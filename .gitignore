@@ -1,0 +1,6 @@
+*.vsidx
+**/bin/Debug/
+**/bin/Release/
+**/obj/
+**/.vs/
+
