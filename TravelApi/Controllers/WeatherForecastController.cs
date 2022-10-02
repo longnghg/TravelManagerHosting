@@ -27,7 +27,6 @@ namespace TravelApi.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            var stringnew = Enums.Hello();
                 var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {

@@ -6,11 +6,25 @@ using System.Threading.Tasks;
 
 namespace Travel.Shared.Ultilities
 {
-    public static class Enums
+    public  class Enums
     {
-        public static string  Hello()
+        public enum StatusCar
         {
-            return "123";
+            Broken = -1, // xe đang hư
+            Free = 0, // xe đang rảnh
+            Busy = 1, // xe đã có tour
+        }
+        public enum TitleRole
+        {
+            Admin = -1,
+            LocalManager = 0,
+            ServiceManager = 1,
+            TourManager = 2,
+            TourBookingManager = 3,
+        }
+        public  enum StatusContract{
+            Expired = 0,
+            Valid = 1,
         }
     }
 }

@@ -8,21 +8,21 @@ namespace Travel.Shared.Models
 {
     public class Place
     {
-        private int id;
-        private int idContract;
+        private Guid id;
+        private Guid idContract;
         private string name;
         private string address;
         private string phone;
-        private decimal priceTicket;
+        private float priceTicket;
         private string modifyBy;
         private long modifyDate;
 
-        public int Id { get => id; set => id = value; }
-        public int IdContract { get => idContract; set => idContract = value; }
+        public Guid Id { get => id; set => id = value; }
+        public Guid IdContract { get => idContract; set => idContract = value; }
         public string Name { get => name; set => name = value; }
         public string Address { get => address; set => address = value; }
         public string Phone { get => phone; set => phone = value; }
-        public decimal PriceTicket { get => priceTicket; set => priceTicket = value; }
+        public float PriceTicket { get => priceTicket; set => priceTicket = value; }
         public string ModifyBy { get => modifyBy; set => modifyBy = value; }
         public long ModifyDate { get => modifyDate; set => modifyDate = value; }
     }

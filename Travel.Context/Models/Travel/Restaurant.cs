@@ -8,16 +8,16 @@ namespace Travel.Shared.Models
 {
     public class Restaurant
     {
-        private int id;
-        private int idContract;
+        private Guid id;
+        private Guid idContract;
         private string name;
         private string address;
         private string phone;
         private string modifyBy;
         private long modifyDate;
 
-        public int Id { get => id; set => id = value; }
-        public int IdContract { get => idContract; set => idContract = value; }
+        public Guid Id { get => id; set => id = value; }
+        public Guid IdContract { get => idContract; set => idContract = value; }
         public string Name { get => name; set => name = value; }
         public string Address { get => address; set => address = value; }
         public string Phone { get => phone; set => phone = value; }
