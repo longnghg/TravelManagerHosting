@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Travel.Data\Travel.Data.csproj" />
-    <ProjectReference Include="..\Travel.Shared\Travel.Shared.csproj" />
   </ItemGroup>
 
 </Project>
