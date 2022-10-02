@@ -4,10 +4,4 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Travel.Context\Travel.Context.csproj" />
-    <ProjectReference Include="..\Travel.Data\Travel.Data.csproj" />
-    <ProjectReference Include="..\TravelApi\TravelApi.csproj" />
-  </ItemGroup>
-
 </Project>
