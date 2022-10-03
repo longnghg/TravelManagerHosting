@@ -6,6 +6,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Travel.Context\Travel.Context.csproj" />
+    <ProjectReference Include="..\Travel.Shared\Travel.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="PrUtility">
+      <HintPath>..\Travel.Shared\PrUtility.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
