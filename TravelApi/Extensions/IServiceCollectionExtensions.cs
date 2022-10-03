@@ -7,6 +7,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Travel.Context.Models.Notification;
 using Travel.Context.Models.Travel;
+using Travel.Data.Interfaces;
+using Travel.Data.Responsives;
 
 namespace TravelApi.Extensions
 {
@@ -26,6 +28,11 @@ namespace TravelApi.Extensions
                 options.UseSqlServer(configuration.GetConnectionString("travelEntities"));
             });
             return services;
+        }
+        public static IServiceCollection AddRepositories(this IServiceCollection services)
+        {
+            return services
+                .AddScoped<IAuthentication, ResAuthentication>();
         }
 
     }

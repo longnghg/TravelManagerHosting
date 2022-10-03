@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json.Linq;
-using PrUtility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Travel.Context.Models;
 using Travel.Context.Models.Travel;
-using Travel.Shared.ViewModels;
+using Travel.Data.Interfaces;
 
 namespace Travel.Data.Responsives
 {
-    class ResAuthentication
+    public class ResAuthentication : IAuthentication
     {
         private readonly TravelContext context;
         public ResAuthentication(TravelContext _context)
