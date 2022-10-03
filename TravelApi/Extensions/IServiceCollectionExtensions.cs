@@ -19,13 +19,13 @@ namespace TravelApi.Extensions
             // Configure DbContext with Scoped lifetime
             services.AddDbContext<NotificationContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("notificationEntities"));
+                options.UseSqlServer(configuration.GetConnectionString("notifyTravelEntities"));
             }
             );
 
             services.AddDbContext<TravelContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("travelEntities"));
+                options.UseSqlServer(configuration.GetConnectionString("travelRoverEntities"));
             });
             return services;
         }
