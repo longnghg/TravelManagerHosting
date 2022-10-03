@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Travel.Shared.Models
+namespace Travel.Context.Models
 {
     public class Contract
     {
