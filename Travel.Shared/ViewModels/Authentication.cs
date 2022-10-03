@@ -9,9 +9,9 @@ namespace Travel.Shared.ViewModels
     public class Authentication
     {
         public string Token { get; set; }
-        public string RoleId { get; set; }
-        public string EmployeeId { get; set; }
-        public string EmployeeName { get; set; }
-        public string EmployeeImg { get; set; }
+        public int RoleId { get; set; }
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Image { get; set; }
     }
 }

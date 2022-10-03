@@ -70,10 +70,10 @@ namespace TravelApi.Controllers
 
                                 Authentication auth = new Authentication();
                                 auth.Token = tokenJWT;
-                                auth.RoleId = result.RoleId.ToString();
-                                auth.EmployeeId = result.Id.ToString();
-                                auth.EmployeeName = result.Name;
-                                auth.EmployeeImg = result.Image;
+                                auth.RoleId = result.RoleId;
+                                auth.Id = result.Id;
+                                auth.Name = result.Name;
+                                auth.Image = result.Image;
 
 
                                 res.Content = JsonSerializer.Serialize(auth);
