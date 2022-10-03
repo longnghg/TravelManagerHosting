@@ -29,6 +29,11 @@ namespace Travel.Context.Models
         private Guid idPlace;
         private float priceTicketPlace;
 
+        private TourDetail tourDetails;
+        private Place place;
+        private Hotel hotel;
+        private Restaurant restaurant;
+
         public Guid Id { get => id; set => id = value; }
         public string IdTourDetail { get => idTourDetail; set => idTourDetail = value; }
         public float Breakfast { get => breakfast; set => breakfast = value; }
@@ -49,5 +54,9 @@ namespace Travel.Context.Models
         public float PriceRestaurant { get => priceRestaurant; set => priceRestaurant = value; }
         public Guid IdPlace { get => idPlace; set => idPlace = value; }
         public float PriceTicketPlace { get => priceTicketPlace; set => priceTicketPlace = value; }
+        public TourDetail TourDetails { get => tourDetails; set => tourDetails = value; }
+        public Place Place { get => place; set => place = value; }
+        public Hotel Hotel { get => hotel; set => hotel = value; }
+        public Restaurant Restaurant { get => restaurant; set => restaurant = value; }
     }
 }

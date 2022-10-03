@@ -28,6 +28,7 @@ namespace Travel.Context.Models
         private float vat;
         private float finalPrice;
 
+        private CostTour costTour;
         public string Id { get => id; set => id = value; }
         public string TourId { get => tourId; set => tourId = value; }
         public Guid IdCostTour { get => idCostTour; set => idCostTour = value; }
@@ -46,5 +47,6 @@ namespace Travel.Context.Models
         public int Profit { get => profit; set => profit = value; }
         public float Vat { get => vat; set => vat = value; }
         public float FinalPrice { get => finalPrice; set => finalPrice = value; }
+        public CostTour CostTour { get => costTour; set => costTour = value; }
     }
 }
