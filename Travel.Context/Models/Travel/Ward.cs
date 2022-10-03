@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Travel.Shared.Models
+namespace Travel.Context.Models
 {
     public class Ward
     {
