@@ -9,18 +9,10 @@ namespace Travel.Shared.ViewModels
 {
     public class Notification
     {
-        private string messenge;
-        private string type;
-        private string description;
-        private DateTime dateTime;
+        public string Messenge { get; set; }
+        public string Type { get; set; }
+        public DateTime DateTime { get; set; }
+        public string Description { get; set; }
 
-        public string Messenge { get => messenge; set => messenge = value; }
-
-        public string Type { get => type; set => type = value; }
-
-        public DateTime DateTime { get => dateTime; set => dateTime = value; }
-
-        public string Description { get => description; set => description = value; }
-        
     }
 }

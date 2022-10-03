@@ -8,12 +8,8 @@ namespace Travel.Shared.ViewModels
 {
     public class Pagination
     {
-        private string pageNumber;
-        private string pageSize;
-        private int pageTotal;
-
-        public string PageNumber { get => pageNumber; set => pageNumber = value; }
-        public string PageSize { get => pageSize; set => pageSize = value; }
-        public int PageTotal { get => pageTotal; set => pageTotal = value; }
+        public string PageNumber { get; set; }
+        public string PageSize { get; set; }
+        public int PageTotal { get; set; }
     }
 }
