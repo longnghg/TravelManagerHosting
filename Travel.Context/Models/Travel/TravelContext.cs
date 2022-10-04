@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Travel.Context.Extensions;
+
 
 namespace Travel.Context.Models.Travel
 {
@@ -44,8 +44,7 @@ namespace Travel.Context.Models.Travel
         public DbSet<Timeline> Timelines { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Seed();
-
+           
             modelBuilder.Entity<Payment>(entity =>
             {
                 entity.HasOne(e => e.Tourbooking)
@@ -219,6 +218,7 @@ namespace Travel.Context.Models.Travel
                 entity.Property(e => e.Phone).HasMaxLength(15).IsRequired(true);
                 entity.Property(e => e.Image).HasMaxLength(100).IsRequired(true);
                 entity.Property(e => e.IdSchedule).HasMaxLength(50);
+                entity.Property(e => e.ModifyBy).HasMaxLength(50);
             });
             modelBuilder.Entity<Car>(entity =>
             {
