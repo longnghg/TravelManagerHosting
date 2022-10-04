@@ -7,7 +7,7 @@ namespace Travel.Context.Models
 {
     public class Timeline
     {
-        private string  id;
+        private string id;
         private string description;
         private long fromTime;
         private long toTime;
@@ -18,7 +18,7 @@ namespace Travel.Context.Models
 
         private string idSchedule;
 
-        private Schedule schedule; 
+        private Schedule schedule;
 
         public string Id { get => id; set => id = value; }
         public string Description { get => description; set => description = value; }

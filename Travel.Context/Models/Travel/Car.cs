@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Travel.Context.Models
 {
-    
+
     public class Car
     {
         private Guid id;
