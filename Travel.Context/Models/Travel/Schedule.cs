@@ -27,6 +27,7 @@ namespace Travel.Context.Models
         private int idTourGuide;
         private int idPromotion;
         private string idTimeline;
+        private string idEmployee;
 
         private Car cars;
         private ICollection<Promotion> promotions;
@@ -55,5 +56,6 @@ namespace Travel.Context.Models
         public Tour Tour { get => tour; set => tour = value; }
         public Timeline Timelines { get => timelines; set => timelines = value; }
         public Employee Employee { get => employee; set => employee = value; }
+        public string IdEmployee { get => idEmployee; set => idEmployee = value; }
     }
 }

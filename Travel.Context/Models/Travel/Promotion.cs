@@ -13,12 +13,13 @@ namespace Travel.Context.Models
         private string idSchedule;
         private long toDate;
         private long fromDate;
-        public Schedule Schedules { get; set; }
+        private Schedule schedules;
 
         public Guid Id { get => id; set => id = value; }
         public int Value { get => value; set => this.value = value; }
         public string IdSchedule { get => idSchedule; set => idSchedule = value; }
         public long ToDate { get => toDate; set => toDate = value; }
         public long FromDate { get => fromDate; set => fromDate = value; }
+        public Schedule Schedules { get => schedules; set => schedules = value; }
     }
 }

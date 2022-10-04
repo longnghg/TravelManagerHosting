@@ -24,7 +24,7 @@ namespace Travel.Context.Models
 
         private bool isDelete;
         private bool isActive;
-        public ICollection<Schedule> schedules { get; set; }
+        private ICollection<Schedule> schedules;
 
         public string Id { get => id; set => id = value; }
         public string TourName { get => tourName; set => tourName = value; }
@@ -39,5 +39,6 @@ namespace Travel.Context.Models
         public bool IsDelete { get => isDelete; set => isDelete = value; }
         public bool IsActive { get => isActive; set => isActive = value; }
         public string Thumbsnail { get => thumbsnail; set => thumbsnail = value; }
+        public ICollection<Schedule> Schedules { get => schedules; set => schedules = value; }
     }
 }
