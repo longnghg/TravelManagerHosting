@@ -14,6 +14,9 @@ import { TablesComponent } from '../../pages/tables/tables.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // import { ToastrModule } from 'ngx-toastr';
 
+
+import { AgGridModule } from 'ag-grid-angular';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -21,7 +24,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     HttpClientModule,
     NgbModule,
-    ClipboardModule
+    ClipboardModule,
+    AgGridModule
   ],
   declarations: [
     DashboardComponent,

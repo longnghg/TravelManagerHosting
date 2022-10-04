@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-declare const google: any;
+import { ColDef, GridReadyEvent } from 'ag-grid-community';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-maps',
@@ -7,50 +8,56 @@ declare const google: any;
   styleUrls: ['./maps.component.scss']
 })
 export class MapsComponent implements OnInit {
+  public columnDefs: ColDef[] = [
+    // set filters
+    { field: 'athlete', filter: 'agSetColumnFilter', rowDrag: true  },
+    {
+      field: 'country',
+      filter: 'agTextColumnFilter',
+      filterParams: {
 
-  constructor() { }
+        applyMiniFilterWhileTyping: true,
+      },
 
+    },
+    // number filters
+    { field: 'gold', filter: 'agNumberColumnFilter' },
+    { field: 'silver', filter: 'agNumberColumnFilter' },
+    { field: 'bronze', filter: 'agNumberColumnFilter' },
+  ];
+  public defaultColDef: ColDef = {
+    flex: 1,
+    minWidth: 200,
+    resizable: true,
+    floatingFilter: true,
+  };
+  public rowData!: IOlympicData[];
+
+  constructor(private http: HttpClient) {}
+
+  onGridReady(params: GridReadyEvent<IOlympicData>) {
+    this.http
+      .get<IOlympicData[]>(
+        'https://www.ag-grid.com/example-assets/olympic-winners.json'
+      )
+      .subscribe((data) => (this.rowData = data));
+  }
   ngOnInit() {
-    let map = document.getElementById('map-canvas');
-    let lat = map.getAttribute('data-lat');
-    let lng = map.getAttribute('data-lng');
 
-    var myLatlng = new google.maps.LatLng(lat, lng);
-    var mapOptions = {
-        zoom: 12,
-        scrollwheel: false,
-        center: myLatlng,
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        styles: [
-          {"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},
-          {"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},
-          {"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},
-          {"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},
-          {"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},
-          {"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},
-          {"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},
-          {"featureType":"water","elementType":"all","stylers":[{"color":'#5e72e4'},{"visibility":"on"}]}]
-    }
 
-    map = new google.maps.Map(map, mapOptions);
-
-    var marker = new google.maps.Marker({
-        position: myLatlng,
-        map: map,
-        animation: google.maps.Animation.DROP,
-        title: 'Hello World!'
-    });
-
-    var contentString = '<div class="info-window-content"><h2>Argon Dashboard</h2>' +
-        '<p>A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.</p></div>';
-
-    var infowindow = new google.maps.InfoWindow({
-        content: contentString
-    });
-
-    google.maps.event.addListener(marker, 'click', function() {
-        infowindow.open(map, marker);
-    });
   }
 
+}
+
+export interface IOlympicData {
+  athlete: string;
+  age: number;
+  country: string;
+  year: number;
+  date: string;
+  sport: string;
+  gold: number;
+  silver: number;
+  bronze: number;
+  total: number;
 }
