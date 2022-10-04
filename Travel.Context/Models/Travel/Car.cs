@@ -14,6 +14,9 @@ namespace Travel.Context.Models
         private int amountSeat;
         private Guid idEmployee;
 
+        public Employee Employees { get; set; }
+        public ICollection<Schedule> Schedules { get; set; }
+
         public Guid Id { get => id; set => id = value; }
         public string LiscensePlate { get => liscensePlate; set => liscensePlate = value; }
         public int Status { get => status; set => status = value; }

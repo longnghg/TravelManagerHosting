@@ -24,6 +24,7 @@ namespace Travel.Context.Models
 
         private bool isDelete;
         private bool isActive;
+        public ICollection<Schedule> schedules { get; set; }
 
         public string Id { get => id; set => id = value; }
         public string TourName { get => tourName; set => tourName = value; }
