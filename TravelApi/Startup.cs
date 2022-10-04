@@ -59,6 +59,9 @@ namespace TravelApi
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Token:Key"]))
                 };
             });
+
+            // add automapper
+            Travel.Shared.Ultilities.Mapper.RegisterMappings();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
