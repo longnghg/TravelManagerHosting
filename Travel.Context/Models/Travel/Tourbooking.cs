@@ -26,7 +26,8 @@ namespace Travel.Context.Models
         private float totalPrice;
         private string modifyBy;
         private long modifyDate;
-
+        public ICollection<Payment> Payment { get; set; }
+        public TourbookingDetails TourbookingDetails { get; set; }
         public string Id { get => id; set => id = value; }
         public string CustomerName { get => customerName; set => customerName = value; }
         public string ContactName { get => contactName; set => contactName = value; }

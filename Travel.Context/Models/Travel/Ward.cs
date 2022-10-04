@@ -7,7 +7,7 @@ namespace Travel.Context.Models
         private Guid id;
         private string name;
         private Guid idDistrict;
-
+        public District District { get; set; }
 
         public Guid Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
