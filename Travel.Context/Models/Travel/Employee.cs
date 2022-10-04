@@ -26,6 +26,10 @@ namespace Travel.Context.Models
         private bool isDelete;
         private bool isActive;
 
+        public ICollection<Role> roles { get; set; } // 1
+        public Car cars { get; set; } // n
+        public Schedule Schedules { get; set; }
+
         public Guid Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
         public string Email { get => email; set => email = value; }
