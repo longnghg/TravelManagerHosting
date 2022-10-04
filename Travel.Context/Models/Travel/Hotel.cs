@@ -21,6 +21,8 @@ namespace Travel.Context.Models
         private string modifyBy;
         private long modifyDate;
 
+        private ICollection<CostTour> costTours;
+
         public Guid Id { get => id; set => id = value; }
         public Guid IdContract { get => idContract; set => idContract = value; }
         public string Name { get => name; set => name = value; }
@@ -33,5 +35,6 @@ namespace Travel.Context.Models
         public int QuantitySR { get => quantitySR; set => quantitySR = value; }
         public string ModifyBy { get => modifyBy; set => modifyBy = value; }
         public long ModifyDate { get => modifyDate; set => modifyDate = value; }
+        public ICollection<CostTour> CostTours { get => costTours; set => costTours = value; }
     }
 }
