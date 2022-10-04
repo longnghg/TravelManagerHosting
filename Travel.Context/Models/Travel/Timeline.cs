@@ -15,6 +15,7 @@ namespace Travel.Context.Models
         private long modifyDate;
 
         private bool isDelete;
+        public ICollection<Schedule> Schedules { get; set; }
 
         public string Id { get => id; set => id = value; }
         public string Description { get => description; set => description = value; }

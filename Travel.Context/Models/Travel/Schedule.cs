@@ -33,7 +33,8 @@ namespace Travel.Context.Models
         public Tour tour { get; set; }
         public Timeline timelines { get; set; }
         public ICollection<Employee> employee { get; set; }
-        
+        public ICollection<Schedule> Schedules { get; set; }
+
         public string Id { get => id; set => id = value; }
         public long DepartureDate { get => departureDate; set => departureDate = value; }
         public long BeginDate { get => beginDate; set => beginDate = value; }
