@@ -8,16 +8,10 @@ namespace Travel.Shared.ViewModels
 {
     public class Authentication
     {
-        private string token;
-        private string roleId;
-        private string employeeId;
-        private string employeeName;
-        private string employeeImg;
-
-        public string Token { get => token; set => token = value; }
-        public string RoleId { get => roleId; set => roleId = value; }
-        public string EmployeeId { get => employeeId; set => employeeId = value; }
-        public string EmployeeName { get => employeeName; set => employeeName = value; }
-        public string EmployeeImg { get => employeeImg; set => employeeImg = value; }
+        public string Token { get; set; }
+        public string RoleId { get; set; }
+        public string EmployeeId { get; set; }
+        public string EmployeeName { get; set; }
+        public string EmployeeImg { get; set; }
     }
 }

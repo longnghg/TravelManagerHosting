@@ -14,6 +14,8 @@ using Travel.Shared.ViewModels;
 
 namespace TravelApi.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class AuthenticationController : Controller
     {
         private IConfiguration configuration;
@@ -75,7 +77,6 @@ namespace TravelApi.Controllers
 
 
                                 res.Content = JsonSerializer.Serialize(auth);
-                                res.Status = 200;
                                 res.Notification.DateTime = DateTime.Now;
                                 res.Notification.Description = null;
                                 res.Notification.Messenge = "Đăng nhập thành công !";
@@ -85,6 +86,7 @@ namespace TravelApi.Controllers
                             }
                             else
                             {
+
                                 res.Notification.DateTime = DateTime.Now;
                                 res.Notification.Description = null;
                                 res.Notification.Messenge = "Tài khoản của bạn chưa được kích hoạt !";
@@ -116,9 +118,9 @@ namespace TravelApi.Controllers
                 {
                     res.Notification.DateTime = DateTime.Now;
                     res.Notification.Description = null;
-                    res.Notification.Messenge = "Sai mật khẩu !";
+                    res.Notification.Messenge = "Không tìm thấy email [" + email + "] trên hệ thống !";
                     res.Notification.Type = "Error";
-                    return Ok("Không tìm thấy email [" + email + "] trên hệ thống !");
+                    return Ok(res);
                 }
             }
             catch (Exception e)
