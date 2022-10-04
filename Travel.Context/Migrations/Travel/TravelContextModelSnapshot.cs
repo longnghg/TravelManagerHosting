@@ -67,7 +67,7 @@ namespace Travel.Context.Migrations.Travel
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cars");
+                    b.ToTable("Car");
                 });
 
             modelBuilder.Entity("Travel.Context.Models.Contract", b =>
@@ -279,8 +279,8 @@ namespace Travel.Context.Migrations.Travel
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AccessToken")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasMaxLength(550)
+                        .HasColumnType("nvarchar(550)");
 
                     b.Property<long>("Birthday")
                         .HasColumnType("bigint");
@@ -329,6 +329,88 @@ namespace Travel.Context.Migrations.Travel
                     b.HasIndex("RoleId");
 
                     b.ToTable("Employees");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("eff5ed34-9960-452d-b32a-43aa4c5075f7"),
+                            Birthday = 202204101007L,
+                            CreateDate = 202204101007L,
+                            Email = "test1@gmail.com",
+                            Image = "",
+                            IsActive = true,
+                            IsDelete = false,
+                            ModifyBy = "Admin Test",
+                            ModifyDate = 202204101007L,
+                            Name = "Admin Test",
+                            Password = "3244185981728979115075721453575112",
+                            Phone = "0789786646",
+                            RoleId = -1
+                        },
+                        new
+                        {
+                            Id = new Guid("f734663d-875e-489f-b347-3c6b16e901df"),
+                            Birthday = 202204101007L,
+                            CreateDate = 202204101007L,
+                            Email = "test2@gmail.com",
+                            Image = "",
+                            IsActive = true,
+                            IsDelete = false,
+                            ModifyBy = "Admin Test",
+                            ModifyDate = 202204101007L,
+                            Name = "Local Manager Test",
+                            Password = "3244185981728979115075721453575112",
+                            Phone = "0789786645",
+                            RoleId = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("ee7074a0-7eb3-448d-9008-0fdaa902e29b"),
+                            Birthday = 202204101007L,
+                            CreateDate = 202204101007L,
+                            Email = "test3@gmail.com",
+                            Image = "",
+                            IsActive = true,
+                            IsDelete = false,
+                            ModifyBy = "Admin Test",
+                            ModifyDate = 202204101007L,
+                            Name = "Service Manager Test",
+                            Password = "3244185981728979115075721453575112",
+                            Phone = "0789786644",
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            Id = new Guid("f7e91b23-1e5a-44a7-8ddd-d3e1235c6bd0"),
+                            Birthday = 202204101007L,
+                            CreateDate = 202204101007L,
+                            Email = "test4@gmail.com",
+                            Image = "",
+                            IsActive = true,
+                            IsDelete = false,
+                            ModifyBy = "Admin Test",
+                            ModifyDate = 202204101007L,
+                            Name = "Tour Manager Test",
+                            Password = "3244185981728979115075721453575112",
+                            Phone = "0789786643",
+                            RoleId = 3
+                        },
+                        new
+                        {
+                            Id = new Guid("5d271cf1-e326-4714-8a46-cd3b122df84c"),
+                            Birthday = 202204101007L,
+                            CreateDate = 202204101007L,
+                            Email = "test5@gmail.com",
+                            Image = "",
+                            IsActive = true,
+                            IsDelete = false,
+                            ModifyBy = "Admin Test",
+                            ModifyDate = 202204101007L,
+                            Name = "Tour Booking Manager Test",
+                            Password = "3244185981728979115075721453575112",
+                            Phone = "0789786642",
+                            RoleId = 4
+                        });
                 });
 
             modelBuilder.Entity("Travel.Context.Models.File", b =>
@@ -579,6 +661,43 @@ namespace Travel.Context.Migrations.Travel
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            Description = "Trùm",
+                            IsDelete = false,
+                            Name = "Admin"
+                        },
+                        new
+                        {
+                            Id = 1,
+                            Description = "Quản lý cục bộ",
+                            IsDelete = false,
+                            Name = "LocalManager"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Quản lý dịch vụ",
+                            IsDelete = false,
+                            Name = "ServiceManager"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Quản lý tour",
+                            IsDelete = false,
+                            Name = "TourManager"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Quản lý tour booking",
+                            IsDelete = false,
+                            Name = "TourBookingManager"
+                        });
                 });
 
             modelBuilder.Entity("Travel.Context.Models.Schedule", b =>

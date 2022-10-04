@@ -192,7 +192,7 @@ namespace Travel.Context.Models.Travel
 
             modelBuilder.Entity<Employee>(entity =>
             {
-                entity.Property(e => e.AccessToken).HasMaxLength(30);
+                entity.Property(e => e.AccessToken).HasMaxLength(550);
                 entity.Property(e => e.Email).HasDefaultValue(0);
                 entity.Property(e => e.Email).IsRequired(true);
             });

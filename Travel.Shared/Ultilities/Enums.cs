@@ -17,10 +17,10 @@ namespace Travel.Shared.Ultilities
         public enum TitleRole
         {
             Admin = -1,
-            LocalManager = 0,
-            ServiceManager = 1,
-            TourManager = 2,
-            TourBookingManager = 3,
+            LocalManager = 1,
+            ServiceManager = 2,
+            TourManager = 3,
+            TourBookingManager = 4,
         }
         public  enum StatusContract{
             Expired = 0,
