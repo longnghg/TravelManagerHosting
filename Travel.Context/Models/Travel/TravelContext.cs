@@ -136,6 +136,8 @@ namespace Travel.Context.Models.Travel
                   .HasForeignKey<CostTour>(e => e.IdTourDetail);
 
                 entity.Property(e => e.Description).HasMaxLength(300);
+                entity.Property(e => e.Id).HasMaxLength(30);
+                entity.Property(e => e.TourId).HasMaxLength(30);
             });
 
             modelBuilder.Entity<CostTour>(entity =>
@@ -151,6 +153,8 @@ namespace Travel.Context.Models.Travel
                 entity.HasOne<Restaurant>(e => e.Restaurant)
                   .WithMany(e => e.CostTours)
                   .HasForeignKey(e => e.IdRestaurant);
+
+                entity.Property(e => e.IdTourDetail).HasMaxLength(30);
             });
 
 
@@ -159,6 +163,11 @@ namespace Travel.Context.Models.Travel
                 entity.Property(e => e.Name).HasMaxLength(100);
                 entity.Property(e => e.Address).HasMaxLength(100);
                 entity.Property(e => e.Phone).HasMaxLength(15);
+                entity.Property(e => e.ModifyBy).HasMaxLength(100);
+
+                entity.Property(e => e.Name).IsRequired(true);
+                entity.Property(e => e.Phone).IsRequired(true);
+                entity.Property(e => e.Address).IsRequired(true);
             });
 
             modelBuilder.Entity<Restaurant>(entity =>
@@ -166,6 +175,11 @@ namespace Travel.Context.Models.Travel
                 entity.Property(e => e.Name).HasMaxLength(100);
                 entity.Property(e => e.Address).HasMaxLength(100);
                 entity.Property(e => e.Phone).HasMaxLength(15);
+                entity.Property(e => e.ModifyBy).HasMaxLength(100);
+
+                entity.Property(e => e.Name).IsRequired(true);
+                entity.Property(e => e.Phone).IsRequired(true);
+                entity.Property(e => e.Address).IsRequired(true);
             });
 
             modelBuilder.Entity<Hotel>(entity =>
@@ -173,13 +187,32 @@ namespace Travel.Context.Models.Travel
                 entity.Property(e => e.Name).HasMaxLength(100);
                 entity.Property(e => e.Address).HasMaxLength(100);
                 entity.Property(e => e.Phone).HasMaxLength(15);
+                entity.Property(e => e.ModifyBy).HasMaxLength(100);
+
+                entity.Property(e => e.Name).IsRequired(true);
+                entity.Property(e => e.Phone).IsRequired(true);
+                entity.Property(e => e.Address).IsRequired(true);
             });
 
             modelBuilder.Entity<Voucher>(entity =>
             {
                 entity.Property(e => e.Point).HasDefaultValue(0);
+                entity.Property(e => e.Code).HasMaxLength(10);
                 entity.Property(e => e.IsDelete).IsRequired().HasDefaultValue(0);
                 entity.Property(e => e.Description).HasMaxLength(100);
+                entity.Property(e => e.ModifyBy).HasMaxLength(100);
+                entity.Property(e => e.CreateBy).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<Contract>(entity =>
+            {
+                entity.Property(e => e.ContractName).HasMaxLength(100);
+                entity.Property(e => e.TypeService).HasMaxLength(100);
+                entity.Property(e => e.ModifyBy).HasMaxLength(100);
+                entity.Property(e => e.CreateBy).HasMaxLength(100);
+
+                entity.Property(e => e.ContractName).IsRequired(true);
+                entity.Property(e => e.TypeService).IsRequired(true);
             });
 
             modelBuilder.Entity<Employee>(entity =>
