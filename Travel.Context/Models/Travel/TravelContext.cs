@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Travel.Context.Extensions;
 
 namespace Travel.Context.Models.Travel
 {
@@ -33,6 +34,8 @@ namespace Travel.Context.Models.Travel
         public DbSet<Contract> Contracts { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //modelBuilder.Seed();
+
             modelBuilder.Entity<Payment>(entity =>
             {
                 entity.HasOne(e => e.Tourbooking)

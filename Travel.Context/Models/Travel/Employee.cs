@@ -17,7 +17,6 @@ namespace Travel.Context.Models
 
         private int roleId;
 
-        private int status;
         private long createDate;    
         private string accessToken;
       
@@ -35,7 +34,6 @@ namespace Travel.Context.Models
         public string Image { get => image; set => image = value; }
         public string Phone { get => phone; set => phone = value; }
         public int RoleId { get => roleId; set => roleId = value; } 
-        public int Status { get => status; set => status = value; }
         public long CreateDate { get => createDate; set => createDate = value; } 
         public string AccessToken { get => accessToken; set => accessToken = value; }
         public string ModifyBy { get => modifyBy; set => modifyBy = value; }
