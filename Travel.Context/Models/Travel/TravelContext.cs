@@ -33,14 +33,15 @@ namespace Travel.Context.Models.Travel
         public DbSet<Contract> Contracts { get; set; }
         //
         public DbSet<Employee> Employees { get; set; }
-        public DbSet<Role> roles { get; set; }
-        public DbSet<Car> cars { get; set; }
+        public DbSet<Role> Roles { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
+        public DbSet<Car> Cars { get; set; }
+
         public DbSet<Promotion> Promotions { get; set; }
         public DbSet<Tour> Tour { get; set; }
-        public DbSet<File> files { get; set; }
+        public DbSet<File> Files { get; set; }
         public DbSet<Image> Images { get; set; }
-        public DbSet<Timeline> timelines { get; set; }
+        public DbSet<Timeline> Timelines { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.Seed();
@@ -60,7 +61,7 @@ namespace Travel.Context.Models.Travel
             modelBuilder.Entity<Tourbooking>(entity =>
             {
                 entity.HasOne(e => e.TourbookingDetails)
-                .WithOne(e => e.Tourbooking)                             
+                .WithOne(e => e.Tourbooking)
                 .HasForeignKey<TourbookingDetails>(e => e.IdTourBooking);
 
                 entity.Property(e => e.Email).HasMaxLength(100);
@@ -77,7 +78,7 @@ namespace Travel.Context.Models.Travel
 
 
                 entity.Property(e => e.Email).IsRequired(true);
-                entity.Property(e => e.Phone1).IsRequired(true);              
+                entity.Property(e => e.Phone1).IsRequired(true);
             });
 
             modelBuilder.Entity<TourbookingDetails>(entity =>
@@ -110,9 +111,9 @@ namespace Travel.Context.Models.Travel
                 .HasForeignKey(e => e.IdDistrict);
                 entity.Property(e => e.Name).HasMaxLength(30);
                 entity.Property(e => e.Name).IsRequired(true);
-            
+
             });
-            
+
             modelBuilder.Entity<Customer>(entity =>
             {
                 entity.Property(e => e.Name).HasMaxLength(100);
@@ -125,7 +126,7 @@ namespace Travel.Context.Models.Travel
                 entity.Property(e => e.Name).IsRequired(true);
                 entity.Property(e => e.Email).IsRequired(true);
                 entity.Property(e => e.Phone).IsRequired(true);
-                
+
             });
 
             modelBuilder.Entity<TourDetail>(entity =>
@@ -135,6 +136,8 @@ namespace Travel.Context.Models.Travel
                   .HasForeignKey<CostTour>(e => e.IdTourDetail);
 
                 entity.Property(e => e.Description).HasMaxLength(300);
+                entity.Property(e => e.Id).HasMaxLength(30);
+                entity.Property(e => e.TourId).HasMaxLength(30);
             });
 
             modelBuilder.Entity<CostTour>(entity =>
@@ -150,6 +153,8 @@ namespace Travel.Context.Models.Travel
                 entity.HasOne<Restaurant>(e => e.Restaurant)
                   .WithMany(e => e.CostTours)
                   .HasForeignKey(e => e.IdRestaurant);
+
+                entity.Property(e => e.IdTourDetail).HasMaxLength(30);
             });
 
 
@@ -158,6 +163,11 @@ namespace Travel.Context.Models.Travel
                 entity.Property(e => e.Name).HasMaxLength(100);
                 entity.Property(e => e.Address).HasMaxLength(100);
                 entity.Property(e => e.Phone).HasMaxLength(15);
+                entity.Property(e => e.ModifyBy).HasMaxLength(100);
+
+                entity.Property(e => e.Name).IsRequired(true);
+                entity.Property(e => e.Phone).IsRequired(true);
+                entity.Property(e => e.Address).IsRequired(true);
             });
 
             modelBuilder.Entity<Restaurant>(entity =>
@@ -165,6 +175,11 @@ namespace Travel.Context.Models.Travel
                 entity.Property(e => e.Name).HasMaxLength(100);
                 entity.Property(e => e.Address).HasMaxLength(100);
                 entity.Property(e => e.Phone).HasMaxLength(15);
+                entity.Property(e => e.ModifyBy).HasMaxLength(100);
+
+                entity.Property(e => e.Name).IsRequired(true);
+                entity.Property(e => e.Phone).IsRequired(true);
+                entity.Property(e => e.Address).IsRequired(true);
             });
 
             modelBuilder.Entity<Hotel>(entity =>
@@ -172,45 +187,91 @@ namespace Travel.Context.Models.Travel
                 entity.Property(e => e.Name).HasMaxLength(100);
                 entity.Property(e => e.Address).HasMaxLength(100);
                 entity.Property(e => e.Phone).HasMaxLength(15);
+                entity.Property(e => e.ModifyBy).HasMaxLength(100);
+
+                entity.Property(e => e.Name).IsRequired(true);
+                entity.Property(e => e.Phone).IsRequired(true);
+                entity.Property(e => e.Address).IsRequired(true);
             });
 
             modelBuilder.Entity<Voucher>(entity =>
             {
                 entity.Property(e => e.Point).HasDefaultValue(0);
+                entity.Property(e => e.Code).HasMaxLength(10);
                 entity.Property(e => e.IsDelete).IsRequired().HasDefaultValue(0);
                 entity.Property(e => e.Description).HasMaxLength(100);
+                entity.Property(e => e.ModifyBy).HasMaxLength(100);
+                entity.Property(e => e.CreateBy).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<Contract>(entity =>
+            {
+                entity.Property(e => e.ContractName).HasMaxLength(100);
+                entity.Property(e => e.TypeService).HasMaxLength(100);
+                entity.Property(e => e.ModifyBy).HasMaxLength(100);
+                entity.Property(e => e.CreateBy).HasMaxLength(100);
+
+                entity.Property(e => e.ContractName).IsRequired(true);
+                entity.Property(e => e.TypeService).IsRequired(true);
             });
 
             modelBuilder.Entity<Employee>(entity =>
             {
                 entity.HasKey(s => s.Id);
 
-                entity.HasOne(e => e.Car)
-                .WithOne(d => d.Employee)
+                entity.HasOne(e => e.cars)
+                .WithOne(d => d.Employees)
                 .HasForeignKey<Car>(e => e.IdEmployee);
-                entity.Property(e => e.AccessToken).HasMaxLength(30);
-                entity.Property(e => e.Email).HasDefaultValue(0);
-                entity.Property(e => e.Email).IsRequired(true);
-            });
-     
-            modelBuilder.Entity<Role>()
-             .HasKey(s => s.Id);
 
-            modelBuilder.Entity<Car>()
-               .HasKey(s => s.Id);
+                entity.HasOne<Schedule>(e => e.Schedules)
+                .WithMany(d => d.employees)
+                .HasForeignKey(e => e.IdSchedule);
+
+
+
+                entity.Property(e => e.Email).HasDefaultValue("");
+                entity.Property(e => e.Email).IsRequired();
+                entity.Property(e => e.Email).IsRequired(true);
+                entity.Property(e => e.Name).HasMaxLength(100);
+                entity.Property(e => e.Name).IsRequired();
+                entity.Property(e => e.Phone).HasMaxLength(15);
+                entity.Property(e => e.Phone).IsRequired();
+            });
+
+            modelBuilder.Entity<Role>(entity =>
+            {
+                entity.HasKey(s => s.Id);
+                entity.Property(e => e.Name).HasMaxLength(30);
+                entity.Property(e => e.Name).IsRequired(true);
+            });
+
+            modelBuilder.Entity<Car>(entity =>
+            {
+                entity.HasKey(s => s.Id);
+                entity.Property(e => e.LiscensePlate).IsRequired(true);
+           
+            });
+            modelBuilder.Entity<Car>(entity =>
+            {
+                entity.Property(e => e.LiscensePlate).HasMaxLength(15).IsRequired();
+                entity.Property(e => e.Phone).HasMaxLength(15).IsRequired();
+                entity.Property(e => e.NameDriver).HasMaxLength(15).IsRequired();
+                entity.Property(e => e.Status).HasDefaultValue(0);
+
+            });
             modelBuilder.Entity<Schedule>(entity =>
             {
                 entity.HasKey(s => s.Id);
 
-                entity.HasOne<Car>(e => e.Cars)
+                entity.HasOne<Car>(e => e.carss)
                  .WithMany(d => d.Schedules)
                  .HasForeignKey(e => e.IdCar);
 
-                entity.HasOne(e => e.Employee)
+                entity.HasOne<Timeline>(e => e.timeliness)
                .WithMany(d => d.Schedules)
-               .HasForeignKey(e => e.IdEmployee);
+               .HasForeignKey(e => e.IdTimeline);
 
-                entity.HasOne<Tour>(e => e.Tour)
+                entity.HasOne<Tour>(e => e.tours)
                .WithMany(d => d.Schedules)
                .HasForeignKey(e => e.IdTour);
             });
@@ -228,7 +289,25 @@ namespace Travel.Context.Models.Travel
                .WithMany(d => d.Timelines)
                .HasForeignKey(e => e.IdSchedule);
             });
+            modelBuilder.Entity<File>(entity =>
+            {
+                entity.HasKey(s => s.Id);
+                entity.Property(e => e.FilePath).HasMaxLength(150);
+            });
+            // Image
+            modelBuilder.Entity<Image>(entity =>
+            {
+                entity.HasKey(s => s.Id);
+                entity.Property(e => e.FilePath).HasMaxLength(150);
+                entity.Property(e => e.Name).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<Tour>(entity =>
+            {
+                entity.HasKey(s => s.Id);
+                entity.Property(e => e.Thumbsnail).HasMaxLength(150);
+            });
         }
-        
+
     }
 }
