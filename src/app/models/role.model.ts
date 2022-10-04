@@ -7,11 +7,11 @@ export interface RoleModel {
 
 
 export enum RoleTitle {
-  'Admin',
-  'Quản lý cục bộ',
-  'Quản lý tour booking',
-  'Quản lý tour',
-  'Quản lý dịch vụ'
+  'Admin' = -1,
+  'Quản lý cục bộ' = 0,
+  'Quản lý dịch vụ' = 1,
+  'Quản lý tour' = 2,
+  'Quản lý tour booking' = 3
 }
 
 export enum StatusBooking {
