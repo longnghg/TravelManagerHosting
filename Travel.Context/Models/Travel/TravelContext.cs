@@ -133,16 +133,6 @@ namespace Travel.Context.Models.Travel
                 entity.Property(e => e.Description).HasMaxLength(100);
             });
 
-            modelBuilder.Entity<Banner>(entity =>
-            {
-
-            });
-
-            modelBuilder.Entity<Contract>(entity =>
-            {
-
-            });
-            // 
             modelBuilder.Entity<Employee>(entity =>
             {
                 entity.HasKey(s => s.Id);
@@ -172,10 +162,6 @@ namespace Travel.Context.Models.Travel
                .WithMany(d => d.Schedules)
                .HasForeignKey(e => e.IdEmployee);
 
-                entity.HasOne<Timeline>(e => e.Timelines)
-               .WithMany(d => d.Schedule)
-               .HasForeignKey(e => e.IdTimeline);
-
                 entity.HasOne<Tour>(e => e.Tour)
                .WithMany(d => d.Schedules)
                .HasForeignKey(e => e.IdTour);
@@ -188,21 +174,11 @@ namespace Travel.Context.Models.Travel
                .WithMany(d => d.Promotions)
                .HasForeignKey(e => e.IdSchedule);
             });
-            // timeline
-            modelBuilder.Entity<Timeline>()
-          .HasKey(s => s.Id);
-
-            // file
-            modelBuilder.Entity<File>()
-             .HasKey(s => s.Id);
-
-            // Image
-            modelBuilder.Entity<Image>()
-                       .HasKey(s => s.Id);
-
-            modelBuilder.Entity<Tour>(entity =>
+            modelBuilder.Entity<Timeline>(entity =>
             {
-                entity.HasKey(s => s.Id);
+                entity.HasOne<Schedule>(e => e.Schedule)
+               .WithMany(d => d.Timelines)
+               .HasForeignKey(e => e.IdSchedule);
             });
         }
         

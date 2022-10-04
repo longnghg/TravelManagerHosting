@@ -22,17 +22,16 @@ namespace Travel.Context.Models
         private float minCapacity;
         private float quantityChild;
 
-        private int idTour;
-        private int idCar;
-        private int idTourGuide;
+        private string idTour;
+        private Guid idCar;
         private int idPromotion;
         private string idTimeline;
-        private string idEmployee;
+        private Guid idEmployee;
 
         private Car cars;
         private ICollection<Promotion> promotions;
         private Tour tour;
-        private Timeline timelines;
+        private ICollection<Timeline> timelines;
         private Employee employee;
         
         public string Id { get => id; set => id = value; }
@@ -46,16 +45,15 @@ namespace Travel.Context.Models
         public float QuantityBaby { get => quantityBaby; set => quantityBaby = value; }
         public float MinCapacity { get => minCapacity; set => minCapacity = value; }
         public float QuantityChild { get => quantityChild; set => quantityChild = value; }
-        public int IdTour { get => idTour; set => idTour = value; }
-        public int IdCar { get => idCar; set => idCar = value; }
-        public int IdTourGuide { get => idTourGuide; set => idTourGuide = value; }
+        public string IdTour { get => idTour; set => idTour = value; }
+        public Guid IdCar { get => idCar; set => idCar = value; }
         public int IdPromotion { get => idPromotion; set => idPromotion = value; }
         public string IdTimeline { get => idTimeline; set => idTimeline = value; }
         public Car Cars { get => cars; set => cars = value; }
         public ICollection<Promotion> Promotions { get => promotions; set => promotions = value; }
         public Tour Tour { get => tour; set => tour = value; }
-        public Timeline Timelines { get => timelines; set => timelines = value; }
+        public ICollection<Timeline> Timelines { get => timelines; set => timelines = value; }
         public Employee Employee { get => employee; set => employee = value; }
-        public string IdEmployee { get => idEmployee; set => idEmployee = value; }
+        public Guid IdEmployee { get => idEmployee; set => idEmployee = value; }
     }
 }

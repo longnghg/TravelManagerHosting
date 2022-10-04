@@ -16,7 +16,9 @@ namespace Travel.Context.Models
 
         private bool isDelete;
 
-        private ICollection<Schedule> schedule;
+        private string idSchedule;
+
+        private Schedule schedule;
         public string Id { get => id; set => id = value; }
         public string Description { get => description; set => description = value; }
         public long FromTime { get => fromTime; set => fromTime = value; }
@@ -24,6 +26,7 @@ namespace Travel.Context.Models
         public string ModifyBy { get => modifyBy; set => modifyBy = value; }
         public long ModifyDate { get => modifyDate; set => modifyDate = value; }
         public bool IsDelete { get => isDelete; set => isDelete = value; }
-        public ICollection<Schedule> Schedule { get => schedule; set => schedule = value; }
+        public Schedule Schedule { get => schedule; set => schedule = value; }
+        public string IdSchedule { get => idSchedule; set => idSchedule = value; }
     }
 }
