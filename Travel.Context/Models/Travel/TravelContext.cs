@@ -35,7 +35,6 @@ namespace Travel.Context.Models.Travel
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
-        public DbSet<Car> Cars { get; set; }
 
         public DbSet<Promotion> Promotions { get; set; }
         public DbSet<Tour> Tour { get; set; }
