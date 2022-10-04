@@ -28,8 +28,7 @@ namespace Travel.Context.Models
         private string idSchedule;
 
         private Role role;
-        public Car cars { get; set; } // n
-        public Schedule Schedules { get; set; }
+        public ICollection<Schedule> Schedules { get; set; }
 
         public Guid Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }

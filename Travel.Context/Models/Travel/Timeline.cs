@@ -19,7 +19,6 @@ namespace Travel.Context.Models
         private string idSchedule;
 
         private Schedule schedule; 
-        public ICollection<Schedule> Schedules { get; set; }
 
         public string Id { get => id; set => id = value; }
         public string Description { get => description; set => description = value; }

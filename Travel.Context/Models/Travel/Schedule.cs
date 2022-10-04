@@ -26,20 +26,13 @@ namespace Travel.Context.Models
         private Guid idCar;
         private int idPromotion;
         private Guid idEmployee;
-        private string idTimeline;
 
         private Car cars;
-        private ICollection<Promotion> promotions;
         private Tour tour;
+        private ICollection<Promotion> promotions;
         private ICollection<Timeline> timelines;
         private Employee employee;
 
-        public Car carss { get; set; }
-        public ICollection<Promotion> Promotions { get; set; }
-        public Tour tours { get; set; }
-        public Timeline timeliness { get; set; }
-      
-        public ICollection<Employee> employees { get; set; }
         public string Id { get => id; set => id = value; }
         public long DepartureDate { get => departureDate; set => departureDate = value; }
         public long BeginDate { get => beginDate; set => beginDate = value; }
@@ -56,10 +49,9 @@ namespace Travel.Context.Models
         public int IdPromotion { get => idPromotion; set => idPromotion = value; }
         public Guid IdEmployee { get => idEmployee; set => idEmployee = value; }
         public Car Cars { get => cars; set => cars = value; }
-        public ICollection<Promotion> Promotions1 { get => promotions; set => promotions = value; }
+        public ICollection<Promotion> Promotions { get => promotions; set => promotions = value; }
         public Tour Tour { get => tour; set => tour = value; }
         public ICollection<Timeline> Timelines { get => timelines; set => timelines = value; }
         public Employee Employee { get => employee; set => employee = value; }
-        public string IdTimeline { get => idTimeline; set => idTimeline = value; }
     }
 }

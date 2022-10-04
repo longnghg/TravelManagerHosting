@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Travel.Context.Models.Travel;
 using Travel.Shared;
 using Travel.Shared.Ultilities;
 
@@ -13,28 +15,33 @@ namespace TravelApi.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
+        TravelContext _db;
+        public WeatherForecastController(TravelContext db)
+        {
+            _db = db;
+        }
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-        {
-            _logger = logger;
-        }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public object Get()
         {
-                var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            try
             {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+                var li = _db.Employees.Include(x=> x.Role).ToList();
+
+                var ul = Mapper.MapEmployee(li);
+
+                var rng = new Random();
+                return Ok(ul);
+            }
+            catch (Exception e)
+            {
+
+                return Ok(e.Message);
+            }
         }
     }
 }
