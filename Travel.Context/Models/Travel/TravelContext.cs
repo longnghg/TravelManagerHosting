@@ -192,9 +192,14 @@ namespace Travel.Context.Models.Travel
 
             modelBuilder.Entity<Employee>(entity =>
             {
-                entity.Property(e => e.AccessToken).HasMaxLength(550);
+                entity.Property(e => e.Name).HasMaxLength(100).IsRequired(true); 
                 entity.Property(e => e.Email).HasDefaultValue(0);
-                entity.Property(e => e.Email).IsRequired(true);
+                entity.Property(e => e.Email).IsRequired(true).HasMaxLength(100);
+                entity.Property(e => e.Password).HasMaxLength(30);
+                entity.Property(e => e.AccessToken).HasMaxLength(550);
+                entity.Property(e => e.Phone).HasMaxLength(15).IsRequired(true);
+                entity.Property(e => e.Image).HasMaxLength(100).IsRequired(true);
+                entity.Property(e => e.IdSchedule).HasMaxLength(50);
             });
             modelBuilder.Entity<Car>(entity =>
             {
@@ -225,12 +230,44 @@ namespace Travel.Context.Models.Travel
                 entity.HasOne<Schedule>(e => e.Schedule)
                .WithMany(d => d.Timelines)
                .HasForeignKey(e => e.IdSchedule);
+
+                entity.Property(e => e.Description).HasMaxLength(150);
+                entity.Property(e => e.ModifyBy).HasMaxLength(100);
+                entity.Property(e => e.IdSchedule).HasMaxLength(50);
+            });
+            modelBuilder.Entity<Tour>(entity =>
+            {
+        
+                entity.Property(e => e.TourName).HasMaxLength(150).IsRequired(true);
+                entity.Property(e => e.ModifyBy).HasMaxLength(100);
+                entity.Property(e => e.Thumbsnail).HasMaxLength(100);
+                entity.Property(e => e.FromPlace).HasMaxLength(100);
+                entity.Property(e => e.ToPlace).HasMaxLength(100);
+                entity.Property(e => e.ApproveStatus).HasMaxLength(100);
             });
             modelBuilder.Entity<Promotion>(entity =>
             {
                 entity.HasOne<Schedule>(e => e.Schedules)
                .WithMany(d => d.Promotions)
                .HasForeignKey(e => e.IdSchedule);
+            });
+            modelBuilder.Entity<Role>(entity =>
+            {
+                entity.Property(e => e.Name).HasMaxLength(100);
+                entity.Property(e => e.Description).HasMaxLength(100);
+
+            });
+            modelBuilder.Entity<File>(entity =>
+            {
+                entity.Property(e => e.FileName).HasMaxLength(100).IsRequired(true);
+                entity.Property(e => e.FileExtension).HasMaxLength(100);
+                entity.Property(e => e.FilePath).HasMaxLength(150);
+            }); 
+            modelBuilder.Entity<Image>(entity =>
+            {
+                entity.Property(e => e.Name).HasMaxLength(100).IsRequired(true);
+                entity.Property(e => e.Extension).HasMaxLength(100);
+                entity.Property(e => e.FilePath).HasMaxLength(150);
             });
         }
 
