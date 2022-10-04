@@ -42,9 +42,17 @@ namespace Travel.Shared.Ultilities
         {
             return _mapper.Map<Role, RoleViewModel>(data);
         }
+        public static List<RoleViewModel> MapRole(List<Role> data)
+        {
+            return _mapper.Map<List<Role>, List<RoleViewModel>>(data);
+        }
         public static EmployeeViewModel MapEmployee(Employee data)
         {
             return _mapper.Map<Employee, EmployeeViewModel>(data);
+        }
+        public static List<EmployeeViewModel> MapEmployee(List<Employee> data)
+        {
+            return _mapper.Map<List<Employee>, List<EmployeeViewModel>>(data);
         }
     }
 }

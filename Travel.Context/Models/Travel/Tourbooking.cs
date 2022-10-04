@@ -11,7 +11,7 @@ namespace Travel.Context.Models
         private string id;
         private string customerName;
         private string contactName;
-        private string Phone;
+        private string phone;
         private string bookingNo;
         private string pincode;       
         private long dateBooking;
@@ -31,7 +31,7 @@ namespace Travel.Context.Models
         public string Id { get => id; set => id = value; }
         public string CustomerName { get => customerName; set => customerName = value; }
         public string ContactName { get => contactName; set => contactName = value; }
-        public string Phone1 { get => Phone; set => Phone = value; }
+        public string Phone { get => phone; set => phone = value; }
         public string BookingNo { get => bookingNo; set => bookingNo = value; }
         public string Pincode { get => pincode; set => pincode = value; }
         public long DateBooking { get => dateBooking; set => dateBooking = value; }
