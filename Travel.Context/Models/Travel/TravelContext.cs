@@ -217,7 +217,7 @@ namespace Travel.Context.Models.Travel
                 entity.Property(e => e.AccessToken).HasMaxLength(550);
                 entity.Property(e => e.Phone).HasMaxLength(15).IsRequired(true);
                 entity.Property(e => e.Image).HasMaxLength(100).IsRequired(true);
-                entity.Property(e => e.IdSchedule).HasMaxLength(50);
+                entity.Property(e => e.IdSchedule).HasMaxLength(450);
                 entity.Property(e => e.ModifyBy).HasMaxLength(50);
             });
             modelBuilder.Entity<Car>(entity =>
@@ -252,7 +252,7 @@ namespace Travel.Context.Models.Travel
 
                 entity.Property(e => e.Description).HasMaxLength(150);
                 entity.Property(e => e.ModifyBy).HasMaxLength(100);
-                entity.Property(e => e.IdSchedule).HasMaxLength(50);
+                entity.Property(e => e.IdSchedule).HasMaxLength(450);
             });
             modelBuilder.Entity<Tour>(entity =>
             {
