@@ -17,7 +17,6 @@ namespace Travel.Context.Models
 
         private int roleId;
 
-        private int status;
         private long createDate;    
         private string accessToken;
       
@@ -27,6 +26,10 @@ namespace Travel.Context.Models
         private bool isDelete;
         private bool isActive;
 
+        private Role role;
+        private Car car;
+        private ICollection<Schedule> schedules;
+
         public Guid Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
         public string Email { get => email; set => email = value; }
@@ -35,13 +38,15 @@ namespace Travel.Context.Models
         public string Image { get => image; set => image = value; }
         public string Phone { get => phone; set => phone = value; }
         public int RoleId { get => roleId; set => roleId = value; } 
-        public int Status { get => status; set => status = value; }
         public long CreateDate { get => createDate; set => createDate = value; } 
         public string AccessToken { get => accessToken; set => accessToken = value; }
         public string ModifyBy { get => modifyBy; set => modifyBy = value; }
         public long ModifyDate { get => modifyDate; set => modifyDate = value; }
         public bool IsDelete { get => isDelete; set => isDelete = value; }
         public bool IsActive { get => isActive; set => isActive = value; }
+        public Role Role { get => role; set => role = value; }
+        public Car Car { get => car; set => car = value; }
+        public ICollection<Schedule> Schedules { get => schedules; set => schedules = value; }
     }
 
 }
