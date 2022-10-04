@@ -14,13 +14,15 @@ namespace Travel.Context.Models
         private int amountSeat;
         private Guid idEmployee;
 
-        public Employee Employees { get; set; }
-        public ICollection<Schedule> Schedules { get; set; }
+        private Employee employee;
+        private ICollection<Schedule> schedules;
 
         public Guid Id { get => id; set => id = value; }
         public string LiscensePlate { get => liscensePlate; set => liscensePlate = value; }
         public int Status { get => status; set => status = value; }
         public int AmountSeat { get => amountSeat; set => amountSeat = value; }
         public Guid IdEmployee { get => idEmployee; set => idEmployee = value; }
+        public Employee Employee { get => employee; set => employee = value; }
+        public ICollection<Schedule> Schedules { get => schedules; set => schedules = value; }
     }
 }

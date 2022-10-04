@@ -147,14 +147,9 @@ namespace Travel.Context.Models.Travel
             {
                 entity.HasKey(s => s.Id);
 
-                entity.HasOne(e => e.cars)
-                .WithOne(d => d.Employees)
+                entity.HasOne(e => e.Car)
+                .WithOne(d => d.Employee)
                 .HasForeignKey<Car>(e => e.IdEmployee);
-
-                entity.HasOne<Schedule>(e => e.Schedules)
-                .WithMany(d => d.employee)
-                .HasForeignKey(e => e.IdSchedule);
-
                 entity.Property(e => e.AccessToken).HasMaxLength(30);
                 entity.Property(e => e.Email).HasDefaultValue(0);
                 entity.Property(e => e.Email).IsRequired(true);
@@ -169,16 +164,20 @@ namespace Travel.Context.Models.Travel
             {
                 entity.HasKey(s => s.Id);
 
-                entity.HasOne<Car>(e => e.cars)
+                entity.HasOne<Car>(e => e.Cars)
                  .WithMany(d => d.Schedules)
                  .HasForeignKey(e => e.IdCar);
 
-                entity.HasOne<Timeline>(e => e.timelines)
+                entity.HasOne(e => e.Employee)
                .WithMany(d => d.Schedules)
+               .HasForeignKey(e => e.IdEmployee);
+
+                entity.HasOne<Timeline>(e => e.Timelines)
+               .WithMany(d => d.Schedule)
                .HasForeignKey(e => e.IdTimeline);
 
-                entity.HasOne<Tour>(e => e.tour)
-               .WithMany(d => d.schedules)
+                entity.HasOne<Tour>(e => e.Tour)
+               .WithMany(d => d.Schedules)
                .HasForeignKey(e => e.IdTour);
             });
             modelBuilder.Entity<Promotion>(entity =>

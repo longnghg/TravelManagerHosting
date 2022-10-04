@@ -27,8 +27,8 @@ namespace Travel.Context.Models
         private bool isActive;
 
         private Role role;
-        public Car cars { get; set; } // n
-        public Schedule Schedules { get; set; }
+        private Car car;
+        private ICollection<Schedule> schedules;
 
         public Guid Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
@@ -45,6 +45,8 @@ namespace Travel.Context.Models
         public bool IsDelete { get => isDelete; set => isDelete = value; }
         public bool IsActive { get => isActive; set => isActive = value; }
         public Role Role { get => role; set => role = value; }
+        public Car Car { get => car; set => car = value; }
+        public ICollection<Schedule> Schedules { get => schedules; set => schedules = value; }
     }
 
 }
