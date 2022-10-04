@@ -17,6 +17,9 @@ namespace Travel.Context.Models
         private bool isCalled;
         private long callDate;
 
+        private string idTourBooking;
+        public Tourbooking Tourbooking { get; set; }
+
         public string Id { get => id; set => id = value; }
         public int Baby { get => baby; set => baby = value; }
         public int Child { get => child; set => child = value; }
@@ -25,5 +28,6 @@ namespace Travel.Context.Models
         public int Status { get => status; set => status = value; }
         public bool IsCalled { get => isCalled; set => isCalled = value; }
         public long CallDate { get => callDate; set => callDate = value; }
+        public string IdTourBooking { get => idTourBooking; set => idTourBooking = value; }
     }
 }

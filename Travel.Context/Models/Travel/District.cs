@@ -11,9 +11,11 @@ namespace Travel.Context.Models
         private Guid id;
         private string name;
         private Guid idProvice;
-
+        public Province Province { get; set; }
+        public ICollection<Ward> Ward { get; set; }
         public Guid Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
         public Guid IdProvice { get => idProvice; set => idProvice = value; }
+
     }
 }

@@ -13,5 +13,6 @@ namespace Travel.Context.Models
 
         public Guid Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
+        public ICollection<District> Districts { get; set; }
     }
 }
