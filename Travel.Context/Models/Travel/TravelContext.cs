@@ -188,16 +188,29 @@ namespace Travel.Context.Models.Travel
                 entity.HasOne(e => e.Car)
                 .WithOne(d => d.Employee)
                 .HasForeignKey<Car>(e => e.IdEmployee);
-                entity.Property(e => e.AccessToken).HasMaxLength(30);
-                entity.Property(e => e.Email).HasDefaultValue(0);
-                entity.Property(e => e.Email).IsRequired(true);
-            });
-     
-            modelBuilder.Entity<Role>()
-             .HasKey(s => s.Id);
 
-            modelBuilder.Entity<Car>()
-               .HasKey(s => s.Id);
+                entity.Property(e => e.Name).HasMaxLength(100);
+                entity.Property(e => e.Email).HasMaxLength(100);
+
+                entity.Property(e => e.Name).IsRequired(true);
+                entity.Property(e => e.Email).IsRequired(true);
+
+                entity.Property(e => e.Phone).HasMaxLength(15);
+                entity.Property(e => e.Phone).IsRequired(true);
+            });
+
+            modelBuilder.Entity<Role>(entity =>
+            {
+                entity.HasKey(s => s.Id);
+                entity.Property(e => e.Name).HasMaxLength(30);
+                entity.Property(e => e.Name).IsRequired(true);
+            });
+
+            modelBuilder.Entity<Car>(entity =>
+            {
+                entity.HasKey(s => s.Id);
+                entity.Property(e => e.LiscensePlate).IsRequired(true);
+            });
             modelBuilder.Entity<Schedule>(entity =>
             {
                 entity.HasKey(s => s.Id);
@@ -227,6 +240,24 @@ namespace Travel.Context.Models.Travel
                 entity.HasOne<Schedule>(e => e.Schedule)
                .WithMany(d => d.Timelines)
                .HasForeignKey(e => e.IdSchedule);
+            });
+            modelBuilder.Entity<File>(entity =>
+            {
+                entity.HasKey(s => s.Id);
+                entity.Property(e => e.FilePath).HasMaxLength(150);
+            });
+            // Image
+            modelBuilder.Entity<Image>(entity =>
+            {
+                entity.HasKey(s => s.Id);
+                entity.Property(e => e.FilePath).HasMaxLength(150);
+                entity.Property(e => e.Name).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<Tour>(entity =>
+            {
+                entity.HasKey(s => s.Id);
+                entity.Property(e => e.Thumbsnail).HasMaxLength(150);
             });
         }
         
