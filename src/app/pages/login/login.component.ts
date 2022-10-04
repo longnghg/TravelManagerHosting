@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   responsive: ResponsiveModel
   token: string
   isloading = false
-  email = "phuongkiet850@gmail.com1"
+  email = "test1@gmail.com"
   password = "123"
   constructor( private configService:ConfigService, private notificationService:NotificationService, private authentication:AuthenticationService) { }
   ngOnInit() {}
@@ -37,10 +37,6 @@ export class LoginComponent implements OnInit {
       }
 
       this.isloading = false
-      console.log(this.responsive);
-      localStorage.setItem("currentUser", this.responsive.content)
-      document.location.assign("http://localhost:4200/#/dashboard")
-
 
     }, error => {
       this.isloading = false
