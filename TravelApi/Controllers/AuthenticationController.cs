@@ -35,7 +35,6 @@ namespace TravelApi.Controllers
         {
             try
             {
-               
                 string email = PrCommon.GetString("email", frmData);
                 string password = PrCommon.GetString("password", frmData);
                 var result = authentication.EmpLogin(email);
@@ -89,7 +88,6 @@ namespace TravelApi.Controllers
                             }
                             else
                             {
-
                                 res.Notification.DateTime = DateTime.Now;
                                 res.Notification.Description = null;
                                 res.Notification.Messenge = "Tài khoản của bạn chưa được kích hoạt !";
