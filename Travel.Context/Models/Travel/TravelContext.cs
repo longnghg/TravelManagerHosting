@@ -129,7 +129,8 @@ namespace Travel.Context.Models.Travel
 
             modelBuilder.Entity<Voucher>(entity =>
             {
-                entity.Property(e => e.IsDelete).IsRequired().HasDefaultValueSql("0");
+                entity.Property(e => e.Point).HasDefaultValue(0);
+                entity.Property(e => e.IsDelete).IsRequired().HasDefaultValue(0);
                 entity.Property(e => e.Description).HasMaxLength(100);
             });
 
