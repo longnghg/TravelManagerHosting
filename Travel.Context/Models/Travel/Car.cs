@@ -12,17 +12,17 @@ namespace Travel.Context.Models
         private string liscensePlate;
         private int status;
         private int amountSeat;
-        private Guid idEmployee;
+        private string nameDriver;
+        private string phone;
 
-        private Employee employee;
         private ICollection<Schedule> schedules;
 
         public Guid Id { get => id; set => id = value; }
         public string LiscensePlate { get => liscensePlate; set => liscensePlate = value; }
         public int Status { get => status; set => status = value; }
         public int AmountSeat { get => amountSeat; set => amountSeat = value; }
-        public Guid IdEmployee { get => idEmployee; set => idEmployee = value; }
-        public Employee Employee { get => employee; set => employee = value; }
         public ICollection<Schedule> Schedules { get => schedules; set => schedules = value; }
+        public string NameDriver { get => nameDriver; set => nameDriver = value; }
+        public string Phone { get => phone; set => phone = value; }
     }
 }

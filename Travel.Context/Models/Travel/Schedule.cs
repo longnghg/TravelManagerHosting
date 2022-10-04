@@ -25,7 +25,6 @@ namespace Travel.Context.Models
         private string idTour;
         private Guid idCar;
         private int idPromotion;
-        private string idTimeline;
         private Guid idEmployee;
 
         private Car cars;
@@ -48,7 +47,6 @@ namespace Travel.Context.Models
         public string IdTour { get => idTour; set => idTour = value; }
         public Guid IdCar { get => idCar; set => idCar = value; }
         public int IdPromotion { get => idPromotion; set => idPromotion = value; }
-        public string IdTimeline { get => idTimeline; set => idTimeline = value; }
         public Car Cars { get => cars; set => cars = value; }
         public ICollection<Promotion> Promotions { get => promotions; set => promotions = value; }
         public Tour Tour { get => tour; set => tour = value; }

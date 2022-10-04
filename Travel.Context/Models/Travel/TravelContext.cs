@@ -33,14 +33,15 @@ namespace Travel.Context.Models.Travel
         public DbSet<Contract> Contracts { get; set; }
         //
         public DbSet<Employee> Employees { get; set; }
-        public DbSet<Role> roles { get; set; }
-        public DbSet<Car> cars { get; set; }
+        public DbSet<Role> Roles { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
+        public DbSet<Car> Cars { get; set; }
+
         public DbSet<Promotion> Promotions { get; set; }
         public DbSet<Tour> Tour { get; set; }
-        public DbSet<File> files { get; set; }
+        public DbSet<File> Files { get; set; }
         public DbSet<Image> Images { get; set; }
-        public DbSet<Timeline> timelines { get; set; }
+        public DbSet<Timeline> Timelines { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.Seed();
@@ -60,7 +61,7 @@ namespace Travel.Context.Models.Travel
             modelBuilder.Entity<Tourbooking>(entity =>
             {
                 entity.HasOne(e => e.TourbookingDetails)
-                .WithOne(e => e.Tourbooking)                             
+                .WithOne(e => e.Tourbooking)
                 .HasForeignKey<TourbookingDetails>(e => e.IdTourBooking);
 
                 entity.Property(e => e.Email).HasMaxLength(100);
@@ -77,7 +78,7 @@ namespace Travel.Context.Models.Travel
 
 
                 entity.Property(e => e.Email).IsRequired(true);
-                entity.Property(e => e.Phone1).IsRequired(true);              
+                entity.Property(e => e.Phone1).IsRequired(true);
             });
 
             modelBuilder.Entity<TourbookingDetails>(entity =>
@@ -110,9 +111,9 @@ namespace Travel.Context.Models.Travel
                 .HasForeignKey(e => e.IdDistrict);
                 entity.Property(e => e.Name).HasMaxLength(30);
                 entity.Property(e => e.Name).IsRequired(true);
-            
+
             });
-            
+
             modelBuilder.Entity<Customer>(entity =>
             {
                 entity.Property(e => e.Name).HasMaxLength(100);
@@ -125,7 +126,7 @@ namespace Travel.Context.Models.Travel
                 entity.Property(e => e.Name).IsRequired(true);
                 entity.Property(e => e.Email).IsRequired(true);
                 entity.Property(e => e.Phone).IsRequired(true);
-                
+
             });
 
             modelBuilder.Entity<TourDetail>(entity =>
@@ -183,28 +184,26 @@ namespace Travel.Context.Models.Travel
 
             modelBuilder.Entity<Employee>(entity =>
             {
-                entity.HasKey(s => s.Id);
-
-                entity.HasOne(e => e.Car)
-                .WithOne(d => d.Employee)
-                .HasForeignKey<Car>(e => e.IdEmployee);
                 entity.Property(e => e.AccessToken).HasMaxLength(30);
                 entity.Property(e => e.Email).HasDefaultValue(0);
                 entity.Property(e => e.Email).IsRequired(true);
             });
-     
-            modelBuilder.Entity<Role>()
-             .HasKey(s => s.Id);
+            modelBuilder.Entity<Car>(entity =>
+            {
+                entity.Property(e => e.LiscensePlate).HasMaxLength(15).IsRequired();
+                entity.Property(e => e.Phone).HasMaxLength(15).IsRequired();
+                entity.Property(e => e.NameDriver).HasMaxLength(15).IsRequired();
+                entity.Property(e => e.Status).HasDefaultValue(0);
 
-            modelBuilder.Entity<Car>()
-               .HasKey(s => s.Id);
+            });
             modelBuilder.Entity<Schedule>(entity =>
             {
                 entity.HasKey(s => s.Id);
 
                 entity.HasOne<Car>(e => e.Cars)
-                 .WithMany(d => d.Schedules)
-                 .HasForeignKey(e => e.IdCar);
+             .WithMany(d => d.Schedules)
+             .HasForeignKey(e => e.IdCar);
+
 
                 entity.HasOne(e => e.Employee)
                .WithMany(d => d.Schedules)
@@ -229,6 +228,6 @@ namespace Travel.Context.Models.Travel
                .HasForeignKey(e => e.IdSchedule);
             });
         }
-        
+
     }
 }
