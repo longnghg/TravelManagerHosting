@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Travel.Context.Extensions;
 
 namespace Travel.Context.Models.Travel
 {
@@ -32,6 +31,16 @@ namespace Travel.Context.Models.Travel
         public DbSet<Voucher> Vouchers { get; set; }
         public DbSet<Banner> Banners { get; set; }
         public DbSet<Contract> Contracts { get; set; }
+        //
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Role> roles { get; set; }
+        public DbSet<Car> cars { get; set; }
+        public DbSet<Schedule> Schedules { get; set; }
+        public DbSet<Promotion> Promotions { get; set; }
+        public DbSet<Tour> Tour { get; set; }
+        public DbSet<File> files { get; set; }
+        public DbSet<Image> Images { get; set; }
+        public DbSet<Timeline> timelines { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.Seed();
@@ -132,6 +141,68 @@ namespace Travel.Context.Models.Travel
             modelBuilder.Entity<Contract>(entity =>
             {
 
+            });
+            // 
+            modelBuilder.Entity<Employee>(entity =>
+            {
+                entity.HasKey(s => s.Id);
+
+                entity.HasOne(e => e.Car)
+                .WithOne(d => d.Employee)
+                .HasForeignKey<Car>(e => e.IdEmployee);
+                entity.Property(e => e.AccessToken).HasMaxLength(30);
+                entity.Property(e => e.Email).HasDefaultValue(0);
+                entity.Property(e => e.Email).IsRequired(true);
+            });
+     
+            modelBuilder.Entity<Role>()
+             .HasKey(s => s.Id);
+
+            modelBuilder.Entity<Car>()
+               .HasKey(s => s.Id);
+            modelBuilder.Entity<Schedule>(entity =>
+            {
+                entity.HasKey(s => s.Id);
+
+                entity.HasOne<Car>(e => e.Cars)
+                 .WithMany(d => d.Schedules)
+                 .HasForeignKey(e => e.IdCar);
+
+                entity.HasOne(e => e.Employee)
+               .WithMany(d => d.Schedules)
+               .HasForeignKey(e => e.IdEmployee);
+
+                entity.HasOne<Timeline>(e => e.Timelines)
+               .WithMany(d => d.Schedule)
+               .HasForeignKey(e => e.IdTimeline);
+
+                entity.HasOne<Tour>(e => e.Tour)
+               .WithMany(d => d.Schedules)
+               .HasForeignKey(e => e.IdTour);
+            });
+            modelBuilder.Entity<Promotion>(entity =>
+            {
+                entity.HasKey(s => s.Id);
+
+                entity.HasOne<Schedule>(e => e.Schedules)
+               .WithMany(d => d.Promotions)
+               .HasForeignKey(e => e.IdSchedule);
+            });
+            // timeline
+            modelBuilder.Entity<Timeline>()
+          .HasKey(s => s.Id);
+
+            // file
+            modelBuilder.Entity<File>()
+             .HasKey(s => s.Id);
+
+            // Image
+            modelBuilder.Entity<Image>()
+                       .HasKey(s => s.Id);
+
+            modelBuilder.Entity<Tour>(entity =>
+            {
+                entity.HasKey(s => s.Id);
             });
         }
         
