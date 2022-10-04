@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Travel.Context.Extensions;
 
 namespace Travel.Context.Models.Travel
 {
@@ -43,7 +44,7 @@ namespace Travel.Context.Models.Travel
         public DbSet<Timeline> Timelines { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Seed();
+            modelBuilder.Seed();
 
             modelBuilder.Entity<Payment>(entity =>
             {

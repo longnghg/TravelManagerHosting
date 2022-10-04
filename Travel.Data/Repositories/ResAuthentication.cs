@@ -22,10 +22,10 @@ namespace Travel.Data.Responsives
         {
             try
             {
-                //var result = context.Users.Where(x => x.IsDelete == false &&
-                //                                      x.UserEmail == email).FirstOrDefault();
-                //return result;
-                return null;
+                var result = context.Employees.Where(x => x.IsDelete == false &&
+                                                      x.Email == email).FirstOrDefault();
+                return result;
+ 
             }
             catch (Exception)
             {
@@ -37,12 +37,11 @@ namespace Travel.Data.Responsives
         {
             try
             {
-                //var result = context.Users.Where(x => x.IsDelete == false &&
-                //                                      x.UserPassword == password &&
-                //                                      x.UserEmail == email).FirstOrDefault();
+                var result = context.Employees.Where(x => x.IsDelete == false &&
+                                                      x.Password  == password &&
+                                                      x.Email == email).FirstOrDefault();
 
-                //return result;
-                return null;
+                return result;
             }
             catch (Exception)
             {
@@ -55,9 +54,8 @@ namespace Travel.Data.Responsives
         {
             try
             {
-                //context.Users.Find(user.UserId).UserToken = token;
-                //context.Users.Find(user.UserId).UserStatus = true;
-                //context.SaveChanges();
+                context.Employees.Find(emp.Id).AccessToken = token;
+                context.SaveChanges();
                 return true;
             }
             catch (Exception)
@@ -70,12 +68,11 @@ namespace Travel.Data.Responsives
         {
             try
             {
-                //var result = context.Users.Where(x => x.IsDelete == false &&
-                //                                      x.Active == true &&
-                //                                      x.UserEmail == email).FirstOrDefault();
-                //return (result != null) ? true : false;
+                var result = context.Employees.Where(x => x.IsDelete == false &&
+                                                      x.IsActive == true &&
+                                                      x.Email == email).FirstOrDefault();
+                return (result != null) ? true : false;
 
-                return true;
 
             }
             catch (Exception)

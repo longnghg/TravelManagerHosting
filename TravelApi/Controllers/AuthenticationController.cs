@@ -35,11 +35,14 @@ namespace TravelApi.Controllers
         {
             try
             {
+               
                 string email = PrCommon.GetString("email", frmData);
                 string password = PrCommon.GetString("password", frmData);
                 var result = authentication.EmpLogin(email);
                 if (result != null)
                 {
+                    string encryption = authentication.Encryption(password);
+                    result = authentication.EmpLogin(email, encryption);
                     if (result != null)
                     {
                         var isNew = authentication.EmpIsNew(email);
@@ -116,11 +119,6 @@ namespace TravelApi.Controllers
                 }
                 else
                 {
-                    Authentication auth = new Authentication();
-                    auth.Id = Guid.NewGuid();
-                    auth.Name = "Trác Phương Kiệt";
-                    res.Content = JsonSerializer.Serialize(auth);
-
                     res.Notification.DateTime = DateTime.Now;
                     res.Notification.Description = null;
                     res.Notification.Messenge = "Không tìm thấy email [" + email + "] trên hệ thống !";
