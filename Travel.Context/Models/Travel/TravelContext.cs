@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Travel.Context.Extensions;
 
 namespace Travel.Context.Models.Travel
 {
@@ -31,17 +32,6 @@ namespace Travel.Context.Models.Travel
         public DbSet<Voucher> Vouchers { get; set; }
         public DbSet<Banner> Banners { get; set; }
         public DbSet<Contract> Contracts { get; set; }
-
-
-        // 
-
-        public DbSet<Voucher> Vouc23hers { get; set; }
-        public DbSet<Banner> Bann23ers { get; set; }
-        public DbSet<Contract> Contr23acts { get; set; }
-
-        //
-
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.Seed();
