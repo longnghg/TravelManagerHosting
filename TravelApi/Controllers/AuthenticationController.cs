@@ -116,6 +116,11 @@ namespace TravelApi.Controllers
                 }
                 else
                 {
+                    Authentication auth = new Authentication();
+                    auth.Id = Guid.NewGuid();
+                    auth.Name = "Trác Phương Kiệt";
+                    res.Content = JsonSerializer.Serialize(auth);
+
                     res.Notification.DateTime = DateTime.Now;
                     res.Notification.Description = null;
                     res.Notification.Messenge = "Không tìm thấy email [" + email + "] trên hệ thống !";
