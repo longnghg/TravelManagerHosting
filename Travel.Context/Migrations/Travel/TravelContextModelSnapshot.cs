@@ -77,10 +77,12 @@ namespace Travel.Context.Migrations.Travel
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ContractName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("CreateBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<long>("CreateDate")
                         .HasColumnType("bigint");
@@ -95,7 +97,8 @@ namespace Travel.Context.Migrations.Travel
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ModifyBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<long>("ModifyDate")
                         .HasColumnType("bigint");
@@ -107,7 +110,8 @@ namespace Travel.Context.Migrations.Travel
                         .HasColumnType("int");
 
                     b.Property<string>("TypeService")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
@@ -214,7 +218,8 @@ namespace Travel.Context.Migrations.Travel
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("FbToken")
                         .HasMaxLength(300)
@@ -324,6 +329,88 @@ namespace Travel.Context.Migrations.Travel
                     b.HasIndex("RoleId");
 
                     b.ToTable("Employees");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("5990dfe3-bbe3-4967-b518-dddce4e461ee"),
+                            Birthday = 202204101007L,
+                            CreateDate = 202204101007L,
+                            Email = "test1@gmail.com",
+                            Image = "",
+                            IsActive = true,
+                            IsDelete = false,
+                            ModifyBy = "Admin Test",
+                            ModifyDate = 202204101007L,
+                            Name = "Admin Test",
+                            Password = "3244185981728979115075721453575112",
+                            Phone = "0789786646",
+                            RoleId = -1
+                        },
+                        new
+                        {
+                            Id = new Guid("1e149642-2e37-4579-83c3-248f86863efa"),
+                            Birthday = 202204101007L,
+                            CreateDate = 202204101007L,
+                            Email = "test2@gmail.com",
+                            Image = "",
+                            IsActive = true,
+                            IsDelete = false,
+                            ModifyBy = "Admin Test",
+                            ModifyDate = 202204101007L,
+                            Name = "Local Manager Test",
+                            Password = "3244185981728979115075721453575112",
+                            Phone = "0789786645",
+                            RoleId = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("ba00dd49-b0db-45a2-b739-0e4af03d7f79"),
+                            Birthday = 202204101007L,
+                            CreateDate = 202204101007L,
+                            Email = "test3@gmail.com",
+                            Image = "",
+                            IsActive = true,
+                            IsDelete = false,
+                            ModifyBy = "Admin Test",
+                            ModifyDate = 202204101007L,
+                            Name = "Service Manager Test",
+                            Password = "3244185981728979115075721453575112",
+                            Phone = "0789786644",
+                            RoleId = 2
+                        },
+                        new
+                        {
+                            Id = new Guid("1327e980-cd96-435d-bece-94f08d4c978e"),
+                            Birthday = 202204101007L,
+                            CreateDate = 202204101007L,
+                            Email = "test4@gmail.com",
+                            Image = "",
+                            IsActive = true,
+                            IsDelete = false,
+                            ModifyBy = "Admin Test",
+                            ModifyDate = 202204101007L,
+                            Name = "Tour Manager Test",
+                            Password = "3244185981728979115075721453575112",
+                            Phone = "0789786643",
+                            RoleId = 3
+                        },
+                        new
+                        {
+                            Id = new Guid("7ff35364-ea85-460e-a1a7-ffd8e5169155"),
+                            Birthday = 202204101007L,
+                            CreateDate = 202204101007L,
+                            Email = "test5@gmail.com",
+                            Image = "",
+                            IsActive = true,
+                            IsDelete = false,
+                            ModifyBy = "Admin Test",
+                            ModifyDate = 202204101007L,
+                            Name = "Tour Booking Manager Test",
+                            Password = "3244185981728979115075721453575112",
+                            Phone = "0789786642",
+                            RoleId = 4
+                        });
                 });
 
             modelBuilder.Entity("Travel.Context.Models.File", b =>
@@ -574,6 +661,43 @@ namespace Travel.Context.Migrations.Travel
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            Description = "Trùm",
+                            IsDelete = false,
+                            Name = "Admin"
+                        },
+                        new
+                        {
+                            Id = 1,
+                            Description = "Quản lý cục bộ",
+                            IsDelete = false,
+                            Name = "LocalManager"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Quản lý dịch vụ",
+                            IsDelete = false,
+                            Name = "ServiceManager"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Quản lý tour",
+                            IsDelete = false,
+                            Name = "TourManager"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Quản lý tour booking",
+                            IsDelete = false,
+                            Name = "TourBookingManager"
+                        });
                 });
 
             modelBuilder.Entity("Travel.Context.Models.Schedule", b =>
@@ -821,7 +945,7 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<long>("ModifyDate")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Phone1")
+                    b.Property<string>("Phone")
                         .IsRequired()
                         .HasMaxLength(14)
                         .HasColumnType("nvarchar(14)");
