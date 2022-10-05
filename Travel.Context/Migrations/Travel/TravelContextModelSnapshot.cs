@@ -291,14 +291,18 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<string>("Email")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
                         .HasDefaultValue("0");
 
                     b.Property<string>("IdSchedule")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -313,13 +317,18 @@ namespace Travel.Context.Migrations.Travel
                         .HasColumnType("bigint");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
@@ -329,88 +338,6 @@ namespace Travel.Context.Migrations.Travel
                     b.HasIndex("RoleId");
 
                     b.ToTable("Employees");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("eff5ed34-9960-452d-b32a-43aa4c5075f7"),
-                            Birthday = 202204101007L,
-                            CreateDate = 202204101007L,
-                            Email = "test1@gmail.com",
-                            Image = "",
-                            IsActive = true,
-                            IsDelete = false,
-                            ModifyBy = "Admin Test",
-                            ModifyDate = 202204101007L,
-                            Name = "Admin Test",
-                            Password = "3244185981728979115075721453575112",
-                            Phone = "0789786646",
-                            RoleId = -1
-                        },
-                        new
-                        {
-                            Id = new Guid("f734663d-875e-489f-b347-3c6b16e901df"),
-                            Birthday = 202204101007L,
-                            CreateDate = 202204101007L,
-                            Email = "test2@gmail.com",
-                            Image = "",
-                            IsActive = true,
-                            IsDelete = false,
-                            ModifyBy = "Admin Test",
-                            ModifyDate = 202204101007L,
-                            Name = "Local Manager Test",
-                            Password = "3244185981728979115075721453575112",
-                            Phone = "0789786645",
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            Id = new Guid("ee7074a0-7eb3-448d-9008-0fdaa902e29b"),
-                            Birthday = 202204101007L,
-                            CreateDate = 202204101007L,
-                            Email = "test3@gmail.com",
-                            Image = "",
-                            IsActive = true,
-                            IsDelete = false,
-                            ModifyBy = "Admin Test",
-                            ModifyDate = 202204101007L,
-                            Name = "Service Manager Test",
-                            Password = "3244185981728979115075721453575112",
-                            Phone = "0789786644",
-                            RoleId = 2
-                        },
-                        new
-                        {
-                            Id = new Guid("f7e91b23-1e5a-44a7-8ddd-d3e1235c6bd0"),
-                            Birthday = 202204101007L,
-                            CreateDate = 202204101007L,
-                            Email = "test4@gmail.com",
-                            Image = "",
-                            IsActive = true,
-                            IsDelete = false,
-                            ModifyBy = "Admin Test",
-                            ModifyDate = 202204101007L,
-                            Name = "Tour Manager Test",
-                            Password = "3244185981728979115075721453575112",
-                            Phone = "0789786643",
-                            RoleId = 3
-                        },
-                        new
-                        {
-                            Id = new Guid("5d271cf1-e326-4714-8a46-cd3b122df84c"),
-                            Birthday = 202204101007L,
-                            CreateDate = 202204101007L,
-                            Email = "test5@gmail.com",
-                            Image = "",
-                            IsActive = true,
-                            IsDelete = false,
-                            ModifyBy = "Admin Test",
-                            ModifyDate = 202204101007L,
-                            Name = "Tour Booking Manager Test",
-                            Password = "3244185981728979115075721453575112",
-                            Phone = "0789786642",
-                            RoleId = 4
-                        });
                 });
 
             modelBuilder.Entity("Travel.Context.Models.File", b =>
@@ -420,13 +347,17 @@ namespace Travel.Context.Migrations.Travel
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("FileExtension")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("FileName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("FilePath")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<int>("FileSize")
                         .HasColumnType("int");
@@ -443,6 +374,7 @@ namespace Travel.Context.Migrations.Travel
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -453,16 +385,19 @@ namespace Travel.Context.Migrations.Travel
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ModifyBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<long>("ModifyDate")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Phone")
+                        .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
@@ -490,16 +425,20 @@ namespace Travel.Context.Migrations.Travel
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Extension")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("FilePath")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<Guid>("IdService")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("Size")
                         .HasColumnType("int");
@@ -541,6 +480,7 @@ namespace Travel.Context.Migrations.Travel
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -548,16 +488,19 @@ namespace Travel.Context.Migrations.Travel
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ModifyBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<long>("ModifyDate")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Phone")
+                        .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
@@ -579,7 +522,7 @@ namespace Travel.Context.Migrations.Travel
                         .HasColumnType("bigint");
 
                     b.Property<string>("IdSchedule")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<long>("ToDate")
                         .HasColumnType("bigint");
@@ -617,6 +560,7 @@ namespace Travel.Context.Migrations.Travel
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -624,16 +568,19 @@ namespace Travel.Context.Migrations.Travel
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ModifyBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<long>("ModifyDate")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Phone")
+                        .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
@@ -650,60 +597,26 @@ namespace Travel.Context.Migrations.Travel
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = -1,
-                            Description = "Trùm",
-                            IsDelete = false,
-                            Name = "Admin"
-                        },
-                        new
-                        {
-                            Id = 1,
-                            Description = "Quản lý cục bộ",
-                            IsDelete = false,
-                            Name = "LocalManager"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Quản lý dịch vụ",
-                            IsDelete = false,
-                            Name = "ServiceManager"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "Quản lý tour",
-                            IsDelete = false,
-                            Name = "TourManager"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Description = "Quản lý tour booking",
-                            IsDelete = false,
-                            Name = "TourBookingManager"
-                        });
                 });
 
             modelBuilder.Entity("Travel.Context.Models.Schedule", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<long>("BeginDate")
                         .HasColumnType("bigint");
@@ -764,19 +677,22 @@ namespace Travel.Context.Migrations.Travel
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<long>("FromTime")
                         .HasColumnType("bigint");
 
                     b.Property<string>("IdSchedule")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
 
                     b.Property<string>("ModifyBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<long>("ModifyDate")
                         .HasColumnType("bigint");
@@ -797,13 +713,15 @@ namespace Travel.Context.Migrations.Travel
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ApproveStatus")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<long>("CreateDate")
                         .HasColumnType("bigint");
 
                     b.Property<string>("FromPlace")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -812,7 +730,8 @@ namespace Travel.Context.Migrations.Travel
                         .HasColumnType("bit");
 
                     b.Property<string>("ModifyBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<long>("ModifyDate")
                         .HasColumnType("bigint");
@@ -824,13 +743,17 @@ namespace Travel.Context.Migrations.Travel
                         .HasColumnType("int");
 
                     b.Property<string>("Thumbsnail")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("ToPlace")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("TourName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Id");
 
@@ -889,7 +812,8 @@ namespace Travel.Context.Migrations.Travel
                         .HasColumnType("real");
 
                     b.Property<string>("TourId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<float>("Vat")
                         .HasColumnType("real");
@@ -1019,10 +943,12 @@ namespace Travel.Context.Migrations.Travel
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("CreateBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<long>("CreateDate")
                         .HasColumnType("bigint");
@@ -1043,7 +969,8 @@ namespace Travel.Context.Migrations.Travel
                         .HasDefaultValue(false);
 
                     b.Property<string>("ModifyBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<long>("ModifyDate")
                         .HasColumnType("bigint");
