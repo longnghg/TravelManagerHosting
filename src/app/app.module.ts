@@ -19,7 +19,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
-import { ProvinceComponent } from './pages/Location/province/province.component';
+
+import { ListProvinceComponent } from './pages/Location/province/list-province/list-province.component';
+import { ItemProvinceComponent } from './pages/Location/province/item-province/item-province.component';
+import { ListWardComponent } from './pages/Location/ward/list-ward/list-ward.component';
+import { ItemWardComponent } from './pages/Location/ward/item-ward/item-ward.component';
 
 @NgModule({
   imports: [
@@ -45,7 +49,11 @@ import { ProvinceComponent } from './pages/Location/province/province.component'
     AppComponent,
     AdminLayoutComponent,
     AuthLayoutComponent,
-    ProvinceComponent
+
+    ListProvinceComponent,
+    ItemProvinceComponent,
+    ListWardComponent,
+    ItemWardComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
