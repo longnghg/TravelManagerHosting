@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 import { ClipboardModule } from 'ngx-clipboard';
 
@@ -17,6 +18,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AgGridModule } from 'ag-grid-angular';
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -25,7 +27,7 @@ import { AgGridModule } from 'ag-grid-angular';
     HttpClientModule,
     NgbModule,
     ClipboardModule,
-    AgGridModule
+    AgGridModule,
   ],
   declarations: [
     DashboardComponent,
@@ -35,5 +37,6 @@ import { AgGridModule } from 'ag-grid-angular';
     MapsComponent
   ]
 })
+
 
 export class AdminLayoutModule {}
