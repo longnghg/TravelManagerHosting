@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Travel.Context.Models.Notification;
 using Travel.Context.Models.Travel;
 using Travel.Data.Interfaces;
+using Travel.Data.Repositories;
 using Travel.Data.Responsives;
 
 namespace TravelApi.Extensions
@@ -31,8 +32,15 @@ namespace TravelApi.Extensions
         }
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
+            services
+              .AddScoped<IEmployee, ResEmployee>();
+            services
+               .AddScoped<ILocation, ResLocation>();
+            services
+                .AddScoped<INews, ResNews>();
             return services
                 .AddScoped<IAuthentication, ResAuthentication>();
+
         }
 
     }

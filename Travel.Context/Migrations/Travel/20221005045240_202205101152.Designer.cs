@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Travel.Context.Models.Travel;
 
 namespace Travel.Context.Migrations.Travel
 {
     [DbContext(typeof(TravelContext))]
-    partial class TravelContextModelSnapshot : ModelSnapshot
+    [Migration("20221005045240_202205101152")]
+    partial class _202205101152
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -690,6 +692,43 @@ namespace Travel.Context.Migrations.Travel
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            Description = "Trùm",
+                            IsDelete = false,
+                            Name = "Admin"
+                        },
+                        new
+                        {
+                            Id = 1,
+                            Description = "Quản lý cục bộ",
+                            IsDelete = false,
+                            Name = "LocalManager"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Quản lý dịch vụ",
+                            IsDelete = false,
+                            Name = "ServiceManager"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Quản lý tour",
+                            IsDelete = false,
+                            Name = "TourManager"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Quản lý tour booking",
+                            IsDelete = false,
+                            Name = "TourBookingManager"
+                        });
                 });
 
             modelBuilder.Entity("Travel.Context.Models.Schedule", b =>

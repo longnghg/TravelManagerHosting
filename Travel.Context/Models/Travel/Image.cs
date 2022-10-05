@@ -9,14 +9,14 @@ namespace Travel.Context.Models
     {
         private Guid id;
         private string name;
-        private int size;
+        private long size;
         private string extension;
         private string filePath;
         private Guid idService;
 
         public Guid Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
-        public int Size { get => size; set => size = value; }
+        public long Size { get => size; set => size = value; }
         
         public string FilePath { get => filePath; set => filePath = value; }
         public Guid IdService { get => idService; set => idService = value; }

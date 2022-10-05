@@ -127,10 +127,10 @@ namespace Travel.Context.Models.Travel
                 entity.Property(e => e.Name).HasMaxLength(100);
                 entity.Property(e => e.Address).HasMaxLength(100);
                 entity.Property(e => e.Phone).HasMaxLength(14);
-                entity.Property(e => e.Password).HasMaxLength(30);
-                entity.Property(e => e.FbToken).HasMaxLength(300);
-                entity.Property(e => e.AccessToken).HasMaxLength(300);
-                entity.Property(e => e.GoogleToken).HasMaxLength(300);
+                entity.Property(e => e.Password).HasMaxLength(255);
+                entity.Property(e => e.FbToken).HasMaxLength(550);
+                entity.Property(e => e.AccessToken).HasMaxLength(550);
+                entity.Property(e => e.GoogleToken).HasMaxLength(550);
                 entity.Property(e => e.Name).IsRequired(true);
                 entity.Property(e => e.Email).HasMaxLength(100).IsRequired(true);
                 entity.Property(e => e.Phone).IsRequired(true);
@@ -214,11 +214,12 @@ namespace Travel.Context.Models.Travel
                 entity.Property(e => e.Name).HasMaxLength(100).IsRequired(true); 
                 entity.Property(e => e.Email).HasDefaultValue(0);
                 entity.Property(e => e.Email).IsRequired(true).HasMaxLength(100);
-                entity.Property(e => e.Password).HasMaxLength(30);
+                entity.Property(e => e.Password).HasMaxLength(255);
                 entity.Property(e => e.AccessToken).HasMaxLength(550);
                 entity.Property(e => e.Phone).HasMaxLength(15).IsRequired(true);
                 entity.Property(e => e.Image).HasMaxLength(100).IsRequired(true);
                 entity.Property(e => e.IdSchedule).HasMaxLength(50);
+                entity.Property(e => e.ModifyBy).HasMaxLength(50);
             });
             modelBuilder.Entity<Car>(entity =>
             {
@@ -231,6 +232,7 @@ namespace Travel.Context.Models.Travel
 
             modelBuilder.Entity<Schedule>(entity =>
             {
+                entity.Property(e => e.Id).HasMaxLength(50);
                 entity.HasOne<Car>(e => e.Cars)
                  .WithMany(d => d.Schedules)
                  .HasForeignKey(e => e.IdCar);
@@ -259,7 +261,7 @@ namespace Travel.Context.Models.Travel
         
                 entity.Property(e => e.TourName).HasMaxLength(150).IsRequired(true);
                 entity.Property(e => e.ModifyBy).HasMaxLength(100);
-                entity.Property(e => e.Thumbsnail).HasMaxLength(100);
+                entity.Property(e => e.Thumbsnail).HasMaxLength(150);
                 entity.Property(e => e.FromPlace).HasMaxLength(100);
                 entity.Property(e => e.ToPlace).HasMaxLength(100);
                 entity.Property(e => e.ApproveStatus).HasMaxLength(100);
@@ -279,14 +281,14 @@ namespace Travel.Context.Models.Travel
             modelBuilder.Entity<File>(entity =>
             {
                 entity.Property(e => e.FileName).HasMaxLength(100).IsRequired(true);
-                entity.Property(e => e.FileExtension).HasMaxLength(100);
+                entity.Property(e => e.FileExtension).HasMaxLength(10);
                 entity.Property(e => e.FilePath).HasMaxLength(150);
             }); 
             modelBuilder.Entity<Image>(entity =>
             {
                 entity.Property(e => e.Name).HasMaxLength(100).IsRequired(true);
-                entity.Property(e => e.Extension).HasMaxLength(100);
-                entity.Property(e => e.FilePath).HasMaxLength(150);
+                entity.Property(e => e.Extension).HasMaxLength(5);
+                entity.Property(e => e.FilePath).HasMaxLength(255);
             });
         }
 
