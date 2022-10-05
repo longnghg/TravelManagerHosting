@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ColDef, FirstDataRenderedEvent, GridApi, GridReadyEvent, SideBarDef, ValueFormatterParams } from 'ag-grid-community';
-import { HttpClient } from '@angular/common/http';
+import { EmployeeService } from "../../services_API/employee.service";
+import { NotificationService } from "../../services_API/notification.service";
+import { EmployeeModel } from "../../models/employee.model";
+import { RoleTitle } from "../../models/role.model";
+import { ResponsiveModel } from "../../models/responsiveModels/responsive.model";
+import { ColDef} from 'ag-grid-community';
 
 @Component({
   selector: 'app-maps',
@@ -8,86 +12,42 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./maps.component.scss']
 })
 export class MapsComponent implements OnInit {
+  resEmployee: EmployeeModel[]
+  responsive: ResponsiveModel
 
   public columnDefs: ColDef[] = [
     // set filters
-    { field: 'athlete', filter: 'agTextColumnFilter'},
-    {
-      field: 'country',
-      filter: 'agTextColumnFilter'
-    },
-    // number filters
-    { field: 'gold', filter: 'agSetColumnFilter' },
-    { field: 'silver', filter: 'agNumberColumnFilter' },
-    { field: 'bronze', filter: 'agNumberColumnFilter' },
+    { field: 'Index',headerName: "", filter: false,},
+    { field: 'Id', headerName: "Mã số", filter: 'agTextColumnFilter',},
+    { field: 'Name',headerName: "Tên", filter: 'agTextColumnFilter'},
+    { field: 'Email',headerName: "Email", filter: 'agTextColumnFilter'},
+    { field: 'Phone',headerName: "Số điện thoại", filter: 'agTextColumnFilter'},
+    { field: 'RoleName',headerName: "Chức vụ", filter: 'agTextColumnFilter'},
+    { field: 'IsActive',headerName: "Kích hoạt", filter: 'agTextColumnFilter'},
+
   ];
-  public rowSelection: 'single' | 'multiple' = 'multiple';
-  public defaultColDef: ColDef = {
-    flex: 1,
-    minWidth: 200,
-    sortable: true,
-    floatingFilter: true,
-  };
-  public rowData!: IOlympicData[];
-  private gridApi!: GridApi<IOlympicData>;
-  constructor(private http: HttpClient) {}
 
-
-  printFilterModel() {
-    var filterModel = this.gridApi.getFilterModel();
-    console.log(filterModel);
-  }
-
-
-
-
+  constructor(private employeeService: EmployeeService, private notificationService: NotificationService) {}
   ngOnInit() {
+    this.employeeService.GetEmployees().subscribe(res => {
+      this.responsive = res
 
-
-  }
-
-  onSelectionChanged() {
-    var selectedRows = this.gridApi.getSelectedRows();
-    var selectedRowsString = '';
-    var maxToShow = 5;
-    selectedRows.forEach(function (selectedRow, index) {
-      if (index >= maxToShow) {
-        return;
+      if(this.responsive.notification.type == "Error")
+      {
+        this.notificationService.handleAlertObj(res.notification)
       }
-      if (index > 0) {
-        selectedRowsString += ', ';
+
+      this.resEmployee = JSON.parse(this.responsive.content)
+      for (let index = 0; index < this.resEmployee.length; index++) {
+        this.resEmployee[index].Index = index+1
+        this.resEmployee[index].RoleName = RoleTitle[this.resEmployee[index].RoleId]
       }
-      selectedRowsString += selectedRow.athlete;
-    });
-    if (selectedRows.length > maxToShow) {
-      var othersCount = selectedRows.length - maxToShow;
-      selectedRowsString +=
-        ' and ' + othersCount + ' other' + (othersCount !== 1 ? 's' : '');
-    }
-    (document.querySelector(
-      '#selectedRows'
-    ) as any).innerHTML = selectedRowsString;
+        console.log(this.resEmployee);
+    })
+
   }
-  onGridReady(params: GridReadyEvent<IOlympicData>) {
-    this.http
-      .get<IOlympicData[]>(
-        'https://www.ag-grid.com/example-assets/olympic-winners.json'
-      )
-      .subscribe((data) => (this.rowData = data));
-  }
+
 
 }
 
-export interface IOlympicData {
-  athlete: string;
-  age: number;
-  country: string;
-  year: number;
-  date: string;
-  sport: string;
-  gold: number;
-  silver: number;
-  bronze: number;
-  total: number;
-}
 

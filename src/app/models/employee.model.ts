@@ -1,4 +1,5 @@
 export interface EmployeeModel {
+  Index: number
   Id: string
   Name: string
   Email: string
@@ -6,7 +7,7 @@ export interface EmployeeModel {
   Phone: string
   Birthday: number
   Image: string
-  RoleId: number
+  RoleId: string
   RoleName: string
   AccessToken: string
   CreateDate: number

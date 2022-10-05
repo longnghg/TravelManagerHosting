@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { ClipboardModule } from 'ngx-clipboard';
+import { ComponentsModule } from '../../components/components.module'
+
 
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../pages/dashboard/dashboard.component';
@@ -28,6 +30,7 @@ import { AgGridModule } from 'ag-grid-angular';
     NgbModule,
     ClipboardModule,
     AgGridModule,
+    ComponentsModule
   ],
   declarations: [
     DashboardComponent,
