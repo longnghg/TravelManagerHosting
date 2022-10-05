@@ -38,5 +38,21 @@ namespace TravelApi.Controllers
                 return Ok(res);
             }
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("UploadBanner")]
+        public object GetBanners()
+        {
+            try
+            {
+
+                return Ok(res);
+            }
+            catch (Exception)
+            {
+                return Ok(res);
+            }
+        }
     }
 }
