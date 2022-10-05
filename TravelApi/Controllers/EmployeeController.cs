@@ -16,11 +16,11 @@ namespace TravelApi.Controllers
     {
         private IEmployee employee;
         private Notification message;
-        private Responsive res;
+        private Response res;
         public EmployeeController(IEmployee _employee)
         {
             employee = _employee;
-            res = new Responsive();
+            res = new Response();
         }
 
         [HttpGet]
