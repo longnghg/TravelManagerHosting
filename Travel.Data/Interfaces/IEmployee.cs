@@ -9,6 +9,6 @@ namespace Travel.Data.Interfaces
 {
     public interface IEmployee
     {
-        Responsive GetEmployees();
+        Response GetEmployees();
     }
 }

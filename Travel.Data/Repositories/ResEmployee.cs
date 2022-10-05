@@ -15,15 +15,15 @@ namespace Travel.Data.Repositories
     {
         private readonly TravelContext context;
         private Notification message;
-        private Responsive res;
+        private Response res;
         public ResEmployee(TravelContext _context)
         {
             context = _context;
             message = new Notification();
-            res = new Responsive();
+            res = new Response();
         }
 
-        public Responsive GetEmployees()
+        public Response GetEmployees()
         {
             try
             {
