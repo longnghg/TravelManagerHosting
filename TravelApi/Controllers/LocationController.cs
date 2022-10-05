@@ -18,17 +18,17 @@ namespace TravelApi.Controllers
     {
         private ILocation location;
         private Notification message;
-        private Responsive res;
+        private Response res;
         public LocationController(ILocation _location)
         {
             location = _location;
-            res = new Responsive();
+            res = new Response();
         }
 
         [HttpGet]
         [AllowAnonymous]
-        [Route("GetProvince")]
-        public object GetProvince()
+        [Route("get-province")]
+        public object GetProvince(string id)
         {
             res = location.GetProvinces();
             return Ok(res);
@@ -36,7 +36,7 @@ namespace TravelApi.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [Route("GetDistrict")]
+        [Route("get-district")]
         public object GetDistrict([FromBody] JObject frmData)
         {
             var district = location.SetDataDistrict(frmData, ref message);
@@ -54,7 +54,7 @@ namespace TravelApi.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [Route("GetWard")]
+        [Route("get-ward")]
         public object GetWard([FromBody] JObject frmData)
         {
             var ward = location.SetDataWard(frmData, ref message);
@@ -72,7 +72,7 @@ namespace TravelApi.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [Route("InsertProvince")]
+        [Route("insert-province")]
         public object InsertProvince([FromBody] JObject frmData)
         {
             var province = location.SetDataProvince(frmData, ref message);
@@ -89,7 +89,7 @@ namespace TravelApi.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [Route("InsertDistrict")]
+        [Route("insert-district")]
         public object InsertDistrict([FromBody] JObject frmData)
         {
             var district = location.SetDataDistrict(frmData, ref message);
@@ -106,7 +106,7 @@ namespace TravelApi.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [Route("InsertWard")]
+        [Route("insert-ward")]
         public object InsertWard([FromBody] JObject frmData)
         {
             var ward = location.SetDataWard(frmData, ref message);
@@ -123,7 +123,7 @@ namespace TravelApi.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [Route("UpdateProvince")]
+        [Route("update-province")]
         public object UpdateProvince([FromBody] JObject frmData)
         {
             var province = location.SetDataProvince(frmData, ref message);
@@ -140,7 +140,7 @@ namespace TravelApi.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [Route("UpdateDistrict")]
+        [Route("update-district")]
         public object UpdateDistrict([FromBody] JObject frmData)
         {
             var district = location.SetDataDistrict(frmData, ref message);

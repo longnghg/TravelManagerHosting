@@ -13,15 +13,14 @@ namespace Travel.Data.Repositories
     public class ResLocation : ILocation
     {
         private readonly TravelContext context;
-        private Responsive res;
+        private Response res;
         private Notification message;
         public ResLocation(TravelContext _context)
         {
             context = _context;
-            res = new Responsive();
+            res = new Response();
             message = new Notification();
         }
-
         public Province SetDataProvince(JObject frmData, ref Notification _message)
         {
                 Province province = new Province();
@@ -112,7 +111,7 @@ namespace Travel.Data.Repositories
             }
         }
 
-        public Responsive GetProvinces()
+        public Response GetProvinces()
         {
             try
             {
@@ -140,7 +139,7 @@ namespace Travel.Data.Repositories
             }
         }
 
-        public Responsive GetDistrict(District district)
+        public Response GetDistrict(District district)
         {
             try
             {
@@ -168,7 +167,7 @@ namespace Travel.Data.Repositories
             }
         }
 
-        public Responsive GetWard(Ward ward)
+        public Response GetWard(Ward ward)
         {
             try
             {
@@ -196,7 +195,7 @@ namespace Travel.Data.Repositories
             }
         }
 
-        public Responsive InsertProvince(Province province)
+        public Response InsertProvince(Province province)
         {
             try
             {
@@ -219,7 +218,7 @@ namespace Travel.Data.Repositories
             }
         }
 
-        public Responsive InsertDistrict(District district)
+        public Response InsertDistrict(District district)
         {
             try
             {
@@ -242,7 +241,7 @@ namespace Travel.Data.Repositories
             }
         }
 
-        public Responsive InsertWard(Ward ward)
+        public Response InsertWard(Ward ward)
         {
             try
             {
@@ -265,7 +264,7 @@ namespace Travel.Data.Repositories
             }
         }
 
-        public Responsive UpdateProvince(Province province)
+        public Response UpdateProvince(Province province)
         {
             try
             {
@@ -298,7 +297,7 @@ namespace Travel.Data.Repositories
             }
         }
 
-        public Responsive UpdateDistrict(District district)
+        public Response UpdateDistrict(District district)
         {
             try
             {
@@ -332,7 +331,7 @@ namespace Travel.Data.Repositories
             }
         }
 
-        public Responsive UpdateWard(Ward ward)
+        public Response UpdateWard(Ward ward)
         {
             try
             {
@@ -365,7 +364,7 @@ namespace Travel.Data.Repositories
                 return res;
             }
         }
-        public Responsive DeleteProvince(Province province)
+        public Response DeleteProvince(Province province)
         {
             try
             {
@@ -398,7 +397,7 @@ namespace Travel.Data.Repositories
             }
         }
 
-        public Responsive DeleteDistrict(District district)
+        public Response DeleteDistrict(District district)
         {
             try
             {
@@ -431,7 +430,7 @@ namespace Travel.Data.Repositories
             }
         }
 
-        public Responsive DeleteWard(Ward ward)
+        public Response DeleteWard(Ward ward)
         {
             try
             {

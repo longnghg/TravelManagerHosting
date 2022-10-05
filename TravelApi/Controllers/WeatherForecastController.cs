@@ -15,7 +15,7 @@ namespace TravelApi.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        TravelContext _db;
+        private readonly TravelContext _db;
         public WeatherForecastController(TravelContext db)
         {
             _db = db;
@@ -30,12 +30,12 @@ namespace TravelApi.Controllers
         {
             try
             {
-                var li = _db.Employees.Include(x=> x.Role).ToList();
+                var lsEmployee = _db.Employees.Include(x => x.Role).Include(x => x.Schedules).AsNoTracking().ToList();
 
-                var ul = Mapper.MapEmployee(li);
+                var showLsEmployee = Mapper.MapEmployee(lsEmployee);
 
                 var rng = new Random();
-                return Ok(ul);
+                return Ok(showLsEmployee);
             }
             catch (Exception e)
             {
