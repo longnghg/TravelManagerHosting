@@ -340,7 +340,7 @@ namespace Travel.Context.Migrations.Travel
                     b.HasData(
                         new
                         {
-                            Id = new Guid("acd65b05-8e4c-47a3-98b3-4de3242ec88f"),
+                            Id = new Guid("cca4105c-b22c-4c02-97a1-f5cdb234186d"),
                             Birthday = 202204101007L,
                             CreateDate = 202204101007L,
                             Email = "test1@gmail.com",
@@ -356,7 +356,7 @@ namespace Travel.Context.Migrations.Travel
                         },
                         new
                         {
-                            Id = new Guid("341fd010-582f-4e49-9f5f-07fee37032db"),
+                            Id = new Guid("bf63123a-916c-4ecd-8520-173e018d7bae"),
                             Birthday = 202204101007L,
                             CreateDate = 202204101007L,
                             Email = "test2@gmail.com",
@@ -372,7 +372,7 @@ namespace Travel.Context.Migrations.Travel
                         },
                         new
                         {
-                            Id = new Guid("db7fcfb0-b759-4340-b15f-10685de71a00"),
+                            Id = new Guid("e6bf75b4-f7a8-493f-ac94-6524d38274b9"),
                             Birthday = 202204101007L,
                             CreateDate = 202204101007L,
                             Email = "test3@gmail.com",
@@ -388,7 +388,7 @@ namespace Travel.Context.Migrations.Travel
                         },
                         new
                         {
-                            Id = new Guid("620b23b5-b861-49b8-b01f-3459dd6f1847"),
+                            Id = new Guid("2b399799-78f4-474f-a0b8-d496f6eb2e56"),
                             Birthday = 202204101007L,
                             CreateDate = 202204101007L,
                             Email = "test4@gmail.com",
@@ -404,7 +404,7 @@ namespace Travel.Context.Migrations.Travel
                         },
                         new
                         {
-                            Id = new Guid("4d3202f0-c29d-421a-bb6c-64b574761e73"),
+                            Id = new Guid("62a54aca-9fb3-47dd-a87c-048781136644"),
                             Birthday = 202204101007L,
                             CreateDate = 202204101007L,
                             Email = "test5@gmail.com",
@@ -690,6 +690,43 @@ namespace Travel.Context.Migrations.Travel
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            Description = "Trùm",
+                            IsDelete = false,
+                            Name = "Admin"
+                        },
+                        new
+                        {
+                            Id = 1,
+                            Description = "Quản lý cục bộ",
+                            IsDelete = false,
+                            Name = "LocalManager"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Quản lý dịch vụ",
+                            IsDelete = false,
+                            Name = "ServiceManager"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Quản lý tour",
+                            IsDelete = false,
+                            Name = "TourManager"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Quản lý tour booking",
+                            IsDelete = false,
+                            Name = "TourBookingManager"
+                        });
                 });
 
             modelBuilder.Entity("Travel.Context.Models.Schedule", b =>

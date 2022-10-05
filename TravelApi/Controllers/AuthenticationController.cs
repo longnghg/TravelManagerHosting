@@ -20,12 +20,12 @@ namespace TravelApi.Controllers
     {
         private IConfiguration configuration;
         private IAuthentication authentication;
-        private Responsive res;
+        private Response res;
         public AuthenticationController(IConfiguration _configuration, IAuthentication _authentication)
         {
             configuration = _configuration;
             authentication = _authentication;
-            res = new Responsive();
+            res = new Response();
         }
 
         [HttpPost]
