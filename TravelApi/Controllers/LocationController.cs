@@ -28,7 +28,7 @@ namespace TravelApi.Controllers
         [HttpGet]
         [AllowAnonymous]
         [Route("get-province")]
-        public object GetProvince(string id)
+        public object GetProvince()
         {
             res = location.GetProvinces();
             return Ok(res);
@@ -157,7 +157,7 @@ namespace TravelApi.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [Route("UpdateWard")]
+        [Route("Update-Ward")]
         public object UpdateWard([FromBody] JObject frmData)
         {
             var ward = location.SetDataWard(frmData, ref message);
