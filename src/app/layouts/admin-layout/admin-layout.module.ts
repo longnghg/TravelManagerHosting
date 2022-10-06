@@ -16,7 +16,8 @@ import { UserProfileComponent } from '../../pages/user-profile/user-profile.comp
 import { TablesComponent } from '../../pages/tables/tables.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // import { ToastrModule } from 'ngx-toastr';
-
+import { ListProvinceComponent } from '../../pages/Location/province/list-province/list-province.component';
+import { ItemProvinceComponent } from '../../pages/Location/province/item-province/item-province.component';
 
 import { AgGridModule } from 'ag-grid-angular';
 
@@ -37,7 +38,9 @@ import { AgGridModule } from 'ag-grid-angular';
     UserProfileComponent,
     TablesComponent,
     IconsComponent,
-    MapsComponent
+    MapsComponent,
+    ListProvinceComponent,
+    ItemProvinceComponent
   ]
 })
 

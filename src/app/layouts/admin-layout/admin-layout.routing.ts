@@ -5,7 +5,8 @@ import { IconsComponent } from '../../pages/icons/icons.component';
 import { MapsComponent } from '../../pages/maps/maps.component';
 import { UserProfileComponent } from '../../pages/user-profile/user-profile.component';
 import { TablesComponent } from '../../pages/tables/tables.component';
-import { ProvinceComponent } from 'src/app/pages/Location/province/province.component';
+import { ListProvinceComponent } from 'src/app/pages/Location/province/list-province/list-province.component';
+import { ItemProvinceComponent } from 'src/app/pages/Location/province/item-province/item-province.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -13,5 +14,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'tables',         component: TablesComponent },
     { path: 'icons',          component: IconsComponent },
     { path: 'maps',           component: MapsComponent },
-    { path: 'province',           component: ProvinceComponent }
+    { path: 'list-province',  component: ListProvinceComponent },
+    { path: 'item-province',  component: ItemProvinceComponent },
+
 ];

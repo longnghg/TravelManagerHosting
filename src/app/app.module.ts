@@ -20,8 +20,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 
-import { ListProvinceComponent } from './pages/Location/province/list-province/list-province.component';
-import { ItemProvinceComponent } from './pages/Location/province/item-province/item-province.component';
+
 import { ListWardComponent } from './pages/Location/ward/list-ward/list-ward.component';
 import { ItemWardComponent } from './pages/Location/ward/item-ward/item-ward.component';
 
@@ -50,8 +49,7 @@ import { ItemWardComponent } from './pages/Location/ward/item-ward/item-ward.com
     AdminLayoutComponent,
     AuthLayoutComponent,
 
-    ListProvinceComponent,
-    ItemProvinceComponent,
+
     ListWardComponent,
     ItemWardComponent
   ],
