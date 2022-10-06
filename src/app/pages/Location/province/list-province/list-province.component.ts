@@ -5,19 +5,20 @@ import { ProvinceService } from 'src/app/services_API/province.service';
 import { LocationModel } from "../../../../models/location.model";
 import { ResponsiveModel } from "../../../../models/responsiveModels/responsive.model";
 
+
 @Component({
   selector: 'app-list-province',
   templateUrl: './list-province.component.html',
-  styleUrls: ['./list-province.component.scss']
+  styleUrls: ['./list-province.component.scss'],
 })
 export class ListProvinceComponent implements OnInit {
 
   resProvince: LocationModel[]
   response: ResponsiveModel
   child: LocationModel
-
+  type: string
   constructor(private provinceService: ProvinceService, private notificationService: NotificationService,
-     private configService: ConfigService) { }
+     private configService: ConfigService){}
   ngOnInit(): void {
     this.provinceService.GetProvince().subscribe(res => {
       this.response = res
@@ -35,14 +36,9 @@ export class ListProvinceComponent implements OnInit {
     })
   }
 
-  PageItem(){
-    document.location.assign(this.configService.clientUrl + "/#/item-province")
-  }
-
-
-  childData(data: LocationModel){
-    document.location.assign(this.configService.clientUrl + "/#/item-province")
+  childData(data: LocationModel, type: string){
     this.child = data
+    this.type = type
   }
 
 }

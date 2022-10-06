@@ -14,33 +14,54 @@ export class ItemProvinceComponent implements OnInit {
 
   // nếu mà show item thôi thì LocationModel, còn nếu show danh sách thì LocationModel[] oke
   response: ResponsiveModel
-  @Input() resProvince: LocationModel
-
+  @Input() resParent: LocationModel
+  @Input() type: string
+  resProvince: LocationModel
   constructor(private provinceService: ProvinceService, private notificationService: NotificationService,
     private configService: ConfigService) { }
 
   ngOnInit(): void {
 
   }
-  ngOnChanges(): void {
-    console.log(this.resProvince);
 
+  ngOnChanges(): void {
+    this.resProvince = this.resParent
+    console.log(this.resProvince);
+    console.log(this.type);
+    if (this.type == "insert") {
+      this.resProvince.Name = ""
+    }
   }
 
+
   save(){
+    if (this.type == "insert") {
+      this.provinceService.InsertProvince(this.resProvince).subscribe(res =>{
+        this.response = res
+        if(this.response.notification.type == "Error")
+        {
+          this.notificationService.handleAlertObj(res.notification)
+        }
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, "Error")
+      })
+    }
+    else{
+      this.provinceService.UpdateProvince(this.resProvince).subscribe(res =>{
+        this.response = res
+        if(this.response.notification.type == "Error")
+        {
+          this.notificationService.handleAlertObj(res.notification)
+        }
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, "Error")
+      })
+    }
     console.log(this.resProvince);
 
-    this.provinceService.InsertProvince(this.resProvince).subscribe(res =>{
-      this.response = res
 
-      if(this.response.notification.type == "Error")
-      {
-        this.notificationService.handleAlertObj(res.notification)
-      }
-      alert("Thêm thành công")
-      document.location.assign(this.configService.clientUrl + "/#/list-province")
-
-    })
   }
 
 }

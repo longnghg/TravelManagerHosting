@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
 
     }, error => {
       this.isloading = false
-      var message = this.authentication.error(error.status, error.error != null?error.error.text:"");
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, "Error")
     })
   }
