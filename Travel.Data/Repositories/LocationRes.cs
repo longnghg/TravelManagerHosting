@@ -58,7 +58,7 @@ namespace Travel.Data.Repositories
                     district.Id = Guid.Parse(PrCommon.GetString("Id", frmData));
                 }
 
-                var idProvince = PrCommon.GetString("IdLocation", frmData);
+                var idProvince = PrCommon.GetString("IdProvince", frmData);
                 if (!String.IsNullOrEmpty(idProvince))
                 {
                     district.IdProvice = Guid.Parse(idProvince);
@@ -90,7 +90,7 @@ namespace Travel.Data.Repositories
                     ward.Id = Guid.Parse(PrCommon.GetString("Id", frmData));
                 }
 
-                var idDistrict = PrCommon.GetString("IdLocation", frmData);
+                var idDistrict = PrCommon.GetString("IdDistrict", frmData);
                 if (!String.IsNullOrEmpty(idDistrict))
                 {
                     ward.IdDistrict = Guid.Parse(idDistrict);
