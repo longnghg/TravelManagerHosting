@@ -6,6 +6,10 @@
 </div>
 
 
+<label class="form-control-label">Thành phố</label>
+<select name="province" id="province" (change)="changeProvince($event.target.value)">
+  <option *ngFor="let province of resProvince" [value]="province | json">{{province.Name}}</option>
+</select>
 
 <div class="col-xl-12 mb-5 mb-xl-0">
   <div class="card shadow">
