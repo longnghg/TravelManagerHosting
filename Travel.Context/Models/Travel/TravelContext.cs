@@ -106,7 +106,7 @@ namespace Travel.Context.Models.Travel
             {
                 entity.HasOne(e => e.Province)
                 .WithMany(d => d.Districts)
-                .HasForeignKey(e => e.IdProvice);
+                .HasForeignKey(e => e.IdProvince);
                 entity.Property(e => e.Name).HasMaxLength(100);
                 entity.Property(e => e.Name).IsRequired(true);
 
