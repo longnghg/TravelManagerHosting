@@ -17,7 +17,7 @@ namespace Travel.Data.Repositories
     {
         private readonly TravelContext context;
         private  Banner banner;
-        private Notification message;
+        private Notification message, _message;
         public ResNews(TravelContext _context)
         {
             context = _context;
@@ -41,11 +41,11 @@ namespace Travel.Data.Repositories
                     int i = 0;
                     foreach (var file in files)
                     {
-                        var image = Ultility.WriteFile(file, "Banners", Id, ref message);
-                        if (message != null)
+                        var image = Ultility.WriteFile(file, "Banners", Id, ref _message);
+                        if (_message != null)
                         {
                             i++;
-                            message.Messenge = message.Messenge + " ("+ i +")";
+                            message.Messenge = _message.Messenge + " ("+ i +")";
                         }
                         else
                         {
