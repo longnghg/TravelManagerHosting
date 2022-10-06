@@ -21,8 +21,7 @@ import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 
 
-import { ListWardComponent } from './pages/Location/ward/list-ward/list-ward.component';
-import { ItemWardComponent } from './pages/Location/ward/item-ward/item-ward.component';
+
 
 @NgModule({
   imports: [
@@ -49,9 +48,6 @@ import { ItemWardComponent } from './pages/Location/ward/item-ward/item-ward.com
     AdminLayoutComponent,
     AuthLayoutComponent,
 
-
-    ListWardComponent,
-    ItemWardComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

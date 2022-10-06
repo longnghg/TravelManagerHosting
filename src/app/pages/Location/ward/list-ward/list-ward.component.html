@@ -1,1 +1,62 @@
-<p>list-ward works!</p>
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+      <!-- Card stats -->
+
+    </div>
+  </div>
+</div>
+<div class="col-xl-12 mb-5 mb-xl-0">
+  <div class="card shadow">
+    <div class="card-header border-0">
+      <div class="row align-items-center">
+        <div class="col">
+          <h3 class="mb-0">Ward</h3>
+        </div>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <!-- Projects table -->
+      <div class="form-group">
+
+        <label class="form-control-label">Thành phố</label>
+        <select name="province" id="province" (change)="changeProvince($event.target.value)">
+          <option *ngFor="let province of resProvince" [value]="province | json">{{province.Name}}</option>
+        </select>
+
+        <label class="form-control-label">Quận</label>
+        <select name="district" id="district" (change)="changeDistrict($event.target.value)">
+          <option *ngFor="let district of resDistrict" [value]="district | json">{{district.Name}}</option>
+        </select>
+      <table class="table align-items-center table-flush">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of resWard; let i=index">
+            <th scope="row">
+              {{item.Id}}
+            </th>
+            <td>
+              {{item.Name}}
+            </td>
+            <td>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Chi tiết
+              </button>
+            </td>
+            <td>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+

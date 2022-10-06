@@ -27,12 +27,7 @@ export class ListProvinceComponent implements OnInit {
       {
         this.notificationService.handleAlertObj(res.notification)
       }
-
       this.resProvince = JSON.parse(this.response.content)
-      for (let index = 0; index < this.resProvince.length; index++) {
-
-      }
-        console.log(this.resProvince);
     })
   }
 

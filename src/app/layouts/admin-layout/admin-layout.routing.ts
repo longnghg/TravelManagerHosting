@@ -11,6 +11,9 @@ import { BannerComponent } from '../../pages/banner/banner.component';
 import { ListProvinceComponent } from 'src/app/pages/Location/province/list-province/list-province.component';
 import { ItemProvinceComponent } from 'src/app/pages/Location/province/item-province/item-province.component';
 
+import { ListWardComponent } from '../../pages/Location/ward/list-ward/list-ward.component';
+import { ItemWardComponent } from '../../pages/Location/ward/item-ward/item-ward.component';
+
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
@@ -22,4 +25,7 @@ export const AdminLayoutRoutes: Routes = [
 
     { path: 'list-province',  component: ListProvinceComponent },
     { path: 'item-province',  component: ItemProvinceComponent },
+
+    { path: 'list-ward',  component: ListWardComponent },
+    { path: 'item-ward',  component: ItemWardComponent },
 ];
