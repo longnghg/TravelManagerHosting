@@ -39,7 +39,7 @@ export class ListWardComponent implements OnInit {
       this.resProvince = JSON.parse(this.response.content)
 
       if (this.resProvince) {
-        this.resProvince[0].IdLocation = this.resProvince[0].Id
+        this.resProvince[0].IdProvince = this.resProvince[0].Id
         this.districtService.GetDistrict(this.resProvince[0]).subscribe(res => {
           this.response = res
 
@@ -52,7 +52,7 @@ export class ListWardComponent implements OnInit {
 
 
           if (this.resDistrict) {
-            this.resDistrict[0].IdLocation =  this.resDistrict[0].Id
+            this.resDistrict[0].IdDistrict =  this.resDistrict[0].Id
           this.wardService.GetWard(this.resDistrict[0]).subscribe(res => {
             this.response = res
 
@@ -73,7 +73,7 @@ export class ListWardComponent implements OnInit {
   changeProvince(value){
     var data = JSON.parse(value)
     if (data) {
-      data.IdLocation =  data.Id
+      data.IdProvince =  data.Id
       this.districtService.GetDistrict(data).subscribe(res => {
         this.response = res
 
@@ -87,7 +87,7 @@ export class ListWardComponent implements OnInit {
         if (this.resDistrict) {
           this.resDistrict.forEach(district => {
 
-            district.IdLocation = district.Id
+            district.IdDistrict = district.Id
             this.wardService.GetWard(district).subscribe(res => {
               this.response = res
 

@@ -35,10 +35,8 @@ export class ItemWardComponent implements OnInit {
     if (this.type == "insert") {
       this.wardService.InsertWard(this.resWard).subscribe(res =>{
         this.response = res
-        if(this.response.notification.type == "Error")
-        {
-          this.notificationService.handleAlertObj(res.notification)
-        }
+        this.notificationService.handleAlertObj(res.notification)
+
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, "Error")
@@ -47,10 +45,8 @@ export class ItemWardComponent implements OnInit {
     else{
       this.wardService.UpdateWard(this.resWard).subscribe(res =>{
         this.response = res
-        if(this.response.notification.type == "Error")
-        {
-          this.notificationService.handleAlertObj(res.notification)
-        }
+        this.notificationService.handleAlertObj(res.notification)
+
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, "Error")

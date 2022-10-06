@@ -6,8 +6,8 @@
 </div>
 
 
-<label class="form-control-label">Thành phố</label>
-<select name="province" id="province" (change)="changeProvince($event.target.value)">
+<label class="form-control-label">Thành phố </label>
+<select name="province" id="province" (change)="changeProvince($event.target.value)" >
   <option *ngFor="let province of resProvince" [value]="province | json">{{province.Name}}</option>
 </select>
 
@@ -67,7 +67,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-         <app-item-province [resParent]="child" [type]="type"></app-item-province>
+         <app-item-districts [resParent]="child" [type]="type"></app-item-districts>
       </div>
     </div>
   </div>

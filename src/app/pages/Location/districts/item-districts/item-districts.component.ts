@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NotificationService } from "../../../../services_API/notification.service";
 import { ConfigService } from "../../../../services_API/config.service";
-import { DistrictService } from 'src/app/services_API/district.service';
+import { DistrictService } from '../../../../services_API/district.service';
 import { LocationModel } from "../../../../models/location.model";
 import { ResponsiveModel } from "../../../../models/responsiveModels/responsive.model";
 @Component({
@@ -11,7 +11,7 @@ import { ResponsiveModel } from "../../../../models/responsiveModels/responsive.
 })
 export class ItemDistrictsComponent implements OnInit {
 
-  response: ResponsiveModel
+  respon: ResponsiveModel
   @Input() resParent: LocationModel
   @Input() type: string
   resDistrict: LocationModel
@@ -20,23 +20,23 @@ export class ItemDistrictsComponent implements OnInit {
     private configService: ConfigService) { }
 
   ngOnInit(): void {
+
+
+  }
+  ngOnChanges(): void {
     this.resDistrict = this.resParent
-    console.log(this.resDistrict);
-    console.log(this.type);
     if (this.type == "insert") {
       this.resDistrict.Name = ""
     }
-
   }
 
   save(){
+
     if (this.type == "insert") {
       this.districtService.InsertDistrict(this.resDistrict).subscribe(res =>{
-        this.response = res
-        if(this.response.notification.type == "Error")
-        {
-          this.notificationService.handleAlertObj(res.notification)
-        }
+        this.respon = res
+        this.notificationService.handleAlertObj(res.notification)
+
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, "Error")
@@ -44,16 +44,18 @@ export class ItemDistrictsComponent implements OnInit {
     }
     else{
       this.districtService.UpdateDistrict(this.resDistrict).subscribe(res =>{
-        this.response = res
-        if(this.response.notification.type == "Error")
-        {
-          this.notificationService.handleAlertObj(res.notification)
-        }
+        this.respon = res
+        this.notificationService.handleAlertObj(res.notification)
+
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, "Error")
       })
     }
-    console.log(this.resDistrict);
+
+
+
   }
+
+
 }

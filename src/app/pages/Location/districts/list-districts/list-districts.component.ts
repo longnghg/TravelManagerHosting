@@ -37,7 +37,7 @@ export class ListDistrictsComponent implements OnInit {
       this.resProvince = JSON.parse(this.response.content)
 
       if (this.resProvince) {
-        this.resProvince[0].IdLocation = this.resProvince[0].Id
+        this.resProvince[0].IdProvince = this.resProvince[0].Id
         this.districtService.GetDistrict(this.resProvince[0]).subscribe(res => {
           this.response = res
 
@@ -59,7 +59,7 @@ export class ListDistrictsComponent implements OnInit {
     var data = JSON.parse(value)
 
     if(data){
-     data.IdLocation =  data.Id
+     data.IdProvince =  data.Id
      this.districtService.GetDistrict(data).subscribe(res => {
        this.response = res
 
@@ -69,6 +69,7 @@ export class ListDistrictsComponent implements OnInit {
        }
 
        this.resDistrict = JSON.parse(this.response.content)
+       console.log(this.resDistrict );
 
      })
     }
@@ -80,6 +81,8 @@ export class ListDistrictsComponent implements OnInit {
 
   childData(data: LocationModel, type: string){
     this.child = data
+    console.log(this.child);
+
     this.type = type
 
   }
