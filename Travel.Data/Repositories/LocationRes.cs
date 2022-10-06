@@ -61,7 +61,7 @@ namespace Travel.Data.Repositories
                 var idProvince = PrCommon.GetString("IdProvince", frmData);
                 if (!String.IsNullOrEmpty(idProvince))
                 {
-                    district.IdProvice = Guid.Parse(idProvince);
+                    district.IdProvince = Guid.Parse(idProvince);
                 }
               
                 district.Name = PrCommon.GetString("Name", frmData);
@@ -143,7 +143,7 @@ namespace Travel.Data.Repositories
         {
             try
             {
-                var result = _db.Districts.Where(x => x.IdProvice == district.IdProvice);
+                var result = _db.Districts.Where(x => x.IdProvince == district.IdProvince);
 
                 if (result.Count() > 0)
                 {
@@ -305,7 +305,7 @@ namespace Travel.Data.Repositories
                 if (check != null)
                 {
                     _db.Districts.Find(district.Id).Name = district.Name;
-                    _db.Districts.Find(district.Id).IdProvice = district.IdProvice;
+                    _db.Districts.Find(district.Id).IdProvince = district.IdProvince;
                     _db.SaveChanges();
 
                     res.Notification.DateTime = DateTime.Now;
