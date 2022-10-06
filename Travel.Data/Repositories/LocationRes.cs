@@ -12,12 +12,12 @@ namespace Travel.Data.Repositories
 {
     public class ResLocation : ILocation
     {
-        private readonly TravelContext context;
+        private readonly TravelContext _db;
         private Response res;
         private Notification message;
-        public ResLocation(TravelContext _context)
+        public ResLocation(TravelContext db)
         {
-            context = _context;
+            _db = db;
             res = new Response();
             message = new Notification();
         }
@@ -115,7 +115,7 @@ namespace Travel.Data.Repositories
         {
             try
             {
-                var result = context.Provinces;
+                var result = _db.Provinces;
 
                 if (result.Count() > 0)
                 {
@@ -143,7 +143,7 @@ namespace Travel.Data.Repositories
         {
             try
             {
-                var result = context.Districts.Where(x => x.IdProvice == district.IdProvice);
+                var result = _db.Districts.Where(x => x.IdProvice == district.IdProvice);
 
                 if (result.Count() > 0)
                 {
@@ -171,7 +171,7 @@ namespace Travel.Data.Repositories
         {
             try
             {
-                var result = context.Wards.Where(x => x.IdDistrict == ward.IdDistrict);
+                var result = _db.Wards.Where(x => x.IdDistrict == ward.IdDistrict);
 
                 if (result.Count() > 0)
                 {
@@ -200,8 +200,8 @@ namespace Travel.Data.Repositories
             try
             {
                 province.Id = Guid.NewGuid();
-                context.Provinces.Add(province);
-                context.SaveChanges();
+                _db.Provinces.Add(province);
+                _db.SaveChanges();
 
                 res.Notification.DateTime = DateTime.Now;
                 res.Notification.Messenge = "Thêm thành công !";
@@ -223,8 +223,8 @@ namespace Travel.Data.Repositories
             try
             {
                 district.Id = Guid.NewGuid();
-                context.Districts.Add(district);
-                context.SaveChanges();
+                _db.Districts.Add(district);
+                _db.SaveChanges();
 
                 res.Notification.DateTime = DateTime.Now;
                 res.Notification.Messenge = "Thêm thành công !";
@@ -246,8 +246,8 @@ namespace Travel.Data.Repositories
             try
             {
                 ward.Id = Guid.NewGuid();
-                context.Wards.Add(ward);
-                context.SaveChanges();
+                _db.Wards.Add(ward);
+                _db.SaveChanges();
 
                 res.Notification.DateTime = DateTime.Now;
                 res.Notification.Messenge = "Thêm thành công !";
@@ -268,11 +268,11 @@ namespace Travel.Data.Repositories
         {
             try
             {
-                var check = context.Provinces.Find(province.Id);
+                var check = _db.Provinces.Find(province.Id);
                 if (check != null)
                 {
-                    context.Provinces.Find(province.Id).Name = province.Name;
-                    context.SaveChanges();
+                    _db.Provinces.Find(province.Id).Name = province.Name;
+                    _db.SaveChanges();
 
                     res.Notification.DateTime = DateTime.Now;
                     res.Notification.Messenge = "Sửa thành công !";
@@ -301,12 +301,12 @@ namespace Travel.Data.Repositories
         {
             try
             {
-                var check = context.Districts.Find(district.Id);
+                var check = _db.Districts.Find(district.Id);
                 if (check != null)
                 {
-                    context.Districts.Find(district.Id).Name = district.Name;
-                    context.Districts.Find(district.Id).IdProvice = district.IdProvice;
-                    context.SaveChanges();
+                    _db.Districts.Find(district.Id).Name = district.Name;
+                    _db.Districts.Find(district.Id).IdProvice = district.IdProvice;
+                    _db.SaveChanges();
 
                     res.Notification.DateTime = DateTime.Now;
                     res.Notification.Messenge = "Sửa thành công !";
@@ -335,12 +335,12 @@ namespace Travel.Data.Repositories
         {
             try
             {
-                var check = context.Wards.Find(ward.Id);
+                var check = _db.Wards.Find(ward.Id);
                 if (check != null)
                 {
-                    context.Wards.Find(ward.Id).Name = ward.Name;
-                    context.Wards.Find(ward.Id).IdDistrict = ward.IdDistrict;
-                    context.SaveChanges();
+                    _db.Wards.Find(ward.Id).Name = ward.Name;
+                    _db.Wards.Find(ward.Id).IdDistrict = ward.IdDistrict;
+                    _db.SaveChanges();
 
                     res.Notification.DateTime = DateTime.Now;
                     res.Notification.Messenge = "Sửa thành công !";
@@ -368,11 +368,11 @@ namespace Travel.Data.Repositories
         {
             try
             {
-                var check = context.Provinces.Find(province.Id);
+                var check = _db.Provinces.Find(province.Id);
                 if (check != null)
                 {
-                    context.Provinces.Remove(check);
-                    context.SaveChanges();
+                    _db.Provinces.Remove(check);
+                    _db.SaveChanges();
 
                     res.Notification.DateTime = DateTime.Now;
                     res.Notification.Messenge = "Xóa thành công !";
@@ -401,11 +401,11 @@ namespace Travel.Data.Repositories
         {
             try
             {
-                var check = context.Districts.Find(district.Id);
+                var check = _db.Districts.Find(district.Id);
                 if (check != null)
                 {
-                    context.Districts.Remove(check);
-                    context.SaveChanges();
+                    _db.Districts.Remove(check);
+                    _db.SaveChanges();
 
                     res.Notification.DateTime = DateTime.Now;
                     res.Notification.Messenge = "Xóa thành công !";
@@ -434,11 +434,11 @@ namespace Travel.Data.Repositories
         {
             try
             {
-                var check = context.Wards.Find(ward.Id);
+                var check = _db.Wards.Find(ward.Id);
                 if (check != null)
                 {
-                    context.Wards.Remove(check);
-                    context.SaveChanges();
+                    _db.Wards.Remove(check);
+                    _db.SaveChanges();
 
                     res.Notification.DateTime = DateTime.Now;
                     res.Notification.Messenge = "Xóa thành công !";

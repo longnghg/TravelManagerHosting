@@ -13,12 +13,12 @@ namespace Travel.Data.Repositories
 {
     public class ResEmployee : IEmployee
     {
-        private readonly TravelContext context;
+        private readonly TravelContext _db;
         private Notification message;
         private Response res;
-        public ResEmployee(TravelContext _context)
+        public ResEmployee(TravelContext db)
         {
-            context = _context;
+            _db = db;
             message = new Notification();
             res = new Response();
         }
@@ -27,7 +27,7 @@ namespace Travel.Data.Repositories
         {
             try
             {
-                var result = context.Employees.Where(x => x.IsDelete == false);
+                var result = _db.Employees.Where(x => x.IsDelete == false);
 
                 if (result.Count() > 0)
                 {

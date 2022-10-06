@@ -39,7 +39,7 @@ namespace TravelApi.Extensions
             services
                 .AddScoped<INews, ResNews>();
             return services
-                .AddScoped<IAuthentication, ResAuthentication>();
+                .AddScoped<IAuthentication, AuthenticationRes>();
 
         }
 

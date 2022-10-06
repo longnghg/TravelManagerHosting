@@ -11,18 +11,18 @@ using Travel.Data.Interfaces;
 
 namespace Travel.Data.Responsives
 {
-    public class ResAuthentication : IAuthentication
+    public class AuthenticationRes : IAuthentication
     {
-        private readonly TravelContext context;
-        public ResAuthentication(TravelContext _context)
+        private readonly TravelContext _db;
+        public AuthenticationRes(TravelContext db)
         {
-            context = _context;
+            _db = db;
         }
         public Employee EmpLogin(string email)
         {
             try
             {
-                var result = context.Employees.Where(x => x.IsDelete == false &&
+                var result = _db.Employees.Where(x => x.IsDelete == false &&
                                                       x.Email == email).FirstOrDefault();
                 return result;
  
@@ -37,7 +37,7 @@ namespace Travel.Data.Responsives
         {
             try
             {
-                var result = context.Employees.Where(x => x.IsDelete == false &&
+                var result = _db.Employees.Where(x => x.IsDelete == false &&
                                                       x.Password  == password &&
                                                       x.Email == email).FirstOrDefault();
 
@@ -54,8 +54,8 @@ namespace Travel.Data.Responsives
         {
             try
             {
-                context.Employees.Find(emp.Id).AccessToken = token;
-                context.SaveChanges();
+                _db.Employees.Find(emp.Id).AccessToken = token;
+                _db.SaveChanges();
                 return true;
             }
             catch (Exception)
@@ -68,7 +68,7 @@ namespace Travel.Data.Responsives
         {
             try
             {
-                var result = context.Employees.Where(x => x.IsDelete == false &&
+                var result = _db.Employees.Where(x => x.IsDelete == false &&
                                                       x.IsActive == true &&
                                                       x.Email == email).FirstOrDefault();
                 return (result != null) ? true : false;
@@ -85,7 +85,7 @@ namespace Travel.Data.Responsives
         {
             try
             {
-                //var result = context.Users.Where(x => x.IsDelete == false &&
+                //var result = _db.Users.Where(x => x.IsDelete == false &&
                 //                                      x.IsNew == false &&
                 //                                      x.UserEmail == email).FirstOrDefault();
                 //return (result != null) ? true : false;
@@ -103,10 +103,10 @@ namespace Travel.Data.Responsives
             {
                 try
                 {
-                    //var user = context.Users.Where(x => x.UserId == userId).FirstOrDefault();
+                    //var user = _db.Users.Where(x => x.UserId == userId).FirstOrDefault();
                     //user.UserToken = null;
                     //user.UserStatus = false;
-                    //context.SaveChanges();
+                    //_db.SaveChanges();
                     return true;
                 }
                 catch (Exception)

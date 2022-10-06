@@ -15,12 +15,12 @@ namespace Travel.Data.Repositories
 {
     public class ResNews: INews
     {
-        private readonly TravelContext context;
+        private readonly TravelContext _db;
         private  Banner banner;
         private Notification message, _message;
-        public ResNews(TravelContext _context)
+        public ResNews(TravelContext db)
         {
-            context = _context;
+            _db = db;
             banner =  new Banner();
             message = new Notification();
         }
@@ -37,8 +37,8 @@ namespace Travel.Data.Repositories
                     var isActive = true;
                     banner.Id = Id;
                     banner.IsActive = isActive;
-                    context.Banners.Add(banner);
-                    context.SaveChanges();
+                    _db.Banners.Add(banner);
+                    _db.SaveChanges();
                     int i = 0;
                     foreach (var file in files)
                     {
@@ -50,8 +50,8 @@ namespace Travel.Data.Repositories
                         }
                         else
                         {
-                            context.Images.Add(image);
-                            context.SaveChanges();
+                            _db.Images.Add(image);
+                            _db.SaveChanges();
                             message.Messenge = "Upload Banners thành công !";
                             message.DateTime = DateTime.Now;
                             message.Type = "Success";
