@@ -8,11 +8,18 @@ import { TablesComponent } from '../../pages/tables/tables.component';
 import { BannerComponent } from '../../pages/banner/banner.component';
 
 
+import { ListProvinceComponent } from 'src/app/pages/Location/province/list-province/list-province.component';
+import { ItemProvinceComponent } from 'src/app/pages/Location/province/item-province/item-province.component';
+
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'tables',         component: TablesComponent },
     { path: 'icons',          component: IconsComponent },
     { path: 'maps',           component: MapsComponent },
-    { path: 'banner',         component: BannerComponent }
+
+    { path: 'banner',         component: BannerComponent },
+
+    { path: 'list-province',  component: ListProvinceComponent },
+    { path: 'item-province',  component: ItemProvinceComponent },
 ];

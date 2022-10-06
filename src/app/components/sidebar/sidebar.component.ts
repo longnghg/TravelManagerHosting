@@ -14,8 +14,8 @@ export const ROUTES: RouteInfo[] = [
     { path: '/user-profile', title: 'User profile',  icon:'ni-single-02 text-yellow', class: '' },
     { path: '/tables', title: 'Tables',  icon:'ni-bullet-list-67 text-red', class: '' },
     { path: '/banner', title: 'Banner',  icon:'ni-bullet-list-67 text-red', class: '' },
-
-];
+    { path: '/list-province', title: 'Province',  icon:'ni-bullet-list-67 text-red', class: '' },
+  ];
 
 @Component({
   selector: 'app-sidebar',

@@ -20,6 +20,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 
+
+import { ListWardComponent } from './pages/Location/ward/list-ward/list-ward.component';
+import { ItemWardComponent } from './pages/Location/ward/item-ward/item-ward.component';
+
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -43,7 +47,11 @@ import { ComponentsModule } from './components/components.module';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    AuthLayoutComponent
+    AuthLayoutComponent,
+
+
+    ListWardComponent,
+    ItemWardComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
