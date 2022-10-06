@@ -157,7 +157,7 @@ namespace TravelApi.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [Route("Update-Ward")]
+        [Route("update-ward")]
         public object UpdateWard([FromBody] JObject frmData)
         {
             var ward = location.SetDataWard(frmData, ref message);
