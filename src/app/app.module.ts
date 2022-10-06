@@ -23,6 +23,8 @@ import { ComponentsModule } from './components/components.module';
 
 
 
+
+
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -47,7 +49,6 @@ import { ComponentsModule } from './components/components.module';
     AppComponent,
     AdminLayoutComponent,
     AuthLayoutComponent,
-
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

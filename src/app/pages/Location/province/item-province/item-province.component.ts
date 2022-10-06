@@ -25,6 +25,8 @@ export class ItemProvinceComponent implements OnInit {
   }
 
   ngOnChanges(): void {
+
+    // this.resProvince = Object.assign({}, this.resParent)
     this.resProvince = this.resParent
     console.log(this.resProvince);
     console.log(this.type);

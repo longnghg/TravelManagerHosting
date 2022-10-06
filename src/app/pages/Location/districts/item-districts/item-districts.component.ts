@@ -1,40 +1,40 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NotificationService } from "../../../../services_API/notification.service";
 import { ConfigService } from "../../../../services_API/config.service";
-import { WardService } from '../../../../services_API/ward.service';
+import { DistrictService } from '../../../../services_API/district.service';
 import { LocationModel } from "../../../../models/location.model";
 import { ResponsiveModel } from "../../../../models/responsiveModels/responsive.model";
-
 @Component({
-  selector: 'app-item-ward',
-  templateUrl: './item-ward.component.html',
-  styleUrls: ['./item-ward.component.scss']
+  selector: 'app-item-districts',
+  templateUrl: './item-districts.component.html',
+  styleUrls: ['./item-districts.component.scss']
 })
-export class ItemWardComponent implements OnInit {
+export class ItemDistrictsComponent implements OnInit {
 
-  response: ResponsiveModel
+  respon: ResponsiveModel
   @Input() resParent: LocationModel
   @Input() type: string
-  resWard: LocationModel
-  constructor(private wardService: WardService, private notificationService: NotificationService,
+  resDistrict: LocationModel
+
+  constructor(private districtService: DistrictService, private notificationService: NotificationService,
     private configService: ConfigService) { }
 
   ngOnInit(): void {
 
-  }
 
+  }
   ngOnChanges(): void {
-    this.resWard = this.resParent
+    this.resDistrict = this.resParent
     if (this.type == "insert") {
-      this.resWard.Name = ""
+      this.resDistrict.Name = ""
     }
   }
 
-
   save(){
+
     if (this.type == "insert") {
-      this.wardService.InsertWard(this.resWard).subscribe(res =>{
-        this.response = res
+      this.districtService.InsertDistrict(this.resDistrict).subscribe(res =>{
+        this.respon = res
         this.notificationService.handleAlertObj(res.notification)
 
       }, error => {
@@ -43,8 +43,8 @@ export class ItemWardComponent implements OnInit {
       })
     }
     else{
-      this.wardService.UpdateWard(this.resWard).subscribe(res =>{
-        this.response = res
+      this.districtService.UpdateDistrict(this.resDistrict).subscribe(res =>{
+        this.respon = res
         this.notificationService.handleAlertObj(res.notification)
 
       }, error => {
@@ -54,6 +54,8 @@ export class ItemWardComponent implements OnInit {
     }
 
 
+
   }
+
 
 }

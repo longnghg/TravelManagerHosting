@@ -19,8 +19,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ListProvinceComponent } from '../../pages/Location/province/list-province/list-province.component';
 import { ItemProvinceComponent } from '../../pages/Location/province/item-province/item-province.component';
 
+import { ListDistrictsComponent } from '../../pages/Location/districts/list-districts/list-districts.component';
+import { ItemDistrictsComponent } from '../../pages/Location/districts/item-districts/item-districts.component';
+
 import { ListWardComponent } from '../../pages/Location/ward/list-ward/list-ward.component';
 import { ItemWardComponent } from '../../pages/Location/ward/item-ward/item-ward.component';
+
 
 import { AgGridModule } from 'ag-grid-angular';
 
@@ -47,10 +51,12 @@ import { AgGridModule } from 'ag-grid-angular';
 
     ListProvinceComponent,
     ItemProvinceComponent,
+
+    ListDistrictsComponent,
+    ItemDistrictsComponent,
+
     ListWardComponent,
     ItemWardComponent
-
-
 
   ]
 })
