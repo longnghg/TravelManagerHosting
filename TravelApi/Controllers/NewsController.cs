@@ -15,11 +15,11 @@ namespace TravelApi.Controllers
     public class NewsController : Controller
     {
         private INews news;
-        private Responsive res;
+        private Response res;
         public NewsController(INews _news)
         {
             news = _news;
-            res = new Responsive();
+            res = new Response();
         }
 
         [HttpPost]

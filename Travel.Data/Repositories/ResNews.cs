@@ -24,6 +24,7 @@ namespace Travel.Data.Repositories
             banner =  new Banner();
             message = new Notification();
         }
+
         public Notification UploadBanner(IFormCollection frmdata, ICollection<IFormFile> files)
         {
             try
@@ -66,6 +67,11 @@ namespace Travel.Data.Repositories
             }
         }
 
-    
+        public Response GetBanners()
+        {
+            throw new NotImplementedException();
+        }
+        // code ở đây
+
     }
 }
