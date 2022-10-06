@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { ClipboardModule } from 'ngx-clipboard';
 import { ComponentsModule } from '../../components/components.module'
 
-
+import { BannerComponent } from '../../pages/banner/banner.component';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../pages/dashboard/dashboard.component';
 import { IconsComponent } from '../../pages/icons/icons.component';
@@ -37,7 +37,8 @@ import { AgGridModule } from 'ag-grid-angular';
     UserProfileComponent,
     TablesComponent,
     IconsComponent,
-    MapsComponent
+    MapsComponent,
+    BannerComponent
   ]
 })
 

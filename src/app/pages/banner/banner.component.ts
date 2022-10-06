@@ -1,0 +1,34 @@
+import { Component, OnInit } from '@angular/core';
+import { BannerService } from "../../services_API/banner.service";
+
+@Component({
+  selector: 'app-banner',
+  templateUrl: './banner.component.html',
+  styleUrls: ['./banner.component.scss']
+})
+export class BannerComponent implements OnInit {
+
+  constructor(private _bannerService: BannerService) {  }
+  files: any
+  ngOnInit(): void {
+  }
+
+  changeImg(e){
+    this.files = e
+    console.log(this.files.path[0].files);
+  }
+
+  save(){
+    var files = this.files.path[0].files
+    var file = new FormData();
+                for (let index = 0; index < files.length; index++) {
+                  file.append('files', files[index]);
+                }
+                  console.log(this.files.path[0].files)
+                  this._bannerService.UploadBanner(file).subscribe(res =>{
+                  console.log(res);
+      alert("Thêm thành công")
+    })
+  }
+
+}
