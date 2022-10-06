@@ -10,6 +10,8 @@ import { BannerComponent } from '../../pages/banner/banner.component';
 
 import { ListProvinceComponent } from 'src/app/pages/Location/province/list-province/list-province.component';
 import { ItemProvinceComponent } from 'src/app/pages/Location/province/item-province/item-province.component';
+import { ListDistrictsComponent } from '../../pages/Location/districts/list-districts/list-districts.component';
+import { ItemDistrictsComponent } from '../../pages/Location/districts/item-districts/item-districts.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -22,4 +24,6 @@ export const AdminLayoutRoutes: Routes = [
 
     { path: 'list-province',  component: ListProvinceComponent },
     { path: 'item-province',  component: ItemProvinceComponent },
+    { path: 'list-district',  component: ListDistrictsComponent },
+    { path: 'item-district',  component: ItemDistrictsComponent },
 ];

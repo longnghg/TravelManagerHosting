@@ -24,6 +24,8 @@ import { ComponentsModule } from './components/components.module';
 import { ListWardComponent } from './pages/Location/ward/list-ward/list-ward.component';
 import { ItemWardComponent } from './pages/Location/ward/item-ward/item-ward.component';
 
+
+
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -51,7 +53,8 @@ import { ItemWardComponent } from './pages/Location/ward/item-ward/item-ward.com
 
 
     ListWardComponent,
-    ItemWardComponent
+    ItemWardComponent,
+
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
