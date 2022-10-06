@@ -10,12 +10,12 @@ using Travel.Shared.ViewModels;
 
 namespace Travel.Data.Repositories
 {
-    public class ResLocation : ILocation
+    public class LocationRes : ILocation
     {
         private readonly TravelContext _db;
         private Response res;
         private Notification message;
-        public ResLocation(TravelContext db)
+        public LocationRes(TravelContext db)
         {
             _db = db;
             res = new Response();

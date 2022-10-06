@@ -13,12 +13,12 @@ using Travel.Shared.ViewModels;
 
 namespace Travel.Data.Repositories
 {
-    public class ResNews: INews
+    public class NewsRes: INews
     {
         private readonly TravelContext _db;
         private  Banner banner;
         private Notification message, _message;
-        public ResNews(TravelContext db)
+        public NewsRes(TravelContext db)
         {
             _db = db;
             banner =  new Banner();

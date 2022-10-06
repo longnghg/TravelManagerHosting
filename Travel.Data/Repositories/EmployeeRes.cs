@@ -11,12 +11,12 @@ using Travel.Shared.ViewModels;
 
 namespace Travel.Data.Repositories
 {
-    public class ResEmployee : IEmployee
+    public class EmployeeRes : IEmployee
     {
         private readonly TravelContext _db;
         private Notification message;
         private Response res;
-        public ResEmployee(TravelContext db)
+        public EmployeeRes(TravelContext db)
         {
             _db = db;
             message = new Notification();
