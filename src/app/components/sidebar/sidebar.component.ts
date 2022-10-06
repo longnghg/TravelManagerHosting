@@ -16,7 +16,8 @@ export const ROUTES: RouteInfo[] = [
     { path: '/banner', title: 'Banner',  icon:'ni-bullet-list-67 text-red', class: '' },
     { path: '/list-province', title: 'Province',  icon:'ni-bullet-list-67 text-red', class: '' },
     { path: '/list-district', title: 'District',  icon:'ni-bullet-list-67 text-red', class: '' },
-  ];
+
+    { path: '/list-ward', title: 'Ward',  icon:'ni-bullet-list-67 text-red', class: '' },]
 
 @Component({
   selector: 'app-sidebar',

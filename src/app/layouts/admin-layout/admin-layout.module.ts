@@ -18,8 +18,15 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // import { ToastrModule } from 'ngx-toastr';
 import { ListProvinceComponent } from '../../pages/Location/province/list-province/list-province.component';
 import { ItemProvinceComponent } from '../../pages/Location/province/item-province/item-province.component';
+<<<<<<< HEAD
 import { ListDistrictsComponent } from '../../pages/Location/districts/list-districts/list-districts.component';
 import { ItemDistrictsComponent } from '../../pages/Location/districts/item-districts/item-districts.component';
+=======
+
+import { ListWardComponent } from '../../pages/Location/ward/list-ward/list-ward.component';
+import { ItemWardComponent } from '../../pages/Location/ward/item-ward/item-ward.component';
+
+>>>>>>> 810af9fa62b63dc011143592b5ef631374986f77
 import { AgGridModule } from 'ag-grid-angular';
 
 
@@ -45,8 +52,15 @@ import { AgGridModule } from 'ag-grid-angular';
 
     ListProvinceComponent,
     ItemProvinceComponent,
+<<<<<<< HEAD
     ListDistrictsComponent,
     ItemDistrictsComponent
+=======
+    ListWardComponent,
+    ItemWardComponent
+
+
+>>>>>>> 810af9fa62b63dc011143592b5ef631374986f77
 
   ]
 })
