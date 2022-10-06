@@ -12,11 +12,16 @@ export class ProvinceService{
 
   GetProvince()
   {
-      return this.http.get<ResponsiveModel>( this.url.apiUrl + "/api/Location/getprovince");
+      return this.http.get<ResponsiveModel>( this.url.apiUrl + "/api/Location/get-province");
   }
 
   InsertProvince(data: any)
   {
-      return this.http.post<ResponsiveModel>( this.url.apiUrl + "/api/Location/insertprovince", data);
+      return this.http.post<ResponsiveModel>( this.url.apiUrl + "/api/Location/insert-province", data);
+  }
+
+  UpdateProvince(data: any)
+  {
+      return this.http.post<ResponsiveModel>( this.url.apiUrl + "/api/Location/update-province", data);
   }
 }

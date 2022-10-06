@@ -13,20 +13,21 @@ import { ResponsiveModel } from "../../../../models/responsiveModels/responsive.
 export class ListProvinceComponent implements OnInit {
 
   resProvince: LocationModel[]
-  responsive: ResponsiveModel
+  response: ResponsiveModel
+  child: LocationModel
 
   constructor(private provinceService: ProvinceService, private notificationService: NotificationService,
      private configService: ConfigService) { }
   ngOnInit(): void {
     this.provinceService.GetProvince().subscribe(res => {
-      this.responsive = res
+      this.response = res
 
-      if(this.responsive.notification.type == "Error")
+      if(this.response.notification.type == "Error")
       {
         this.notificationService.handleAlertObj(res.notification)
       }
 
-      this.resProvince = JSON.parse(this.responsive.content)
+      this.resProvince = JSON.parse(this.response.content)
       for (let index = 0; index < this.resProvince.length; index++) {
 
       }
@@ -36,6 +37,12 @@ export class ListProvinceComponent implements OnInit {
 
   PageItem(){
     document.location.assign(this.configService.clientUrl + "/#/item-province")
+  }
+
+
+  childData(data: LocationModel){
+    document.location.assign(this.configService.clientUrl + "/#/item-province")
+    this.child = data
   }
 
 }
