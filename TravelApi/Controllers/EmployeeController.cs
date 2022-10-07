@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +24,22 @@ namespace TravelApi.Controllers
             res = new Response();
         }
 
+        [HttpPost]
+        [Authorize]
+        [Route("get-employees")]
+        public object GetEmployees([FromBody] JObject frmData)
+        {
+            employee.SetDataEmployee(frmData, ref message);
+            res = employee.GetEmployees();
+            return Ok(res);
+        }
+
         [HttpGet]
         [Authorize]
-        [Route("GetEmployees")]
-        public object GetEmployees()
+        [Route("test")]
+        public object Test()
         {
-            res = employee.GetEmployees();
+            res = employee.Test();
             return Ok(res);
         }
     }
