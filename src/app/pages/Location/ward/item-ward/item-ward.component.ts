@@ -3,7 +3,7 @@ import { NotificationService } from "../../../../services_API/notification.servi
 import { ConfigService } from "../../../../services_API/config.service";
 import { WardService } from '../../../../services_API/ward.service';
 import { LocationModel } from "../../../../models/location.model";
-import { ResponsiveModel } from "../../../../models/responsiveModels/responsive.model";
+import { ResponseModel } from "../../../../models/responsiveModels/response.model";
 
 @Component({
   selector: 'app-item-ward',
@@ -12,7 +12,7 @@ import { ResponsiveModel } from "../../../../models/responsiveModels/responsive.
 })
 export class ItemWardComponent implements OnInit {
 
-  response: ResponsiveModel
+  response: ResponseModel
   @Input() resParent: LocationModel
   @Input() type: string
   resWard: LocationModel

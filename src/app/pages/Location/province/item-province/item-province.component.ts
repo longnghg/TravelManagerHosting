@@ -3,7 +3,7 @@ import { NotificationService } from "../../../../services_API/notification.servi
 import { ConfigService } from "../../../../services_API/config.service";
 import { ProvinceService } from 'src/app/services_API/province.service';
 import { LocationModel } from "../../../../models/location.model";
-import { ResponsiveModel } from "../../../../models/responsiveModels/responsive.model";
+import { ResponseModel } from "../../../../models/responsiveModels/response.model";
 
 @Component({
   selector: 'app-item-province',
@@ -13,7 +13,7 @@ import { ResponsiveModel } from "../../../../models/responsiveModels/responsive.
 export class ItemProvinceComponent implements OnInit {
 
   // nếu mà show item thôi thì LocationModel, còn nếu show danh sách thì LocationModel[] oke
-  response: ResponsiveModel
+  response: ResponseModel
   @Input() resParent: LocationModel
   @Input() type: string
   resProvince: LocationModel

@@ -3,7 +3,7 @@ import { NotificationService } from "../../../../services_API/notification.servi
 import { ConfigService } from "../../../../services_API/config.service";
 import { DistrictService } from '../../../../services_API/district.service';
 import { LocationModel } from "../../../../models/location.model";
-import { ResponsiveModel } from "../../../../models/responsiveModels/responsive.model";
+import { ResponseModel } from "../../../../models/responsiveModels/response.model";
 @Component({
   selector: 'app-item-districts',
   templateUrl: './item-districts.component.html',
@@ -11,7 +11,7 @@ import { ResponsiveModel } from "../../../../models/responsiveModels/responsive.
 })
 export class ItemDistrictsComponent implements OnInit {
 
-  respon: ResponsiveModel
+  respon: ResponseModel
   @Input() resParent: LocationModel
   @Input() type: string
   resDistrict: LocationModel

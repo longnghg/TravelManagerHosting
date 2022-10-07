@@ -1,6 +1,7 @@
 export interface RoleModel {
   Id: number
   Name: string
+  Name_vi: string
   Description: string
   IsDelete: boolean
 }

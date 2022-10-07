@@ -4,7 +4,7 @@ import { ConfigService } from "../../services_API/config.service";
 import { NotificationService } from "../../services_API/notification.service";
 import { AuthenticationModel } from "../../models/authentication.model";
 import { RoleModel, RoleTitle } from "../../models/role.model";
-import { ResponsiveModel } from "../../models/responsiveModels/responsive.model";
+import { ResponseModel } from "../../models/responsiveModels/response.model";
 
 
 @Component({
@@ -14,7 +14,7 @@ import { ResponsiveModel } from "../../models/responsiveModels/responsive.model"
 })
 export class LoginComponent implements OnInit {
   resAthentication: AuthenticationModel
-  responsive: ResponsiveModel
+  response: ResponseModel
   token: string
   isloading = false
   email = "test1@gmail.com"
@@ -25,12 +25,12 @@ export class LoginComponent implements OnInit {
   Login(){
     this.isloading = true
     this.authentication.login(this.email, this.password).subscribe(res=>{
-      this.responsive = res
+      this.response = res
 
       this.notificationService.handleAlertObj(res.notification)
-      if(this.responsive.notification.type == "Success")
+      if(this.response.notification.type == "Success")
       {
-        this.resAthentication = JSON.parse(this.responsive.content)
+        this.resAthentication = JSON.parse(this.response.content)
         localStorage.setItem("token", this.resAthentication.Token)
         localStorage.setItem("currentUser", JSON.stringify(this.resAthentication))
         document.location.assign("http://localhost:4200/#/dashboard")

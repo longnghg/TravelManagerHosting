@@ -5,7 +5,7 @@ import { WardService } from "../../../../services_API/ward.service";
 import { ProvinceService } from "../../../../services_API/province.service";
 import { DistrictService } from "../../../../services_API/district.service";
 import { LocationModel } from "../../../../models/location.model";
-import { ResponsiveModel } from "../../../../models/responsiveModels/responsive.model";
+import { ResponseModel } from "../../../../models/responsiveModels/response.model";
 
 
 @Component({
@@ -18,7 +18,7 @@ export class ListWardComponent implements OnInit {
   resWard: LocationModel[]
   resProvince: LocationModel[]
   resDistrict: LocationModel[]
-  response: ResponsiveModel
+  response: ResponseModel
   child: LocationModel
   type: string
 

@@ -3,7 +3,7 @@ import { NotificationService } from "../../../../services_API/notification.servi
 import { ConfigService } from "../../../../services_API/config.service";
 import { ProvinceService } from 'src/app/services_API/province.service';
 import { LocationModel } from "../../../../models/location.model";
-import { ResponsiveModel } from "../../../../models/responsiveModels/responsive.model";
+import { ResponseModel } from "../../../../models/responsiveModels/response.model";
 
 
 @Component({
@@ -14,7 +14,7 @@ import { ResponsiveModel } from "../../../../models/responsiveModels/responsive.
 export class ListProvinceComponent implements OnInit {
 
   resProvince: LocationModel[]
-  response: ResponsiveModel
+  response: ResponseModel
   child: LocationModel
   type: string
   constructor(private provinceService: ProvinceService, private notificationService: NotificationService,

@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ConfigService } from "./config.service";
-import { ResponsiveModel } from "../models/responsiveModels/responsive.model";
+import { ResponseModel } from "../models/responsiveModels/response.model";
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +12,7 @@ export class AuthenticationService{
 
   login(email: any, password: any)
   {
-      return this.http.post<ResponsiveModel>( this.url.apiUrl + "/api/Authentication/EmpLogin", {email, password});
+      return this.http.post<ResponseModel>( this.url.apiUrl + "/api/Authentication/EmpLogin", {email, password});
   }
 
   logOut()

@@ -1,5 +1,4 @@
 export interface EmployeeModel {
-  Index: number
   Id: string
   Name: string
   Email: string
