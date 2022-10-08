@@ -78,7 +78,7 @@ namespace Travel.Data.Repositories
 
                 if (result.Count() > 0)
                 {
-                    res.Content = JsonSerializer.Serialize(result);
+                    res.Content = result;
                 }
                 else
                 {
