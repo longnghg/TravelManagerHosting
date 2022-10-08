@@ -29,7 +29,7 @@ namespace Travel.Data.Repositories
                 var result = _db.Roles.Where(x => x.IsDelete == false).ToList();
                 if (result.Count() > 0)
                 {
-                    res.Content = JsonSerializer.Serialize(result);
+                    res.Content = result;
                 }
                 else
                 {

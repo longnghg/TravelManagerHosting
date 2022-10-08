@@ -80,7 +80,7 @@ namespace TravelApi.Controllers
                                 auth.Image = result.Image;
 
 
-                                res.Content = JsonSerializer.Serialize(auth);
+                                res.Content = auth;
                                 res.Notification.DateTime = DateTime.Now;
                                 res.Notification.Description = null;
                                 res.Notification.Messenge = "Đăng nhập thành công !";
