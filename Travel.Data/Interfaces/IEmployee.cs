@@ -13,6 +13,5 @@ namespace Travel.Data.Interfaces
     {
         Employee SetDataEmployee(JObject frmData, ref Notification _message);
         Response GetEmployees();
-        Response Test();
     }
 }

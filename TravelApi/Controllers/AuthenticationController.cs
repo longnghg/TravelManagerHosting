@@ -65,6 +65,7 @@ namespace TravelApi.Controllers
                                 var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
                                 var token = new JwtSecurityToken(configuration["Token:Issuer"],
                                     configuration["Token:Audience"], claim, expires: DateTime.UtcNow.AddMinutes(60),
+                                    //configuration["Token:Audience"], claim, expires: DateTime.UtcNow.AddMinutes(525600),
                                     signingCredentials: signIn);
 
                                 var tokenJWT = new JwtSecurityTokenHandler().WriteToken(token);

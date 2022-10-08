@@ -33,6 +33,8 @@ namespace TravelApi.Extensions
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services
+              .AddScoped<IRole, RoleRes>();
+            services
               .AddScoped<IEmployee, EmployeeRes>();
             services
                .AddScoped<ILocation, LocationRes>();

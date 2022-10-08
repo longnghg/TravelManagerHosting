@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,26 +11,24 @@ namespace TravelApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeeController : ControllerBase
+    public class RoleController : Controller
     {
-        private IEmployee employee;
+        private IRole role;
         private Notification message;
         private Response res;
-        public EmployeeController(IEmployee _employee)
+        public RoleController(IRole _role)
         {
-            employee = _employee;
+            role = _role;
             res = new Response();
         }
 
-        [HttpPost]
-        [Authorize]
-        [Route("get-employees")]
-        public object GetEmployees([FromBody] JObject frmData)
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("view-all")]
+        public object ViewAll()
         {
-            employee.SetDataEmployee(frmData, ref message);
-            res = employee.GetEmployees();
+            res = role.ViewAll();
             return Ok(res);
         }
-
     }
 }
