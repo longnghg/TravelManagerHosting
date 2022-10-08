@@ -21,6 +21,11 @@ namespace Travel.Shared.ViewModels.Travel
         private string idSchedule;
 
         private Schedule schedule;
+        private long beginDate;
+        private long endDate;
+
+        private string idTour;
+        private string nameTour;
 
         public string Id { get => id; set => id = value; }
         public string Description { get => description; set => description = value; }
@@ -31,5 +36,9 @@ namespace Travel.Shared.ViewModels.Travel
         public bool IsDelete { get => isDelete; set => isDelete = value; }
         public Schedule Schedule { get => schedule; set => schedule = value; }
         public string IdSchedule { get => idSchedule; set => idSchedule = value; }
+        public long BeginDate { get => beginDate; set => beginDate = value; }
+        public long EndDate { get => endDate; set => endDate = value; }
+        public string IdTour { get => idTour; set => idTour = value; }
+        public string NameTour { get => nameTour; set => nameTour = value; }
     }
 }
