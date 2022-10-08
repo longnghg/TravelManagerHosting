@@ -15,6 +15,9 @@
           <h3 class="mb-0">Tỉnh</h3>
         </div>
         <div class="col text-right">
+          <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="childData(null, 'insert')">
+            Thêm
+          </button>
         </div>
       </div>
     </div>
@@ -23,27 +26,27 @@
       <table class="table align-items-center table-flush">
         <thead class="thead-light">
           <tr>
+            <th scope="col">STT</th>
             <th scope="col">Id</th>
             <th scope="col">Name</th>
-            <th scope="col"></th>
             <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of resProvince; let i=index">
+          <tr *ngFor="let item of resProvince let i=index">
             <th scope="row">
-              {{item.Id}}
+              <strong>{{i}}</strong>
+            </th>
+            <th>
+              {{item.id}}
             </th>
             <td>
-              {{item.Name}}
+              {{item.name}}
             </td>
             <td>
               <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="childData(item, 'detail')">
                 Chi tiết
               </button>
-            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="childData(item, 'insert')">
-              Thêm
-            </button>
             </td>
             <td>
             </td>

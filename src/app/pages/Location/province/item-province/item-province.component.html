@@ -1,5 +1,5 @@
 
-<div class="card-body" *ngIf="resParent">
+<div class="card-body" *ngIf="resProvince">
   <form>
     <h6 class="heading-small text-muted mb-4">Province</h6>
     <div class="pl-lg-4">
@@ -7,16 +7,7 @@
         <div class="col-lg-6">
           <div class="form-group">
             <label class="form-control-label">Name</label>
-            <input type="text" [(ngModel)]= "resProvince.Name" class="form-control" placeholder="" value="">
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <div class="form-group">
-            <label class="form-control-label">Thành phố</label>
-            <select name="cars" id="cars">
-              <option value="volvo">Hồ Chí Minh</option>
-              <option value="saab">Long An</option>
-            </select>
+            <input type="text" [(ngModel)]= "resProvince.name" class="form-control" placeholder="Tên thành phố/ tỉnh" value="">
           </div>
         </div>
       </div>
