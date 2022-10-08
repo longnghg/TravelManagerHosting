@@ -51,8 +51,8 @@
             <div>
               <ng-container *ngIf="column.filter == 'avatar'; else elseType">
                 <div class="media align-items-center">
-                  <a href="#" class="avatar rounded-circle mr-3">
-                    <img alt="Image placeholder" src="assets/img/theme/bootstrap.jpg">
+                  <a href="javascript:void(0)" class="avatar rounded-circle mr-3">
+                    <img  [src]="row.Image ? row.Image : '../../../assets/img/employees/unknown.png'">
                   </a>
                   <div class="media-body">
                     <span class="mb-0 text-sm">{{row[column.field]}}</span>

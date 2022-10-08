@@ -26,7 +26,7 @@ export class ItemDistrictsComponent implements OnInit {
   ngOnChanges(): void {
     this.resDistrict = this.resParent
     if (this.type == "insert") {
-      this.resDistrict.Name = ""
+      this.resDistrict.name = ""
     }
   }
 

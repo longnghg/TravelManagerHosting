@@ -1,8 +1,8 @@
 export interface CarModel{
-  Id: string
-  LiscensePlate: string
-  Status: number
-  AmountSeat: number
-  Driver: string
-  IdEmployee: number
+  id: string
+  liscensePlate: string
+  status: number
+  amountSeat: number
+  driver: string
+  idEmployee: number
 }

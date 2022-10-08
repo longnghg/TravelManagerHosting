@@ -30,8 +30,10 @@ export class LoginComponent implements OnInit {
       this.notificationService.handleAlertObj(res.notification)
       if(this.response.notification.type == "Success")
       {
-        this.resAthentication = JSON.parse(this.response.content)
-        localStorage.setItem("token", this.resAthentication.Token)
+        this.resAthentication = this.response.content
+        console.log(this.resAthentication);
+
+        localStorage.setItem("token", this.resAthentication.token)
         localStorage.setItem("currentUser", JSON.stringify(this.resAthentication))
         document.location.assign("http://localhost:4200/#/dashboard")
       }

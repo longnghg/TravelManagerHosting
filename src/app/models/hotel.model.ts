@@ -1,14 +1,14 @@
 export interface HotelModel{
-  Id: string
-  IdContract: string
-  Name: string
-  Phone: string
-  Address: string
-  Star: number
-  SingleRoomPrice: number
-  DoubleRoomPrice: number
-  QuantityDBR: number
-  QuantitySR: number
-  ModifyBy: string
-  ModifyDate: number
+  id: string
+  idContract: string
+  name: string
+  phone: string
+  address: string
+  star: number
+  singleRoomPrice: number
+  doubleRoomPrice: number
+  quantityDBR: number
+  quantitySR: number
+  modifyBy: string
+  modifyDate: number
 }

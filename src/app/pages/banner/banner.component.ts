@@ -15,7 +15,6 @@ export class BannerComponent implements OnInit {
 
   changeImg(e){
     this.files = e
-    console.log(this.files.path[0].files);
   }
 
   save(){
@@ -24,11 +23,8 @@ export class BannerComponent implements OnInit {
                 for (let index = 0; index < files.length; index++) {
                   file.append('files', files[index]);
                 }
-                  console.log(this.files.path[0].files)
-                  this._bannerService.UploadBanner(file).subscribe(res =>{
-                  console.log(res);
-      alert("Thêm thành công")
-    })
+                this._bannerService.UploadBanner(file).subscribe(res =>{
+                })
   }
 
 }

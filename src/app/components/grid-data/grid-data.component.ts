@@ -23,6 +23,7 @@ export class GridDataComponent implements OnInit {
     pageNumber: this.pageNumber,
     pageSize: this.pageSize,
   }
+
   paginationTmp: PaginationModel
 
   constructor(){}

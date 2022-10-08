@@ -26,7 +26,7 @@ export class ItemWardComponent implements OnInit {
   ngOnChanges(): void {
     this.resWard = this.resParent
     if (this.type == "insert") {
-      this.resWard.Name = ""
+      this.resWard.name = ""
     }
   }
 

@@ -1,7 +1,7 @@
 export interface AuthenticationModel{
-  Token: string
-  RoleId: number
-  Id: string
-  Name: string
-  Image: string
+  token: string
+  roleId: number
+  id: string
+  name: string
+  image: string
 }

@@ -1,10 +1,10 @@
 export interface TourBookingDetailModel{
-  Id: string
-  Baby: number
-  Child: number
-  Adult: number
-  Pincode: string
-  Status: number
-  IsCalled: boolean
-  CallDate: number
+  id: string
+  baby: number
+  child: number
+  adult: number
+  pincode: string
+  status: number
+  isCalled: boolean
+  callDate: number
 }

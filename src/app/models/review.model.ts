@@ -1,6 +1,6 @@
 export interface ReviewModel{
-  Id: string
-  Rating: number
-  DateTime: number
-  Comment: string
+  id: string
+  rating: number
+  dateTime: number
+  comment: string
 }

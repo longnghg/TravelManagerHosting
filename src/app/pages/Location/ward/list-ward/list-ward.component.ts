@@ -36,10 +36,10 @@ export class ListWardComponent implements OnInit {
 
       }
 
-      this.resProvince = JSON.parse(this.response.content)
+      this.resProvince = this.response.content
 
       if (this.resProvince) {
-        this.resProvince[0].IdProvince = this.resProvince[0].Id
+        this.resProvince[0].idProvince = this.resProvince[0].id
         this.districtService.GetDistrict(this.resProvince[0]).subscribe(res => {
           this.response = res
 
@@ -48,11 +48,11 @@ export class ListWardComponent implements OnInit {
             this.notificationService.handleAlertObj(res.notification)
           }
 
-          this.resDistrict = JSON.parse(this.response.content)
+          this.resDistrict = this.response.content
 
 
           if (this.resDistrict) {
-            this.resDistrict[0].IdDistrict =  this.resDistrict[0].Id
+            this.resDistrict[0].idDistrict =  this.resDistrict[0].id
           this.wardService.GetWard(this.resDistrict[0]).subscribe(res => {
             this.response = res
 
@@ -61,7 +61,7 @@ export class ListWardComponent implements OnInit {
               this.notificationService.handleAlertObj(res.notification)
             }
 
-            this.resWard = JSON.parse(this.response.content)
+            this.resWard = this.response.content
           })
           }
         })
@@ -82,12 +82,12 @@ export class ListWardComponent implements OnInit {
           this.notificationService.handleAlertObj(res.notification)
         }
 
-        this.resDistrict = JSON.parse(this.response.content)
+        this.resDistrict = this.response.content
 
         if (this.resDistrict) {
           this.resDistrict.forEach(district => {
 
-            district.IdDistrict = district.Id
+            district.idDistrict = district.id
             this.wardService.GetWard(district).subscribe(res => {
               this.response = res
 
@@ -96,7 +96,7 @@ export class ListWardComponent implements OnInit {
                 this.notificationService.handleAlertObj(res.notification)
               }
 
-              this.resWard = JSON.parse(this.response.content)
+              this.resWard = this.response.content
 
             })
           });
@@ -120,7 +120,7 @@ export class ListWardComponent implements OnInit {
         this.notificationService.handleAlertObj(res.notification)
       }
 
-      this.resWard = JSON.parse(this.response.content)
+      this.resWard = this.response.content
 
     })
    }

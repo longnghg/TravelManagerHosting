@@ -1,9 +1,9 @@
 export interface TimeLineModel{
-  Id: string
-  Description: string
-  FromTime: number
-  ToTime: number
-  ModifyBy: string
-  ModifyDate: number
-  IsDelete: boolean
+  id: string
+  description: string
+  fromTime: number
+  toTime: number
+  modifyBy: string
+  modifyDate: number
+  isDelete: boolean
 }

@@ -22,8 +22,8 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
     this.currentUser = JSON.parse(localStorage.getItem("currentUser"))
     if(this.currentUser){
-      if(this.currentUser.Image){
-        this.img = this.configService.apiUrl + this.currentUser.Image
+      if(this.currentUser.image){
+        this.img = this.configService.apiUrl + this.currentUser.image
       }
     }
     console.log(this.currentUser);

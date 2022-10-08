@@ -8,20 +8,20 @@ import { ResponseModel } from "../models/responsiveModels/response.model";
 })
 
 export class DistrictService{
-  constructor(private http:HttpClient, private url:ConfigService){ }
+  constructor(private http:HttpClient, private configService:ConfigService){ }
 
   GetDistrict(data: any)
   {
-      return this.http.post<ResponseModel>( this.url.apiUrl + "/api/Location/get-district", data);
+      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/get-district", data);
   }
 
   InsertDistrict(data: any)
   {
-      return this.http.post<ResponseModel>( this.url.apiUrl + "/api/Location/insert-district", data);
+      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/insert-district", data);
   }
 
   UpdateDistrict(data: any)
   {
-      return this.http.post<ResponseModel>( this.url.apiUrl + "/api/Location/update-district", data);
+      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/update-district", data);
   }
 }

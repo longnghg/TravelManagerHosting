@@ -8,10 +8,10 @@ import { ResponseModel } from "../models/responsiveModels/response.model";
 })
 
 export class BannerService{
-  constructor(private http:HttpClient, private url:ConfigService){ }
+  constructor(private http:HttpClient, private configService:ConfigService){ }
 
     UploadBanner(data: any)
   {
-      return this.http.post<ResponseModel>(this.url.apiUrl + "/api/news/UploadBanner",data);
+      return this.http.post<ResponseModel>(this.configService.apiUrl + "/api/news/UploadBanner",data);
   }
 }

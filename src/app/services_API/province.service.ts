@@ -8,20 +8,20 @@ import { ResponseModel } from "../models/responsiveModels/response.model";
 })
 
 export class ProvinceService{
-  constructor(private http:HttpClient, private url:ConfigService){ }
+  constructor(private http:HttpClient, private configService:ConfigService){ }
 
   GetProvince()
   {
-      return this.http.get<ResponseModel>( this.url.apiUrl + "/api/Location/get-province");
+      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/get-province");
   }
 
   InsertProvince(data: any)
   {
-      return this.http.post<ResponseModel>( this.url.apiUrl + "/api/Location/insert-province", data);
+      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/insert-province", data);
   }
 
   UpdateProvince(data: any)
   {
-      return this.http.post<ResponseModel>( this.url.apiUrl + "/api/Location/update-province", data);
+      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/update-province", data);
   }
 }

@@ -27,7 +27,7 @@ export class ListProvinceComponent implements OnInit {
       {
         this.notificationService.handleAlertObj(res.notification)
       }
-      this.resProvince = JSON.parse(this.response.content)
+      this.resProvince = this.response.content
     })
   }
 

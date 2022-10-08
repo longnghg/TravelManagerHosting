@@ -1,7 +1,7 @@
 export interface LocationModel{
-  Id: string
-  Name: string
-  IdProvince?: string
-  IdDistrict?: string
-  IdWard?: string
+  id: string
+  name: string
+  idProvince?: string
+  idDistrict?: string
+  idWard?: string
 }

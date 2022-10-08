@@ -34,10 +34,10 @@ export class ListDistrictsComponent implements OnInit {
 
       }
 
-      this.resProvince = JSON.parse(this.response.content)
+      this.resProvince = this.response.content
 
       if (this.resProvince) {
-        this.resProvince[0].IdProvince = this.resProvince[0].Id
+        this.resProvince[0].idProvince = this.resProvince[0].id
         this.districtService.GetDistrict(this.resProvince[0]).subscribe(res => {
           this.response = res
 
@@ -46,7 +46,7 @@ export class ListDistrictsComponent implements OnInit {
             this.notificationService.handleAlertObj(res.notification)
           }
 
-          this.resDistrict = JSON.parse(this.response.content)
+          this.resDistrict = this.response.content
           console.log(this.resDistrict);
 
         })
@@ -68,7 +68,7 @@ export class ListDistrictsComponent implements OnInit {
          this.notificationService.handleAlertObj(res.notification)
        }
 
-       this.resDistrict = JSON.parse(this.response.content)
+       this.resDistrict = this.response.content
        console.log(this.resDistrict );
 
      })

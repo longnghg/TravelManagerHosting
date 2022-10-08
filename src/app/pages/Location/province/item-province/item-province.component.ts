@@ -31,7 +31,7 @@ export class ItemProvinceComponent implements OnInit {
     console.log(this.resProvince);
     console.log(this.type);
     if (this.type == "insert") {
-      this.resProvince.Name = ""
+      this.resProvince.name = ""
     }
   }
 

@@ -1,7 +1,7 @@
 import { NotificationModel } from "./notification.model";
 
 export interface ResponseModel{
-  content: string
+  content: any
   notification: NotificationModel
   totalResult: number
 }

@@ -1,8 +1,8 @@
 export interface ImageModel{
-  Id: string
-  Name: number
-  Size: number
-  FilePath: string
-  IdService: number
-  Extension: string
+  id: string
+  name: number
+  size: number
+  filePath: string
+  idService: number
+  extension: string
 }

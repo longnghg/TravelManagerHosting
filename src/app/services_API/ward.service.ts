@@ -8,20 +8,20 @@ import { ResponseModel } from "../models/responsiveModels/response.model";
 })
 
 export class WardService{
-  constructor(private http:HttpClient, private url:ConfigService){ }
+  constructor(private http:HttpClient, private configService:ConfigService){ }
 
   GetWard(data: any)
   {
-      return this.http.post<ResponseModel>( this.url.apiUrl + "/api/Location/get-ward", data);
+      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/get-ward", data);
   }
 
   InsertWard(data: any)
   {
-      return this.http.post<ResponseModel>( this.url.apiUrl + "/api/Location/insert-ward", data);
+      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/insert-ward", data);
   }
 
   UpdateWard(data: any)
   {
-      return this.http.post<ResponseModel>( this.url.apiUrl + "/api/Location/update-ward", data);
+      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/update-ward", data);
   }
 }

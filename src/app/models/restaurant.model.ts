@@ -1,9 +1,9 @@
 export interface RestaurantModel{
-  Id: string
-  IdContract: string
-  Name: string
-  Address: string
-  Phone: string
-  ModifyBy: string
-  ModifyDate: number
+  id: string
+  idContract: string
+  name: string
+  address: string
+  phone: string
+  modifyBy: string
+  modifyDate: number
 }

@@ -1,20 +1,20 @@
 export interface TourDetailModel{
-  Id: string
-  TourId: string
-  IdCostTour: string
-  PriceChild: number
-  PriceBaby: number
-  PriceAdult: number
-  PriceChildPromotion: number
-  PriceBabyPromotion: number
-  PriceAdultPromotion: number
-  DisplayPrice: number
-  DisplayPromotionPrice
-  Description: string
-  QuantityBooked: number
-  IsPromotion: boolean
-  TotalCostTour: number
-  Profit: number
-  Vat: number
-  FinalPrice: number
+  id: string
+  tourId: string
+  idCostTour: string
+  priceChild: number
+  priceBaby: number
+  priceAdult: number
+  priceChildPromotion: number
+  priceBabyPromotion: number
+  priceAdultPromotion: number
+  displayPrice: number
+  displayPromotionPrice
+  description: string
+  quantityBooked: number
+  isPromotion: boolean
+  totalCostTour: number
+  profit: number
+  vat: number
+  finalPrice: number
 }

@@ -1,10 +1,10 @@
 export interface PlaceModel{
-  Id: string
-  IdContract: string
-  Name: string
-  Address: string
-  Phone: string
-  PriceTicket: number
-  ModifyBy: string
-  ModifyDate: number
+  id: string
+  idContract: string
+  name: string
+  address: string
+  phone: string
+  priceTicket: number
+  modifyBy: string
+  modifyDate: number
 }
