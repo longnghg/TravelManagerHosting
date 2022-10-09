@@ -9,7 +9,7 @@ namespace Travel.Context.Models
     public class District
     {
         public Guid IdDistrict { get; set; }
-        public string Name { get; set; }
+        public string NameDistrict { get; set; }
         public Guid IdProvince { get; set; }
         public Province Province { get; set; }
         public ICollection<Ward> Ward { get; set; }

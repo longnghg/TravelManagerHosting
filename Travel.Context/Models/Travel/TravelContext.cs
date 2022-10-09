@@ -91,7 +91,7 @@ namespace Travel.Context.Models.Travel
 
             modelBuilder.Entity<TourbookingDetails>(entity =>
             {
-                entity.Property(e => e.pincode).HasMaxLength(10);
+                entity.Property(e => e.Pincode).HasMaxLength(10);
                 entity.Property(e => e.IdTourBooking).HasMaxLength(30);
             });
 
@@ -117,21 +117,21 @@ namespace Travel.Context.Models.Travel
                 entity.HasOne(e => e.District)
                 .WithMany(e => e.Ward)
                 .HasForeignKey(e => e.IdDistrict);
-                entity.Property(e => e.Name).HasMaxLength(30);
-                entity.Property(e => e.Name).IsRequired(true);
+                entity.Property(e => e.NameWard).HasMaxLength(30);
+                entity.Property(e => e.NameWard).IsRequired(true);
 
             });
 
             modelBuilder.Entity<Customer>(entity =>
             {
-                entity.Property(e => e.Name).HasMaxLength(100);
+                entity.Property(e => e.NameCustomer).HasMaxLength(100);
                 entity.Property(e => e.Address).HasMaxLength(100);
                 entity.Property(e => e.Phone).HasMaxLength(14);
                 entity.Property(e => e.Password).HasMaxLength(255);
                 entity.Property(e => e.FbToken).HasMaxLength(550);
                 entity.Property(e => e.AccessToken).HasMaxLength(550);
                 entity.Property(e => e.GoogleToken).HasMaxLength(550);
-                entity.Property(e => e.Name).IsRequired(true);
+                entity.Property(e => e.NameCustomer).IsRequired(true);
                 entity.Property(e => e.Email).HasMaxLength(100).IsRequired(true);
                 entity.Property(e => e.Phone).IsRequired(true);
 
