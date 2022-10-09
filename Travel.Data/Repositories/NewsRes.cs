@@ -35,7 +35,7 @@ namespace Travel.Data.Repositories
                     //JObject frmData = JObject.Parse(frmdata["data"]);
                     var Id = Guid.NewGuid();
                     var isActive = true;
-                    banner.Id = Id;
+                    banner.IdBanner = Id;
                     banner.IsActive = isActive;
                     _db.Banners.Add(banner);
                     _db.SaveChanges();

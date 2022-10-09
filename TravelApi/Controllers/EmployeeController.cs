@@ -6,8 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Travel.Context.Models;
 using Travel.Data.Interfaces;
+using Travel.Shared.Ultilities;
 using Travel.Shared.ViewModels;
+using Travel.Shared.ViewModels.Travel;
 
 namespace TravelApi.Controllers
 {
@@ -29,10 +32,22 @@ namespace TravelApi.Controllers
         [Route("get-employees")]
         public object GetEmployees([FromBody] JObject frmData)
         {
-            employee.SetDataEmployee(frmData, ref message);
+            employee.CheckBeforeSave(frmData, ref message);
             res = employee.GetEmployees();
             return Ok(res);
         }
+        [HttpPost]
+        [Authorize]
+        [Route("create-employees")]
+        public object Create([FromBody] JObject frmData)
+        {
 
+           var result = employee.CheckBeforeSave(frmData, ref message);
+            if (message != null)
+            {
+                res = employee.GetEmployees();
+            }
+            return Ok(res);
+        }
     }
 }

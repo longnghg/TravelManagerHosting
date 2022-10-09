@@ -54,7 +54,7 @@ namespace Travel.Data.Responsives
         {
             try
             {
-                _db.Employees.Find(emp.Id).AccessToken = token;
+                _db.Employees.Find(emp.IdEmployee).AccessToken = token;
                 _db.SaveChanges();
                 return true;
             }

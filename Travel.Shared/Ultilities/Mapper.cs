@@ -68,6 +68,9 @@ namespace Travel.Shared.Ultilities
         {
             return _mapper.Map<List<Employee>, List<EmployeeViewModel>>(data);
         }
-
+        public static Role MapCreateRole(CreateRoleViewModel data)
+        {
+            return _mapper.Map<CreateRoleViewModel,Role>(data);
+        }
     }
 }
