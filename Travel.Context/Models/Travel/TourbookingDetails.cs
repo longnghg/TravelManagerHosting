@@ -17,7 +17,7 @@ namespace Travel.Context.Models
         public bool   IsCalled{get;set;}
         public long   CallDate{get;set;}
         public string TourBookingId{get;set;}
-        public Tourbooking Tourbooking { get; set; }
+        public virtual Tourbooking Tourbooking { get; set; }
 
     }
 }

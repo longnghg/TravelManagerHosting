@@ -21,12 +21,12 @@ namespace Travel.Context.Models
         public string IdTour { get; set; }
         public Guid IdCar { get; set; }
         public int IdPromotion { get; set; }
-        public Guid IdEmployee { get; set; }
-        public Car Cars { get; set; }
-        public ICollection<Promotion> Promotions { get; set; }
-        public Tour Tour { get; set; }
-        public ICollection<Timeline> Timelines { get; set; }
-        public Employee Employee { get; set; }
+        public  Guid IdEmployee { get; set; }
+        public virtual Car Cars { get; set; }
+        public virtual ICollection<Promotion> Promotions { get; set; }
+        public virtual Tour Tour { get; set; }
+        public virtual ICollection<Timeline> Timelines { get; set; }
+        public virtual Employee Employee { get; set; }
         
     }
 }

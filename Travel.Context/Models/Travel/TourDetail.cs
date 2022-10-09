@@ -26,7 +26,7 @@ namespace Travel.Context.Models
         public int Profit { get; set; }
         public float Vat { get; set; }
         public float FinalPrice { get; set; }
-        public CostTour CostTour { get; set; }
+        public virtual CostTour CostTour { get; set; }
         
     }
 }

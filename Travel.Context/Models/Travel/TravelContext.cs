@@ -71,6 +71,8 @@ namespace Travel.Context.Models.Travel
             modelBuilder.Entity<Tourbooking>(entity =>
             {
                 entity.HasKey(e => e.IdTourbooking);
+
+
                 entity.HasOne(e => e.TourbookingDetails)
                 .WithOne(e => e.Tourbooking)
                 .HasForeignKey<TourbookingDetails>(e => e.IdTourbookingDetails);
@@ -95,7 +97,7 @@ namespace Travel.Context.Models.Travel
             modelBuilder.Entity<TourbookingDetails>(entity =>
             {
                 entity.HasKey(e => e.IdTourbookingDetails);
-                entity.Property(e => e.IdTourbookingDetails).HasMaxLength(10);
+                entity.Property(e => e.IdTourbookingDetails).HasMaxLength(30);
 
                 entity.Property(e => e.Pincode).HasMaxLength(10);
                 entity.Property(e => e.TourBookingId).HasMaxLength(30);
@@ -251,6 +253,9 @@ namespace Travel.Context.Models.Travel
                 entity.Property(e => e.Phone).HasMaxLength(15).IsRequired(true);
                 entity.Property(e => e.Image).HasMaxLength(100).IsRequired(true);
                 entity.Property(e => e.ModifyBy).HasMaxLength(50);
+                entity.HasOne(e => e.Role)
+                .WithMany(e => e.Employees)
+                .HasForeignKey(e => e.RoleId);
             });
             modelBuilder.Entity<Car>(entity =>
             {

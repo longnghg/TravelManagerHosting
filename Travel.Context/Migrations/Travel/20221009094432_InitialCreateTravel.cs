@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Travel.Context.Migrations.Travel
 {
-    public partial class _202205101152 : Migration
+    public partial class InitialCreateTravel : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,19 +11,21 @@ namespace Travel.Context.Migrations.Travel
                 name: "Banners",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdBanner = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NameBanner = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Total = table.Column<int>(type: "int", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Banners", x => x.Id);
+                    table.PrimaryKey("PK_Banners", x => x.IdBanner);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Car",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdCar = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     LiscensePlate = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     AmountSeat = table.Column<int>(type: "int", nullable: false),
@@ -32,18 +34,18 @@ namespace Travel.Context.Migrations.Travel
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Car", x => x.Id);
+                    table.PrimaryKey("PK_Car", x => x.IdCar);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Contracts",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdService = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ContractName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    IdContract = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ServiceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NameContract = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     TypeService = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
-                    IdFile = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FileId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SignDate = table.Column<long>(type: "bigint", nullable: false),
                     ExpDate = table.Column<long>(type: "bigint", nullable: false),
                     ModifyDate = table.Column<long>(type: "bigint", nullable: false),
@@ -54,15 +56,15 @@ namespace Travel.Context.Migrations.Travel
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Contracts", x => x.Id);
+                    table.PrimaryKey("PK_Contracts", x => x.IdContract);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Customer",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    IdCustomer = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NameCustomer = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(14)", maxLength: 14, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
@@ -76,31 +78,31 @@ namespace Travel.Context.Migrations.Travel
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customer", x => x.Id);
+                    table.PrimaryKey("PK_Customer", x => x.IdCustomer);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Files",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FileName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    IdFile = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NameFile = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     FileSize = table.Column<int>(type: "int", nullable: false),
                     FileExtension = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     FilePath = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Files", x => x.Id);
+                    table.PrimaryKey("PK_Files", x => x.IdFile);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Hotels",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdContract = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    IdHotel = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ContractId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NameHotel = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Star = table.Column<int>(type: "int", nullable: false),
@@ -113,15 +115,15 @@ namespace Travel.Context.Migrations.Travel
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Hotels", x => x.Id);
+                    table.PrimaryKey("PK_Hotels", x => x.IdHotel);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Images",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    IdImage = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NameImage = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Size = table.Column<long>(type: "bigint", nullable: false),
                     FilePath = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     IdService = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -129,16 +131,16 @@ namespace Travel.Context.Migrations.Travel
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Images", x => x.Id);
+                    table.PrimaryKey("PK_Images", x => x.IdImage);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Places",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdContract = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    IdPlace = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ContractId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NamePlace = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     PriceTicket = table.Column<float>(type: "real", nullable: false),
@@ -147,28 +149,28 @@ namespace Travel.Context.Migrations.Travel
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Places", x => x.Id);
+                    table.PrimaryKey("PK_Places", x => x.IdPlace);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Provinces",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    IdProvince = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NameProvince = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Provinces", x => x.Id);
+                    table.PrimaryKey("PK_Provinces", x => x.IdProvince);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Restaurants",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdContract = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    IdRestaurant = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ContractId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NameRestaurant = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     ModifyBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
@@ -176,30 +178,30 @@ namespace Travel.Context.Migrations.Travel
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Restaurants", x => x.Id);
+                    table.PrimaryKey("PK_Restaurants", x => x.IdRestaurant);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    IdRole = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    NameRole = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     IsDelete = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Roles", x => x.Id);
+                    table.PrimaryKey("PK_Roles", x => x.IdRole);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Tour",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    TourName = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    IdTour = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    NameTour = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     Rating = table.Column<double>(type: "float", nullable: false),
                     FromPlace = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     ToPlace = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
@@ -214,16 +216,16 @@ namespace Travel.Context.Migrations.Travel
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tour", x => x.Id);
+                    table.PrimaryKey("PK_Tour", x => x.IdTour);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Tourbookings",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    CustomerName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    ContactName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    IdTourbooking = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    NameCustomer = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    NameContact = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(14)", maxLength: 14, nullable: false),
                     BookingNo = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     Pincode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
@@ -242,16 +244,16 @@ namespace Travel.Context.Migrations.Travel
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tourbookings", x => x.Id);
+                    table.PrimaryKey("PK_Tourbookings", x => x.IdTourbooking);
                 });
 
             migrationBuilder.CreateTable(
                 name: "TourDetails",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IdTourDetail = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     TourId = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
-                    IdCostTour = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CostTourId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PriceChild = table.Column<float>(type: "real", nullable: false),
                     PriceBaby = table.Column<float>(type: "real", nullable: false),
                     PriceAdult = table.Column<float>(type: "real", nullable: false),
@@ -270,14 +272,14 @@ namespace Travel.Context.Migrations.Travel
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TourDetails", x => x.Id);
+                    table.PrimaryKey("PK_TourDetails", x => x.IdTourDetail);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Vouchers",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdVoucher = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Code = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Value = table.Column<int>(type: "int", nullable: false),
@@ -289,29 +291,29 @@ namespace Travel.Context.Migrations.Travel
                     CreateBy = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Point = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     IsDelete = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    IdCustomer = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Vouchers", x => x.Id);
+                    table.PrimaryKey("PK_Vouchers", x => x.IdVoucher);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Districts",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    IdProvice = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    IdDistrict = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NameDistrict = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    ProvinceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Districts", x => x.Id);
+                    table.PrimaryKey("PK_Districts", x => x.IdDistrict);
                     table.ForeignKey(
-                        name: "FK_Districts_Provinces_IdProvice",
-                        column: x => x.IdProvice,
+                        name: "FK_Districts_Provinces_ProvinceId",
+                        column: x => x.ProvinceId,
                         principalTable: "Provinces",
-                        principalColumn: "Id",
+                        principalColumn: "IdProvince",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -319,8 +321,8 @@ namespace Travel.Context.Migrations.Travel
                 name: "Employees",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    IdEmployee = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NameEmployee = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValue: "0"),
                     Password = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     Birthday = table.Column<long>(type: "bigint", nullable: false),
@@ -333,16 +335,16 @@ namespace Travel.Context.Migrations.Travel
                     ModifyDate = table.Column<long>(type: "bigint", nullable: false),
                     IsDelete = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    IdSchedule = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
+                    IdSchedule = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Employees", x => x.Id);
+                    table.PrimaryKey("PK_Employees", x => x.IdEmployee);
                     table.ForeignKey(
                         name: "FK_Employees_Roles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "Roles",
-                        principalColumn: "Id",
+                        principalColumn: "IdRole",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -350,19 +352,19 @@ namespace Travel.Context.Migrations.Travel
                 name: "Payment",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    IdPayment = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    NamePayment = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Type = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
-                    IdTourBooking = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true)
+                    TourBookingId = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Payment", x => x.Id);
+                    table.PrimaryKey("PK_Payment", x => x.IdPayment);
                     table.ForeignKey(
-                        name: "FK_Payment_Tourbookings_IdTourBooking",
-                        column: x => x.IdTourBooking,
+                        name: "FK_Payment_Tourbookings_TourBookingId",
+                        column: x => x.TourBookingId,
                         principalTable: "Tourbookings",
-                        principalColumn: "Id",
+                        principalColumn: "IdTourbooking",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -370,7 +372,7 @@ namespace Travel.Context.Migrations.Travel
                 name: "tourbookingDetails",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IdTourbookingDetails = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Baby = table.Column<int>(type: "int", nullable: false),
                     Child = table.Column<int>(type: "int", nullable: false),
                     Adult = table.Column<int>(type: "int", nullable: false),
@@ -378,25 +380,25 @@ namespace Travel.Context.Migrations.Travel
                     Status = table.Column<int>(type: "int", nullable: false),
                     IsCalled = table.Column<bool>(type: "bit", nullable: false),
                     CallDate = table.Column<long>(type: "bigint", nullable: false),
-                    IdTourBooking = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true)
+                    TourBookingId = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tourbookingDetails", x => x.Id);
+                    table.PrimaryKey("PK_tourbookingDetails", x => x.IdTourbookingDetails);
                     table.ForeignKey(
-                        name: "FK_tourbookingDetails_Tourbookings_IdTourBooking",
-                        column: x => x.IdTourBooking,
+                        name: "FK_tourbookingDetails_Tourbookings_IdTourbookingDetails",
+                        column: x => x.IdTourbookingDetails,
                         principalTable: "Tourbookings",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "IdTourbooking",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "CostTours",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdTourDetail = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    IdCostTour = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TourDetailId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Breakfast = table.Column<float>(type: "real", nullable: false),
                     Water = table.Column<float>(type: "real", nullable: false),
                     FeeGas = table.Column<float>(type: "real", nullable: false),
@@ -409,39 +411,39 @@ namespace Travel.Context.Migrations.Travel
                     InsuranceFee = table.Column<float>(type: "real", nullable: false),
                     IsHoliday = table.Column<bool>(type: "bit", nullable: false),
                     TotalCostTour = table.Column<float>(type: "real", nullable: false),
-                    IdHotel = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    HotelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PriceHotel = table.Column<float>(type: "real", nullable: false),
-                    IdRestaurant = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RestaurantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PriceRestaurant = table.Column<float>(type: "real", nullable: false),
-                    IdPlace = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PlaceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PriceTicketPlace = table.Column<float>(type: "real", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CostTours", x => x.Id);
+                    table.PrimaryKey("PK_CostTours", x => x.IdCostTour);
                     table.ForeignKey(
-                        name: "FK_CostTours_Hotels_IdHotel",
-                        column: x => x.IdHotel,
+                        name: "FK_CostTours_Hotels_HotelId",
+                        column: x => x.HotelId,
                         principalTable: "Hotels",
-                        principalColumn: "Id",
+                        principalColumn: "IdHotel",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CostTours_Places_IdPlace",
-                        column: x => x.IdPlace,
+                        name: "FK_CostTours_Places_PlaceId",
+                        column: x => x.PlaceId,
                         principalTable: "Places",
-                        principalColumn: "Id",
+                        principalColumn: "IdPlace",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CostTours_Restaurants_IdRestaurant",
-                        column: x => x.IdRestaurant,
+                        name: "FK_CostTours_Restaurants_RestaurantId",
+                        column: x => x.RestaurantId,
                         principalTable: "Restaurants",
-                        principalColumn: "Id",
+                        principalColumn: "IdRestaurant",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CostTours_TourDetails_IdTourDetail",
-                        column: x => x.IdTourDetail,
+                        name: "FK_CostTours_TourDetails_TourDetailId",
+                        column: x => x.TourDetailId,
                         principalTable: "TourDetails",
-                        principalColumn: "Id",
+                        principalColumn: "IdTourDetail",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -449,18 +451,18 @@ namespace Travel.Context.Migrations.Travel
                 name: "Wards",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    IdDistrict = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    IdWard = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NameWard = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    DistrictId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Wards", x => x.Id);
+                    table.PrimaryKey("PK_Wards", x => x.IdWard);
                     table.ForeignKey(
-                        name: "FK_Wards_Districts_IdDistrict",
-                        column: x => x.IdDistrict,
+                        name: "FK_Wards_Districts_DistrictId",
+                        column: x => x.DistrictId,
                         principalTable: "Districts",
-                        principalColumn: "Id",
+                        principalColumn: "IdDistrict",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -468,7 +470,7 @@ namespace Travel.Context.Migrations.Travel
                 name: "Schedules",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    IdSchedule = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     DepartureDate = table.Column<long>(type: "bigint", nullable: false),
                     BeginDate = table.Column<long>(type: "bigint", nullable: false),
                     EndDate = table.Column<long>(type: "bigint", nullable: false),
@@ -486,24 +488,24 @@ namespace Travel.Context.Migrations.Travel
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Schedules", x => x.Id);
+                    table.PrimaryKey("PK_Schedules", x => x.IdSchedule);
                     table.ForeignKey(
                         name: "FK_Schedules_Car_IdCar",
                         column: x => x.IdCar,
                         principalTable: "Car",
-                        principalColumn: "Id",
+                        principalColumn: "IdCar",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Schedules_Employees_IdEmployee",
                         column: x => x.IdEmployee,
                         principalTable: "Employees",
-                        principalColumn: "Id",
+                        principalColumn: "IdEmployee",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Schedules_Tour_IdTour",
                         column: x => x.IdTour,
                         principalTable: "Tour",
-                        principalColumn: "Id",
+                        principalColumn: "IdTour",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -511,7 +513,7 @@ namespace Travel.Context.Migrations.Travel
                 name: "Promotions",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdPromotion = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Value = table.Column<int>(type: "int", nullable: false),
                     IdSchedule = table.Column<string>(type: "nvarchar(50)", nullable: true),
                     ToDate = table.Column<long>(type: "bigint", nullable: false),
@@ -519,12 +521,12 @@ namespace Travel.Context.Migrations.Travel
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Promotions", x => x.Id);
+                    table.PrimaryKey("PK_Promotions", x => x.IdPromotion);
                     table.ForeignKey(
                         name: "FK_Promotions_Schedules_IdSchedule",
                         column: x => x.IdSchedule,
                         principalTable: "Schedules",
-                        principalColumn: "Id",
+                        principalColumn: "IdSchedule",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -532,7 +534,7 @@ namespace Travel.Context.Migrations.Travel
                 name: "Timelines",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IdTimeline = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
                     FromTime = table.Column<long>(type: "bigint", nullable: false),
                     ToTime = table.Column<long>(type: "bigint", nullable: false),
@@ -543,18 +545,18 @@ namespace Travel.Context.Migrations.Travel
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Timelines", x => x.Id);
+                    table.PrimaryKey("PK_Timelines", x => x.IdTimeline);
                     table.ForeignKey(
                         name: "FK_Timelines_Schedules_IdSchedule",
                         column: x => x.IdSchedule,
                         principalTable: "Schedules",
-                        principalColumn: "Id",
+                        principalColumn: "IdSchedule",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
                 table: "Roles",
-                columns: new[] { "Id", "Description", "IsDelete", "Name" },
+                columns: new[] { "IdRole", "Description", "IsDelete", "NameRole" },
                 values: new object[,]
                 {
                     { -1, "Trùm", false, "Admin" },
@@ -566,42 +568,42 @@ namespace Travel.Context.Migrations.Travel
 
             migrationBuilder.InsertData(
                 table: "Employees",
-                columns: new[] { "Id", "AccessToken", "Birthday", "CreateDate", "Email", "IdSchedule", "Image", "IsActive", "IsDelete", "ModifyBy", "ModifyDate", "Name", "Password", "Phone", "RoleId" },
+                columns: new[] { "IdEmployee", "AccessToken", "Birthday", "CreateDate", "Email", "IdSchedule", "Image", "IsActive", "IsDelete", "ModifyBy", "ModifyDate", "NameEmployee", "Password", "Phone", "RoleId" },
                 values: new object[,]
                 {
-                    { new Guid("acd65b05-8e4c-47a3-98b3-4de3242ec88f"), null, 202204101007L, 202204101007L, "test1@gmail.com", null, "", true, false, "Admin Test", 202204101007L, "Admin Test", "3244185981728979115075721453575112", "0789786646", -1 },
-                    { new Guid("341fd010-582f-4e49-9f5f-07fee37032db"), null, 202204101007L, 202204101007L, "test2@gmail.com", null, "", true, false, "Admin Test", 202204101007L, "Local Manager Test", "3244185981728979115075721453575112", "0789786645", 1 },
-                    { new Guid("db7fcfb0-b759-4340-b15f-10685de71a00"), null, 202204101007L, 202204101007L, "test3@gmail.com", null, "", true, false, "Admin Test", 202204101007L, "Service Manager Test", "3244185981728979115075721453575112", "0789786644", 2 },
-                    { new Guid("620b23b5-b861-49b8-b01f-3459dd6f1847"), null, 202204101007L, 202204101007L, "test4@gmail.com", null, "", true, false, "Admin Test", 202204101007L, "Tour Manager Test", "3244185981728979115075721453575112", "0789786643", 3 },
-                    { new Guid("4d3202f0-c29d-421a-bb6c-64b574761e73"), null, 202204101007L, 202204101007L, "test5@gmail.com", null, "", true, false, "Admin Test", 202204101007L, "Tour Booking Manager Test", "3244185981728979115075721453575112", "0789786642", 4 }
+                    { new Guid("a86546c5-8832-4c33-99b9-7552bfdd0699"), null, 202204101007L, 202204101007L, "test1@gmail.com", null, "", true, false, "Admin Test", 202204101007L, "Admin Test", "3244185981728979115075721453575112", "0789786646", -1 },
+                    { new Guid("9558c63b-852c-4880-a212-afaed190834e"), null, 202204101007L, 202204101007L, "test2@gmail.com", null, "", true, false, "Admin Test", 202204101007L, "Local Manager Test", "3244185981728979115075721453575112", "0789786645", 1 },
+                    { new Guid("4b57b373-ef99-46b2-9ae0-15429e499cd2"), null, 202204101007L, 202204101007L, "test3@gmail.com", null, "", true, false, "Admin Test", 202204101007L, "Service Manager Test", "3244185981728979115075721453575112", "0789786644", 2 },
+                    { new Guid("1c7f9025-702f-4573-8b9a-09b91acb16bb"), null, 202204101007L, 202204101007L, "test4@gmail.com", null, "", true, false, "Admin Test", 202204101007L, "Tour Manager Test", "3244185981728979115075721453575112", "0789786643", 3 },
+                    { new Guid("03e7cb2f-614f-45c2-845a-f5b8d3a9e278"), null, 202204101007L, 202204101007L, "test5@gmail.com", null, "", true, false, "Admin Test", 202204101007L, "Tour Booking Manager Test", "3244185981728979115075721453575112", "0789786642", 4 }
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CostTours_IdHotel",
+                name: "IX_CostTours_HotelId",
                 table: "CostTours",
-                column: "IdHotel");
+                column: "HotelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CostTours_IdPlace",
+                name: "IX_CostTours_PlaceId",
                 table: "CostTours",
-                column: "IdPlace");
+                column: "PlaceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CostTours_IdRestaurant",
+                name: "IX_CostTours_RestaurantId",
                 table: "CostTours",
-                column: "IdRestaurant");
+                column: "RestaurantId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CostTours_IdTourDetail",
+                name: "IX_CostTours_TourDetailId",
                 table: "CostTours",
-                column: "IdTourDetail",
+                column: "TourDetailId",
                 unique: true,
-                filter: "[IdTourDetail] IS NOT NULL");
+                filter: "[TourDetailId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Districts_IdProvice",
+                name: "IX_Districts_ProvinceId",
                 table: "Districts",
-                column: "IdProvice");
+                column: "ProvinceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_RoleId",
@@ -609,9 +611,9 @@ namespace Travel.Context.Migrations.Travel
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Payment_IdTourBooking",
+                name: "IX_Payment_TourBookingId",
                 table: "Payment",
-                column: "IdTourBooking");
+                column: "TourBookingId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Promotions_IdSchedule",
@@ -639,16 +641,9 @@ namespace Travel.Context.Migrations.Travel
                 column: "IdSchedule");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tourbookingDetails_IdTourBooking",
-                table: "tourbookingDetails",
-                column: "IdTourBooking",
-                unique: true,
-                filter: "[IdTourBooking] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Wards_IdDistrict",
+                name: "IX_Wards_DistrictId",
                 table: "Wards",
-                column: "IdDistrict");
+                column: "DistrictId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

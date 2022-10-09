@@ -10,8 +10,8 @@ using Travel.Context.Models.Travel;
 namespace Travel.Context.Migrations.Travel
 {
     [DbContext(typeof(TravelContext))]
-    [Migration("20221005045240_202205101152")]
-    partial class _202205101152
+    [Migration("20221009094432_InitialCreateTravel")]
+    partial class InitialCreateTravel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,21 +23,29 @@ namespace Travel.Context.Migrations.Travel
 
             modelBuilder.Entity("Travel.Context.Models.Banner", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("IdBanner")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.HasKey("Id");
+                    b.Property<string>("NameBanner")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("Total")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdBanner");
 
                     b.ToTable("Banners");
                 });
 
             modelBuilder.Entity("Travel.Context.Models.Car", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("IdCar")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -64,20 +72,16 @@ namespace Travel.Context.Migrations.Travel
                         .HasColumnType("int")
                         .HasDefaultValue(0);
 
-                    b.HasKey("Id");
+                    b.HasKey("IdCar");
 
                     b.ToTable("Car");
                 });
 
             modelBuilder.Entity("Travel.Context.Models.Contract", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("IdContract")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ContractName")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("CreateBy")
                         .HasMaxLength(50)
@@ -89,10 +93,7 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<long>("ExpDate")
                         .HasColumnType("bigint");
 
-                    b.Property<Guid>("IdFile")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("IdService")
+                    b.Property<Guid>("FileId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ModifyBy")
@@ -101,6 +102,13 @@ namespace Travel.Context.Migrations.Travel
 
                     b.Property<long>("ModifyDate")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("NameContract")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<Guid>("ServiceId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<long>("SignDate")
                         .HasColumnType("bigint");
@@ -112,14 +120,14 @@ namespace Travel.Context.Migrations.Travel
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdContract");
 
                     b.ToTable("Contracts");
                 });
 
             modelBuilder.Entity("Travel.Context.Models.CostTour", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("IdCostTour")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -138,17 +146,8 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<float>("FeeGas")
                         .HasColumnType("real");
 
-                    b.Property<Guid>("IdHotel")
+                    b.Property<Guid>("HotelId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("IdPlace")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("IdRestaurant")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("IdTourDetail")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<float>("InsuranceFee")
                         .HasColumnType("real");
@@ -159,6 +158,9 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<float>("OtherPrice")
                         .HasColumnType("real");
 
+                    b.Property<Guid>("PlaceId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<float>("PriceHotel")
                         .HasColumnType("real");
 
@@ -167,6 +169,9 @@ namespace Travel.Context.Migrations.Travel
 
                     b.Property<float>("PriceTicketPlace")
                         .HasColumnType("real");
+
+                    b.Property<Guid>("RestaurantId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<float>("SellCost")
                         .HasColumnType("real");
@@ -177,27 +182,30 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<float>("TotalCostTour")
                         .HasColumnType("real");
 
+                    b.Property<string>("TourDetailId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<float>("Water")
                         .HasColumnType("real");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdCostTour");
 
-                    b.HasIndex("IdHotel");
+                    b.HasIndex("HotelId");
 
-                    b.HasIndex("IdPlace");
+                    b.HasIndex("PlaceId");
 
-                    b.HasIndex("IdRestaurant");
+                    b.HasIndex("RestaurantId");
 
-                    b.HasIndex("IdTourDetail")
+                    b.HasIndex("TourDetailId")
                         .IsUnique()
-                        .HasFilter("[IdTourDetail] IS NOT NULL");
+                        .HasFilter("[TourDetailId] IS NOT NULL");
 
                     b.ToTable("CostTours");
                 });
 
             modelBuilder.Entity("Travel.Context.Models.Customer", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("IdCustomer")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -228,7 +236,7 @@ namespace Travel.Context.Migrations.Travel
                         .HasMaxLength(550)
                         .HasColumnType("nvarchar(550)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("NameCustomer")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -245,35 +253,35 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<int>("Point")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdCustomer");
 
                     b.ToTable("Customer");
                 });
 
             modelBuilder.Entity("Travel.Context.Models.District", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("IdDistrict")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("IdProvice")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("NameDistrict")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("Id");
+                    b.Property<Guid>("ProvinceId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("IdProvice");
+                    b.HasKey("IdDistrict");
+
+                    b.HasIndex("ProvinceId");
 
                     b.ToTable("Districts");
                 });
 
             modelBuilder.Entity("Travel.Context.Models.Employee", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("IdEmployee")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -295,8 +303,7 @@ namespace Travel.Context.Migrations.Travel
                         .HasDefaultValue("0");
 
                     b.Property<string>("IdSchedule")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image")
                         .IsRequired()
@@ -316,7 +323,7 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<long>("ModifyDate")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("NameEmployee")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -333,7 +340,7 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdEmployee");
 
                     b.HasIndex("RoleId");
 
@@ -342,7 +349,7 @@ namespace Travel.Context.Migrations.Travel
                     b.HasData(
                         new
                         {
-                            Id = new Guid("acd65b05-8e4c-47a3-98b3-4de3242ec88f"),
+                            IdEmployee = new Guid("a86546c5-8832-4c33-99b9-7552bfdd0699"),
                             Birthday = 202204101007L,
                             CreateDate = 202204101007L,
                             Email = "test1@gmail.com",
@@ -351,14 +358,14 @@ namespace Travel.Context.Migrations.Travel
                             IsDelete = false,
                             ModifyBy = "Admin Test",
                             ModifyDate = 202204101007L,
-                            Name = "Admin Test",
+                            NameEmployee = "Admin Test",
                             Password = "3244185981728979115075721453575112",
                             Phone = "0789786646",
                             RoleId = -1
                         },
                         new
                         {
-                            Id = new Guid("341fd010-582f-4e49-9f5f-07fee37032db"),
+                            IdEmployee = new Guid("9558c63b-852c-4880-a212-afaed190834e"),
                             Birthday = 202204101007L,
                             CreateDate = 202204101007L,
                             Email = "test2@gmail.com",
@@ -367,14 +374,14 @@ namespace Travel.Context.Migrations.Travel
                             IsDelete = false,
                             ModifyBy = "Admin Test",
                             ModifyDate = 202204101007L,
-                            Name = "Local Manager Test",
+                            NameEmployee = "Local Manager Test",
                             Password = "3244185981728979115075721453575112",
                             Phone = "0789786645",
                             RoleId = 1
                         },
                         new
                         {
-                            Id = new Guid("db7fcfb0-b759-4340-b15f-10685de71a00"),
+                            IdEmployee = new Guid("4b57b373-ef99-46b2-9ae0-15429e499cd2"),
                             Birthday = 202204101007L,
                             CreateDate = 202204101007L,
                             Email = "test3@gmail.com",
@@ -383,14 +390,14 @@ namespace Travel.Context.Migrations.Travel
                             IsDelete = false,
                             ModifyBy = "Admin Test",
                             ModifyDate = 202204101007L,
-                            Name = "Service Manager Test",
+                            NameEmployee = "Service Manager Test",
                             Password = "3244185981728979115075721453575112",
                             Phone = "0789786644",
                             RoleId = 2
                         },
                         new
                         {
-                            Id = new Guid("620b23b5-b861-49b8-b01f-3459dd6f1847"),
+                            IdEmployee = new Guid("1c7f9025-702f-4573-8b9a-09b91acb16bb"),
                             Birthday = 202204101007L,
                             CreateDate = 202204101007L,
                             Email = "test4@gmail.com",
@@ -399,14 +406,14 @@ namespace Travel.Context.Migrations.Travel
                             IsDelete = false,
                             ModifyBy = "Admin Test",
                             ModifyDate = 202204101007L,
-                            Name = "Tour Manager Test",
+                            NameEmployee = "Tour Manager Test",
                             Password = "3244185981728979115075721453575112",
                             Phone = "0789786643",
                             RoleId = 3
                         },
                         new
                         {
-                            Id = new Guid("4d3202f0-c29d-421a-bb6c-64b574761e73"),
+                            IdEmployee = new Guid("03e7cb2f-614f-45c2-845a-f5b8d3a9e278"),
                             Birthday = 202204101007L,
                             CreateDate = 202204101007L,
                             Email = "test5@gmail.com",
@@ -415,7 +422,7 @@ namespace Travel.Context.Migrations.Travel
                             IsDelete = false,
                             ModifyBy = "Admin Test",
                             ModifyDate = 202204101007L,
-                            Name = "Tour Booking Manager Test",
+                            NameEmployee = "Tour Booking Manager Test",
                             Password = "3244185981728979115075721453575112",
                             Phone = "0789786642",
                             RoleId = 4
@@ -424,18 +431,13 @@ namespace Travel.Context.Migrations.Travel
 
             modelBuilder.Entity("Travel.Context.Models.File", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("IdFile")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("FileExtension")
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("FilePath")
                         .HasMaxLength(150)
@@ -444,14 +446,19 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<int>("FileSize")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<string>("NameFile")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("IdFile");
 
                     b.ToTable("Files");
                 });
 
             modelBuilder.Entity("Travel.Context.Models.Hotel", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("IdHotel")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -460,11 +467,11 @@ namespace Travel.Context.Migrations.Travel
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<Guid>("ContractId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<float>("DoubleRoomPrice")
                         .HasColumnType("real");
-
-                    b.Property<Guid>("IdContract")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ModifyBy")
                         .HasMaxLength(50)
@@ -473,7 +480,7 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<long>("ModifyDate")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("NameHotel")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -495,14 +502,14 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<int>("Star")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdHotel");
 
                     b.ToTable("Hotels");
                 });
 
             modelBuilder.Entity("Travel.Context.Models.Image", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("IdImage")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -517,7 +524,7 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<Guid>("IdService")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("NameImage")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -525,39 +532,39 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<long>("Size")
                         .HasColumnType("bigint");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdImage");
 
                     b.ToTable("Images");
                 });
 
             modelBuilder.Entity("Travel.Context.Models.Payment", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("IdPayment")
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<string>("IdTourBooking")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("NamePayment")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("TourBookingId")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Type")
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdPayment");
 
-                    b.HasIndex("IdTourBooking");
+                    b.HasIndex("TourBookingId");
 
                     b.ToTable("Payment");
                 });
 
             modelBuilder.Entity("Travel.Context.Models.Place", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("IdPlace")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -566,7 +573,7 @@ namespace Travel.Context.Migrations.Travel
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<Guid>("IdContract")
+                    b.Property<Guid>("ContractId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ModifyBy")
@@ -576,7 +583,7 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<long>("ModifyDate")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("NamePlace")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -589,14 +596,14 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<float>("PriceTicket")
                         .HasColumnType("real");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdPlace");
 
                     b.ToTable("Places");
                 });
 
             modelBuilder.Entity("Travel.Context.Models.Promotion", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("IdPromotion")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -612,7 +619,7 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<int>("Value")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdPromotion");
 
                     b.HasIndex("IdSchedule");
 
@@ -621,23 +628,23 @@ namespace Travel.Context.Migrations.Travel
 
             modelBuilder.Entity("Travel.Context.Models.Province", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("IdProvince")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("NameProvince")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdProvince");
 
                     b.ToTable("Provinces");
                 });
 
             modelBuilder.Entity("Travel.Context.Models.Restaurant", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("IdRestaurant")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -646,7 +653,7 @@ namespace Travel.Context.Migrations.Travel
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<Guid>("IdContract")
+                    b.Property<Guid>("ContractId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ModifyBy")
@@ -656,7 +663,7 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<long>("ModifyDate")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("NameRestaurant")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -666,14 +673,14 @@ namespace Travel.Context.Migrations.Travel
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdRestaurant");
 
                     b.ToTable("Restaurants");
                 });
 
             modelBuilder.Entity("Travel.Context.Models.Role", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("IdRole")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -685,55 +692,55 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("NameRole")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdRole");
 
                     b.ToTable("Roles");
 
                     b.HasData(
                         new
                         {
-                            Id = -1,
+                            IdRole = -1,
                             Description = "Trùm",
                             IsDelete = false,
-                            Name = "Admin"
+                            NameRole = "Admin"
                         },
                         new
                         {
-                            Id = 1,
+                            IdRole = 1,
                             Description = "Quản lý cục bộ",
                             IsDelete = false,
-                            Name = "LocalManager"
+                            NameRole = "LocalManager"
                         },
                         new
                         {
-                            Id = 2,
+                            IdRole = 2,
                             Description = "Quản lý dịch vụ",
                             IsDelete = false,
-                            Name = "ServiceManager"
+                            NameRole = "ServiceManager"
                         },
                         new
                         {
-                            Id = 3,
+                            IdRole = 3,
                             Description = "Quản lý tour",
                             IsDelete = false,
-                            Name = "TourManager"
+                            NameRole = "TourManager"
                         },
                         new
                         {
-                            Id = 4,
+                            IdRole = 4,
                             Description = "Quản lý tour booking",
                             IsDelete = false,
-                            Name = "TourBookingManager"
+                            NameRole = "TourBookingManager"
                         });
                 });
 
             modelBuilder.Entity("Travel.Context.Models.Schedule", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("IdSchedule")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -779,7 +786,7 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<long>("TimePromotion")
                         .HasColumnType("bigint");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdSchedule");
 
                     b.HasIndex("IdCar");
 
@@ -792,7 +799,7 @@ namespace Travel.Context.Migrations.Travel
 
             modelBuilder.Entity("Travel.Context.Models.Timeline", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("IdTimeline")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
@@ -819,7 +826,7 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<long>("ToTime")
                         .HasColumnType("bigint");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdTimeline");
 
                     b.HasIndex("IdSchedule");
 
@@ -828,7 +835,7 @@ namespace Travel.Context.Migrations.Travel
 
             modelBuilder.Entity("Travel.Context.Models.Tour", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("IdTour")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ApproveStatus")
@@ -855,6 +862,11 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<long>("ModifyDate")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("NameTour")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
                     b.Property<double>("Rating")
                         .HasColumnType("float");
 
@@ -869,20 +881,18 @@ namespace Travel.Context.Migrations.Travel
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("TourName")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.HasKey("Id");
+                    b.HasKey("IdTour");
 
                     b.ToTable("Tour");
                 });
 
             modelBuilder.Entity("Travel.Context.Models.TourDetail", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("IdTourDetail")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<Guid>("CostTourId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .HasMaxLength(300)
@@ -896,9 +906,6 @@ namespace Travel.Context.Migrations.Travel
 
                     b.Property<float>("FinalPrice")
                         .HasColumnType("real");
-
-                    b.Property<Guid>("IdCostTour")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsPromotion")
                         .HasColumnType("bit");
@@ -937,14 +944,14 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<float>("Vat")
                         .HasColumnType("real");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdTourDetail");
 
                     b.ToTable("TourDetails");
                 });
 
             modelBuilder.Entity("Travel.Context.Models.Tourbooking", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("IdTourbooking")
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
@@ -955,14 +962,6 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<string>("BookingNo")
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("ContactName")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("CustomerName")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<long>("DateBooking")
                         .HasColumnType("bigint");
@@ -988,6 +987,14 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<long>("ModifyDate")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("NameContact")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("NameCustomer")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasMaxLength(14)
@@ -1010,15 +1017,16 @@ namespace Travel.Context.Migrations.Travel
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdTourbooking");
 
                     b.ToTable("Tourbookings");
                 });
 
             modelBuilder.Entity("Travel.Context.Models.TourbookingDetails", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<string>("IdTourbookingDetails")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<int>("Adult")
                         .HasColumnType("int");
@@ -1032,10 +1040,6 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<int>("Child")
                         .HasColumnType("int");
 
-                    b.Property<string>("IdTourBooking")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
                     b.Property<bool>("IsCalled")
                         .HasColumnType("bit");
 
@@ -1046,18 +1050,18 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<string>("TourBookingId")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
-                    b.HasIndex("IdTourBooking")
-                        .IsUnique()
-                        .HasFilter("[IdTourBooking] IS NOT NULL");
+                    b.HasKey("IdTourbookingDetails");
 
                     b.ToTable("tourbookingDetails");
                 });
 
             modelBuilder.Entity("Travel.Context.Models.Voucher", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("IdVoucher")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -1072,15 +1076,15 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<long>("CreateDate")
                         .HasColumnType("bigint");
 
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Description")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<long>("EndDate")
                         .HasColumnType("bigint");
-
-                    b.Property<Guid>("IdCustomer")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDelete")
                         .ValueGeneratedOnAdd()
@@ -1105,28 +1109,28 @@ namespace Travel.Context.Migrations.Travel
                     b.Property<int>("Value")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdVoucher");
 
                     b.ToTable("Vouchers");
                 });
 
             modelBuilder.Entity("Travel.Context.Models.Ward", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("IdWard")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("IdDistrict")
+                    b.Property<Guid>("DistrictId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("NameWard")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdWard");
 
-                    b.HasIndex("IdDistrict");
+                    b.HasIndex("DistrictId");
 
                     b.ToTable("Wards");
                 });
@@ -1135,25 +1139,25 @@ namespace Travel.Context.Migrations.Travel
                 {
                     b.HasOne("Travel.Context.Models.Hotel", "Hotel")
                         .WithMany("CostTours")
-                        .HasForeignKey("IdHotel")
+                        .HasForeignKey("HotelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Travel.Context.Models.Place", "Place")
                         .WithMany("CostTours")
-                        .HasForeignKey("IdPlace")
+                        .HasForeignKey("PlaceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Travel.Context.Models.Restaurant", "Restaurant")
                         .WithMany("CostTours")
-                        .HasForeignKey("IdRestaurant")
+                        .HasForeignKey("RestaurantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Travel.Context.Models.TourDetail", "TourDetails")
                         .WithOne("CostTour")
-                        .HasForeignKey("Travel.Context.Models.CostTour", "IdTourDetail");
+                        .HasForeignKey("Travel.Context.Models.CostTour", "TourDetailId");
 
                     b.Navigation("Hotel");
 
@@ -1168,7 +1172,7 @@ namespace Travel.Context.Migrations.Travel
                 {
                     b.HasOne("Travel.Context.Models.Province", "Province")
                         .WithMany("Districts")
-                        .HasForeignKey("IdProvice")
+                        .HasForeignKey("ProvinceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1178,7 +1182,7 @@ namespace Travel.Context.Migrations.Travel
             modelBuilder.Entity("Travel.Context.Models.Employee", b =>
                 {
                     b.HasOne("Travel.Context.Models.Role", "Role")
-                        .WithMany()
+                        .WithMany("Employees")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1190,7 +1194,7 @@ namespace Travel.Context.Migrations.Travel
                 {
                     b.HasOne("Travel.Context.Models.Tourbooking", "Tourbooking")
                         .WithMany("Payment")
-                        .HasForeignKey("IdTourBooking");
+                        .HasForeignKey("TourBookingId");
 
                     b.Navigation("Tourbooking");
                 });
@@ -1242,7 +1246,9 @@ namespace Travel.Context.Migrations.Travel
                 {
                     b.HasOne("Travel.Context.Models.Tourbooking", "Tourbooking")
                         .WithOne("TourbookingDetails")
-                        .HasForeignKey("Travel.Context.Models.TourbookingDetails", "IdTourBooking");
+                        .HasForeignKey("Travel.Context.Models.TourbookingDetails", "IdTourbookingDetails")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Tourbooking");
                 });
@@ -1251,7 +1257,7 @@ namespace Travel.Context.Migrations.Travel
                 {
                     b.HasOne("Travel.Context.Models.District", "District")
                         .WithMany("Ward")
-                        .HasForeignKey("IdDistrict")
+                        .HasForeignKey("DistrictId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1291,6 +1297,11 @@ namespace Travel.Context.Migrations.Travel
             modelBuilder.Entity("Travel.Context.Models.Restaurant", b =>
                 {
                     b.Navigation("CostTours");
+                });
+
+            modelBuilder.Entity("Travel.Context.Models.Role", b =>
+                {
+                    b.Navigation("Employees");
                 });
 
             modelBuilder.Entity("Travel.Context.Models.Schedule", b =>
