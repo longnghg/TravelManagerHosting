@@ -34,6 +34,7 @@ namespace Travel.Data.Repositories
             CreateUpdateEmployeeViewModel employee = new CreateUpdateEmployeeViewModel();
             try
             {
+                bool checkAcocountExist = true;
                 var id = PrCommon.GetString("idEmployee", frmData);
                 if (!String.IsNullOrEmpty(id))
                 {

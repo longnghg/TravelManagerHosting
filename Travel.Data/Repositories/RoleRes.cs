@@ -39,7 +39,7 @@ namespace Travel.Data.Repositories
                     role.IdRole = Int32.Parse(idRole);
                 }
 
-                var roleName = PrCommon.GetString("roleName", frmData);
+                var roleName = PrCommon.GetString("NameRole", frmData);
                 if (!String.IsNullOrEmpty(roleName))
                 {
                     role.RoleName = roleName;
