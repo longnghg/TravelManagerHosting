@@ -10,7 +10,10 @@ using System.Threading.Tasks;
 using Travel.Context.Models;
 using Travel.Context.Models.Travel;
 using Travel.Data.Interfaces;
+using Travel.Shared.Ultilities;
 using Travel.Shared.ViewModels;
+using Travel.Shared.ViewModels.Travel;
+using static Travel.Shared.Ultilities.Enums;
 
 namespace Travel.Data.Repositories
 {
@@ -26,40 +29,41 @@ namespace Travel.Data.Repositories
             res = new Response();
         }
         // validate vd create
-        public Employee CheckBeforeSave(JObject frmData, ref Notification _message) // hàm đăng nhập  sử cho create update delete
+        public CreateUpdateEmployeeViewModel CheckBeforeSave(JObject frmData, ref Notification _message) // hàm đăng nhập  sử cho create update delete
         {
-            Employee employee = new Employee();
+            CreateUpdateEmployeeViewModel employee = new CreateUpdateEmployeeViewModel();
             try
             {
-                bool checkAcocountExist = true;
-
-                var taikhoan = PrCommon.GetString("Taikhoan", frmData);
-                if (!String.IsNullOrEmpty(taikhoan))
+                var id = PrCommon.GetString("idEmployee", frmData);
+                if (!String.IsNullOrEmpty(id))
                 {
-                    employee.Email = taikhoan;
-                }
-                var Matkhau = PrCommon.GetString("Matkhau", frmData);
-                if (!String.IsNullOrEmpty(Matkhau))
-                {
-                    employee.Password = Matkhau;
+                    employee.IdEmployee = Guid.Parse(id);
                 }
 
 
-
-
-                if(checkAcocountExist)
+                var name = PrCommon.GetString("nameEmployee", frmData);
+                if (!String.IsNullOrEmpty(name))
                 {
-                    message.Type = "Error";
-                    message.DateTime = DateTime.Now;
-                    message.Messenge = "Tài khoản đã tồn z";
-                   
-                }
-                else
-                {
-                    return null;
+                    employee.NameEmployee = name;
                 }
 
+                var email = PrCommon.GetString("email", frmData);
+                if (!String.IsNullOrEmpty(email))
+                {
+                    employee.Email = email;
+                }
 
+                var phone = PrCommon.GetString("phone", frmData);
+                if (!String.IsNullOrEmpty(phone))
+                {
+                    employee.Phone = phone;
+                }
+
+                var roleid = PrCommon.GetString("roleId", frmData);
+                if (!String.IsNullOrEmpty(roleid))
+                {
+                    employee.RoleId = roleid.ToEnum<TitleRole>();
+                }
                 //res.KwId = PrCommon.GetString("KwId", frmData);
                 //res.KwName = PrCommon.GetString("KwName", frmData);
                 //res.KwEmail = PrCommon.GetString("KwEmail", frmData);
@@ -143,6 +147,30 @@ namespace Travel.Data.Repositories
             }
             catch (Exception e)
             {
+                res.Notification.DateTime = DateTime.Now;
+                res.Notification.Description = e.Message;
+                res.Notification.Messenge = "Có lỗi xảy ra !";
+                res.Notification.Type = "Error";
+                return res;
+            }
+        }
+
+        public Response Update(CreateUpdateEmployeeViewModel input)
+        {
+            try
+            {
+                Employee employee = Mapper.MapCreateEmployee(input);
+                _db.Employees.Update(employee);
+                _db.SaveChanges();
+                res.Notification.DateTime = DateTime.Now;
+                res.Notification.Messenge = "Sửa thành công";
+                res.Notification.Type = "Success";
+                return res;
+
+            }
+            catch (Exception e)
+            {
+
                 res.Notification.DateTime = DateTime.Now;
                 res.Notification.Description = e.Message;
                 res.Notification.Messenge = "Có lỗi xảy ra !";
