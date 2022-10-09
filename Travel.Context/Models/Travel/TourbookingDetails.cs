@@ -8,26 +8,16 @@ namespace Travel.Context.Models
 {
     public class TourbookingDetails
     {
-        private string id;
-        private int baby;
-        private int child;
-        private int adult;
-        private string pincode;
-        private int status;
-        private bool isCalled;
-        private long callDate;
-
-        private string idTourBooking;
+        public string idTourbookingDetails{get;set;}
+        public int baby{get;set;}
+        public int child{get;set;}
+        public int adult{get;set;}
+        public string pincode{get;set;}
+        public int status{get;set;}
+        public bool isCalled{get;set;}
+        public long callDate{get;set;}
+        public string idTourBooking{get;set;}
         public Tourbooking Tourbooking { get; set; }
 
-        public string Id { get => id; set => id = value; }
-        public int Baby { get => baby; set => baby = value; }
-        public int Child { get => child; set => child = value; }
-        public int Adult { get => adult; set => adult = value; }
-        public string Pincode { get => pincode; set => pincode = value; }
-        public int Status { get => status; set => status = value; }
-        public bool IsCalled { get => isCalled; set => isCalled = value; }
-        public long CallDate { get => callDate; set => callDate = value; }
-        public string IdTourBooking { get => idTourBooking; set => idTourBooking = value; }
     }
 }

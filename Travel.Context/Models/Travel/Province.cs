@@ -8,11 +8,8 @@ namespace Travel.Context.Models
 {
     public class Province
     {
-        private Guid id;
-        private string name;
-
-        public Guid Id { get => id; set => id = value; }
-        public string Name { get => name; set => name = value; }
+        public Guid IdProvince { get; set; }
+        public string NameProvince { get; set; }
         public ICollection<District> Districts { get; set; }
     }
 }

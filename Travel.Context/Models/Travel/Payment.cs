@@ -8,14 +8,10 @@ namespace Travel.Context.Models
 {
     public class Payment
     {
-        private string id;
-        private string name;
-        private string type;
-        private string idTourBooking;
+        public string IdPayment { get; set; }
+        public string NamePayment { get; set; }
+        public string Type { get; set; }
+        public string IdTourBooking { get; set; }
         public Tourbooking Tourbooking { get; set; }
-        public string Id { get => id; set => id = value; }
-        public string Name { get => name; set => name = value; }
-        public string Type { get => type; set => type = value; }
-        public string IdTourBooking { get => idTourBooking; set => idTourBooking = value; }
     }
 }

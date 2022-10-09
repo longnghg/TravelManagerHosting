@@ -8,43 +8,27 @@ namespace Travel.Context.Models
 {
     public class Tourbooking
     {
-        private string id;
-        private string customerName;
-        private string contactName;
-        private string phone;
-        private string bookingNo;
-        private string pincode;       
-        private long dateBooking;
-        private long lastDate;
-        private double vat;
-        private string address;
-        private string email;
-        private string voucherCode;
-        private bool isCalled;
-        private float deposit;
-        private float remainPrice;
-        private float totalPrice;
-        private string modifyBy;
-        private long modifyDate;
+        public string IdTourbooking{get;set;}
+        public string NameCustomer { get;set;}
+        public string NameContact { get;set;}
+        public string Phone{get;set;}
+        public string BookingNo{get;set;}
+        public string Pincode{get;set;}       
+        public long   DateBooking{get;set;}
+        public long   LastDate{get;set;}
+        public double Vat{get;set;}
+        public string Address{get;set;}
+        public string Email{get;set;}
+        public string VoucherCode{get;set;}
+        public bool   IsCalled{get;set;}
+        public float  Deposit{get;set;}
+        public float  RemainPrice{get;set;}
+        public float  TotalPrice{get;set;}
+        public string ModifyBy{get;set;}
+        public long   ModifyDate{get;set;}
         public ICollection<Payment> Payment { get; set; }
         public TourbookingDetails TourbookingDetails { get; set; }
-        public string Id { get => id; set => id = value; }
-        public string CustomerName { get => customerName; set => customerName = value; }
-        public string ContactName { get => contactName; set => contactName = value; }
-        public string Phone { get => phone; set => phone = value; }
-        public string BookingNo { get => bookingNo; set => bookingNo = value; }
-        public string Pincode { get => pincode; set => pincode = value; }
-        public long DateBooking { get => dateBooking; set => dateBooking = value; }
-        public long LastDate { get => lastDate; set => lastDate = value; }
-        public double Vat { get => vat; set => vat = value; }
-        public string Address { get => address; set => address = value; }
-        public string Email { get => email; set => email = value; }
-        public string VoucherCode { get => voucherCode; set => voucherCode = value; }
-        public bool IsCalled { get => isCalled; set => isCalled = value; }
-        public float Deposit { get => deposit; set => deposit = value; }
-        public float RemainPrice { get => remainPrice; set => remainPrice = value; }
-        public float TotalPrice { get => totalPrice; set => totalPrice = value; }
-        public string ModifyBy { get => modifyBy; set => modifyBy = value; }
-        public long ModifyDate { get => modifyDate; set => modifyDate = value; }
+
+    
     }
 }
