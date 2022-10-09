@@ -11,7 +11,7 @@ namespace Travel.Context.Models
         public string IdTourbookingDetails{get;set;}
         public int    Baby{get;set;}
         public int    Child{get;set;}
-        public int    adult{get;set;}
+        public int    Adult{get;set;}
         public string Pincode{get;set;}
         public int    Status{get;set;}
         public bool   IsCalled{get;set;}

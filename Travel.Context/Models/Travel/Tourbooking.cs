@@ -29,6 +29,5 @@ namespace Travel.Context.Models
         public ICollection<Payment> Payment { get; set; }
         public TourbookingDetails TourbookingDetails { get; set; }
 
-    
     }
 }
