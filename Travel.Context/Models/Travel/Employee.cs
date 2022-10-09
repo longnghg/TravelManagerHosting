@@ -21,11 +21,8 @@ namespace Travel.Context.Models
         public long ModifyDate { get; set; }
         public bool IsDelete { get; set; }
         public bool IsActive { get; set; }
-        public Role Role { get; set; }
-        public string IdSchedule {get; set;}
-
-        public  Role role { get; set; }
-        public ICollection<Schedule> Schedules { get; set; }
+        public virtual Role Role { get; set; }
+        public virtual ICollection<Schedule> Schedules { get; set; }
 
     }
 

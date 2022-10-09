@@ -21,6 +21,6 @@ namespace Travel.Context.Models
         public int QuantitySR { get; set; }
         public string ModifyBy { get; set; }
         public long ModifyDate { get; set; }
-        public ICollection<CostTour> CostTours { get; set; }
+        public virtual ICollection<CostTour> CostTours { get; set; }
     }
 }

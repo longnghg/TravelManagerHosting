@@ -15,7 +15,7 @@ namespace Travel.Context.Models
         public string ModifyBy { get; set; }
         public long ModifyDate { get; set; }
         public bool IsDelete { get; set; }
-        public Schedule Schedule { get; set; }
+        public virtual Schedule Schedule { get; set; }
         public string IdSchedule { get; set; }
 
     }

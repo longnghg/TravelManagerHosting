@@ -15,5 +15,6 @@ namespace Travel.Data.Interfaces
         CreateUpdateEmployeeViewModel CheckBeforeSave(JObject frmData, ref Notification _message);
         Response GetEmployees();
         Response Update(CreateUpdateEmployeeViewModel input);
+        Response Create(CreateUpdateEmployeeViewModel input);
     }
 }

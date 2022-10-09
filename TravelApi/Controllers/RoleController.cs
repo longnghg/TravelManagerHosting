@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,36 @@ namespace TravelApi.Controllers
         public object ViewAll()
         {
             res = role.ViewAll();
+            return Ok(res);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("create")]
+        public object Create([FromBody] JObject frmData)
+        {
+
+            var result = role.CheckBeforSave(frmData, ref message);
+            if (message == null)
+            {
+              res = role.Create(result);
+            }
+            
+            return Ok(res);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("update-role")]
+        public object Update([FromBody] JObject frmData)
+        {
+
+            var result = role.CheckBeforSave(frmData, ref message);
+            if (message == null)
+            {
+                res = role.Update(result);
+            }
+
             return Ok(res);
         }
     }

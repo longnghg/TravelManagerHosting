@@ -13,6 +13,6 @@ namespace Travel.Context.Models
         public string IdSchedule { get; set; }
         public long ToDate { get; set; }
         public long FromDate { get; set; }
-        public Schedule Schedules { get; set; }
+        public virtual Schedule Schedules { get; set; }
     }
 }

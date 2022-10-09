@@ -17,7 +17,7 @@ namespace Travel.Context.Models
         public string Phone { get; set; }
 
 
-        public ICollection<Schedule> Schedules { get; set; }
+        public virtual ICollection<Schedule> Schedules { get; set; }
 
     }
 }

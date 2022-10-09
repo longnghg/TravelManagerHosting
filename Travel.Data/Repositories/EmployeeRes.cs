@@ -52,9 +52,22 @@ namespace Travel.Data.Repositories
                 {
                     employee.Email = email;
                 }
-
-                var phone = PrCommon.GetString("phone", frmData);
+                var phone = PrCommon.GetString("Phone", frmData);
                 if (!String.IsNullOrEmpty(phone))
+                {
+                    employee.NameEmployee = phone;
+                }
+
+                var role = PrCommon.GetString("RoleId", frmData);
+                if (!String.IsNullOrEmpty(phone))
+                {
+                    employee.RoleId = role.ToEnum<TitleRole>();
+                }
+
+
+
+
+                if (checkAcocountExist)
                 {
                     employee.Phone = phone;
                 }
@@ -90,16 +103,18 @@ namespace Travel.Data.Repositories
             try
             {
 
-                res.TotalResult = _db.Employees.Where(x => x.IsDelete == false).Count();
-                var result = _db.Employees.FromSqlRaw("[SearchEmployees] {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}", res.KwId, res.KwName, res.KwEmail, res.KwPhone, res.KwRoleName, res.KwIsActive, res.PageNumber, res.PageSize).ToList();
+                var result = _db.Employees.ToList();
                 //if (!string.IsNullOrEmpty(res.KwId) || !string.IsNullOrEmpty(res.KwName) || !string.IsNullOrEmpty(res.KwEmail) || !string.IsNullOrEmpty(res.KwPhone) || !string.IsNullOrEmpty(res.KwRoleName) || !string.IsNullOrEmpty(res.KwIsActive))
                 //{
                 //    res.TotalResult = result.Count();
                 //}
 
+                var result2 = Mapper.MapEmployee(result);
+
+
                 if (result.Count() > 0)
                 {
-                    res.Content = result;
+                    res.Content = result2;
                 }
                 else
                 {
@@ -118,31 +133,19 @@ namespace Travel.Data.Repositories
                 return res;
             }
         }
-        public Response CreateEmployees(Employee unit)
+        public Response Create(CreateUpdateEmployeeViewModel input)
         {
             try
             {
+                Employee employee = Mapper.MapCreateEmployee(input);
 
-                _db.Employees.Add(unit);
+                _db.Employees.Add(employee);
+                _db.SaveChanges();
 
+                res.Notification.DateTime = DateTime.Now;
+                res.Notification.Messenge = "Thêm thành công !";
+                res.Notification.Type = "Success";
 
-                res.TotalResult = _db.Employees.Where(x => x.IsDelete == false).Count();
-                var result = _db.Employees.FromSqlRaw("[SearchEmployees] {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}", res.KwId, res.KwName, res.KwEmail, res.KwPhone, res.KwRoleName, res.KwIsActive, res.PageNumber, res.PageSize).ToList();
-                //if (!string.IsNullOrEmpty(res.KwId) || !string.IsNullOrEmpty(res.KwName) || !string.IsNullOrEmpty(res.KwEmail) || !string.IsNullOrEmpty(res.KwPhone) || !string.IsNullOrEmpty(res.KwRoleName) || !string.IsNullOrEmpty(res.KwIsActive))
-                //{
-                //    res.TotalResult = result.Count();
-                //}
-
-                if (result.Count() > 0)
-                {
-                    res.Content = result;
-                }
-                else
-                {
-                    res.Notification.DateTime = DateTime.Now;
-                    res.Notification.Messenge = "Không có dữ liệu trả về !";
-                    res.Notification.Type = "Warning";
-                }
                 return res;
             }
             catch (Exception e)
