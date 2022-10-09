@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -57,6 +58,36 @@ namespace Travel.Shared.Ultilities
                 catch { temp = ""; }
             }
             return temp;
+        }
+
+        public static string RandomPassword()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append(RandomString(1, true));
+            builder.Append(RandomNumber(0, 9));
+            builder.Append(RandomNumber(0, 9));
+            builder.Append(RandomString(2, true));
+            builder.Append(RandomNumber(0, 9));
+            builder.Append(RandomString(1, true));
+            return builder.ToString();
+        }
+
+        public static string RandomString(int Size, bool LowerCase)
+        {
+            StringBuilder builder = new StringBuilder();
+            Random random = new Random();
+            char ch;
+            for (int i = 0; i < Size; i++)
+            {
+                ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65)));
+                builder.Append(ch);
+                Thread.Sleep(10);
+            }
+            if (LowerCase)
+            {
+                return builder.ToString().ToLower();
+            }
+            return builder.ToString();
         }
         #endregion
 
@@ -148,8 +179,8 @@ namespace Travel.Shared.Ultilities
                 {
                     file.CopyTo(stream);
                 }
-                image.Id = Guid.NewGuid();
-                image.Name = fileName;
+                image.IdImage = Guid.NewGuid();
+                image.NameImage = fileName;
                 image.Extension = str[1];
                 image.IdService = Id;
                 image.Size = file.Length;
@@ -239,36 +270,20 @@ namespace Travel.Shared.Ultilities
         //        _message = message;
         //    }
         //}
-
-        public static string RandomPassword()
+        public static string Encryption(string password)
         {
-            StringBuilder builder = new StringBuilder();
-            builder.Append(RandomString(1, true));
-            builder.Append(RandomNumber(0, 9));
-            builder.Append(RandomNumber(0, 9));
-            builder.Append(RandomString(2, true));
-            builder.Append(RandomNumber(0, 9));
-            builder.Append(RandomString(1, true));
-            return builder.ToString();
+            MD5CryptoServiceProvider MD5 = new MD5CryptoServiceProvider();
+            byte[] Encrypt;
+            UTF8Encoding Encode = new UTF8Encoding();
+            Encrypt = MD5.ComputeHash(Encode.GetBytes(password));
+            StringBuilder Encryptdata = new StringBuilder();
+            for (int i = 0; i < Encrypt.Length; i++)
+            {
+                Encryptdata.Append(Encrypt[i].ToString());
+            }
+            return Encryptdata.ToString();
         }
 
-        public static string RandomString(int Size, bool LowerCase)
-        {
-            StringBuilder builder = new StringBuilder();
-            Random random = new Random();
-            char ch;
-            for (int i = 0; i < Size; i++)
-            {
-                ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65)));
-                builder.Append(ch);
-                Thread.Sleep(10);
-            }
-            if (LowerCase)
-            {
-                return builder.ToString().ToLower();
-            }
-            return builder.ToString();
-        }
 
         public static int RandomNumber(int min, int max)
         {
