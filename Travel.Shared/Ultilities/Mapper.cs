@@ -17,12 +17,12 @@ namespace Travel.Shared.Ultilities
             var mapperConfiguration = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Role, RoleViewModel>()
-                          .ForMember(dto => dto.Id, opt => opt.MapFrom(src => src.Id))
-                          .ForMember(dto => dto.Name, opt => opt.MapFrom(src => src.Name))
+                          .ForMember(dto => dto.IdRole, opt => opt.MapFrom(src => src.IdRole))
+                          .ForMember(dto => dto.NameRole, opt => opt.MapFrom(src => src.NameRole))
                           .ForMember(dto => dto.Description, opt => opt.MapFrom(src => string.IsNullOrEmpty(src.Description) ? "" : src.Description));
                 cfg.CreateMap<Employee, EmployeeViewModel>()
-                         .ForMember(dto => dto.Id, opt => opt.MapFrom(src => src.Id))
-                         .ForMember(dto => dto.Name, opt => opt.MapFrom(src => src.Name))
+                         .ForMember(dto => dto.IdEmployee, opt => opt.MapFrom(src => src.IdEmployee))
+                         .ForMember(dto => dto.NameEmployee, opt => opt.MapFrom(src => src.NameEmployee))
                          .ForMember(dto => dto.Birthday, opt => opt.MapFrom(src => src.Birthday))
                          .ForMember(dto => dto.CreateDate, opt => opt.MapFrom(src => src.CreateDate))
                          .ForMember(dto => dto.Email, opt => opt.MapFrom(src => src.Email))
@@ -34,7 +34,7 @@ namespace Travel.Shared.Ultilities
                          .ForMember(dto => dto.Phone, opt => opt.MapFrom(src => src.Phone))
                          .ForMember(dto => dto.RoleDescription, opt => opt.MapFrom(src => string.IsNullOrEmpty(src.Role.Description) ? "" : src.Role.Description))
                          .ForMember(dto => dto.RoleId, opt => opt.MapFrom(src => src.RoleId))
-                         .ForMember(dto => dto.RoleName, opt => opt.MapFrom(src => src.Role.Name));
+                         .ForMember(dto => dto.RoleName, opt => opt.MapFrom(src => src.Role.NameRole));
             });
             _mapper = mapperConfiguration.CreateMapper();
         }
