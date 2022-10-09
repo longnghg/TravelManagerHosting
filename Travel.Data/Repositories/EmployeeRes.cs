@@ -41,7 +41,6 @@ namespace Travel.Data.Repositories
                 if (!String.IsNullOrEmpty(pageSize))
                 {
                     res.PageSize = Int32.Parse(PrCommon.GetString("PageSize", frmData));
-
                 }
                 res.KwId = PrCommon.GetString("KwId", frmData);
                 res.KwName = PrCommon.GetString("KwName", frmData);

@@ -7,7 +7,7 @@ namespace Travel.Context.Models
 {
     public class Employee
     {       
-        private Guid id;
+        private Guid idEmployee;
         private string name;
         private string email;
         private string password;
@@ -15,6 +15,7 @@ namespace Travel.Context.Models
         private string image;
         private string phone;
 
+        // foreign key
         private int roleId;
 
         private long createDate;    
@@ -25,12 +26,10 @@ namespace Travel.Context.Models
     
         private bool isDelete;
         private bool isActive;
-        private string idSchedule;
 
         private Role role;
         public ICollection<Schedule> Schedules { get; set; }
 
-        public Guid Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
         public string Email { get => email; set => email = value; }
         public string Password { get => password; set => password = value; }
@@ -45,7 +44,7 @@ namespace Travel.Context.Models
         public bool IsDelete { get => isDelete; set => isDelete = value; }
         public bool IsActive { get => isActive; set => isActive = value; }
         public Role Role { get => role; set => role = value; }
-        public string IdSchedule { get => idSchedule; set => idSchedule = value; }
+        public Guid IdEmployee { get => idEmployee; set => idEmployee = value; }
     }
 
 }

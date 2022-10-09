@@ -8,10 +8,10 @@ namespace Travel.Context.Models
 {
     public class Banner
     {
-        private Guid id;
+        private Guid idBanner;
         private bool isActive;
 
-        public Guid Id { get => id; set => id = value; }
+        public Guid IdBanner { get => idBanner; set => idBanner = value; }
         public bool IsActive { get => isActive; set => isActive = value; }
     }
 }
