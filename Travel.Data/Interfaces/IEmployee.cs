@@ -11,7 +11,7 @@ namespace Travel.Data.Interfaces
 {
     public interface IEmployee
     {
-        Employee SetDataEmployee(JObject frmData, ref Notification _message);
+        Employee CheckBeforeSave(JObject frmData, ref Notification _message);
         Response GetEmployees();
     }
 }
