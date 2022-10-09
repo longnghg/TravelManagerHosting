@@ -8,7 +8,7 @@ namespace Travel.Context.Models
     public class Employee
     {
         public Guid IdEmployee { get; set; }
-        public string Name       { get; set; }
+        public string NameEmployee { get; set; }
         public string Email     { get; set; }
         public string Password   { get; set; }
         public long Birthday     { get; set; }

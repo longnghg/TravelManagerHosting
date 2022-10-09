@@ -8,7 +8,7 @@ namespace Travel.Context.Models
     public class Promotion
     {
 
-        public Guid Id { get; set; }
+        public Guid IdPromotion { get; set; }
         public int Value { get; set; }
         public string IdSchedule { get; set; }
         public long ToDate { get; set; }

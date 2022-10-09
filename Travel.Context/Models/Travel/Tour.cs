@@ -8,7 +8,7 @@ namespace Travel.Context.Models
     public class Tour
     {     
         public string IdTour { get; set; }
-        public string TourName { get; set; }
+        public string NameTour { get; set; }
         public double Rating { get; set; }
         public string FromPlace { get; set; }
         public string ToPlace { get; set; }
