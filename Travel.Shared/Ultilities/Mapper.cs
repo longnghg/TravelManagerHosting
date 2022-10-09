@@ -16,6 +16,19 @@ namespace Travel.Shared.Ultilities
         {
             var mapperConfiguration = new MapperConfiguration(cfg =>
             {
+                // Create
+                cfg.CreateMap<CreateEmployeeViewModel, Employee>()
+                          .ForMember(dto => dto.NameEmployee, opt => opt.MapFrom(src => src.NameEmployee))
+                          .ForMember(dto => dto.Email, opt => opt.MapFrom(src => src.Email))
+                          .ForMember(dto => dto.Birthday, opt => opt.MapFrom(src => src.Birthday))
+                          .ForMember(dto => dto.Image, opt => opt.MapFrom(src => src.Image))
+                          .ForMember(dto => dto.Phone, opt => opt.MapFrom(src => src.Phone))
+                          .ForMember(dto => dto.RoleId, opt => opt.MapFrom(src => src.RoleId));
+
+                cfg.CreateMap<CreateRoleViewModel, Role>()
+                       .ForMember(dto => dto.NameRole, opt => opt.MapFrom(src => src.RoleName))
+                       .ForMember(dto => dto.Description, opt => opt.MapFrom(src => string.IsNullOrEmpty(src.Description) ? "" : src.Description));
+
                 cfg.CreateMap<Role, RoleViewModel>()
                           .ForMember(dto => dto.IdRole, opt => opt.MapFrom(src => src.IdRole))
                           .ForMember(dto => dto.NameRole, opt => opt.MapFrom(src => src.NameRole))
@@ -33,8 +46,9 @@ namespace Travel.Shared.Ultilities
                          .ForMember(dto => dto.ModifyDate, opt => opt.MapFrom(src => src.ModifyDate))
                          .ForMember(dto => dto.Phone, opt => opt.MapFrom(src => src.Phone))
                          .ForMember(dto => dto.RoleDescription, opt => opt.MapFrom(src => string.IsNullOrEmpty(src.Role.Description) ? "" : src.Role.Description))
-                         .ForMember(dto => dto.RoleId, opt => opt.MapFrom(src => src.RoleId))
+                         .ForMember(dto => dto.IdRole, opt => opt.MapFrom(src => src.RoleId))
                          .ForMember(dto => dto.RoleName, opt => opt.MapFrom(src => src.Role.NameRole));
+                
             });
             _mapper = mapperConfiguration.CreateMapper();
         }
@@ -54,5 +68,6 @@ namespace Travel.Shared.Ultilities
         {
             return _mapper.Map<List<Employee>, List<EmployeeViewModel>>(data);
         }
+
     }
 }

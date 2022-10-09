@@ -9,14 +9,14 @@ namespace Travel.Shared.ViewModels.Travel
 {
     public class EmployeeViewModel
     {
-        private Guid id;
-        private string name;
+        private Guid idEmployee;
+        private string nameEmployee;
         private string email;
         private long birthday;
         private string image;
         private string phone;
 
-        private TitleRole roleId;
+        private TitleRole idRole;
         private string roleName;
         private string roleDescription;
 
@@ -31,13 +31,10 @@ namespace Travel.Shared.ViewModels.Travel
 
 
 
-        public Guid Id { get => id; set => id = value; }
-        public string Name { get => name; set => name = value; }
         public string Email { get => email; set => email = value; }
         public long Birthday { get => birthday; set => birthday = value; }
         public string Image { get => image; set => image = value; }
         public string Phone { get => phone; set => phone = value; }
-        public TitleRole RoleId { get => roleId; set => roleId = value; }
         public int Status { get => status; set => status = value; }
         public string ModifyBy { get => modifyBy; set => modifyBy = value; }
         public long ModifyDate { get => modifyDate; set => modifyDate = value; }
@@ -46,5 +43,8 @@ namespace Travel.Shared.ViewModels.Travel
         public string RoleName { get => roleName; set => roleName = value; }
         public long CreateDate { get => createDate; set => createDate = value; }
         public string RoleDescription { get => roleDescription; set => roleDescription = value; }
+        public TitleRole IdRole { get => idRole; set => idRole = value; }
+        public Guid IdEmployee { get => idEmployee; set => idEmployee = value; }
+        public string NameEmployee { get => nameEmployee; set => nameEmployee = value; }
     }
 }
