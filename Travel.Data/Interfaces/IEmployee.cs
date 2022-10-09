@@ -6,12 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Travel.Context.Models;
 using Travel.Shared.ViewModels;
+using Travel.Shared.ViewModels.Travel;
 
 namespace Travel.Data.Interfaces
 {
     public interface IEmployee
     {
-        Employee CheckBeforeSave(JObject frmData, ref Notification _message);
+        CreateUpdateEmployeeViewModel CheckBeforeSave(JObject frmData, ref Notification _message);
         Response GetEmployees();
+        Response Update(CreateUpdateEmployeeViewModel input);
     }
 }

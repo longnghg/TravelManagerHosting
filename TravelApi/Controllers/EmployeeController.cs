@@ -49,5 +49,19 @@ namespace TravelApi.Controllers
             }
             return Ok(res);
         }
+
+        [HttpPost]
+        [Authorize]
+        [Route("update-employess")]
+        public object Update([FromBody] JObject frmData)
+        {
+
+            var result = employee.CheckBeforeSave(frmData, ref message);
+            if (message != null)
+            {
+                res = employee.Update(result);
+            }
+            return Ok(res);
+        }
     }
 }
