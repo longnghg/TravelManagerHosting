@@ -28,9 +28,9 @@ namespace Travel.Context.Models
         public float PriceRestaurant { get; set; }
         public Guid PlaceId { get; set; }
         public float PriceTicketPlace { get; set; }
-        public TourDetail TourDetails { get; set; }
-        public Place Place { get; set; }
-        public Hotel Hotel { get; set; }
-        public Restaurant Restaurant { get; set; }
+        public virtual TourDetail TourDetails { get; set; }
+        public virtual Place Place { get; set; }
+        public virtual Hotel Hotel { get; set; }
+        public virtual Restaurant Restaurant { get; set; }
     }
 }

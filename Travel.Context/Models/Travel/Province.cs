@@ -10,6 +10,6 @@ namespace Travel.Context.Models
     {
         public Guid IdProvince { get; set; }
         public string NameProvince { get; set; }
-        public ICollection<District> Districts { get; set; }
+        public virtual ICollection<District> Districts { get; set; }
     }
 }

@@ -100,16 +100,18 @@ namespace Travel.Data.Repositories
             try
             {
 
-                res.TotalResult = _db.Employees.Where(x => x.IsDelete == false).Count();
-                var result = _db.Employees.FromSqlRaw("[SearchEmployees] {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}", res.KwId, res.KwName, res.KwEmail, res.KwPhone, res.KwRoleName, res.KwIsActive, res.PageNumber, res.PageSize).ToList();
+                var result = _db.Employees.ToList();
                 //if (!string.IsNullOrEmpty(res.KwId) || !string.IsNullOrEmpty(res.KwName) || !string.IsNullOrEmpty(res.KwEmail) || !string.IsNullOrEmpty(res.KwPhone) || !string.IsNullOrEmpty(res.KwRoleName) || !string.IsNullOrEmpty(res.KwIsActive))
                 //{
                 //    res.TotalResult = result.Count();
                 //}
 
+                var result2 = Mapper.MapEmployee(result);
+
+
                 if (result.Count() > 0)
                 {
-                    res.Content = result;
+                    res.Content = result2;
                 }
                 else
                 {
