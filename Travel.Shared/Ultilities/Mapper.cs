@@ -17,7 +17,8 @@ namespace Travel.Shared.Ultilities
             var mapperConfiguration = new MapperConfiguration(cfg =>
             {
                 // Create
-                cfg.CreateMap<CreateEmployeeViewModel, Employee>()
+                cfg.CreateMap<CreateUpdateEmployeeViewModel, Employee>()
+                          .ForMember(dto => dto.IdEmployee, opt => opt.MapFrom(src => src.IdEmployee))
                           .ForMember(dto => dto.NameEmployee, opt => opt.MapFrom(src => src.NameEmployee))
                           .ForMember(dto => dto.Email, opt => opt.MapFrom(src => src.Email))
                           .ForMember(dto => dto.Birthday, opt => opt.MapFrom(src => src.Birthday))
@@ -25,7 +26,8 @@ namespace Travel.Shared.Ultilities
                           .ForMember(dto => dto.Phone, opt => opt.MapFrom(src => src.Phone))
                           .ForMember(dto => dto.RoleId, opt => opt.MapFrom(src => src.RoleId));
 
-                cfg.CreateMap<CreateRoleViewModel, Role>()
+                cfg.CreateMap<CreateUpdateRoleViewModel, Role>()
+                       .ForMember(dto => dto.IdRole, opt => opt.MapFrom(src => src.IdRole))
                        .ForMember(dto => dto.NameRole, opt => opt.MapFrom(src => src.RoleName))
                        .ForMember(dto => dto.Description, opt => opt.MapFrom(src => string.IsNullOrEmpty(src.Description) ? "" : src.Description));
 
@@ -68,9 +70,9 @@ namespace Travel.Shared.Ultilities
         {
             return _mapper.Map<List<Employee>, List<EmployeeViewModel>>(data);
         }
-        public static Role MapCreateRole(CreateRoleViewModel data)
+        public static Role MapCreateRole(CreateUpdateRoleViewModel data)
         {
-            return _mapper.Map<CreateRoleViewModel,Role>(data);
+            return _mapper.Map<CreateUpdateRoleViewModel,Role>(data);
         }
     }
 }

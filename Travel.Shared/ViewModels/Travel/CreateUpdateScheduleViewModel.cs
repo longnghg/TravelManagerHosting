@@ -7,7 +7,7 @@ using Travel.Context.Models;
 
 namespace Travel.Shared.ViewModels.Travel
 {
-    public class CreateScheduleViewModel
+    public class CreateUpdateScheduleViewModel
     {
         private string id;
         private long departureDate;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Travel.Context.Models.Travel
 {
-    public class CreateTimelineViewModel
+    public class CreateUpdateTimelineViewModel
     {
         private string id;
         private string description;

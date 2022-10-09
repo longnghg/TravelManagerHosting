@@ -7,8 +7,9 @@ using static Travel.Shared.Ultilities.Enums;
 
 namespace Travel.Shared.ViewModels.Travel
 {
-    public class CreateEmployeeViewModel
+    public class CreateUpdateEmployeeViewModel
     {
+        private Guid idEmployee;
         private string nameEmployee;
         private string email;
         private long birthday;
@@ -23,5 +24,6 @@ namespace Travel.Shared.ViewModels.Travel
         public string Phone { get => phone; set => phone = value; }
         public TitleRole RoleId { get => roleId; set => roleId = value; }
         public string NameEmployee { get => nameEmployee; set => nameEmployee = value; }
+        public Guid IdEmployee { get => idEmployee; set => idEmployee = value; }
     }
 }

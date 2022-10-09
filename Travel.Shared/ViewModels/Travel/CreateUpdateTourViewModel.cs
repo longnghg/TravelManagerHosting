@@ -3,7 +3,7 @@ using Travel.Context.Models;
 
 namespace Travel.Shared.ViewModels.Travel
 {
-    public class CreateTourViewModel
+    public class CreateUpdateTourViewModel
     {
         private string id;
         private string tourName;
