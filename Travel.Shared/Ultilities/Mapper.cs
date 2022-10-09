@@ -74,5 +74,9 @@ namespace Travel.Shared.Ultilities
         {
             return _mapper.Map<CreateUpdateRoleViewModel,Role>(data);
         }
+        public static Employee MapCreateEmployee(CreateUpdateEmployeeViewModel data)
+        {
+            return _mapper.Map<CreateUpdateEmployeeViewModel, Employee>(data);
+        }
     }
 }
