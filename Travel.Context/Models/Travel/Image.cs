@@ -7,19 +7,12 @@ namespace Travel.Context.Models
 {
     public class Image
     {
-        private Guid id;
-        private string name;
-        private long size;
-        private string extension;
-        private string filePath;
-        private Guid idService;
+        public Guid IdImage { get; set; }
+        public string NameImage { get; set; }
+        public long Size { get; set; }
 
-        public Guid Id { get => id; set => id = value; }
-        public string Name { get => name; set => name = value; }
-        public long Size { get => size; set => size = value; }
-        
-        public string FilePath { get => filePath; set => filePath = value; }
-        public Guid IdService { get => idService; set => idService = value; }
-        public string Extension { get => extension; set => extension = value; }
+        public string FilePath { get; set; }
+        public Guid IdService { get; set; }
+        public string Extension { get; set; }
     }
 }

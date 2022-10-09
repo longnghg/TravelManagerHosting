@@ -6,39 +6,21 @@ using System.Threading.Tasks;
 namespace Travel.Context.Models
 {
     public class Tour
-    {
-        private string id;
-        private string tourName;
-        private double rating;
-        private string thumbsnail;
-        private string fromPlace;
-        private string toPlace;
+    {     
+        public string IdTour { get; set; }
+        public string TourName { get; set; }
+        public double Rating { get; set; }
+        public string FromPlace { get; set; }
+        public string ToPlace { get; set; }
+        public string ApproveStatus { get; set; }
+        public int Status { get; set; }
+        public long CreateDate { get; set; }
+        public string ModifyBy { get; set; }
+        public long ModifyDate { get; set; }
+        public bool IsDelete { get; set; }
+        public bool IsActive { get; set; }
+        public string Thumbsnail { get; set; }
+        public ICollection<Schedule> Schedules { get; set; }
 
-        private string approveStatus;   
-        private int status;
-
-        private long createDate;
-
-        private string modifyBy;
-        private long modifyDate;
-
-        private bool isDelete;
-        private bool isActive;
-        private ICollection<Schedule> schedules;
-
-        public string Id { get => id; set => id = value; }
-        public string TourName { get => tourName; set => tourName = value; }
-        public double Rating { get => rating; set => rating = value; }
-        public string FromPlace { get => fromPlace; set => fromPlace = value; }
-        public string ToPlace { get => toPlace; set => toPlace = value; }
-        public string ApproveStatus { get => approveStatus; set => approveStatus = value; }
-        public int Status { get => status; set => status = value; }
-        public long CreateDate { get => createDate; set => createDate = value; }
-        public string ModifyBy { get => modifyBy; set => modifyBy = value; }
-        public long ModifyDate { get => modifyDate; set => modifyDate = value; }
-        public bool IsDelete { get => isDelete; set => isDelete = value; }
-        public bool IsActive { get => isActive; set => isActive = value; }
-        public string Thumbsnail { get => thumbsnail; set => thumbsnail = value; }
-        public ICollection<Schedule> Schedules { get => schedules; set => schedules = value; }
     }
 }

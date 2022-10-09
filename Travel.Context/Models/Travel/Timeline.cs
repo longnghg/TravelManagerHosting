@@ -7,27 +7,16 @@ namespace Travel.Context.Models
 {
     public class Timeline
     {
-        private string  id;
-        private string description;
-        private long fromTime;
-        private long toTime;
-        private string modifyBy;
-        private long modifyDate;
 
-        private bool isDelete;
+        public string IdTimeline { get; set; }
+        public string Description { get; set; }
+        public long FromTime { get; set; }
+        public long ToTime { get; set; }
+        public string ModifyBy { get; set; }
+        public long ModifyDate { get; set; }
+        public bool IsDelete { get; set; }
+        public Schedule Schedule { get; set; }
+        public string IdSchedule { get; set; }
 
-        private string idSchedule;
-
-        private Schedule schedule; 
-
-        public string Id { get => id; set => id = value; }
-        public string Description { get => description; set => description = value; }
-        public long FromTime { get => fromTime; set => fromTime = value; }
-        public long ToTime { get => toTime; set => toTime = value; }
-        public string ModifyBy { get => modifyBy; set => modifyBy = value; }
-        public long ModifyDate { get => modifyDate; set => modifyDate = value; }
-        public bool IsDelete { get => isDelete; set => isDelete = value; }
-        public Schedule Schedule { get => schedule; set => schedule = value; }
-        public string IdSchedule { get => idSchedule; set => idSchedule = value; }
     }
 }

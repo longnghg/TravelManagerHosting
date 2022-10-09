@@ -7,14 +7,11 @@ namespace Travel.Context.Models
 {
     public class Role
     {
-        private int id;
-        private string name;
-        private string description;
-        private bool isDelete;
 
-        public int Id { get => id; set => id = value; }
-        public string Name { get => name; set => name = value; }
-        public string Description { get => description; set => description = value; }
-        public bool IsDelete { get => isDelete; set => isDelete = value; }
+        public int IdRole { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public bool IsDelete { get; set; }
+
     } 
 }

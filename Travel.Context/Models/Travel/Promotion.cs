@@ -8,18 +8,11 @@ namespace Travel.Context.Models
     public class Promotion
     {
 
-        private Guid id;
-        private int value;
-        private string idSchedule;
-        private long toDate;
-        private long fromDate;
-        private Schedule schedules;
-
-        public Guid Id { get => id; set => id = value; }
-        public int Value { get => value; set => this.value = value; }
-        public string IdSchedule { get => idSchedule; set => idSchedule = value; }
-        public long ToDate { get => toDate; set => toDate = value; }
-        public long FromDate { get => fromDate; set => fromDate = value; }
-        public Schedule Schedules { get => schedules; set => schedules = value; }
+        public Guid Id { get; set; }
+        public int Value { get; set; }
+        public string IdSchedule { get; set; }
+        public long ToDate { get; set; }
+        public long FromDate { get; set; }
+        public Schedule Schedules { get; set; }
     }
 }

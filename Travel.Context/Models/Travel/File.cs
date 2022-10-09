@@ -8,16 +8,11 @@ namespace Travel.Context.Models
     public class File
     {
 
-        private Guid id;
-        private string fileName;
-        private int fileSize;
-        private string fileExtension;
-        private string filePath;
+        public Guid IdFile { get; set; }
+        public string NameFile { get; set; }
+        public int FileSize { get; set; }
+        public string FileExtension { get; set; }
+        public string FilePath { get; set; }
 
-        public Guid Id { get => id; set => id = value; }
-        public string FileName { get => fileName; set => fileName = value; }
-        public int FileSize { get => fileSize; set => fileSize = value; }
-        public string FileExtension { get => fileExtension; set => fileExtension = value; }
-        public string FilePath { get => filePath; set => filePath = value; }
     }
 }
