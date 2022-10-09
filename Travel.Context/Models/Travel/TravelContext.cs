@@ -211,7 +211,7 @@ namespace Travel.Context.Models.Travel
 
             modelBuilder.Entity<Employee>(entity =>
             {
-                entity.Property(e => e.Name).HasMaxLength(100).IsRequired(true); 
+                entity.Property(e => e.NameEmployee).HasMaxLength(100).IsRequired(true); 
                 entity.Property(e => e.Email).HasDefaultValue(0);
                 entity.Property(e => e.Email).IsRequired(true).HasMaxLength(100);
                 entity.Property(e => e.Password).HasMaxLength(255);
@@ -232,7 +232,7 @@ namespace Travel.Context.Models.Travel
 
             modelBuilder.Entity<Schedule>(entity =>
             {
-                entity.Property(e => e.Id).HasMaxLength(50);
+                entity.Property(e => e.IdSchedule).HasMaxLength(50);
                 entity.HasOne<Car>(e => e.Cars)
                  .WithMany(d => d.Schedules)
                  .HasForeignKey(e => e.IdCar);
@@ -259,7 +259,7 @@ namespace Travel.Context.Models.Travel
             modelBuilder.Entity<Tour>(entity =>
             {
         
-                entity.Property(e => e.TourName).HasMaxLength(150).IsRequired(true);
+                entity.Property(e => e.NameTour).HasMaxLength(150).IsRequired(true);
                 entity.Property(e => e.ModifyBy).HasMaxLength(100);
                 entity.Property(e => e.Thumbsnail).HasMaxLength(150);
                 entity.Property(e => e.FromPlace).HasMaxLength(100);
@@ -274,19 +274,19 @@ namespace Travel.Context.Models.Travel
             });
             modelBuilder.Entity<Role>(entity =>
             {
-                entity.Property(e => e.Name).HasMaxLength(100);
+                entity.Property(e => e.NameRole).HasMaxLength(100);
                 entity.Property(e => e.Description).HasMaxLength(100);
 
             });
             modelBuilder.Entity<File>(entity =>
             {
-                entity.Property(e => e.FileName).HasMaxLength(100).IsRequired(true);
+                entity.Property(e => e.NameFile).HasMaxLength(100).IsRequired(true);
                 entity.Property(e => e.FileExtension).HasMaxLength(10);
                 entity.Property(e => e.FilePath).HasMaxLength(150);
             }); 
             modelBuilder.Entity<Image>(entity =>
             {
-                entity.Property(e => e.Name).HasMaxLength(100).IsRequired(true);
+                entity.Property(e => e.NameImage).HasMaxLength(100).IsRequired(true);
                 entity.Property(e => e.Extension).HasMaxLength(5);
                 entity.Property(e => e.FilePath).HasMaxLength(255);
             });
