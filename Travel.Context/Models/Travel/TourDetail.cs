@@ -7,46 +7,26 @@ using System.Threading.Tasks;
 namespace Travel.Context.Models
 {
     public class TourDetail
-    {
-        private string id;
-        private string tourId;
-        private Guid idCostTour;
-
-        private float priceChild;
-        private float priceBaby;
-        private float priceAdult;
-        private float priceChildPromotion;
-        private float priceBabyPromotion;
-        private float priceAdultPromotion;
-        private float displayPrice;
-        private float displayPromotionPrice;
-        private string description;
-        private int quantityBooked;
-        private bool isPromotion;
-        private float totalCostTour;
-        private int profit;
-        private float vat;
-        private float finalPrice;
-
-        private CostTour costTour;
-        public string Id { get => id; set => id = value; }
-        public string TourId { get => tourId; set => tourId = value; }
-        public Guid IdCostTour { get => idCostTour; set => idCostTour = value; }
-        public float PriceChild { get => priceChild; set => priceChild = value; }
-        public float PriceBaby { get => priceBaby; set => priceBaby = value; }
-        public float PriceAdult { get => priceAdult; set => priceAdult = value; }
-        public float PriceChildPromotion { get => priceChildPromotion; set => priceChildPromotion = value; }
-        public float PriceBabyPromotion { get => priceBabyPromotion; set => priceBabyPromotion = value; }
-        public float PriceAdultPromotion { get => priceAdultPromotion; set => priceAdultPromotion = value; }
-        public float DisplayPrice { get => displayPrice; set => displayPrice = value; }
-        public float DisplayPromotionPrice { get => displayPromotionPrice; set => displayPromotionPrice = value; }
-        public string Description { get => description; set => description = value; }
-        public int QuantityBooked { get => quantityBooked; set => quantityBooked = value; }
-        public bool IsPromotion { get => isPromotion; set => isPromotion = value; }
-        public float TotalCostTour { get => totalCostTour; set => totalCostTour = value; }
-        public int Profit { get => profit; set => profit = value; }
-        public float Vat { get => vat; set => vat = value; }
-        public float FinalPrice { get => finalPrice; set => finalPrice = value; }
-        public CostTour CostTour { get => costTour; set => costTour = value; }
+    {  
+        public string IdTourDetail { get; set; }
+        public string TourId { get; set; }
+        public Guid CostTourId { get; set; }
+        public float PriceChild { get; set; }
+        public float PriceBaby { get; set; }
+        public float PriceAdult { get; set; }
+        public float PriceChildPromotion { get; set; }
+        public float PriceBabyPromotion { get; set; }
+        public float PriceAdultPromotion { get; set; }
+        public float DisplayPrice { get; set; }
+        public float DisplayPromotionPrice { get; set; }
+        public string Description { get; set; }
+        public int QuantityBooked { get; set; }
+        public bool IsPromotion { get; set; }
+        public float TotalCostTour { get; set; }
+        public int Profit { get; set; }
+        public float Vat { get; set; }
+        public float FinalPrice { get; set; }
+        public CostTour CostTour { get; set; }
+        
     }
 }

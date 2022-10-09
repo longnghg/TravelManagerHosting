@@ -8,55 +8,29 @@ namespace Travel.Context.Models
 {
     public class CostTour
     {
-        private Guid id;
-        private string idTourDetail;
-        private float breakfast;
-        private float water;
-        private float feeGas;
-        private float distance;
-        private float sellCost;
-        private float depreciation;
-        private float otherPrice;
-        private float tolls;
-        private int cusExpected;
-        private float insuranceFee;
-        private bool isHoliday;
-        private float totalCostTour;
-        private Guid idHotel;
-        private float priceHotel;
-        private Guid idRestaurant;
-        private float priceRestaurant;
-        private Guid idPlace;
-        private float priceTicketPlace;
-
-        private TourDetail tourDetails;
-        private Place place;
-        private Hotel hotel;
-        private Restaurant restaurant;
-
-        public Guid Id { get => id; set => id = value; }
-        public string IdTourDetail { get => idTourDetail; set => idTourDetail = value; }
-        public float Breakfast { get => breakfast; set => breakfast = value; }
-        public float Water { get => water; set => water = value; }
-        public float FeeGas { get => feeGas; set => feeGas = value; }
-        public float Distance { get => distance; set => distance = value; }
-        public float SellCost { get => sellCost; set => sellCost = value; }
-        public float Depreciation { get => depreciation; set => depreciation = value; }
-        public float OtherPrice { get => otherPrice; set => otherPrice = value; }
-        public float Tolls { get => tolls; set => tolls = value; }
-        public int CusExpected { get => cusExpected; set => cusExpected = value; }
-        public float InsuranceFee { get => insuranceFee; set => insuranceFee = value; }
-        public bool IsHoliday { get => isHoliday; set => isHoliday = value; }
-        public float TotalCostTour { get => totalCostTour; set => totalCostTour = value; }
-        public Guid IdHotel { get => idHotel; set => idHotel = value; }
-        public float PriceHotel { get => priceHotel; set => priceHotel = value; }
-        public Guid IdRestaurant { get => idRestaurant; set => idRestaurant = value; }
-        public float PriceRestaurant { get => priceRestaurant; set => priceRestaurant = value; }
-        public Guid IdPlace { get => idPlace; set => idPlace = value; }
-        public float PriceTicketPlace { get => priceTicketPlace; set => priceTicketPlace = value; }
-        public TourDetail TourDetails { get => tourDetails; set => tourDetails = value; }
-        public Place Place { get => place; set => place = value; }
-        public Hotel Hotel { get => hotel; set => hotel = value; }
-        public Restaurant Restaurant { get => restaurant; set => restaurant = value; }
+        public Guid IdCostTour { get; set; }
+        public string TourDetailId { get; set; }
+        public float Breakfast { get; set; }
+        public float Water { get; set; }
+        public float FeeGas { get; set; }
+        public float Distance { get; set; }
+        public float SellCost { get; set; }
+        public float Depreciation { get; set; }
+        public float OtherPrice { get; set; }
+        public float Tolls { get; set; }
+        public int CusExpected { get; set; }
+        public float InsuranceFee { get; set; }
+        public bool IsHoliday { get; set; }
+        public float TotalCostTour { get; set; }
+        public Guid HotelId { get; set; }
+        public float PriceHotel { get; set; }
+        public Guid RestaurantId { get; set; }
+        public float PriceRestaurant { get; set; }
+        public Guid PlaceId { get; set; }
+        public float PriceTicketPlace { get; set; }
+        public TourDetail TourDetails { get; set; }
+        public Place Place { get; set; }
+        public Hotel Hotel { get; set; }
+        public Restaurant Restaurant { get; set; }
     }
 }
