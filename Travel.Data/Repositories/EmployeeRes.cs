@@ -34,7 +34,7 @@ namespace Travel.Data.Repositories
             CreateUpdateEmployeeViewModel employee = new CreateUpdateEmployeeViewModel();
             try
             {
-                bool checkAcocountExist = true;
+      
                 var id = PrCommon.GetString("idEmployee", frmData);
                 if (!String.IsNullOrEmpty(id))
                 {
@@ -59,18 +59,16 @@ namespace Travel.Data.Repositories
                     employee.NameEmployee = phone;
                 }
 
-                var role = PrCommon.GetString("RoleId", frmData);
-                if (!String.IsNullOrEmpty(phone))
+                var birthday = PrCommon.GetString("birthday", frmData);
+                if (!String.IsNullOrEmpty(birthday))
                 {
-                    employee.RoleId = role.ToEnum<TitleRole>();
+                    employee.Birthday = long.Parse(birthday);
                 }
 
-
-
-
-                if (checkAcocountExist)
+                var image = PrCommon.GetString("image", frmData);
+                if (!String.IsNullOrEmpty(image))
                 {
-                    employee.Phone = phone;
+                    employee.Image = image;
                 }
 
                 var roleid = PrCommon.GetString("roleId", frmData);
@@ -139,6 +137,11 @@ namespace Travel.Data.Repositories
             try
             {
                 Employee employee = Mapper.MapCreateEmployee(input);
+
+                employee.IdEmployee = Guid.NewGuid();
+                employee.CreateDate = 202204101007;
+                employee.IsActive = true;
+                employee.Password = "3244185981728979115075721453575112";
 
                 _db.Employees.Add(employee);
                 _db.SaveChanges();
