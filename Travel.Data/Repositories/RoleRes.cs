@@ -115,5 +115,30 @@ namespace Travel.Data.Repositories
                 return res;
             }
         }
+        public Response Update(CreateUpdateRoleViewModel input)
+        {
+
+            try
+            {
+                Role role = new Role();
+                role = Mapper.MapCreateRole(input);
+                _db.Update(role);
+                _db.SaveChanges();
+
+                res.Notification.DateTime = DateTime.Now;
+                res.Notification.Messenge = "Sửa thành công !";
+                res.Notification.Type = "Success";
+                return res;
+            }
+            catch (Exception e)
+            {
+                res.Notification.DateTime = DateTime.Now;
+                res.Notification.Description = e.Message;
+                res.Notification.Messenge = "Có lỗi xảy ra !";
+                res.Notification.Type = "Error";
+                return res;
+            }
+
+        }
     }
 }

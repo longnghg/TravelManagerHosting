@@ -14,6 +14,6 @@ namespace Travel.Data.Interfaces
         CreateUpdateRoleViewModel CheckBeforSave(JObject frmData, ref Notification _message);
         Response ViewAll();
         Response Create(CreateUpdateRoleViewModel input);
-
+        Response Update(CreateUpdateRoleViewModel input);
     }
 }

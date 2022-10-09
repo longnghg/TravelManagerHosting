@@ -46,5 +46,20 @@ namespace TravelApi.Controllers
             
             return Ok(res);
         }
+
+        [HttpPost]
+        [Authorize]
+        [Route("update-role")]
+        public object Update([FromBody] JObject frmData)
+        {
+
+            var result = role.CheckBeforSave(frmData, ref message);
+            if (message == null)
+            {
+                res = role.Update(result);
+            }
+
+            return Ok(res);
+        }
     }
 }
