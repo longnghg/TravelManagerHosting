@@ -58,7 +58,7 @@ namespace TravelApi.Controllers
                                     new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
                                     new Claim(JwtRegisteredClaimNames.Aud, configuration["Token:Audience"]),
                                     new Claim(ClaimTypes.Role, result.RoleId.ToString()),
-                                    new Claim("EmployeeId", result.Id.ToString())
+                                    new Claim("EmployeeId", result.IdEmployee.ToString())
                                 };
 
                                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Token:key"]));
@@ -75,8 +75,8 @@ namespace TravelApi.Controllers
                                 Authentication auth = new Authentication();
                                 auth.Token = tokenJWT;
                                 auth.RoleId = result.RoleId;
-                                auth.Id = result.Id;
-                                auth.Name = result.Name;
+                                auth.Id = result.IdEmployee;
+                                auth.Name = result.NameEmployee;
                                 auth.Image = result.Image;
 
 
