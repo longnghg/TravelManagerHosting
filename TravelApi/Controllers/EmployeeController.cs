@@ -36,16 +36,29 @@ namespace TravelApi.Controllers
             res = employee.GetEmployees();
             return Ok(res);
         }
+        //[HttpPost]
+        //[Authorize]
+        //[Route("create-employees")]
+        //public object Create([FromBody] JObject frmData)
+        //{
+
+        //   var result = employee.CheckBeforeSave(frmData, ref message);
+        //    if (message != null)
+        //    {
+        //        res = employee.GetEmployees();
+        //    }
+        //    return Ok(res);
+        //}
+
         [HttpPost]
         [Authorize]
         [Route("create-employees")]
         public object Create([FromBody] JObject frmData)
         {
-
-           var result = employee.CheckBeforeSave(frmData, ref message);
-            if (message != null)
+            var result = employee.CheckBeforeSave(frmData, ref message);
+            if(message == null)
             {
-                res = employee.GetEmployees();
+                res = employee.Create(result);
             }
             return Ok(res);
         }

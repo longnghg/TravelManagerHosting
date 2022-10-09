@@ -12,6 +12,8 @@ using Travel.Context.Models.Travel;
 using Travel.Data.Interfaces;
 using Travel.Shared.Ultilities;
 using Travel.Shared.ViewModels;
+using Travel.Shared.ViewModels.Travel;
+using static Travel.Shared.Ultilities.Enums;
 
 namespace Travel.Data.Repositories
 {
@@ -27,28 +29,39 @@ namespace Travel.Data.Repositories
             res = new Response();
         }
         // validate vd create
-        public Employee CheckBeforeSave(JObject frmData, ref Notification _message) // hàm đăng nhập  sử cho create update delete
+        public CreateUpdateEmployeeViewModel CheckBeforeSave(JObject frmData, ref Notification _message) // hàm đăng nhập  sử cho create update delete
         {
-            Employee employee = new Employee();
+            CreateUpdateEmployeeViewModel employee = new CreateUpdateEmployeeViewModel();
             try
             {
-                bool checkAcocountExist = true;
+            
 
-                var taikhoan = PrCommon.GetString("Taikhoan", frmData);
-                if (!String.IsNullOrEmpty(taikhoan))
+                var email = PrCommon.GetString("Email", frmData);
+                if (!String.IsNullOrEmpty(email))
                 {
-                    employee.Email = taikhoan;
+                    employee.Email = email;
                 }
-                var Matkhau = PrCommon.GetString("Matkhau", frmData);
-                if (!String.IsNullOrEmpty(Matkhau))
+                var name = PrCommon.GetString("NameEmployee", frmData);
+                if (!String.IsNullOrEmpty(name))
                 {
-                    employee.Password = Matkhau;
+                    employee.NameEmployee = name;
+                }
+                var phone = PrCommon.GetString("Phone", frmData);
+                if (!String.IsNullOrEmpty(phone))
+                {
+                    employee.NameEmployee = phone;
+                }
+
+                var role = PrCommon.GetString("RoleId", frmData);
+                if (!String.IsNullOrEmpty(phone))
+                {
+                    employee.RoleId = role.ToEnum<TitleRole>();
                 }
 
 
 
 
-                if(checkAcocountExist)
+                if (checkAcocountExist)
                 {
                     message.Type = "Error";
                     message.DateTime = DateTime.Now;
@@ -142,6 +155,31 @@ namespace Travel.Data.Repositories
                     res.Notification.Messenge = "Không có dữ liệu trả về !";
                     res.Notification.Type = "Warning";
                 }
+                return res;
+            }
+            catch (Exception e)
+            {
+                res.Notification.DateTime = DateTime.Now;
+                res.Notification.Description = e.Message;
+                res.Notification.Messenge = "Có lỗi xảy ra !";
+                res.Notification.Type = "Error";
+                return res;
+            }
+        }
+    
+        public Response Create(CreateUpdateEmployeeViewModel input)
+        {
+            try
+            {
+                Employee employee = Mapper.MapCreateEmployee(input);
+
+                _db.Employees.Add(employee);
+                _db.SaveChanges();
+
+                res.Notification.DateTime = DateTime.Now;
+                res.Notification.Messenge = "Thêm thành công !";
+                res.Notification.Type = "Success";
+
                 return res;
             }
             catch (Exception e)
