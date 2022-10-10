@@ -28,6 +28,9 @@ import { ItemWardComponent } from '../../pages/Location/ward/item-ward/item-ward
 import { ListRoleComponent } from '../../pages/roles/list-role/list-role.component';
 import { ItemRoleComponent } from '../../pages/roles/item-role/item-role.component';
 
+import { ListEmployeeComponent } from '../../pages/employee/list-employee/list-employee.component';
+import { ItemEmployeeComponent } from '../../pages/employee/item-employee/item-employee.component';
+
 import { AgGridModule } from 'ag-grid-angular';
 
 
@@ -62,6 +65,9 @@ import { AgGridModule } from 'ag-grid-angular';
 
     ListRoleComponent,
     ItemRoleComponent,
+
+    ListEmployeeComponent,
+    ItemEmployeeComponent,
 
   ]
 })
