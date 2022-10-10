@@ -68,8 +68,8 @@ namespace Travel.Data.Repositories
         {
             try
             {
-
-                var result = _db.Roles.Where(x => x.IsDelete == false).ToList();
+                var listRole= (from x in _db.Roles where x.IsDelete == false select x).ToList();
+                var result = Mapper.MapRole(listRole);
                 if (result.Count() > 0)
                 {
                     res.Content = result;

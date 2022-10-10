@@ -30,13 +30,21 @@ namespace TravelApi.Controllers
             _db = db;
         }
 
-        [HttpPost]
+        [HttpGet]
         [Authorize]
         [Route("get-employees")]
-        public object GetEmployees([FromBody] JObject frmData)
+        public object GetEmployees()
         {
-            employee.CheckBeforeSave(frmData, ref message);
             res =  employee.GetEmployees();
+            return Ok(res);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("search-employees")]
+        public object SearchEmployee([FromBody] JObject frmData)
+        {
+            res = employee.Search(frmData);
             return Ok(res);
         }
         //[HttpPost]

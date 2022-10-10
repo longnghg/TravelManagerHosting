@@ -20,7 +20,6 @@ namespace Travel.Shared.ViewModels.Travel
         private string roleName;
         private string roleDescription;
 
-        private int status;
         private long createDate;
 
         private string modifyBy;
@@ -35,7 +34,6 @@ namespace Travel.Shared.ViewModels.Travel
         public long Birthday { get => birthday; set => birthday = value; }
         public string Image { get => image; set => image = value; }
         public string Phone { get => phone; set => phone = value; }
-        public int Status { get => status; set => status = value; }
         public string ModifyBy { get => modifyBy; set => modifyBy = value; }
         public long ModifyDate { get => modifyDate; set => modifyDate = value; }
         public bool IsActive { get => isActive; set => isActive = value; }

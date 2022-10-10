@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using PrUtility;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -109,22 +110,16 @@ namespace Travel.Data.Repositories
                 //var b4 = stopWatch4.Elapsed;
 
                 //var stopWatch5 = Stopwatch.StartNew();
-                //var result6 =  (from x in _db.Employees select x).ToList();
+                //var result6 = (from x in _db.Employees select x).ToList();
                 //var b5 = stopWatch5.Elapsed;
                 #endregion
 
-                var result = (from x in _db.Employees select x).ToList();
-                //if (!string.IsNullOrEmpty(res.KwId) || !string.IsNullOrEmpty(res.KwName) || !string.IsNullOrEmpty(res.KwEmail) || !string.IsNullOrEmpty(res.KwPhone) || !string.IsNullOrEmpty(res.KwRoleName) || !string.IsNullOrEmpty(res.KwIsActive))
-                //{
-                //    res.TotalResult = result.Count();
-                //}
+                var listEmp = (from x in _db.Employees where x.IsDelete == false orderby x.Role select x).ToList();
+                var result = Mapper.MapEmployee(listEmp);
 
-                var result2 = Mapper.MapEmployee(result);
-
-
-                if (result.Count() > 0)
+                if (listEmp.Count() > 0)
                 {
-                    res.Content = result2;
+                    res.Content = result;
                 }
                 else
                 {
@@ -195,6 +190,42 @@ namespace Travel.Data.Repositories
                 res.Notification.Type = "Error";
                 return res;
             }
+        }
+
+        public Response Search(JObject frmData)
+        {
+            try
+            {
+                var kwId = PrCommon.GetString("idEmployee", frmData);
+                var kwName = PrCommon.GetString("nameEmployee", frmData);
+                var kwPhone = PrCommon.GetString("phone", frmData);
+                var kwEmail = PrCommon.GetString("email", frmData);
+                var kwRoleId = PrCommon.GetString("idRole", frmData);
+                var kwIsActive = PrCommon.GetString("isActive", frmData);
+                var listEmp = _db.Employees.FromSqlRaw("[SearchEmployees] {0}, {1}, {2}, {3}, {4}, {5}", kwId, kwName, kwEmail, kwPhone, kwRoleId, kwIsActive).ToList();
+                var result = Mapper.MapEmployee(listEmp);
+
+                if (listEmp.Count() > 0)
+                {
+                    res.Content = result;
+                }
+                else
+                {
+                    res.Notification.DateTime = DateTime.Now;
+                    res.Notification.Messenge = "Không có dữ liệu trả về !";
+                    res.Notification.Type = "Warning";
+                }
+                return res;
+            }
+            catch (Exception e)
+            {
+                res.Notification.DateTime = DateTime.Now;
+                res.Notification.Description = e.Message;
+                res.Notification.Messenge = "Có lỗi xảy ra !";
+                res.Notification.Type = "Error";
+                return res;
+            }
+
         }
     }
 }

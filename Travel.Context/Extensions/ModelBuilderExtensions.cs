@@ -12,11 +12,11 @@ namespace Travel.Context.Extensions
         public static void Seed(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Role>().HasData(
-                new Role() { IdRole = -1, NameRole = "Admin", Description = "Trùm", IsDelete = false },
-                new Role() { IdRole = 1, NameRole = "LocalManager", Description = "Quản lý cục bộ", IsDelete = false },
-                new Role() { IdRole = 2, NameRole = "ServiceManager", Description = "Quản lý dịch vụ", IsDelete = false },
-                new Role() { IdRole = 3, NameRole = "TourManager", Description = "Quản lý tour", IsDelete = false },
-                new Role() { IdRole = 4, NameRole = "TourBookingManager", Description = "Quản lý tour booking", IsDelete = false }
+                new Role() { IdRole = -1, NameRole = "Admin", Description = "Admin", IsDelete = false },
+                new Role() { IdRole = 1, NameRole = "Quản lý cục bộ", Description = "LocalManager", IsDelete = false },
+                new Role() { IdRole = 2, NameRole = "Quản lý dịch vụ", Description = "ServiceManager", IsDelete = false },
+                new Role() { IdRole = 3, NameRole = "Quản lý tour", Description = "TourManager", IsDelete = false },
+                new Role() { IdRole = 4, NameRole = "Quản lý tour booking", Description = "TourBookingManager", IsDelete = false }
             );
 
             modelBuilder.Entity<Employee>().HasData(
