@@ -96,13 +96,24 @@ namespace Travel.Data.Repositories
                 _message = message;
                 return employee;
             }
-        } 
+        }
         public Response GetEmployees()
         {
             try
             {
 
-                var result = _db.Employees.ToList();
+
+                #region đo tốc độ EF và linq
+                //var stopWatch4 = Stopwatch.StartNew();
+                //var result5 = _db.Employees.ToList();
+                //var b4 = stopWatch4.Elapsed;
+
+                //var stopWatch5 = Stopwatch.StartNew();
+                //var result6 =  (from x in _db.Employees select x).ToList();
+                //var b5 = stopWatch5.Elapsed;
+                #endregion
+
+                var result = (from x in _db.Employees select x).ToList();
                 //if (!string.IsNullOrEmpty(res.KwId) || !string.IsNullOrEmpty(res.KwName) || !string.IsNullOrEmpty(res.KwEmail) || !string.IsNullOrEmpty(res.KwPhone) || !string.IsNullOrEmpty(res.KwRoleName) || !string.IsNullOrEmpty(res.KwIsActive))
                 //{
                 //    res.TotalResult = result.Count();

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Travel.Context.Models;
+using Travel.Context.Models.Travel;
 using Travel.Data.Interfaces;
 using Travel.Shared.Ultilities;
 using Travel.Shared.ViewModels;
@@ -21,10 +22,12 @@ namespace TravelApi.Controllers
         private IEmployee employee;
         private Notification message;
         private Response res;
-        public EmployeeController(IEmployee _employee)
+        TravelContext _db;
+        public EmployeeController(IEmployee _employee, TravelContext db)
         {
             employee = _employee;
             res = new Response();
+            _db = db;
         }
 
         [HttpPost]
@@ -33,7 +36,7 @@ namespace TravelApi.Controllers
         public object GetEmployees([FromBody] JObject frmData)
         {
             employee.CheckBeforeSave(frmData, ref message);
-            res = employee.GetEmployees();
+            res =  employee.GetEmployees();
             return Ok(res);
         }
         //[HttpPost]
@@ -49,6 +52,33 @@ namespace TravelApi.Controllers
         //    }
         //    return Ok(res);
         //}
+
+        [Authorize]
+        [Route("create-data")]
+        public object Create()
+        {
+            for (int i = 0; i <= 500; i++)
+            {
+                Employee newobj = new Employee();
+                newobj.IdEmployee = Guid.NewGuid();
+                newobj.NameEmployee = "Anh" + i.ToString();
+                newobj.Email = "Teoteo@gmail.com";
+                newobj.Password = "123";
+                newobj.Birthday = 123;
+                newobj.Image = "123";
+                newobj.Phone = "123123123";
+                newobj.RoleId = 2;
+                newobj.CreateDate = 123;
+                newobj.AccessToken = "123";
+                newobj.ModifyBy = "123";
+                newobj.ModifyDate = 123123;
+                newobj.IsDelete = false;
+                newobj.IsActive = false;
+                _db.Employees.Add(newobj);
+            }
+            _db.SaveChanges();
+            return Ok("succcccc");
+        }
 
         [HttpPost]
         [Authorize]
