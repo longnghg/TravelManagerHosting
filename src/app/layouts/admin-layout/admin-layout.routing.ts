@@ -11,9 +11,10 @@ import { BannerComponent } from '../../pages/banner/banner.component';
 import { ListProvinceComponent } from 'src/app/pages/Location/province/list-province/list-province.component';
 import { ListDistrictsComponent } from '../../pages/Location/districts/list-districts/list-districts.component';
 
-import { ListRoleComponent } from '../../pages/roles/list-role/list-role.component';
+import { ListRoleComponent } from 'src/app/pages/roles/list-role/list-role.component';
 
 import { ListWardComponent } from '../../pages/Location/ward/list-ward/list-ward.component';
+import { ListEmployeeComponent } from 'src/app/pages/employee/list-employee/list-employee.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -29,6 +30,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'list-district',  component: ListDistrictsComponent },
 
     { path: 'list-ward',  component: ListWardComponent },
-
     { path: 'list-role',  component: ListRoleComponent },
+    { path: 'list-employee',  component: ListEmployeeComponent },
 ];

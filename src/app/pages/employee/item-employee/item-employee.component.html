@@ -1,0 +1,40 @@
+<div class="card-body" *ngIf="resEmployee">
+  <form>
+    <h6 class="heading-small text-muted mb-4">Employee</h6>
+    <div class="pl-lg-4">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label class="form-control-label">Tên nhân viên</label>
+            <input type="text"  [(ngModel)]="resEmployee.nameEmployee" class="form-control"  value="">
+          </div>
+          <div class="form-group">
+            <label class="form-control-label">Email</label>
+            <input type="text"  [(ngModel)]="resEmployee.email"  class="form-control"  value="">
+          </div>
+          <div class="form-group">
+            <label class="form-control-label">Ngày sinh</label>
+            <input type="text" [(ngModel)]="resEmployee.birthday" class="form-control"  value="">
+          </div>
+          <div class="form-group">
+            <label class="form-control-label">Hình ảnh</label>
+            <input type="text" [(ngModel)]="resEmployee.image" class="form-control"  value="">
+          </div>
+          <div class="form-group">
+            <label class="form-control-label">SĐT</label>
+            <input type="text" [(ngModel)]="resEmployee.phone" class="form-control"  value="">
+          </div>
+          <div class="form-group">
+            <label class="form-control-label">Quyền</label>
+            <input type="text" [(ngModel)]="resEmployee.roleId" class="form-control"  value="">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <button (click)="save()" class="btn btn-primary">text</button>
+      </div>
+    </div>
+    <hr class="my-4" />
+  </form>
+</div>
+

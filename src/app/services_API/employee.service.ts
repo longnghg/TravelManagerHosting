@@ -14,4 +14,9 @@ export class EmployeeService{
   {
       return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/get-employees", pagination);
   }
+
+  Create(data: any)
+  {
+    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/create-employees", data);
+  }
 }

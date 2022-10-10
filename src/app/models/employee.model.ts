@@ -1,6 +1,6 @@
-export interface EmployeeModel {
-  id: string
-  name: string
+export class EmployeeModel {
+  idEmployee: string = ''
+  nameEmployee: string = ''
   email: string
   password: string
   phone: string
