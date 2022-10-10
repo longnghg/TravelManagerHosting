@@ -1,4 +1,4 @@
-export interface CustomerModel{
+export class CustomerModel{
   id: string
   name: string
   phone: string

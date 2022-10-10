@@ -1,4 +1,4 @@
-export interface RestaurantModel{
+export class RestaurantModel{
   id: string
   idContract: string
   name: string

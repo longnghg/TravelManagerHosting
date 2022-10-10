@@ -1,4 +1,4 @@
-export interface ContractModel{
+export class ContractModel{
   id: string
   idService: string
   contractName: string

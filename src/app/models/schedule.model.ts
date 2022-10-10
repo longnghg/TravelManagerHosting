@@ -1,4 +1,4 @@
-export interface ScheduleModel{
+export class ScheduleModel{
   id: string
   departureDate: number
   beginDate: number

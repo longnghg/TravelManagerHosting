@@ -1,4 +1,4 @@
-export interface PlaceModel{
+export class PlaceModel{
   id: string
   idContract: string
   name: string

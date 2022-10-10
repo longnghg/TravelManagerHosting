@@ -1,4 +1,4 @@
-export interface LocationModel{
+export class LocationModel{
   id: string
   name: string
   idProvince?: string

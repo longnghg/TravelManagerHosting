@@ -1,4 +1,4 @@
-export interface TimeLineModel{
+export class TimeLineModel{
   id: string
   description: string
   fromTime: number

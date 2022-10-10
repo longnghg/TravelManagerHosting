@@ -1,4 +1,4 @@
-export interface TourDetailModel{
+export class TourDetailModel{
   id: string
   tourId: string
   idCostTour: string

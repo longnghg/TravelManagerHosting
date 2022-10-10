@@ -1,4 +1,4 @@
-export interface ReviewModel{
+export class ReviewModel{
   id: string
   rating: number
   dateTime: number

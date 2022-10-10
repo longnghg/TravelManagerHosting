@@ -1,4 +1,4 @@
-export interface ImageModel{
+export class ImageModel{
   id: string
   name: number
   size: number

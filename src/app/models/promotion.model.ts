@@ -1,4 +1,4 @@
-export interface PromotionModel{
+export class PromotionModel{
   id: string
   value: number
   idSchedule: string

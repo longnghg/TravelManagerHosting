@@ -1,17 +1,16 @@
-export interface EmployeeModel {
-  id: string
-  name: string
-  email: string
-  password: string
-  phone: string
-  birthday: number
-  image: string
-  roleId: string
-  roleName: string
-  accessToken: string
-  createDate: number
-  modifyDate: number
-  modifyBy: string
-  isActive: boolean
-  isDelete: boolean
+export class EmployeeModel {
+  idEmployee: string = ""
+  nameEmployee: string = ""
+  email: string = ""
+  phone: string = ""
+  birthday: number = 0
+  image: string = ""
+  idRole: string = ""
+  roleName: string = ""
+  roleDescription: string = ""
+  createDate: number = 0
+  modifyDate: number = 0
+  modifyBy: string = ""
+  isActive: boolean = true
+  isDelete: boolean = false
 }

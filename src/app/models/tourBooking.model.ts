@@ -1,4 +1,4 @@
-export interface TourBookingModel{
+export class TourBookingModel{
   id: string
   customerName: string
   contactName: string

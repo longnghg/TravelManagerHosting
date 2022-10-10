@@ -1,4 +1,4 @@
-export interface HotelModel{
+export class HotelModel{
   id: string
   idContract: string
   name: string

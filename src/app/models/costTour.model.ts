@@ -1,4 +1,4 @@
-export interface CostTourModel{
+export class CostTourModel{
   id: string
   idTourDetail: string
   breakfast: number

@@ -1,4 +1,4 @@
-export interface VoucherModel{
+export class VoucherModel{
   id: string
   code: string
   description: string

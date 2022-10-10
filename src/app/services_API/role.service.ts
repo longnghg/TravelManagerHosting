@@ -20,9 +20,6 @@ export class RoleService{
       if(!this.response.notification.type)
       {
         this.resRole = this.response.content
-        this.resRole.forEach(role => {
-          // role.name_vi = RoleTitle[role.id]
-        });
         sessionStorage.setItem("resRole", JSON.stringify(this.resRole))
       }
       else{

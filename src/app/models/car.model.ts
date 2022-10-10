@@ -1,4 +1,4 @@
-export interface CarModel{
+export class CarModel{
   id: string
   liscensePlate: string
   status: number
