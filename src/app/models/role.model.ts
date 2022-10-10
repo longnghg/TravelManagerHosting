@@ -1,10 +1,16 @@
-export interface RoleModel {
-  id: number
-  name: string
-  name_vi: string
-  description: string
-  isDelete: boolean
+export class RoleModel {
+  idRole: number = 0
+  nameRole: string = ""
+  description: string = ""
+  isDelete: boolean = false
 }
+// export interface RoleModel {
+//   id: number
+//   name: string
+//   name_vi: string
+//   description: string
+//   isDelete: boolean
+// }
 
 
 export enum RoleTitle {

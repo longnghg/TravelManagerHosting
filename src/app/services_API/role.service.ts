@@ -21,7 +21,7 @@ export class RoleService{
       {
         this.resRole = this.response.content
         this.resRole.forEach(role => {
-          role.name_vi = RoleTitle[role.id]
+          // role.name_vi = RoleTitle[role.id]
         });
         sessionStorage.setItem("resRole", JSON.stringify(this.resRole))
       }
@@ -37,5 +37,9 @@ export class RoleService{
     return JSON.parse(sessionStorage.getItem("resRole"))
   }
 
+  create(data: any)
+  {
+    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Role/create-role", data);
+  }
 
 }

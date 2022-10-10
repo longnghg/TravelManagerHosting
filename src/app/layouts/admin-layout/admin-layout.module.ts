@@ -25,6 +25,8 @@ import { ItemDistrictsComponent } from '../../pages/Location/districts/item-dist
 import { ListWardComponent } from '../../pages/Location/ward/list-ward/list-ward.component';
 import { ItemWardComponent } from '../../pages/Location/ward/item-ward/item-ward.component';
 
+import { ListRoleComponent } from '../../pages/roles/list-role/list-role.component';
+import { ItemRoleComponent } from '../../pages/roles/item-role/item-role.component';
 
 import { AgGridModule } from 'ag-grid-angular';
 
@@ -56,7 +58,10 @@ import { AgGridModule } from 'ag-grid-angular';
     ItemDistrictsComponent,
 
     ListWardComponent,
-    ItemWardComponent
+    ItemWardComponent,
+
+    ListRoleComponent,
+    ItemRoleComponent,
 
   ]
 })
