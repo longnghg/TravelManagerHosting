@@ -25,10 +25,7 @@ export class ItemProvinceComponent implements OnInit {
   }
 
   ngOnChanges(): void {
-
     this.resProvince = this.resParent
-    console.log(this.resProvince);
-    console.log(this.type);
     if (this.type == "insert") {
       this.resProvince = new LocationModel()
     }
@@ -39,11 +36,7 @@ export class ItemProvinceComponent implements OnInit {
     if (this.type == "insert") {
       this.provinceService.InsertProvince(this.resProvince).subscribe(res =>{
         this.response = res
-        if(this.response.notification.type == "Error")
-        {
-          this.notificationService.handleAlertObj(res.notification)
-        }
-        window.location.reload();
+        this.notificationService.handleAlertObj(res.notification)
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, "Error")
@@ -52,19 +45,12 @@ export class ItemProvinceComponent implements OnInit {
     else{
       this.provinceService.UpdateProvince(this.resProvince).subscribe(res =>{
         this.response = res
-        if(this.response.notification.type == "Error")
-        {
-          this.notificationService.handleAlertObj(res.notification)
-        }
-      window.location.reload();
+        this.notificationService.handleAlertObj(res.notification)
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, "Error")
       })
     }
-    console.log(this.resProvince);
-
-
   }
 
 }
