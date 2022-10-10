@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -69,7 +69,9 @@ import { AgGridModule } from 'ag-grid-angular';
     ListEmployeeComponent,
     ItemEmployeeComponent,
 
-  ]
+  ],
+  providers: [],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 
 

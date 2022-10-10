@@ -10,12 +10,17 @@ import { ResponseModel } from "../models/responsiveModels/response.model";
 export class EmployeeService{
   constructor(private http:HttpClient, private configService:ConfigService){ }
 
-  GetEmployees()
+  gets()
   {
       return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/get-employees");
   }
 
-  Create(data: any)
+  search(data){
+    console.log(data);
+
+      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/search-employees", data);
+  }
+  create(data: any)
   {
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/create-employees", data);
   }

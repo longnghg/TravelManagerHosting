@@ -30,7 +30,7 @@ export class ItemEmployeeComponent implements OnInit {
   }
 
   save(){
-    this.employeeService.Create(this.resEmployee).subscribe(res =>{
+    this.employeeService.create(this.resEmployee).subscribe(res =>{
       this.response = res
       if(this.response.notification.type == "Error")
       {

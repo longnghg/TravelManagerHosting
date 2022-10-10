@@ -14,6 +14,7 @@ import { ResponseModel } from "../../models/responsiveModels/response.model";
   styleUrls: ['./maps.component.scss']
 })
 export class MapsComponent implements OnInit {
+  event: any
   resEmployee: EmployeeModel[]
   resRole: RoleModel[]
   response: ResponseModel
@@ -22,46 +23,57 @@ export class MapsComponent implements OnInit {
   public columnDefs: ColDef[] = [
     // set filters
     // { field: 'Index',headerName: ""},
-    { field: 'id', headerName: "Mã số", searchable: false, searchType: 'text'},
-    { field: 'name',headerName: "Tên", filter: "avatar", searchable: true, searchType: 'date'},
-    { field: 'email',headerName: "Email", searchable: true, searchType: 'email'},
-    { field: 'phone',headerName: "Số điện thoại", searchable: true, searchType: 'text'},
-    { field: 'roleName',headerName: "Chức vụ", searchable: true, searchType: 'section', bindLabel: 'name_vi', bindValue: "id", listSection: this.roleService.ViewAll()},
-    { field: 'isActive',headerName: "Kích hoạt", filter: "status", searchable: true, searchType: 'section', bindLabel: 'name', bindValue: "id", listSection: [{id: 0, name: "Chưa kích hoạt"},{id: 1, name: "Đã kích hoạt"}]},
+    { field: 'idEmployee', headerName: "Mã số", searchable: true, searchType: 'text', searchObj: 'idEmployee'},
+    { field: 'nameEmployee',headerName: "Tên", filter: "avatar", searchable: true, searchType: 'text', searchObj: 'nameEmployee'},
+    { field: 'email',headerName: "Email", searchable: true, searchType: 'email', searchObj: 'email'},
+    { field: 'phone',headerName: "Số điện thoại", searchable: true, searchType: 'text', searchObj: 'phone'},
+    { field: 'roleName',headerName: "Chức vụ", searchable: true, searchType: 'section', searchObj: 'idRole', bindLabel: 'nameRole', bindValue: "idRole", listSection: this.roleService.ViewAll()},
+    { field: 'isActive',headerName: "Kích hoạt", filter: "status", searchable: true, searchType: 'section', searchObj: 'id', bindLabel: 'name', bindValue: "id", listSection: [{id: 0, name: "Chưa kích hoạt"},{id: 1, name: "Đã kích hoạt"}]},
   ];
 
   ngOnInit() {
-  }
-
-  ngOnChanges(): void {
     this.search()
-
-
   }
 
-  search(pagination?){
-  if (!pagination.isTrusted)
-  {
-    this.employeeService.GetEmployees(pagination).subscribe(res => {
-      this.response = res
-      if(!this.response.notification.type)
-      {
-        this.resEmployee = this.response.content
-        for (let index = 0; index < this.resEmployee.length; index++) {
-          this.resEmployee[index].roleName = RoleTitle[this.resEmployee[index].roleId]
+  search(e?){
+    console.log(e);
+    if (e) {
+      console.log(1);
+
+      this.employeeService.search(e).subscribe(res => {
+        this.response = res
+        if(!this.response.notification.type)
+        {
+          this.resEmployee = this.response.content
         }
-      }
-      else{
-        this.resEmployee = null
-        this.notificationService.handleAlertObj(res.notification)
+        else{
+          this.resEmployee = null
+          this.notificationService.handleAlertObj(res.notification)
+        }
 
-      }
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, "Error")
+      })
+    }
+    else{
+      console.log(2);
+      this.employeeService.gets().subscribe(res => {
+        this.response = res
+        if(!this.response.notification.type)
+        {
+          this.resEmployee = this.response.content
+        }
+        else{
+          this.resEmployee = null
+          this.notificationService.handleAlertObj(res.notification)
+        }
 
-    }, error => {
-      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
-    })
-  }
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, "Error")
+      })
+    }
 
   }
 }

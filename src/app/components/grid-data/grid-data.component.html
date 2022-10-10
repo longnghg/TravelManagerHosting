@@ -19,7 +19,7 @@
           <th scope="col"></th>
           <th scope="col" *ngFor="let column of columnDefs">{{column.headerName}}
             <ng-container *ngIf="column.searchType == 'section'; else elseSection">
-              <ng-select style="width: 200px;" [items]="column.listSection"  placeholder="Tìm kiếm..." (change)="selectSection('kw'+column.field)" id="section" name="section" [(ngModel)]="pagination['kw'+column.field]" [bindLabel]="column.bindLabel" [bindValue]="column.bindValue" appendTo="body" [multiple]="true"  dropdownPosition="auto" [searchable]="false" [closeOnSelect]="false">
+              <ng-select style="width: 200px;" [items]="column.listSection"  placeholder="Tìm kiếm..." (change)="selectSection(column.searchObj)" id="section" name="section" [(ngModel)]="keyword[column.searchObj]" [bindLabel]="column.bindLabel" [bindValue]="column.bindValue" appendTo="body" [multiple]="true"  dropdownPosition="auto" [searchable]="false" [closeOnSelect]="false">
               <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
                 <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item[column.bindLabel]}}
               </ng-template>
@@ -37,7 +37,7 @@
                 </div>
               </ng-container>
               <ng-template #elseDateTime>
-                <input *ngIf="column.searchable" placeholder="Tìm kiếm..."  (blur)="search('kw'+column.field)" [(ngModel)]="pagination['kw'+column.field]" [type]="column.searchType" class="form-control custom-pages-input" style="height: 30px" [name]="column.field" [id]="column.field">
+                <input *ngIf="column.searchable" placeholder="Tìm kiếm..."  (change)="search(column.searchObj)" [(ngModel)]="keyword[column.field]" [type]="column.searchType" class="form-control custom-pages-input" style="height: 30px" [name]="column.field" [id]="column.field">
               </ng-template>
 
             </ng-template>
@@ -45,10 +45,10 @@
         </tr>
       </thead>
       <tbody *ngIf="rowData">
-        <tr *ngFor="let row of rowData; let i=index">
-          <td style="padding-left: 20px;">{{index + i+1}}</td>
-          <td  *ngFor="let column of columnDefs" scope="row">
-            <div>
+        <tr *ngFor="let row of rowData; let i=index" >
+          <ng-container *ngIf="row.rowNum >= start && row.rowNum <= end">
+            <td style="padding-left: 20px;">{{row.rowNum}}</td>
+            <td  *ngFor="let column of columnDefs" scope="row">
               <ng-container *ngIf="column.filter == 'avatar'; else elseType">
                 <div class="media align-items-center">
                   <a href="javascript:void(0)" class="avatar rounded-circle mr-3">
@@ -81,7 +81,10 @@
                   {{row[column.field]}}
                 </ng-template>
               </ng-template>
-            </div>
+            </td>
+          </ng-container>
+
+        </tr>
       </tbody>
     </table>
   </div>

@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { PaginationModel } from "../../models/responsiveModels/pagination.model";
 const FILTER_PAG_REGEX = /[^0-9]/g;
 @Component({
   selector: 'app-grid-data',
@@ -7,33 +6,43 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
   styleUrls: ['./grid-data.component.scss']
 })
 export class GridDataComponent implements OnInit {
-  @Output() change: EventEmitter<PaginationModel> = new EventEmitter<PaginationModel>()
   @Input() rowData: any
   @Input() columnDefs: ColDef[]
-  @Input() totalResult: number
+  @Output() gdSearch = new EventEmitter<any>()
+  totalResult: number
+  rowDataTmp: any
   pageCount: number
-  listPageSize = [2, 5, 10, 15, 20, 25, 30]
+  listPageSize = [1, 2, 5, 10, 15, 20, 25, 30]
   pageSize: number = 15
-  index: number
+  index: number = 0
   pageNumber: number = 1
+  start: number = 0
+  end: number = 0
   btnPrev: boolean = false
   btnNext: boolean = true
-  changed = true
-  pagination: PaginationModel = {
-    pageNumber: this.pageNumber,
-    pageSize: this.pageSize,
-  }
-
-  paginationTmp: PaginationModel
-
+  keyword = []
+  keywordTmp = []
   constructor(){}
   ngOnInit(): void {
-      this.setCache();
   }
-
-
   ngOnChanges(): void {
     if (this.rowData) {
+      this.rowDataTmp = Object.assign(this.rowData)
+    }
+    this.calTotalResult()
+    this.calStartEnd()
+  }
+
+  calStartEnd(){
+    this.start = ((this.pageNumber - 1) * this.pageSize) + 1
+    this.end = this.start + this.pageSize - 1
+  }
+  calTotalResult(){
+    if (this.rowData) {
+      for (let index = 0; index < this.rowData.length; index++) {
+        this.rowData[index].rowNum = index+1
+      }
+      this.totalResult = this.rowData.length
       if(this.totalResult % this.pageSize == 0){
         this.pageCount = this.totalResult / this.pageSize
       }
@@ -47,12 +56,9 @@ export class GridDataComponent implements OnInit {
       else{
         this.btnNext = true
       }
-
       this.index = (this.pageNumber - 1) * this.pageSize
     }
-
   }
-
   selectPage(page: string, type: string) {
     var index = parseInt(page)
     if (type == 'prev' && index > 1) {
@@ -93,12 +99,8 @@ export class GridDataComponent implements OnInit {
       this.btnNext = true
     }
 
-    this.pagination.pageNumber  = this.pageNumber
-
-    if (this.paginationTmp) {
-      this.paginationTmp.pageNumber = this.pagination.pageNumber
-    }
-    this.setCache()
+    this.calTotalResult()
+    this.calStartEnd()
   }
 
   formatInput(input: HTMLInputElement) {
@@ -106,52 +108,46 @@ export class GridDataComponent implements OnInit {
   }
 
   changePageSize(){
-    this.pagination.pageSize = this.pageSize
-
-    if (this.paginationTmp) {
-      this.paginationTmp.pageSize = this.pagination.pageSize
-    }
-    this.setCache()
+    this.calTotalResult()
+    this.calStartEnd()
   }
 
-  selectSection(e){
-    var x = ""
+  selectSection(name){
+   var kw = ""
     var i = 0
-    this.paginationTmp = Object.assign({}, this.pagination)
-    if (this.paginationTmp[e].length > 1) {
-      this.paginationTmp[e].forEach(element => {
-        if (i < this.paginationTmp[e].length-1) {
-          x += element + ","
+    this.keywordTmp = Object.assign({}, this.keyword)
+    if (this.keywordTmp[name].length > 1) {
+      this.keywordTmp[name].forEach(item => {
+        if ( i < this.keywordTmp[name].length-1) {
+          kw += item + ","
         }
         else{
-          x += element
+          kw += item
         }
         i++
       });
     }
     else{
-      x = this.paginationTmp[e][0]
+      kw = this.keywordTmp[name][0]
     }
-    this.paginationTmp[e] = x
-
+    this.keywordTmp[name] = kw
+    this.setCache()
+  }
+  search(name){
+    if (this.keywordTmp) {
+      this.keywordTmp[name] = this.keyword[name]
+    }
     this.setCache()
 
   }
-
-  search(e){
-    if (this.paginationTmp) {
-      this.paginationTmp[e] = this.pagination[e]
-    }
-    this.setCache()
-  }
-
-
   setCache(){
-    if (this.paginationTmp) {
-     this.change.emit(this.paginationTmp);
+    if (this.keywordTmp)
+    {
+      this.gdSearch.emit(Object.assign({}, this.keywordTmp));
     }
-    else{
-      this.change.emit(this.pagination);
+    else
+    {
+       this.gdSearch.emit(this.keyword);
     }
   }
 }
@@ -162,8 +158,10 @@ export interface ColDef{
   filter?: string
   width?: string
   searchable?: boolean
+  searchObj?: any
   searchType?: string
   bindValue?: string
   bindLabel?: string
   listSection?: any
 }
+

@@ -96,7 +96,7 @@
   <div class="row">
     <div class="col">
       <div class="card shadow border-0">
-        <app-grid-data [rowData]="resEmployee" [columnDefs]="columnDefs" [totalResult]="response ? response.totalResult: 0" (change)="search($any($event))"></app-grid-data>
+        <app-grid-data [rowData]="resEmployee" [columnDefs]="columnDefs" (gdSearch)="search($event)"></app-grid-data>
       </div>
     </div>
   </div>
