@@ -56,7 +56,7 @@ namespace Travel.Data.Repositories
                 var phone = PrCommon.GetString("Phone", frmData);
                 if (!String.IsNullOrEmpty(phone))
                 {
-                    employee.NameEmployee = phone;
+                    employee.Phone = phone;
                 }
 
                 var birthday = PrCommon.GetString("birthday", frmData);
