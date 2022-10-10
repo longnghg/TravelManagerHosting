@@ -10,8 +10,8 @@ import { ResponseModel } from "../models/responsiveModels/response.model";
 export class EmployeeService{
   constructor(private http:HttpClient, private configService:ConfigService){ }
 
-  GetEmployees(pagination: any)
+  GetEmployees()
   {
-      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/get-employees", pagination);
+      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/get-employees");
   }
 }
