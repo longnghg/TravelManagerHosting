@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json.Linq;
 using PrUtility;
 using System;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Travel.Data.Interfaces;
 using Travel.Shared.ViewModels;
+using TravelApi.Hubs;
 
 namespace TravelApi.Controllers
 {
@@ -19,17 +21,23 @@ namespace TravelApi.Controllers
         private ILocation location;
         private Notification message;
         private Response res;
-        public LocationController(ILocation _location)
+        private IHubContext<TravelHub, ITravelHub> _messageHub;
+
+        public LocationController(ILocation _location
+             , IHubContext<TravelHub, ITravelHub> messageHub)
         {
             location = _location;
             res = new Response();
+            _messageHub = messageHub;
+
         }
 
         [HttpGet]
         [AllowAnonymous]
         [Route("get-province")]
-        public object GetProvince()
+        public  object GetProvince()
         {
+       
             res = location.GetProvinces();
             return Ok(res);
         }

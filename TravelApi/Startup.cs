@@ -14,6 +14,7 @@ using System.Text;
 using Travel.Context.Models.Notification;
 using Travel.Context.Models.Travel;
 using TravelApi.Extensions;
+using TravelApi.Hubs;
 
 namespace TravelApi
 {
@@ -32,6 +33,10 @@ namespace TravelApi
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddSignalR();
+            services.AddCors(options => {
+                options.AddPolicy("CORSPolicy", builder => builder.AllowAnyMethod().AllowAnyHeader().AllowCredentials().SetIsOriginAllowed((hosts) => true));
+            });
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -40,7 +45,7 @@ namespace TravelApi
 
             services.AddDatabase(Configuration)
                 .AddRepositories();
-
+            
             services.AddDbContext<TravelContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("travelRoverEntities")));
 
@@ -87,11 +92,16 @@ namespace TravelApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
+           
             app.UseCors(x => x
                .AllowAnyMethod()
                .AllowAnyHeader()
                .SetIsOriginAllowed(origin => true) // allow any origin
                .AllowCredentials());
+            app.UseEndpoints(endpoints => {
+                endpoints.MapControllers();
+                endpoints.MapHub<TravelHub>("/travelhub");
+            });
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseStaticFiles();

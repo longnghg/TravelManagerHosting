@@ -60,33 +60,33 @@ namespace TravelApi.Controllers
         //    }
         //    return Ok(res);
         //}
-
-        [Authorize]
-        [Route("create-data")]
-        public object Create()
-        {
-            for (int i = 0; i <= 500; i++)
-            {
-                Employee newobj = new Employee();
-                newobj.IdEmployee = Guid.NewGuid();
-                newobj.NameEmployee = "Anh" + i.ToString();
-                newobj.Email = "Teoteo@gmail.com";
-                newobj.Password = "123";
-                newobj.Birthday = 123;
-                newobj.Image = "123";
-                newobj.Phone = "123123123";
-                newobj.RoleId = 2;
-                newobj.CreateDate = 123;
-                newobj.AccessToken = "123";
-                newobj.ModifyBy = "123";
-                newobj.ModifyDate = 123123;
-                newobj.IsDelete = false;
-                newobj.IsActive = false;
-                _db.Employees.Add(newobj);
-            }
-            _db.SaveChanges();
-            return Ok("succcccc");
-        }
+        //[HttpGet]
+        //[Authorize]
+        //[Route("create-data")]
+        //public object Create()
+        //{
+        //    for (int i = 0; i <= 500; i++)
+        //    {
+        //        Employee newobj = new Employee();
+        //        newobj.IdEmployee = Guid.NewGuid();
+        //        newobj.NameEmployee = "Anh" + i.ToString();
+        //        newobj.Email = "Teoteo@gmail.com";
+        //        newobj.Password = "123";
+        //        newobj.Birthday = 123;
+        //        newobj.Image = "123";
+        //        newobj.Phone = "123123123";
+        //        newobj.RoleId = 2;
+        //        newobj.CreateDate = 123;
+        //        newobj.AccessToken = "123";
+        //        newobj.ModifyBy = "123";
+        //        newobj.ModifyDate = 123123;
+        //        newobj.IsDelete = false;
+        //        newobj.IsActive = false;
+        //        _db.Employees.Add(newobj);
+        //    }
+        //    _db.SaveChanges();
+        //    return Ok("succcccc");
+        //}
 
         [HttpPost]
         [Authorize]

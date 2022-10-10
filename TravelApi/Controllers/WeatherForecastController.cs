@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using Travel.Context.Models.Travel;
 using Travel.Shared;
 using Travel.Shared.Ultilities;
+using TravelApi.Hubs;
 
 namespace TravelApi.Controllers
 {
@@ -15,10 +17,15 @@ namespace TravelApi.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
+        
         private readonly TravelContext _db;
-        public WeatherForecastController(TravelContext db)
+        private IHubContext<TravelHub, ITravelHub> _messageHub;
+
+        public WeatherForecastController(TravelContext db
+            , IHubContext<TravelHub, ITravelHub> messageHub)
         {
             _db = db;
+            _messageHub = messageHub;
         }
         private static readonly string[] Summaries = new[]
         {
@@ -26,22 +33,14 @@ namespace TravelApi.Controllers
         };
 
         [HttpGet]
-        public object Get()
+        [Route("get-data")]
+        public void  Get()
         {
-            try
-            {
-                var lsEmployee = _db.Employees.Include(x => x.Role).Include(x => x.Schedules).AsNoTracking().ToList();
-
-                var showLsEmployee = Mapper.MapEmployee(lsEmployee);
-
-                var rng = new Random();
-                return Ok(showLsEmployee);
-            }
-            catch (Exception e)
-            {
-
-                return Ok(e.Message);
-            }
+            List<string> offers = new List<string>();
+            offers.Add("20% Off on IPhone 12");
+            offers.Add("15% Off on HP Pavillion");
+            offers.Add("25% Off on Samsung Smart TV");
+             _messageHub.Clients.All.SendOffersToUser(offers);
         }
     }
 }
