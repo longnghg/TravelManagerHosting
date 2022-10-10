@@ -21,6 +21,20 @@
         </div>
       </div>
     </div>
+    <h1>
+      table temp
+    </h1>
+    <em *ngIf = "offers.length>0">
+      <b *ngFor= "let item of offers">
+        Offers: {{item}}
+      </b>
+    </em>
+    <h1>
+      end table temp
+    </h1>
+    <button class="btn btn-primary" (click) = "clickbtn()">
+      clickbtn
+    </button>
     <div class="table-responsive">
       <!-- Projects table -->
       <table class="table align-items-center table-flush">
