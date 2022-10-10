@@ -27,23 +27,43 @@
           <tr>
             <th scope="col">STT</th>
             <th scope="col">Id</th>
-            <th scope="col">Name</th>
-            <th scope="col"></th>
+            <th scope="col">Tên</th>
+            <th scope="col">Email</th>
+            <th scope="col">Ngày sinh</th>
+            <th scope="col">Hình ảnh</th>
+            <th scope="col">Điện thoại</th>
+            <th scope="col">Chức vụ</th>
+
           </tr>
         </thead>
         <tbody>
-          <tr >
+          <tr  *ngFor="let item of resEmployee let i=index">
             <th scope="row">
-              <strong></strong>
+              <strong>{{i}}</strong>
             </th>
             <th>
-
+                {{item.idEmployee}}
             </th>
             <td>
-
+               {{item.nameEmployee}}
             </td>
             <td>
-              <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
+              {{item.email}}
+           </td>
+           <td>
+            {{item.birthday}}
+          </td>
+          <td>
+            {{item.image}}
+          </td>
+           <td>
+               {{item.phone}}
+            </td>
+            <td>
+              {{item.roleName}}
+           </td>
+            <td>
+              <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="childData(item, 'detail')">
                 Chi tiết
               </button>
             </td>
@@ -65,7 +85,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-         <app-item-employee [resEmployee]="child" [type]="type"></app-item-employee>
+         <app-item-employee [resParent]="child" [type]="type"></app-item-employee>
       </div>
     </div>
   </div>
