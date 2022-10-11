@@ -1,15 +1,82 @@
+
 <div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
   <div class="container-fluid">
     <div class="header-body">
-      <!-- Card stats -->
-
     </div>
   </div>
 </div>
 
 
 
-<input type="file" multiple (change)="changeImg($event)">
-<input type="text" [(ngModel)]="nameBanner"  >
-<button class="btn btn-outline-warning" (click)="save()">Thêm</button>
+<div class="col-xl-12 mb-5 mb-xl-0">
+  <div class="card shadow">
+    <div class="card-header border-0">
+      <div class="row align-items-center">
+        <div class="col">
+          <h3 class="mb-0">Banner</h3>
+        </div>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <!-- Projects table -->
+      <table class="table align-items-center table-flush">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">STT</th>
+            <th scope="col">IDBanner</th>
+            <th scope="col">NameBanner</th>
+            <th scope="col">TotalBanner</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of resBanner let i=index">
+            <th scope="row">
+              <strong>{{i+1}}</strong>
+            </th>
+            <th>
+              {{item.idBanner}}
+            </th>
+            <td>
+              {{item.nameBanner}}
+            </td>
+            <td>
+              {{item.total}}
+            <td>
+
+              <div class="col text-right">
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="childData(item, 'create')">
+                  Thêm
+                </button>
+                <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="childData(item, 'create')">
+                  Chi Tiết
+                </button>
+                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="childData(item, 'create')">
+                  Xóa
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Thêm - Sửa -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+          <input type="file" multiple (change)="changeImg($event)">
+          <input type="text" [(ngModel)]="nameBanner"  >
+
+        <button class="btn btn-outline-warning" (click)="save()">Thêm</button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+      </div>
+    </div>
+  </div>
+</div>
 
