@@ -22,8 +22,10 @@ namespace Travel.Data.Responsives
         {
             try
             {
-                var result = _db.Employees.Where(x => x.IsDelete == false &&
-                                                      x.Email == email).FirstOrDefault();
+                //var result = _db.Employees.Where(x => x.IsDelete == false &&
+                //                                      x.Email == email).FirstOrDefault();
+                var result = (from x in _db.Employees where x.IsDelete == false && 
+                                                            x.Email == email select x).FirstOrDefault();
                 return result;
  
             }
@@ -37,9 +39,14 @@ namespace Travel.Data.Responsives
         {
             try
             {
-                var result = _db.Employees.Where(x => x.IsDelete == false &&
-                                                      x.Password  == password &&
-                                                      x.Email == email).FirstOrDefault();
+                //var result = _db.Employees.Where(x => x.IsDelete == false &&
+                //                                      x.Password  == password &&
+                //                                      x.Email == email).FirstOrDefault();
+                var result = (from x in _db.Employees
+                              where x.IsDelete == false &&
+                                    x.Email == email &&
+                                    x.Password == password
+                              select x).FirstOrDefault();
 
                 return result;
             }
@@ -68,9 +75,14 @@ namespace Travel.Data.Responsives
         {
             try
             {
-                var result = _db.Employees.Where(x => x.IsDelete == false &&
-                                                      x.IsActive == true &&
-                                                      x.Email == email).FirstOrDefault();
+                //var result = _db.Employees.Where(x => x.IsDelete == false &&
+                //                                      x.IsActive == true &&
+                //                                      x.Email == email).FirstOrDefault();
+                var result = (from x in _db.Employees
+                              where x.IsDelete == false &&
+                                    x.IsActive == true &&
+                                    x.Email == email
+                              select x).FirstOrDefault();
                 return (result != null) ? true : false;
 
 

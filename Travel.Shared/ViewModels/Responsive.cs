@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Travel.Shared.ViewModels
 {
-    public class Response: Pagination
+    public class Response
     {
         public object Content { get; set; }
         public int TotalResult { get; set; }
