@@ -25,10 +25,19 @@ namespace TravelApi.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        [Route("view-all")]
-        public object ViewAll()
+        [Route("get-role")]
+        public object GetRole()
         {
             res = role.ViewAll();
+            return Ok(res);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("get-roledelete")]
+        public object GetRoleDelete()
+        {
+            res = role.ViewDelete();
             return Ok(res);
         }
 
@@ -63,7 +72,7 @@ namespace TravelApi.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize]
         [Route("restore-role")]
         public object Restore([FromBody] JObject frmData)
         {

@@ -92,6 +92,34 @@ namespace Travel.Data.Repositories
             }
         }
 
+        public Response ViewDelete()
+        {
+            try
+            {
+                var listRole = (from x in _db.Roles where x.IsDelete == true select x).ToList();
+                var result = Mapper.MapRole(listRole);
+                if (result.Count() > 0)
+                {
+                    res.Content = result;
+                }
+                else
+                {
+                    res.Notification.DateTime = DateTime.Now;
+                    res.Notification.Messenge = "Không có dữ liệu trả về !";
+                    res.Notification.Type = "Warning";
+                }
+                return res;
+            }
+            catch (Exception e)
+            {
+                res.Notification.DateTime = DateTime.Now;
+                res.Notification.Description = e.Message;
+                res.Notification.Messenge = "Có lỗi xảy ra !";
+                res.Notification.Type = "Error";
+                return res;
+            }
+        }
+
         public Response Create(CreateUpdateRoleViewModel input)
         {
             try
