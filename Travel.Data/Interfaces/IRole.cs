@@ -15,5 +15,7 @@ namespace Travel.Data.Interfaces
         Response ViewAll();
         Response Create(CreateUpdateRoleViewModel input);
         Response Update(CreateUpdateRoleViewModel input);
+
+        Response Restore(CreateUpdateRoleViewModel input);
     }
 }

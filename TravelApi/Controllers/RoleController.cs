@@ -34,7 +34,7 @@ namespace TravelApi.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [Route("create")]
+        [Route("create-role")]
         public object Create([FromBody] JObject frmData)
         {
 
@@ -57,6 +57,21 @@ namespace TravelApi.Controllers
             if (message == null)
             {
                 res = role.Update(result);
+            }
+
+            return Ok(res);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("restore-role")]
+        public object Restore([FromBody] JObject frmData)
+        {
+
+            var result = role.CheckBeforSave(frmData, ref message);
+            if (message == null)
+            {
+                res = role.Restore(result);
             }
 
             return Ok(res);
