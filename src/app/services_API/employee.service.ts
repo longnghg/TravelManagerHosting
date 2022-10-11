@@ -27,4 +27,8 @@ export class EmployeeService{
   {
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/update-employee", data);
   }
+  delete(data: any)
+  {
+    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/delete-employee", data);
+  }
 }
