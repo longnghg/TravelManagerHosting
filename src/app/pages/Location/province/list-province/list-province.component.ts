@@ -29,8 +29,21 @@ export class ListProvinceComponent implements OnInit {
   ngOnInit(): void {
     this.hubConnectionBuilder = new HubConnectionBuilder().withUrl('https://localhost:44394/travelhub').configureLogging(LogLevel.Information).build();
     this.hubConnectionBuilder.start().then(()=> console.log("Da ket noi")).catch(err => console.log("error"));
-    this.hubConnectionBuilder.on('SendOffersToUser', (result: any) => {
-      this.offers.push(result);
+    this.hubConnectionBuilder.on('Insert', (result: any) => {
+       this.provinceService.GetProvince().subscribe(res => {
+
+      this.response = res
+
+      if(this.response.notification.type == "Error")
+      {
+        this.notificationService.handleAlertObj(res.notification)
+      }
+
+      this.resProvince = this.response.content
+
+      console.log("finisheed");
+
+    })
     })
 
     this.provinceService.GetProvince().subscribe(res => {
