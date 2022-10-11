@@ -27,6 +27,8 @@ export class ItemRoleComponent implements OnInit {
     if (this.type == "create") {
      this.roleRes = new RoleModel()
     }
+    console.log(this.type);
+
   }
 
   save(){
