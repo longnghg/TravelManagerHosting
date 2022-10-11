@@ -109,12 +109,13 @@ namespace Travel.Data.Repositories
                 //var result6 = (from x in _db.Employees select x).ToList();
                 //var b5 = stopWatch5.Elapsed;
                 #endregion
-
+               
                 var listEmp = (from x in _db.Employees where x.IsDelete == false orderby x.Role select x).ToList();
                 var result = Mapper.MapEmployee(listEmp);
 
                 if (listEmp.Count() > 0)
                 {
+
                     res.Content = result;
                 }
                 else
@@ -315,6 +316,42 @@ namespace Travel.Data.Repositories
                 return res;
             }
 
+        }
+
+        public Response Delete(CreateUpdateEmployeeViewModel input)
+        {
+            try
+            {
+                Employee employee = new Employee();
+                employee = Mapper.MapCreateEmployee(input);
+                
+
+                var check = _db.Employees.Find(employee.IdEmployee);
+                if (check != null)
+                {
+                    _db.Employees.Find(employee.IdEmployee).IsDelete = true;
+                    _db.SaveChanges();
+
+                    res.Notification.DateTime = DateTime.Now;
+                    res.Notification.Messenge = "Restore thành công !";
+                    res.Notification.Type = "Success";
+                }
+                else
+                {
+                    res.Notification.DateTime = DateTime.Now;
+                    res.Notification.Messenge = "Không tìm thấy !";
+                    res.Notification.Type = "Warning";
+                }
+                return res;
+            }
+            catch (Exception e)
+            {
+                res.Notification.DateTime = DateTime.Now;
+                res.Notification.Description = e.Message;
+                res.Notification.Messenge = "Có lỗi xảy ra !";
+                res.Notification.Type = "Error";
+                return res;
+            }
         }
     }
 }

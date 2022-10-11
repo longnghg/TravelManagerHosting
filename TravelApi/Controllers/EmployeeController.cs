@@ -112,5 +112,18 @@ namespace TravelApi.Controllers
             }
             return Ok(res);
         }
+        [HttpPost]
+        [Authorize]
+        [Route("delete-employee")]
+        public object Delete([FromBody] JObject frmData)
+        {
+
+            var result = employee.CheckBeforeSave(frmData, ref message);
+            if (message == null)
+            {
+                res = employee.Delete(result);
+            }
+            return Ok(res);
+        }
     }
 }
