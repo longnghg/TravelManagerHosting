@@ -10,6 +10,11 @@ import { ResponseModel } from "../models/responsiveModels/response.model";
 export class ProvinceService{
   constructor(private http:HttpClient, private configService:ConfigService){ }
 
+  GetData()
+  {
+      return this.http.get<ResponseModel>( this.configService.apiUrl + "/WeatherForecast/get-data");
+  }
+
   GetProvince()
   {
       return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/get-province");

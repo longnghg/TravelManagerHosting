@@ -16,9 +16,22 @@ export class ListEmployeeComponent implements OnInit {
   response: ResponseModel
   child: EmployeeModel
   type: string
-  constructor() { }
+  constructor(private employeeService: EmployeeService, private notificationService: NotificationService,
+    private configService: ConfigService) { }
 
   ngOnInit(): void {
+    this.employeeService.gets().subscribe(res => {
+      this.response = res
+
+      if(this.response.notification.type == "Error")
+      {
+        this.notificationService.handleAlertObj(res.notification)
+      }
+
+      this.resEmployee = this.response.content
+      console.log(this.resEmployee);
+
+    })
   }
 
   childData(data: EmployeeModel, type: string){
