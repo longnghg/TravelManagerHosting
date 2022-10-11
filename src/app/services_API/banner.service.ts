@@ -14,4 +14,9 @@ export class BannerService{
   {
       return this.http.post<ResponseModel>(this.configService.apiUrl + "/api/news/UploadBanner",data);
   }
+
+  gets()
+  {
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/news/gets-banner")
+  }
 }

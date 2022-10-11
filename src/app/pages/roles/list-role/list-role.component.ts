@@ -23,6 +23,48 @@ export class ListRoleComponent implements OnInit {
   ngOnInit(): void {
     // this.roleRes = this.roleService.ViewAll()
     console.log(this.roleRes);
+    this.roleService.gets().subscribe(res => {
+      this.response = res
+
+      if(this.response.notification.type == "Error")
+      {
+        this.notificationService.handleAlertObj(res.notification)
+      }
+
+      this.roleRes = this.response.content
+      console.log(this.roleRes);
+
+    })
+  }
+
+  getsRole(){
+    this.roleService.gets().subscribe(res => {
+      this.response = res
+
+      if(this.response.notification.type == "Error")
+      {
+        this.notificationService.handleAlertObj(res.notification)
+      }
+
+      this.roleRes = this.response.content
+      console.log(this.roleRes);
+
+    })
+  }
+
+  getDelete(){
+    this.roleService.getsDelete().subscribe(res => {
+      this.response = res
+
+      if(this.response.notification.type == "Error")
+      {
+        this.notificationService.handleAlertObj(res.notification)
+      }
+
+      this.roleRes = this.response.content
+      console.log(this.roleRes);
+
+    })
   }
 
   changeProvince(value){
