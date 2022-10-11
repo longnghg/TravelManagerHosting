@@ -24,10 +24,8 @@ export class ItemRoleComponent implements OnInit {
   }
 
   ngOnChanges(): void {
-
     if (this.type == "create") {
      this.roleRes = new RoleModel()
-
     }
   }
 

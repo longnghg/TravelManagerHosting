@@ -15,7 +15,7 @@ export class RoleService{
   resRole: RoleModel[]
   ViewAll():RoleModel[]
   {
-    this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/view-all").subscribe(res => {
+    this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/get-role").subscribe(res => {
       this.response = res
       if(!this.response.notification.type)
       {
