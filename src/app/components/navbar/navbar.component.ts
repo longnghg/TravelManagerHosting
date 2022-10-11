@@ -26,8 +26,6 @@ export class NavbarComponent implements OnInit {
         this.img = this.configService.apiUrl + this.currentUser.image
       }
     }
-    console.log(this.currentUser);
-
     this.listTitles = ROUTES.filter(listTitle => listTitle);
   }
   getTitle(){

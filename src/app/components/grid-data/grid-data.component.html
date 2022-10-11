@@ -19,10 +19,12 @@
           <th scope="col"></th>
           <th scope="col" *ngFor="let column of columnDefs">{{column.headerName}}
             <ng-container *ngIf="column.searchType == 'section'; else elseSection">
-              <ng-select style="width: 200px;" [items]="column.listSection"  placeholder="Tìm kiếm..." (change)="selectSection(column.searchObj)" id="section" name="section" [(ngModel)]="keyword[column.searchObj]" [bindLabel]="column.bindLabel" [bindValue]="column.bindValue" appendTo="body" [multiple]="true"  dropdownPosition="auto" [searchable]="false" [closeOnSelect]="false">
-              <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item[column.bindLabel]}}
-              </ng-template>
+              <ng-select style="width: 200px;" [items]="column.listSection"  placeholder="Tìm kiếm..." (change)="selectSection(column.searchObj)" id="section" name="section" [(ngModel)]="keyword[column.searchObj]" [bindLabel]="column.bindLabel" [bindValue]="column.bindValue" appendTo="body" [multiple]="column.multiple"  dropdownPosition="auto" [searchable]="false" [closeOnSelect]="false">
+                <ng-container *ngIf="column.multiple;">
+                  <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                    <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item[column.bindLabel]}}
+                  </ng-template>
+                </ng-container>
               </ng-select>
             </ng-container>
             <ng-template #elseSection>

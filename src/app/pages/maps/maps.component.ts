@@ -6,7 +6,6 @@ import { RoleTitle, RoleModel } from "../../models/role.model";
 import { ColDef} from '../../components/grid-data/grid-data.component';
 import { ConfigService } from "../../services_API/config.service";
 import { RoleService } from "../../services_API/role.service";
-
 import { ResponseModel } from "../../models/responsiveModels/response.model";
 @Component({
   selector: 'app-maps',
@@ -20,26 +19,30 @@ export class MapsComponent implements OnInit {
   response: ResponseModel
   constructor(private roleService: RoleService, private configService: ConfigService, private employeeService: EmployeeService, private notificationService: NotificationService) {}
 
-  public columnDefs: ColDef[] = [
-    // set filters
-    // { field: 'Index',headerName: ""},
-    { field: 'idEmployee', headerName: "Mã số", searchable: true, searchType: 'text', searchObj: 'idEmployee'},
-    { field: 'nameEmployee',headerName: "Tên", filter: "avatar", searchable: true, searchType: 'text', searchObj: 'nameEmployee'},
-    { field: 'email',headerName: "Email", searchable: true, searchType: 'email', searchObj: 'email'},
-    { field: 'phone',headerName: "Số điện thoại", searchable: true, searchType: 'text', searchObj: 'phone'},
-    { field: 'roleName',headerName: "Chức vụ", searchable: true, searchType: 'section', searchObj: 'idRole', bindLabel: 'nameRole', bindValue: "idRole", listSection: this.roleService.ViewAll()},
-    { field: 'isActive',headerName: "Kích hoạt", filter: "status", searchable: true, searchType: 'section', searchObj: 'id', bindLabel: 'name', bindValue: "id", listSection: [{id: 0, name: "Chưa kích hoạt"},{id: 1, name: "Đã kích hoạt"}]},
-  ];
+  public columnDefs: ColDef[]
 
   ngOnInit() {
     this.search()
+    this.roleService.ViewAll().then(response => {
+      this.resRole = response
+    })
+    setTimeout(() => {
+      this.columnDefs= [
+        { field: 'idEmployee', headerName: "Mã số", searchable: true, searchType: 'text', searchObj: 'idEmployee'},
+        { field: 'nameEmployee',headerName: "Tên", filter: "avatar", searchable: true, searchType: 'text', searchObj: 'nameEmployee'},
+        { field: 'email',headerName: "Email", searchable: true, searchType: 'email', searchObj: 'email'},
+        { field: 'phone',headerName: "Số điện thoại", searchable: true, searchType: 'text', searchObj: 'phone'},
+        { field: 'roleName',headerName: "Chức vụ", searchable: true, searchType: 'section', searchObj: 'idRole', multiple: true, bindLabel: 'nameRole', bindValue: "idRole", listSection: this.resRole},
+        { field: 'isActive',headerName: "Kích hoạt", filter: "status", searchable: true, searchType: 'section', multiple: false, searchObj: 'isActive', bindLabel: 'name', bindValue: "id", listSection: [{id: false, name: "Chưa kích hoạt"},{id: true, name: "Đã kích hoạt"}]},
+      ];
+    }, 100);
+
+
+
   }
 
   search(e?){
-    console.log(e);
     if (e) {
-      console.log(1);
-
       this.employeeService.search(e).subscribe(res => {
         this.response = res
         if(!this.response.notification.type)
@@ -57,7 +60,6 @@ export class MapsComponent implements OnInit {
       })
     }
     else{
-      console.log(2);
       this.employeeService.gets().subscribe(res => {
         this.response = res
         if(!this.response.notification.type)
@@ -73,6 +75,7 @@ export class MapsComponent implements OnInit {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, "Error")
       })
+
     }
 
   }

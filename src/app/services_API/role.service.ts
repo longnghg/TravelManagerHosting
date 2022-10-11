@@ -13,25 +13,23 @@ export class RoleService{
   constructor(private http:HttpClient, private configService:ConfigService, private notificationService: NotificationService){ }
   response: ResponseModel
   resRole: RoleModel[]
-  ViewAll():RoleModel[]
+  async ViewAll()
   {
-    this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/view-all").subscribe(res => {
-      this.response = res
-      if(!this.response.notification.type)
-      {
-        this.resRole = this.response.content
-        sessionStorage.setItem("resRole", JSON.stringify(this.resRole))
-      }
-      else{
-        this.notificationService.handleAlertObj(res.notification)
+    var value = <RoleModel[]>await new Promise<RoleModel[]>(resolve => {
+      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/view-all").subscribe(res => {
+        this.response = res
+        if(!this.response.notification.type)
+        {
+          this.resRole =  this.response.content
+          resolve(this.resRole);
+        }
+        else{
+          this.notificationService.handleAlertObj(res.notification)
 
-      }
-    }, error => {
-      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
-    })
-
-    return JSON.parse(sessionStorage.getItem("resRole"))
+        }
+      })
+    });
+    return value;
   }
 
   create(data: any)

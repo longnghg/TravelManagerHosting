@@ -16,8 +16,6 @@ export class EmployeeService{
   }
 
   search(data){
-    console.log(data);
-
       return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/search-employees", data);
   }
   create(data: any)

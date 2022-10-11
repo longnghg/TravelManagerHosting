@@ -21,7 +21,7 @@ export class ListRoleComponent implements OnInit {
     private configService: ConfigService ) { }
 
   ngOnInit(): void {
-    this.roleRes = this.roleService.ViewAll()
+    // this.roleRes = this.roleService.ViewAll()
     console.log(this.roleRes);
   }
 

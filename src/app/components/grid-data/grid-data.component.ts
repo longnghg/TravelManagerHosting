@@ -129,6 +129,9 @@ export class GridDataComponent implements OnInit {
     }
     else{
       kw = this.keywordTmp[name][0]
+      if (!kw) {
+        kw = this.keywordTmp[name]
+      }
     }
     this.keywordTmp[name] = kw
     this.setCache()
@@ -162,6 +165,7 @@ export interface ColDef{
   searchType?: string
   bindValue?: string
   bindLabel?: string
+  multiple?: boolean
   listSection?: any
 }
 
