@@ -58,5 +58,16 @@ export class ItemEmployeeComponent implements OnInit {
     }
 
   }
-
+  delete(){
+    this.employeeService.delete(this.resEmployee).subscribe(res =>{
+      this.response = res
+      if(this.response.notification.type == "Error")
+      {
+        this.notificationService.handleAlertObj(res.notification)
+      }
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, "Error")
+    })
+  }
 }
