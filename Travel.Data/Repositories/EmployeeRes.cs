@@ -169,13 +169,29 @@ namespace Travel.Data.Repositories
             try
             {
                 Employee employee = Mapper.MapCreateEmployee(input);
-                _db.Employees.Update(employee);
-                _db.SaveChanges();
-                res.Notification.DateTime = DateTime.Now;
-                res.Notification.Messenge = "Sửa thành công";
-                res.Notification.Type = "Success";
-                return res;
 
+                var check = _db.Employees.Find(employee.IdEmployee);
+                if (check != null)
+                {
+                    _db.Employees.Find(employee.IdEmployee).NameEmployee = employee.NameEmployee;
+                    _db.Employees.Find(employee.IdEmployee).Email = employee.Email;
+                    _db.Employees.Find(employee.IdEmployee).Birthday = employee.Birthday;
+                    _db.Employees.Find(employee.IdEmployee).Image = employee.Image;
+                    _db.Employees.Find(employee.IdEmployee).Phone = employee.Phone;
+                    _db.Employees.Find(employee.IdEmployee).RoleId = employee.RoleId;
+                    _db.SaveChanges();
+
+                    res.Notification.DateTime = DateTime.Now;
+                    res.Notification.Messenge = "Sửa thành công !";
+                    res.Notification.Type = "Success";               
+                }
+                else
+                {
+                    res.Notification.DateTime = DateTime.Now;
+                    res.Notification.Messenge = "Không tìm thấy !";
+                    res.Notification.Type = "Warning";
+                }
+                return res;
             }
             catch (Exception e)
             {

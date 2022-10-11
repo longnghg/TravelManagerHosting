@@ -106,7 +106,7 @@ namespace TravelApi.Controllers
         {
 
             var result = employee.CheckBeforeSave(frmData, ref message);
-            if (message != null)
+            if (message == null)
             {
                 res = employee.Update(result);
             }
