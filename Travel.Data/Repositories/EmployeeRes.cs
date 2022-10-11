@@ -3,11 +3,7 @@ using Newtonsoft.Json.Linq;
 using PrUtility;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 using Travel.Context.Models;
 using Travel.Context.Models.Travel;
 using Travel.Data.Interfaces;
@@ -196,15 +192,92 @@ namespace Travel.Data.Repositories
         {
             try
             {
-                var kwId = PrCommon.GetString("idEmployee", frmData);
-                var kwName = PrCommon.GetString("nameEmployee", frmData);
-                var kwPhone = PrCommon.GetString("phone", frmData);
-                var kwEmail = PrCommon.GetString("email", frmData);
-                var kwRoleId = PrCommon.GetString("idRole", frmData);
-                var kwIsActive = PrCommon.GetString("isActive", frmData);
-                var listEmp = _db.Employees.FromSqlRaw("[SearchEmployees] {0}, {1}, {2}, {3}, {4}, {5}", kwId, kwName, kwEmail, kwPhone, kwRoleId, kwIsActive).ToList();
-                var result = Mapper.MapEmployee(listEmp);
+                Keywords keywords = new Keywords();
 
+                var kwId = PrCommon.GetString("idEmployee", frmData);
+                if (!String.IsNullOrEmpty(kwId))
+                {
+                    keywords.KwId = kwId.Trim().ToLower();
+                }
+                else
+                {
+                    keywords.KwId = "";
+
+                }
+
+                var kwName = PrCommon.GetString("nameEmployee", frmData).Trim();
+                if (!String.IsNullOrEmpty(kwName))
+                {
+                    keywords.KwName = kwName.Trim().ToLower();
+                }
+                else
+                {
+                    keywords.KwName = "";
+
+                }
+
+                var kwPhone = PrCommon.GetString("phone", frmData).Trim();
+                if (!String.IsNullOrEmpty(kwPhone))
+                {
+                    keywords.KwPhone = kwPhone.Trim().ToLower();
+                }
+                else
+                {
+                    keywords.KwPhone = "";
+
+                }
+
+                var kwEmail = PrCommon.GetString("email", frmData).Trim();
+                if (!String.IsNullOrEmpty(kwEmail))
+                {
+                    keywords.KwEmail = kwEmail.Trim().ToLower();
+                }
+                else
+                {
+                    keywords.KwEmail = "";
+
+                }
+
+                var kwRoleId = PrCommon.GetString("idRole", frmData);
+                keywords.KwRoleId = PrCommon.getListInt(kwRoleId, ',', false);
+
+                var kwIsActive = PrCommon.GetString("isActive", frmData);
+                if (!String.IsNullOrEmpty(kwId))
+                {
+                    keywords.KwIsActive = Boolean.Parse(kwIsActive);
+                }
+                else
+                {
+                    keywords.KwIsActive = true;
+
+                }
+               
+                //var listEmp = _db.Employees.FromSqlRaw("[SearchEmployees] {0}, {1}, {2}, {3}, {4}, {5}", kwId, kwName, kwEmail, kwPhone, kwRoleId, kwIsActive).ToList();
+                var listEmp = new List<Employee>();
+                if (keywords.KwRoleId.Count > 0)
+                {
+                    listEmp =  (from x in _db.Employees
+                     where x.IsDelete == false &&
+                                     x.IdEmployee.ToString().ToLower().Contains(keywords.KwId) &&
+                                     x.NameEmployee.ToLower().Contains(keywords.KwName) &&
+                                     x.Email.ToLower().Contains(keywords.KwEmail) &&
+                                     x.Phone.ToLower().Contains(keywords.KwPhone) &&
+                                     x.IsActive == keywords.KwIsActive && 
+                                     keywords.KwRoleId.Contains(x.RoleId)
+                     select x).ToList();
+                }
+                else
+                {
+                    listEmp = (from x in _db.Employees
+                               where x.IsDelete == false &&
+                                               x.IdEmployee.ToString().ToLower().Contains(keywords.KwId) &&
+                                               x.NameEmployee.ToLower().Contains(keywords.KwName) &&
+                                               x.Email.ToLower().Contains(keywords.KwEmail) &&
+                                               x.Phone.ToLower().Contains(keywords.KwPhone) &&
+                                               x.IsActive == keywords.KwIsActive
+                               select x).ToList();
+                }
+                var result = Mapper.MapEmployee(listEmp);
                 if (listEmp.Count() > 0)
                 {
                     res.Content = result;
