@@ -18,6 +18,12 @@
           <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="childData(null, 'create')" >
             Thêm
           </button>
+          <button type="button" class="btn btn-outline-primary" (click)="getsRole()">
+            Danh sách
+          </button>
+          <button type="button" class="btn btn-outline-danger" (click)="getDelete()">
+            Kho lưu trữ
+          </button>
         </div>
       </div>
     </div>
@@ -46,9 +52,7 @@
             <td>
               {{item.description}}
             </td>
-
             <td>
-
               <div class="col text-right">
                 <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="childData(item, 'detail')">
                   Chi Tiết
@@ -76,4 +80,5 @@
     </div>
   </div>
 </div>
+
 
