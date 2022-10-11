@@ -56,4 +56,16 @@ export class ItemRoleComponent implements OnInit {
     })
   }
 
+  delete(){
+    this.roleService.delete(this.roleRes).subscribe(res =>{
+      this.response = res
+      if(this.response.notification.type == "Error")
+      {
+        this.notificationService.handleAlertObj(res.notification)
+      }
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, "Error")
+    })
+  }
 }

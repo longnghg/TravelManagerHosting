@@ -52,4 +52,7 @@ export class RoleService{
   {
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Role/restore-role", data);
   }
+  delete(data: any){
+    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Role/delete-role", data);
+  }
 }
