@@ -48,6 +48,11 @@ export class RoleService{
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Role/create-role", data);
   }
 
+  update(data: any)
+  {
+    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Role/update-role", data);
+  }
+
   restore(data: any)
   {
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Role/restore-role", data);

@@ -30,17 +30,31 @@ export class ItemRoleComponent implements OnInit {
   }
 
   save(){
+    if(this.type == "create"){
+      this.roleService.create(this.roleRes).subscribe(res =>{
+        this.response = res
+        if(this.response.notification.type == "Error")
+        {
+          this.notificationService.handleAlertObj(res.notification)
+        }
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, "Error")
+      })
+    }
+    else{
+      this.roleService.update(this.roleRes).subscribe(res =>{
+        this.response = res
+        if(this.response.notification.type == "Error")
+        {
+          this.notificationService.handleAlertObj(res.notification)
+        }
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, "Error")
+      })
+    }
 
-    this.roleService.create(this.roleRes).subscribe(res =>{
-      this.response = res
-      if(this.response.notification.type == "Error")
-      {
-        this.notificationService.handleAlertObj(res.notification)
-      }
-    }, error => {
-      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
-    })
   }
 
   restore(){
