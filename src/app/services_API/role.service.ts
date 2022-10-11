@@ -16,7 +16,7 @@ export class RoleService{
   async ViewAll()
   {
     var value = <RoleModel[]>await new Promise<RoleModel[]>(resolve => {
-      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/view-all").subscribe(res => {
+      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/gets-role").subscribe(res => {
         this.response = res
         if(!this.response.notification.type)
         {

@@ -35,7 +35,7 @@ export class MapsComponent implements OnInit {
         { field: 'roleName',headerName: "Chức vụ", searchable: true, searchType: 'section', searchObj: 'idRole', multiple: true, bindLabel: 'nameRole', bindValue: "idRole", listSection: this.resRole},
         { field: 'isActive',headerName: "Kích hoạt", filter: "status", searchable: true, searchType: 'section', multiple: false, searchObj: 'isActive', bindLabel: 'name', bindValue: "id", listSection: [{id: false, name: "Chưa kích hoạt"},{id: true, name: "Đã kích hoạt"}]},
       ];
-    }, 100);
+    }, 200);
 
 
 

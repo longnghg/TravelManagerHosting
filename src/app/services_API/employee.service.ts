@@ -12,19 +12,19 @@ export class EmployeeService{
 
   gets()
   {
-      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/get-employees");
+      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/gets-employee");
   }
 
   search(data){
-      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/search-employees", data);
+      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/search-employee", data);
   }
   create(data: any)
   {
-    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/create-employees", data);
+    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/create-employee", data);
   }
 
   update(data: any)
   {
-    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/update-employees", data);
+    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/update-employee", data);
   }
 }
