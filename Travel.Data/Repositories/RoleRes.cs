@@ -64,7 +64,7 @@ namespace Travel.Data.Repositories
             }
         }
 
-        public Response ViewAll()
+        public Response GetsRole()
         {
             try
             {

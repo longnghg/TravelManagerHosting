@@ -98,13 +98,13 @@ namespace TravelApi
                .AllowAnyHeader()
                .SetIsOriginAllowed(origin => true) // allow any origin
                .AllowCredentials());
+            app.UseStaticFiles();
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
                 endpoints.MapHub<TravelHub>("/travelhub");
             });
-            app.UseAuthentication();
-            app.UseAuthorization();
-            app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {

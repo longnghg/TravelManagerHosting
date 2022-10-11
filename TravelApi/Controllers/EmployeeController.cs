@@ -22,26 +22,24 @@ namespace TravelApi.Controllers
         private IEmployee employee;
         private Notification message;
         private Response res;
-        TravelContext _db;
-        public EmployeeController(IEmployee _employee, TravelContext db)
+        public EmployeeController(IEmployee _employee)
         {
             employee = _employee;
             res = new Response();
-            _db = db;
         }
 
         [HttpGet]
         [Authorize]
-        [Route("get-employees")]
-        public object GetEmployees()
+        [Route("gets-employee")]
+        public object GetsEmployee()
         {
-            res =  employee.GetEmployees();
+            res =  employee.Gets();
             return Ok(res);
         }
 
         [HttpPost]
         [Authorize]
-        [Route("search-employees")]
+        [Route("search-employee")]
         public object SearchEmployee([FromBody] JObject frmData)
         {
             res = employee.Search(frmData);
@@ -90,7 +88,7 @@ namespace TravelApi.Controllers
 
         [HttpPost]
         [Authorize]
-        [Route("create-employees")]
+        [Route("create-employee")]
         public object Create([FromBody] JObject frmData)
         {
             var result = employee.CheckBeforeSave(frmData, ref message);
@@ -103,7 +101,7 @@ namespace TravelApi.Controllers
 
         [HttpPost]
         [Authorize]
-        [Route("update-employess")]
+        [Route("update-employee")]
         public object Update([FromBody] JObject frmData)
         {
 

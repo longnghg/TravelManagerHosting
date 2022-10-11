@@ -25,10 +25,10 @@ namespace TravelApi.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        [Route("get-role")]
-        public object GetRole()
+        [Route("gets-role")]
+        public object GetsRole()
         {
-            res = role.ViewAll();
+            res = role.GetsRole();
             return Ok(res);
         }
 

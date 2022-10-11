@@ -94,7 +94,7 @@ namespace Travel.Data.Repositories
                 return employee;
             }
         }
-        public Response GetEmployees()
+        public Response Gets()
         {
             try
             {
