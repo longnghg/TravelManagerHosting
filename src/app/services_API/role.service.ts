@@ -25,19 +25,17 @@ export class RoleService{
         }
         else{
           this.notificationService.handleAlertObj(res.notification)
-
-      }
+        }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, "Error")
-    })
-
+    })})
     return value
+
   }
 
   create(data: any)
   {
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Role/create-role", data);
   }
-
 }
