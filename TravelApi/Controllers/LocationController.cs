@@ -87,6 +87,7 @@ namespace TravelApi.Controllers
             if (message == null)
             {
                 res = location.InsertProvince(province);
+                _messageHub.Clients.All.Insert();
             }
             else
             {

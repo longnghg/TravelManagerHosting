@@ -12,6 +12,10 @@ namespace TravelApi.Hubs
         {
             await Clients.All.SendOffersToUser(message);
         }
+        public async Task Insert()
+        {
+            await Clients.All.Insert();
+        }
     }
    
 }

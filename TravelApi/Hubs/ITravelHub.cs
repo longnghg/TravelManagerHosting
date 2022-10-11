@@ -8,6 +8,7 @@ namespace TravelApi.Hubs
     public interface ITravelHub
     {
         Task SendOffersToUser(List<string> message);
+        Task Insert();
 
     }
 }
