@@ -49,7 +49,7 @@
                 <i class="fas fa-ellipsis-v"></i>
               </a>
               <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
-                <a class="dropdown-item" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#gridData">Thêm</a>
+                <a class="dropdown-item" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#gridData" (click)="childData(null, 'create')" >Thêm</a>
                 <div class="dropdown-divider"></div>
                 <label class="custom-toggle" style="margin-left: 5px;">
                   <input type="checkbox" (change)="changeChecked()" [checked]="checked">
@@ -90,7 +90,7 @@
                         <i class="fas fa-ellipsis-v"></i>
                       </a>
                       <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
-                        <a class="dropdown-item" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#gridData">Chi tiết</a>
+                        <a class="dropdown-item" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#gridData" (click)="childData(row, 'detail')">Chi tiết</a>
                         <a class="dropdown-item" href="javascript:void(0)">Xóa</a>
                       </div>
                     </div>

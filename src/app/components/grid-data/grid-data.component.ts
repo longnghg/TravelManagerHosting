@@ -10,6 +10,8 @@ export class GridDataComponent implements OnInit {
   @Input() columnDefs: ColDef[]
   @Output() gdSearch = new EventEmitter<any>()
   @Output() gdChecked = new EventEmitter<any>()
+  @Output() gdChild = new EventEmitter<any>()
+  @Output() gdType = new EventEmitter<any>()
   totalResult: number
   rowDataTmp: any
   rowDataRestore: any
@@ -169,6 +171,10 @@ export class GridDataComponent implements OnInit {
       this.keyword.isDelete = this.isDelete
        this.gdSearch.emit(this.keyword);
     }
+  }
+  childData(data: any, type: string){
+    this.gdChild.emit(data);
+    this.gdType.emit(type);
   }
 }
 
