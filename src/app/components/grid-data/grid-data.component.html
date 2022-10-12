@@ -41,11 +41,28 @@
               <ng-template #elseDateTime>
                 <input *ngIf="column.searchable" placeholder="Tìm kiếm..."  (change)="search(column.searchObj)" [(ngModel)]="keyword[column.field]" [type]="column.searchType" class="form-control custom-pages-input" style="height: 30px" [name]="column.field" [id]="column.field">
               </ng-template>
-
             </ng-template>
+          </th>
+          <th>
+            <div ngbDropdown placement="bottom-right">
+              <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
+                <i class="fas fa-ellipsis-v"></i>
+              </a>
+              <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
+                <a class="dropdown-item" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#gridData">Thêm</a>
+                <div class="dropdown-divider"></div>
+                <label class="custom-toggle" style="margin-left: 5px;">
+                  <input type="checkbox" (change)="changeChecked()" [checked]="checked">
+                  <span class="custom-toggle-slider rounded-circle"></span>
+                </label>
+                <span style="position: absolute; margin-left: 5px;">Kho lưu trữ</span>
+              </div>
+            </div>
+
           </th>
         </tr>
       </thead>
+      <tbody *ngIf="!rowData" ><tr><td><br><br><br><br></td></tr></tbody>
       <tbody *ngIf="rowData">
         <tr *ngFor="let row of rowData; let i=index" >
           <ng-container *ngIf="row.rowNum >= start && row.rowNum <= end">
@@ -85,7 +102,9 @@
               </ng-template>
             </td>
           </ng-container>
-
+        </tr>
+        <tr *ngIf="rowData.length == 1">
+          <td><br></td>
         </tr>
       </tbody>
     </table>

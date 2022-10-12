@@ -7,7 +7,7 @@ export class EmployeeModel {
   address: string = ""
   birthday: number = 0
   image: string = ""
-  roleId: string = ""
+  idRole: string = ""
   roleName: string = ""
   roleDescription: string = ""
   createDate: number = 0

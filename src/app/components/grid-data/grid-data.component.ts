@@ -9,8 +9,10 @@ export class GridDataComponent implements OnInit {
   @Input() rowData: any
   @Input() columnDefs: ColDef[]
   @Output() gdSearch = new EventEmitter<any>()
+  @Output() gdChecked = new EventEmitter<any>()
   totalResult: number
   rowDataTmp: any
+  rowDataRestore: any
   pageCount: number
   listPageSize = [1, 2, 5, 10, 15, 20, 25, 30]
   pageSize: number = 15
@@ -20,8 +22,9 @@ export class GridDataComponent implements OnInit {
   end: number = 0
   btnPrev: boolean = false
   btnNext: boolean = true
-  keyword = []
-  keywordTmp = []
+  keyword: any = []
+  keywordTmp: any = []
+  isDelete: boolean
   constructor(){}
   ngOnInit(): void {
   }
@@ -143,13 +146,27 @@ export class GridDataComponent implements OnInit {
     this.setCache()
 
   }
+  changeChecked(){
+    if (this.isDelete) {
+      this.isDelete = false
+      this.gdChecked.emit(false);
+
+    }
+    else{
+      this.isDelete = true
+      this.gdChecked.emit(true);
+
+    }
+  }
   setCache(){
     if (this.keywordTmp)
     {
+      this.keywordTmp.isDelete = this.isDelete
       this.gdSearch.emit(Object.assign({}, this.keywordTmp));
     }
     else
     {
+      this.keyword.isDelete = this.isDelete
        this.gdSearch.emit(this.keyword);
     }
   }

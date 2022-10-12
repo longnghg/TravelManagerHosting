@@ -14,7 +14,10 @@ export class EmployeeService{
   {
       return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/gets-employee");
   }
-
+  getsDelete()
+  {
+      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/gets-delete-employee");
+  }
   search(data){
       return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/search-employee", data);
   }

@@ -33,14 +33,10 @@ export class RoleService{
     return value
 
   }
-  gets()
-  {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/gets-role");
-  }
 
   getsDelete()
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/get-roledelete");
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/gets-delete-role");
   }
 
   create(data: any)
