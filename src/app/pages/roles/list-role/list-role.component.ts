@@ -14,7 +14,7 @@ export class ListRoleComponent implements OnInit {
 
   response: ResponseModel
   type: string
-  roleRes: RoleModel[]
+  resRole: RoleModel[]
   child: RoleModel
 
   constructor(private roleService: RoleService, private notificationService: NotificationService,
@@ -22,19 +22,11 @@ export class ListRoleComponent implements OnInit {
 
   ngOnInit(): void {
     // this.roleRes = this.roleService.ViewAll()
-    console.log(this.roleRes);
-    // this.roleService.gets().subscribe(res => {
-    //   this.response = res
 
-    //   if(this.response.notification.type == "Error")
-    //   {
-    //     this.notificationService.handleAlertObj(res.notification)
-    //   }
+    this.roleService.gets().then(response => {
+      this.resRole = response
+    })
 
-    //   this.roleRes = this.response.content
-    //   console.log(this.roleRes);
-
-    // })
   }
 
   // getsRole(){
@@ -61,8 +53,7 @@ export class ListRoleComponent implements OnInit {
         this.notificationService.handleAlertObj(res.notification)
       }
 
-      this.roleRes = this.response.content
-      console.log(this.roleRes);
+      this.resRole = this.response.content
 
     })
   }
@@ -81,8 +72,6 @@ export class ListRoleComponent implements OnInit {
        }
 
        this.roleService = this.response.content
-       console.log(this.roleService );
-
      })
     }
     else{

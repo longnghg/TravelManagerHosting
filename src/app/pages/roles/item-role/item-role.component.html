@@ -23,8 +23,8 @@
         </div>
       </ng-container>
       <ng-template #elseTemplate>
-        <div class="row" [ngClass]="type ? 'create' : 'detail'" >
-          <button (click)="save()" class="btn btn-primary">{{type ? 'Thêm quyền' : 'Sửa quyền'}}</button>
+        <div class="row"  >
+          <button (click)="save()" class="btn btn-primary">{{type == 'create' ? 'Thêm quyền' : 'Sửa quyền'}}</button>
         </div>
         <hr>
         <div class="row">

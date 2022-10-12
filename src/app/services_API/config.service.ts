@@ -28,6 +28,15 @@ export class ConfigService{
     return message
   }
 
+  listGender(){
+    var listGender = [
+      {id: false, name: "Nam"},
+      {id: true, name: "Nữ"}
+    ]
+
+    return listGender
+  }
+
   listStatus(){
     var listStatus = [
       {id: false, name: "Chưa kích hoạt"},

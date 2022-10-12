@@ -23,10 +23,13 @@ export class MapsComponent implements OnInit {
 
   ngOnInit() {
     this.init()
+
     this.roleService.gets().then(response => {
       this.resRole = response
     })
+
     setTimeout(() => {
+
       this.columnDefs= [
         { field: 'idEmployee', headerName: "Mã số", searchable: true, searchType: 'text', searchObj: 'idEmployee'},
         { field: 'nameEmployee',headerName: "Tên", filter: "avatar", searchable: true, searchType: 'text', searchObj: 'nameEmployee'},

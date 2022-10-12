@@ -14,19 +14,22 @@ export class ItemEmployeeComponent implements OnInit {
 
   response: ResponseModel
   @Input()   resEmployee: EmployeeModel
-
   @Input() type: string
+  listGender = this.configService.listGender()
+  isReadOnly: boolean = true
   constructor(private employeeService: EmployeeService, private notificationService: NotificationService,
     private configService: ConfigService) { }
 
   ngOnInit(): void {
-
   }
   ngOnChanges(): void {
+    console.log(this.type);
+
     if(this.type == "create"){
       this.resEmployee = new EmployeeModel()
+      this.isReadOnly = false
     }
-    console.log(this.resEmployee);
+
 
   }
 
@@ -70,4 +73,6 @@ export class ItemEmployeeComponent implements OnInit {
       this.notificationService.handleAlert(message, "Error")
     })
   }
+
+
 }
