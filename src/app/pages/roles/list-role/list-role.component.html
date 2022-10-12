@@ -7,79 +7,12 @@
 
 
 
-<div class="col-xl-12 mb-5 mb-xl-0">
-  <div class="card shadow">
-    <div class="card-header border-0">
-      <div class="row align-items-center">
-        <div class="col">
-          <h3 class="mb-0">Role</h3>
-        </div>
-        <div class="col text-right">
-          <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="childData(null, 'create')" >
-            Thêm
-          </button>
-          <button type="button" class="btn btn-outline-primary">
-            Danh sách
-          </button>
-          <button type="button" class="btn btn-outline-danger" (click)="getDelete()">
-            Kho lưu trữ
-          </button>
-        </div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow border-0">
+        <app-grid-data [rowData]="resRole" [columnDefs]="columnDefs" (gdChecked)="init($event)" (gdSearch)="search($event)"></app-grid-data>
       </div>
-    </div>
-    <div class="table-responsive">
-      <!-- Projects table -->
-      <table class="table align-items-center table-flush">
-        <thead class="thead-light">
-          <tr>
-            <th scope="col">STT</th>
-            <th scope="col">idRole</th>
-            <th scope="col">nameRole</th>
-            <th scope="col">description</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of resRole let i=index">
-            <th scope="row">
-              <strong>{{i}}</strong>
-            </th>
-            <th>
-              {{item.idRole}}
-            </th>
-            <td>
-              {{item.nameRole}}
-            </td>
-            <td>
-              {{item.description}}
-            </td>
-            <td>
-              <div class="col text-right">
-                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="childData(item, 'detail')">
-                  Chi Tiết
-                </button>
-
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
-<!-- Thêm - Sửa -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Thông tin</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-         <app-item-role [roleRes]="child" [type]="type"></app-item-role>
-      </div>
-    </div>
-  </div>
-</div>
 
 

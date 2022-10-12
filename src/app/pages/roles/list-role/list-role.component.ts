@@ -4,6 +4,7 @@ import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { NotificationService } from "../../../services_API/notification.service";
 import { ConfigService } from "../../../services_API/config.service";
 import { RoleModel } from "../../../models/role.model";
+import { ColDef} from '../../../components/grid-data/grid-data.component';
 
 @Component({
   selector: 'app-list-role',
@@ -11,7 +12,7 @@ import { RoleModel } from "../../../models/role.model";
   styleUrls: ['./list-role.component.scss']
 })
 export class ListRoleComponent implements OnInit {
-
+  event: any
   response: ResponseModel
   type: string
   resRole: RoleModel[]
@@ -19,30 +20,25 @@ export class ListRoleComponent implements OnInit {
 
   constructor(private roleService: RoleService, private notificationService: NotificationService,
     private configService: ConfigService ) { }
-
+    public columnDefs: ColDef[]
   ngOnInit(): void {
-    // this.roleRes = this.roleService.ViewAll()
+    this.init()
 
     this.roleService.gets().then(response => {
       this.resRole = response
     })
+    setTimeout(() => {
+
+      this.columnDefs= [
+      //  { field: 'idRole', headerName: "Mã số", searchable: true, searchType: 'text', searchObj: 'idRole'},
+        { field: 'nameRole',headerName: "Chức Vụ", filter: "avatar", searchable: true, searchType: 'text', searchObj: 'nameRole'},
+        { field: 'description',headerName: "Mô Tả", filter: "avatar", searchable: true, searchType: 'text', searchObj: 'description'},
+      ];
+    }, 200);
 
   }
 
-  // getsRole(){
-  //   this.roleService.gets().subscribe(res => {
-  //     this.response = res
 
-  //     if(this.response.notification.type == "Error")
-  //     {
-  //       this.notificationService.handleAlertObj(res.notification)
-  //     }
-
-  //     this.roleRes = this.response.content
-  //     console.log(this.roleRes);
-
-  //   })
-  // }
 
   getDelete(){
     this.roleService.getsDelete().subscribe(res => {
@@ -85,5 +81,60 @@ export class ListRoleComponent implements OnInit {
     this.type = type
 
   }
+  search(e?){
+    if (e) {
+      this.roleService.search(e).subscribe(res => {
+        this.response = res
+        if(!this.response.notification.type)
+        {
+          this.resRole = this.response.content
+        }
+        else{
+          this.resRole = null
+          this.notificationService.handleAlertObj(res.notification)
+        }
 
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, "Error")
+      })
+    }
+  }
+
+  init(e?){
+   if (e) {
+    this.event.getsDelete().subscribe(res => {
+      this.response = res
+      if(!this.response.notification.type)
+      {
+        this.resRole = this.response.content
+      }
+      else{
+        this.resRole = null
+        this.notificationService.handleAlertObj(res.notification)
+      }
+
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, "Error")
+    })
+   }
+   else{
+    this.roleService.getRole().subscribe(res => {
+      this.response = res
+      if(!this.response.notification.type)
+      {
+        this.resRole = this.response.content
+      }
+      else{
+        this.resRole = null
+        this.notificationService.handleAlertObj(res.notification)
+      }
+
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, "Error")
+    })
+   }
+  }
 }
