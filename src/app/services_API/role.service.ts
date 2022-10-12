@@ -33,9 +33,31 @@ export class RoleService{
     return value
 
   }
+  gets()
+  {
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/gets-role");
+  }
+
+  getsDelete()
+  {
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/get-roledelete");
+  }
 
   create(data: any)
   {
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Role/create-role", data);
+  }
+
+  update(data: any)
+  {
+    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Role/update-role", data);
+  }
+
+  restore(data: any)
+  {
+    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Role/restore-role", data);
+  }
+  delete(data: any){
+    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Role/delete-role", data);
   }
 }

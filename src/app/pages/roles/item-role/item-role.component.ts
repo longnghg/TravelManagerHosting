@@ -27,11 +27,40 @@ export class ItemRoleComponent implements OnInit {
     if (this.type == "create") {
      this.roleRes = new RoleModel()
     }
+    console.log(this.type);
+
   }
 
   save(){
+    if(this.type == "create"){
+      this.roleService.create(this.roleRes).subscribe(res =>{
+        this.response = res
+        if(this.response.notification.type == "Error")
+        {
+          this.notificationService.handleAlertObj(res.notification)
+        }
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, "Error")
+      })
+    }
+    else{
+      this.roleService.update(this.roleRes).subscribe(res =>{
+        this.response = res
+        if(this.response.notification.type == "Error")
+        {
+          this.notificationService.handleAlertObj(res.notification)
+        }
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, "Error")
+      })
+    }
 
-    this.roleService.create(this.roleRes).subscribe(res =>{
+  }
+
+  restore(){
+    this.roleService.restore(this.roleRes).subscribe(res =>{
       this.response = res
       if(this.response.notification.type == "Error")
       {
@@ -43,4 +72,16 @@ export class ItemRoleComponent implements OnInit {
     })
   }
 
+  delete(){
+    this.roleService.delete(this.roleRes).subscribe(res =>{
+      this.response = res
+      if(this.response.notification.type == "Error")
+      {
+        this.notificationService.handleAlertObj(res.notification)
+      }
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, "Error")
+    })
+  }
 }

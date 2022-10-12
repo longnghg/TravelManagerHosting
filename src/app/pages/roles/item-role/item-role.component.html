@@ -9,13 +9,28 @@
         <div class="col-lg-6">
           <div class="form-group">
             <label class="form-control-label">Name</label>
-            <input type="text" [(ngModel)]="roleRes.nameRole" class="form-control" placeholder="Nhập tên" value="">
+            <input type="text" [(ngModel)]="roleRes.nameRole" name="nameRole" class="form-control" placeholder="Nhập tên" value="">
+          </div>
+          <div class="form-group">
+            <label class="form-control-label">Name</label>
+            <input type="text" [(ngModel)]="roleRes.description" name="description"  class="form-control" placeholder="Nhập tên" value="">
           </div>
         </div>
       </div>
-      <div class="row">
-        <button (click)="save()" class="btn btn-primary">text</button>
-      </div>
+      <ng-container *ngIf="roleRes.isDelete == true; else elseTemplate">
+        <div>
+          <button (click)="restore()" class="btn btn-warning">Khôi phục</button>
+        </div>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <div class="row" [ngClass]="type ? 'create' : 'detail'" >
+          <button (click)="save()" class="btn btn-primary">{{type ? 'Thêm quyền' : 'Sửa quyền'}}</button>
+        </div>
+        <hr>
+        <div class="row">
+          <button (click)="delete()" class="btn btn-danger">Xóa</button>
+        </div>
+      </ng-template>
     </div>
     <hr class="my-4" />
   </form>

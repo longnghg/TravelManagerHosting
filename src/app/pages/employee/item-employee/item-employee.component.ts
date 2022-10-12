@@ -13,9 +13,9 @@ import { ResponseModel } from "../../../models/responsiveModels/response.model";
 export class ItemEmployeeComponent implements OnInit {
 
   response: ResponseModel
-  @Input() resParent: EmployeeModel
+  @Input()   resEmployee: EmployeeModel
+
   @Input() type: string
-  resEmployee: EmployeeModel
   constructor(private employeeService: EmployeeService, private notificationService: NotificationService,
     private configService: ConfigService) { }
 
@@ -23,7 +23,6 @@ export class ItemEmployeeComponent implements OnInit {
 
   }
   ngOnChanges(): void {
-    this.resEmployee = this.resParent
     if(this.type == "create"){
       this.resEmployee = new EmployeeModel()
     }
@@ -46,9 +45,29 @@ export class ItemEmployeeComponent implements OnInit {
       })
     }
     else{
-
+      this.employeeService.update(this.resEmployee).subscribe(res =>{
+        this.response = res
+        if(this.response.notification.type == "Error")
+        {
+          this.notificationService.handleAlertObj(res.notification)
+        }
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, "Error")
+      })
     }
 
   }
-
+  delete(){
+    this.employeeService.delete(this.resEmployee).subscribe(res =>{
+      this.response = res
+      if(this.response.notification.type == "Error")
+      {
+        this.notificationService.handleAlertObj(res.notification)
+      }
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, "Error")
+    })
+  }
 }
