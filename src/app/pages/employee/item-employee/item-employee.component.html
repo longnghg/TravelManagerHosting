@@ -89,8 +89,11 @@
               <div class="col-lg-6">
                 <div class="form-group">
                   <label class="form-control-label" for="input-first-name">Giới tính</label>
-                  <ng-select [items]="listGender"  [(ngModel)]="resEmployee.gender" bindValue="id" bindLabel="name" name="gender">
-                 </ng-select>
+                  <!-- <ng-select [items]="listGender"  [(ngModel)]="resEmployee.gender" bindValue="id" bindLabel="name" name="gender">
+                 </ng-select> -->
+                  <select [(ngModel)]="resEmployee.gender" class="form-control form-control-alternative" [disabled]="isReadOnly">
+                    <option *ngFor="let gender of listGender" [value]="gender.id">{{gender.name}}</option>
+                  </select>
                 </div>
               </div>
               <div class="col-lg-6">
@@ -104,7 +107,10 @@
               <div class="col-lg-6">
                 <div class="form-group">
                   <label class="form-control-label" for="input-city">Chức vụ</label>
-                  <input [(ngModel)]="resEmployee.roleName" name="roleName" type="text" id="input-city" class="form-control form-control-alternative" placeholder="Nhập chức vụ" value="" [readonly]="isReadOnly" >
+                  <input [(ngModel)]="resEmployee.idRole" name="idRole" type="text" id="input-city" class="form-control form-control-alternative" placeholder="Nhập chức vụ" value="" [readonly]="isReadOnly" >
+                    <!-- <select [(ngModel)]="resEmployee.idRole" class="form-control form-control-alternative" [disabled]="isReadOnly">
+                      <option *ngFor="let role of resRole" [value]="role.idRole">{{role.nameRole}}</option>
+                    </select> -->
                 </div>
               </div>
             </div>
@@ -128,6 +134,9 @@
                   <textarea [(ngModel)]="resEmployee.address" name="address" rows="4" class="form-control form-control-alternative" placeholder="Nhập địa chỉ" [readonly]="isReadOnly"></textarea>
                 </div>
               </div>
+            </div>
+            <div class="row">
+              <button (click)="save()" class="btn btn-primary">{{type == 'create' ? 'Thêm nhân viên' : 'Sửa thông tin'}}</button>
             </div>
           </div>
         </form>

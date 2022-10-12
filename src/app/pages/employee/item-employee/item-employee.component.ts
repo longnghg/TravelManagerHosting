@@ -4,6 +4,8 @@ import { ConfigService } from "../../../services_API/config.service";
 import { EmployeeService } from 'src/app/services_API/employee.service';
 import { EmployeeModel } from 'src/app/models/employee.model';
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
+import { RoleModel } from 'src/app/models/role.model';
+import { RoleService } from 'src/app/services_API/role.service';
 
 @Component({
   selector: 'app-item-employee',
@@ -17,20 +19,24 @@ export class ItemEmployeeComponent implements OnInit {
   @Input() type: string
   listGender = this.configService.listGender()
   isReadOnly: boolean = true
+  resRole: RoleModel[]
   constructor(private employeeService: EmployeeService, private notificationService: NotificationService,
-    private configService: ConfigService) { }
+    private configService: ConfigService, private roleService: RoleService) { }
 
   ngOnInit(): void {
+
   }
   ngOnChanges(): void {
-    console.log(this.type);
+    this.roleService.gets().then(response =>{
+      this.resRole = response
+    })
+    console.log(this.resRole);
+    console.log(this.listGender);
 
     if(this.type == "create"){
       this.resEmployee = new EmployeeModel()
       this.isReadOnly = false
     }
-
-
   }
 
   save(){
