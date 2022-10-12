@@ -3,6 +3,8 @@ export class EmployeeModel {
   nameEmployee: string = ""
   email: string = ""
   phone: string = ""
+  gender: boolean = null
+  address: string = ""
   birthday: number = 0
   image: string = ""
   idRole: string = ""

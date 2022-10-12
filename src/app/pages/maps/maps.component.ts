@@ -23,7 +23,7 @@ export class MapsComponent implements OnInit {
 
   ngOnInit() {
     this.search()
-    this.roleService.ViewAll().then(response => {
+    this.roleService.gets().then(response => {
       this.resRole = response
     })
     setTimeout(() => {
@@ -33,7 +33,7 @@ export class MapsComponent implements OnInit {
         { field: 'email',headerName: "Email", searchable: true, searchType: 'email', searchObj: 'email'},
         { field: 'phone',headerName: "Số điện thoại", searchable: true, searchType: 'text', searchObj: 'phone'},
         { field: 'roleName',headerName: "Chức vụ", searchable: true, searchType: 'section', searchObj: 'idRole', multiple: true, bindLabel: 'nameRole', bindValue: "idRole", listSection: this.resRole},
-        { field: 'isActive',headerName: "Kích hoạt", filter: "status", searchable: true, searchType: 'section', multiple: false, searchObj: 'isActive', bindLabel: 'name', bindValue: "id", listSection: [{id: false, name: "Chưa kích hoạt"},{id: true, name: "Đã kích hoạt"}]},
+        { field: 'isActive',headerName: "Kích hoạt", filter: "status", searchable: true, searchType: 'section', multiple: false, searchObj: 'isActive', bindLabel: 'name', bindValue: "id", listSection: this.configService.listStatus()},
       ];
     }, 200);
 
