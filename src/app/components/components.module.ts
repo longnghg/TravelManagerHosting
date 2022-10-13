@@ -9,13 +9,11 @@ import { GridDataComponent } from './grid-data/grid-data.component';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule }           from '@ng-select/ng-select';
 import { NgOptionHighlightModule }  from '@ng-select/ng-option-highlight';
-import { AgGridModule } from 'ag-grid-angular';
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     NgbModule,
-    AgGridModule,
     FormsModule,
     NgSelectModule,
     NgOptionHighlightModule,

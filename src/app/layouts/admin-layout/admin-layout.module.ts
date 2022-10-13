@@ -31,8 +31,8 @@ import { ItemRoleComponent } from '../../pages/roles/item-role/item-role.compone
 import { ListEmployeeComponent } from '../../pages/employee/list-employee/list-employee.component';
 import { ItemEmployeeComponent } from '../../pages/employee/item-employee/item-employee.component';
 
-import { AgGridModule } from 'ag-grid-angular';
-
+import { NgSelectModule }           from '@ng-select/ng-select';
+import { NgOptionHighlightModule }  from '@ng-select/ng-option-highlight';
 
 @NgModule({
   imports: [
@@ -42,8 +42,9 @@ import { AgGridModule } from 'ag-grid-angular';
     HttpClientModule,
     NgbModule,
     ClipboardModule,
-    AgGridModule,
-    ComponentsModule
+    ComponentsModule,
+    NgSelectModule,
+    NgOptionHighlightModule,
   ],
   declarations: [
     DashboardComponent,
