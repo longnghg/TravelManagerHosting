@@ -10,14 +10,11 @@ import { ResponseModel } from "../models/responsiveModels/response.model";
 export class EmployeeService{
   constructor(private http:HttpClient, private configService:ConfigService){ }
 
-  gets()
+  gets(isDelete: any)
   {
-      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/gets-employee");
+      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/gets-employee", {isDelete});
   }
-  getsDelete()
-  {
-      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/gets-delete-employee");
-  }
+
   search(data){
       return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/search-employee", data);
   }

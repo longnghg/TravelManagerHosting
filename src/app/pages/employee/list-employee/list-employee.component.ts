@@ -66,8 +66,7 @@ export class ListEmployeeComponent implements OnInit {
   }
 
   init(e?){
-   if (e) {
-    this.employeeService.getsDelete().subscribe(res => {
+    this.employeeService.gets(e).subscribe(res => {
       this.response = res
       if(!this.response.notification.type)
       {
@@ -82,24 +81,6 @@ export class ListEmployeeComponent implements OnInit {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, "Error")
     })
-   }
-   else{
-    this.employeeService.gets().subscribe(res => {
-      this.response = res
-      if(!this.response.notification.type)
-      {
-        this.resEmployee = this.response.content
-      }
-      else{
-        this.resEmployee = null
-        this.notificationService.handleAlertObj(res.notification)
-      }
-
-    }, error => {
-      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
-    })
-   }
   }
 
   childData(e){
