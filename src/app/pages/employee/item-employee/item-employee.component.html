@@ -1,148 +1,137 @@
-<div class="row" *ngIf="resEmployee">
-  <ng-container *ngIf="type == 'delete'; else elseTemplate">
-    <div class="modal-content text-center">
-      <!--Header-->
-      <div class="modal-header d-flex justify-content-center">
-        <p class="heading">Bạn có muốn xóa?</p>
-      </div>
-
-      <div class="modal-body">
-        <i class="fas fa-times fa-4x animated rotateIn"></i>
-      </div>
-      <div class="modal-footer flex-center">
-        <a type="button" class="btn  btn-success" (click)="delete()">Yes</a>
-        <a type="button" class="btn  btn-white waves-effect" data-bs-dismiss="modal">No</a>
-      </div>
-    </div>
-  </ng-container>
-  <ng-template #elseTemplate>
-    <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
-      <div class="card card-profile shadow">
-        <div class="row justify-content-center">
-          <div class="col-lg-3 order-lg-2">
-            <div class="card-profile-image">
-              <a href="javascript:void(0)">
-                <img [src]="img" class="rounded-circle">
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-          <div class="d-flex justify-content-between">
-            <a href="javascript:void(0)"  class="btn btn-sm btn-info mr-4">Connect</a>
-            <a href="javascript:void(0)" class="btn btn-sm btn-default float-right">Message</a>
-          </div>
-        </div>
-        <div class="card-body pt-0 pt-md-4">
-          <div class="row">
-            <div class="col">
-              <div class="card-profile-stats d-flex justify-content-center mt-md-5">
-                <input type="file" (change)="eventChangeImg($event)" class="form-control form-control-alternative" [readonly]="isEdit" >
+<div class="modal-header">
+  <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin chi tiết</h1>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
+</div>
+<div class="modal-body">
+  <div class="row" *ngIf="resEmployee">
+      <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+        <div class="card card-profile shadow">
+          <div class="row justify-content-center">
+            <div class="col-lg-3 order-lg-2">
+              <div class="card-profile-image">
+                <a href="javascript:void(0)">
+                  <img [src]="img ? img : '../../../assets/img/employees/unknown.png'" class="rounded-circle">
+                </a>
               </div>
             </div>
           </div>
-          <div class="text-center">
-            <h3>
-              {{resEmployee.nameEmployee}}<span class="font-weight-light"></span>
-            </h3>
-            <div>
-              <i class="ni education_hat mr-2"></i>{{resEmployee.roleName}}
-            </div>
-            <hr class="my-4" />
-            <p>Ngày sinh: {{resEmployee.birthday}}</p>
-            <p>Email: {{resEmployee.email}}</p>
-            <p>Điện thoại: {{resEmployee.phone}}</p>
-            <p>Địa chỉ: {{resEmployee.address}}</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-    <div class="col-xl-8 order-xl-1">
-      <div class="card bg-secondary shadow">
-        <div class="card-header bg-white border-0">
-          <div class="row align-items-center">
-            <div class="col-8">
-              <h3 class="mb-0">Thông tin</h3>
-            </div>
-            <div class="col-4 text-right">
-              <a href="javascript:void(0)" class="btn btn-sm btn-primary" (click)="isEdit ? isEdit = false : isEdit = true">Chỉnh sửa</a>
+          <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+            <div class="d-flex justify-content-between">
+              <a href="javascript:void(0)"  class="btn btn-sm btn-info mr-4">Connect</a>
+              <a href="javascript:void(0)" class="btn btn-sm btn-default float-right">Message</a>
             </div>
           </div>
-        </div>
-        <div class="card-body">
-          <form>
-            <h6 class="heading-small text-muted mb-4">Thông tin cá nhân</h6>
-            <div class="pl-lg-4">
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-username">Họ & tên</label>
-                    <input [(ngModel)]="resEmployee.nameEmployee" name="nameEmployee" type="text" id="input-username" class="form-control form-control-alternative" placeholder="Nhập họ tên"  [readonly]="isEdit">
-                  </div>
+          <div class="card-body pt-0 pt-md-4">
+            <div class="row">
+              <div class="col">
+                <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                  <input type="file" (change)="eventChangeImg($event)" class="form-control form-control-alternative" [readonly]="isEdit" >
                 </div>
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-city">Chức vụ</label>
-                    <!-- <input [(ngModel)]="resEmployee.idRole" name="idRole" type="text" id="input-city" class="form-control form-control-alternative" placeholder="Nhập chức vụ" value="" [readonly]="isEdit" > -->
+              </div>
+            </div>
+            <div class="text-center">
+              <h3>
+                {{resEmployee.nameEmployee}}<span class="font-weight-light"></span>
+              </h3>
+              <div>
+                <i class="ni education_hat mr-2"></i>{{resEmployee.roleName}}
+              </div>
+              <hr class="my-4" />
+              <p>Ngày sinh: {{resEmployee.birthday}}</p>
+              <p>Email: {{resEmployee.email}}</p>
+              <p>Điện thoại: {{resEmployee.phone}}</p>
+              <p>Địa chỉ: {{resEmployee.address}}</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-xl-8 order-xl-1">
+        <div class="card bg-secondary shadow">
+          <div class="card-header bg-white border-0">
+            <div class="row align-items-center">
+              <div class="col-8">
+                <h3 class="mb-0">Thông tin</h3>
+              </div>
+              <div class="col-4 text-right">
+                <a href="javascript:void(0)" *ngIf="type == 'detail'" class="btn btn-sm btn-primary" (click)="isEditChange()">{{!isEdit ? "Chỉnh sửa":"Quay lại"}}</a>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <form>
+              <h6 class="heading-small text-muted mb-4">Thông tin cá nhân</h6>
+              <div class="pl-lg-4">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-username">Họ & tên</label>
+                      <input [(ngModel)]="resEmployee.nameEmployee" (input)="inputChange()" name="nameEmployee" type="text" id="input-username" class="form-control form-control-alternative" placeholder="Nhập họ tên"  [readonly]="!isEdit">
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-city">Chức vụ</label>
+                       <select *ngIf="resRole" [(ngModel)]="resEmployee.idRole" name="idRole" class="form-control form-control-alternative" [disabled]="!isEdit">
                         <option *ngFor="let role of resRole" [value]="role.idRole">{{role.nameRole}}</option>
                       </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-first-name">Giới tính</label>
+                      <ng-select [items]="listGender" [(ngModel)]="resEmployee.gender" bindValue="id" bindLabel="name" name="gender" [disabled]="!isEdit" >
+                     </ng-select>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-last-name">Ngày sinh</label>
+                      <input  name="birthday" (input)="inputChange()" class="form-control datepicker" placeholder="Chọn ngày" name="dp"  ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" type="text" [disabled]="!isEdit"/>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-first-name">Giới tính</label>
-                    <ng-select [items]="listGender"  [(ngModel)]="resEmployee.gender" bindValue="id" bindLabel="name" name="gender" [disabled]="isEdit">
-                   </ng-select>
-                    <!-- <select [(ngModel)]="resEmployee.gender" class="form-control form-control-alternative" [disabled]="isReadOnly">
-                      <option *ngFor="let gender of listGender" [value]="gender.id">{{gender.name}}</option>
-                    </select> -->
+              <hr class="my-4" />
+              <!-- Address -->
+              <h6 class="heading-small text-muted mb-4">Thông tin liên lạc</h6>
+              <div class="pl-lg-4">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-city">Điện thoại</label>
+                      <input [(ngModel)]="resEmployee.phone" (input)="inputChange()" name="phone" type="text" id="input-city" class="form-control form-control-alternative" placeholder="Nhập điện thoại" value="" [readonly]="!isEdit">
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-email">Email</label>
+                      <input [(ngModel)]="resEmployee.email" (input)="inputChange()" name="email" type="email" id="input-email" class="form-control form-control-alternative" placeholder="Nhập email" [readonly]="!isEdit" >
+                    </div>
                   </div>
                 </div>
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-last-name">Ngày sinh</label>
-                    <input  name="birthday" class="form-control datepicker" placeholder="Chọn ngày" name="dp"  ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" type="text" [disabled]="isEdit"/>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-address">Địa chỉ</label>
+                      <textarea [(ngModel)]="resEmployee.address" (input)="inputChange()" name="address" rows="4" class="form-control form-control-alternative" placeholder="Nhập địa chỉ" [readonly]="!isEdit"></textarea>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <hr class="my-4" />
-            <!-- Address -->
-            <h6 class="heading-small text-muted mb-4">Thông tin liên lạc</h6>
-            <div class="pl-lg-4">
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-city">Điện thoại</label>
-                    <input [(ngModel)]="resEmployee.phone" name="phone" type="text" id="input-city" class="form-control form-control-alternative" placeholder="Nhập điện thoại" value="" [readonly]="isEdit">
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-email">Email</label>
-                    <input [(ngModel)]="resEmployee.email" name="email" type="email" id="input-email" class="form-control form-control-alternative" placeholder="Nhập email" [readonly]="isEdit" >
-                  </div>
+                <div class="row">
+                  <button  *ngIf="type == 'detail' && resEmployee.isDelete == false" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteEmployeeModal" (click)="getDataDelete()">Xóa</button>
+                  <button *ngIf="isChange && type == 'detail'" (click)="restore()" class="btn btn-warning" >Khôi phục</button>
+                  <button *ngIf="isChange" (click)="save()" class="btn btn-primary">{{type == 'detail' ? "Lưu":"Thêm"}}</button>
+                  <button *ngIf="resEmployee.isDelete == true" (click)="restoreEmployee()" class="btn btn-warning" >Khôi phục người dùng</button>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-address">Địa chỉ</label>
-                    <textarea [(ngModel)]="resEmployee.address" name="address" rows="4" class="form-control form-control-alternative" placeholder="Nhập địa chỉ" [readonly]="isEdit"></textarea>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <button (click)="save()" class="btn btn-primary">{{type == 'create' ? 'Thêm nhân viên' : 'Sửa thông tin'}}</button>
-                <button (click)="restore()" class="btn btn-warning" *ngIf="resEmployee.isDelete == true">Khôi phục</button>
-              </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-  </ng-template>
+  </div>
 </div>
+
+

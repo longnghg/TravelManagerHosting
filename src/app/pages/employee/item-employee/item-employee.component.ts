@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NotificationService } from "../../../services_API/notification.service";
 import { ConfigService } from "../../../services_API/config.service";
 import { EmployeeService } from 'src/app/services_API/employee.service';
@@ -17,9 +17,12 @@ export class ItemEmployeeComponent implements OnInit {
   response: ResponseModel
   @Input() resEmployee: EmployeeModel
   @Input() type: string
+  @Output() parentDel = new EventEmitter<any>()
   listGender = this.configService.listGender()
   isEdit: boolean = true
+  isChange: boolean = false
   resRole: RoleModel[]
+  resEmployeeTmp: EmployeeModel
   formData: any
   img:any
   constructor(private employeeService: EmployeeService, private notificationService: NotificationService,
@@ -40,7 +43,32 @@ export class ItemEmployeeComponent implements OnInit {
 
     if(this.type == "create"){
       this.resEmployee = new EmployeeModel()
+      this.isEdit = true
+    }
+
+    this.resEmployeeTmp = Object.assign({}, this.resEmployee)
+  }
+
+  inputChange(){
+    console.log(JSON.stringify(this.resEmployeeTmp));
+      console.log(JSON.stringify(this.resEmployee));
+
+    if (JSON.stringify(this.resEmployee) != JSON.stringify(this.resEmployeeTmp)) {
+      this.isChange = true
+    }
+    else{
+      this.isChange = false
+    }
+  }
+
+  isEditChange(){
+    if (this.isEdit) {
       this.isEdit = false
+      this.restore()
+
+    }
+    else{
+      this.isEdit = true
     }
   }
 
@@ -55,34 +83,36 @@ export class ItemEmployeeComponent implements OnInit {
   }
 
   save(){
-    if(this.type == "create")
-    {
-      var file = new FormData();
-      file.append('data', JSON.stringify(this.resEmployee))
-      file.append('file', this.formData.path[0].files[0])
+    var valid =  this.configService.validateEmployee(this.resEmployee)
+    valid.forEach(element => {
+        this.notificationService.handleAlert(element, "Error")
+    });
+    if (valid.length == 0) {
+      if(this.type == "create")
+      {
+        var file = new FormData();
+        file.append('data', JSON.stringify(this.resEmployee))
+        file.append('file', this.formData.path[0].files[0])
 
-      this.employeeService.create(file).subscribe(res =>{
-        this.response = res
-        if(this.response.notification.type == "Error")
-        {
+        this.employeeService.create(file).subscribe(res =>{
+          this.response = res
+         this.notificationService.handleAlertObj(res.notification)
+        }, error => {
+          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+          this.notificationService.handleAlert(message, "Error")
+        })
+      }
+      else{
+        this.employeeService.update(this.resEmployee).subscribe(res =>{
+          this.response = res
           this.notificationService.handleAlertObj(res.notification)
-        }
-      }, error => {
-        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, "Error")
-      })
-    }
-    else{
-      this.employeeService.update(this.resEmployee).subscribe(res =>{
-        this.response = res
-        if(this.response.notification.type == "Error")
-        {
-          this.notificationService.handleAlertObj(res.notification)
-        }
-      }, error => {
-        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, "Error")
-      })
+        }, error => {
+          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+          this.notificationService.handleAlert(message, "Error")
+        })
+      }
+      this.isChange = false
+      this.isEdit = false
     }
 
   }
@@ -100,8 +130,20 @@ export class ItemEmployeeComponent implements OnInit {
   }
 
   restore(){
+    this.resEmployee = Object.assign({}, this.resEmployeeTmp)
+    this.isChange = false
+  }
+
+  close(){
+    this.isEdit = false
+    this.restore()
+  }
+
+  restoreEmployee(){
     this.employeeService.restore(this.resEmployee).subscribe(res =>{
       this.response = res
+      console.log(this.response);
+
       if(this.response.notification.type == "Error")
       {
         this.notificationService.handleAlertObj(res.notification)
@@ -112,5 +154,8 @@ export class ItemEmployeeComponent implements OnInit {
     })
   }
 
+  getDataDelete(){
+    this.parentDel.emit(this.resEmployee);
+  }
 
 }

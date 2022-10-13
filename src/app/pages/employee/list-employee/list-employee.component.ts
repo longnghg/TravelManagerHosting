@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { EmployeeService } from "../../../services_API/employee.service";
 import { NotificationService } from "../../../services_API/notification.service";
 import { EmployeeModel } from "../../../models/employee.model";
@@ -18,10 +18,12 @@ export class ListEmployeeComponent implements OnInit {
   resEmployee: EmployeeModel[]
   resRole: RoleModel[]
   response: ResponseModel
+  dataDelete: EmployeeModel
   constructor(private roleService: RoleService, private configService: ConfigService, private employeeService: EmployeeService, private notificationService: NotificationService) {}
 
   public columnDefs: ColDef[]
   public gridConfig: GridConfig = {
+    idModalDelete: "deleteEmployeeModal",
     idModal: "gridEmployee",
     radioBox: true,
     radioBoxName: "Kho lưu trữ"
@@ -103,6 +105,26 @@ export class ListEmployeeComponent implements OnInit {
       this.typeChild = e
     }
   }
+
+  getDataDelete(data: any){
+    this.dataDelete = data
+    console.log(this.dataDelete);
+
+  }
+
+  deleteEmployee(){
+    if (this.dataDelete) {
+     this.employeeService.delete(this.dataDelete).subscribe(res =>{
+       this.response = res
+       this.notificationService.handleAlertObj(res.notification)
+     }, error => {
+       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+       this.notificationService.handleAlert(message, "Error")
+     })
+    }
+   }
+
+
 }
 
 

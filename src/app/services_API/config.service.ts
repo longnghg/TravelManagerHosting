@@ -46,7 +46,7 @@ export class ConfigService{
     return listStatus
   }
 
-  validateUser(data: any){
+  validateEmployee(data: any){
     var err = []
     var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
