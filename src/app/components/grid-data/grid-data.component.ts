@@ -8,6 +8,7 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
 export class GridDataComponent implements OnInit {
   @Input() rowData: any
   @Input() columnDefs: ColDef[]
+  @Input() gridConfig: GridConfig
   @Output() gdSearch = new EventEmitter<any>()
   @Output() gdChecked = new EventEmitter<any>()
   @Output() gdChild = new EventEmitter<any>()
@@ -182,13 +183,20 @@ export interface ColDef{
   field?: string
   headerName?: string
   filter?: string
-  width?: string
+  style?: string
+  searchStyle?: string
   searchable?: boolean
   searchObj?: any
   searchType?: string
   bindValue?: string
   bindLabel?: string
   multiple?: boolean
+  closeOnSelect?: boolean
   listSection?: any
 }
 
+export class GridConfig{
+  idModal?: string
+  radioBox?: boolean
+  radioBoxName?: string
+}

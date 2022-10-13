@@ -3,7 +3,7 @@ import { EmployeeService } from "../../../services_API/employee.service";
 import { NotificationService } from "../../../services_API/notification.service";
 import { EmployeeModel } from "../../../models/employee.model";
 import { RoleTitle, RoleModel } from "../../../models/role.model";
-import { ColDef} from '../../../components/grid-data/grid-data.component';
+import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.component';
 import { ConfigService } from "../../../services_API/config.service";
 import { RoleService } from "../../../services_API/role.service";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
@@ -21,24 +21,32 @@ export class ListEmployeeComponent implements OnInit {
   constructor(private roleService: RoleService, private configService: ConfigService, private employeeService: EmployeeService, private notificationService: NotificationService) {}
 
   public columnDefs: ColDef[]
-
+  public gridConfig: GridConfig = {
+    idModal: "gridEmployee",
+    radioBox: true,
+    radioBoxName: "Kho lưu trữ"
+  }
   ngOnInit() {
-    this.init()
 
-    this.roleService.gets().then(response => {
+
+      this.init()
+
+    this.roleService.views().then(response => {
       this.resRole = response
     })
 
     setTimeout(() => {
 
       this.columnDefs= [
-        { field: 'idEmployee', headerName: "Mã số", searchable: true, searchType: 'text', searchObj: 'idEmployee'},
-        { field: 'nameEmployee',headerName: "Tên", filter: "avatar", searchable: true, searchType: 'text', searchObj: 'nameEmployee'},
-        { field: 'email',headerName: "Email", searchable: true, searchType: 'email', searchObj: 'email'},
-        { field: 'phone',headerName: "Số điện thoại", searchable: true, searchType: 'text', searchObj: 'phone'},
-        { field: 'roleName',headerName: "Chức vụ", searchable: true, searchType: 'section', searchObj: 'idRole', multiple: true, bindLabel: 'nameRole', bindValue: "idRole", listSection: this.resRole},
-        { field: 'isActive',headerName: "Kích hoạt", filter: "status", searchable: true, searchType: 'section', multiple: false, searchObj: 'isActive', bindLabel: "name", bindValue: "id", listSection: this.configService.listStatus()},
+        { field: 'idEmployee', headerName: "Mã số", style: "width: 350px;", searchable: true, searchType: 'text', searchObj: 'idEmployee'},
+        { field: 'nameEmployee',headerName: "Tên", style: "width: 400px;", filter: "avatar", searchable: true, searchType: 'text', searchObj: 'nameEmployee'},
+        { field: 'email',headerName: "Email", style: "width: 200px;", searchable: true, searchType: 'email', searchObj: 'email'},
+        { field: 'phone',headerName: "Số điện thoại", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'phone'},
+        { field: 'roleName',headerName: "Chức vụ", style: "width: 250px;", searchable: true, searchType: 'section', searchObj: 'idRole', searchStyle: "width: 200px;", multiple: true, closeOnSelect: false, bindLabel: 'nameRole', bindValue: "idRole", listSection: this.resRole},
+        { field: 'isActive',headerName: "Kích hoạt", style: "width: 200px;", filter: "status", searchable: true, searchType: 'section', searchStyle: "width: 150px;", multiple: false, closeOnSelect: true, searchObj: 'isActive', bindLabel: "name", bindValue: "id", listSection: this.configService.listStatus()},
       ];
+
+
     }, 200);
 
 
@@ -84,7 +92,6 @@ export class ListEmployeeComponent implements OnInit {
   }
 
   childData(e){
-    console.log(e);
     if (e) {
       this.dataChild = e
     }

@@ -24,7 +24,7 @@ export class ListRoleComponent implements OnInit {
   ngOnInit(): void {
     this.init()
 
-    this.roleService.gets().then(response => {
+    this.roleService.views().then(response => {
       this.resRole = response
     })
     setTimeout(() => {
@@ -120,7 +120,7 @@ export class ListRoleComponent implements OnInit {
     })
    }
    else{
-    this.roleService.getRole().subscribe(res => {
+    this.roleService.gets().subscribe(res => {
       this.response = res
       if(!this.response.notification.type)
       {

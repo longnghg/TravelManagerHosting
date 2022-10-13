@@ -53,10 +53,10 @@ export class ConfigService{
     //name
     if(data.nameEmployee == null || data.nameEmployee == ""){
        err.push("[Họ và tên] không được để trống !")
-    }
-
-    if (data.nameEmployee.length > 100) {
+    }else if (data.nameEmployee.length > 100) {
        err.push("[Họ và tên] quá dài !")
+    }else if (data.nameEmployee.length < 1) {
+      err.push("[Họ và tên] quá ngắn !")
     }
 
 
@@ -77,22 +77,16 @@ export class ConfigService{
      //email
     if (data.email == null || data.email == "") {
        err.push("[Email] không được để trống !")
-    }
-
-    if (!filter.test(data.email)) {
+    }else if (!filter.test(data.email)) {
        err.push("[Email] không hợp lệ !")
     }
 
     //Phone
     if (data.phone == null || data.phone == "") {
        err.push("[Số điện thoại] không được để trống !")
-    }
-
-    if (data.phone.length > 10) {
+    }else if (data.phone.length > 10) {
        err.push("[Số điện thoại] vượt quá 10 số !")
-    }
-
-    if (!data.phone.startsWith("0")) {
+    }else if (!data.phone.startsWith("0")) {
        err.push("[Số điện thoại] không hợp lệ !")
     }
 
@@ -109,9 +103,7 @@ export class ConfigService{
     //Address
     if (data.address == null || data.address == "") {
        err.push("[Địa chỉ] không được để trống !")
-    }
-
-    if (data.address.length > 255) {
+    }else if (data.address.length > 255) {
       err.push("[Địa chỉ] quá dài !")
    }
 
@@ -119,6 +111,22 @@ export class ConfigService{
     // if (data.image == null || data.image == "") {
     //    err.push("[Hình ảnh] không được để trống !")
     // }
+
+    return err
+
+   }
+
+   validateProvince(data: any){
+    var err = []
+    //name
+    if(data.nameProvince == null || data.nameProvince == ""){
+       err.push("[Tên thành phố/tỉnh] không được để trống !")
+    }
+    else if (data.nameProvince.length > 30) {
+       err.push("[Tên thành phố/tỉnh] quá dài !")
+    }else if (data.nameProvince.length < 3) {
+      err.push("[Tên thành phố/tỉnh] quá ngắn !")
+    }
 
     return err
 

@@ -16,14 +16,8 @@ import { UserProfileComponent } from '../../pages/user-profile/user-profile.comp
 import { TablesComponent } from '../../pages/tables/tables.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // import { ToastrModule } from 'ngx-toastr';
-import { ListProvinceComponent } from '../../pages/Location/province/list-province/list-province.component';
-import { ItemProvinceComponent } from '../../pages/Location/province/item-province/item-province.component';
-
-import { ListDistrictsComponent } from '../../pages/Location/districts/list-districts/list-districts.component';
-import { ItemDistrictsComponent } from '../../pages/Location/districts/item-districts/item-districts.component';
-
-import { ListWardComponent } from '../../pages/Location/ward/list-ward/list-ward.component';
-import { ItemWardComponent } from '../../pages/Location/ward/item-ward/item-ward.component';
+import { ListLocationComponent } from '../../pages/locations/list-location/list-location.component';
+import { ItemLocationComponent } from '../../pages/locations/item-location/item-location.component';
 
 import { ListRoleComponent } from '../../pages/roles/list-role/list-role.component';
 import { ItemRoleComponent } from '../../pages/roles/item-role/item-role.component';
@@ -31,8 +25,18 @@ import { ItemRoleComponent } from '../../pages/roles/item-role/item-role.compone
 import { ListEmployeeComponent } from '../../pages/employee/list-employee/list-employee.component';
 import { ItemEmployeeComponent } from '../../pages/employee/item-employee/item-employee.component';
 
+
+import { ListProvinceComponent } from '../../pages/locations/provinces/list-province/list-province.component';
+import { ItemProvinceComponent } from '../../pages/locations/provinces/item-province/item-province.component';
+import { ListDistrictComponent } from '../../pages/locations/districts/list-district/list-district.component';
+import { ItemDistrictComponent } from '../../pages/locations/districts/item-district/item-district.component';
+import { ItemWardComponent } from '../../pages/locations/wards/item-ward/item-ward.component';
+import { ListWardComponent } from '../../pages/locations/wards/list-ward/list-ward.component';
+
+
 import { NgSelectModule }           from '@ng-select/ng-select';
 import { NgOptionHighlightModule }  from '@ng-select/ng-option-highlight';
+
 
 @NgModule({
   imports: [
@@ -55,20 +59,20 @@ import { NgOptionHighlightModule }  from '@ng-select/ng-option-highlight';
 
     BannerComponent,
 
-    ListProvinceComponent,
-    ItemProvinceComponent,
-
-    ListDistrictsComponent,
-    ItemDistrictsComponent,
-
-    ListWardComponent,
-    ItemWardComponent,
+    ListLocationComponent,
+    ItemLocationComponent,
 
     ListRoleComponent,
     ItemRoleComponent,
 
     ListEmployeeComponent,
     ItemEmployeeComponent,
+    ListProvinceComponent,
+    ItemProvinceComponent,
+    ListDistrictComponent,
+    ItemDistrictComponent,
+    ItemWardComponent,
+    ListWardComponent,
 
   ],
   providers: [],

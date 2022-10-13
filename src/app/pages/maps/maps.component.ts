@@ -24,7 +24,7 @@ export class MapsComponent implements OnInit {
   ngOnInit() {
     this.init()
 
-    this.roleService.gets().then(response => {
+    this.roleService.views().then(response => {
       this.resRole = response
     })
 

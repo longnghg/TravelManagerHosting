@@ -1,0 +1,77 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+    </div>
+  </div>
+</div>
+
+
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow border-0">
+        <app-list-province></app-list-province>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt-5">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow border-0">
+        <app-list-district></app-list-district>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt-5">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow border-0">
+        <app-list-ward></app-list-ward>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="modal fade" id="gridData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="gridDataLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin chi tiết</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ng-container *ngIf="expression; then thenTemplate; else elseTemplate">
+          <app-item-province></app-item-province>
+        </ng-container>
+        <ng-template #thenTemplate>
+          <app-item-district></app-item-district>
+        </ng-template>
+        <ng-template #elseTemplate>
+          <app-item-ward></app-item-ward>
+        </ng-template>
+
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+<!-- Thêm - Sửa -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Thông tin</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+         <app-item-province [resParent]="child" [type]="type"></app-item-province>
+      </div>
+    </div>
+  </div>
+</div>
+

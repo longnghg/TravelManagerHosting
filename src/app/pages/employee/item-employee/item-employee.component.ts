@@ -15,7 +15,7 @@ import { RoleService } from 'src/app/services_API/role.service';
 export class ItemEmployeeComponent implements OnInit {
 
   response: ResponseModel
-  @Input()   resEmployee: EmployeeModel
+  @Input() resEmployee: EmployeeModel
   @Input() type: string
   listGender = this.configService.listGender()
   isEdit: boolean = true
@@ -29,7 +29,7 @@ export class ItemEmployeeComponent implements OnInit {
 
   }
   ngOnChanges(): void {
-    this.roleService.gets().then(response =>{
+    this.roleService.views().then(response =>{
       this.resRole = response
     })
     console.log(this.resRole);

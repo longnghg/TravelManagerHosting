@@ -1,8 +1,15 @@
 export class LocationModel{
-  id: string
-  name: string
-  nameProvince: string
-  idProvince?: string
-  idDistrict?: string
-  idWard?: string
+  nameProvince?: string = ""
+  nameDistrict?: string = ""
+  nameWard?: string = ""
+
+  provinceName?: string = ""
+  districtName?: string = ""
+  wardName?: string = ""
+
+  idProvince?: string = ""
+  idDistrict?: string = ""
+  idWard?: string = ""
+
+  total?: number = 0
 }

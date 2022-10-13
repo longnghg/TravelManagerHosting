@@ -1,0 +1,9 @@
+<app-grid-data [rowData]="resProvince" [columnDefs]="columnDefs" [gridConfig]="gridConfig"  (gdChecked)="init($event)" (gdType)="childType($event)" (gdSearch)="search($event)" (gdChild)="childData($event)"></app-grid-data>
+
+<div class="modal fade" [id]="gridConfig.idModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="gridDataLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <app-item-province [resProvince]="dataChild" [type]="typeChild"></app-item-province>
+    </div>
+  </div>
+</div>
