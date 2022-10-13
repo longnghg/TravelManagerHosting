@@ -84,10 +84,9 @@
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-city">Chức vụ</label>
-                    <input [(ngModel)]="resEmployee.idRole" name="idRole" type="text" id="input-city" class="form-control form-control-alternative" placeholder="Nhập chức vụ" value="" [readonly]="isEdit" >
-                      <!-- <select [(ngModel)]="resEmployee.idRole" name="idRole" class="form-control form-control-alternative" [disabled]="isReadOnly">
+                    <!-- <input [(ngModel)]="resEmployee.idRole" name="idRole" type="text" id="input-city" class="form-control form-control-alternative" placeholder="Nhập chức vụ" value="" [readonly]="isEdit" > -->
                         <option *ngFor="let role of resRole" [value]="role.idRole">{{role.nameRole}}</option>
-                      </select> -->
+                      </select>
                   </div>
                 </div>
               </div>
@@ -138,6 +137,7 @@
               </div>
               <div class="row">
                 <button (click)="save()" class="btn btn-primary">{{type == 'create' ? 'Thêm nhân viên' : 'Sửa thông tin'}}</button>
+                <button (click)="restore()" class="btn btn-warning" *ngIf="resEmployee.isDelete == true">Khôi phục</button>
               </div>
             </div>
           </form>
