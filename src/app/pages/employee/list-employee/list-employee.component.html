@@ -96,7 +96,7 @@
   <div class="row">
     <div class="col">
       <div class="card shadow border-0">
-        <app-grid-data [rowData]="resEmployee" [columnDefs]="columnDefs" (gdChecked)="init($event)" (gdType)="childType($event)" (gdSearch)="search($event)" (gdChild)="childData($event)"></app-grid-data>
+        <app-grid-data [rowData]="resEmployee" [columnDefs]="columnDefs" [gridConfig]="gridConfig" (gdChecked)="init($event)" (gdType)="childType($event)" (gdSearch)="search($event)" (gdChild)="childData($event)"></app-grid-data>
       </div>
     </div>
   </div>
@@ -104,7 +104,7 @@
 
 
 
-<div class="modal fade" id="gridData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="gridDataLabel" aria-hidden="true">
+<div class="modal fade" [id]="gridConfig.idModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="gridDataLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">

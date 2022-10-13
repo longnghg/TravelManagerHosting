@@ -1,0 +1,37 @@
+<div class="modal-header">
+  <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin chi tiết</h1>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
+</div>
+<div class="modal-body">
+  <ng-container *ngIf="resProvince">
+    <div class="container-fluid" >
+      <div class="row align-items-center">
+        <div class="col-12 text-right">
+          <a href="javascript:void(0)" *ngIf="type == 'detail'" class="btn btn-sm btn-primary" (click)="isEditChange()">{{!isEdit ? "Chỉnh sửa":"Quay lại"}}</a>
+        </div>
+      </div>
+
+      <form>
+        <div class="pl-lg-4">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="form-group">
+                <label class="form-control-label" for="input-username">Tên thành phố/tỉnh</label>
+                <input type="text" id="name" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập tên thành phố/tỉnh" [(ngModel)]="resProvince.nameProvince" [readonly]="!isEdit">
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="row align-items-center">
+      <div class="col-12 text-right">
+        <button  *ngIf="type == 'detail'" class="btn btn-sm btn-danger" data-bs-dismiss="modal" aria-label="Close" (click)="delete()">Xóa</button>
+        <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="restore()">Khôi phục</button>
+        <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="save()">{{type == 'detail' ? "Lưu":"Thêm"}}</button>
+      </div>
+    </div>
+
+  </ng-container>
+</div>

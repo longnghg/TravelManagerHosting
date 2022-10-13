@@ -13,9 +13,9 @@ export class RoleService{
   constructor(private http:HttpClient, private configService:ConfigService, private notificationService: NotificationService){ }
   response: ResponseModel
   resRole: RoleModel[]
-  async gets()
+  async views()
   {
-    var value = <RoleModel[]>await new Promise<RoleModel[]>(resolve => {
+    var value = <any>await new Promise<any>(resolve => {
       this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/gets-role").subscribe(res => {
         this.response = res
         if(!this.response.notification.type)
@@ -33,7 +33,7 @@ export class RoleService{
     return value
 
   }
-  getRole()
+  gets()
   {
       return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/gets-role");
   }

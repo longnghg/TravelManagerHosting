@@ -16,10 +16,10 @@
     <table class="table align-items-center table-flush" >
       <thead class="thead-light" *ngIf="columnDefs">
         <tr>
-          <th scope="col"></th>
-          <th scope="col" *ngFor="let column of columnDefs">{{column.headerName}}
+          <th scope="col" style="width: 50px;"></th>
+          <th scope="col" *ngFor="let column of columnDefs" [style]="column.style">{{column.headerName}}
             <ng-container *ngIf="column.searchType == 'section'; else elseSection">
-              <ng-select style="width: 200px;" [items]="column.listSection"  placeholder="Tìm kiếm..." (change)="selectSection(column.searchObj)" id="section" name="section" [(ngModel)]="keyword[column.searchObj]" [bindLabel]="column.bindLabel" [bindValue]="column.bindValue" appendTo="body" [multiple]="column.multiple"  dropdownPosition="auto" [searchable]="false" [closeOnSelect]="false">
+              <ng-select [style]="column.searchStyle" [items]="column.listSection"  placeholder="Tìm kiếm..." (change)="selectSection(column.searchObj)" id="section" name="section" [(ngModel)]="keyword[column.searchObj]" [bindLabel]="column.bindLabel" [bindValue]="column.bindValue" appendTo="body" [multiple]="column.multiple"  dropdownPosition="auto" [searchable]="false" [closeOnSelect]="column.closeOnSelect">
                 <ng-container *ngIf="column.multiple;">
                   <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
                     <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item[column.bindLabel]}}
@@ -44,30 +44,33 @@
             </ng-template>
           </th>
           <th>
-            <div ngbDropdown placement="bottom-right">
+            <div ngbDropdown placement="bottom-right" *ngIf="gridConfig">
               <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
                 <i class="fas fa-ellipsis-v"></i>
               </a>
               <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
-                <a class="dropdown-item" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#gridData" (click)="childData(null, 'create')" >Thêm</a>
-                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="javascript:void(0)" data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModal" (click)="childData(null, 'create')" >Thêm</a>
+                <ng-container *ngIf="gridConfig.radioBox;">
+                  <div class="dropdown-divider"></div>
                 <label class="custom-toggle" style="margin-left: 5px;">
                   <input type="checkbox" (change)="changeChecked()" [checked]="checked">
                   <span class="custom-toggle-slider rounded-circle"></span>
                 </label>
-                <span style="position: absolute; margin-left: 5px;">Kho lưu trữ</span>
+                <span style="position: absolute; margin-left: 5px;">{{gridConfig.radioBoxName}}</span>
+                </ng-container>
+
               </div>
             </div>
 
           </th>
         </tr>
       </thead>
-      <tbody *ngIf="!rowData" ><tr><td><br><br><br><br></td></tr></tbody>
+      <tbody *ngIf="!rowData"></tbody>
       <tbody *ngIf="rowData">
         <tr *ngFor="let row of rowData; let i=index" >
           <ng-container *ngIf="row.rowNum >= start && row.rowNum <= end">
-            <td style="padding-left: 20px;">{{row.rowNum}}</td>
-            <td  *ngFor="let column of columnDefs" scope="row">
+            <td style="padding-left: 20px; width: 50px;">{{row.rowNum}}</td>
+            <td  *ngFor="let column of columnDefs" [style]="column.style" scope="row">
               <ng-container *ngIf="column.filter == 'avatar'; else elseType">
                 <div class="media align-items-center">
                   <a href="javascript:void(0)" class="avatar rounded-circle mr-3">
@@ -80,20 +83,11 @@
               </ng-container>
               <ng-template #elseType>
                 <ng-container *ngIf="column.filter == 'status'; else elseStatus">
-                  <div style="float: right;">
+                  <div style="text-align: center;">
                     <span class="badge badge-dot mr-4">
                       <i [class]="row[column.field] ? 'bg-success':'bg-error'"></i>
                     </span>
-
-                    <div ngbDropdown [placement]="i >= rowData.length-2 ? 'top-right':'bottom-right'">
-                      <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
-                        <i class="fas fa-ellipsis-v"></i>
-                      </a>
-                      <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
-                        <a class="dropdown-item" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#gridData" (click)="childData(row, 'detail')">Chi tiết</a>
-                        <a class="dropdown-item" href="javascript:void(0)">Xóa</a>
-                      </div>
-                    </div>
+                    {{row[column.field] ? 'Đã kích hoạt':'Chưa kích hoạt'}}
                   </div>
                 </ng-container>
                 <ng-template #elseStatus>
@@ -101,10 +95,20 @@
                 </ng-template>
               </ng-template>
             </td>
+
+            <td>
+              <div ngbDropdown [placement]="i >= rowData.length-2 && rowData.length > 2? 'top-right':'bottom-right'">
+                <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
+                  <i class="fas fa-ellipsis-v"></i>
+                </a>
+                <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
+                  <a class="dropdown-item" href="javascript:void(0)" data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModal" (click)="childData(row, 'detail')">Chi tiết</a>
+                  <a class="dropdown-item" href="javascript:void(0)">Xóa</a>
+                </div>
+              </div>
+            </td>
           </ng-container>
-        </tr>
-        <tr *ngIf="rowData.length == 1">
-          <td><br></td>
+
         </tr>
       </tbody>
     </table>
@@ -114,7 +118,7 @@
       <ul class="pagination justify-content-start" style="margin-left: 20px;">
       <li class="page-item" style="margin-right: 10px; margin-top: 10px;"><h5>Xem</h5></li>
       <li class="page-item">
-        <ng-select [items]="listPageSize"  placeholder="Chọn giá trị..."  id="pageSize" name="pageSize" [(ngModel)]="pageSize" (change)="changePageSize()" appendTo="body" [clearable]="false" dropdownPosition="auto" [searchable]="false" style="margin-top: 3px;">
+        <ng-select [items]="listPageSize"  placeholder="Chọn giá trị..."  id="pageSize" name="pageSize" [(ngModel)]="pageSize" (change)="changePageSize()"  [clearable]="false" dropdownPosition="auto" [searchable]="false" style="margin-top: 3px;">
         </ng-select>
       </li>
       <li class="page-item" style="margin-left: 10px; margin-top: 10px;"><h5>mục</h5></li>
