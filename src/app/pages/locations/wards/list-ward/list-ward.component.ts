@@ -49,8 +49,6 @@ export class ListWardComponent implements OnInit {
       if(!this.response.notification.type)
       {
         this.resWard = this.response.content
-        console.log(this.resDistrict);
-
       }
       else{
         this.resWard = null

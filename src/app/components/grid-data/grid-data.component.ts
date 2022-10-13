@@ -11,6 +11,7 @@ export class GridDataComponent implements OnInit {
   @Input() gridConfig: GridConfig
   @Output() gdSearch = new EventEmitter<any>()
   @Output() gdChecked = new EventEmitter<any>()
+  @Output() gdDelete = new EventEmitter<any>()
   @Output() gdChild = new EventEmitter<any>()
   @Output() gdType = new EventEmitter<any>()
   totalResult: number
@@ -173,6 +174,11 @@ export class GridDataComponent implements OnInit {
        this.gdSearch.emit(this.keyword);
     }
   }
+
+  getDataDelete(data: any){
+    this.gdDelete.emit(data);
+  }
+
   childData(data: any, type: string){
     this.gdChild.emit(data);
     this.gdType.emit(type);
@@ -196,6 +202,7 @@ export interface ColDef{
 }
 
 export class GridConfig{
+  idModalDelete?: string
   idModal?: string
   radioBox?: boolean
   radioBoxName?: string

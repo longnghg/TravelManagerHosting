@@ -21,7 +21,7 @@ export class ListLocationComponent implements OnInit {
   resProvince: LocationModel[]
   resDistrict: LocationModel[]
   resWard: LocationModel[]
-
+  dataDelete: LocationModel
   response: ResponseModel
   child: LocationModel
   type: string
@@ -51,4 +51,20 @@ export class ListLocationComponent implements OnInit {
     this.provinceService.GetData().subscribe(res => {
     })
   };
+
+  getDataDelete(data: any){
+    this.dataDelete = data
+  }
+
+  deleteProvince(){
+   if (this.dataDelete) {
+    this.provinceService.delete(this.dataDelete).subscribe(res =>{
+      this.response = res
+      this.notificationService.handleAlertObj(res.notification)
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, "Error")
+    })
+   }
+  }
 }

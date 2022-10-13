@@ -16,15 +16,15 @@ import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signal
   styleUrls: ['./list-province.component.scss']
 })
 export class ListProvinceComponent implements OnInit {
+  @Output() parentLocationDel = new EventEmitter<any>()
   dataChild: LocationModel
   typeChild: string
   resProvince: LocationModel[]
   resDistrict: LocationModel[]
   response: ResponseModel
-  child: LocationModel
-  type: string
   public columnDefs: ColDef[]
   public gridConfig: GridConfig = {
+    idModalDelete: "deleteProvinceModal",
     idModal: "gridProvince",
     radioBox: false,
   }
@@ -116,6 +116,10 @@ export class ListProvinceComponent implements OnInit {
     if (e) {
       this.typeChild = e
     }
+  }
+
+  parentDelete(e){
+    this.parentLocationDel.emit(e);
   }
 
 }

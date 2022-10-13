@@ -27,7 +27,7 @@
 
     <div class="row align-items-center">
       <div class="col-12 text-right">
-        <button  *ngIf="type == 'detail'" class="btn btn-sm btn-danger" data-bs-dismiss="modal" aria-label="Close" (click)="delete()">Xóa</button>
+        <button  *ngIf="type == 'detail'" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteProvinceModal" (click)="getDataDelete()">Xóa</button>
         <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="restore()">Khôi phục</button>
         <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="save()">{{type == 'detail' ? "Lưu":"Thêm"}}</button>
       </div>
@@ -35,3 +35,5 @@
 
   </ng-container>
 </div>
+
+

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { NotificationService } from "../../../../services_API/notification.service";
 import { ProvinceService } from "../../../../services_API/province.service";
 import { ConfigService } from "../../../../services_API/config.service";
@@ -12,6 +12,7 @@ import { ResponseModel } from "../../../../models/responsiveModels/response.mode
 export class ItemProvinceComponent implements OnInit {
   @Input() resProvince: LocationModel
   @Input() type: string
+  @Output() parentDel = new EventEmitter<any>()
   response: ResponseModel
   isEdit: boolean = false
   isChange: boolean = false
@@ -40,9 +41,6 @@ export class ItemProvinceComponent implements OnInit {
     }
   }
   inputChange(){
-    console.log(JSON.stringify(this.resProvinceTmp));
-      console.log(JSON.stringify(this.resProvince));
-
     if (JSON.stringify(this.resProvince) != JSON.stringify(this.resProvinceTmp)) {
       this.isChange = true
     }
@@ -93,23 +91,13 @@ export class ItemProvinceComponent implements OnInit {
 
       }
       this.isChange = false
-    this.isEdit = false
+      this.isEdit = false
     }
 
   }
-  delete(){
-    this.isChange = false
-      this.isEdit = false
-    // this.employeeService.delete(this.resEmployee).subscribe(res =>{
-    //   this.response = res
-    //   if(this.response.notification.type == "Error")
-    //   {
-    //     this.notificationService.handleAlertObj(res.notification)
-    //   }
-    // }, error => {
-    //   var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-    //   this.notificationService.handleAlert(message, "Error")
-    // })
+
+  getDataDelete(){
+    this.parentDel.emit(this.resProvince);
   }
 
   close(){
