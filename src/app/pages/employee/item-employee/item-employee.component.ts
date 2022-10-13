@@ -18,8 +18,10 @@ export class ItemEmployeeComponent implements OnInit {
   @Input() resEmployee: EmployeeModel
   @Input() type: string
   listGender = this.configService.listGender()
-  isReadOnly: boolean = true
+  isEdit: boolean = true
   resRole: RoleModel[]
+  formData: any
+  img:any
   constructor(private employeeService: EmployeeService, private notificationService: NotificationService,
     private configService: ConfigService, private roleService: RoleService) { }
 
@@ -30,17 +32,36 @@ export class ItemEmployeeComponent implements OnInit {
     this.roleService.views().then(response =>{
       this.resRole = response
     })
+    console.log(this.resRole);
+
+    if(this.resEmployee){
+      this.img = this.configService.apiUrl + this.resEmployee.image
+    }
 
     if(this.type == "create"){
       this.resEmployee = new EmployeeModel()
-      this.isReadOnly = false
+      this.isEdit = false
+    }
+  }
+
+  eventChangeImg(e: any){
+    this.formData = e
+    if (e.target.files && e.target.files[0]){
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = e => this.img = reader.result;
+      reader.readAsDataURL(file)
     }
   }
 
   save(){
     if(this.type == "create")
     {
-      this.employeeService.create(this.resEmployee).subscribe(res =>{
+      var file = new FormData();
+      file.append('data', JSON.stringify(this.resEmployee))
+      file.append('file', this.formData.path[0].files[0])
+
+      this.employeeService.create(file).subscribe(res =>{
         this.response = res
         if(this.response.notification.type == "Error")
         {
