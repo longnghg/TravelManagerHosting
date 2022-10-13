@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" *ngIf="resEmployee">
   <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
     <div class="card card-profile shadow">
       <div class="row justify-content-center">
@@ -16,46 +16,31 @@
           <a href="javascript:void(0)" class="btn btn-sm btn-default float-right">Message</a>
         </div>
       </div>
+
       <div class="card-body pt-0 pt-md-4">
         <div class="row">
           <div class="col">
             <div class="card-profile-stats d-flex justify-content-center mt-md-5">
-              <div>
-                <span class="heading">22</span>
-                <span class="description">Friends</span>
-              </div>
-              <div>
-                <span class="heading">10</span>
-                <span class="description">Photos</span>
-              </div>
-              <div>
-                <span class="heading">89</span>
-                <span class="description">Comments</span>
-              </div>
             </div>
           </div>
         </div>
         <div class="text-center">
           <h3>
-            Jessica Jones<span class="font-weight-light">, 27</span>
+            {{resEmployee.nameEmployee}}<span class="font-weight-light"></span>
           </h3>
-          <div class="h5 font-weight-300">
-            <i class="ni location_pin mr-2"></i>Bucharest, Romania
-          </div>
-          <div class="h5 mt-4">
-            <i class="ni business_briefcase-24 mr-2"></i>Solution Manager - Creative Tim Officer
-          </div>
           <div>
-            <i class="ni education_hat mr-2"></i>University of Computer Science
+            <i class="ni education_hat mr-2"></i>{{resEmployee.roleName}}
           </div>
           <hr class="my-4" />
-          <p>Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music.</p>
-          <a href="javascript:void(0)">Show more</a>
+          <p>Ngày sinh: {{resEmployee.birthday}}</p>
+          <p>Email: {{resEmployee.email}}</p>
+          <p>Điện thoại: {{resEmployee.phone}}</p>
+          <p>Địa chỉ: {{resEmployee.address}}</p>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-xl-8 order-xl-1" *ngIf="resEmployee">
+  <div class="col-xl-8 order-xl-1">
     <div class="card bg-secondary shadow">
       <div class="card-header bg-white border-0">
         <div class="row align-items-center">
@@ -89,7 +74,7 @@
               <div class="col-lg-6">
                 <div class="form-group">
                   <label class="form-control-label" for="input-first-name">Giới tính</label>
-                  <ng-select [items]="listGender"  [(ngModel)]="resEmployee.gender" bindValue="id" bindLabel="name" name="gender">
+                  <ng-select [items]="listGender"  [(ngModel)]="resEmployee.gender" bindValue="id" bindLabel="name" name="gender" [disabled]="isReadOnly">
                  </ng-select>
                   <!-- <select [(ngModel)]="resEmployee.gender" class="form-control form-control-alternative" [disabled]="isReadOnly">
                     <option *ngFor="let gender of listGender" [value]="gender.id">{{gender.name}}</option>
@@ -99,7 +84,7 @@
               <div class="col-lg-6">
                 <div class="form-group">
                   <label class="form-control-label" for="input-last-name">Ngày sinh</label>
-                  <input  name="birthday" class="form-control datepicker" placeholder="Chọn ngày" name="dp"  ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" type="text"/>
+                  <input  name="birthday" class="form-control datepicker" placeholder="Chọn ngày" name="dp"  ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" type="text" [disabled]="isReadOnly"/>
                 </div>
               </div>
             </div>
@@ -108,9 +93,15 @@
                 <div class="form-group">
                   <label class="form-control-label" for="input-city">Chức vụ</label>
                   <input [(ngModel)]="resEmployee.idRole" name="idRole" type="text" id="input-city" class="form-control form-control-alternative" placeholder="Nhập chức vụ" value="" [readonly]="isReadOnly" >
-                    <!-- <select [(ngModel)]="resEmployee.idRole" class="form-control form-control-alternative" [disabled]="isReadOnly">
+                    <!-- <select [(ngModel)]="resEmployee.idRole" name="idRole" class="form-control form-control-alternative" [disabled]="isReadOnly">
                       <option *ngFor="let role of resRole" [value]="role.idRole">{{role.nameRole}}</option>
                     </select> -->
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-email">Hình</label>
+                  <input [(ngModel)]="resEmployee.image" name="image"  class="form-control form-control-alternative" placeholder="Chọn hình" [readonly]="isReadOnly" >
                 </div>
               </div>
             </div>
