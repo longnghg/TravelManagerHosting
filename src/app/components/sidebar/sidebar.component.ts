@@ -17,6 +17,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/list-location', title: 'Location',  icon:'ni-bullet-list-67 text-red', class: '' },
     { path: '/list-role', title: 'Role',  icon:'ni-bullet-list-67 text-red', class: '' },
     { path: '/list-employee', title: 'Employee',  icon:'ni-bullet-list-67 text-red', class: '' },
+    { path: '/list-customer', title: 'Customer',  icon:'ni-bullet-list-67 text-red', class: '' },
   ]
 
 

@@ -15,6 +15,9 @@ import { ListRoleComponent } from 'src/app/pages/roles/list-role/list-role.compo
 
 import { ListEmployeeComponent } from 'src/app/pages/employee/list-employee/list-employee.component';
 
+import { ListCustomerComponent } from 'src/app/pages/customer/list-customer/list-customer.component';
+
+
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
@@ -28,4 +31,6 @@ export const AdminLayoutRoutes: Routes = [
 
     { path: 'list-role',  component: ListRoleComponent },
     { path: 'list-employee',  component: ListEmployeeComponent },
+    { path: 'list-customer',  component: ListCustomerComponent },
+
 ];
