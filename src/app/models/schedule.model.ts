@@ -9,9 +9,16 @@ export class ScheduleModel{
   quantityAdult: number
   quantityBaby: number
   minCapacity: number
+  maxCapacity: number
   quantityChild: number
   idTour: string
+  nameTour: string
   idCar: string
+  liscensePlate: string
+  nameDriver:string
+  idEmployee: string
   idTourGuide: string
   idPromotion: string
+  nameEmployee:string
+  valuePromotion: number
 }

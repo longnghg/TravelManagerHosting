@@ -33,6 +33,8 @@ import { ItemDistrictComponent } from '../../pages/locations/districts/item-dist
 import { ItemWardComponent } from '../../pages/locations/wards/item-ward/item-ward.component';
 import { ListWardComponent } from '../../pages/locations/wards/list-ward/list-ward.component';
 
+import { ListScheduleComponent } from '../../pages/schedule/list-schedule/list-schedule.component';
+import { ItemScheduleComponent } from '../../pages/schedule/item-schedule/item-schedule.component';
 
 import { NgSelectModule }           from '@ng-select/ng-select';
 import { NgOptionHighlightModule }  from '@ng-select/ng-option-highlight';
@@ -75,6 +77,8 @@ import { NgOptionHighlightModule }  from '@ng-select/ng-option-highlight';
     ItemDistrictComponent,
     ItemWardComponent,
     ListWardComponent,
+    ListScheduleComponent,
+    ItemScheduleComponent,
 
   ],
   providers: [],
