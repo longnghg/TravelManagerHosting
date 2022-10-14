@@ -18,6 +18,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/list-role', title: 'Role',  icon:'ni-bullet-list-67 text-red', class: '' },
     { path: '/list-employee', title: 'Employee',  icon:'ni-bullet-list-67 text-red', class: '' },
     { path: '/list-customer', title: 'Customer',  icon:'ni-bullet-list-67 text-red', class: '' },
+    { path: '/list-tour', title: 'Tour',  icon:'ni-bullet-list-67 text-red', class: '' },
   ]
 
 

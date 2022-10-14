@@ -17,6 +17,7 @@ import { ListEmployeeComponent } from 'src/app/pages/employee/list-employee/list
 
 import { ListCustomerComponent } from 'src/app/pages/customer/list-customer/list-customer.component';
 
+import { ListTourComponent } from 'src/app/pages/tour/list-tour/list-tour.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -32,5 +33,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'list-role',  component: ListRoleComponent },
     { path: 'list-employee',  component: ListEmployeeComponent },
     { path: 'list-customer',  component: ListCustomerComponent },
+    { path: 'list-tour',  component: ListTourComponent },
+
 
 ];
