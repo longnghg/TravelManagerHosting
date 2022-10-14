@@ -1,0 +1,95 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+    </div>
+  </div>
+</div>
+
+
+<div class="col-xl-12 mb-5 mb-xl-0">
+  <div class="card shadow">
+    <div class="card-header border-0">
+      <div class="row align-items-center">
+        <div class="col">
+          <h3 class="mb-0">Đặt Du Lịch</h3>
+        </div>
+        <div class="col text-right">
+          <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            TourBooking
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <!-- Projects table -->
+      <table class="table align-items-center table-flush">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">STT</th>
+            <th scope="col">Id</th>
+            <th scope="col">Tên Khách hàng</th>
+            <th scope="col">Địa Chỉ</th>
+            <th scope="col">Email</th>
+            <th scope="col">Số ĐT</th>
+            <th scope="col">Tên Liên Hệ</th>
+            <th scope="col">Ngày Đặt</th>
+            <th scope="col">Ngày Kết Thúc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr  *ngFor="let item of resTourBooking let i=index">
+            <th scope="row">
+              <strong>{{i}}</strong>
+            </th>
+            <th>
+                {{item.id}}
+            </th>
+            <td>
+               {{item.customerName}}
+            </td>
+            <td>
+              {{item.address}}
+           </td>
+            <td>
+              {{item.email}}
+           </td>
+           <td>
+            {{item.phone}}
+          </td>
+          <td>
+            {{item.contactName}}
+          </td>
+           <td>
+            {{item.dateBooking}}
+          </td>
+            <td>
+              {{item.lastDate}}
+           </td>
+            <td>
+              <!-- <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="childData(item, 'detail')">
+                Chi tiết
+              </button> -->
+            </td>
+            <td>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Thêm - Sửa -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Thông tin</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- <app-item-customer [resCustomer]="child" [type]="type"></app-item-customer> -->
+      </div>
+    </div>
+  </div>
+</div>
