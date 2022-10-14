@@ -1,5 +1,5 @@
 export class CarModel{
-  id: string
+  idCar: string
   liscensePlate: string
   status: number
   amountSeat: number

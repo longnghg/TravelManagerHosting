@@ -16,7 +16,7 @@ export class ListScheduleComponent implements OnInit {
   response: ResponseModel
   dataChild: ScheduleModel
   typeChild: string
-  constructor(private schduleService: ScheduleService, private configService: ConfigService, private notificationService: NotificationService) { }
+  constructor(private scheduleService: ScheduleService, private configService: ConfigService, private notificationService: NotificationService) { }
 
   public columnDefs: ColDef[]
   public gridConfig: GridConfig = {
@@ -29,6 +29,7 @@ export class ListScheduleComponent implements OnInit {
   ngOnInit(): void {
 
     this.init()
+    console.log(this.resSchedule);
 
     setTimeout(() => {
       this.columnDefs= [
@@ -52,12 +53,10 @@ export class ListScheduleComponent implements OnInit {
   }
 
   init(){
-    this.schduleService.gets().subscribe(res =>{
+    this.scheduleService.gets().subscribe(res =>{
       this.response = res
       if(!this.response.notification.type){
         this.resSchedule = this.response.content
-        console.log(this.response);
-
       }
       else{
         this.resSchedule = null
