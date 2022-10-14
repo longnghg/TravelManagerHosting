@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { NotificationService } from "../../../services_API/notification.service";
 import { ConfigService } from "../../../services_API/config.service";
 import { EmployeeService } from 'src/app/services_API/employee.service';
@@ -11,7 +11,6 @@ import { RoleService } from 'src/app/services_API/role.service';
   selector: 'app-item-employee',
   templateUrl: './item-employee.component.html',
   styleUrls: ['./item-employee.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ItemEmployeeComponent implements OnInit{
 
@@ -45,14 +44,11 @@ export class ItemEmployeeComponent implements OnInit{
       this.resEmployee = new EmployeeModel()
       this.isEdit = true
     }
+    else{
+      this.isEdit = false
+    }
 
     this.resEmployeeTmp = Object.assign({}, this.resEmployee)
-  }
-  ngDoCheck(): void {
-    if(this.type == "create"){
-      this.resEmployee = new EmployeeModel()
-      this.isEdit = true
-    }
   }
   inputChange(){
     console.log(JSON.stringify(this.resEmployeeTmp));
@@ -141,7 +137,9 @@ export class ItemEmployeeComponent implements OnInit{
   }
 
   close(){
-    this.isEdit = false
+    if (this.type == 'detail') {
+      this.isEdit = false
+    }
     this.restore()
   }
 

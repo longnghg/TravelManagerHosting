@@ -7,8 +7,7 @@ import { ResponseModel } from "../../../../models/responsiveModels/response.mode
 @Component({
   selector: 'app-item-province',
   templateUrl: './item-province.component.html',
-  styleUrls: ['./item-province.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./item-province.component.scss']
 
 })
 export class ItemProvinceComponent implements OnInit {
@@ -29,16 +28,12 @@ export class ItemProvinceComponent implements OnInit {
     if(this.type == "create"){
       this.resProvince = new LocationModel()
       this.isEdit = true
+    }else{
+      this.isEdit = false
     }
     this.resProvinceTmp = Object.assign({}, this.resProvince)
   }
 
-  ngDoCheck(): void {
-    if(this.type == "create"){
-      this.resProvince = new LocationModel()
-      this.isEdit = true
-    }
-  }
   isEditChange(){
     if (this.isEdit) {
       this.isEdit = false
@@ -110,7 +105,9 @@ export class ItemProvinceComponent implements OnInit {
   }
 
   close(){
-     this.isEdit = false
+    if (this.type == 'detail') {
+      this.isEdit = false
+    }
      this.restore()
   }
 }
