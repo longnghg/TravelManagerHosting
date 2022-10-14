@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 import { NotificationService } from "../../../../services_API/notification.service";
 import { ProvinceService } from "../../../../services_API/province.service";
 import { ConfigService } from "../../../../services_API/config.service";
@@ -7,7 +7,9 @@ import { ResponseModel } from "../../../../models/responsiveModels/response.mode
 @Component({
   selector: 'app-item-province',
   templateUrl: './item-province.component.html',
-  styleUrls: ['./item-province.component.scss']
+  styleUrls: ['./item-province.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 export class ItemProvinceComponent implements OnInit {
   @Input() resProvince: LocationModel
@@ -29,6 +31,13 @@ export class ItemProvinceComponent implements OnInit {
       this.isEdit = true
     }
     this.resProvinceTmp = Object.assign({}, this.resProvince)
+  }
+
+  ngDoCheck(): void {
+    if(this.type == "create"){
+      this.resProvince = new LocationModel()
+      this.isEdit = true
+    }
   }
   isEditChange(){
     if (this.isEdit) {

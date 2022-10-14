@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 import { NotificationService } from "../../../services_API/notification.service";
 import { ConfigService } from "../../../services_API/config.service";
 import { EmployeeService } from 'src/app/services_API/employee.service';
@@ -10,21 +10,22 @@ import { RoleService } from 'src/app/services_API/role.service';
 @Component({
   selector: 'app-item-employee',
   templateUrl: './item-employee.component.html',
-  styleUrls: ['./item-employee.component.scss']
+  styleUrls: ['./item-employee.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ItemEmployeeComponent implements OnInit {
+export class ItemEmployeeComponent implements OnInit{
 
   response: ResponseModel
   @Input() resEmployee: EmployeeModel
   @Input() type: string
   @Output() parentDel = new EventEmitter<any>()
   listGender = this.configService.listGender()
-  isEdit: boolean = true
+  isEdit: boolean = false
   isChange: boolean = false
   resRole: RoleModel[]
   resEmployeeTmp: EmployeeModel
   formData: any
-  img:any
+  img:any = "../../../../assets/img/employees/unknown.png"
   constructor(private employeeService: EmployeeService, private notificationService: NotificationService,
     private configService: ConfigService, private roleService: RoleService) { }
 
@@ -35,12 +36,11 @@ export class ItemEmployeeComponent implements OnInit {
     this.roleService.views().then(response =>{
       this.resRole = response
     })
-    console.log(this.resRole);
-
     if(this.resEmployee){
-      this.img = this.configService.apiUrl + this.resEmployee.image
+      if (this.resEmployee.image) {
+        this.img = this.configService.apiUrl + this.resEmployee.image
+      }
     }
-
     if(this.type == "create"){
       this.resEmployee = new EmployeeModel()
       this.isEdit = true
@@ -48,7 +48,12 @@ export class ItemEmployeeComponent implements OnInit {
 
     this.resEmployeeTmp = Object.assign({}, this.resEmployee)
   }
-
+  ngDoCheck(): void {
+    if(this.type == "create"){
+      this.resEmployee = new EmployeeModel()
+      this.isEdit = true
+    }
+  }
   inputChange(){
     console.log(JSON.stringify(this.resEmployeeTmp));
       console.log(JSON.stringify(this.resEmployee));
@@ -62,6 +67,7 @@ export class ItemEmployeeComponent implements OnInit {
   }
 
   isEditChange(){
+
     if (this.isEdit) {
       this.isEdit = false
       this.restore()
@@ -72,7 +78,7 @@ export class ItemEmployeeComponent implements OnInit {
     }
   }
 
-  eventChangeImg(e: any){
+  changeImg(e: any){
     this.formData = e
     if (e.target.files && e.target.files[0]){
       const file = e.target.files[0];

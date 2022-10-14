@@ -34,7 +34,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                     </div>
-                    <input class="form-control datepicker" placeholder="Select date" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" type="text"/>
+                    <input class="form-control datepicker" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker"  placeholder="DD/MM/YYYY" (click)="d.toggle()" type="text"/>
                   </div>
                 </div>
               </ng-container>
@@ -49,11 +49,11 @@
                 <i class="fas fa-ellipsis-v"></i>
               </a>
               <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
-                <a class="dropdown-item" href="javascript:void(0)" data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModal" (click)="childData(null, 'create')" >Thêm</a>
+                <a class="dropdown-item" href="javascript:void(0)" *ngIf="!isDelete" data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModal" (click)="childData(null, 'create')" >Thêm</a>
                 <ng-container *ngIf="gridConfig.radioBox;">
                   <div class="dropdown-divider"></div>
                 <label class="custom-toggle" style="margin-left: 5px;">
-                  <input type="checkbox" (change)="changeChecked()" [checked]="checked">
+                  <input type="checkbox" (change)="changeChecked()">
                   <span class="custom-toggle-slider rounded-circle"></span>
                 </label>
                 <span style="position: absolute; margin-left: 5px;">{{gridConfig.radioBoxName}}</span>

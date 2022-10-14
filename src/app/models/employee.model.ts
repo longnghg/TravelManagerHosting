@@ -1,18 +1,18 @@
 export class EmployeeModel {
-  idEmployee: string = ""
-  nameEmployee: string = ""
-  email: string = ""
-  phone: string = ""
-  gender: boolean = false
-  address: string = ""
+  idEmployee: string = null
+  nameEmployee: string = null
+  email: string = null
+  phone: string = null
+  gender: boolean = null
+  address: string = null
   birthday: number = 0
-  image: string = ""
-  idRole: string = ""
-  roleName: string = ""
-  roleDescription: string = ""
+  image: string = null
+  idRole: string = null
+  roleName: string = null
+  roleDescription: string = null
   createDate: number = 0
   modifyDate: number = 0
-  modifyBy: string = ""
+  modifyBy: string = null
   isActive: boolean = true
   isDelete: boolean = false
 }
