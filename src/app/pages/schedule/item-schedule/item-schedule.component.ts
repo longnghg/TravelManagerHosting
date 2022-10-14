@@ -38,7 +38,6 @@ export class ItemScheduleComponent implements OnInit {
 
   ngOnChanges(): void {
     this.init()
-    console.log(this.resSchedule);
 
     // if(this.resSchedule){
     //   if(this.resSchedule.departureDate){
