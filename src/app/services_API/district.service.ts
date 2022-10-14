@@ -44,11 +44,16 @@ export class DistrictService{
 
   create(data: any)
   {
-      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/insert-district", data);
+      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/create-district", data);
   }
 
   update(data: any)
   {
       return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/update-district", data);
+  }
+
+  delete(data: any)
+  {
+      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/delete-district", data);
   }
 }

@@ -6,24 +6,26 @@ import { EmployeeModel } from 'src/app/models/employee.model';
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { RoleModel } from 'src/app/models/role.model';
 import { RoleService } from 'src/app/services_API/role.service';
-
+const FILTER_PAG_REGEX = /[^0-9]/g;
 @Component({
   selector: 'app-item-employee',
   templateUrl: './item-employee.component.html',
   styleUrls: ['./item-employee.component.scss'],
 })
 export class ItemEmployeeComponent implements OnInit{
-
   response: ResponseModel
   @Input() resEmployee: EmployeeModel
   @Input() type: string
-  @Output() parentDel = new EventEmitter<any>()
+  @Output() parentDelete = new EventEmitter<any>()
+  @Output() parentRestore = new EventEmitter<any>()
   listGender = this.configService.listGender()
   isEdit: boolean = false
   isChange: boolean = false
   resRole: RoleModel[]
   resEmployeeTmp: EmployeeModel
   formData: any
+  birthday: string
+  birthdayView: string
   img:any = "../../../../assets/img/employees/unknown.png"
   constructor(private employeeService: EmployeeService, private notificationService: NotificationService,
     private configService: ConfigService, private roleService: RoleService) { }
@@ -39,6 +41,12 @@ export class ItemEmployeeComponent implements OnInit{
       if (this.resEmployee.image) {
         this.img = this.configService.apiUrl + this.resEmployee.image
       }
+
+      if(this.resEmployee.birthday){
+        this.birthday = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resEmployee.birthday))
+        this.birthdayView = this.configService.formatFromUnixTimestampToFullDateView(Number.parseInt(this.resEmployee.birthday))
+
+      }
     }
     if(this.type == "create"){
       this.resEmployee = new EmployeeModel()
@@ -51,9 +59,6 @@ export class ItemEmployeeComponent implements OnInit{
     this.resEmployeeTmp = Object.assign({}, this.resEmployee)
   }
   inputChange(){
-    console.log(JSON.stringify(this.resEmployeeTmp));
-      console.log(JSON.stringify(this.resEmployee));
-
     if (JSON.stringify(this.resEmployee) != JSON.stringify(this.resEmployeeTmp)) {
       this.isChange = true
     }
@@ -66,7 +71,7 @@ export class ItemEmployeeComponent implements OnInit{
 
     if (this.isEdit) {
       this.isEdit = false
-      this.restore()
+      this.backup()
 
     }
     else{
@@ -81,6 +86,8 @@ export class ItemEmployeeComponent implements OnInit{
       const reader = new FileReader();
       reader.onload = e => this.img = reader.result;
       reader.readAsDataURL(file)
+
+      this.resEmployee.image = this.img
     }
   }
 
@@ -90,49 +97,54 @@ export class ItemEmployeeComponent implements OnInit{
         this.notificationService.handleAlert(element, "Error")
     });
     if (valid.length == 0) {
+      console.log(this.resEmployee);
+
+      var file = new FormData();
+      file.append('data', JSON.stringify(this.resEmployee))
+
+      if (this.formData) {
+        file.append('file', this.formData.path[0].files[0])
+      }
+
       if(this.type == "create")
       {
-        var file = new FormData();
-        file.append('data', JSON.stringify(this.resEmployee))
-        file.append('file', this.formData.path[0].files[0])
-
         this.employeeService.create(file).subscribe(res =>{
           this.response = res
          this.notificationService.handleAlertObj(res.notification)
+         this.close()
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, "Error")
         })
       }
       else{
-        this.employeeService.update(this.resEmployee).subscribe(res =>{
+        this.employeeService.update(file).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
+          this.close()
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, "Error")
         })
       }
-      this.isChange = false
-      this.isEdit = false
+
     }
 
   }
   delete(){
     this.employeeService.delete(this.resEmployee).subscribe(res =>{
       this.response = res
-      if(this.response.notification.type == "Error")
-      {
-        this.notificationService.handleAlertObj(res.notification)
-      }
+      this.notificationService.handleAlertObj(res.notification)
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, "Error")
     })
   }
 
-  restore(){
+  backup(){
     this.resEmployee = Object.assign({}, this.resEmployeeTmp)
+    this.birthday = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resEmployee.birthday))
+    this.birthdayView = this.configService.formatFromUnixTimestampToFullDateView(Number.parseInt(this.resEmployee.birthday))
     this.isChange = false
   }
 
@@ -140,26 +152,18 @@ export class ItemEmployeeComponent implements OnInit{
     if (this.type == 'detail') {
       this.isEdit = false
     }
-    this.restore()
+    this.backup()
   }
 
-  restoreEmployee(){
-    this.employeeService.restore(this.resEmployee).subscribe(res =>{
-      this.response = res
-      console.log(this.response);
 
-      if(this.response.notification.type == "Error")
-      {
-        this.notificationService.handleAlertObj(res.notification)
-      }
-    }, error => {
-      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
-    })
-  }
 
   getDataDelete(){
-    this.parentDel.emit(this.resEmployee);
+    this.parentDelete.emit(this.resEmployee);
   }
-
+  getDataRestore(){
+    this.parentRestore.emit(this.resEmployee);
+  }
+  formatInput(input: HTMLInputElement) {
+    input.value = input.value.replace(FILTER_PAG_REGEX, '');
+  }
 }

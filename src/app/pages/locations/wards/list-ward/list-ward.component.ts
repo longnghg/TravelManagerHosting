@@ -12,16 +12,15 @@ import { ColDef, GridConfig} from '../../../../components/grid-data/grid-data.co
   styleUrls: ['./list-ward.component.scss']
 })
 export class ListWardComponent implements OnInit {
-  @Output() dataDistrict = new EventEmitter<LocationModel[]>()
+  @Output() parentLocationDel = new EventEmitter<any>()
   dataChild: LocationModel
   typeChild: string
   resDistrict: LocationModel[]
   resWard: LocationModel[]
   response: ResponseModel
-  child: LocationModel
-  type: string
   public columnDefs: ColDef[]
   public gridConfig: GridConfig = {
+    idModalDelete: "deleteWardModal",
     idModal: "gridWard",
     radioBox: false,
   }
@@ -94,4 +93,7 @@ export class ListWardComponent implements OnInit {
     }
   }
 
+  parentDelete(e){
+    this.parentLocationDel.emit(e);
+  }
 }

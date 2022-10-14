@@ -20,7 +20,7 @@
   <div class="row">
     <div class="col">
       <div class="card shadow border-0">
-        <app-list-district></app-list-district>
+        <app-list-district (parentLocationDel)="getDataDelete($event)"></app-list-district>
       </div>
     </div>
   </div>
@@ -30,7 +30,7 @@
   <div class="row">
     <div class="col">
       <div class="card shadow border-0">
-        <app-list-ward></app-list-ward>
+        <app-list-ward (parentLocationDel)="getDataDelete($event)"></app-list-ward>
       </div>
     </div>
   </div>
@@ -49,6 +49,42 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteProvince()">Xóa</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteDistrictModal" tabindex="-1" aria-labelledby="deleteDistrictModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="deleteDistrictModalLabel">Xác nhận</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="dataDelete">
+        Bạn có chắc muốn xóa [<span class="text-red">{{dataDelete.nameDistrict}}</span>] !
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteDistrict()">Xóa</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteWardModal" tabindex="-1" aria-labelledby="deleteWardModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="deleteWardModalLabel">Xác nhận</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="dataDelete">
+        Bạn có chắc muốn xóa [<span class="text-red">{{dataDelete.nameWard}}</span>] !
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteWard()">Xóa</button>
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
       </div>
     </div>

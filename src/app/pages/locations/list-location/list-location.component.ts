@@ -67,4 +67,28 @@ export class ListLocationComponent implements OnInit {
     })
    }
   }
+
+  deleteDistrict(){
+    if (this.dataDelete) {
+     this.districtService.delete(this.dataDelete).subscribe(res =>{
+       this.response = res
+       this.notificationService.handleAlertObj(res.notification)
+     }, error => {
+       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+       this.notificationService.handleAlert(message, "Error")
+     })
+    }
+   }
+
+   deleteWard(){
+    if (this.dataDelete) {
+     this.wardService.delete(this.dataDelete).subscribe(res =>{
+       this.response = res
+       this.notificationService.handleAlertObj(res.notification)
+     }, error => {
+       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+       this.notificationService.handleAlert(message, "Error")
+     })
+    }
+   }
 }

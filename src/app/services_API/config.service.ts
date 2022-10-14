@@ -61,7 +61,7 @@ export class ConfigService{
 
 
     //gender
-    if (data.gender == null || data.gender == "") {
+    if (data.gender === null) {
        err.push("[Giới tính] không được để trống !")
     }
 
@@ -128,7 +128,69 @@ export class ConfigService{
       err.push("[Tên thành phố/tỉnh] quá ngắn !")
     }
 
+
     return err
 
+   }
+
+   validateDistrict(data: any){
+    var err = []
+    //name
+    if(data.nameDistrict == null || data.nameDistrict == ""){
+       err.push("[Tên quận/huyện] không được để trống !")
+    }
+    else if (data.nameDistrict.length > 30) {
+       err.push("[Tên quận/huyện] quá dài !")
+    }else if (data.nameDistrict.length < 3) {
+      err.push("[Tên quận/huyện] quá ngắn !")
+    }
+    console.log(data);
+
+    //province
+    if (data.idProvince == null || data.idProvince == "") {
+      err.push("[Thành phố/tỉnh] không được để trống !")
+    }
+    return err
+
+   }
+
+   validateWard(data: any){
+    var err = []
+    //name
+    if(data.nameWard == null || data.nameWard == ""){
+       err.push("[Tên phường/xã] không được để trống !")
+    }
+    else if (data.nameWard.length > 30) {
+       err.push("[Tên phường/xã] quá dài !")
+    }else if (data.nameWard.length < 3) {
+      err.push("[Tên phường/xã] quá ngắn !")
+    }
+
+    //province
+    if (data.idDistrict == null || data.idDistrict == "") {
+      err.push("[Quận/huyện] không được để trống !")
+    }
+    return err
+
+   }
+
+   formatFromUnixTimestampToFullDate(unix_timestamp: number){
+    var date = new Date(unix_timestamp).toLocaleDateString("en-US");
+    var split = date.split("/")
+    var day = split[1];
+    var month = split[0];
+    var year =  split[2];
+    var formattedDate = year + '-' + month + '-' + day;
+    return formattedDate
+   }
+
+   formatFromUnixTimestampToFullDateView(unix_timestamp: number){
+    var date = new Date(unix_timestamp).toLocaleDateString("en-US");
+    var split = date.split("/")
+    var day = split[1];
+    var month = split[0];
+    var year =  split[2];
+    var formattedDate = day + '/' + month + '/' + year;
+    return formattedDate
    }
 }

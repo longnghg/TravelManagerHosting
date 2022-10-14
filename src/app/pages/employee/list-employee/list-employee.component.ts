@@ -18,15 +18,16 @@ export class ListEmployeeComponent implements OnInit {
   resEmployee: EmployeeModel[]
   resRole: RoleModel[]
   response: ResponseModel
-  dataDelete: EmployeeModel
+  data: EmployeeModel
   constructor(private roleService: RoleService, private configService: ConfigService, private employeeService: EmployeeService, private notificationService: NotificationService) {}
 
   public columnDefs: ColDef[]
   public gridConfig: GridConfig = {
+    idModalRestore: "restoreEmployeeModal",
     idModalDelete: "deleteEmployeeModal",
     idModal: "gridEmployee",
     radioBox: true,
-    radioBoxName: "Kho lưu trữ"
+    radioBoxName: "Kho lưu trữ",
   }
   ngOnInit() {
 
@@ -106,15 +107,13 @@ export class ListEmployeeComponent implements OnInit {
     }
   }
 
-  getDataDelete(data: any){
-    this.dataDelete = data
-    console.log(this.dataDelete);
-
+  getData(data: any){
+    this.data = data
   }
 
-  deleteEmployee(){
-    if (this.dataDelete) {
-     this.employeeService.delete(this.dataDelete).subscribe(res =>{
+  delete(){
+    if (this.data) {
+     this.employeeService.delete(this.data).subscribe(res =>{
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
      }, error => {
@@ -124,7 +123,17 @@ export class ListEmployeeComponent implements OnInit {
     }
    }
 
-
+   restore(){
+    if (this.data) {
+      this.employeeService.restore(this.data).subscribe(res =>{
+        this.response = res
+        this.notificationService.handleAlertObj(res.notification)
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, "Error")
+      })
+    }
+  }
 }
 
 

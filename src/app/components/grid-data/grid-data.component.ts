@@ -12,6 +12,7 @@ export class GridDataComponent implements OnInit {
   @Output() gdSearch = new EventEmitter<any>()
   @Output() gdChecked = new EventEmitter<any>()
   @Output() gdDelete = new EventEmitter<any>()
+  @Output() gdRestore = new EventEmitter<any>()
   @Output() gdChild = new EventEmitter<any>()
   @Output() gdType = new EventEmitter<any>()
   totalResult: number
@@ -33,6 +34,8 @@ export class GridDataComponent implements OnInit {
   ngOnInit(): void {
   }
   ngOnChanges(): void {
+    console.log(this.rowData);
+
     if (this.rowData) {
       this.rowDataTmp = Object.assign(this.rowData)
     }
@@ -120,27 +123,33 @@ export class GridDataComponent implements OnInit {
   }
 
   selectSection(name){
+
    var kw = ""
     var i = 0
     this.keywordTmp = Object.assign({}, this.keyword)
-    if (this.keywordTmp[name].length > 1) {
-      this.keywordTmp[name].forEach(item => {
-        if ( i < this.keywordTmp[name].length-1) {
-          kw += item + ","
-        }
-        else{
-          kw += item
-        }
-        i++
-      });
-    }
-    else{
-      kw = this.keywordTmp[name][0]
-      if (!kw) {
-        kw = this.keywordTmp[name]
+    if (this.keywordTmp[name]) {
+      if (this.keywordTmp[name].length > 1) {
+        this.keywordTmp[name].forEach(item => {
+          if ( i < this.keywordTmp[name].length-1) {
+            kw += item + ","
+          }
+          else{
+            kw += item
+          }
+          i++
+        });
+      }
+      else{
+        kw = this.keywordTmp[name][0]
+
       }
     }
+    else{
+      kw = this.keywordTmp[name]
+    }
+
     this.keywordTmp[name] = kw
+
     this.setCache()
   }
   search(name){
@@ -176,7 +185,12 @@ export class GridDataComponent implements OnInit {
   }
 
   getDataDelete(data: any){
+
     this.gdDelete.emit(data);
+  }
+
+  getDataRestore(data: any){
+    this.gdRestore.emit(data);
   }
 
   childData(data: any, type: string){
@@ -202,6 +216,7 @@ export interface ColDef{
 }
 
 export class GridConfig{
+  idModalRestore?: string
   idModalDelete?: string
   idModal?: string
   radioBox?: boolean

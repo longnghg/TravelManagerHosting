@@ -50,4 +50,9 @@ export class WardService{
   {
       return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/update-ward", data);
   }
+
+  delete(data: any)
+  {
+      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/delete-ward", data);
+  }
 }

@@ -94,8 +94,7 @@ export class ItemProvinceComponent implements OnInit {
         })
 
       }
-      this.isChange = false
-      this.isEdit = false
+      this.close()
     }
 
   }

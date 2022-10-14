@@ -34,7 +34,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                     </div>
-                    <input class="form-control datepicker" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker"  placeholder="DD/MM/YYYY" (click)="d.toggle()" type="text"/>
+                    <input class="form-control datepicker" name="dp" [(ngModel)]="model"   placeholder="DD/MM/YYYY"  type="date"/>
                   </div>
                 </div>
               </ng-container>
@@ -51,7 +51,7 @@
               <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
                 <a class="dropdown-item" href="javascript:void(0)" *ngIf="!isDelete" data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModal" (click)="childData(null, 'create')" >Thêm</a>
                 <ng-container *ngIf="gridConfig.radioBox;">
-                  <div class="dropdown-divider"></div>
+                  <div class="dropdown-divider" *ngIf="!isDelete"></div>
                 <label class="custom-toggle" style="margin-left: 5px;">
                   <input type="checkbox" (change)="changeChecked()">
                   <span class="custom-toggle-slider rounded-circle"></span>
@@ -71,28 +71,16 @@
           <ng-container *ngIf="row.rowNum >= start && row.rowNum <= end">
             <td style="padding-left: 20px; width: 50px;">{{row.rowNum}}</td>
             <td  *ngFor="let column of columnDefs" [style]="column.style" scope="row">
-              <ng-container *ngIf="column.filter == 'avatar'; else elseType">
-                <div class="media align-items-center">
-                  <a href="javascript:void(0)" class="avatar rounded-circle mr-3">
-                    <img  [src]="row.Image ? row.Image : '../../../assets/img/employees/unknown.png'">
-                  </a>
-                  <div class="media-body">
-                    <span class="mb-0 text-sm">{{row[column.field]}}</span>
-                  </div>
+              <ng-container *ngIf="column.filter == 'status'; else elseStatus">
+                <div style="text-align: center;">
+                  <span class="badge badge-dot mr-4">
+                    <i [class]="row[column.field] ? 'bg-success':'bg-danger'"></i>
+                  </span>
+                  {{row[column.field] ? 'Đã kích hoạt':'Chưa kích hoạt'}}
                 </div>
               </ng-container>
-              <ng-template #elseType>
-                <ng-container *ngIf="column.filter == 'status'; else elseStatus">
-                  <div style="text-align: center;">
-                    <span class="badge badge-dot mr-4">
-                      <i [class]="row[column.field] ? 'bg-success':'bg-error'"></i>
-                    </span>
-                    {{row[column.field] ? 'Đã kích hoạt':'Chưa kích hoạt'}}
-                  </div>
-                </ng-container>
-                <ng-template #elseStatus>
-                  {{row[column.field]}}
-                </ng-template>
+              <ng-template #elseStatus>
+                {{row[column.field]}}
               </ng-template>
             </td>
 
@@ -103,7 +91,13 @@
                 </a>
                 <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
                   <a class="dropdown-item" href="javascript:void(0)" data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModal" (click)="childData(row, 'detail')">Chi tiết</a>
-                  <a class="dropdown-item" href="javascript:void(0)"  data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModalDelete" (click)="getDataDelete(row)">Xóa</a>
+                  <ng-container *ngIf="!isDelete; else elseRestoreOrDelete">
+                    <a class="dropdown-item" href="javascript:void(0)"  data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModalDelete" (click)="getDataDelete(row)">Xóa</a>
+                  </ng-container>
+                  <ng-template #elseRestoreOrDelete>
+                    <a class="dropdown-item" href="javascript:void(0)"  data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModalRestore" (click)="getDataRestore(row)">Khôi phục</a>
+                  </ng-template>
+
                 </div>
               </div>
             </td>

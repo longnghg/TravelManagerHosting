@@ -49,20 +49,24 @@ export class ListProvinceComponent implements OnInit {
     })
 
     setTimeout(() => {
-      this.resProvince.forEach(province => {
-        province.total = 0
-        this.resDistrict.forEach(district => {
-          if (province.idProvince == district.idProvince) {
-            province.total += 1
-          }
-        });
-      });
-
       this.columnDefs= [
         { field: 'idProvince', headerName: "Mã thành phố/tỉnh", searchable: true, searchType: 'text', searchObj: 'idProvince'},
         { field: 'nameProvince',headerName: "Tên thành phố/tỉnh", searchable: true, searchType: 'text', searchObj: 'nameProvince'},
         { field: 'total',headerName: "Tổng số quận/huyện", searchable: false},
       ];
+      if (this.resProvince) {
+        this.resProvince.forEach(province => {
+          province.total = 0
+          if (this.resDistrict) {
+            this.resDistrict.forEach(district => {
+              if (province.idProvince == district.idProvince) {
+                province.total += 1
+              }
+            });
+          }
+        });
+      }
+
     }, 200);
   }
   init(e?){

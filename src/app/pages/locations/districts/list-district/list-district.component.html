@@ -1,15 +1,9 @@
-<app-grid-data [rowData]="resDistrict" [columnDefs]="columnDefs" [gridConfig]="gridConfig"  (gdChecked)="init($event)" (gdType)="childType($event)" (gdSearch)="search($event)" (gdChild)="childData($event)"></app-grid-data>
+<app-grid-data [rowData]="resDistrict" [columnDefs]="columnDefs" [gridConfig]="gridConfig"  (gdChecked)="init($event)" (gdType)="childType($event)" (gdSearch)="search($event)" (gdChild)="childData($event)" (gdDelete)="parentDelete($event)"></app-grid-data>
 
 <div class="modal fade" [id]="gridConfig.idModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="gridDataLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin chi tiết</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <app-item-district></app-item-district>
-      </div>
+      <app-item-district [resDistrict]="dataChild" [type]="typeChild" (parentDel)="parentDelete($event)"></app-item-district>
     </div>
   </div>
 </div>

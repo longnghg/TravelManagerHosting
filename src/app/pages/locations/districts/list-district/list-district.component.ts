@@ -13,17 +13,16 @@ import { ColDef, GridConfig} from '../../../../components/grid-data/grid-data.co
   styleUrls: ['./list-district.component.scss']
 })
 export class ListDistrictComponent implements OnInit {
-  @Output() dataDistrict = new EventEmitter<LocationModel[]>()
+  @Output() parentLocationDel = new EventEmitter<any>()
   dataChild: LocationModel
   typeChild: string
   resProvince: LocationModel[]
   resDistrict: LocationModel[]
   resWard: LocationModel[]
   response: ResponseModel
-  child: LocationModel
-  type: string
   public columnDefs: ColDef[]
   public gridConfig: GridConfig = {
+    idModalDelete: "deleteDistrictModal",
     idModal: "gridDistrict",
     radioBox: false,
   }
@@ -40,15 +39,6 @@ export class ListDistrictComponent implements OnInit {
       this.resWard = response
     })
     setTimeout(() => {
-      this.resDistrict.forEach(district => {
-        district.total = 0
-        this.resWard.forEach(ward => {
-          if (district.idDistrict == ward.idDistrict) {
-            district.total += 1
-          }
-        });
-      });
-
       this.columnDefs= [
         { field: 'idDistrict', headerName: "Mã quận/huyện", searchable: true, searchType: 'text', searchObj: 'idDistrict'},
         { field: 'nameDistrict',headerName: "Tên quận/huyện", searchable: true, searchType: 'text', searchObj: 'nameDistrict'},
@@ -56,6 +46,18 @@ export class ListDistrictComponent implements OnInit {
         { field: 'total',headerName: "Tổng số phường/xã", searchable: false},
       ];
 
+     if (this.resDistrict) {
+      this.resDistrict.forEach(district => {
+        district.total = 0
+        if (this.resWard) {
+          this.resWard.forEach(ward => {
+            if (district.idDistrict == ward.idDistrict) {
+              district.total += 1
+            }
+          });
+        }
+      });
+     }
     }, 200);
   }
   init(e?){
@@ -108,6 +110,10 @@ export class ListDistrictComponent implements OnInit {
     if (e) {
       this.typeChild = e
     }
+  }
+
+  parentDelete(e){
+    this.parentLocationDel.emit(e);
   }
 
 }

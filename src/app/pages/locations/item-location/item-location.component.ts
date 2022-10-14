@@ -23,33 +23,8 @@ export class ItemLocationComponent implements OnInit {
 
   }
 
-  ngOnChanges(): void {
-    this.resProvince = this.resParent
-    if (this.type == "insert") {
-      this.resProvince = new LocationModel()
-    }
-  }
 
 
-  save(){
-    // if (this.type == "insert") {
-    //   this.provinceService.InsertProvince(this.resProvince).subscribe(res =>{
-    //     this.response = res
-    //     this.notificationService.handleAlertObj(res.notification)
-    //   }, error => {
-    //     var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-    //     this.notificationService.handleAlert(message, "Error")
-    //   })
-    // }
-    // else{
-    //   this.provinceService.UpdateProvince(this.resProvince).subscribe(res =>{
-    //     this.response = res
-    //     this.notificationService.handleAlertObj(res.notification)
-    //   }, error => {
-    //     var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-    //     this.notificationService.handleAlert(message, "Error")
-    //   })
-    // }
-  }
+
 
 }
