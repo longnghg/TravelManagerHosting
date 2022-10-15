@@ -24,7 +24,7 @@ import { ListScheduleComponent } from 'src/app/pages/schedule/list-schedule/list
 import { ListTourBookingComponent } from 'src/app/pages/tourBooking/list-tour-booking/list-tour-booking.component';
 
 import { ListHotelComponent } from 'src/app/pages/servicess/hotel/list-hotel/list-hotel.component';
-
+import { ListPlaceComponent } from '../../pages/servicess/place/list-place/list-place.component';
 // import { ListPromotionComponent } from 'src/app/pages/promotion/list-promotion/list-promotion.component';
 
 import { ListRestaurantComponent } from 'src/app/pages/servicess/restaurant/list-restaurant/list-restaurant.component';
@@ -50,4 +50,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'list-hotel',     component: ListHotelComponent},
     // { path: 'list-promotion',  component: ListPromotionComponent},
     { path: 'list-restaurant',     component: ListRestaurantComponent},
+    { path: 'list-place',     component: ListPlaceComponent},
 ];

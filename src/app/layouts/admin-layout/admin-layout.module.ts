@@ -24,7 +24,8 @@ import { ItemRoleComponent } from '../../pages/roles/item-role/item-role.compone
 
 import { ListEmployeeComponent } from '../../pages/employee/list-employee/list-employee.component';
 import { ItemEmployeeComponent } from '../../pages/employee/item-employee/item-employee.component';
-
+import { ListPlaceComponent } from '../../pages/servicess/place/list-place/list-place.component';
+import { ItemPlaceComponent } from '../../pages/servicess/place/item-place/item-place.component';
 
 import { ListProvinceComponent } from '../../pages/locations/provinces/list-province/list-province.component';
 import { ItemProvinceComponent } from '../../pages/locations/provinces/item-province/item-province.component';
@@ -81,7 +82,7 @@ import { ListTourBookingComponent } from '../../pages/tourBooking/list-tour-book
     ItemLocationComponent,
 
     ListRoleComponent,
-    ItemRoleComponent,
+    ItemRoleComponent,ItemPlaceComponent ,ListPlaceComponent,
 
     ListEmployeeComponent,
     ItemEmployeeComponent,

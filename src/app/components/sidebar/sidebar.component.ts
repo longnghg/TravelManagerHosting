@@ -23,6 +23,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/list-tourBooking', title: 'tourBooking',  icon:'ni-bullet-list-67 text-red', class: '' },
     { path: '/list-hotel', title: 'Hotel',  icon:'ni-bullet-list-67 text-red', class: '' },
     { path: '/list-restaurant', title: 'Restaurant',  icon:'ni-bullet-list-67 text-red', class: '' },
+    { path: '/list-place', title: 'Place',  icon:'ni-bullet-list-67 text-red', class: '' },
   ]
 
 
