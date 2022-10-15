@@ -1,5 +1,5 @@
 export class TourModel{
-  id: string
+  idTour: string
   tourName: string
   thumbsnail: string
   fromPlace: string
@@ -9,7 +9,6 @@ export class TourModel{
   createDate: number
   modifyBy: string
   modifyDate: number
-  idReview: string
   isDelete: boolean
   isActive: boolean
 }
