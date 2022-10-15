@@ -39,6 +39,15 @@ import { ItemScheduleComponent } from '../../pages/schedule/item-schedule/item-s
 import { ListHotelComponent } from '../../pages/servicess/hotel/list-hotel/list-hotel.component';
 import { ItemHotelComponent } from '../../pages/servicess/hotel/item-hotel/item-hotel.component';
 
+import { ListCustomerComponent } from '../../pages/customer/list-customer/list-customer.component';
+import { ItemCustomerComponent } from '../../pages/customer/item-customer/item-customer.component';
+import { ItemTourComponent } from '../../pages/tour/item-tour/item-tour.component';
+import { ListTourComponent } from '../../pages/tour/list-tour/list-tour.component';
+
+import { ListPromotionComponent } from '../../pages/promotion/list-promotion/list-promotion.component';
+import { ItemPromotionComponent } from '../../pages/promotion/item-promotion/item-promotion.component';
+
+
 import { NgSelectModule }           from '@ng-select/ng-select';
 import { NgOptionHighlightModule }  from '@ng-select/ng-option-highlight';
 
@@ -85,6 +94,12 @@ import { ListTourBookingComponent } from '../../pages/tourBooking/list-tour-book
     ListTourBookingComponent,
     ListHotelComponent,
     ItemHotelComponent,
+    ListPromotionComponent,
+    ItemPromotionComponent,
+    ListCustomerComponent,
+    ItemCustomerComponent,
+    ItemTourComponent,
+    ListTourComponent,
   ],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

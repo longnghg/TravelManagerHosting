@@ -19,10 +19,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
-import { ListCustomerComponent } from './pages/customer/list-customer/list-customer.component';
-import { ItemCustomerComponent } from './pages/customer/item-customer/item-customer.component';
-import { ItemTourComponent } from './pages/tour/item-tour/item-tour.component';
-import { ListTourComponent } from './pages/tour/list-tour/list-tour.component';
+
+
 
 @NgModule({
   imports: [
@@ -48,10 +46,7 @@ import { ListTourComponent } from './pages/tour/list-tour/list-tour.component';
     AppComponent,
     AdminLayoutComponent,
     AuthLayoutComponent,
-    ListCustomerComponent,
-    ItemCustomerComponent,
-    ItemTourComponent,
-    ListTourComponent,
+
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

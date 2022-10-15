@@ -24,6 +24,9 @@ import { ListScheduleComponent } from 'src/app/pages/schedule/list-schedule/list
 import { ListTourBookingComponent } from 'src/app/pages/tourBooking/list-tour-booking/list-tour-booking.component';
 
 import { ListHotelComponent } from 'src/app/pages/servicess/hotel/list-hotel/list-hotel.component';
+
+import { ListPromotionComponent } from 'src/app/pages/promotion/list-promotion/list-promotion.component';
+
 import { Component } from '@angular/core';
 
 export const AdminLayoutRoutes: Routes = [
@@ -43,5 +46,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'list-tour',  component: ListTourComponent },
     { path: 'list-schedule',  component: ListScheduleComponent},
     { path: 'list-tourBooking',  component: ListTourBookingComponent},
-    { path: 'list-hotel',     component: ListHotelComponent}
+    { path: 'list-hotel',     component: ListHotelComponent},
+    { path: 'list-promotion',  component: ListPromotionComponent}
 ];
