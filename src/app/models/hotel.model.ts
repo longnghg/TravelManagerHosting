@@ -1,6 +1,6 @@
 export class HotelModel{
-  id: string
-  idContract: string
+  idHotel: string
+  contractId: string
   name: string
   phone: string
   address: string

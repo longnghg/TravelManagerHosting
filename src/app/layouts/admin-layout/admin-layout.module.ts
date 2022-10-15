@@ -36,6 +36,9 @@ import { ListWardComponent } from '../../pages/locations/wards/list-ward/list-wa
 import { ListScheduleComponent } from '../../pages/schedule/list-schedule/list-schedule.component';
 import { ItemScheduleComponent } from '../../pages/schedule/item-schedule/item-schedule.component';
 
+import { ListHotelComponent } from '../../pages/servicess/hotel/list-hotel/list-hotel.component';
+import { ItemHotelComponent } from '../../pages/servicess/hotel/item-hotel/item-hotel.component';
+
 import { NgSelectModule }           from '@ng-select/ng-select';
 import { NgOptionHighlightModule }  from '@ng-select/ng-option-highlight';
 
@@ -80,6 +83,8 @@ import { ListTourBookingComponent } from '../../pages/tourBooking/list-tour-book
     ListScheduleComponent,
     ItemScheduleComponent,
     ListTourBookingComponent,
+    ListHotelComponent,
+    ItemHotelComponent,
   ],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

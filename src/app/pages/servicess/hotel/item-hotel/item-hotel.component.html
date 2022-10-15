@@ -1,0 +1,80 @@
+<div class="modal-header">
+  <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin chi tiết</h1>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
+</div>
+<div class="modal-body">
+  <ng-container *ngIf="resHotel">
+    <div class="container-fluid" >
+      <div class="row align-items-center">
+        <div class="col-12 text-right">
+          <a href="javascript:void(0)" *ngIf="type == 'detail'" class="btn btn-sm btn-primary" (click)="isEditChange()">{{!isEdit ? "Chỉnh sửa":"Quay lại"}}</a>
+        </div>
+      </div>
+      <form>
+        <div class="pl-lg-4">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label class="form-control-label" for="input-name">Tên Khách Sạn</label>
+                <input type="text" id="name" name="name" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số tên khách sạn" [(ngModel)]="resHotel.name" [readonly]="!isEdit">
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label class="form-control-label" for="input-phone">Số điện thoại</label>
+                <input type="text" id="phone" name="phone" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số điện thoại" [(ngModel)]="resHotel.phone" [readonly]="!isEdit">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-10">
+              <label class="form-control-label" for="input-address">Địa chỉ</label>
+              <input type="text" id="address" name="address" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số điạ chỉ" [(ngModel)]="resHotel.address" [readonly]="!isEdit">
+            </div>
+            <div class="col-lg-2">
+              <label class="form-control-label" for="input-star">Số sao</label>
+              <input type="number" id="star" name="star" (input)="inputChange()" min="1" max="6" class="form-control form-control-alternative" placeholder="Nhập số sao" [(ngModel)]="resHotel.star" [readonly]="!isEdit">
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-lg-3">
+              <div class="form-group">
+                <label class="form-control-label" for="input-quantitySR">Số lượng phòng đơn</label>
+                <input type="number" name="quantitySR" id="quantitySR" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số lượng phòng đơn" [(ngModel)]="resHotel.quantitySR" [readonly]="!isEdit">
+              </div>
+            </div>
+            <div class="col-lg-3">
+              <div class="form-group">
+                <label class="form-control-label" for="input-singleRoomPrice">Giá phòng đơn</label>
+                <input type="number" name="singleRoomPrice" id="singleRoomPrice" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập giá tiền phòng đơn" [(ngModel)]="resHotel.singleRoomPrice" [readonly]="!isEdit">
+              </div>
+            </div>
+            <div class="col-lg-3">
+              <div class="form-group">
+                <label class="form-control-label" for="input-quantityDBR">Số lượng phòng đôi</label>
+                <input type="number" name="quantityDBR" id="quantityDBR" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số lượng phòng đôi" [(ngModel)]="resHotel.quantityDBR" [readonly]="!isEdit">
+              </div>
+            </div>
+            <div class="col-lg-3">
+              <div class="form-group">
+                <label class="form-control-label" for="input-doubleRoomPrice">Giá phòng đôi</label>
+                <input type="number" name="doubleRoomPrice" id="doubleRoomPrice" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập giá tiền phòng đôi" [(ngModel)]="resHotel.doubleRoomPrice" [readonly]="!isEdit">
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="row align-items-center">
+      <div class="col-12 text-right">
+        <button  *ngIf="type == 'detail'" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteProvinceModal" (click)="getDataDelete()">Xóa</button>
+        <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="restore()">Khôi phục</button>
+        <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="save()">{{type == 'detail' ? "Lưu":"Thêm"}}</button>
+      </div>
+    </div>
+
+  </ng-container>
+</div>
+

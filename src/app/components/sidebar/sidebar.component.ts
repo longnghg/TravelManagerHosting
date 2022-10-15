@@ -21,6 +21,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/list-tour', title: 'Tour',  icon:'ni-bullet-list-67 text-red', class: '' },
     { path: '/list-schedule', title: 'Schedule',  icon:'ni-bullet-list-67 text-red', class: '' },
     { path: '/list-tourBooking', title: 'tourBooking',  icon:'ni-bullet-list-67 text-red', class: '' },
+    { path: '/list-hotel', title: 'Hotel',  icon:'ni-bullet-list-67 text-red', class: '' },
   ]
 
 
