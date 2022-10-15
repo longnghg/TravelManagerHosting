@@ -44,9 +44,11 @@ import { ItemCustomerComponent } from '../../pages/customer/item-customer/item-c
 import { ItemTourComponent } from '../../pages/tour/item-tour/item-tour.component';
 import { ListTourComponent } from '../../pages/tour/list-tour/list-tour.component';
 
-import { ListPromotionComponent } from '../../pages/promotion/list-promotion/list-promotion.component';
-import { ItemPromotionComponent } from '../../pages/promotion/item-promotion/item-promotion.component';
+// import { ListPromotionComponent } from '../../../pages/promotion/list-promotion/list-promotion.component';
+// import { ItemPromotionComponent } from '../../../pages/promotion/item-promotion/item-promotion.component';
 
+import { ListRestaurantComponent } from '../../pages/servicess/restaurant/list-restaurant/list-restaurant.component';
+import { ItemRestaurantComponent } from '../../pages/servicess/restaurant/item-restaurant/item-restaurant.component';
 
 import { NgSelectModule }           from '@ng-select/ng-select';
 import { NgOptionHighlightModule }  from '@ng-select/ng-option-highlight';
@@ -94,12 +96,14 @@ import { ListTourBookingComponent } from '../../pages/tourBooking/list-tour-book
     ListTourBookingComponent,
     ListHotelComponent,
     ItemHotelComponent,
-    ListPromotionComponent,
-    ItemPromotionComponent,
+    // ListPromotionComponent,
+    // ItemPromotionComponent,
     ListCustomerComponent,
     ItemCustomerComponent,
     ItemTourComponent,
     ListTourComponent,
+    ListRestaurantComponent,
+    ItemRestaurantComponent,
   ],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

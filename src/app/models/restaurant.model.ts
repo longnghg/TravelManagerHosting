@@ -1,6 +1,6 @@
 export class RestaurantModel{
-  id: string
-  idContract: string
+  idRestaurant: string
+  contractId: string
   name: string
   address: string
   phone: string
