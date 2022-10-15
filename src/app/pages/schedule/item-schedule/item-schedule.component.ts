@@ -57,26 +57,14 @@ export class ItemScheduleComponent implements OnInit {
   }
 
   init(e?){
-    this.employeeService.gets(e).subscribe(res =>{
-      this.response = res
-      if(!this.response.notification.type)
-      {
-        this.resEmployee = this.response.content
-      }
+    this.employeeService.views(e).then(response =>{
+      this.resEmployee = response
     })
-    this.carService.gets().subscribe(res =>{
-      this.response = res
-      if(!this.response.notification.type)
-      {
-        this.resCar = this.response.content
-      }
+    this.carService.views().then(response =>{
+      this.resCar = response
     })
-    this.tourService.gets().subscribe(res =>{
-      this.response = res
-      if(!this.response.notification.type)
-      {
-        this.resTour = this.response.content
-      }
+    this.tourService.views().then(response =>{
+      this.resTour = response
     })
   }
 
