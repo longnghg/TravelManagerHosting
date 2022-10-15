@@ -26,8 +26,6 @@ export class BannerComponent implements OnInit {
     if(!this.response.notification.type)
     {
       this.resBanner = this.response.content
-      console.log(this.resBanner);
-
     }
     else{
       this.notificationService.handleAlertObj(res.notification)
@@ -53,5 +51,4 @@ export class BannerComponent implements OnInit {
                 this._bannerService.UploadBanner(file).subscribe(res =>{
                 })
   }
-
 }

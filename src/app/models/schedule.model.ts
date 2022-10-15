@@ -1,6 +1,6 @@
 export class ScheduleModel{
   id: string
-  departureDate: number
+  departureDate: string
   beginDate: number
   endDate: number
   timePromotion: number
@@ -9,9 +9,16 @@ export class ScheduleModel{
   quantityAdult: number
   quantityBaby: number
   minCapacity: number
+  maxCapacity: number
   quantityChild: number
-  idTour: string
-  idCar: string
+  tourId: string
+  nameTour: string
+  carId: string
+  liscensePlate: string
+  nameDriver:string
+  employeeId: string
   idTourGuide: string
-  idPromotion: string
+  promotionId: string
+  nameEmployee:string
+  valuePromotion: number
 }

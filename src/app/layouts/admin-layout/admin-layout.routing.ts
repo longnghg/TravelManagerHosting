@@ -19,6 +19,11 @@ import { ListCustomerComponent } from 'src/app/pages/customer/list-customer/list
 
 import { ListTourComponent } from 'src/app/pages/tour/list-tour/list-tour.component';
 
+import { ListScheduleComponent } from 'src/app/pages/schedule/list-schedule/list-schedule.component';
+
+import { ListTourBookingComponent } from 'src/app/pages/tourBooking/list-tour-booking/list-tour-booking.component';
+import { Component } from '@angular/core';
+
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
@@ -34,6 +39,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'list-employee',  component: ListEmployeeComponent },
     { path: 'list-customer',  component: ListCustomerComponent },
     { path: 'list-tour',  component: ListTourComponent },
-
-
+    { path: 'list-schedule',  component: ListScheduleComponent},
+    { path: 'list-tourBooking',  component: ListTourBookingComponent}
 ];
