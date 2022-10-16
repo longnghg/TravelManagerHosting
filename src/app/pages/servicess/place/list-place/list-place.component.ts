@@ -29,18 +29,18 @@ export class ListPlaceComponent implements OnInit {
   }
   ngOnInit(): void {
     this.init()
-    console.log(this.resPlace);
+
 
     setTimeout(() => {
 
       this.columnDefs= [
         { field: 'idPlace', headerName: "Mã số", style: "width: 330px;", searchable: true, searchType: 'text', searchObj: 'idPlace'},
-        { field: 'idContract',headerName: "Mã hợp đồng", style: "width: 330px;", searchable: true, searchType: 'text', searchObj: 'idContract'},
-        { field: 'name',headerName: "Tên khách sạn", style: "width: 250px;", searchable: true, searchType: 'text', searchObj: 'name'},
+        { field: 'contractId',headerName: "Mã hợp đồng", style: "width: 330px;", searchable: true, searchType: 'text', searchObj: 'contractId'},
+        { field: 'name',headerName: "Tên địa điểm ", style: "width: 250px;", searchable: true, searchType: 'text', searchObj: 'name'},
         { field: 'address',headerName: "Địa chỉ", style: "width: 250px;", searchable: true, searchType: 'text', searchObj: 'address'},
         { field: 'phone',headerName: "Số điện thoại", style: "width: 250px;", searchable: true, searchType: 'text', searchObj: 'phone'},
         { field: 'priceTicket',headerName: "Giá vé", style: "width: 150px;", searchable: true, searchType: 'text', searchObj: 'priceTicket'},
-        { field: 'modifyBy',headerName: "Người Sửa", style: "width: 150px;", searchable: true, searchType: 'text', searchObj: 'modifyBy'},
+        { field: 'npm',headerName: "Người Sửa", style: "width: 150px;", searchable: true, searchType: 'text', searchObj: 'modifyBy'},
         { field: 'modifyDate',headerName: "Ngày Sửa", style: "width: 200px;", searchable: true, searchType: 'text', searchObj: 'modifyDate'},
       ];
     }, 200);
@@ -52,7 +52,8 @@ export class ListPlaceComponent implements OnInit {
       if(!this.response.notification.type){
         this.resPlace = this.response.content
 
-
+        console.log(this.resPlace);
+        console.log(this.resPlace);
       }
       else{
         this.resPlace = null

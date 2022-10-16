@@ -1,6 +1,6 @@
 export class PlaceModel{
   idPlace: string
-  idContract: string
+  contractId: string
   name: string
   address: string
   phone: string
