@@ -18,7 +18,7 @@
                 <label class="form-control-label" for="tourId">Chọn tour</label>
                 <ng-select [items]="resTour"
                             bindLabel="tourName"
-                            bindValue="id"
+                            bindValue="idTour"
                             [(ngModel)]="resSchedule.tourId"
                             [disabled]="!isEdit"
                             placeholder="Chọn tour..."
@@ -63,7 +63,7 @@
             <div class="col-lg-6">
               <div class="form-group">
                 <label class="form-control-label" for="input-departureDate">Chọn ngày khởi hành</label>
-                <input type="text" id="departureDate" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Chọn ngày" [(ngModel)]="resSchedule.departureDate" [readonly]="!isEdit">
+                <input   (change)="resSchedule.departureDate = resScheduleTmp.departureDate; inputChange()" [(ngModel)]="resScheduleTmp.departureDate" class="form-control datepicker" placeholder="Chọn ngày" name="departureDate" id="departureDate" type="date" [disabled]="!isEdit"/>
               </div>
             </div>
           </div>
@@ -71,13 +71,13 @@
             <div class="col-lg-6">
               <div class="form-group">
                 <label class="form-control-label" for="input-promotionId">Chọn khuyến mãi</label>
-                <input type="text" id="promotionId" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Chọn khuyến mãi" [(ngModel)]="resSchedule.promotionId" [readonly]="!isEdit">
+                <input type="text" name="promotionId" id="promotionId" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Chọn khuyến mãi" [(ngModel)]="resSchedule.promotionId" [readonly]="!isEdit">
               </div>
             </div>
             <div class="col-lg-6">
               <div class="form-group">
                 <label class="form-control-label" for="input-timePromotion">Chọn thời gian khuyến mãi</label>
-                <input type="text" id="timePromotion" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Chọn ngày" [(ngModel)]="resSchedule.timePromotion" [readonly]="!isEdit">
+                <input   (change)="resSchedule.timePromotion = resScheduleTmp.timePromotion; inputChange()" [(ngModel)]="resScheduleTmp.timePromotion" class="form-control datepicker" placeholder="Chọn ngày" name="timePromotion" id="timePromotion" type="time" [disabled]="!isEdit"/>
               </div>
             </div>
           </div>
@@ -85,13 +85,13 @@
             <div class="col-lg-6">
               <div class="form-group">
                 <label class="form-control-label" for="input-beginDate">Chọn ngày bắt đầu</label>
-                <input type="text" id="beginDate" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Chọn ngày" [(ngModel)]="resSchedule.beginDate" [readonly]="!isEdit">
+                <input   (change)="resSchedule.beginDate = resScheduleTmp.beginDate; inputChange()" [(ngModel)]="resScheduleTmp.beginDate" class="form-control datepicker" placeholder="Chọn ngày" name="beginDate" id="beginDate" type="date" [disabled]="!isEdit"/>
               </div>
             </div>
             <div class="col-lg-6">
               <div class="form-group">
                 <label class="form-control-label" for="input-endDate">Chọn ngày kết thúc</label>
-                <input type="text" id="endDate" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Chọn ngày" [(ngModel)]="resSchedule.endDate" [readonly]="!isEdit">
+                <input   (change)="resSchedule.endDate = resScheduleTmp.endDate; inputChange()" [(ngModel)]="resScheduleTmp.endDate" class="form-control datepicker" placeholder="Chọn ngày" name="endDate" id="endDate" type="date" [disabled]="!isEdit"/>
               </div>
             </div>
           </div>
@@ -99,13 +99,13 @@
             <div class="col-lg-6">
               <div class="form-group">
                 <label class="form-control-label" for="input-minCapacity">Tối thiểu số người</label>
-                <input type="text" id="minCapacity" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số lượng tối thiểu" [(ngModel)]="resSchedule.minCapacity" [readonly]="!isEdit">
+                <input type="text" name="minCapacity" id="minCapacity" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số lượng tối thiểu" [(ngModel)]="resSchedule.minCapacity" [readonly]="!isEdit">
               </div>
             </div>
             <div class="col-lg-6">
               <div class="form-group">
                 <label class="form-control-label" for="input-maxCapacity">Tối đa số người</label>
-                <input type="text" id="maxCapacity" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số lượng tối đa" [(ngModel)]="resSchedule.maxCapacity" [readonly]="!isEdit">
+                <input type="text" name="maxCapacity" id="maxCapacity" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số lượng tối đa" [(ngModel)]="resSchedule.maxCapacity" [readonly]="!isEdit">
               </div>
             </div>
           </div>

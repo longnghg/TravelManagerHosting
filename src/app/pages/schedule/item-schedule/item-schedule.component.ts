@@ -39,12 +39,6 @@ export class ItemScheduleComponent implements OnInit {
   ngOnChanges(): void {
     this.init()
 
-    // if(this.resSchedule){
-    //   if(this.resSchedule.departureDate){
-    //     this.date = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.departureDate))
-    //     this.dateView = this.configService.formatFromUnixTimestampToFullDateView(Number.parseInt(this.resSchedule.departureDate))
-    //   }
-    // }
     if(this.type == 'create'){
       this.resSchedule = new ScheduleModel()
       this.isEdit = true
@@ -53,6 +47,15 @@ export class ItemScheduleComponent implements OnInit {
     }
     this.resScheduleTmp = Object.assign({}, this.resSchedule)
 
+    // if(this.resScheduleTmp){
+
+    //     this.resScheduleTmp.departureDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.departureDate))
+    //     this.resScheduleTmp.beginDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.beginDate))
+    //     this.resScheduleTmp.endDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.endDate))
+    //     this.resScheduleTmp.timePromotion = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.timePromotion))
+    //     this.dateView = this.configService.formatFromUnixTimestampToFullDateView(Number.parseInt(this.resSchedule.departureDate))
+
+    // }
 
   }
 

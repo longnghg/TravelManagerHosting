@@ -29,7 +29,6 @@ export class ListScheduleComponent implements OnInit {
   ngOnInit(): void {
 
     this.init()
-    console.log(this.resSchedule);
 
     setTimeout(() => {
       this.columnDefs= [
@@ -37,10 +36,10 @@ export class ListScheduleComponent implements OnInit {
         { field: 'nameTour', headerName: "Tên tour", style: "width: 300px;", searchable: true, searchType: 'text', searchObj: 'nameTour'},
         { field: 'nameDriver', headerName: "Tên người lái", style: "width: 270px;", searchable: true, searchType: 'text', searchObj: 'nameDriver'},
         { field: 'liscensePlate', headerName: "Biển số xe", style: "width: 200px;", searchable: true, searchType: 'text', searchObj: 'liscensePlate'},
-        { field: 'departureDate',headerName: "Ngày khởi hành", style: "width: 200px;", filter: "avatar", searchable: true, searchType: 'date', searchObj: 'departureDate'},
-        { field: 'beginDate',headerName: "Ngày bắt đầu", style: "width: 200px;", searchable: true, searchType: 'date', searchObj: 'beginDate'},
-        { field: 'endDate',headerName: "Ngày kết thúc", style: "width: 200px;", searchable: true, searchType: 'date', searchObj: 'endDate'},
-        { field: 'timePromotion',headerName: "Thời gian khuyến mãi", style: "width: 180px;", searchable: true, searchType: 'time', searchObj: 'timePromotion'},
+        { field: 'departureDate',headerName: "Ngày khởi hành", filter: "date", style: "width: 200px;", searchable: true, searchType: 'date', searchObj: 'departureDate'},
+        { field: 'beginDate',headerName: "Ngày bắt đầu", filter: "date", style: "width: 200px;", searchable: true, searchType: 'date', searchObj: 'beginDate'},
+        { field: 'endDate',headerName: "Ngày kết thúc", filter: "date", style: "width: 200px;", searchable: true, searchType: 'date', searchObj: 'endDate'},
+        { field: 'timePromotion',headerName: "Thời gian khuyến mãi", filter: "date", style: "width: 180px;", searchable: true, searchType: 'time', searchObj: 'timePromotion'},
         { field: 'minCapacity',headerName: "Tối thiểu", style: "width: 130px;", searchable: true, searchType: 'number', searchObj: 'minCapacity'},
         { field: 'maxCapacity',headerName: "Tối đa", style: "width: 130px;", searchable: true, searchType: 'number', searchObj: 'maxCapacity'},
         { field: 'quantityAdult',headerName: "Số lượng người lớn", style: "width: 130px;", searchable: true, searchType: 'number', searchObj: 'quantityAdult'},

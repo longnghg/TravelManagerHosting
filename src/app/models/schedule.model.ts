@@ -1,9 +1,9 @@
 export class ScheduleModel{
   id: string
   departureDate: string
-  beginDate: number
-  endDate: number
-  timePromotion: number
+  beginDate: string
+  endDate: string
+  timePromotion: string
   status: number
   finalPrice: number
   quantityAdult: number
