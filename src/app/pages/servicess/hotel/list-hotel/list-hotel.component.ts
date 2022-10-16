@@ -12,6 +12,7 @@ import { ResponseModel } from "../../../../models/responsiveModels/response.mode
 })
 export class ListHotelComponent implements OnInit {
   resHotel: HotelModel[]
+  resHotelWaiting: HotelModel[]
   response: ResponseModel
   dataChild: HotelModel
   typeChild: string
@@ -24,6 +25,9 @@ export class ListHotelComponent implements OnInit {
     idModal: "gridHotel",
     radioBox: true,
     radioBoxName: "Kho lưu trữ",
+  }
+  public gridConfigWaiting: GridConfig = {
+    idModal: "gridHotel",
   }
   ngOnInit(): void {
     this.init()
@@ -51,6 +55,22 @@ export class ListHotelComponent implements OnInit {
       this.response = res
       if(!this.response.notification.type){
         this.resHotel = this.response.content
+      }
+      else{
+        this.resHotel = null
+        this.notificationService.handleAlertObj(res.notification)
+      }
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, "Error")
+    })
+
+
+
+    this.hotelService.getsWaiting().subscribe(res =>{
+      this.response = res
+      if(!this.response.notification.type){
+        this.resHotelWaiting = this.response.content
       }
       else{
         this.resHotel = null

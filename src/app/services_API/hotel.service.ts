@@ -13,7 +13,10 @@ gets()
 {
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/gets-hotel");
 }
-
+getsWaiting()
+{
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/gets-hotel-waiting");
+}
 create(data: any)
 {
   return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Service/create-hotel", data);

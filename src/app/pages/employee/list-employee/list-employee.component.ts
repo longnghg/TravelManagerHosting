@@ -7,6 +7,10 @@ import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.compo
 import { ConfigService } from "../../../services_API/config.service";
 import { RoleService } from "../../../services_API/role.service";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
+
+
+// signalr 
+import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 @Component({
   selector: 'app-maps',
   templateUrl: './list-employee.component.html',
@@ -19,8 +23,15 @@ export class ListEmployeeComponent implements OnInit {
   resRole: RoleModel[]
   response: ResponseModel
   data: EmployeeModel
-  constructor(private roleService: RoleService, private configService: ConfigService, private employeeService: EmployeeService, private notificationService: NotificationService) {}
+     //signalr
+     private hubConnectionBuilder: HubConnection
 
+  constructor(private roleService: RoleService,
+     private configService: ConfigService,
+      private employeeService: EmployeeService,
+       private notificationService: NotificationService) {}
+
+  
   public columnDefs: ColDef[]
   public gridConfig: GridConfig = {
     idModalRestore: "restoreEmployeeModal",
@@ -29,14 +40,17 @@ export class ListEmployeeComponent implements OnInit {
     radioBox: true,
     radioBoxName: "Kho lưu trữ",
   }
+
   ngOnInit() {
-
-
-      this.init()
-
     this.roleService.views().then(response => {
       this.resRole = response
     })
+    this.hubConnectionBuilder = new HubConnectionBuilder().withUrl(`${this.configService.apiUrl}/travelhub`).configureLogging(LogLevel.Information).build();
+    this.hubConnectionBuilder.start().then(()=> console.log("Da ket noi")).catch(err => console.log("error"));
+
+      this.init()
+
+  
 
     setTimeout(() => {
 
@@ -51,9 +65,6 @@ export class ListEmployeeComponent implements OnInit {
 
 
     }, 200);
-
-
-
   }
 
   search(e?){
@@ -77,23 +88,29 @@ export class ListEmployeeComponent implements OnInit {
   }
 
   init(e?){
-    this.employeeService.gets(e).subscribe(res => {
-      this.response = res
-      if(!this.response.notification.type)
-      {
-        this.resEmployee = this.response.content
-      }
-      else{
-        this.resEmployee = null
-        this.notificationService.handleAlertObj(res.notification)
-      }
-
-    }, error => {
-      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
+    this.getlist(e);
+    this.hubConnectionBuilder.on('Insert', (result: any) => {
+      this.getlist(e);
     })
+      
   }
+ getlist(e?){
+  this.employeeService.gets(e).subscribe(res => {
+    this.response = res
+    if(!this.response.notification.type)
+    {
+      this.resEmployee = this.response.content
+    }
+    else{
+      this.resEmployee = null
+      this.notificationService.handleAlertObj(res.notification)
+    }
 
+  }, error => {
+    var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+    this.notificationService.handleAlert(message, "Error")
+  })
+ }
   childData(e){
     if (e) {
       this.dataChild = e
