@@ -14,6 +14,9 @@
           <h3 class="mb-0">Car</h3>
         </div>
         <div class="col text-right">
+          <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Thêm
+          </button>
           <!-- <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="childData(null, 'create')" >
             Thêm
           </button> -->
@@ -25,15 +28,13 @@
       <table class="table align-items-center table-flush">
         <thead class="thead-light">
           <tr>
-            <!-- <th scope="col">STT</th>
+            <th scope="col">STT</th>
             <th scope="col">Id</th>
-            <th scope="col">Tên</th>
-            <th scope="col">Email</th>
-            <th scope="col">Ngày sinh</th>
-            <th scope="col">Hình ảnh</th>
-            <th scope="col">Điện thoại</th>
-            <th scope="col">Chức vụ</th> -->
-
+            <th scope="col">Liscense Plate</th>
+            <th scope="col">Status</th>
+            <th scope="col">Amount Seat</th>
+            <th scope="col">Name Driver</th>
+            <th scope="col">Phone</th>
           </tr>
         </thead>
         <tbody>
@@ -51,9 +52,14 @@
               {{item.status}}
            </td>
            <td>
+            {{item.amountSeat}}
+         </td>
+           <td>
+            {{item.driver}}
+          </td>
+          <td>
             {{item.Phone}}
           </td>
-
             <td>
               <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="childData(item, 'detail')">
                 Chi tiết
@@ -86,7 +92,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-         <!-- <app-item-car [resParent]="child" [type]="type"></app-item-car> -->
+         <!-- <app-item-car [resCar]="child" [type]="type"></app-item-car> -->
       </div>
     </div>
   </div>

@@ -3,6 +3,7 @@ export class CarModel{
   liscensePlate: string
   status: number
   amountSeat: number
+  phone: string
   driver: string
   idEmployee: number
 }

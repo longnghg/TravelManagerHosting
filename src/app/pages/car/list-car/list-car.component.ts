@@ -28,7 +28,6 @@ export class ListCarComponent implements OnInit {
       {
         this.notificationService.handleAlertObj(res.notification)
       }
-
       this.resCar = this.response.content
       // console.log(this.resCar);
 
@@ -36,22 +35,23 @@ export class ListCarComponent implements OnInit {
   }
 
   childData(data: CarModel, type: string){
+    this.child = data
     this.type = type
   }
 
-  getsCar(){
-    this.carService.gets().subscribe(res => {
-      this.response = res
+  // getsCar(){
+  //   this.carService.gets().subscribe(res => {
+  //     this.response = res
 
-      if(this.response.notification.type == "Error")
-      {
-        this.notificationService.handleAlertObj(res.notification)
-      }
+  //     if(this.response.notification.type == "Error")
+  //     {
+  //       this.notificationService.handleAlertObj(res.notification)
+  //     }
 
-      this.resCar = this.response.content
-      console.log(this.resCar);
+  //     this.resCar = this.response.content
+  //     console.log(this.resCar);
 
-    })
-  }
+  //   })
+  // }
 
 }

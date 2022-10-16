@@ -13,9 +13,10 @@ import { ResponseModel } from "../../../models/responsiveModels/response.model";
 export class ItemCarComponent implements OnInit {
 
   response: ResponseModel
-  @Input() resParent: CarModel
+  @Input() resCar: CarModel
   @Input() type: string
-  resCar: CarModel
+
+
   constructor(private carService: CarService, private notificationService: NotificationService,
     private configService: ConfigService) { }
 
@@ -23,16 +24,14 @@ export class ItemCarComponent implements OnInit {
   }
 
   ngOnChanges(): void {
-    this.resCar = this.resParent
+    this.resCar = this.resCar
     if(this.type == "create"){
       this.resCar = new CarModel()
     }
     console.log(this.resCar);
-
   }
 
   save(){
-
     this.carService.create(this.resCar).subscribe(res =>{
       this.response = res
       if(this.response.notification.type == "Error")
