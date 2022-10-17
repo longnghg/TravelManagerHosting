@@ -5,7 +5,9 @@ export class LocationModel{
 
   provinceName?: string = null
   districtName?: string = null
-  wardName?: string = null
+
+  provinceId?: string = null
+  districtId?: string = null
 
   idProvince?: string = null
   idDistrict?: string = null

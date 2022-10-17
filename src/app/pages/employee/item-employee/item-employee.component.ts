@@ -26,7 +26,7 @@ export class ItemEmployeeComponent implements OnInit{
   formData: any
   birthday: string
   birthdayView: string
-  img:any = "../../../../assets/img/employees/unknown.png"
+  img:any
   constructor(private employeeService: EmployeeService, private notificationService: NotificationService,
     private configService: ConfigService, private roleService: RoleService) { }
 
@@ -38,19 +38,21 @@ export class ItemEmployeeComponent implements OnInit{
       this.resRole = response
     })
     if(this.resEmployee){
+
       if (this.resEmployee.image) {
         this.img = this.configService.apiUrl + this.resEmployee.image
+      }
+      else{
+        this.img = "../../../../assets/img/employees/unknown.png"
       }
 
       if(this.resEmployee.birthday){
         this.birthday = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resEmployee.birthday))
         this.birthdayView = this.configService.formatFromUnixTimestampToFullDateView(Number.parseInt(this.resEmployee.birthday))
-
       }
     }
     if(this.type == "create"){
-      this.resEmployee = new EmployeeModel()
-      this.isEdit = true
+      this.close()
     }
     else{
       this.isEdit = false
@@ -59,6 +61,7 @@ export class ItemEmployeeComponent implements OnInit{
     this.resEmployeeTmp = Object.assign({}, this.resEmployee)
   }
   inputChange(){
+    this.birthdayView = this.configService.formatFromUnixTimestampToFullDateView(Number.parseInt(this.resEmployee.birthday))
     if (JSON.stringify(this.resEmployee) != JSON.stringify(this.resEmployeeTmp)) {
       this.isChange = true
     }
@@ -68,11 +71,9 @@ export class ItemEmployeeComponent implements OnInit{
   }
 
   isEditChange(){
-
     if (this.isEdit) {
       this.isEdit = false
       this.backup()
-
     }
     else{
       this.isEdit = true
@@ -97,8 +98,6 @@ export class ItemEmployeeComponent implements OnInit{
         this.notificationService.handleAlert(element, "Error")
     });
     if (valid.length == 0) {
-      console.log(this.resEmployee);
-
       var file = new FormData();
       file.append('data', JSON.stringify(this.resEmployee))
 
@@ -111,7 +110,7 @@ export class ItemEmployeeComponent implements OnInit{
         this.employeeService.create(file).subscribe(res =>{
           this.response = res
          this.notificationService.handleAlertObj(res.notification)
-         this.close()
+          this.close()
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, "Error")
@@ -121,7 +120,10 @@ export class ItemEmployeeComponent implements OnInit{
         this.employeeService.update(file).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-          this.close()
+          if (this.type == 'detail') {
+            this.isEdit = false
+          }
+          this.isChange = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, "Error")
@@ -130,15 +132,6 @@ export class ItemEmployeeComponent implements OnInit{
 
     }
 
-  }
-  delete(){
-    this.employeeService.delete(this.resEmployee).subscribe(res =>{
-      this.response = res
-      this.notificationService.handleAlertObj(res.notification)
-    }, error => {
-      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
-    })
   }
 
   backup(){
@@ -152,7 +145,13 @@ export class ItemEmployeeComponent implements OnInit{
     if (this.type == 'detail') {
       this.isEdit = false
     }
-    this.backup()
+    else{
+      this.resEmployee = new EmployeeModel()
+      this.img = "../../../../assets/img/employees/unknown.png"
+      this.birthday = null
+      this.birthdayView = null
+      this.isEdit = true
+    }
   }
 
 

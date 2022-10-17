@@ -27,7 +27,7 @@
             </div>
           </div>
         </a>
-        <div class="dropdown-menu-arrow dropdown-menu-right" ngbDropdownMenu>
+        <div class="dropdown-menu-arrow dropdown-menu-right" ngbDropdownMenu style="margin-left: -40px;">
           <div class=" dropdown-header noti-title">
             <h6 class="text-overflow m-0">Welcome!</h6>
           </div>
@@ -36,21 +36,13 @@
             <span>My profile</span>
           </a>
           <a routerLinkActive="active" [routerLink]="['/user-profile']" class="dropdown-item">
-            <i class="ni ni-settings-gear-65"></i>
-            <span>Settings</span>
-          </a>
-          <a routerLinkActive="active" [routerLink]="['/user-profile']" class="dropdown-item">
-            <i class="ni ni-calendar-grid-58"></i>
-            <span>Activity</span>
-          </a>
-          <a routerLinkActive="active" [routerLink]="['/user-profile']" class="dropdown-item">
             <i class="ni ni-support-16"></i>
             <span>Support</span>
           </a>
-          <div class="dropdown-divider"></div>
+          <div class="dropdown-divider" style="z-index: 2;"></div>
           <a href="#!" class="dropdown-item">
             <i class="ni ni-user-run"></i>
-            <span>Logout</span>
+            <span>Đăng xuất</span>
           </a>
         </div>
       </li>

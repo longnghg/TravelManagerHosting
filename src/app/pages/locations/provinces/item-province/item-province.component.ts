@@ -37,7 +37,7 @@ export class ItemProvinceComponent implements OnInit {
   isEditChange(){
     if (this.isEdit) {
       this.isEdit = false
-      this.restore()
+      this.backup()
 
     }
     else{
@@ -53,7 +53,7 @@ export class ItemProvinceComponent implements OnInit {
     }
   }
 
-  restore(){
+  backup(){
     this.resProvince = Object.assign({}, this.resProvinceTmp)
     this.isChange = false
   }
@@ -68,10 +68,7 @@ export class ItemProvinceComponent implements OnInit {
         this.provinceService.create(this.resProvince).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-
-          if(this.response.notification.type == "Error")
-          {
-          }
+          this.close()
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, "Error")
@@ -88,13 +85,18 @@ export class ItemProvinceComponent implements OnInit {
           else{
             this.resProvince = Object.assign({},this.resProvinceTmp)
           }
+
+          if (this.type == 'detail') {
+            this.isEdit = false
+          }
+          this.isChange = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, "Error")
         })
 
       }
-      this.close()
+
     }
 
   }
@@ -107,6 +109,6 @@ export class ItemProvinceComponent implements OnInit {
     if (this.type == 'detail') {
       this.isEdit = false
     }
-     this.restore()
+     this.backup()
   }
 }

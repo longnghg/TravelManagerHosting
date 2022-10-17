@@ -54,8 +54,8 @@ export class ProvinceService{
       return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/update-province", data);
   }
 
-  delete(data: any)
+  delete(idProvince: any)
   {
-      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/delete-province", data);
+      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/delete-province?idProvince="+idProvince);
   }
 }

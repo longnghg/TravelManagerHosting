@@ -9,8 +9,8 @@ import { RoleService } from "../../../services_API/role.service";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 
 
-// signalr 
-import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
+// signalr
+import { HubConnection } from '@microsoft/signalr';
 @Component({
   selector: 'app-maps',
   templateUrl: './list-employee.component.html',
@@ -23,15 +23,11 @@ export class ListEmployeeComponent implements OnInit {
   resRole: RoleModel[]
   response: ResponseModel
   data: EmployeeModel
+  type: boolean
      //signalr
-     private hubConnectionBuilder: HubConnection
+  private hubConnectionBuilder: HubConnection
 
-  constructor(private roleService: RoleService,
-     private configService: ConfigService,
-      private employeeService: EmployeeService,
-       private notificationService: NotificationService) {}
 
-  
   public columnDefs: ColDef[]
   public gridConfig: GridConfig = {
     idModalRestore: "restoreEmployeeModal",
@@ -41,30 +37,24 @@ export class ListEmployeeComponent implements OnInit {
     radioBoxName: "Kho lưu trữ",
   }
 
+
+    constructor(private roleService: RoleService,
+       private configService: ConfigService,
+        private employeeService: EmployeeService,
+         private notificationService: NotificationService) {}
+
   ngOnInit() {
-    this.roleService.views().then(response => {
-      this.resRole = response
+
+
+    this.init(this.type)
+    this.hubConnectionBuilder = this.configService.signIR(this.init())
+    this.hubConnectionBuilder.start();
+    this.hubConnectionBuilder.on('Init', (result: any) => {
+      this.init(this.type)
     })
-    this.hubConnectionBuilder = new HubConnectionBuilder().withUrl(`${this.configService.apiUrl}/travelhub`).configureLogging(LogLevel.Information).build();
-    this.hubConnectionBuilder.start().then(()=> console.log("Da ket noi")).catch(err => console.log("error"));
-
-      this.init()
-
-  
-
-    setTimeout(() => {
-
-      this.columnDefs= [
-        { field: 'idEmployee', headerName: "Mã số", style: "width: 350px;", searchable: true, searchType: 'text', searchObj: 'idEmployee'},
-        { field: 'nameEmployee',headerName: "Tên", style: "width: 400px;", filter: "avatar", searchable: true, searchType: 'text', searchObj: 'nameEmployee'},
-        { field: 'email',headerName: "Email", style: "width: 200px;", searchable: true, searchType: 'email', searchObj: 'email'},
-        { field: 'phone',headerName: "Số điện thoại", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'phone'},
-        { field: 'roleName',headerName: "Chức vụ", style: "width: 250px;", searchable: true, searchType: 'section', searchObj: 'idRole', searchStyle: "width: 200px;", multiple: true, closeOnSelect: false, bindLabel: 'nameRole', bindValue: "idRole", listSection: this.resRole},
-        { field: 'isActive',headerName: "Kích hoạt", style: "width: 200px;", filter: "status", searchable: true, searchType: 'section', searchStyle: "width: 150px;", multiple: false, closeOnSelect: true, searchObj: 'isActive', bindLabel: "name", bindValue: "id", listSection: this.configService.listStatus()},
-      ];
 
 
-    }, 200);
+
   }
 
   search(e?){
@@ -88,29 +78,40 @@ export class ListEmployeeComponent implements OnInit {
   }
 
   init(e?){
-    this.getlist(e);
-    this.hubConnectionBuilder.on('Insert', (result: any) => {
-      this.getlist(e);
-    })
-      
-  }
- getlist(e?){
-  this.employeeService.gets(e).subscribe(res => {
-    this.response = res
-    if(!this.response.notification.type)
-    {
-      this.resEmployee = this.response.content
-    }
-    else{
-      this.resEmployee = null
-      this.notificationService.handleAlertObj(res.notification)
-    }
+    this.type = e
+    this.employeeService.gets(this.type).subscribe(res => {
+      this.response = res
+      if(!this.response.notification.type)
+      {
+        this.resEmployee = this.response.content
+      }
+      else{
+        this.resEmployee = null
+        this.notificationService.handleAlertObj(res.notification)
+      }
 
-  }, error => {
-    var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-    this.notificationService.handleAlert(message, "Error")
-  })
- }
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, "Error")
+    })
+
+    this.roleService.views().then(response => {
+      this.resRole = response
+    })
+
+    setTimeout(() => {
+
+      this.columnDefs= [
+        { field: 'idEmployee', headerName: "Mã số", style: "width: 350px;", searchable: true, searchType: 'text', searchObj: 'idEmployee'},
+        { field: 'nameEmployee',headerName: "Tên", style: "width: 400px;", searchable: true, searchType: 'text', searchObj: 'nameEmployee'},
+        { field: 'email',headerName: "Email", style: "width: 200px;", searchable: true, searchType: 'email', searchObj: 'email'},
+        { field: 'phone',headerName: "Số điện thoại", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'phone'},
+        { field: 'roleName',headerName: "Chức vụ", style: "width: 250px;", searchable: true, searchType: 'section', searchObj: 'roleId', searchStyle: "width: 200px;", multiple: true, closeOnSelect: false, bindLabel: 'nameRole', bindValue: "idRole", listSection: this.resRole},
+        { field: 'isActive',headerName: "Kích hoạt", style: "width: 200px;", filter: "status", searchable: true, searchType: 'section', searchStyle: "width: 150px;", multiple: false, closeOnSelect: true, searchObj: 'isActive', bindLabel: "name", bindValue: "id", listSection: this.configService.listStatus()},
+      ];
+    }, 200);
+  }
+
   childData(e){
     if (e) {
       this.dataChild = e
@@ -130,7 +131,7 @@ export class ListEmployeeComponent implements OnInit {
 
   delete(){
     if (this.data) {
-     this.employeeService.delete(this.data).subscribe(res =>{
+     this.employeeService.delete(this.data.idEmployee).subscribe(res =>{
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
      }, error => {
@@ -142,7 +143,7 @@ export class ListEmployeeComponent implements OnInit {
 
    restore(){
     if (this.data) {
-      this.employeeService.restore(this.data).subscribe(res =>{
+      this.employeeService.restore(this.data.idEmployee).subscribe(res =>{
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
       }, error => {

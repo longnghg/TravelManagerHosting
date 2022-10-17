@@ -51,8 +51,8 @@ export class WardService{
       return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/update-ward", data);
   }
 
-  delete(data: any)
+  delete(idWard: any)
   {
-      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/delete-ward", data);
+      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/delete-ward?idWard="+idWard);
   }
 }

@@ -1,38 +1,48 @@
-<!-- <p>item-role works!</p> -->
-
-
-<div class="card-body" *ngIf="roleRes">
-  <form>
-    <h6 class="heading-small text-muted mb-4">Role</h6>
-    <div class="pl-lg-4">
-      <div class="row">
-        <div class="col-lg-6">
-          <div class="form-group">
-            <label class="form-control-label">Name</label>
-            <input type="text" [(ngModel)]="roleRes.nameRole" name="nameRole" class="form-control" placeholder="Nhập tên" value="">
-          </div>
-          <div class="form-group">
-            <label class="form-control-label">Name</label>
-            <input type="text" [(ngModel)]="roleRes.description" name="description"  class="form-control" placeholder="Nhập tên" value="">
-          </div>
+<div class="modal-header">
+  <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin chi tiết</h1>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
+</div>
+<div class="modal-body">
+  <ng-container *ngIf="resRole">
+    <div class="container-fluid" >
+      <div class="row align-items-center">
+        <div class="col-12 text-right">
+          <a href="javascript:void(0)" *ngIf="type == 'detail' && resRole.isDelete == false" class="btn btn-sm btn-primary" (click)="isEditChange()">{{!isEdit ? "Chỉnh sửa":"Quay lại"}}</a>
         </div>
       </div>
-      <ng-container *ngIf="roleRes.isDelete == true; else elseTemplate">
-        <div>
-          <button (click)="restore()" class="btn btn-warning">Khôi phục</button>
+
+      <form>
+        <div class="pl-lg-4">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="form-group">
+                <label class="form-control-label" for="input-username">Tên chức vụ</label>
+                <input type="text" id="name" name="name" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập tên chức vụ" [(ngModel)]="resRole.nameRole" [readonly]="!isEdit">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="form-group">
+                <label class="form-control-label" for="input-username">Mô tả</label>
+                <input type="text" id="description" name="description" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập mô tả" [(ngModel)]="resRole.description" [readonly]="!isEdit">
+              </div>
+            </div>
+          </div>
         </div>
-      </ng-container>
-      <ng-template #elseTemplate>
-        <div class="row"  >
-          <button (click)="save()" class="btn btn-primary">{{type == 'create' ? 'Thêm quyền' : 'Sửa quyền'}}</button>
-        </div>
-        <hr>
-        <div class="row">
-          <button (click)="delete()" class="btn btn-danger">Xóa</button>
-        </div>
-      </ng-template>
+      </form>
     </div>
-    <hr class="my-4" />
-  </form>
+
+    <div class="row align-items-center">
+      <div class="col-12 text-right">
+        <button  *ngIf="type == 'detail' && resRole.isDelete == false" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteRoleModal" (click)="getDataDelete()">Xóa</button>
+        <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="backup()">Khôi phục</button>
+        <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="save()">{{type == 'detail' ? "Lưu":"Thêm"}}</button>
+        <button *ngIf="resRole.isDelete == true" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreRoleModal" class="btn btn-warning" >Khôi phục người dùng</button>
+      </div>
+    </div>
+
+  </ng-container>
 </div>
+
 

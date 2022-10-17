@@ -1,15 +1,21 @@
 import { Injectable, Inject } from "@angular/core";
 import { DOCUMENT } from '@angular/common';
+import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigService{
   constructor(@Inject(DOCUMENT) private document: Document){}
-
+  private hubConnectionBuilder: HubConnection
   public apiUrl = "https://localhost:44394";
   public clientUrl = this.document.location.origin
 
+  signIR(func: any){
+    console.log(func);
+
+   return this.hubConnectionBuilder = new HubConnectionBuilder().withUrl(`${this.apiUrl}/travelhub`).configureLogging(LogLevel.Information).build();
+  }
   error(status: any, message: any){
     console.log('Status:  '  + status);
     console.log('Message: '  + message);
@@ -46,6 +52,7 @@ export class ConfigService{
     return listStatus
   }
 
+
   validateEmployee(data: any){
     var err = []
     var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -70,7 +77,7 @@ export class ConfigService{
     // }
 
     //role
-    if (data.idRole == null || data.idRole == "") {
+    if (data.roleId == null || data.roleId == "") {
        err.push("[Quyền] không được để trống !")
     }
 
@@ -93,10 +100,16 @@ export class ConfigService{
     // if (Number.parseInt(data.phone) == NaN) {
     //    err.push("[Số điện thoại] không hợp lệ !")
     // }
-
+    let timeDiff = Math.abs(Date.now() - Date.parse(data.birthday));
+    let age = Math.floor((timeDiff / (1000 * 3600 * 24))/365);
+    console.log(age)
     //BirthDay
     if (data.birthday == null || data.birthday == "") {
        err.push("[Ngày sinh] không được để trống !")
+    }else if(age < 18){
+      err.push("[Ngày sinh] phải trên 18 tuổi !")
+    }else if(age > 60){
+      err.push("[Ngày sinh] phải dưới 60 tuổi !")
     }
 
 
@@ -133,6 +146,22 @@ export class ConfigService{
 
    }
 
+   validateRole(data: any){
+    var err = []
+    //name
+    if(data.nameRole == null || data.nameRole == ""){
+       err.push("[Tên chức vụ] không được để trống !")
+    }
+    else if (data.nameRole.length > 30) {
+       err.push("[Tên chức vụ] quá dài !")
+    }else if (data.nameRole.length < 3) {
+      err.push("[Tên chức vụ] quá ngắn !")
+    }
+
+    return err
+
+   }
+
    validateDistrict(data: any){
     var err = []
     //name
@@ -147,7 +176,7 @@ export class ConfigService{
     console.log(data);
 
     //province
-    if (data.idProvince == null || data.idProvince == "") {
+    if (data.provinceId == null || data.provinceId == "") {
       err.push("[Thành phố/tỉnh] không được để trống !")
     }
     return err
@@ -167,7 +196,7 @@ export class ConfigService{
     }
 
     //province
-    if (data.idDistrict == null || data.idDistrict == "") {
+    if (data.districtId == null || data.districtId == "") {
       err.push("[Quận/huyện] không được để trống !")
     }
     return err
@@ -178,7 +207,13 @@ export class ConfigService{
     var date = new Date(unix_timestamp).toLocaleDateString("en-US");
     var split = date.split("/")
     var day = split[1];
+    if (Number.parseInt(day) < 10) {
+      day = "0"+day
+    }
     var month = split[0];
+    if (Number.parseInt(month) < 10) {
+      month = "0"+month
+    }
     var year =  split[2];
     var formattedDate = year + '-' + month + '-' + day;
     return formattedDate
@@ -188,7 +223,13 @@ export class ConfigService{
     var date = new Date(unix_timestamp).toLocaleDateString("en-US");
     var split = date.split("/")
     var day = split[1];
+    if (Number.parseInt(day) < 10) {
+      day = "0"+day
+    }
     var month = split[0];
+    if (Number.parseInt(month) < 10) {
+      month = "0"+month
+    }
     var year =  split[2];
     var formattedDate = day + '/' + month + '/' + year;
     return formattedDate

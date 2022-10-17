@@ -48,9 +48,6 @@ export class ItemWardComponent implements OnInit {
     }
   }
   inputChange(){
-    console.log(JSON.stringify(this.resWard));
-    console.log(JSON.stringify(this.resWardTmp));
-
     if (JSON.stringify(this.resWard) != JSON.stringify(this.resWardTmp)) {
       this.isChange = true
     }
@@ -74,10 +71,7 @@ export class ItemWardComponent implements OnInit {
         this.wardService.create(this.resWard).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-
-          if(this.response.notification.type == "Error")
-          {
-          }
+          this.close()
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, "Error")
@@ -94,13 +88,16 @@ export class ItemWardComponent implements OnInit {
           else{
             this.resWard = Object.assign({},this.resWardTmp)
           }
+          if (this.type == 'detail') {
+            this.isEdit = false
+          }
+          this.isChange = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, "Error")
         })
 
       }
-     this.close()
     }
 
   }

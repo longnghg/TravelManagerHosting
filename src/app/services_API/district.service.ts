@@ -52,8 +52,8 @@ export class DistrictService{
       return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/update-district", data);
   }
 
-  delete(data: any)
+  delete(idDistrict: any)
   {
-      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/delete-district", data);
+      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/delete-district?idDistrict="+idDistrict);
   }
 }

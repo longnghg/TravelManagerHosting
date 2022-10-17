@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NotificationService } from "../../../../services_API/notification.service";
 import { ConfigService } from "../../../../services_API/config.service";
 import { DistrictService } from '../../../../services_API/district.service';
@@ -6,6 +6,7 @@ import { WardService } from '../../../../services_API/ward.service';
 import { LocationModel } from "../../../../models/location.model";
 import { ResponseModel } from "../../../../models/responsiveModels/response.model";
 import { ColDef, GridConfig} from '../../../../components/grid-data/grid-data.component';
+import { HubConnection } from '@microsoft/signalr';
 @Component({
   selector: 'app-list-ward',
   templateUrl: './list-ward.component.html',
@@ -13,9 +14,9 @@ import { ColDef, GridConfig} from '../../../../components/grid-data/grid-data.co
 })
 export class ListWardComponent implements OnInit {
   @Output() parentLocationDel = new EventEmitter<any>()
+  @Input() resDistrict: LocationModel[]
   dataChild: LocationModel
   typeChild: string
-  resDistrict: LocationModel[]
   resWard: LocationModel[]
   response: ResponseModel
   public columnDefs: ColDef[]
@@ -24,25 +25,20 @@ export class ListWardComponent implements OnInit {
     idModal: "gridWard",
     radioBox: false,
   }
+
+  private hubConnectionBuilder: HubConnection
   constructor( private wardService: WardService, private districtService: DistrictService, private notificationService: NotificationService,
     private configService: ConfigService){}
   ngOnInit(): void {
-    this.init();
-
-    this.districtService.views().then(response => {
-      this.resDistrict = response
+    this.init()
+    this.hubConnectionBuilder = this.configService.signIR(this.init())
+    this.hubConnectionBuilder.start();
+    this.hubConnectionBuilder.on('Init', (result: any) => {
+      this.init()
     })
-    setTimeout(() => {
 
-      this.columnDefs= [
-        { field: 'idWard', headerName: "Mã phường/xã", searchable: true, searchType: 'text', searchObj: 'idWard'},
-        { field: 'nameWard',headerName: "Tên phường/xã", searchable: true, searchType: 'text', searchObj: 'nameWard'},
-        { field: 'districtName',headerName: "Tên quận/huyện", searchable: true, searchType: 'section', searchObj: 'idDistrict', multiple: true, closeOnSelect: false, bindLabel: 'nameDistrict', bindValue: "idDistrict", listSection: this.resDistrict},
-      ];
-
-    }, 200);
   }
-  init(e?){
+  init(){
     this.wardService.gets().subscribe(res => {
       this.response = res
       if(!this.response.notification.type)
@@ -58,6 +54,19 @@ export class ListWardComponent implements OnInit {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, "Error")
     })
+
+    this.districtService.views().then(response => {
+      this.resDistrict = response
+    })
+    setTimeout(() => {
+
+      this.columnDefs= [
+        { field: 'idWard', headerName: "Mã phường/xã", searchable: true, searchType: 'text', searchObj: 'idWard'},
+        { field: 'nameWard',headerName: "Tên phường/xã", searchable: true, searchType: 'text', searchObj: 'nameWard'},
+        { field: 'districtName',headerName: "Tên quận/huyện", searchable: true, searchType: 'section', searchObj: 'districtId', multiple: true, closeOnSelect: false, bindLabel: 'nameDistrict', bindValue: "idDistrict", listSection: this.resDistrict},
+      ];
+
+    }, 200);
   }
 
   search(e?){

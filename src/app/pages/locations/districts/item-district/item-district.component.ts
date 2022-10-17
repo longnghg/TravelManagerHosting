@@ -48,9 +48,6 @@ export class ItemDistrictComponent implements OnInit {
     }
   }
   inputChange(){
-    console.log(JSON.stringify(this.resDistrict));
-    console.log(JSON.stringify(this.resDistrictTmp));
-
     if (JSON.stringify(this.resDistrict) != JSON.stringify(this.resDistrictTmp)) {
       this.isChange = true
     }
@@ -74,10 +71,8 @@ export class ItemDistrictComponent implements OnInit {
         this.districtService.create(this.resDistrict).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
+          this.close()
 
-          if(this.response.notification.type == "Error")
-          {
-          }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, "Error")
@@ -94,13 +89,16 @@ export class ItemDistrictComponent implements OnInit {
           else{
             this.resDistrict = Object.assign({},this.resDistrictTmp)
           }
+          if (this.type == 'detail') {
+            this.isEdit = false
+          }
+          this.isChange = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, "Error")
         })
 
       }
-     this.close()
     }
 
   }

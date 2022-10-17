@@ -16,7 +16,7 @@ export class RoleService{
   async views()
   {
     var value = <any>await new Promise<any>(resolve => {
-      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/gets-role").subscribe(res => {
+      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/gets-role?isDelete="+false).subscribe(res => {
         this.response = res
         if(!this.response.notification.type)
         {
@@ -33,17 +33,16 @@ export class RoleService{
     return value
 
   }
-  gets()
+  gets(isDelete: any)
   {
-      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/gets-role");
+    if (!isDelete) {
+      isDelete = false
+    }
+      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/gets-role?isDelete="+isDelete);
   }
   search(data: any)
   {
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Role/search-role", data);
-  }
-  getsDelete()
-  {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/gets-delete-role");
   }
 
   create(data: any)
@@ -56,11 +55,11 @@ export class RoleService{
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Role/update-role", data);
   }
 
-  restore(data: any)
+  restore(idRole: any)
   {
-    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Role/restore-role", data);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/restore-role?idRole="+idRole);
   }
-  delete(data: any){
-    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Role/delete-role", data);
+  delete(idRole: any){
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/delete-role?idRole="+idRole);
   }
 }

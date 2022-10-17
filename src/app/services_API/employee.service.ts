@@ -16,7 +16,7 @@ export class EmployeeService{
   async views(isDelete: any)
   {
     var value = <any>await new Promise<any>(resolve => {
-      this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/gets-employee", {isDelete}).subscribe(res => {
+      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/gets-employee?isDelete="+isDelete).subscribe(res => {
         this.response = res
         if(!this.response.notification.type)
         {
@@ -35,7 +35,10 @@ export class EmployeeService{
   }
   gets(isDelete: any)
   {
-      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/gets-employee", {isDelete});
+    if (!isDelete) {
+      isDelete = false
+    }
+      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/gets-employee?isDelete="+isDelete);
   }
 
   search(data){
@@ -50,12 +53,12 @@ export class EmployeeService{
   {
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/update-employee", data);
   }
-  delete(data: any)
+  delete(idEmployee: any)
   {
-    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/delete-employee", data);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/delete-employee?idEmployee="+idEmployee);
   }
-  restore(data: any)
+  restore(idEmployee: any)
   {
-    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/restore-employess", data);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/restore-employess?idEmployee="+idEmployee);
   }
 }

@@ -34,8 +34,6 @@ export class GridDataComponent implements OnInit {
   ngOnInit(): void {
   }
   ngOnChanges(): void {
-    console.log(this.rowData);
-
     if (this.rowData) {
       this.rowDataTmp = Object.assign(this.rowData)
     }
