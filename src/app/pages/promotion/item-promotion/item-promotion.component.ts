@@ -1,42 +1,40 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { PromotionModel } from "src/app/models/promotion.model";
+import { PromotionService } from "../../../services_API/promotion.service";
 import { NotificationService } from "../../../services_API/notification.service";
-import { ConfigService } from "../../../services_API/config.service";
 import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.component';
-import { CarService } from 'src/app/services_API/car.service';
-import { CarModel } from 'src/app/models/Car.model';
+import { ConfigService } from "../../../services_API/config.service";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 
-@Component({
-  selector: 'app-item-car',
-  templateUrl: './item-car.component.html',
-  styleUrls: ['./item-car.component.scss']
-})
-export class ItemCarComponent implements OnInit {
 
-  response: ResponseModel
-  @Input() resCar: CarModel
+@Component({
+  selector: 'app-item-promotion',
+  templateUrl: './item-promotion.component.html',
+  styleUrls: ['./item-promotion.component.scss']
+})
+export class ItemPromotionComponent implements OnInit {
+
+  @Input() resPromotion: PromotionModel
   @Input() type: string
-  date: string
-  dateView: string
+  response: ResponseModel
   isEdit: boolean = false
   isChange: boolean = false
-  resCarTmp: CarModel
+  resPromotiontTmp: PromotionModel
 
-
-  constructor(private carService: CarService, private notificationService: NotificationService,
-    private configService: ConfigService) { }
+  constructor(private promotionService: PromotionService, private configService: ConfigService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
   }
 
   ngOnChanges(): void {
+
     if(this.type == 'create'){
-      this.resCar = new CarModel()
+      this.resPromotion = new PromotionModel()
       this.isEdit = true
     }else{
       this.isEdit = false
     }
-    this.resCarTmp = Object.assign({}, this.resCar)
+    this.resPromotiontTmp = Object.assign({}, this.resPromotion)
   }
 
   isEditChange(){
@@ -49,8 +47,9 @@ export class ItemCarComponent implements OnInit {
       this.isEdit = true
     }
   }
+
   inputChange(){
-    if (JSON.stringify(this.resCar) != JSON.stringify(this.resCarTmp)) {
+    if (JSON.stringify(this.resPromotion) != JSON.stringify(this.resPromotiontTmp)) {
       this.isChange = true
     }
     else{
@@ -59,7 +58,7 @@ export class ItemCarComponent implements OnInit {
   }
 
   restore(){
-    this.resCar = Object.assign({}, this.resCarTmp)
+    this.resPromotion = Object.assign({}, this.resPromotiontTmp)
     this.isChange = false
   }
 
@@ -67,7 +66,7 @@ export class ItemCarComponent implements OnInit {
 
       if(this.type == "create")
       {
-        this.carService.create(this.resCar).subscribe(res =>{
+        this.promotionService.create(this.resPromotion).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
 
@@ -93,5 +92,3 @@ export class ItemCarComponent implements OnInit {
      this.restore()
   }
 }
-
-

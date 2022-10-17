@@ -3,7 +3,7 @@
   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
 </div>
 <div class="modal-body">
-  <ng-container *ngIf="resCar">
+  <ng-container *ngIf="resPromotion">
     <div class="container-fluid" >
       <div class="row align-items-center">
         <div class="col-12 text-right">
@@ -15,29 +15,29 @@
           <div class="row">
             <div class="col-lg-6">
               <div class="form-group">
-                <label class="form-control-label" for="input-name">Tên người lái</label>
-                <input type="text" id="driver" name="driver" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập tên người lái" [(ngModel)]="resCar.driver" [readonly]="!isEdit">
+                <label class="form-control-label" for="input-name">Giá trị</label>
+                <input type="text" id="value" name="value" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập giá trị mã giảm giá" [(ngModel)]="resPromotion.value" [readonly]="!isEdit">
               </div>
             </div>
             <div class="col-lg-6">
               <div class="form-group">
-                <label class="form-control-label" for="input-phone">Số điện thoại</label>
-                <input type="text" id="phone" name="phone" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số điện thoại" [(ngModel)]="resCar.phone" [readonly]="!isEdit">
+                <label class="form-control-label" for="input-phone">Đến nay</label>
+                <input type="text" id="toDate" name="toDate" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập mã đến nay" [(ngModel)]="resPromotion.toDate" [readonly]="!isEdit">
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-lg-12">
-              <label class="form-control-label" for="input-address">Biển số xe</label>
-              <input type="text" id="liscensePlate" name="liscensePlate" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập biển số xe" [(ngModel)]="resCar.liscensePlate" [readonly]="!isEdit">
+              <label class="form-control-label" for="input-address">Từ ngày</label>
+              <input type="text" id="fromDate" name="fromDate" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập mã từ ngày" [(ngModel)]="resPromotion.fromDate" [readonly]="!isEdit">
             </div>
           </div>
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-lg-12">
               <label class="form-control-label" for="input-address">Số lượng chỗ ngồi</label>
               <input type="text" id="amountSeat" name="amountSeat" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số lượng chỗ ngồi" [(ngModel)]="resCar.amountSeat" [readonly]="!isEdit">
             </div>
-          </div>
+          </div> -->
           <hr>
         </div>
       </form>
@@ -53,4 +53,5 @@
 
   </ng-container>
 </div>
+
 

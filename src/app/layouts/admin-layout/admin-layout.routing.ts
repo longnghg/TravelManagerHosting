@@ -25,7 +25,9 @@ import { ListTourBookingComponent } from 'src/app/pages/tourBooking/list-tour-bo
 
 import { ListHotelComponent } from 'src/app/pages/servicess/hotel/list-hotel/list-hotel.component';
 import { ListPlaceComponent } from '../../pages/servicess/place/list-place/list-place.component';
-// import { ListPromotionComponent } from 'src/app/pages/promotion/list-promotion/list-promotion.component';
+import { ListPromotionComponent } from 'src/app/pages/promotion/list-promotion/list-promotion.component';
+import { ListCarComponent } from 'src/app/pages/car/list-car/list-car.component';
+
 
 import { ListRestaurantComponent } from 'src/app/pages/servicess/restaurant/list-restaurant/list-restaurant.component';
 import { Component } from '@angular/core';
@@ -48,7 +50,8 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'list-schedule',  component: ListScheduleComponent},
     { path: 'list-tourBooking',  component: ListTourBookingComponent},
     { path: 'list-hotel',     component: ListHotelComponent},
-    // { path: 'list-promotion',  component: ListPromotionComponent},
+    { path: 'list-promotion',  component: ListPromotionComponent},
     { path: 'list-restaurant',     component: ListRestaurantComponent},
     { path: 'list-place',     component: ListPlaceComponent},
+    { path: 'list-car',     component: ListCarComponent},
 ];
