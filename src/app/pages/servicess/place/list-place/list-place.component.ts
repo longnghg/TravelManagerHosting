@@ -14,6 +14,7 @@ import { ResponseModel } from "../../../../models/responsiveModels/response.mode
 export class ListPlaceComponent implements OnInit {
 
   resPlace: PlaceModel[]
+  resPlaceWaiting: PlaceModel[]
   response: ResponseModel
   dataChild: PlaceModel
   typeChild: string
@@ -29,10 +30,8 @@ export class ListPlaceComponent implements OnInit {
   }
   ngOnInit(): void {
     this.init()
-
-
+    this.initWaiting()
     setTimeout(() => {
-
       this.columnDefs= [
         { field: 'idPlace', headerName: "Mã số", style: "width: 330px;", searchable: true, searchType: 'text', searchObj: 'idPlace'},
         { field: 'contractId',headerName: "Mã hợp đồng", style: "width: 330px;", searchable: true, searchType: 'text', searchObj: 'contractId'},
@@ -46,13 +45,30 @@ export class ListPlaceComponent implements OnInit {
     }, 200);
   }
 
+
+  initWaiting(){
+    this.placeService.getwaiting().subscribe(res =>{
+      this.response = res
+      if(!this.response.notification.type){
+        this.resPlaceWaiting = this.response.content
+        console.log(this.resPlaceWaiting);
+      }
+      else{
+        this.resPlace = null
+        this.notificationService.handleAlertObj(res.notification)
+      }
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, "Error")
+    })
+  }
+
+
   init(){
     this.placeService.gets().subscribe(res =>{
       this.response = res
       if(!this.response.notification.type){
         this.resPlace = this.response.content
-
-        console.log(this.resPlace);
         console.log(this.resPlace);
       }
       else{
@@ -64,6 +80,9 @@ export class ListPlaceComponent implements OnInit {
       this.notificationService.handleAlert(message, "Error")
     })
   }
+
+
+
 
   childData(e){
     if (e) {
