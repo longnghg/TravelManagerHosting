@@ -12,6 +12,7 @@ import { ResponseModel } from "../../../../models/responsiveModels/response.mode
 })
 export class ListRestaurantComponent implements OnInit {
   resRestaurant: RestaurantModel[]
+  resRestaurantWaiting: RestaurantModel[]
   response: ResponseModel
   dataChild: ResponseModel
   typeChild: string
@@ -27,7 +28,7 @@ export class ListRestaurantComponent implements OnInit {
   }
   ngOnInit(): void {
     this.init()
-
+    this.initWaiting();
     setTimeout(() => {
 
       this.columnDefs= [
@@ -38,6 +39,22 @@ export class ListRestaurantComponent implements OnInit {
         { field: 'phone',headerName: "Số điện thoại", style: "width: 250px;", searchable: true, searchType: 'text', searchObj: 'phone'},
       ];
     }, 200);
+  }
+
+  initWaiting(){
+    this.restaurantService.getwaiting().subscribe(res =>{
+      this.response = res
+      if(!this.response.notification.type){
+        this.resRestaurantWaiting = this.response.content
+      }
+      else{
+        this.resRestaurantWaiting = null
+        this.notificationService.handleAlertObj(res.notification)
+      }
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, "Error")
+    })
   }
 
   init(){

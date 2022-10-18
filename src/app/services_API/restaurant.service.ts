@@ -14,6 +14,11 @@ gets()
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/gets-restaurant");
 }
 
+getwaiting(){
+  return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/gets-restaurant-waiting");
+}
+
+
 create(data: any)
 {
   return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Service/create-restaurant", data);

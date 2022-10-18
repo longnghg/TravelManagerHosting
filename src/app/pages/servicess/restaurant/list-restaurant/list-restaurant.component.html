@@ -101,6 +101,18 @@
   </div>
 </div>
 
+<!-- list waiting -->
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow border-0">
+        <app-grid-data [rowData]="resRestaurantWaiting" [columnDefs]="columnDefs" [gridConfig]="gridConfig" (gdChecked)="initWaiting()" (gdType)="childType($event)" (gdChild)="childData($event)"></app-grid-data>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div class="modal fade" [id]="gridConfig.idModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="gridDataLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
