@@ -38,6 +38,12 @@ export class PromotionService{
       return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Promotion/gets-promotion");
   }
 
+  getsWaiting()
+  {
+      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Promotion/gets-promotion-waiting");
+  }
+
+
   create(data: any)
   {
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Promotion/create-promotion", data);
