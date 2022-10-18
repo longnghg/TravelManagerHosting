@@ -5,6 +5,8 @@ import { TourService } from "src/app/services_API/tour.service";
 import { TourModel } from 'src/app/models/tour.model';
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.component';
+// signalr
+import { HubConnection } from '@microsoft/signalr';
 
 @Component({
   selector: 'app-list-tour',
@@ -14,22 +16,58 @@ import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.compo
 export class ListTourComponent implements OnInit {
   resTour: TourModel[]
   response: ResponseModel
-  child: TourModel
-  type: string
-  constructor(private tourService: TourService, private notificationService: NotificationService,
-    private configService: ConfigService) { }
-    public columnDefs: ColDef[]
-    public gridConfig: GridConfig = {
-      idModalRestore: "",
-      idModalDelete: "",
-      idModal: "gridSchedule",
-      radioBox: true,
-      radioBoxName: "Kho lưu trữ",
-    }
+  dataChild: TourModel
+  data: TourModel
+  type: boolean
+  typeChild: string
+  private hubConnectionBuilder: HubConnection
+
+
+  public columnDefs: ColDef[]
+  public gridConfig: GridConfig = {
+    idModalRestore: "restoreTourModal",
+    idModalDelete: "deleteTourModal",
+    idModal: "gridTour",
+    radioBox: true,
+    radioBoxName: "Kho lưu trữ",
+  }
+
+  constructor(
+    private configService: ConfigService,
+     private tourService: TourService,
+      private notificationService: NotificationService) {}
+
     ngOnInit(): void {
 
-      this.init()
-      console.log(this.resTour);
+      this.init(this.type)
+      this.hubConnectionBuilder = this.configService.signIR(this.init())
+      this.hubConnectionBuilder.start();
+      this.hubConnectionBuilder.on('Init', (result: any) => {
+        this.init(this.type)
+      })
+
+
+
+    }
+
+    init(e?){
+      this.tourService.gets().subscribe(res =>{
+        this.response = res
+        if(!this.response.notification.type){
+          this.resTour = this.response.content
+          console.log(this.resTour);
+        }
+        else{
+          this.resTour = null
+          this.notificationService.handleAlertObj(res.notification)
+        }
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, "Error")
+      })
+
+
+
 
       setTimeout(() => {
         this.columnDefs= [
@@ -44,31 +82,17 @@ export class ListTourComponent implements OnInit {
         ];
       }, 200);
     }
-
-    init(){
-      this.tourService.gets().subscribe(res =>{
-        this.response = res
-        if(!this.response.notification.type){
-          this.resTour = this.response.content
-        }
-        else{
-          this.resTour = null
-          this.notificationService.handleAlertObj(res.notification)
-        }
-      }, error => {
-        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, "Error")
-      })
+    childData(e){
+      if (e) {
+        this.dataChild = e
+      }
     }
-
-    // childData(e){
-    //   if (e) {
-    //     this.dataChild = e
-    //   }
-    // }
-    // childType(e){
-    //   if (e) {
-    //     this.typeChild = e
-    //   }
-    // }
+    childType(e){
+      if (e) {
+        this.typeChild = e
+      }
+    }
+     getData(data: any){
+      this.data = data
+    }
   }

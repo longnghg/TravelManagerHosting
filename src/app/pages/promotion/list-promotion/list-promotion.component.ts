@@ -15,6 +15,7 @@ import { ResponseModel } from "../../../models/responsiveModels/response.model";
 export class ListPromotionComponent implements OnInit {
 
   resPromotion: PromotionModel[]
+  resPromotionWaiting: PromotionModel[]
   response: ResponseModel
   dataChild: PromotionModel
   typeChild: string
@@ -32,6 +33,7 @@ export class ListPromotionComponent implements OnInit {
   ngOnInit(): void {
 
     this.init()
+    this.initWaiting();
     console.log(this.resPromotion);
 
     setTimeout(() => {
@@ -61,6 +63,25 @@ export class ListPromotionComponent implements OnInit {
       this.notificationService.handleAlert(message, "Error")
     })
   }
+
+  initWaiting(){
+    this.promotionService.getsWaiting().subscribe(res =>{
+      this.response = res
+      if(!this.response.notification.type){
+        this.resPromotionWaiting = this.response.content
+        console.log(this.resPromotionWaiting);
+
+      }
+      else{
+        this.resPromotionWaiting = null
+        this.notificationService.handleAlertObj(res.notification)
+      }
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, "Error")
+    })
+  }
+
 
   childData(e){
     if (e) {

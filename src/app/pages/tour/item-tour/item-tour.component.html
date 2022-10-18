@@ -1,1 +1,82 @@
-<p>item-tour works!</p>
+<div class="modal-header">
+  <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin chi tiết</h1>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
+</div>
+<div class="modal-body">
+  <ng-container *ngIf="resTour">
+    <div class="container-fluid" >
+      <div class="row align-items-center">
+        <div class="col-12 text-right">
+          <a href="javascript:void(0)" *ngIf="type == 'detail'" class="btn btn-sm btn-primary" (click)="isEditChange()">{{!isEdit ? "Chỉnh sửa":"Quay lại"}}</a>
+        </div>
+      </div>
+      <form>
+        <div class="pl-lg-4">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label class="form-control-label" for="input-tourName">Tên Chuyến Du Lịch</label>
+                <input type="text" id="tourName" name="tourName" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số tên chuyến du lịch" [(ngModel)]="resTour.tourName" [readonly]="!isEdit">
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label class="form-control-label" for="input-thumbsnail">Hình ảnh</label>
+                <input type="file" id="thumbsnail" name="thumbsnail" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập hình ảnh" [(ngModel)]="resTour.thumbsnail" [readonly]="!isEdit">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <label class="form-control-label" for="input-fromPlace">Điểm đi</label>
+              <input type="text" id="fromPlace" name="fromPlace" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập điểm đi " [(ngModel)]="resTour.fromPlace" [readonly]="!isEdit">
+            </div>
+            <div class="col-lg-6">
+              <label class="form-control-label" for="input-toPlace">Điểm đến </label>
+              <input type="text" id="toPlace" name="toPlace" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập điểm đến " [(ngModel)]="resTour.toPlace" [readonly]="!isEdit">
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+
+            <div class="col-lg-3">
+              <div class="form-group">
+                <label class="form-control-label" for="input-singleRoomPrice">Giá vé</label>
+                <input type="number" name="singleRoomPrice" id="singleRoomPrice" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập giá vé" [(ngModel)]="resTour.priceAdult" [readonly]="!isEdit">
+              </div>
+            </div>
+            <div class="col-lg-3">
+              <div class="form-group">
+                <label class="form-control-label" for="input-singleRoomPrice">Giá vé khuyến mãi</label>
+                <input type="number" name="singleRoomPrice" id="singleRoomPrice" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập giá vé" [(ngModel)]="resTour.priceAdultPromotion" [readonly]="!isEdit">
+              </div>
+            </div>
+            <div class="col-lg-3">
+              <div class="form-group">
+                <label class="form-control-label" for="input-singleRoomPrice">Người Sửa</label>
+                <input type="text" name="singleRoomPrice" id="singleRoomPrice" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập Người Sửa" [(ngModel)]="resTour.modifyBy" [readonly]="!isEdit">
+              </div>
+            </div>
+            <div class="col-lg-3">
+              <div class="form-group">
+                <label class="form-control-label" for="input-singleRoomPrice">Ngày Sửa</label>
+                <input type="date" name="singleRoomPrice" id="singleRoomPrice" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập ngày sửa" [(ngModel)]="resTour.modifyDate" [readonly]="!isEdit">
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="row align-items-center">
+      <div class="col-12 text-right">
+        <button  *ngIf="type == 'detail'" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteProvinceModal" (click)="getDataDelete()">Xóa</button>
+        <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="restore()">Khôi phục</button>
+        <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="save()">{{type == 'detail' ? "Lưu":"Thêm"}}</button>
+      </div>
+    </div>
+
+  </ng-container>
+</div>
+
+
