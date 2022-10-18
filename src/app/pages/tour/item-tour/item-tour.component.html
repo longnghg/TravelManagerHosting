@@ -7,6 +7,7 @@
     <div class="container-fluid" >
       <div class="row align-items-center">
         <div class="col-12 text-right">
+          <button class="btn btn-sm btn-outline-primary me-2" (click)="acc.toggle('toggle-1')">Chi tiết tour</button>
           <a href="javascript:void(0)" *ngIf="type == 'detail'" class="btn btn-sm btn-primary" (click)="isEditChange()">{{!isEdit ? "Chỉnh sửa":"Quay lại"}}</a>
         </div>
       </div>
@@ -22,7 +23,7 @@
             <div class="col-lg-6">
               <div class="form-group">
                 <label class="form-control-label" for="input-thumbsnail">Hình ảnh</label>
-                <input type="file" id="thumbsnail" name="thumbsnail" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập hình ảnh" [(ngModel)]="resTour.thumbsnail" [readonly]="!isEdit">
+                <input type="text" id="thumbsnail" name="thumbsnail" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập hình ảnh" [(ngModel)]="resTour.thumbsnail" [readonly]="!isEdit">
               </div>
             </div>
           </div>
@@ -64,10 +65,67 @@
               </div>
             </div>
           </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <ngb-accordion #acc="ngbAccordion" [disable]="true" activeIds="ngb-panel-0" >
+                <ngb-panel id="toggle-1" title="Chi phí tour">
+                  <ng-template ngbPanelContent>
+                    <div class="row">
+                      <div class="col-lg-4">
+                        <div class="form-group">
+                          <label class="form-control-label" for="input-tourName">Nhà hàng</label>
+                          <ng-select [items]="resRestaurant"
+                                      bindLabel="name"
+                                      bindValue="idRestaurant"
+
+                                      [disabled]="!isEdit"
+                                      placeholder="Chọn nhà hàng..."
+                                      name="tourId"
+                                      id="tourId"
+                                      (change)="inputChange()">
+                          </ng-select>
+                        </div>
+                      </div>
+                      <div class="col-lg-4">
+                        <div class="form-group">
+                          <label class="form-control-label" for="input-thumbsnail">Khách sạn</label>
+                          <ng-select [items]="resHotel"
+                                      bindLabel="name"
+                                      bindValue="idHotel"
+
+                                      [disabled]="!isEdit"
+                                      placeholder="Chọn khách sạn..."
+                                      name="tourId"
+                                      id="tourId"
+                                      (change)="inputChange()">
+                          </ng-select>
+                        </div>
+                      </div>
+                      <div class="col-lg-4">
+                        <div class="form-group">
+                          <label class="form-control-label" for="input-thumbsnail">Địa điểm</label>
+                          <ng-select [items]="resPlace"
+                                      bindLabel="name"
+                                      bindValue="idPlace"
+
+                                      [disabled]="!isEdit"
+                                      placeholder="Chọn địa diểm..."
+                                      name="tourId"
+                                      id="tourId"
+                                      (change)="inputChange()">
+                          </ng-select>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-template>
+                </ngb-panel>
+              </ngb-accordion>
+            </div>
+          </div>
         </div>
       </form>
+      <hr>
     </div>
-
     <div class="row align-items-center">
       <div class="col-12 text-right">
         <button  *ngIf="type == 'detail'" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteProvinceModal" (click)="getDataDelete()">Xóa</button>
@@ -75,7 +133,6 @@
         <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="save()">{{type == 'detail' ? "Lưu":"Thêm"}}</button>
       </div>
     </div>
-
   </ng-container>
 </div>
 

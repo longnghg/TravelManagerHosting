@@ -5,6 +5,12 @@ import { NotificationService } from "./../../../services_API/notification.servic
 import { ColDef, GridConfig} from './../../../components/grid-data/grid-data.component';
 import { ConfigService } from "./../../../services_API/config.service";
 import { ResponseModel } from "./../../../models/responsiveModels/response.model";
+import { HotelService } from 'src/app/services_API/hotel.service';
+import { HotelModel } from 'src/app/models/hotel.model';
+import { PlaceService } from 'src/app/services_API/place.service';
+import { PlaceModel } from 'src/app/models/place.model';
+import { RestaurantService } from 'src/app/services_API/restaurant.service';
+import { RestaurantModel } from 'src/app/models/restaurant.model';
 
 @Component({
   selector: 'app-item-tour',
@@ -19,11 +25,16 @@ export class ItemTourComponent implements OnInit {
   isEdit: boolean = false
   isChange: boolean = false
   resTourTmp: TourModel
-  constructor(private tourService: TourService, private configService: ConfigService, private notificationService: NotificationService) { }
+  resHotel: HotelModel[]
+  resPlace: PlaceModel[]
+  resRestaurant: RestaurantModel[]
+  constructor(private tourService: TourService, private configService: ConfigService, private notificationService: NotificationService,
+      private hotelService: HotelService, private placeService: PlaceService, private restaurantService: RestaurantService) { }
 
   ngOnInit(): void {
   }
   ngOnChanges(): void {
+    this.init()
 
     if(this.type == 'create'){
       this.resTour = new TourModel()
@@ -33,6 +44,19 @@ export class ItemTourComponent implements OnInit {
     }
     this.resTourTmp = Object.assign({}, this.resTour)
   }
+
+  init(){
+    this.hotelService.views().then(response =>{
+      this.resHotel = response
+    })
+    this.restaurantService.views().then(response =>{
+      this.resRestaurant = response
+    })
+    this.placeService.views().then(response =>{
+      this.resPlace = response
+    })
+  }
+
   isEditChange(){
     if (this.isEdit) {
       this.isEdit = false
