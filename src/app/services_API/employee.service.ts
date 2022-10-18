@@ -59,6 +59,6 @@ export class EmployeeService{
   }
   restore(idEmployee: any)
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/restore-employess?idEmployee="+idEmployee);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/restore-employee?idEmployee="+idEmployee);
   }
 }

@@ -164,5 +164,6 @@ export class ItemEmployeeComponent implements OnInit{
   }
   formatInput(input: HTMLInputElement) {
     input.value = input.value.replace(FILTER_PAG_REGEX, '');
+    this.resEmployee.phone = input.value
   }
 }
