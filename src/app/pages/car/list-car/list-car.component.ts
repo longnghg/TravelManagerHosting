@@ -36,7 +36,7 @@ export class ListCarComponent implements OnInit {
     setTimeout(() => {
       this.columnDefs= [
         { field: 'idCar', headerName: "Mã số", style: "width: 340px;", searchable: true, searchType: 'text', searchObj: 'idCar'},
-        { field: 'driver', headerName: "Tên người lái", style: "width: 270px;", searchable: true, searchType: 'text', searchObj: 'driver'},
+        { field: 'nameDriver', headerName: "Tên người lái", style: "width: 270px;", searchable: true, searchType: 'text', searchObj: 'nameDriver'},
         { field: 'liscensePlate', headerName: "Biển số xe", style: "width: 200px;", searchable: true, searchType: 'number', searchObj: 'liscensePlate'},
         { field: 'amountSeat',headerName: "Số lượng chỗ ngồi", style: "width: 200px;", searchable: true, searchType: 'number', searchObj: 'amountSeat'},
         { field: 'phone',headerName: "Số điện thoại", style: "width: 200px;", searchable: true, searchType: 'number', searchObj: 'phone'},

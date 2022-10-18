@@ -4,6 +4,6 @@ export class CarModel{
   status: number
   amountSeat: number
   phone: string
-  driver: string
+  nameDriver: string
   idEmployee: number
 }
