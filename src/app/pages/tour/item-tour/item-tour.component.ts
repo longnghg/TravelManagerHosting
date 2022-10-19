@@ -92,21 +92,25 @@ export class ItemTourComponent implements OnInit {
   }
 
   save(){
-    var valid =  this.configService.validateTour(this.resTour)
-    valid.forEach(element => {
-        this.notificationService.handleAlert(element, "Error")
-    });
-    if (valid.length == 0) {
+    // var valid =  this.configService.validateTour(this.resTour)
+    // valid.forEach(element => {
+    //     this.notificationService.handleAlert(element, "Error")
+    // });
+    // if (valid.length == 0) {
       if(this.type == "create")
       {
         this.tourService.create(this.resTour).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-
+          
           if(this.response.notification.type == "Success")
           {
             this.isSuccess = true
           }
+    
+          this.resCostTour.tourDetailId = this.response.content 
+          console.log(this.resCostTour.tourDetailId);
+          
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, "Error")
@@ -117,7 +121,24 @@ export class ItemTourComponent implements OnInit {
 
       }
       this.close()
-    }
+    
+  }
+
+  saveCost(){
+    
+    this.costtourService.create(this.resCostTour).subscribe(res =>{
+      this.response = res
+      this.notificationService.handleAlertObj(res.notification)
+      
+      if(this.response.notification.type == "Success")
+      {
+        this.isSuccess = true
+      }
+      console.log(this.response.content);
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, "Error")
+    })
   }
 
 
