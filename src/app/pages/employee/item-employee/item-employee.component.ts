@@ -109,8 +109,10 @@ export class ItemEmployeeComponent implements OnInit{
       {
         this.employeeService.create(file).subscribe(res =>{
           this.response = res
+          if (res.notification.type != "Error") {
+            this.close()
+          }
          this.notificationService.handleAlertObj(res.notification)
-          this.close()
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, "Error")
