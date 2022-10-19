@@ -1,6 +1,6 @@
 export class TourModel{
   idTour: string
-  tourName: string
+  nameTour: string
   thumbsnail: string
   fromPlace: string
   toPlace: string
@@ -11,4 +11,6 @@ export class TourModel{
   modifyDate: number
   isDelete: boolean
   isActive: boolean
+  description:string
+  vat: number
 }

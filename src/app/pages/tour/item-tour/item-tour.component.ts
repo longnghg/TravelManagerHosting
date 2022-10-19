@@ -11,6 +11,8 @@ import { PlaceService } from 'src/app/services_API/place.service';
 import { PlaceModel } from 'src/app/models/place.model';
 import { RestaurantService } from 'src/app/services_API/restaurant.service';
 import { RestaurantModel } from 'src/app/models/restaurant.model';
+import { CostTourService } from 'src/app/services_API/costtour.service';
+import { CostTourModel } from 'src/app/models/costTour.model';
 
 @Component({
   selector: 'app-item-tour',
@@ -28,8 +30,10 @@ export class ItemTourComponent implements OnInit {
   resHotel: HotelModel[]
   resPlace: PlaceModel[]
   resRestaurant: RestaurantModel[]
+  resCostTour: CostTourModel
+  isHoliday = this.configService.listStatus()
   constructor(private tourService: TourService, private configService: ConfigService, private notificationService: NotificationService,
-      private hotelService: HotelService, private placeService: PlaceService, private restaurantService: RestaurantService) { }
+      private hotelService: HotelService, private placeService: PlaceService, private restaurantService: RestaurantService, private costtourService: CostTourService) { }
 
   ngOnInit(): void {
   }
@@ -38,6 +42,7 @@ export class ItemTourComponent implements OnInit {
 
     if(this.type == 'create'){
       this.resTour = new TourModel()
+      this.resCostTour = new CostTourModel()
       this.isEdit = true
     }else{
       this.isEdit = false
@@ -96,6 +101,20 @@ export class ItemTourComponent implements OnInit {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, "Error")
         })
+
+          this.costtourService.create(this.resCostTour).subscribe(res =>{
+            this.response = res
+            this.notificationService.handleAlertObj(res.notification)
+  
+            if(this.response.notification.type == "Error")
+            {
+            }
+          }, error => {
+            var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+            this.notificationService.handleAlert(message, "Error")
+          })
+        
+        
       }
       else{
 

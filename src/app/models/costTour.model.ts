@@ -1,6 +1,6 @@
 export class CostTourModel{
   id: string
-  idTourDetail: string
+  tourDetailId: string
   breakfast: number
   water: number
   feeGas: number
@@ -13,10 +13,10 @@ export class CostTourModel{
   insuranceFee: number
   isHoliday: boolean
   totalCostTour: number
-  idHotel: string
+  hotelId: string
   priceHotel: number
-  idRestaurant: string
+  restaurantId: string
   priceRestaurant: number
-  idPlace: string
+  placeId: string
   priceTicketPlace: number
 }
