@@ -16,6 +16,9 @@ export class EmployeeService{
   async views(isDelete: any)
   {
     var value = <any>await new Promise<any>(resolve => {
+      if (!isDelete) {
+        isDelete = false
+      }
       this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/gets-employee?isDelete="+isDelete).subscribe(res => {
         this.response = res
         if(!this.response.notification.type)
