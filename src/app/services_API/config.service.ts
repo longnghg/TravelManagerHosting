@@ -129,6 +129,50 @@ export class ConfigService{
 
    }
 
+   validateTour(data: any){
+    var err = []
+    //name
+    if(data.nameTour == null || data.nameTour == ""){
+       err.push("[Tên tour] không được để trống !")
+    }
+    else if (data.nameProvince.length > 30) {
+       err.push("[Tên tour] quá dài !")
+    }else if (data.nameProvince.length < 5) {
+      err.push("[Tên tour] quá ngắn !")
+    }
+
+    if(data.thumbsnail == null || data.thumbsnail == ""){
+      err.push("[Hình tour] không được để trống !")
+   }
+
+   if(data.fromPlace == null || data.fromPlace == ""){
+    err.push("[Điểm đi] không được để trống !")
+    }
+
+    if(data.toPlace == null || data.toPlace == ""){
+    err.push("[Điểm đến] không được để trống !")
+    }
+
+    if(data.description == null || data.description == ""){
+      err.push("[Mô tả] không được để trống !")
+      }
+
+      if(data.priceAdult == null || data.priceAdult == ""){
+        err.push("[Giá vé] không được để trống !")
+        }
+
+        if(data.priceAdultPromotion == null || data.priceAdultPromotion == ""){
+          err.push("[Giá vé khuyến mãi] không được để trống !")
+          }
+
+          if(data.vat == null || data.vat == ""){
+            err.push("[VAT] không được để trống !")
+            }
+
+    return err
+
+   }
+
    validateProvince(data: any){
     var err = []
     //name

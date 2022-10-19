@@ -25,6 +25,7 @@ export class ItemTourComponent implements OnInit {
   @Input() type: string
   response: ResponseModel
   isEdit: boolean = false
+  isSuccess: boolean = false
   isChange: boolean = false
   resTourTmp: TourModel
   resHotel: HotelModel[]
@@ -44,8 +45,11 @@ export class ItemTourComponent implements OnInit {
       this.resTour = new TourModel()
       this.resCostTour = new CostTourModel()
       this.isEdit = true
+      this.isSuccess = false
     }else{
+      this.isSuccess = true
       this.isEdit = false
+
     }
     this.resTourTmp = Object.assign({}, this.resTour)
   }
@@ -83,50 +87,45 @@ export class ItemTourComponent implements OnInit {
 
   restore(){
     this.resTour = Object.assign({}, this.resTour)
+    this.resCostTour = Object.assign({}, this.resCostTour)
     this.isChange = false
   }
 
   save(){
-
+    var valid =  this.configService.validateTour(this.resTour)
+    valid.forEach(element => {
+        this.notificationService.handleAlert(element, "Error")
+    });
+    if (valid.length == 0) {
       if(this.type == "create")
       {
         this.tourService.create(this.resTour).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
 
-          if(this.response.notification.type == "Error")
+          if(this.response.notification.type == "Success")
           {
+            this.isSuccess = true
           }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, "Error")
         })
-
-          this.costtourService.create(this.resCostTour).subscribe(res =>{
-            this.response = res
-            this.notificationService.handleAlertObj(res.notification)
-  
-            if(this.response.notification.type == "Error")
-            {
-            }
-          }, error => {
-            var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-            this.notificationService.handleAlert(message, "Error")
-          })
-        
-        
       }
       else{
 
 
       }
       this.close()
+    }
   }
+
 
   close(){
     if (this.type == 'detail') {
       this.isEdit = false
     }
+    this.isSuccess = false
      this.restore()
   }
 

@@ -72,7 +72,7 @@ export class ListTourComponent implements OnInit {
       setTimeout(() => {
         this.columnDefs= [
         { field: 'idTour', headerName: "Mã số", style: "width: 350px;", searchable: true, searchType: 'text', searchObj: 'idTour'},
-        { field: 'tourName',headerName: "Tên", style: "width: 400px;", filter: "avatar", searchable: true, searchType: 'text', searchObj: 'tourName'},
+        { field: 'nameTour',headerName: "Tên", style: "width: 400px;", searchable: true, searchType: 'text', searchObj: 'tourName'},
         { field: 'thumbsnail',headerName: "Thumbsnail", style: "width: 200px;", searchable: true, searchType: 'text', searchObj: 'thumbsnail'},
         { field: 'fromPlace',headerName: "Từ", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'phone'},
         { field: 'toPlace',headerName: "Đến", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'address'},
