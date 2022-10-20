@@ -242,4 +242,5 @@ export class GridConfig{
   idModal?: string
   radioBox?: boolean
   radioBoxName?: string
+  style?: string
 }

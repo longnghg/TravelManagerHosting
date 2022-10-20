@@ -82,7 +82,7 @@ export class ListProvinceComponent implements OnInit {
 
     setTimeout(() => {
       this.columnDefs= [
-        { field: 'idProvince', headerName: "Mã thành phố/tỉnh", searchable: true, searchType: 'text', searchObj: 'idProvince'},
+        // { field: 'idProvince', headerName: "Mã thành phố/tỉnh", searchable: true, searchType: 'text', searchObj: 'idProvince'},
         { field: 'nameProvince',headerName: "Tên thành phố/tỉnh", searchable: true, searchType: 'text', searchObj: 'nameProvince'},
         { field: 'total',headerName: "Tổng số quận/huyện", searchable: false},
       ];

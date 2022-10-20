@@ -84,6 +84,8 @@ export class ListEmployeeComponent implements OnInit {
       if(!this.response.notification.type)
       {
         this.resEmployee = this.response.content
+        console.log(this.resEmployee);
+
       }
       else{
         this.resEmployee = null
@@ -102,12 +104,12 @@ export class ListEmployeeComponent implements OnInit {
     setTimeout(() => {
 
       this.columnDefs= [
-        { field: 'idEmployee', headerName: "Mã số", style: "width: 350px;", searchable: true, searchType: 'text', searchObj: 'idEmployee'},
+        // { field: 'idEmployee', headerName: "Mã số", style: "width: 350px;", searchable: true, searchType: 'text', searchObj: 'idEmployee'},
         { field: 'nameEmployee',headerName: "Tên", style: "width: 400px;", searchable: true, searchType: 'text', searchObj: 'nameEmployee'},
-        { field: 'email',headerName: "Email", style: "width: 200px;", searchable: true, searchType: 'email', searchObj: 'email'},
-        { field: 'phone',headerName: "Số điện thoại", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'phone'},
-        { field: 'roleName',headerName: "Chức vụ", style: "width: 250px;", searchable: true, searchType: 'section', searchObj: 'roleId', searchStyle: "width: 200px;", multiple: true, closeOnSelect: false, bindLabel: 'nameRole', bindValue: "idRole", listSection: this.resRole},
-        { field: 'isActive',headerName: "Kích hoạt", style: "width: 200px;", filter: "status", searchable: true, searchType: 'section', searchStyle: "width: 150px;", multiple: false, closeOnSelect: true, searchObj: 'isActive', bindLabel: "name", bindValue: "id", listSection: this.configService.listStatus()},
+        { field: 'email',headerName: "Email", style: "width: 400px;", searchable: true, searchType: 'email', searchObj: 'email'},
+        { field: 'phone',headerName: "Số điện thoại", style: "width: 200px;", searchable: true, searchType: 'text', searchObj: 'phone'},
+        { field: 'roleName',headerName: "Chức vụ", style: "width: 300px;", searchable: true, searchType: 'section', searchObj: 'roleId', searchStyle: "width: 200px;", multiple: true, closeOnSelect: false, bindLabel: 'nameRole', bindValue: "idRole", listSection: this.resRole},
+        { field: 'isActive',headerName: "Kích hoạt", style: "width: 300px;", filter: "status", searchable: true, searchType: 'section', searchStyle: "width: 150px;", multiple: false, closeOnSelect: true, searchObj: 'isActive', bindLabel: "name", bindValue: "id", listSection: this.configService.listStatus()},
       ];
     }, 200);
   }
