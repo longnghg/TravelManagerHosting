@@ -73,7 +73,6 @@ export class ListRoleComponent implements OnInit {
     }
     else{
       this.resRole = null
-      this.notificationService.handleAlertObj(res.notification)
     }
 
   }, error => {

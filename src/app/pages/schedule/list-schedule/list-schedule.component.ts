@@ -32,7 +32,7 @@ export class ListScheduleComponent implements OnInit {
 
     setTimeout(() => {
       this.columnDefs= [
-        { field: 'idSchedule', headerName: "Mã số", style: "width: 340px;", searchable: true, searchType: 'text', searchObj: 'idSchedule'},
+        // { field: 'idSchedule', headerName: "Mã số", style: "width: 340px;", searchable: true, searchType: 'text', searchObj: 'idSchedule'},
         { field: 'nameTour', headerName: "Tên tour", style: "width: 300px;", searchable: true, searchType: 'text', searchObj: 'nameTour'},
         { field: 'nameDriver', headerName: "Tên người lái", style: "width: 270px;", searchable: true, searchType: 'text', searchObj: 'nameDriver'},
         { field: 'liscensePlate', headerName: "Biển số xe", style: "width: 200px;", searchable: true, searchType: 'text', searchObj: 'liscensePlate'},

@@ -56,7 +56,7 @@ export class ListPromotionComponent implements OnInit {
       }
       else{
         this.resPromotion = null
-        this.notificationService.handleAlertObj(res.notification)
+      
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -74,7 +74,7 @@ export class ListPromotionComponent implements OnInit {
       }
       else{
         this.resPromotionWaiting = null
-        this.notificationService.handleAlertObj(res.notification)
+      
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
