@@ -14,8 +14,19 @@ export class CostTourService{
   {
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/CostTour/gets-cost-tour");
   }
+
+  getCostbyTourDetailId(idtourdetail: any)
+  {
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/CostTour/gets-cost-tour-id-tour-detail?idtourdetail="+idtourdetail);
+  }
+
   create(data: any)
   {
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/CostTour/create-cost-tour", data);
+  }
+
+  update(data: any)
+  {
+    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/CostTour/update-cost-tour", data);
   }
 }

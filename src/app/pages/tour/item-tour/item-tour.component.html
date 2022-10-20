@@ -78,12 +78,12 @@
 
 
     <div class="container-fluid" *ngIf="isSuccess">
-      <h1 class="modal-title fs-5 mt-5 mb-5" *ngIf="resCostTour" id="gridDataLabel">Thông tin chi phí tour</h1>
+      <h1 class="modal-title fs-5 mt-5 mb-5"  id="gridDataLabel">Thông tin chi phí tour</h1>
       <form>
         <div class="pl-lg-4">
           <div class="row">
             <div class="col-lg-12" >
-              <ngb-accordion #acc="ngbAccordion" [closeOthers]="true" activeIds="toggle-1">
+              <ngb-accordion #acc="ngbAccordion" *ngIf="resCostTour" [closeOthers]="true" activeIds="toggle-1">
                 <ngb-panel id="toggle-1" title="Chi phí tour">
                   <ng-template ngbPanelContent>
                     <div class="row">

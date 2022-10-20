@@ -31,7 +31,7 @@ export class ItemTourComponent implements OnInit {
   resHotel: HotelModel[]
   resPlace: PlaceModel[]
   resRestaurant: RestaurantModel[]
-  resCostTour: CostTourModel
+  @Input() resCostTour: CostTourModel
   isHoliday = this.configService.listStatus()
   constructor(private tourService: TourService, private configService: ConfigService, private notificationService: NotificationService,
       private hotelService: HotelService, private placeService: PlaceService, private restaurantService: RestaurantService, private costtourService: CostTourService) { }
@@ -47,9 +47,22 @@ export class ItemTourComponent implements OnInit {
       this.isEdit = true
       this.isSuccess = false
     }else{
-      this.isSuccess = true
+      if(this.type == 'detail'){
+        this.isSuccess = true
+      } 
       this.isEdit = false
-
+      
+      this.costtourService.getCostbyTourDetailId(this.resTour.idTour+"-Details").subscribe(res =>{
+        this.response = res
+        if(!this.response.notification.type) {
+          this.resCostTour = this.response.content
+          console.log(this.response);
+        }
+        else{
+           this.resCostTour = null
+           this.notificationService.handleAlertObj(res.notification)
+        }
+      })
     }
     this.resTourTmp = Object.assign({}, this.resTour)
   }
@@ -125,7 +138,8 @@ export class ItemTourComponent implements OnInit {
   }
 
   saveCost(){
-    
+    if(this.type == "create")
+      {
     this.costtourService.create(this.resCostTour).subscribe(res =>{
       this.response = res
       this.notificationService.handleAlertObj(res.notification)
@@ -140,13 +154,28 @@ export class ItemTourComponent implements OnInit {
       this.notificationService.handleAlert(message, "Error")
     })
   }
+  else{
+    this.costtourService.update(this.resCostTour).subscribe(res =>{
+      this.response = res
+      this.notificationService.handleAlertObj(res.notification)
+      
+      if(this.response.notification.type == "Success")
+      {
+      }
+      console.log(this.response.content);
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, "Error")
+    })
+  }
+  }
 
 
   close(){
     if (this.type == 'detail') {
       this.isEdit = false
     }
-    this.isSuccess = false
+  
      this.restore()
   }
 

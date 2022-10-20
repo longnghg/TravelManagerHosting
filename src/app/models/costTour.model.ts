@@ -1,5 +1,5 @@
 export class CostTourModel{
-  id: string
+  idCostTour: string
   tourDetailId: string
   breakfast: number
   water: number
