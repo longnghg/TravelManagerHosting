@@ -1,22 +1,22 @@
 export class CostTourModel{
   idCostTour: string
   tourDetailId: string
-  breakfast: number
-  water: number
-  feeGas: number
-  distance: number
-  sellCost: number
-  depreciation: number
-  otherPrice: number
-  tolls: number
-  cusExpected: number
-  insuranceFee: number
-  isHoliday: boolean
-  totalCostTour: number
+  breakfast: number = 0
+  water: number  = 0
+  feeGas: number  = 0
+  distance: number = 0
+  sellCost: number = 0
+  depreciation: number = 0
+  otherPrice: number = 0
+  tolls: number = 0
+  cusExpected: number = 0
+  insuranceFee: number = 0
+  isHoliday: boolean = null
+  totalCostTour: number = 0
   hotelId: string
-  priceHotel: number
+  priceHotel: number = 0
   restaurantId: string
-  priceRestaurant: number
-  placeId: string
-  priceTicketPlace: number
+  priceRestaurant: number = 0
+  placeId: string 
+  priceTicketPlace: number = 0
 }

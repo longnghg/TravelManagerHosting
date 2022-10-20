@@ -25,13 +25,13 @@ export class ItemTourComponent implements OnInit {
   @Input() type: string
   response: ResponseModel
   isEdit: boolean = false
-  isSuccess: boolean = false
   isChange: boolean = false
   resTourTmp: TourModel
   resHotel: HotelModel[]
   resPlace: PlaceModel[]
   resRestaurant: RestaurantModel[]
-  @Input() resCostTour: CostTourModel
+  resCostTour: CostTourModel
+  resCostTourTmp: CostTourModel
   isHoliday = this.configService.listStatus()
   constructor(private tourService: TourService, private configService: ConfigService, private notificationService: NotificationService,
       private hotelService: HotelService, private placeService: PlaceService, private restaurantService: RestaurantService, private costtourService: CostTourService) { }
@@ -45,26 +45,27 @@ export class ItemTourComponent implements OnInit {
       this.resTour = new TourModel()
       this.resCostTour = new CostTourModel()
       this.isEdit = true
-      this.isSuccess = false
     }else{
-      if(this.type == 'detail'){
-        this.isSuccess = true
-      } 
       this.isEdit = false
+      this.initCost()
       
-      this.costtourService.getCostbyTourDetailId(this.resTour.idTour+"-Details").subscribe(res =>{
-        this.response = res
-        if(!this.response.notification.type) {
-          this.resCostTour = this.response.content
-          console.log(this.response);
-        }
-        else{
-           this.resCostTour = null
-           this.notificationService.handleAlertObj(res.notification)
-        }
-      })
     }
     this.resTourTmp = Object.assign({}, this.resTour)
+    this.resCostTourTmp = Object.assign({}, this.resCostTour)
+  }
+
+  initCost(){
+    this.costtourService.getCostbyTourDetailId(this.resTour.idTour+"-Details").subscribe(res =>{
+      this.response = res
+      if(!this.response.notification.type) {
+        this.resCostTour = this.response.content
+        console.log(this.response);
+      }
+      else{
+         this.resCostTour = null
+        
+      }
+    })
   }
 
   init(){
@@ -96,6 +97,12 @@ export class ItemTourComponent implements OnInit {
     else{
       this.isChange = false
     }
+    if (JSON.stringify(this.resCostTour) != JSON.stringify(this.resCostTourTmp)) {
+      this.isChange = true
+    }
+    else{
+      this.isChange = false
+    }
   }
 
   restore(){
@@ -116,59 +123,39 @@ export class ItemTourComponent implements OnInit {
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
           
-          if(this.response.notification.type == "Success")
-          {
-            this.isSuccess = true
-          }
-    
           this.resCostTour.tourDetailId = this.response.content 
-          console.log(this.resCostTour.tourDetailId);
-          
+
+          if(this.resCostTour.tourDetailId != null){
+            this.costtourService.create(this.resCostTour).subscribe(res =>{
+              this.response = res
+              this.notificationService.handleAlertObj(res.notification)      
+              })
+          }
+          if(this.response.notification.type == "Success")
+          {}
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, "Error")
         })
       }
       else{
-
-
+        this.costtourService.update(this.resCostTour).subscribe(res =>{
+          this.response = res
+          this.notificationService.handleAlertObj(res.notification)
+          
+          if(this.response.notification.type == "Success")
+          {
+          }
+          console.log(this.response.content);
+        }, error => {
+          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+          this.notificationService.handleAlert(message, "Error")
+        })
       }
       this.close()
     
   }
 
-  saveCost(){
-    if(this.type == "create")
-      {
-    this.costtourService.create(this.resCostTour).subscribe(res =>{
-      this.response = res
-      this.notificationService.handleAlertObj(res.notification)
-      
-      if(this.response.notification.type == "Success")
-      {
-        this.isSuccess = true
-      }
-      console.log(this.response.content);
-    }, error => {
-      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
-    })
-  }
-  else{
-    this.costtourService.update(this.resCostTour).subscribe(res =>{
-      this.response = res
-      this.notificationService.handleAlertObj(res.notification)
-      
-      if(this.response.notification.type == "Success")
-      {
-      }
-      console.log(this.response.content);
-    }, error => {
-      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
-    })
-  }
-  }
 
 
   close(){

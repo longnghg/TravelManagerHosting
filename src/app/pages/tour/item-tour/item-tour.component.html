@@ -67,17 +67,8 @@
         </div>
       </form>
     </div>
-    <div class="row align-items-center">
-      <div class="col-12 text-right">
-        <button  *ngIf="type == 'detail'" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteProvinceModal" (click)="getDataDelete()">Xóa</button>
-        <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="restore()">Khôi phục</button>
-        <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="save()">{{type == 'detail' ? "Lưu":"Thêm"}}</button>
-      </div>
-    </div>
     <hr>
-
-
-    <div class="container-fluid" *ngIf="isSuccess">
+    <div class="container-fluid">
       <h1 class="modal-title fs-5 mt-5 mb-5"  id="gridDataLabel">Thông tin chi phí tour</h1>
       <form>
         <div class="pl-lg-4">
@@ -214,13 +205,6 @@
                         </div>
                       </div>
                     </div>
-                      <div class="row align-items-center">
-                        <div class="col-12 text-right">
-                          <button  *ngIf="type == 'detail'" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteProvinceModal" (click)="getDataDelete()">Xóa</button>
-                          <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="restore()">Khôi phục</button>
-                          <button  class="btn btn-sm btn-success" (click)="saveCost()" >{{type == 'detail' ? "Cập nhật giá":"Thêm"}}</button>
-                        </div>
-                      </div>
                   </ng-template>
                 </ngb-panel>
               </ngb-accordion>
@@ -229,7 +213,14 @@
         </div>
       </form>
     </div>
-
+    <hr>
+    <div class="row align-items-center">
+      <div class="col-12 text-right">
+        <button  *ngIf="type == 'detail'" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteProvinceModal" (click)="getDataDelete()">Xóa</button>
+        <button *ngIf="isChange && type == 'detail'" class="btn btn-lg btn-info" (click)="restore()">Khôi phục</button>
+        <button *ngIf="isChange" class="btn btn-lg btn-success"  (click)="save()">{{type == 'detail' ? "Cập nhật thông tin/ giá":"Thêm"}}</button>
+      </div>
+    </div>
   </ng-container>
 </div>
 

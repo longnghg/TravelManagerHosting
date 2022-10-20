@@ -15,6 +15,7 @@ import { HubConnection } from '@microsoft/signalr';
 })
 export class ListTourComponent implements OnInit {
   resTour: TourModel[]
+  resTourWaiting: TourModel[]
   response: ResponseModel
   dataChild: TourModel
   data: TourModel
@@ -40,14 +41,29 @@ export class ListTourComponent implements OnInit {
     ngOnInit(): void {
 
       this.init(this.type)
+      this.initWaiting()
       this.hubConnectionBuilder = this.configService.signIR(this.init())
       this.hubConnectionBuilder.start();
       this.hubConnectionBuilder.on('Init', (result: any) => {
         this.init(this.type)
+        this.initWaiting()
       })
+    }
 
-
-
+    initWaiting(){
+      this.tourService.getwaiting().subscribe(res =>{
+        this.response = res
+        if(!this.response.notification.type){
+          this.resTourWaiting = this.response.content
+        }
+        else{
+          this.resTourWaiting = null
+          this.notificationService.handleAlertObj(res.notification)
+        }
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, "Error")
+      })
     }
 
     init(e?){
@@ -76,7 +92,7 @@ export class ListTourComponent implements OnInit {
         { field: 'thumbsnail',headerName: "Thumbsnail", style: "width: 200px;", searchable: true, searchType: 'text', searchObj: 'thumbsnail'},
         { field: 'fromPlace',headerName: "Từ", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'phone'},
         { field: 'toPlace',headerName: "Đến", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'address'},
-        { field: 'approveStatus',headerName: "ApproveStatus", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'approveStatus'},
+        // { field: 'approveStatus',headerName: "ApproveStatus", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'approveStatus'},
         // { field: 'status: string',headerName: "Trạng thái", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'status'},
         // { field: 'createDate: string',headerName: "Ngày tạo", style: "width: 160px;", searchable: true, searchType: 'date', searchObj: 'createDate'},
         ];
