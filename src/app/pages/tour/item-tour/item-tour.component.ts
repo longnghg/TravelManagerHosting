@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TourModel } from 'src/app/models/tour.model';
 import { TourService } from "src/app/services_API/tour.service"
 import { NotificationService } from "./../../../services_API/notification.service";
@@ -13,6 +13,7 @@ import { RestaurantService } from 'src/app/services_API/restaurant.service';
 import { RestaurantModel } from 'src/app/models/restaurant.model';
 import { CostTourService } from 'src/app/services_API/costtour.service';
 import { CostTourModel } from 'src/app/models/costTour.model';
+import { outputAst } from '@angular/compiler';
 
 @Component({
   selector: 'app-item-tour',
@@ -23,6 +24,9 @@ export class ItemTourComponent implements OnInit {
 
   @Input() resTour: TourModel
   @Input() type: string
+  @Output() parentDelete = new EventEmitter<any>()
+  @Output() parentRestore = new EventEmitter<any>()
+
   response: ResponseModel
   isEdit: boolean = false
   isChange: boolean = false
@@ -48,7 +52,7 @@ export class ItemTourComponent implements OnInit {
     }else{
       this.isEdit = false
       this.initCost()
-      
+
     }
     this.resTourTmp = Object.assign({}, this.resTour)
     this.resCostTourTmp = Object.assign({}, this.resCostTour)
@@ -63,7 +67,7 @@ export class ItemTourComponent implements OnInit {
       }
       else{
          this.resCostTour = null
-        
+
       }
     })
   }
@@ -91,15 +95,18 @@ export class ItemTourComponent implements OnInit {
     }
   }
   inputChange(){
-    if (JSON.stringify(this.resTour) != JSON.stringify(this.resTourTmp && 
-      JSON.stringify(this.resCostTour) != JSON.stringify(this.resCostTourTmp))) {
+    if (JSON.stringify(this.resTour) != JSON.stringify(this.resTourTmp)) {
       this.isChange = true
-      
     }
     else{
       this.isChange = false
     }
-    
+    if (JSON.stringify(this.resCostTour) != JSON.stringify(this.resCostTourTmp)) {
+      this.isChange = true
+    }
+    else{
+      this.isChange = false
+    }
   }
 
   restore(){
@@ -109,28 +116,23 @@ export class ItemTourComponent implements OnInit {
   }
 
   save(){
-    var valid =  this.configService.validateTour(this.resTour)
-    valid.forEach(element => {
-        this.notificationService.handleAlert(element, "Error")
-    });
-    if (valid.length == 0) {
-      var valid =  this.configService.validateCost(this.resCostTour)
-      valid.forEach(element => {
-          this.notificationService.handleAlert(element, "Error")
-      });
-      if (valid.length == 0) {
+    // var valid =  this.configService.validateTour(this.resTour)
+    // valid.forEach(element => {
+    //     this.notificationService.handleAlert(element, "Error")
+    // });
+    // if (valid.length == 0) {
       if(this.type == "create")
       {
         this.tourService.create(this.resTour).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-          
-          this.resCostTour.tourDetailId = this.response.content 
+
+          this.resCostTour.tourDetailId = this.response.content
 
           if(this.resCostTour.tourDetailId != null){
             this.costtourService.create(this.resCostTour).subscribe(res =>{
               this.response = res
-              this.notificationService.handleAlertObj(res.notification)      
+              this.notificationService.handleAlertObj(res.notification)
               })
           }
           if(this.response.notification.type == "Success")
@@ -144,7 +146,7 @@ export class ItemTourComponent implements OnInit {
         this.costtourService.update(this.resCostTour).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-          
+
           if(this.response.notification.type == "Success")
           {
           }
@@ -155,8 +157,7 @@ export class ItemTourComponent implements OnInit {
         })
       }
       this.close()
-    }
-    }
+
   }
 
 
@@ -165,9 +166,14 @@ export class ItemTourComponent implements OnInit {
     if (this.type == 'detail') {
       this.isEdit = false
     }
-  
+
      this.restore()
   }
 
-
+  getDataDelete(){
+    this.parentDelete.emit(this.resTour);
+  }
+  getDataRestore(){
+    this.parentRestore.emit(this.resTour);
+  }
 }

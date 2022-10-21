@@ -30,8 +30,8 @@ export class TourService{
       this.notificationService.handleAlert(message, "Error")
     })})
     return value
-
   }
+
   gets()
   {
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/gets-tour");
@@ -42,6 +42,15 @@ export class TourService{
   create(data: any)
   {
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Tour/create-tour", data);
+  }
+
+  delete(idTour: any)
+  {
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/delete-tour?idTour="+idTour);
+  }
+  restore(idTour: any)
+  {
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/restore-tour?idTour="+idTour);
   }
 }
 

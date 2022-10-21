@@ -111,4 +111,28 @@ export class ListTourComponent implements OnInit {
      getData(data: any){
       this.data = data
     }
+
+    delete(){
+      if (this.data) {
+       this.tourService.delete(this.data.idTour).subscribe(res =>{
+         this.response = res
+         this.notificationService.handleAlertObj(res.notification)
+       }, error => {
+         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+         this.notificationService.handleAlert(message, "Error")
+       })
+      }
+     }
+
+     restore(){
+      if (this.data) {
+        this.tourService.restore(this.data.idTour).subscribe(res =>{
+          this.response = res
+          this.notificationService.handleAlertObj(res.notification)
+        }, error => {
+          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+          this.notificationService.handleAlert(message, "Error")
+        })
+      }
+    }
   }
