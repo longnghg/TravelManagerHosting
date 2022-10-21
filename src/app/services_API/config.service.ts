@@ -129,15 +129,36 @@ export class ConfigService{
 
    }
 
+   validateCost(data: any){
+    var err = []
+    if(data.hotelId == null || data.hotelId == ""){
+      err.push("[Khách sạn] không được để trống !")
+   }
+
+   if(data.restaurantId == null || data.restaurantId == ""){
+    err.push("[Nhà hàng] không được để trống !")
+    }
+
+    if(data.placeId == null || data.placeId == ""){
+    err.push("[Địa Điểm] không được để trống !")
+    }
+
+    if(data.isHoliday == null || data.isHoliday == ""){
+      err.push("[Ngày lễ] không được để trống !")
+      }
+
+      return err
+   }
+
    validateTour(data: any){
     var err = []
     //name
     if(data.nameTour == null || data.nameTour == ""){
        err.push("[Tên tour] không được để trống !")
     }
-    else if (data.nameProvince.length > 30) {
+    else if (data.nameTour.length > 30) {
        err.push("[Tên tour] quá dài !")
-    }else if (data.nameProvince.length < 5) {
+    }else if (data.nameTour.length < 5) {
       err.push("[Tên tour] quá ngắn !")
     }
 

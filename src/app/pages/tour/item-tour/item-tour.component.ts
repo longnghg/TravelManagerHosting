@@ -91,18 +91,15 @@ export class ItemTourComponent implements OnInit {
     }
   }
   inputChange(){
-    if (JSON.stringify(this.resTour) != JSON.stringify(this.resTourTmp)) {
+    if (JSON.stringify(this.resTour) != JSON.stringify(this.resTourTmp && 
+      JSON.stringify(this.resCostTour) != JSON.stringify(this.resCostTourTmp))) {
       this.isChange = true
+      
     }
     else{
       this.isChange = false
     }
-    if (JSON.stringify(this.resCostTour) != JSON.stringify(this.resCostTourTmp)) {
-      this.isChange = true
-    }
-    else{
-      this.isChange = false
-    }
+    
   }
 
   restore(){
@@ -112,11 +109,16 @@ export class ItemTourComponent implements OnInit {
   }
 
   save(){
-    // var valid =  this.configService.validateTour(this.resTour)
-    // valid.forEach(element => {
-    //     this.notificationService.handleAlert(element, "Error")
-    // });
-    // if (valid.length == 0) {
+    var valid =  this.configService.validateTour(this.resTour)
+    valid.forEach(element => {
+        this.notificationService.handleAlert(element, "Error")
+    });
+    if (valid.length == 0) {
+      var valid =  this.configService.validateCost(this.resCostTour)
+      valid.forEach(element => {
+          this.notificationService.handleAlert(element, "Error")
+      });
+      if (valid.length == 0) {
       if(this.type == "create")
       {
         this.tourService.create(this.resTour).subscribe(res =>{
@@ -153,7 +155,8 @@ export class ItemTourComponent implements OnInit {
         })
       }
       this.close()
-    
+    }
+    }
   }
 
 
