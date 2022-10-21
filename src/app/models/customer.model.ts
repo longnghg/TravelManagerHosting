@@ -1,6 +1,6 @@
 export class CustomerModel{
-  id: string
-  name: string
+  idCustomer: string
+  nameCustomer: string
   phone: string
   email: string
   address: string

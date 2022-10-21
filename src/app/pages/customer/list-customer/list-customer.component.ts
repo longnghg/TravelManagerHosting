@@ -24,19 +24,18 @@ export class ListCustomerComponent implements OnInit {
     public gridConfig: GridConfig = {
       idModalRestore: "",
       idModalDelete: "",
-      idModal: "gridSchedule",
+      idModal: "gridCustomer",
       radioBox: true,
       radioBoxName: "Kho lưu trữ",
     }
     ngOnInit(): void {
 
       this.init()
-      console.log(this.resCustomer);
 
       setTimeout(() => {
         this.columnDefs= [
-          { field: 'idCustomer', headerName: "Mã số", style: "width: 350px;", searchable: true, searchType: 'text', searchObj: 'idCustomer'},
-        { field: 'nameCustomer',headerName: "Tên", style: "width: 400px;", filter: "avatar", searchable: true, searchType: 'text', searchObj: 'nameCustomer'},
+          // { field: 'idCustomer', headerName: "Mã số", style: "width: 350px;", searchable: true, searchType: 'text', searchObj: 'idCustomer'},
+        { field: 'nameCustomer',headerName: "Tên", style: "width: 400px;", searchable: true, searchType: 'text', searchObj: 'nameCustomer'},
         { field: 'email',headerName: "Email", style: "width: 200px;", searchable: true, searchType: 'email', searchObj: 'email'},
         { field: 'phone',headerName: "Số điện thoại", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'phone'},
         { field: 'address',headerName: "Địa chỉ", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'address'},
@@ -55,14 +54,12 @@ export class ListCustomerComponent implements OnInit {
         }
         else{
           this.resCustomer = null
-          this.notificationService.handleAlertObj(res.notification)
         }
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, "Error")
       })
     }
-
     childData(e){
       if (e) {
         this.dataChild = e
