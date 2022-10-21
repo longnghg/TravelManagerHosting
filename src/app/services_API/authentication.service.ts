@@ -12,7 +12,7 @@ export class AuthenticationService{
 
   login(email: any, password: any)
   {
-      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Authentication/EmpLogin", {email, password});
+      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Authentication/login-employee", {email, password});
   }
 
   logOut()
