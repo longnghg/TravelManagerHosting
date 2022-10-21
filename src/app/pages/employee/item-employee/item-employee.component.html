@@ -27,7 +27,7 @@
                 <div class="card-profile-stats d-flex justify-content-center mt-md-5">
                   <div class="row">
                     <div class="update ml-auto mr-auto">
-                      <input id="file" type="file" class="d-none" (change)="changeImg($event); inputChange()">
+                      <input id="file" type="file" class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeImg($event); inputChange()">
                       <label for="file" style="margin-left: 20px;" [class]="isEdit?'btn text-white btn-primary btn-round':'d-none'">Đổi hình đại diện</label>
                     </div>
                   </div>

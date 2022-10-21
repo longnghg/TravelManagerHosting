@@ -82,13 +82,18 @@ export class ItemEmployeeComponent implements OnInit{
 
   changeImg(e: any){
     this.formData = e
-    if (e.target.files && e.target.files[0]){
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.onload = e => this.img = reader.result;
-      reader.readAsDataURL(file)
+    if (e.target.files[0].type == "image/jpg" || e.target.files[0].type == "image/jpeg" || e.target.files[0].type == "image/png") {
+      if (e.target.files && e.target.files[0]){
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = e => this.img = reader.result;
+        reader.readAsDataURL(file)
 
-      this.resEmployee.image = this.img
+        this.resEmployee.image = this.img
+      }
+    }
+    else{
+      this.notificationService.handleAlert("Không đúng định dạng hình ảnh !", "Error")
     }
   }
 
