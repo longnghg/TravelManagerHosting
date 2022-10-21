@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   constructor( private configService:ConfigService, private notificationService:NotificationService, private authentication:AuthenticationService) { }
   ngOnInit() {}
 
-  Login(){
+  login(){
     this.isloading = true
     this.authentication.login(this.email, this.password).subscribe(res=>{
       this.response = res
