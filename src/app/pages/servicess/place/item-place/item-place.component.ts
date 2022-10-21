@@ -58,7 +58,11 @@ export class ItemPlaceComponent implements OnInit {
   }
 
   save(){
-
+    var valid = this.configService.validateHotel(this.resPlace)
+    valid.forEach(element => {
+        this.notificationService.handleAlert(element, "Error")
+    });
+    if (valid.length == 0) {
       if(this.type == "create")
       {
         this.placeService.create(this.resPlace).subscribe(res =>{
@@ -73,6 +77,7 @@ export class ItemPlaceComponent implements OnInit {
           this.notificationService.handleAlert(message, "Error")
         })
       }
+    }
       else{
 
 

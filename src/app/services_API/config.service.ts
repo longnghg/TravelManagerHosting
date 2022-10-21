@@ -246,6 +246,91 @@ export class ConfigService{
     return err
 
    }
+// hotel
+   validateHotel(data : any)
+   {
+    // name hotel
+        var err = []
+        if(data.name == null || data.name == ""){
+          err.push("[tên khách sạn] không được để trống !")
+      }else if (data.name.length > 100) {
+          err.push("[tên khách sạn] quá dài !")
+      }else if (data.name.length < 1) {
+        err.push("[tên khách sạn] quá ngắn !")
+      }
+      // phone
+      if (data.phone == null || data.phone == "") {
+        err.push("[Số điện thoại] không được để trống !")
+     }else if (data.phone.length > 10) {
+        err.push("[Số điện thoại] vượt quá 10 số !")
+     }else if (!data.phone.startsWith("0")) {
+        err.push("[Số điện thoại] không hợp lệ !")
+     }
+       //Address
+     if (data.address == null || data.address == "") {
+        err.push("[Địa chỉ] không được để trống !")
+     }else if (data.address.length > 255) {
+       err.push("[Địa chỉ] quá dài !")
+    }
+    // quantity
+    if(data.quantitySR == null || data.quantitySR == ""){
+      err.push("[Số lượng] phòng đơn không được để trống !")
+      }
+
+    if(data.singleRoomPrice == null || data.singleRoomPrice == ""){
+      err.push("[Giá vé] phòng đơn không được để trống !")
+      }
+// double room
+      if(data.quantityDBR == null || data.quantityDBR == ""){
+        err.push("[Số lượng] phòng đôi không được để trống !")
+        }
+
+      if(data.doubleRoomPrice == null || data.doubleRoomPrice == ""){
+        err.push("[Giá vé] phòng đôi không được để trống !")
+        }
+        return err
+   }
+   // place
+   validatePlace(data : any)
+   {
+        var err = []
+        if(data.name == null || data.name == ""){
+          err.push("[Tên địa điểm] không được để trống !")
+      }else if (data.name.length > 100) {
+          err.push("[Tên địa điểm] quá dài !")
+      }else if (data.name.length < 1) {
+        err.push("[Tên địa điểm] quá ngắn !")
+      } // phone
+      if (data.phone == null || data.phone == "") {
+        err.push("[Số điện thoại] không được để trống !")
+     }else if (data.phone.length > 10) {
+        err.push("[Số điện thoại] vượt quá 10 số !")
+     }else if (!data.phone.startsWith("0")) {
+        err.push("[Số điện thoại] không hợp lệ !")
+     }
+       //Address
+     if (data.address == null || data.address == "") {
+        err.push("[Địa chỉ] không được để trống !")
+     }else if (data.address.length > 255) {
+       err.push("[Địa chỉ] quá dài !")
+
+    }
+    //priceTicket
+    if(data.priceTicket == null || data.priceTicket == ""){
+      err.push("[Giá vé] không được để trống !")
+      }
+      if(data.modifyBy == null || data.modifyBy == ""){
+        err.push("[Tên người sửa] không được để trống !")
+    }else if (data.modifyBy.length > 100) {
+        err.push("[Tên người sửa] quá dài !")
+    }else if (data.modifyBy.length < 1) {
+      err.push("[Tên người sửa]  quá ngắn !")
+    }
+    if (data.modifyDate == null || data.modifyDate == "") {
+      err.push("[Ngày] không được để trống !")
+   }
+        return err
+   }
 
    formatFromUnixTimestampToFullDate(unix_timestamp: number){
     var date = new Date(unix_timestamp).toLocaleDateString("en-US");

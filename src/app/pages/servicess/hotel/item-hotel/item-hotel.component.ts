@@ -58,26 +58,26 @@ export class ItemHotelComponent implements OnInit {
   }
 
   save(){
-
-      if(this.type == "create")
-      {
+    var valid = this.configService.validateHotel(this.resHotel)
+    valid.forEach(element => {
+        this.notificationService.handleAlert(element, "Error")
+    });
+    if (valid.length == 0) {
+      if(this.type == "create"){
         this.hotelService.create(this.resHotel).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-
-          if(this.response.notification.type == "Error")
-          {
-          }
+          this.close()
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, "Error")
         })
       }
       else{
-
-
+        this.close();
       }
-      this.close()
+    }
+
   }
 
   close(){
