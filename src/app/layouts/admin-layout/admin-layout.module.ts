@@ -60,6 +60,7 @@ import { NgOptionHighlightModule }  from '@ng-select/ng-option-highlight';
 
 import { ListTourBookingComponent } from '../../pages/tourBooking/list-tour-booking/list-tour-booking.component';
 import { ViewTourScheduleComponent } from '../../pages/tour/view-tour-schedule/view-tour-schedule.component';
+import { ItemTourScheduleComponent } from '../../pages/tour/item-tour-schedule/item-tour-schedule.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -111,6 +112,7 @@ import { ViewTourScheduleComponent } from '../../pages/tour/view-tour-schedule/v
     ListRestaurantComponent,
     ItemRestaurantComponent,
     ViewTourScheduleComponent,
+    ItemTourScheduleComponent,
   ],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

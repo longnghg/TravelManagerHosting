@@ -29,11 +29,10 @@ export class ViewTourScheduleComponent implements OnInit {
     radioBox: true,
     radioBoxName: "Kho lưu trữ",
   }
+
   ngOnInit(): void {
     this.idTour = localStorage.getItem("idTour")
-
     this.init()
-    console.log(this.resSchedule);
 
     setTimeout(() => {
       this.columnDefs= [

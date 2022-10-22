@@ -1,6 +1,7 @@
 export class ScheduleModel{
   id: string
   departureDate: string
+  returnDate :string
   beginDate: string
   endDate: string
   timePromotion: string
@@ -25,4 +26,5 @@ export class ScheduleModel{
   totalCostTour: number
   finalHoliday: number
   vat: number
+  description: string
 }

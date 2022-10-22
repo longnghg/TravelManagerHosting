@@ -19,7 +19,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/list-employee', title: 'Employee',  icon:'ni ni-circle-08 text-purple', class: '' },
     { path: '/list-customer', title: 'Customer',  icon:'ni ni-single-02 text-purple', class: '' },
     { path: '/list-tour', title: 'Tour',  icon:'ni ni-world-2 text-purple', class: '' },
-    { path: '/list-schedule', title: 'Schedule',  icon:'ni ni-calendar-grid-58 text-purple', class: '' },
+    // { path: '/list-schedule', title: 'Schedule',  icon:'ni ni-calendar-grid-58 text-purple', class: '' },
     { path: '/list-tourBooking', title: 'tourBooking',  icon:'ni ni-collection text-purple', class: '' },
     { path: '/list-hotel', title: 'Hotel',  icon:'ni ni-building text-purple', class: '' },
     { path: '/list-restaurant', title: 'Restaurant',  icon:'ni-bullet-list-67 text-purple', class: '' },
