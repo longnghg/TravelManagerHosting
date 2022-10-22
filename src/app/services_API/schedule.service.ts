@@ -14,6 +14,11 @@ gets()
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/gets-schedule");
 }
 
+getsSchedulebyIdTour(idTour: any)
+{
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/gets-schedule-idtour?idTour="+idTour);
+}
+
 create(data: any)
 {
   return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Schedule/create-schedule", data);

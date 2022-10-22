@@ -59,7 +59,7 @@ import { NgOptionHighlightModule }  from '@ng-select/ng-option-highlight';
 
 
 import { ListTourBookingComponent } from '../../pages/tourBooking/list-tour-booking/list-tour-booking.component';
-
+import { ViewTourScheduleComponent } from '../../pages/tour/view-tour-schedule/view-tour-schedule.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -110,6 +110,7 @@ import { ListTourBookingComponent } from '../../pages/tourBooking/list-tour-book
     ListTourComponent,
     ListRestaurantComponent,
     ItemRestaurantComponent,
+    ViewTourScheduleComponent,
   ],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

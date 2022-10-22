@@ -30,6 +30,7 @@ import { ListCarComponent } from 'src/app/pages/car/list-car/list-car.component'
 
 
 import { ListRestaurantComponent } from 'src/app/pages/servicess/restaurant/list-restaurant/list-restaurant.component';
+import { ViewTourScheduleComponent } from '../../pages/tour/view-tour-schedule/view-tour-schedule.component';
 import { Component } from '@angular/core';
 
 export const AdminLayoutRoutes: Routes = [
@@ -54,4 +55,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'list-restaurant',     component: ListRestaurantComponent},
     { path: 'list-place',     component: ListPlaceComponent},
     { path: 'list-car',     component: ListCarComponent},
+    { path: 'view-tour-schedule',     component: ViewTourScheduleComponent},
 ];

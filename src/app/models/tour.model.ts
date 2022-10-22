@@ -13,4 +13,5 @@ export class TourModel{
   isActive: boolean
   description:string
   vat: number
+  rating: number
 }

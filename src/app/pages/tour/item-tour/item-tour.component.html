@@ -1,227 +1,69 @@
-<div class="modal-header">
-  <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin chi tiết</h1>
-  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
-</div>
-<div class="modal-body">
-  <ng-container *ngIf="resTour">
-    <div class="container-fluid" >
-      <div class="row align-items-center">
-        <div class="col-12 text-right">
-          <a href="javascript:void(0)" *ngIf="type == 'detail'" class="btn btn-sm btn-primary" (click)="isEditChange()">{{!isEdit ? "Chỉnh sửa":"Quay lại"}}</a>
-        </div>
+
+
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin chi tiết</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
       </div>
-      <form>
-        <div class="pl-lg-4">
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label class="form-control-label" for="input-tourName">Tên Chuyến Du Lịch</label>
-                <input type="text" id="nameTour" name="nameTour" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số tên chuyến du lịch" [(ngModel)]="resTour.nameTour" [readonly]="!isEdit">
+      <div class="modal-body">
+        <ng-container *ngIf="resTour">
+          <div class="container-fluid" >
+            <div class="row align-items-center">
+              <div class="col-12 text-right">
+                <a href="javascript:void(0)" *ngIf="type == 'detail'" (click)="sessionResTour()" class="btn btn-success">Chi tiết lịch trình</a>
+                <a href="javascript:void(0)" *ngIf="type == 'detail'" class="btn btn-xl btn-primary" (click)="isEditChange()">{{!isEdit ? "Chỉnh sửa":"Quay lại"}}</a>
               </div>
             </div>
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label class="form-control-label" for="input-thumbsnail">Hình ảnh</label>
-                <input type="text" id="thumbsnail" name="thumbsnail" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập hình ảnh" [(ngModel)]="resTour.thumbsnail" [readonly]="!isEdit">
+            <form>
+              <div class="pl-lg-4">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-tourName">Tên Chuyến Du Lịch</label>
+                      <input type="text" id="nameTour" name="nameTour" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số tên chuyến du lịch" [(ngModel)]="resTour.nameTour" [readonly]="!isEdit">
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-thumbsnail">Hình ảnh</label>
+                      <input type="text" id="thumbsnail" name="thumbsnail" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập hình ảnh" [(ngModel)]="resTour.thumbsnail" [readonly]="!isEdit">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <label class="form-control-label" for="input-fromPlace">Điểm đi</label>
+                    <input type="text" id="fromPlace" name="fromPlace" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập điểm đi " [(ngModel)]="resTour.fromPlace" [readonly]="!isEdit">
+                  </div>
+                  <div class="col-lg-6">
+                    <label class="form-control-label" for="input-toPlace">Điểm đến </label>
+                    <input type="text" id="toPlace" name="toPlace" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập điểm đến " [(ngModel)]="resTour.toPlace" [readonly]="!isEdit">
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-lg-2">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-singleRoomPrice">Số sao</label>
+                      <input type="number" name="rating" id="rating" min="0" value="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số sao" [(ngModel)]="resTour.rating" [readonly]="!isEdit">
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6">
-              <label class="form-control-label" for="input-fromPlace">Điểm đi</label>
-              <input type="text" id="fromPlace" name="fromPlace" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập điểm đi " [(ngModel)]="resTour.fromPlace" [readonly]="!isEdit">
-            </div>
-            <div class="col-lg-6">
-              <label class="form-control-label" for="input-toPlace">Điểm đến </label>
-              <input type="text" id="toPlace" name="toPlace" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập điểm đến " [(ngModel)]="resTour.toPlace" [readonly]="!isEdit">
-            </div>
+            </form>
           </div>
           <hr>
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label class="form-control-label" for="input-singleRoomPrice">Mô tả </label>
-                <textarea type="text" name="description" id="description" cols="30" rows="5" class="form-control form-control-alternative" placeholder="Nhập Mô tả" [(ngModel)]="resTour.description" [readonly]="!isEdit"></textarea>
-
-              </div>
-            </div>
-            <div class="col-lg-2">
-              <div class="form-group">
-                <label class="form-control-label" for="input-singleRoomPrice">Giá vé</label>
-                <input type="number" name="priceAdult" id="priceAdult" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập giá vé" [(ngModel)]="resTour.priceAdult" [readonly]="!isEdit">
-              </div>
-            </div>
-            <div class="col-lg-2">
-              <div class="form-group">
-                <label class="form-control-label" for="input-singleRoomPrice">Giá vé khuyến mãi</label>
-                <input type="number" name="priceAdultPromotion" id="priceAdultPromotion" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập giá vé" [(ngModel)]="resTour.priceAdultPromotion" [readonly]="!isEdit">
-              </div>
-            </div>
-            <div class="col-lg-2">
-              <div class="form-group">
-                <label class="form-control-label" for="input-singleRoomPrice">VAT</label>
-                <input type="number" name="vat" id="vat" min="0" value="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập VAT" [(ngModel)]="resTour.vat" [readonly]="!isEdit">
-              </div>
+          <div class="row align-items-center">
+            <div class="col-12 text-right">
+              <button  *ngIf="type == 'detail'" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteTourModal" (click)="delete()">Xóa</button>
+              <button *ngIf="isChange && type == 'detail'" class="btn btn-lg btn-info" (click)="restore()">Khôi phục</button>
+              <button *ngIf="isChange" class="btn btn-lg btn-success"  (click)="save()">{{type == 'detail' ? "Cập nhật thông tin/ giá":"Thêm"}}</button>
             </div>
           </div>
-        </div>
-      </form>
-    </div>
-    <hr>
-    <div class="container-fluid">
-      <h1 class="modal-title fs-5 mt-5 mb-5"  id="gridDataLabel">Thông tin chi phí tour</h1>
-      <form>
-        <div class="pl-lg-4">
-          <div class="row">
-            <div class="col-lg-12" >
-              <ngb-accordion #acc="ngbAccordion" *ngIf="resCostTour" [closeOthers]="true" activeIds="toggle-1">
-                <ngb-panel id="toggle-1" title="Chi phí tour">
-                  <ng-template ngbPanelContent>
-                    <div class="row">
-                      <div class="col-lg-3">
-                        <div class="form-group">
-                          <label class="form-control-label" for="input-tourName">Bữa ăn</label>
-                          <input type="number" name="breakfast" id="breakfast" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập giá ăn " [(ngModel)]="resCostTour.breakfast" [readonly]="!isEdit">
-                        </div>
-                      </div>
-                      <div class="col-lg-3">
-                        <div class="form-group">
-                          <label class="form-control-label" for="input-thumbsnail">Nước uống</label>
-                          <input type="number" name="water" id="water" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập giá nước " [(ngModel)]="resCostTour.water" [readonly]="!isEdit">
-                        </div>
-                      </div>
-                      <div class="col-lg-3">
-                        <div class="form-group">
-                          <label class="form-control-label" for="input-thumbsnail">Nguyên liệu xăng</label>
-                          <input type="number" name="feeGas" id="feeGas" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập giá xăng " [(ngModel)]="resCostTour.feeGas" [readonly]="!isEdit">
-                        </div>
-                      </div>
-                      <div class="col-lg-3">
-                        <div class="form-group">
-                          <label class="form-control-label" for="input-thumbsnail">Khoảng cách</label>
-                          <input type="number" name="distance" id="distance" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập khoảng cách " [(ngModel)]="resCostTour.distance" [readonly]="!isEdit">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-3">
-                        <div class="form-group">
-                          <label class="form-control-label" for="input-tourName">Chi phí bán</label>
-                          <input type="number" name="sellCost" id="sellCost" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập chi phí bán " [(ngModel)]="resCostTour.sellCost" [readonly]="!isEdit">
-                        </div>
-                      </div>
-                      <div class="col-lg-3">
-                        <div class="form-group">
-                          <label class="form-control-label" for="input-thumbsnail">Chi phí cầu đường</label>
-                          <input type="number" name="tolls" id="tolls" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập chi phí cầu đường " [(ngModel)]="resCostTour.tolls" [readonly]="!isEdit">
-                        </div>
-                      </div>
-                      <div class="col-lg-3">
-                        <div class="form-group">
-                          <label class="form-control-label" for="input-thumbsnail">Chi phí khác</label>
-                          <input type="number" name="otherPrice" id="otherPrice" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập chi phí khác" [(ngModel)]="resCostTour.otherPrice" [readonly]="!isEdit">
-                        </div>
-                      </div>
-                      <div class="col-lg-3">
-                        <div class="form-group">
-                          <label class="form-control-label" for="input-thumbsnail">Khấu hao</label>
-                          <input type="number" name="depreciation" id="depreciation" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập khấu hao" [(ngModel)]="resCostTour.depreciation" [readonly]="!isEdit">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-3">
-                        <div class="form-group">
-                          <label class="form-control-label" for="input-tourName">CusExpected</label>
-                          <input type="number" name="cusExpected" id="cusExpected" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập gì đó " [(ngModel)]="resCostTour.cusExpected" [readonly]="!isEdit">
-                        </div>
-                      </div>
-                      <div class="col-lg-3">
-                        <div class="form-group">
-                          <label class="form-control-label" for="input-thumbsnail"> Phí bảo hiểm</label>
-                          <input type="number" name="insuranceFee" id="insuranceFee" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập phí bảo hiểm " [(ngModel)]="resCostTour.insuranceFee" [readonly]="!isEdit">
-                        </div>
-                      </div>
-                      <div class="col-lg-3">
-                        <div class="form-group">
-                          <label class="form-control-label" for="input-thumbsnail"> Ngày lễ</label>
-                          <ng-select [items]="isHoliday"
-                          bindLabel="name"
-                          bindValue="id"
-                          [(ngModel)]="resCostTour.isHoliday"
-                          [disabled]="!isEdit"
-                          placeholder="Chọn kích hoạt..."
-                          name="isHoliday"
-                          id="isHoliday"
-                          (change)="inputChange()">
-              </ng-select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-4">
-                        <div class="form-group">
-                          <label class="form-control-label" for="input-tourName">Nhà hàng</label>
-                          <ng-select [items]="resRestaurant"
-                                      bindLabel="name"
-                                      bindValue="idRestaurant"
-                                      [(ngModel)]="resCostTour.restaurantId"
-                                      [disabled]="!isEdit"
-                                      placeholder="Chọn nhà hàng..."
-                                      name="restaurantId"
-                                      id="restaurantId"
-                                      (change)="inputChange()">
-                          </ng-select>
-                        </div>
-                      </div>
-                      <div class="col-lg-4">
-                        <div class="form-group">
-                          <label class="form-control-label" for="input-thumbsnail">Khách sạn</label>
-                          <ng-select [items]="resHotel"
-                                      bindLabel="name"
-                                      bindValue="idHotel"
-                                      [(ngModel)]="resCostTour.hotelId"
-                                      [disabled]="!isEdit"
-                                      placeholder="Chọn khách sạn..."
-                                      name="hotelId"
-                                      id="hotelId"
-                                      (change)="inputChange()">
-                          </ng-select>
-                        </div>
-                      </div>
-                      <div class="col-lg-4">
-                        <div class="form-group">
-                          <label class="form-control-label" for="input-thumbsnail">Địa điểm</label>
-                          <ng-select [items]="resPlace"
-                                      bindLabel="name"
-                                      bindValue="idPlace"
-                                      [(ngModel)]="resCostTour.placeId"
-                                      [disabled]="!isEdit"
-                                      placeholder="Chọn địa diểm..."
-                                      name="placeId"
-                                      id="placeId"
-                                      (change)="inputChange()">
-                          </ng-select>
-                        </div>
-                      </div>
-                    </div>
-                  </ng-template>
-                </ngb-panel>
-              </ngb-accordion>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-    <hr>
-    <div class="row align-items-center">
-      <div class="col-12 text-right">
-        <button  *ngIf="type == 'detail'" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteTourModal" (click)="delete()">Xóa</button>
-        <button *ngIf="isChange && type == 'detail'" class="btn btn-lg btn-info" (click)="restore()">Khôi phục</button>
-        <button *ngIf="isChange" class="btn btn-lg btn-success"  (click)="save()">{{type == 'detail' ? "Cập nhật thông tin/ giá":"Thêm"}}</button>
+        </ng-container>
       </div>
-    </div>
-  </ng-container>
-</div>
+
+
+
+
 
 

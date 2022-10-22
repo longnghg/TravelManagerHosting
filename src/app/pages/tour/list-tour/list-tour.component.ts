@@ -92,7 +92,7 @@ export class ListTourComponent implements OnInit {
         { field: 'thumbsnail',headerName: "Thumbsnail", style: "width: 200px;", searchable: true, searchType: 'text', searchObj: 'thumbsnail'},
         { field: 'fromPlace',headerName: "Từ", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'phone'},
         { field: 'toPlace',headerName: "Đến", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'address'},
-        // { field: 'approveStatus',headerName: "ApproveStatus", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'approveStatus'},
+        { field: 'rating',headerName: "Số sao", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'rating'},
         // { field: 'status: string',headerName: "Trạng thái", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'status'},
         // { field: 'createDate: string',headerName: "Ngày tạo", style: "width: 160px;", searchable: true, searchType: 'date', searchObj: 'createDate'},
         ];

@@ -45,32 +45,37 @@ export class ItemTourComponent implements OnInit {
   ngOnChanges(): void {
     this.init()
 
+
     if(this.type == 'create'){
       this.resTour = new TourModel()
       this.resCostTour = new CostTourModel()
       this.isEdit = true
     }else{
       this.isEdit = false
-      this.initCost()
-
     }
     this.resTourTmp = Object.assign({}, this.resTour)
-    this.resCostTourTmp = Object.assign({}, this.resCostTour)
   }
 
-  initCost(){
-    this.costtourService.getCostbyTourDetailId(this.resTour.idTour+"-Details").subscribe(res =>{
-      this.response = res
-      if(!this.response.notification.type) {
-        this.resCostTour = this.response.content
-        console.log(this.response);
-      }
-      else{
-         this.resCostTour = null
+  sessionResTour(){
+    localStorage.setItem("idTour", this.resTour.idTour)
+    document.location.assign(this.configService.clientUrl + "/#/view-tour-schedule")
 
-      }
-    })
+    window.location.reload()
   }
+
+  // initCost(){
+  //   this.costtourService.getCostbyTourDetailId(this.resTour.idTour+"-Details").subscribe(res =>{
+  //     this.response = res
+  //     if(!this.response.notification.type) {
+  //       this.resCostTour = this.response.content
+  //       console.log(this.response);
+  //     }
+  //     else{
+  //        this.resCostTour = null
+
+  //     }
+  //   })
+  // }
 
   init(){
     this.hotelService.views().then(response =>{
@@ -101,40 +106,27 @@ export class ItemTourComponent implements OnInit {
     else{
       this.isChange = false
     }
-    if (JSON.stringify(this.resCostTour) != JSON.stringify(this.resCostTourTmp)) {
-      this.isChange = true
-    }
-    else{
-      this.isChange = false
-    }
   }
 
   restore(){
     this.resTour = Object.assign({}, this.resTour)
-    this.resCostTour = Object.assign({}, this.resCostTour)
     this.isChange = false
   }
 
   save(){
-    // var valid =  this.configService.validateTour(this.resTour)
-    // valid.forEach(element => {
-    //     this.notificationService.handleAlert(element, "Error")
-    // });
-    // if (valid.length == 0) {
+    var valid =  this.configService.validateTour(this.resTour)
+    valid.forEach(element => {
+        this.notificationService.handleAlert(element, "Error")
+    });
+    if (valid.length == 0) {
       if(this.type == "create")
       {
         this.tourService.create(this.resTour).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
 
-          this.resCostTour.tourDetailId = this.response.content
+          // this.resCostTour.idCostTour = this.response.content
 
-          if(this.resCostTour.tourDetailId != null){
-            this.costtourService.create(this.resCostTour).subscribe(res =>{
-              this.response = res
-              this.notificationService.handleAlertObj(res.notification)
-              })
-          }
           if(this.response.notification.type == "Success")
           {}
         }, error => {
@@ -143,21 +135,10 @@ export class ItemTourComponent implements OnInit {
         })
       }
       else{
-        this.costtourService.update(this.resCostTour).subscribe(res =>{
-          this.response = res
-          this.notificationService.handleAlertObj(res.notification)
 
-          if(this.response.notification.type == "Success")
-          {
-          }
-          console.log(this.response.content);
-        }, error => {
-          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
-        })
       }
       this.close()
-
+    }
   }
 
 
