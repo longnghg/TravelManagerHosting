@@ -63,7 +63,16 @@
             <div class="col-lg-6">
               <div class="form-group">
                 <label class="form-control-label" for="input-promotionId">Chọn khuyến mãi</label>
-                <input type="text" name="promotionId" id="promotionId" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Chọn khuyến mãi" [(ngModel)]="resSchedule.promotionId" [readonly]="!isEdit">
+                <ng-select [items]="resPromotion"
+                bindLabel="value"
+                bindValue="idPromotion"
+                [(ngModel)]="resSchedule.promotionId"
+                [disabled]="!isEdit"
+                placeholder="Chọn khuyến mãi..."
+                name="promotionId"
+                id="promotionId"
+                (change)="inputChange()">
+    </ng-select>
               </div>
             </div>
             <div class="col-lg-6">

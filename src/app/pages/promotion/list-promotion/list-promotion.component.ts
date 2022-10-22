@@ -38,7 +38,7 @@ export class ListPromotionComponent implements OnInit {
 
     setTimeout(() => {
       this.columnDefs= [
-        { field: 'idPrmotion', headerName: "Mã số", style: "width: 340px;", searchable: true, searchType: 'text', searchObj: 'idPrmotion'},
+        { field: 'idPromotion', headerName: "Mã số", style: "width: 340px;", searchable: true, searchType: 'text', searchObj: 'idPromotion'},
         { field: 'value', headerName: "Giá trị", style: "width: 300px;", searchable: true, searchType: 'text', searchObj: 'value'},
         { field: 'toDate', headerName: "Đến nay", style: "width: 270px;", searchable: true, searchType: 'text', searchObj: 'toDate'},
         { field: 'fromDate', headerName: "Từ ngày", style: "width: 200px;", searchable: true, searchType: 'text', searchObj: 'fromDate'},
@@ -56,7 +56,7 @@ export class ListPromotionComponent implements OnInit {
       }
       else{
         this.resPromotion = null
-      
+
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -74,7 +74,7 @@ export class ListPromotionComponent implements OnInit {
       }
       else{
         this.resPromotionWaiting = null
-      
+
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");

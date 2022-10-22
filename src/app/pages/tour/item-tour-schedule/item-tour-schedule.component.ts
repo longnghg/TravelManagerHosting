@@ -9,9 +9,8 @@ import { CarModel } from 'src/app/models/car.model';
 import { CarService } from 'src/app/services_API/car.service';
 import { EmployeeModel } from 'src/app/models/employee.model';
 import { EmployeeService } from 'src/app/services_API/employee.service';
-import { TourModel } from 'src/app/models/tour.model';
-import { TourService } from 'src/app/services_API/tour.service';
 import { PromotionModel } from 'src/app/models/promotion.model';
+import { PromotionService } from 'src/app/services_API/promotion.service';
 @Component({
   selector: 'app-item-tour-schedule',
   templateUrl: './item-tour-schedule.component.html',
@@ -22,7 +21,6 @@ export class ItemTourScheduleComponent implements OnInit {
   @Input() type: string
   resCar: CarModel[]
   resEmployee: EmployeeModel[]
-  resTour: TourModel[]
   resPromotion: PromotionModel[]
   response: ResponseModel
   isEdit: boolean = false
@@ -31,14 +29,14 @@ export class ItemTourScheduleComponent implements OnInit {
   idTour: any
 
   constructor(private scheduleService: ScheduleService, private configService: ConfigService, private notificationService: NotificationService,
-    private employeeService: EmployeeService, private carService: CarService, private tourService: TourService) { }
+    private employeeService: EmployeeService, private carService: CarService, private promotionService: PromotionService) { }
 
   ngOnInit(): void {
   }
 
   ngOnChanges(): void {
     this.init()
-    console.log(this.resSchedule);
+    console.log(this.resPromotion);
 
 
     if(this.type == 'create'){
@@ -69,8 +67,8 @@ export class ItemTourScheduleComponent implements OnInit {
     this.carService.views().then(response =>{
       this.resCar = response
     })
-    this.tourService.views().then(response =>{
-      this.resTour = response
+    this.promotionService.views().then(response =>{
+      this.resPromotion = response
     })
   }
 
@@ -106,11 +104,11 @@ export class ItemTourScheduleComponent implements OnInit {
         this.resSchedule.tourId  = this.idTour
         this.scheduleService.create(this.resSchedule).subscribe(res =>{
           this.response = res
-          this.notificationService.handleAlertObj(res.notification)
-
-          if(this.response.notification.type == "Error")
+          if(res.notification.type != "Error")
           {
+            this.close()
           }
+          this.notificationService.handleAlertObj(res.notification)
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, "Error")

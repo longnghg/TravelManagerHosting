@@ -123,12 +123,13 @@ export class ItemTourComponent implements OnInit {
       {
         this.tourService.create(this.resTour).subscribe(res =>{
           this.response = res
-          this.notificationService.handleAlertObj(res.notification)
 
           // this.resCostTour.idCostTour = this.response.content
-
-          if(this.response.notification.type == "Success")
-          {}
+          if(res.notification.type != "Error")
+          {
+            this.close()
+          }
+          this.notificationService.handleAlertObj(res.notification)
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, "Error")
