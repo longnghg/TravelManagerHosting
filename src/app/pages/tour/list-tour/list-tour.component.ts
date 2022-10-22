@@ -41,16 +41,22 @@ export class ListTourComponent implements OnInit {
     ngOnInit(): void {
 
       this.init(this.type)
-      this.initWaiting()
+
       this.hubConnectionBuilder = this.configService.signIR(this.init())
       this.hubConnectionBuilder.start();
       this.hubConnectionBuilder.on('Init', (result: any) => {
         this.init(this.type)
-        this.initWaiting()
+      })
+
+      this.initWaiting(this.type)
+      this.hubConnectionBuilder = this.configService.signIR(this.initWaiting())
+      this.hubConnectionBuilder.start();
+      this.hubConnectionBuilder.on('InitWaiting', (result: any) => {
+        this.initWaiting(this.type)
       })
     }
 
-    initWaiting(){
+    initWaiting(e?){
       this.tourService.getwaiting().subscribe(res =>{
         this.response = res
         if(!this.response.notification.type){
