@@ -103,11 +103,13 @@
   </div>
 </div>
 
+
+<!--ds waiting -->
 <div class="container-fluid mt--7">
   <div class="row">
     <div class="col">
       <div class="card shadow border-0">
-        <app-grid-data [rowData]="resTour" [columnDefs]="columnDefs" [gridConfig]="gridConfig" (gdChecked)="initWaiting($event)" (gdType)="childType($event)" (gdChild)="childData($event)" (gdRestore)="getData($event)" (gdDelete)="getData($event)"></app-grid-data>
+        <app-grid-data [rowData]="resTourWaiting" [columnDefs]="columnDefs" [gridConfig]="gridConfig" (gdChecked)="initWaiting($event)" (gdType)="childType($event)" (gdChild)="childData($event)" (gdRestore)="getData($event)" (gdDelete)="getData($event)"></app-grid-data>
       </div>
     </div>
   </div>
