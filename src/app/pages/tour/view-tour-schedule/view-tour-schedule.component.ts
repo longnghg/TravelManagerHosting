@@ -5,21 +5,21 @@ import { NotificationService } from "../../../services_API/notification.service"
 import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.component';
 import { ConfigService } from "../../../services_API/config.service";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
-import { TourModel } from 'src/app/models/tour.model';
-
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-view-tour-schedule',
   templateUrl: './view-tour-schedule.component.html',
   styleUrls: ['./view-tour-schedule.component.scss']
 })
 export class ViewTourScheduleComponent implements OnInit {
-  @Input() resTour: TourModel
+  // @Input() resTour: TourModel
   resSchedule: ScheduleModel[]
   response: ResponseModel
   dataChild: ScheduleModel
   typeChild: string
-  idTour: any
-  constructor(private scheduleService: ScheduleService, private configService: ConfigService, private notificationService: NotificationService) { }
+
+  constructor(private scheduleService: ScheduleService, private configService: ConfigService, private notificationService: NotificationService,
+    private activatedRoute: ActivatedRoute) { }
 
   public columnDefs: ColDef[]
   public gridConfig: GridConfig = {
@@ -31,9 +31,7 @@ export class ViewTourScheduleComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.idTour = localStorage.getItem("idTour")
     this.init()
-
     setTimeout(() => {
       this.columnDefs= [
         // { field: 'idSchedule', headerName: "Mã số", style: "width: 340px;", searchable: true, searchType: 'text', searchObj: 'idSchedule'},
@@ -64,7 +62,8 @@ export class ViewTourScheduleComponent implements OnInit {
   }
 
   init(){
-    this.scheduleService.getsSchedulebyIdTour(this.idTour).subscribe(res =>{
+    var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
+    this.scheduleService.getsSchedulebyIdTour(idTour).subscribe(res =>{
       this.response = res
       if(!this.response.notification.type){
         this.resSchedule = this.response.content

@@ -1,15 +1,106 @@
-
-
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin chi tiết</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
+<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+      <!-- Card stats -->
+      <div class="row">
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Traffic</h5>
+                  <span class="h2 font-weight-bold mb-0">350,897</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                    <i class="fas fa-chart-bar"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-3 mb-0 text-muted text-sm">
+                <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+                <span class="text-nowrap">Since last month</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">New users</h5>
+                  <span class="h2 font-weight-bold mb-0">2,356</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
+                    <i class="fas fa-chart-pie"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-3 mb-0 text-muted text-sm">
+                <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 3.48%</span>
+                <span class="text-nowrap">Since last week</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Sales</h5>
+                  <span class="h2 font-weight-bold mb-0">924</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
+                    <i class="fas fa-users"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-3 mb-0 text-muted text-sm">
+                <span class="text-warning mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span>
+                <span class="text-nowrap">Since yesterday</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Performance</h5>
+                  <span class="h2 font-weight-bold mb-0">49,65%</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                    <i class="fas fa-percent"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-3 mb-0 text-muted text-sm">
+                <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span>
+                <span class="text-nowrap">Since last month</span>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
+  </div>
+</div>
+<ul ngbNav #nav="ngbNav" class="nav-tabs">
+  <li ngbNavItem>
+    <a ngbNavLink> <h1>Thông tin chi tiết tour</h1></a>
+    <ng-template ngbNavContent>
       <div class="modal-body">
         <ng-container *ngIf="resTour">
-          <div class="container-fluid" >
+          <div class="col-xl-8 align-items-center order-xl-1">
+            <div class="card bg-secondary shadow">
             <div class="row align-items-center">
               <div class="col-12 text-right">
-                <a href="javascript:void(0)" *ngIf="type == 'detail'" (click)="sessionResTour()" class="btn btn-success">Chi tiết lịch trình</a>
                 <a href="javascript:void(0)" *ngIf="type == 'detail'" class="btn btn-xl btn-primary" (click)="isEditChange()">{{!isEdit ? "Chỉnh sửa":"Quay lại"}}</a>
               </div>
             </div>
@@ -50,20 +141,67 @@
                 </div>
               </div>
             </form>
-          </div>
-          <hr>
-          <div class="row align-items-center">
-            <div class="col-12 text-right">
-              <button  *ngIf="type == 'detail'" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteTourModal" (click)="delete()">Xóa</button>
-              <button *ngIf="isChange && type == 'detail'" class="btn btn-lg btn-info" (click)="restore()">Khôi phục</button>
-              <button *ngIf="isChange" class="btn btn-lg btn-success"  (click)="save()">{{type == 'detail' ? "Cập nhật thông tin/ giá":"Thêm"}}</button>
+            <div class="row align-items-center">
+              <div class="col-12 text-right">
+                <button  *ngIf="type == 'detail'" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteTourModal" (click)="delete()">Xóa</button>
+                <button *ngIf="isChange && type == 'detail'" class="btn btn-lg btn-info" (click)="restore()">Khôi phục</button>
+                <button *ngIf="isChange" class="btn btn-lg btn-success"  (click)="save()">{{type == 'detail' ? "Cập nhật thông tin/ giá":"Thêm"}}</button>
+              </div>
             </div>
           </div>
+          </div>
+          <hr>
         </ng-container>
       </div>
 
+    </ng-template>
+  </li>
+  <li ngbNavItem>
+    <a ngbNavLink><h1>Lịch trình</h1></a>
+    <ng-template ngbNavContent>
+      <app-view-tour-schedule></app-view-tour-schedule>
+    </ng-template>
+  </li>
+</ul>
+<div [ngbNavOutlet]="nav"></div>
 
 
 
 
 
+<div class="modal fade" id="deleteItemTourModal" tabindex="-1" aria-labelledby="deleteItemTourModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="deleteItemTourModal">Xác nhận</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="resTour">
+        Bạn có chắc muốn xóa [<span class="text-red">{{resTour.nameTour}}</span>] !
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"  >Xóa</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="restoreItemTourModal" tabindex="-1" aria-labelledby="restoreItemTourModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="restoreItemTourModal">Xác nhận</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="resTour">
+        Bạn có chắc muốn khôi phục [<span class="text-red">{{resTour.nameTour}}</span>] !
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"   [routerLink]="['','list-employee']" [state]="{isDelete: true}" >Khôi phục</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+      </div>
+    </div>
+  </div>
+</div>

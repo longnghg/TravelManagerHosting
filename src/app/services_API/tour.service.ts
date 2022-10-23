@@ -39,6 +39,10 @@ export class TourService{
   getwaiting(){
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/gets-tour-waiting");
   }
+  getTour(idTour: string)
+  {
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/get-tour?idTour="+idTour);
+  }
   create(data: any)
   {
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Tour/create-tour", data);

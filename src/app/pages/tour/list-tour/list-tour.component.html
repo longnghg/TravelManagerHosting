@@ -93,11 +93,12 @@
 </div>
 
 
-<div class="container-fluid mt--7">
+
+<div class="container-fluid mt-5">
   <div class="row">
     <div class="col">
       <div class="card shadow border-0">
-        <app-grid-data [rowData]="resTour" [columnDefs]="columnDefs" [gridConfig]="gridConfig" (gdChecked)="init($event)" (gdType)="childType($event)" (gdChild)="childData($event)" (gdRestore)="getData($event)" (gdDelete)="getData($event)"></app-grid-data>
+        <app-grid2-data [rowData]="resTour" [columnDefs]="columnDefs" [gridConfig]="gridConfig2" (gdChecked)="init($event)" (gdType)="childType($event)"  (gdChild)="childData($event)" (gdRestore)="getData($event)" (gdDelete)="getData($event)"></app-grid2-data>
       </div>
     </div>
   </div>
@@ -105,23 +106,23 @@
 
 
 <!--ds waiting -->
-<div class="container-fluid mt--7">
+<div class="container-fluid mt-5">
   <div class="row">
     <div class="col">
       <div class="card shadow border-0">
-        <app-grid-data [rowData]="resTourWaiting" [columnDefs]="columnDefs" [gridConfig]="gridConfig" (gdChecked)="initWaiting($event)" (gdType)="childType($event)" (gdChild)="childData($event)" (gdRestore)="getData($event)" (gdDelete)="getData($event)"></app-grid-data>
+        <app-grid2-data [rowData]="resTourWaiting" [columnDefs]="columnDefs" [gridConfig]="gridConfig2" (gdChecked)="init($event)" (gdType)="childType($event)"  (gdChild)="childData($event)" (gdRestore)="getData($event)" (gdDelete)="getData($event)"></app-grid2-data>
       </div>
     </div>
   </div>
 </div>
 
-<div class="modal fade" [id]="gridConfig.idModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="gridDataLabel" aria-hidden="true">
+<!-- <div class="modal fade" [id]="gridConfig.idModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="gridDataLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <app-item-tour [resTour]="dataChild" [type]="typeChild" (parentDelete)="getData($event)"></app-item-tour>
     </div>
   </div>
-</div>
+</div> -->
 
 <div class="modal fade" [id]="gridConfig.idModalDelete" tabindex="-1" aria-labelledby="deleteTourModalLabel" aria-hidden="true">
   <div class="modal-dialog">

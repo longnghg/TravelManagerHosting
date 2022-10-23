@@ -5,6 +5,7 @@ import { TourService } from "src/app/services_API/tour.service";
 import { TourModel } from 'src/app/models/tour.model';
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.component';
+import { ColDef2, GridConfig2} from '../../../components/grid2-data/grid2-data.component';
 // signalr
 import { HubConnection } from '@microsoft/signalr';
 
@@ -29,6 +30,16 @@ export class ListTourComponent implements OnInit {
     idModalRestore: "restoreTourModal",
     idModalDelete: "deleteTourModal",
     idModal: "gridTour",
+    radioBox: true,
+    radioBoxName: "Kho lưu trữ",
+  }
+
+  public gridConfig2: GridConfig2 = {
+    idModalRestore: "restoreItemTourModal",
+    idModalDelete: "deleteItemTourModal",
+    isRestore: false,
+    route: "item-tour",
+    alias: "idTour",
     radioBox: true,
     radioBoxName: "Kho lưu trữ",
   }

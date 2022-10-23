@@ -11,10 +11,7 @@ import { PlaceService } from 'src/app/services_API/place.service';
 import { PlaceModel } from 'src/app/models/place.model';
 import { RestaurantService } from 'src/app/services_API/restaurant.service';
 import { RestaurantModel } from 'src/app/models/restaurant.model';
-import { CostTourService } from 'src/app/services_API/costtour.service';
-import { CostTourModel } from 'src/app/models/costTour.model';
-import { outputAst } from '@angular/compiler';
-
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-item-tour',
   templateUrl: './item-tour.component.html',
@@ -34,48 +31,43 @@ export class ItemTourComponent implements OnInit {
   resHotel: HotelModel[]
   resPlace: PlaceModel[]
   resRestaurant: RestaurantModel[]
-  resCostTour: CostTourModel
-  resCostTourTmp: CostTourModel
   isHoliday = this.configService.listStatus()
   constructor(private tourService: TourService, private configService: ConfigService, private notificationService: NotificationService,
-      private hotelService: HotelService, private placeService: PlaceService, private restaurantService: RestaurantService, private costtourService: CostTourService) { }
+      private hotelService: HotelService, private placeService: PlaceService, private restaurantService: RestaurantService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.init()
+    var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
+    this.type = this.activatedRoute.snapshot.paramMap.get('id1')
+
+    if(this.type == "detail"){
+      this.isEdit = false
+      this.tourService.getTour(idTour).subscribe(res => {
+        this.response = res
+
+        if(!this.response.notification.type)
+        {
+          this.resTour = this.response.content
+          this.resTourTmp = Object.assign({}, this.resTour)
+
+        }
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, "Error")
+      })
+
+    }
+    else{
+      this.resTour = new TourModel
+      this.resTourTmp = Object.assign({}, this.resTour)
+      this.isEdit = true
+    }
   }
   ngOnChanges(): void {
-    this.init()
-
-
-    if(this.type == 'create'){
-      this.resTour = new TourModel()
-      this.resCostTour = new CostTourModel()
-      this.isEdit = true
-    }else{
-      this.isEdit = false
-    }
-    this.resTourTmp = Object.assign({}, this.resTour)
+    
   }
 
-  sessionResTour(){
-    localStorage.setItem("idTour", this.resTour.idTour)
-    document.location.assign(this.configService.clientUrl + "/#/view-tour-schedule")
 
-    window.location.reload()
-  }
-
-  // initCost(){
-  //   this.costtourService.getCostbyTourDetailId(this.resTour.idTour+"-Details").subscribe(res =>{
-  //     this.response = res
-  //     if(!this.response.notification.type) {
-  //       this.resCostTour = this.response.content
-  //       console.log(this.response);
-  //     }
-  //     else{
-  //        this.resCostTour = null
-
-  //     }
-  //   })
-  // }
 
   init(){
     this.hotelService.views().then(response =>{
