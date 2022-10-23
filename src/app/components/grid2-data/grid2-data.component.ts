@@ -237,9 +237,10 @@ export interface ColDef2{
 export class GridConfig2{
   idModalRestore?: string
   idModalDelete?: string
+
   route?: string
   alias?: string
-  idModal?: string
+
   radioBox?: boolean
   radioBoxName?: string
   style?: string

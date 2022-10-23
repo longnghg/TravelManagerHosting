@@ -35,6 +35,7 @@ export class ItemEmployeeComponent implements OnInit{
     var idEmployee = this.activatedRoute.snapshot.paramMap.get('id2')
     this.type = this.activatedRoute.snapshot.paramMap.get('id1')
     if(this.type == "detail"){
+      this.isEdit = false
       this.employeeService.get(idEmployee).subscribe(res => {
         this.response = res
 
@@ -62,7 +63,12 @@ export class ItemEmployeeComponent implements OnInit{
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, "Error")
       })
-        this.isEdit = false
+
+    }
+    else{
+      this.resEmployee = new EmployeeModel
+      this.resEmployeeTmp = Object.assign({}, this.resEmployee)
+      this.isEdit = true
     }
 
     this.roleService.views().then(response =>{

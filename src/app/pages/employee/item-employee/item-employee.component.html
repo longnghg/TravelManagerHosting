@@ -53,10 +53,10 @@
         </div>
         <div class="row align-items-center">
           <div class="col-12 text-right" style="position: absolute; bottom: 0px;">
-            <button  *ngIf="type == 'detail'&& resEmployee.isDelete == false" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteEmployeeModal" (click)="getDataDelete()">Xóa</button>
+            <button  *ngIf="type == 'detail'&& resEmployee.isDelete == false" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemEmployeeModal" (click)="getDataDelete()">Xóa</button>
             <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="backup()">Khôi phục</button>
             <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="save()">{{type == 'detail' ? "Lưu":"Thêm"}}</button>
-            <button *ngIf="resEmployee.isDelete == true" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreEmployeeModal" class="btn btn-warning">Khôi phục người dùng</button>
+            <button *ngIf="resEmployee.isDelete == true" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreItemEmployeeModal" class="btn btn-warning">Khôi phục người dùng</button>
           </div>
         </div>
       </div>
@@ -155,11 +155,11 @@
 </div>
 
 
-<div class="modal fade" id="deleteEmployeeModal" tabindex="-1" aria-labelledby="deleteEmployeeModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteItemEmployeeModal" tabindex="-1" aria-labelledby="deleteItemEmployeeModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="deleteEmployeeModalLabel">Xác nhận</h1>
+        <h1 class="modal-title fs-5" id="deleteItemEmployeeModalLabel">Xác nhận</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" *ngIf="resEmployee">
@@ -174,7 +174,7 @@
 </div>
 
 
-<div class="modal fade" id="restoreEmployeeModal" tabindex="-1" aria-labelledby="restoreEmployeeModalLabel" aria-hidden="true">
+<div class="modal fade" id="restoreItemEmployeeModal" tabindex="-1" aria-labelledby="restoreItemEmployeeModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">

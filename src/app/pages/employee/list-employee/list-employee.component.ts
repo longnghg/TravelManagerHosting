@@ -31,17 +31,16 @@ export class ListEmployeeComponent implements OnInit {
 
   public columnDefs: ColDef[]
   public gridConfig: GridConfig = {
-    idModalRestore: "restoreEmployeeModal1",
-    idModalDelete: "deleteEmployeeModal1",
+    idModalRestore: "restoreEmployeeModal",
+    idModalDelete: "deleteEmployeeModal",
     idModal: "gridEmployee1",
     radioBox: true,
     radioBoxName: "Kho lưu trữ",
   }
 
   public gridConfig2: GridConfig2 = {
-    idModalRestore: "restoreEmployeeModal1",
-    idModalDelete: "deleteEmployeeModal1",
-    idModal: "gridEmployee1",
+    idModalRestore: "restoreEmployeeModal",
+    idModalDelete: "deleteEmployeeModal",
     isRestore: false,
     route: "item-employee",
     alias: "idEmployee",
