@@ -4,10 +4,10 @@ import { NotificationService } from "../../../services_API/notification.service"
 import { EmployeeModel } from "../../../models/employee.model";
 import { RoleTitle, RoleModel } from "../../../models/role.model";
 import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.component';
+import { ColDef2, GridConfig2} from '../../../components/grid2-data/grid2-data.component';
 import { ConfigService } from "../../../services_API/config.service";
 import { RoleService } from "../../../services_API/role.service";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
-
 
 // signalr
 import { HubConnection } from '@microsoft/signalr';
@@ -20,19 +20,31 @@ export class ListEmployeeComponent implements OnInit {
   dataChild: EmployeeModel
   typeChild: string
   resEmployee: EmployeeModel[]
+  resEmployeeTmp: EmployeeModel[]
   resRole: RoleModel[]
   response: ResponseModel
   data: EmployeeModel
-  type: boolean
+  type: boolean = false
      //signalr
   private hubConnectionBuilder: HubConnection
 
 
   public columnDefs: ColDef[]
   public gridConfig: GridConfig = {
-    idModalRestore: "restoreEmployeeModal",
-    idModalDelete: "deleteEmployeeModal",
-    idModal: "gridEmployee",
+    idModalRestore: "restoreEmployeeModal1",
+    idModalDelete: "deleteEmployeeModal1",
+    idModal: "gridEmployee1",
+    radioBox: true,
+    radioBoxName: "Kho lưu trữ",
+  }
+
+  public gridConfig2: GridConfig2 = {
+    idModalRestore: "restoreEmployeeModal1",
+    idModalDelete: "deleteEmployeeModal1",
+    idModal: "gridEmployee1",
+    isRestore: false,
+    route: "item-employee",
+    alias: "idEmployee",
     radioBox: true,
     radioBoxName: "Kho lưu trữ",
   }
@@ -44,13 +56,31 @@ export class ListEmployeeComponent implements OnInit {
          private notificationService: NotificationService) {}
 
   ngOnInit() {
+    if (history.state.isDelete) {
+      this.gridConfig2.isRestore = history.state.isDelete
+      this.init(history.state.isDelete)
+    }
+    else{
+      this.init(this.type)
+    }
 
-
-    this.init(this.type)
-    this.hubConnectionBuilder = this.configService.signIR(this.init())
+    this.hubConnectionBuilder = this.configService.signIR()
     this.hubConnectionBuilder.start();
     this.hubConnectionBuilder.on('Init', (result: any) => {
-      this.init(this.type)
+      console.log(history.state.isDelete);
+
+      if (history.state.isDelete) {
+        if (!this.type) {
+          this.init(this.type)
+        }
+        else{
+          this.gridConfig2.isRestore = history.state.isDelete
+          this.init(history.state.isDelete)
+        }
+      }
+      else{
+        this.init(this.type)
+      }
     })
 
 
@@ -66,7 +96,9 @@ export class ListEmployeeComponent implements OnInit {
           this.resEmployee = this.response.content
         }
         else{
-          this.resEmployee = null
+          console.log(this.resEmployeeTmp);
+
+          this.resEmployee = this.resEmployeeTmp
           this.notificationService.handleAlertObj(res.notification)
         }
 
@@ -84,8 +116,7 @@ export class ListEmployeeComponent implements OnInit {
       if(!this.response.notification.type)
       {
         this.resEmployee = this.response.content
-        console.log(this.resEmployee);
-
+        this.resEmployeeTmp = Object.assign([], this.resEmployee)
       }
       else{
         this.resEmployee = null
@@ -99,19 +130,21 @@ export class ListEmployeeComponent implements OnInit {
 
     this.roleService.views().then(response => {
       this.resRole = response
-    })
-
-    setTimeout(() => {
-
+      console.log(this.resRole);
       this.columnDefs= [
         // { field: 'idEmployee', headerName: "Mã số", style: "width: 350px;", searchable: true, searchType: 'text', searchObj: 'idEmployee'},
         { field: 'nameEmployee',headerName: "Tên", style: "width: 400px;", searchable: true, searchType: 'text', searchObj: 'nameEmployee'},
         { field: 'email',headerName: "Email", style: "width: 400px;", searchable: true, searchType: 'email', searchObj: 'email'},
-        { field: 'phone',headerName: "Số điện thoại", style: "width: 200px;", searchable: true, searchType: 'text', searchObj: 'phone'},
+        { field: 'phone',headerName: "Số điện thoại", filter: "number", style: "width: 200px;", searchable: true, searchType: 'text', searchObj: 'phone'},
         { field: 'roleName',headerName: "Chức vụ", style: "width: 300px;", searchable: true, searchType: 'section', searchObj: 'roleId', searchStyle: "width: 200px;", multiple: true, closeOnSelect: false, bindLabel: 'nameRole', bindValue: "idRole", listSection: this.resRole},
         { field: 'isActive',headerName: "Kích hoạt", style: "width: 300px;", filter: "status", searchable: true, searchType: 'section', searchStyle: "width: 150px;", multiple: false, closeOnSelect: true, searchObj: 'isActive', bindLabel: "name", bindValue: "id", listSection: this.configService.listStatus()},
       ];
-    }, 200);
+    })
+
+    setTimeout(() => {
+
+
+    }, 500);
   }
 
   childData(e){
@@ -154,6 +187,7 @@ export class ListEmployeeComponent implements OnInit {
       })
     }
   }
+
 }
 
 

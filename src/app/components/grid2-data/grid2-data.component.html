@@ -1,0 +1,156 @@
+<div class="table-responsive" >
+    <table class="table align-items-center table-flush" >
+      <thead class="thead-light" *ngIf="columnDefs">
+        <tr>
+          <th scope="col" style="width: 50px;"></th>
+          <th scope="col" *ngFor="let column of columnDefs" [style]="column.style">{{column.headerName}}
+            <ng-container *ngIf="column.searchType == 'section'; else elseSection">
+              <ng-select [style]="column.searchStyle" [virtualScroll]="true" [items]="column.listSection" (open)="ngOnChanges()"  placeholder="Tìm kiếm..." (change)="selectSection(column.searchObj)" id="section" name="section" [(ngModel)]="keyword[column.searchObj]" [bindLabel]="column.bindLabel" [bindValue]="column.bindValue" appendTo="body" [multiple]="column.multiple"  dropdownPosition="auto" [searchable]="false" [closeOnSelect]="column.closeOnSelect">
+                <ng-container *ngIf="column.multiple;">
+                  <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                    <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item[column.bindLabel]}}
+                  </ng-template>
+                </ng-container>
+              </ng-select>
+            </ng-container>
+            <ng-template #elseSection>
+              <ng-container *ngIf="column.searchType == 'date'; else elseDateTime">
+                <div class="form-group">
+                  <div class="input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                    </div>
+                    <input class="form-control datepicker" name="dp" [(ngModel)]="model" onkeydown="return false"   placeholder="DD/MM/YYYY"  type="date"/>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-template #elseDateTime>
+               <ng-container *ngIf="column.filter == 'number'; else elseNumber">
+                <input *ngIf="column.searchable" placeholder="Tìm kiếm..." (input)="formatInput($any($event).target, keyword[column.field])" (change)="search(column.searchObj)" [(ngModel)]="keyword[column.field]" [type]="column.searchType" class="form-control custom-pages-input" style="height: 30px" [name]="column.field" [id]="column.field">
+               </ng-container>
+               <ng-template #elseNumber>
+                <input *ngIf="column.searchable" placeholder="Tìm kiếm..."  (change)="search(column.searchObj)" [(ngModel)]="keyword[column.field]" [type]="column.searchType" class="form-control custom-pages-input" style="height: 30px" [name]="column.field" [id]="column.field">
+               </ng-template>
+
+              </ng-template>
+            </ng-template>
+          </th>
+          <th>
+            <div ngbDropdown placement="bottom-right" *ngIf="gridConfig">
+              <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
+                <i class="fas fa-ellipsis-v" style="color: #4d4aef!important;"></i>
+              </a>
+              <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
+                <a class="dropdown-item" href="javascript:void(0)" *ngIf="!gridConfig.isRestore" [routerLink]="['',gridConfig.route, 'create', '']" >Thêm</a>
+                <ng-container *ngIf="gridConfig.radioBox;">
+                  <div class="dropdown-divider" *ngIf="!gridConfig.isRestore"></div>
+                <label class="custom-toggle" style="margin-left: 5px;">
+                  <input type="checkbox" (change)="changeChecked()" [checked]="gridConfig.isRestore">
+                  <span class="custom-toggle-slider rounded-circle"></span>
+                </label>
+                <span style="position: absolute; margin-left: 5px;">{{gridConfig.radioBoxName}}</span>
+                </ng-container>
+
+              </div>
+            </div>
+
+          </th>
+        </tr>
+      </thead>
+      <tbody *ngIf="!rowData" [style]="gridConfig.style ? gridConfig.style :  'height: 410px;'">
+      </tbody>
+      <tbody *ngIf="rowData" [style]="gridConfig.style ? gridConfig.style :  'height: 410px;'">
+        <tr *ngFor="let row of rowData; let i=index" >
+          <ng-container *ngIf="row.rowNum >= start && row.rowNum <= end">
+            <td style="padding-left: 20px; width: 50px;">{{row.rowNum}}</td>
+            <td  *ngFor="let column of columnDefs" [style]="column.style" scope="row" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+              <ng-container *ngIf="column.filter == 'status'; else elseStatus">
+                <div >
+                  <span class="badge badge-dot">
+                    <i [class]="row[column.field] ? 'bg-success':'bg-danger'"></i>
+                  </span>
+                  {{row[column.field] ? 'Đã kích hoạt':'Chưa kích hoạt'}}
+                </div>
+              </ng-container>
+              <ng-template #elseStatus>
+                <ng-container *ngIf="column.filter == 'date'; else elseDate">
+                  {{formatFromUnixTimestampToFullDateView(row[column.field])}}
+                </ng-container>
+                <ng-template #elseDate>
+                  {{row[column.field]}}
+                </ng-template>
+
+              </ng-template>
+            </td>
+
+            <td>
+              <div ngbDropdown [placement]="i >= rowData.length-2 && rowData.length > 2? 'top-right':'bottom-right'">
+                <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
+                  <i class="fas fa-ellipsis-v" style="color: #4d4aef!important;"></i>
+                </a>
+                <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
+                  <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['',gridConfig.route, 'detail', row[gridConfig.alias]]" >Chi tiết</a>
+                  <ng-container *ngIf="!gridConfig.isRestore; else elseRestoreOrDelete">
+                    <a class="dropdown-item" href="javascript:void(0)"  data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModalDelete" (click)="getDataDelete(row)">Xóa</a>
+                  </ng-container>
+                  <ng-template #elseRestoreOrDelete>
+                    <a class="dropdown-item" href="javascript:void(0)"  data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModalRestore" (click)="getDataRestore(row)">Khôi phục</a>
+                  </ng-template>
+
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <nav aria-label="Page navigation example" class="row">
+    <div class="col-6">
+      <ul class="pagination justify-content-start" style="margin-left: 20px;">
+      <li class="page-item" style="margin-right: 10px; margin-top: 10px;"><h5>Xem</h5></li>
+      <li class="page-item">
+        <ng-select [virtualScroll]="true" [items]="listPageSize"  placeholder="Chọn giá trị..."  id="pageSize" name="pageSize" [(ngModel)]="pageSize" (change)="changePageSize()"  [clearable]="false" dropdownPosition="auto" [searchable]="false" style="margin-top: 3px;">
+        </ng-select>
+      </li>
+      <li class="page-item" style="margin-left: 10px; margin-top: 10px;"><h5>mục</h5></li>
+
+    </ul>
+  </div>
+  <div class="col-6">
+    <ul class="pagination justify-content-end">
+    <li class="page-item">
+      <a href="javascript:void(0)" tabindex="-1" (click)="btnPrev == true?selectPage(i.value, 'prevAll'):''">
+        <span style="font-size: 25px;" >&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item">
+      <a href="javascript:void(0)" tabindex="-1" (click)="btnPrev == true?selectPage(i.value, 'prev'):''">
+        <span style="font-size: 25px;" >&lsaquo;</span>
+      </a>
+    </li>
+    <li class="page-item" style="margin-right: 10px; margin-top: 10px;"><h5>Trang</h5></li>
+    <input type="text" #i  inputmode="numeric"
+    pattern="[0-9]*"
+    class="form-control custom-pages-input"
+    id="paginationInput"
+    [(ngModel)]="pageNumber"
+    (keyup.enter)="selectPage(i.value, '')"
+    (blur)="selectPage(i.value, '')"
+    (input)="formatInput($any($event).target)"
+    style="width: 2.8rem">
+    <li class="page-item" style="margin-left: 10px; margin-top: 10px;"><h5>trên {{pageCount}}</h5></li>
+    <li class="page-item">
+      <a href="javascript:void(0)" (click)="btnNext == true?selectPage(i.value, 'next'):''">
+        <span style="font-size: 25px;"  >&rsaquo;</span>
+      </a>
+    </li>
+    <li class="page-item">
+      <a href="javascript:void(0)" (click)="btnNext == true?selectPage(i.value, 'nextAll'):''">
+        <span style="font-size: 25px;" >&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</div>
+  </nav>

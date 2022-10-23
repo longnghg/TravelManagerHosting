@@ -11,9 +11,7 @@ export class ConfigService{
   public apiUrl = "https://localhost:44394";
   public clientUrl = this.document.location.origin
 
-  signIR(func: any){
-    console.log(func);
-
+  signIR(){
    return this.hubConnectionBuilder = new HubConnectionBuilder().withUrl(`${this.apiUrl}/travelhub`).configureLogging(LogLevel.Information).build();
   }
   error(status: any, message: any){

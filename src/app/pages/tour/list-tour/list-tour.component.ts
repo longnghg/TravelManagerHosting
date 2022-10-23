@@ -42,14 +42,14 @@ export class ListTourComponent implements OnInit {
 
       this.init(this.type)
 
-      this.hubConnectionBuilder = this.configService.signIR(this.init())
+      this.hubConnectionBuilder = this.configService.signIR()
       this.hubConnectionBuilder.start();
       this.hubConnectionBuilder.on('Init', (result: any) => {
         this.init(this.type)
       })
 
       this.initWaiting(this.type)
-      this.hubConnectionBuilder = this.configService.signIR(this.initWaiting())
+      this.hubConnectionBuilder = this.configService.signIR()
       this.hubConnectionBuilder.start();
       this.hubConnectionBuilder.on('InitWaiting', (result: any) => {
         this.initWaiting(this.type)

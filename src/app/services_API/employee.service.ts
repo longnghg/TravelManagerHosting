@@ -38,10 +38,15 @@ export class EmployeeService{
   }
   gets(isDelete: any)
   {
-    if (!isDelete) {
-      isDelete = false
-    }
+    // if (!isDelete) {
+    //   isDelete = false
+    // }
       return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/gets-employee?isDelete="+isDelete);
+  }
+
+  get(idEmployee: any)
+  {
+      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/get-employee?idEmployee="+idEmployee);
   }
 
   search(data){

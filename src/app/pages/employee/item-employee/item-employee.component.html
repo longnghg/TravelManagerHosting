@@ -56,7 +56,7 @@
             <button  *ngIf="type == 'detail'&& resEmployee.isDelete == false" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteEmployeeModal" (click)="getDataDelete()">Xóa</button>
             <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="backup()">Khôi phục</button>
             <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="save()">{{type == 'detail' ? "Lưu":"Thêm"}}</button>
-            <button *ngIf="resEmployee.isDelete == true" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreEmployeeModal" class="btn btn-warning" >Khôi phục người dùng</button>
+            <button *ngIf="resEmployee.isDelete == true" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreEmployeeModal" class="btn btn-warning">Khôi phục người dùng</button>
           </div>
         </div>
       </div>
@@ -155,3 +155,39 @@
 </div>
 
 
+<div class="modal fade" id="deleteEmployeeModal" tabindex="-1" aria-labelledby="deleteEmployeeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="deleteEmployeeModalLabel">Xác nhận</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="resEmployee">
+        Bạn có chắc muốn xóa [<span class="text-red">{{resEmployee.nameEmployee}}</span>] !
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="delete()" >Xóa</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="restoreEmployeeModal" tabindex="-1" aria-labelledby="restoreEmployeeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="restoreEmployeeModalLabel">Xác nhận</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="resEmployee">
+        Bạn có chắc muốn khôi phục [<span class="text-red">{{resEmployee.nameEmployee}}</span>] !
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="restore()"  [routerLink]="['','list-employee']" [state]="{isDelete: true}" >Khôi phục</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+      </div>
+    </div>
+  </div>
+</div>

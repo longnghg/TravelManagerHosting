@@ -36,7 +36,7 @@ export class ListProvinceComponent implements OnInit {
 
   ngOnInit(): void {
     this.init()
-    this.hubConnectionBuilder = this.configService.signIR(this.init())
+    this.hubConnectionBuilder = this.configService.signIR()
     this.hubConnectionBuilder.start();
     this.hubConnectionBuilder.on('Init', (result: any) => {
       this.init()

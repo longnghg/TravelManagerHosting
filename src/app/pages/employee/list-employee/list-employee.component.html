@@ -92,7 +92,7 @@
   </div>
 </div>
 <!-- Page content -->
-<div class="container-fluid mt--7">
+<!-- <div class="container-fluid mt--7">
   <div class="row">
     <div class="col">
       <div class="card shadow border-0">
@@ -100,8 +100,18 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
+
+<div class="container-fluid mt-5">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow border-0">
+        <app-grid2-data [rowData]="resEmployee" [columnDefs]="columnDefs" [gridConfig]="gridConfig2" (gdChecked)="init($event)" (gdType)="childType($event)" (gdSearch)="search($event)" (gdChild)="childData($event)" (gdRestore)="getData($event)" (gdDelete)="getData($event)"></app-grid2-data>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <div class="modal fade" [id]="gridConfig.idModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="gridDataLabel" aria-hidden="true">

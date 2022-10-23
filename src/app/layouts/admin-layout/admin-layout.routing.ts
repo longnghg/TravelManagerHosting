@@ -14,6 +14,7 @@ import { ListLocationComponent } from 'src/app/pages/locations/list-location/lis
 import { ListRoleComponent } from 'src/app/pages/roles/list-role/list-role.component';
 
 import { ListEmployeeComponent } from 'src/app/pages/employee/list-employee/list-employee.component';
+import { ItemEmployeeComponent } from 'src/app/pages/employee/item-employee/item-employee.component';
 
 import { ListCustomerComponent } from 'src/app/pages/customer/list-customer/list-customer.component';
 
@@ -46,6 +47,8 @@ export const AdminLayoutRoutes: Routes = [
 
     { path: 'list-role',  component: ListRoleComponent },
     { path: 'list-employee',  component: ListEmployeeComponent },
+    { path: 'item-employee/:id1/:id2',  component: ItemEmployeeComponent },
+
     { path: 'list-customer',  component: ListCustomerComponent },
     { path: 'list-tour',  component: ListTourComponent },
     { path: 'list-schedule',  component: ListScheduleComponent},

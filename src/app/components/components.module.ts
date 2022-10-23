@@ -6,6 +6,7 @@ import { FooterComponent } from './footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GridDataComponent } from './grid-data/grid-data.component';
+import { Grid2DataComponent } from './grid2-data/grid2-data.component';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule }           from '@ng-select/ng-select';
 import { NgOptionHighlightModule }  from '@ng-select/ng-option-highlight';
@@ -22,13 +23,15 @@ import { NgOptionHighlightModule }  from '@ng-select/ng-option-highlight';
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
-    GridDataComponent
+    GridDataComponent,
+    Grid2DataComponent
   ],
   exports: [
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
-    GridDataComponent
+    GridDataComponent,
+    Grid2DataComponent
   ]
 })
 export class ComponentsModule { }

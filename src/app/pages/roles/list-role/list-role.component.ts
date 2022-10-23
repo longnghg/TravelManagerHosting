@@ -34,7 +34,7 @@ export class ListRoleComponent implements OnInit {
     public columnDefs: ColDef[]
   ngOnInit(): void {
     this.init(this.type)
-    this.hubConnectionBuilder = this.configService.signIR(this.init())
+    this.hubConnectionBuilder = this.configService.signIR()
     this.hubConnectionBuilder.start();
     this.hubConnectionBuilder.on('Init', (result: any) => {
       this.init(this.type)

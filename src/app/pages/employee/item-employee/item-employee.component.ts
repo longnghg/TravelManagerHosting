@@ -6,6 +6,7 @@ import { EmployeeModel } from 'src/app/models/employee.model';
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { RoleModel } from 'src/app/models/role.model';
 import { RoleService } from 'src/app/services_API/role.service';
+import { ActivatedRoute } from '@angular/router';
 const FILTER_PAG_REGEX = /[^0-9]/g;
 @Component({
   selector: 'app-item-employee',
@@ -27,11 +28,46 @@ export class ItemEmployeeComponent implements OnInit{
   birthday: string
   birthdayView: string
   img:any
-  constructor(private employeeService: EmployeeService, private notificationService: NotificationService,
+  constructor(private activatedRoute: ActivatedRoute,private employeeService: EmployeeService, private notificationService: NotificationService,
     private configService: ConfigService, private roleService: RoleService) { }
 
   ngOnInit(): void {
+    var idEmployee = this.activatedRoute.snapshot.paramMap.get('id2')
+    this.type = this.activatedRoute.snapshot.paramMap.get('id1')
+    if(this.type == "detail"){
+      this.employeeService.get(idEmployee).subscribe(res => {
+        this.response = res
 
+        if(!this.response.notification.type)
+        {
+          this.resEmployee = this.response.content
+          this.resEmployeeTmp = Object.assign({}, this.resEmployee)
+
+          if(this.resEmployee){
+
+            if (this.resEmployee.image) {
+              this.img = this.configService.apiUrl + this.resEmployee.image
+            }
+            else{
+              this.img = "../../../../assets/img/employees/unknown.png"
+            }
+
+            if(this.resEmployee.birthday){
+              this.birthday = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resEmployee.birthday))
+              this.birthdayView = this.configService.formatFromUnixTimestampToFullDateView(Number.parseInt(this.resEmployee.birthday))
+            }
+          }
+        }
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, "Error")
+      })
+        this.isEdit = false
+    }
+
+    this.roleService.views().then(response =>{
+      this.resRole = response
+    })
   }
   ngOnChanges(): void {
     this.roleService.views().then(response =>{
@@ -59,6 +95,8 @@ export class ItemEmployeeComponent implements OnInit{
     }
 
     this.resEmployeeTmp = Object.assign({}, this.resEmployee)
+
+
   }
   inputChange(){
     this.birthdayView = this.configService.formatFromUnixTimestampToFullDateView(Number.parseInt(this.resEmployee.birthday))
@@ -172,5 +210,35 @@ export class ItemEmployeeComponent implements OnInit{
   formatInput(input: HTMLInputElement) {
     input.value = input.value.replace(FILTER_PAG_REGEX, '');
     this.resEmployee.phone = input.value
+  }
+
+  delete(){
+    if (this.resEmployee) {
+     this.employeeService.delete(this.resEmployee.idEmployee).subscribe(res =>{
+       this.response = res
+       this.notificationService.handleAlertObj(res.notification)
+       if (res.notification.type == "Success") {
+        location.assign(this.configService.clientUrl + "/#/list-employee")
+       }
+     }, error => {
+       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+       this.notificationService.handleAlert(message, "Error")
+     })
+    }
+   }
+
+   restore(){
+    if (this.resEmployee) {
+      this.employeeService.restore(this.resEmployee.idEmployee).subscribe(res =>{
+        this.response = res
+        this.notificationService.handleAlertObj(res.notification)
+        if (res.notification.type == "Success") {
+
+         }
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, "Error")
+      })
+    }
   }
 }
