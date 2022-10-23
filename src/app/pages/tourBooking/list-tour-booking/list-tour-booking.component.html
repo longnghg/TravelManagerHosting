@@ -112,8 +112,6 @@
         <thead class="thead-light">
           <tr>
             <th scope="col">STT</th>
-            <th scope="col">Id</th>
-            <th scope="col">Tên Khách hàng</th>
             <th scope="col">Địa Chỉ</th>
             <th scope="col">Email</th>
             <th scope="col">Số ĐT</th>
@@ -125,14 +123,8 @@
         <tbody>
           <tr  *ngFor="let item of resTourBooking let i=index">
             <th scope="row">
-              <strong>{{i}}</strong>
+              <strong>{{i + 1}}</strong>
             </th>
-            <th>
-                {{item.id}}
-            </th>
-            <td>
-               {{item.customerName}}
-            </td>
             <td>
               {{item.address}}
            </td>
@@ -143,13 +135,13 @@
             {{item.phone}}
           </td>
           <td>
-            {{item.contactName}}
+            {{item.nameContact}}
           </td>
            <td>
-            {{item.dateBooking}}
+            {{convertDate(item.dateBooking)}}
           </td>
             <td>
-              {{item.lastDate}}
+              {{convertDate(item.lastDate)}}
            </td>
             <td>
               <!-- <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="childData(item, 'detail')">

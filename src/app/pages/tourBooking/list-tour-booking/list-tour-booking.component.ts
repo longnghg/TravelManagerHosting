@@ -4,7 +4,6 @@ import { TourookingService } from "../../../services_API/tourBooking.service";
 import { NotificationService } from "../../../services_API/notification.service";
 import { ConfigService } from "../../../services_API/config.service";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
-
 @Component({
   selector: 'app-list-tour-booking',
   templateUrl: './list-tour-booking.component.html',
@@ -31,5 +30,9 @@ export class ListTourBookingComponent implements OnInit {
       console.log(this.resTourBooking);
     })
   }
+  public convertDate(unixString): string {
+    return this.configService.formatFromUnixTimestampToFullDateView(unixString)
+
+}
 
 }

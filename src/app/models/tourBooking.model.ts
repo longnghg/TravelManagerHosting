@@ -1,7 +1,7 @@
 export class TourBookingModel{
   id: string
-  customerName: string
-  contactName: string
+  nameCustomer: string
+  nameContact: string
   phone: string
   bookingNo: string
   pincode: string
