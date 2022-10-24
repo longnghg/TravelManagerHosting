@@ -110,12 +110,13 @@ export class Grid2DataComponent implements OnInit {
     this.calStartEnd()
   }
 
-  formatInput(input: HTMLInputElement, searchObj?: any) {
+  formatInput(input: HTMLInputElement, keyword?: any, column?: any) {
     input.value = input.value.replace(FILTER_PAG_REGEX, '');
-    searchObj = input.value
+    keyword[column] = input.value
   }
 
   changePageSize(){
+    this.pageNumber = 1
     this.calTotalResult()
     this.calStartEnd()
   }

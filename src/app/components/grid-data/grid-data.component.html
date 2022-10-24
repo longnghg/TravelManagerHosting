@@ -1,58 +1,63 @@
-<div class="table-responsive" >
-    <table class="table align-items-center table-flush" >
-      <thead class="thead-light" *ngIf="columnDefs">
-        <tr>
-          <th scope="col" style="width: 50px;"></th>
-          <th scope="col" *ngFor="let column of columnDefs" [style]="column.style">{{column.headerName}}
-            <ng-container *ngIf="column.searchType == 'section'; else elseSection">
-              <ng-select [style]="column.searchStyle" [virtualScroll]="true" [items]="column.listSection" (open)="ngOnChanges()"  placeholder="Tìm kiếm..." (change)="selectSection(column.searchObj)" id="section" name="section" [(ngModel)]="keyword[column.searchObj]" [bindLabel]="column.bindLabel" [bindValue]="column.bindValue" appendTo="body" [multiple]="column.multiple"  dropdownPosition="auto" [searchable]="false" [closeOnSelect]="column.closeOnSelect">
-                <ng-container *ngIf="column.multiple;">
-                  <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                    <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item[column.bindLabel]}}
-                  </ng-template>
-                </ng-container>
-              </ng-select>
-            </ng-container>
-            <ng-template #elseSection>
-              <ng-container *ngIf="column.searchType == 'date'; else elseDateTime">
-                <div class="form-group">
-                  <div class="input-group input-group-alternative">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
-                    </div>
-                    <input class="form-control datepicker" name="dp" [(ngModel)]="model" onkeydown="return false"   placeholder="DD/MM/YYYY"  type="date"/>
-                  </div>
-                </div>
+<div class="table-responsive" style="overflow-x: hidden;">
+  <table class="table align-items-center table-flush" >
+    <thead class="thead-light" *ngIf="columnDefs">
+      <tr>
+        <th scope="col" style="width: 50px;"></th>
+        <th scope="col" *ngFor="let column of columnDefs" [style]="column.style">{{column.headerName}}
+          <ng-container *ngIf="column.searchType == 'section'; else elseSection">
+            <ng-select [style]="column.searchStyle" [virtualScroll]="true" [items]="column.listSection" (open)="ngOnChanges()"  placeholder="Tìm kiếm..." (change)="selectSection(column.searchObj)" id="section" name="section" [(ngModel)]="keyword[column.searchObj]" [bindLabel]="column.bindLabel" [bindValue]="column.bindValue" appendTo="body" [multiple]="column.multiple"  dropdownPosition="auto" [searchable]="false" [closeOnSelect]="column.closeOnSelect">
+              <ng-container *ngIf="column.multiple;">
+                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                  <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item[column.bindLabel]}}
+                </ng-template>
               </ng-container>
-              <ng-template #elseDateTime>
-                <input *ngIf="column.searchable" placeholder="Tìm kiếm..."  (change)="search(column.searchObj)" [(ngModel)]="keyword[column.field]" [type]="column.searchType" class="form-control custom-pages-input" style="height: 30px" [name]="column.field" [id]="column.field">
-              </ng-template>
-            </ng-template>
-          </th>
-          <th>
-            <div ngbDropdown placement="bottom-right" *ngIf="gridConfig">
-              <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
-                <i class="fas fa-ellipsis-v" style="color: #4d4aef!important;"></i>
-              </a>
-              <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
-                <a class="dropdown-item" href="javascript:void(0)" *ngIf="!isDelete" data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModal" (click)="childData(null, 'create')" >Thêm</a>
-                <ng-container *ngIf="gridConfig.radioBox;">
-                  <div class="dropdown-divider" *ngIf="!isDelete"></div>
-                <label class="custom-toggle" style="margin-left: 5px;">
-                  <input type="checkbox" (change)="changeChecked()">
-                  <span class="custom-toggle-slider rounded-circle"></span>
-                </label>
-                <span style="position: absolute; margin-left: 5px;">{{gridConfig.radioBoxName}}</span>
-                </ng-container>
-
+            </ng-select>
+          </ng-container>
+          <ng-template #elseSection>
+            <ng-container *ngIf="column.searchType == 'date'; else elseDateTime">
+              <div class="form-group">
+                <div class="input-group input-group-alternative">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                  </div>
+                  <input [style]="column.searchStyle" class="form-control datepicker" name="dp" [(ngModel)]="model" onkeydown="return false"   placeholder="DD/MM/YYYY"  type="date"/>
+                </div>
               </div>
-            </div>
+            </ng-container>
+            <ng-template #elseDateTime>
+              <ng-container *ngIf="column.filter == 'number'; else elseNumber">
+                <input *ngIf="column.searchable" [style]="column.searchStyle"  placeholder="Tìm kiếm..." (input)="formatInput($any($event).target, keyword, column.field)" (blur)="search(column.searchObj)" [(ngModel)]="keyword[column.field]" [type]="column.searchType" class="form-control custom-pages-input" style="height: 30px" [name]="column.field" [id]="column.field">
+               </ng-container>
+               <ng-template #elseNumber>
+                <input *ngIf="column.searchable" [style]="column.searchStyle"  placeholder="Tìm kiếm..."  (blur)="search(column.searchObj)" [(ngModel)]="keyword[column.field]" [type]="column.searchType" class="form-control custom-pages-input" style="height: 30px" [name]="column.field" [id]="column.field">
+               </ng-template>
+            </ng-template>
+          </ng-template>
+        </th>
+        <th scope="col">
+          <div ngbDropdown placement="bottom-right" *ngIf="gridConfig">
+            <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
+              <i class="fas fa-ellipsis-v" style="color: #4d4aef!important;"></i>
+            </a>
+            <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
+              <a class="dropdown-item" href="javascript:void(0)" *ngIf="!gridConfig.isRestore" [routerLink]="['',gridConfig.route, 'create', '']" >Thêm</a>
+              <ng-container *ngIf="gridConfig.radioBox;">
+                <div class="dropdown-divider" *ngIf="!gridConfig.isRestore"></div>
+              <label class="custom-toggle" style="margin-left: 5px;">
+                <input type="checkbox" (change)="changeChecked()" [checked]="gridConfig.isRestore">
+                <span class="custom-toggle-slider rounded-circle"></span>
+              </label>
+              <span style="position: absolute; margin-left: 5px;">{{gridConfig.radioBoxName}}</span>
+              </ng-container>
 
-          </th>
-        </tr>
+            </div>
+          </div>
+
+        </th>
+      </tr>
       </thead>
-      <tbody *ngIf="!rowData" [style]="gridConfig.style ? gridConfig.style :  'height: 410px;'"></tbody>
-      <tbody *ngIf="rowData" [style]="gridConfig.style ? gridConfig.style :  'height: 410px;'">
+      <tbody *ngIf="!rowData" [style]="gridConfig.style ? gridConfig.style :  'max-height: 410px;'"></tbody>
+      <tbody *ngIf="rowData" [style]="gridConfig.style ? gridConfig.style :  'max-height: 410px;'">
         <tr *ngFor="let row of rowData; let i=index" >
           <ng-container *ngIf="row.rowNum >= start && row.rowNum <= end">
             <td style="padding-left: 20px; width: 50px;">{{row.rowNum}}</td>

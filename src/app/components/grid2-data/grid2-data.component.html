@@ -1,4 +1,4 @@
-<div class="table-responsive" >
+<div class="table-responsive" style="overflow-x: hidden;">
     <table class="table align-items-center table-flush" >
       <thead class="thead-light" *ngIf="columnDefs">
         <tr>
@@ -20,22 +20,22 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                     </div>
-                    <input class="form-control datepicker" name="dp" [(ngModel)]="model" onkeydown="return false"   placeholder="DD/MM/YYYY"  type="date"/>
+                    <input [style]="column.searchStyle" class="form-control datepicker" name="dp" [(ngModel)]="model" onkeydown="return false"   placeholder="DD/MM/YYYY"  type="date"/>
                   </div>
                 </div>
               </ng-container>
               <ng-template #elseDateTime>
                <ng-container *ngIf="column.filter == 'number'; else elseNumber">
-                <input *ngIf="column.searchable" placeholder="Tìm kiếm..." (input)="formatInput($any($event).target, keyword[column.field])" (change)="search(column.searchObj)" [(ngModel)]="keyword[column.field]" [type]="column.searchType" class="form-control custom-pages-input" style="height: 30px" [name]="column.field" [id]="column.field">
+                <input *ngIf="column.searchable" [style]="column.searchStyle"  placeholder="Tìm kiếm..." (input)="formatInput($any($event).target, keyword, column.field)" (blur)="search(column.searchObj)" [(ngModel)]="keyword[column.field]" [type]="column.searchType" class="form-control custom-pages-input" style="height: 30px" [name]="column.field" [id]="column.field">
                </ng-container>
                <ng-template #elseNumber>
-                <input *ngIf="column.searchable" placeholder="Tìm kiếm..."  (change)="search(column.searchObj)" [(ngModel)]="keyword[column.field]" [type]="column.searchType" class="form-control custom-pages-input" style="height: 30px" [name]="column.field" [id]="column.field">
+                <input *ngIf="column.searchable" [style]="column.searchStyle"  placeholder="Tìm kiếm..."  (blur)="search(column.searchObj)" [(ngModel)]="keyword[column.field]" [type]="column.searchType" class="form-control custom-pages-input" style="height: 30px" [name]="column.field" [id]="column.field">
                </ng-template>
 
               </ng-template>
             </ng-template>
           </th>
-          <th>
+          <th scope="col">
             <div ngbDropdown placement="bottom-right" *ngIf="gridConfig">
               <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
                 <i class="fas fa-ellipsis-v" style="color: #4d4aef!important;"></i>
@@ -57,9 +57,7 @@
           </th>
         </tr>
       </thead>
-      <tbody *ngIf="!rowData" [style]="gridConfig.style ? gridConfig.style :  'height: 410px;'">
-      </tbody>
-      <tbody *ngIf="rowData" [style]="gridConfig.style ? gridConfig.style :  'height: 410px;'">
+      <tbody *ngIf="rowData" [style]="gridConfig.style ? gridConfig.style :  'height: 330px;'">
         <tr *ngFor="let row of rowData; let i=index" >
           <ng-container *ngIf="row.rowNum >= start && row.rowNum <= end">
             <td style="padding-left: 20px; width: 50px;">{{row.rowNum}}</td>

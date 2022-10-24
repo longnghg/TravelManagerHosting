@@ -111,8 +111,9 @@ export class GridDataComponent implements OnInit {
     this.calStartEnd()
   }
 
-  formatInput(input: HTMLInputElement) {
+  formatInput(input: HTMLInputElement, keyword?: any, column?: any) {
     input.value = input.value.replace(FILTER_PAG_REGEX, '');
+    keyword[column] = input.value
   }
 
   changePageSize(){
