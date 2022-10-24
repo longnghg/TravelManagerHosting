@@ -19,6 +19,11 @@ getsSchedulebyIdTour(idTour: any)
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/gets-schedule-idtour?idTour="+idTour);
 }
 
+getsSchedulebyIdTourWaiting(idTour: any)
+{
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/gets-schedule-idtour-waiting?idTour="+idTour);
+}
+
 create(data: any)
 {
   return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Schedule/create-schedule", data);

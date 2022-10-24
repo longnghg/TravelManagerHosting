@@ -12,8 +12,8 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./view-tour-schedule.component.scss']
 })
 export class ViewTourScheduleComponent implements OnInit {
-  // @Input() resTour: TourModel
   resSchedule: ScheduleModel[]
+  resScheduleWaiting: ScheduleModel[]
   response: ResponseModel
   dataChild: ScheduleModel
   typeChild: string
@@ -25,13 +25,14 @@ export class ViewTourScheduleComponent implements OnInit {
   public gridConfig: GridConfig = {
     idModalRestore: "",
     idModalDelete: "",
-    idModal: "gridSchedule",
+    idModal: "gridSchedule1",
     radioBox: true,
     radioBoxName: "Kho lưu trữ",
   }
 
   ngOnInit(): void {
     this.init()
+    this.initWaiting()
     setTimeout(() => {
       this.columnDefs= [
         // { field: 'idSchedule', headerName: "Mã số", style: "width: 340px;", searchable: true, searchType: 'text', searchObj: 'idSchedule'},
@@ -59,6 +60,23 @@ export class ViewTourScheduleComponent implements OnInit {
 
 
 
+  }
+
+  initWaiting(){
+    var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
+    this.scheduleService.getsSchedulebyIdTourWaiting(idTour).subscribe(res =>{
+      this.response = res
+      if(!this.response.notification.type){
+        this.resScheduleWaiting = this.response.content
+      }
+      else{
+        this.resSchedule = null
+        this.notificationService.handleAlertObj(res.notification)
+      }
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, "Error")
+    })
   }
 
   init(){

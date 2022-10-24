@@ -11,6 +11,7 @@ import { EmployeeModel } from 'src/app/models/employee.model';
 import { EmployeeService } from 'src/app/services_API/employee.service';
 import { PromotionModel } from 'src/app/models/promotion.model';
 import { PromotionService } from 'src/app/services_API/promotion.service';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-item-tour-schedule',
   templateUrl: './item-tour-schedule.component.html',
@@ -26,18 +27,16 @@ export class ItemTourScheduleComponent implements OnInit {
   isEdit: boolean = false
   isChange: boolean = false
   resScheduleTmp: ScheduleModel
-  idTour: any
-
+  date: string
+  dateView: string
   constructor(private scheduleService: ScheduleService, private configService: ConfigService, private notificationService: NotificationService,
-    private employeeService: EmployeeService, private carService: CarService, private promotionService: PromotionService) { }
+    private employeeService: EmployeeService, private carService: CarService, private promotionService: PromotionService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
   }
 
   ngOnChanges(): void {
     this.init()
-    console.log(this.resPromotion);
-
 
     if(this.type == 'create'){
       this.resSchedule = new ScheduleModel()
@@ -46,17 +45,14 @@ export class ItemTourScheduleComponent implements OnInit {
       this.isEdit = false
     }
     this.resScheduleTmp = Object.assign({}, this.resSchedule)
+    // if(this.resScheduleTmp){
 
-    if(this.resScheduleTmp){
-
-        this.resScheduleTmp.departureDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.departureDate))
-        this.resScheduleTmp.returnDate = this.configService.formatFromUnixTimestampToFullDateView(Number.parseInt(this.resSchedule.returnDate))
-        this.resScheduleTmp.beginDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.beginDate))
-        this.resScheduleTmp.endDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.endDate))
-        this.resScheduleTmp.timePromotion = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.timePromotion))
-
-
-    }
+    //     this.resScheduleTmp.departureDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.departureDate))
+    //     this.resScheduleTmp.returnDate = this.configService.formatFromUnixTimestampToFullDateView(Number.parseInt(this.resSchedule.returnDate))
+    //     this.resScheduleTmp.beginDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.beginDate))
+    //     this.resScheduleTmp.endDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.endDate))
+    //     this.resScheduleTmp.timePromotion = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.timePromotion))
+    // }
 
   }
 
@@ -97,18 +93,17 @@ export class ItemTourScheduleComponent implements OnInit {
   }
 
   save(){
-
+    var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
       if(this.type == "create")
       {
-        this.idTour = localStorage.getItem("idTour")
-        this.resSchedule.tourId  = this.idTour
+        this.resSchedule.tourId = idTour
         this.scheduleService.create(this.resSchedule).subscribe(res =>{
           this.response = res
-          if(res.notification.type != "Error")
-          {
-            this.close()
-          }
           this.notificationService.handleAlertObj(res.notification)
+
+          if(this.response.notification.type == "Error")
+          {
+          }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, "Error")
