@@ -68,8 +68,6 @@ export class ListEmployeeComponent implements OnInit {
     this.hubConnectionBuilder = this.configService.signIR()
     this.hubConnectionBuilder.start();
     this.hubConnectionBuilder.on('Init', (result: any) => {
-      console.log(history.state.isDelete);
-
       if (history.state.isDelete) {
         if (!this.type) {
           this.init(this.type)
@@ -166,13 +164,18 @@ export class ListEmployeeComponent implements OnInit {
 
   delete(){
     if (this.data) {
-     this.employeeService.delete(this.data.idEmployee).subscribe(res =>{
-       this.response = res
-       this.notificationService.handleAlertObj(res.notification)
-     }, error => {
-       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-       this.notificationService.handleAlert(message, "Error")
-     })
+      if (this.data.idEmployee != localStorage.getItem("idUser")) {
+        this.employeeService.delete(this.data.idEmployee).subscribe(res =>{
+          this.response = res
+          this.notificationService.handleAlertObj(res.notification)
+        }, error => {
+          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+          this.notificationService.handleAlert(message, "Error")
+        })
+      }
+      else{
+        this.notificationService.handleAlert("Bạn không thể xóa tài khoản đang đăng nhập !", "Error")
+      }
     }
    }
 

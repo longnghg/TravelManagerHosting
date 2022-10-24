@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
       {
         this.resAthentication = this.response.content
         localStorage.setItem("token", this.resAthentication.token)
+        localStorage.setItem("idUser", this.resAthentication.id)
         localStorage.setItem("currentUser", JSON.stringify(this.resAthentication))
         document.location.assign( this.configService.clientUrl + "/#/dashboard")
       }

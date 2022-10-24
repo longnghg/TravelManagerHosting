@@ -16,3 +16,15 @@ export class EmployeeModel {
   isActive: boolean = true
   isDelete: boolean = false
 }
+
+export class ValidationEmployeeModel {
+  total: number
+  nameEmployee: string = null
+  email: string = null
+  phone: string = null
+  gender: string = null
+  address: string = null
+  birthday: string = null
+  image: string = null
+  roleId: string = null
+}

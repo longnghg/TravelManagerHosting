@@ -1,8 +1,16 @@
-<div class="modal-header">
-  <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin chi tiết</h1>
+<div [class]="idEmployee ?'header bg-gradient-primary pb-8 pt-5 pt-md-8': 'd-none'" style="z-index: -1;">
+  <div class="container-fluid">
+    <div class="header-body">
+
+    </div>
+  </div>
+</div>
+
+<div [class]="idEmployee?'d-none':'modal-header container-fluid'">
+  <h1 class="modal-title fs-5" id="gridDataLabel" >Thông tin chi tiết</h1>
   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
 </div>
-<div class="modal-body">
+<div class="modal-body" [style]="idEmployee?'margin-top: -130px;':''">
   <div class="row" *ngIf="resEmployee">
       <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
         <div class="card card-profile shadow">
@@ -28,7 +36,7 @@
                   <div class="row">
                     <div class="update ml-auto mr-auto">
                       <input id="file" type="file" class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeImg($event); inputChange()">
-                      <label for="file" style="margin-left: 20px;" [class]="isEdit?'btn text-white btn-primary btn-round':'d-none'">Đổi hình đại diện</label>
+                      <label for="file" style="margin-left: 20px;" [class]="resEmployee.roleId == -1 && type == 'detail'?'d-none':'btn text-white btn-primary btn-round'">Đổi hình đại diện</label>
                     </div>
                   </div>
                 </div>
@@ -51,14 +59,19 @@
 
           </div>
         </div>
-        <div class="row align-items-center">
+        <!-- <div class="row align-items-center">
           <div class="col-12 text-right" style="position: absolute; bottom: 0px;">
-            <button  *ngIf="type == 'detail'&& resEmployee.isDelete == false" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemEmployeeModal" (click)="getDataDelete()">Xóa</button>
-            <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="backup()">Khôi phục</button>
+            <button  *ngIf="type == 'detail'&& resEmployee.isDelete == false " class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemEmployeeModal" (click)="getDataDelete()">Xóa</button>
+            <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#backupItemEmployeeModal">Khôi phục</button>
             <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="save()">{{type == 'detail' ? "Lưu":"Thêm"}}</button>
-            <button *ngIf="resEmployee.isDelete == true" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreItemEmployeeModal" class="btn btn-warning">Khôi phục người dùng</button>
+            <ng-container *ngIf="idEmployee; else elseGrid1">
+              <button *ngIf="resEmployee.isDelete == true" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreItemEmployeeModal" class="btn btn-warning">Khôi phục người dùng</button>
+            </ng-container>
+            <ng-template #elseGrid1>
+              <button *ngIf="resEmployee.isDelete == true" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreEmployeeModal" class="btn btn-warning">Khôi phục người dùng</button>
+            </ng-template>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="col-xl-8 order-xl-1">
         <div class="card bg-secondary shadow">
@@ -67,13 +80,13 @@
               <div class="col-8">
                 <h3 class="mb-0">Thông tin</h3>
                 <div class="row custom-control custom-switch mt-3" style="margin-left: 5px;">
-                  <input type="checkbox" class="custom-control-input" id="customSwitch1" [(ngModel)]="resEmployee.isActive" (click)="resEmployee.isActive ? resEmployee.isActive = false : resEmployee.isActive = true; inputChange()" [disabled]="!isEdit">
+                  <input type="checkbox" class="custom-control-input" id="customSwitch1" [(ngModel)]="resEmployee.isActive" (click)="resEmployee.isActive ? resEmployee.isActive = false : resEmployee.isActive = true; inputChange()" [disabled]="resEmployee.roleId == -1 && type == 'detail'">
                   <label class="custom-control-label" for="customSwitch1">Kích hoạt tài khoản</label>
                 </div>
               </div>
-              <div class="col-4 text-right">
+              <!-- <div class="col-4 text-right">
                 <a href="javascript:void(0)" *ngIf="type == 'detail' && resEmployee.isDelete == false" class="btn btn-sm btn-primary" (click)="isEditChange()">{{!isEdit ? "Chỉnh sửa":"Quay lại"}}</a>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="card-body">
@@ -83,22 +96,37 @@
                 <div class="row">
                   <div class="col-lg-6">
                     <div class="form-group">
-                      <label class="form-control-label" for="nameEmployee">Họ & tên</label>
-                      <input [(ngModel)]="resEmployee.nameEmployee" (input)="inputChange()" name="nameEmployee" type="text" id="nameEmployee" class="form-control form-control-alternative" placeholder="Nhập họ tên"  [readonly]="!isEdit">
+                      <label class="form-control-label" for="nameEmployee">Họ & tên
+                        <span [class]="type == 'detail' && resEmployee.roleId != -1 ?'text-red':'d-none'">* {{this.validateEmployee.nameEmployee ? this.validateEmployee.nameEmployee : ''}}</span>
+                      </label>
+                      <input [(ngModel)]="resEmployee.nameEmployee" (input)="inputChange()" name="nameEmployee" type="text" id="nameEmployee" class="form-control form-control-alternative" placeholder="Nhập họ tên"  [readonly]="resEmployee.roleId == -1 && type == 'detail'">
                     </div>
                   </div>
                   <div class="col-lg-6">
                     <div class="form-group">
-                      <label class="form-control-label" for="idRole">Chức vụ</label>
-                      <ng-select [items]="resRole"
-                                  bindLabel="nameRole"
-                                  bindValue="idRole"
+                      <label class="form-control-label" for="idRole">Chức vụ
+                        <span [class]="type == 'detail' && resEmployee.roleId != -1 ?'text-red':'d-none'">* {{this.validateEmployee.roleId ? this.validateEmployee.nameEmployee : ''}}</span>
+                      </label>
+                      <ng-select
                                   [(ngModel)]="resEmployee.roleId"
-                                  [disabled]="!isEdit"
+                                  [disabled]="resEmployee.roleId == -1 && type == 'detail'"
                                   placeholder="Chọn chức vụ..."
                                   name="idRole"
                                   id="idRole"
                                   (change)="inputChange()">x
+
+                                  <ng-container *ngIf="resEmployee.roleId != -1 && type == 'detail'; else elseADM">
+                                    <ng-container *ngFor="let role of resRole">
+                                      <ng-option *ngIf="role.idRole != -1" [value]="role.idRole" >{{role.nameRole}}</ng-option>
+                                    </ng-container>
+                                  </ng-container>
+                                  <ng-template #elseADM>
+                                    <ng-container *ngFor="let role of resRole">
+                                      <ng-option  [value]="role.idRole" >{{role.nameRole}}</ng-option>
+                                    </ng-container>
+                                  </ng-template>
+
+
                       </ng-select>
                     </div>
                   </div>
@@ -106,16 +134,20 @@
                 <div class="row">
                   <div class="col-lg-6">
                     <div class="form-group">
-                      <label class="form-control-label" for="gender">Giới tính</label>
-                      <ng-select [items]="listGender" [(ngModel)]="resEmployee.gender" bindValue="id" bindLabel="name" name="gender" id="gender" [disabled]="!isEdit"
+                      <label class="form-control-label" for="gender">Giới tính
+                        <span [class]="type == 'detail' && resEmployee.roleId != -1 ?'text-red':'d-none'">* {{this.validateEmployee.gender ? this.validateEmployee.gender : ''}}</span>
+                      </label>
+                      <ng-select [items]="listGender" [(ngModel)]="resEmployee.gender" bindValue="id" bindLabel="name" name="gender" id="gender" [disabled]="resEmployee.roleId == -1 && type == 'detail'"
                       placeholder="Chọn giới tính..." (change)="inputChange()">
                      </ng-select>
                     </div>
                   </div>
                   <div class="col-lg-6">
                     <div class="form-group">
-                      <label class="form-control-label" for="dp">Ngày sinh</label>
-                      <input  name="birthday"  (change)="resEmployee.birthday = birthday; inputChange()" [(ngModel)]="birthday" class="form-control datepicker" placeholder="Chọn ngày" name="dp" id="dp" type="date" [disabled]="!isEdit"/>
+                      <label class="form-control-label" for="dp">Ngày sinh
+                        <span [class]="type == 'detail' && resEmployee.roleId != -1 ?'text-red':'d-none'">* {{this.validateEmployee.birthday ? this.validateEmployee.birthday : ''}}</span>
+                      </label>
+                      <input  name="birthday"  (change)="resEmployee.birthday = birthday; inputChange()" [(ngModel)]="birthday" class="form-control datepicker" placeholder="Chọn ngày" name="dp" id="dp" type="date" [disabled]="resEmployee.roleId == -1 && type == 'detail'"/>
                     </div>
                   </div>
                 </div>
@@ -127,13 +159,17 @@
                 <div class="row">
                   <div class="col-lg-6">
                     <div class="form-group">
-                      <label class="form-control-label" for="phone">Điện thoại</label>
-                      <input [(ngModel)]="resEmployee.phone" (input)="formatInput($any($event).target); inputChange()" name="phone" type="text" id="phone" class="form-control form-control-alternative" placeholder="Nhập điện thoại" [readonly]="!isEdit">
+                      <label class="form-control-label" for="phone">Điện thoại
+                        <span [class]="type == 'detail' && resEmployee.roleId != -1 ?'text-red':'d-none'">* {{this.validateEmployee.phone ? this.validateEmployee.phone : ''}}</span>
+                      </label>
+                      <input [(ngModel)]="resEmployee.phone" (input)="formatInput($any($event).target); inputChange()" name="phone" type="text" id="phone" class="form-control form-control-alternative" placeholder="Nhập điện thoại" [readonly]="resEmployee.roleId == -1 && type == 'detail'">
                     </div>
                   </div>
                   <div class="col-lg-6">
                     <div class="form-group">
-                      <label class="form-control-label" for="email">Email</label>
+                      <label class="form-control-label" for="email">Email
+                        <span [class]="type == 'detail' && resEmployee.roleId != -1 ?'text-red':'d-none'">* {{this.validateEmployee.email ? this.validateEmployee.email : ''}}</span>
+                      </label>
                       <input [(ngModel)]="resEmployee.email" (input)="inputChange()" name="email" type="email" id="email" class="form-control form-control-alternative" placeholder="Nhập email" [readonly]="type == 'detail'">
                     </div>
                   </div>
@@ -141,10 +177,25 @@
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label class="form-control-label" for="address">Địa chỉ</label>
-                      <textarea [(ngModel)]="resEmployee.address" (input)="inputChange()" id="address"  name="address" rows="4" class="form-control form-control-alternative" placeholder="Nhập địa chỉ" [readonly]="!isEdit"></textarea>
+                      <label class="form-control-label" for="address">Địa chỉ
+                        <span [class]="type == 'detail' && resEmployee.roleId != -1 ?'text-red':'d-none'">* {{this.validateEmployee.address ? this.validateEmployee.address : ''}}</span>
+                      </label>
+                      <textarea [(ngModel)]="resEmployee.address" (input)="inputChange()" id="address"  name="address" rows="4" class="form-control form-control-alternative" placeholder="Nhập địa chỉ" [readonly]="resEmployee.roleId == -1 && type == 'detail'"></textarea>
                     </div>
                   </div>
+                </div>
+              </div>
+              <div class="row align-items-center">
+                <div class="col-12 text-right" style="position: absolute; bottom: 10px; right: 10px;">
+                  <button  *ngIf="type == 'detail'&& resEmployee.isDelete == false " class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemEmployeeModal" (click)="getDataDelete()">Xóa</button>
+                  <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#backupItemEmployeeModal">Khôi phục</button>
+                  <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="save()">{{type == 'detail' ? "Lưu":"Thêm"}}</button>
+                  <ng-container *ngIf="idEmployee; else elseGrid1">
+                    <button *ngIf="resEmployee.isDelete == true" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreItemEmployeeModal" class="btn btn-warning">Khôi phục người dùng</button>
+                  </ng-container>
+                  <ng-template #elseGrid1>
+                    <button *ngIf="resEmployee.isDelete == true" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreEmployeeModal" class="btn btn-warning">Khôi phục người dùng</button>
+                  </ng-template>
                 </div>
               </div>
             </form>
@@ -173,6 +224,23 @@
   </div>
 </div>
 
+<div class="modal fade" id="backupItemEmployeeModal" tabindex="-1" aria-labelledby="backupItemEmployeeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="backupItemEmployeeModalLabel">Xác nhận</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="resEmployee">
+        Bạn có chắc muốn khôi phục  về dữ liệu ban đầu ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="backup()" >Khôi phục</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="modal fade" id="restoreItemEmployeeModal" tabindex="-1" aria-labelledby="restoreItemEmployeeModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -185,7 +253,7 @@
         Bạn có chắc muốn khôi phục [<span class="text-red">{{resEmployee.nameEmployee}}</span>] !
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="restore()"  [routerLink]="['','list-employee']" [state]="{isDelete: true}" >Khôi phục</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="restore()" >Khôi phục</button>
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
       </div>
     </div>

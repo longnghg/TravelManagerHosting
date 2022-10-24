@@ -2,11 +2,11 @@ import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { NotificationService } from "../../../services_API/notification.service";
 import { ConfigService } from "../../../services_API/config.service";
 import { EmployeeService } from 'src/app/services_API/employee.service';
-import { EmployeeModel } from 'src/app/models/employee.model';
+import { EmployeeModel, ValidationEmployeeModel } from 'src/app/models/employee.model';
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { RoleModel } from 'src/app/models/role.model';
 import { RoleService } from 'src/app/services_API/role.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 const FILTER_PAG_REGEX = /[^0-9]/g;
 @Component({
   selector: 'app-item-employee',
@@ -15,6 +15,7 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
 })
 export class ItemEmployeeComponent implements OnInit{
   response: ResponseModel
+  validateEmployee: ValidationEmployeeModel = new ValidationEmployeeModel
   @Input() resEmployee: EmployeeModel
   @Input() type: string
   @Output() parentDelete = new EventEmitter<any>()
@@ -28,15 +29,16 @@ export class ItemEmployeeComponent implements OnInit{
   birthday: string
   birthdayView: string
   img:any
-  constructor(private activatedRoute: ActivatedRoute,private employeeService: EmployeeService, private notificationService: NotificationService,
+  idEmployee: any
+  constructor(private router: Router, private activatedRoute: ActivatedRoute,private employeeService: EmployeeService, private notificationService: NotificationService,
     private configService: ConfigService, private roleService: RoleService) { }
 
   ngOnInit(): void {
-    var idEmployee = this.activatedRoute.snapshot.paramMap.get('id2')
+    this.idEmployee = this.activatedRoute.snapshot.paramMap.get('id2')
     this.type = this.activatedRoute.snapshot.paramMap.get('id1')
     if(this.type == "detail"){
       this.isEdit = false
-      this.employeeService.get(idEmployee).subscribe(res => {
+      this.employeeService.get(this.idEmployee).subscribe(res => {
         this.response = res
 
         if(!this.response.notification.type)
@@ -69,10 +71,20 @@ export class ItemEmployeeComponent implements OnInit{
       this.resEmployee = new EmployeeModel
       this.resEmployeeTmp = Object.assign({}, this.resEmployee)
       this.isEdit = true
+      if(this.resEmployee){
+
+        if (this.resEmployee.image) {
+          this.img = this.configService.apiUrl + this.resEmployee.image
+        }
+        else{
+          this.img = "../../../../assets/img/employees/unknown.png"
+        }
+      }
     }
 
     this.roleService.views().then(response =>{
       this.resRole = response
+
     })
   }
   ngOnChanges(): void {
@@ -142,11 +154,10 @@ export class ItemEmployeeComponent implements OnInit{
   }
 
   save(){
-    var valid =  this.configService.validateEmployee(this.resEmployee)
-    valid.forEach(element => {
-        this.notificationService.handleAlert(element, "Error")
-    });
-    if (valid.length == 0) {
+    this.validateEmployee =  this.configService.validateEmployee(this.resEmployee, this.validateEmployee)
+    console.log(this.validateEmployee);
+
+    if (this.validateEmployee.total == 0) {
       var file = new FormData();
       file.append('data', JSON.stringify(this.resEmployee))
 
@@ -190,6 +201,7 @@ export class ItemEmployeeComponent implements OnInit{
     this.birthday = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resEmployee.birthday))
     this.birthdayView = this.configService.formatFromUnixTimestampToFullDateView(Number.parseInt(this.resEmployee.birthday))
     this.isChange = false
+    this.notificationService.handleAlert("Khôi phục dữ liệu ban đầu thành công !", "Info")
   }
 
   close(){
@@ -220,16 +232,22 @@ export class ItemEmployeeComponent implements OnInit{
 
   delete(){
     if (this.resEmployee) {
-     this.employeeService.delete(this.resEmployee.idEmployee).subscribe(res =>{
-       this.response = res
-       this.notificationService.handleAlertObj(res.notification)
-       if (res.notification.type == "Success") {
-        location.assign(this.configService.clientUrl + "/#/list-employee")
+      if (this.resEmployee.idEmployee != localStorage.getItem("idUser")) {
+        this.employeeService.delete(this.resEmployee.idEmployee).subscribe(res =>{
+          this.response = res
+
+          this.notificationService.handleAlertObj(res.notification)
+          if (res.notification.type == "Success") {
+           this.router.navigate(['','list-employee']);
+          }
+        }, error => {
+          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+          this.notificationService.handleAlert(message, "Error")
+        })
        }
-     }, error => {
-       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-       this.notificationService.handleAlert(message, "Error")
-     })
+       else{
+        this.notificationService.handleAlert("Bạn không thể xóa tài khoản đang đăng nhập !", "Error")
+      }
     }
    }
 
@@ -239,7 +257,7 @@ export class ItemEmployeeComponent implements OnInit{
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
         if (res.notification.type == "Success") {
-
+          this.router.navigate(['','list-employee'], { state: { isDelete: true } });
          }
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");

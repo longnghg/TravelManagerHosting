@@ -51,23 +51,26 @@ export class ConfigService{
   }
 
 
-  validateEmployee(data: any){
-    var err = []
+  validateEmployee(data: any, model: any){
+    model.total = 0
     var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-
     //name
     if(data.nameEmployee == null || data.nameEmployee == ""){
-       err.push("[Họ và tên] không được để trống !")
+      model.nameEmployee = "[Họ và tên] không được để trống !"
+      model.total += 1
     }else if (data.nameEmployee.length > 100) {
-       err.push("[Họ và tên] quá dài !")
+      model.nameEmployee = "[Họ và tên] quá dài !"
+      model.total += 1
     }else if (data.nameEmployee.length < 1) {
-      err.push("[Họ và tên] quá ngắn !")
+      model.nameEmployee = "[Họ và tên] quá ngắn !"
+      model.total += 1
     }
 
 
     //gender
     if (data.gender === null) {
-       err.push("[Giới tính] không được để trống !")
+      model.gender = "[Giới tính] không được để trống !"
+      model.total += 1
     }
 
     // if (data.gender != "Nam" && data.gender != "Nữ" && data.gender != "Khác") {
@@ -76,23 +79,29 @@ export class ConfigService{
 
     //role
     if (data.roleId == null || data.roleId == "") {
-       err.push("[Quyền] không được để trống !")
+      model.roleId = "[Quyền] không được để trống !"
+      model.total += 1
     }
 
      //email
     if (data.email == null || data.email == "") {
-       err.push("[Email] không được để trống !")
+      model.email = "[Email] không được để trống !"
+      model.total += 1
     }else if (!filter.test(data.email)) {
-       err.push("[Email] không hợp lệ !")
+      model.email = "[Email] không hợp lệ !"
+      model.total += 1
     }
 
     //Phone
     if (data.phone == null || data.phone == "") {
-       err.push("[Số điện thoại] không được để trống !")
+      model.phone = "[Số điện thoại] không được để trống !"
+      model.total += 1
     }else if (data.phone.length > 10) {
-       err.push("[Số điện thoại] vượt quá 10 số !")
+      model.phone = "[Số điện thoại] vượt quá 10 số !"
+      model.total += 1
     }else if (!data.phone.startsWith("0")) {
-       err.push("[Số điện thoại] không hợp lệ !")
+      model.phone = "[Số điện thoại] không hợp lệ !"
+      model.total += 1
     }
 
     // if (Number.parseInt(data.phone) == NaN) {
@@ -103,27 +112,32 @@ export class ConfigService{
     console.log(age)
     //BirthDay
     if (data.birthday == null || data.birthday == "") {
-       err.push("[Ngày sinh] không được để trống !")
+      model.birthday = "[Ngày sinh] không được để trống !"
+      model.total += 1
     }else if(age < 18){
-      err.push("[Ngày sinh] phải trên 18 tuổi !")
+      model.birthday = "[Ngày sinh] phải trên 18 tuổi !"
+      model.total += 1
     }else if(age > 60){
-      err.push("[Ngày sinh] phải dưới 60 tuổi !")
+      model.birthday = "[Ngày sinh] phải dưới 60 tuổi !"
+      model.total += 1
     }
 
 
     //Address
     if (data.address == null || data.address == "") {
-       err.push("[Địa chỉ] không được để trống !")
+      model.address = "[Địa chỉ] không được để trống !"
+      model.total += 1
     }else if (data.address.length > 255) {
-      err.push("[Địa chỉ] quá dài !")
-   }
+      model.address = "[Địa chỉ] quá dài !"
+      model.total += 1
+    }
 
     //Img
     // if (data.image == null || data.image == "") {
     //    err.push("[Hình ảnh] không được để trống !")
     // }
 
-    return err
+    return model
 
    }
 

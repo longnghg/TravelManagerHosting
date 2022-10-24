@@ -8,15 +8,17 @@ declare interface RouteInfo {
     class: string;
 }
 export const ROUTES: RouteInfo[] = [
-    { path: '/dashboard', title: 'Dashboard',  icon: 'ni-tv-2 text-primary', class: '' },
+    { path: '/dashboard', title: 'Thống kê',  icon: 'ni-tv-2 text-primary', class: '' },
     { path: '/icons', title: 'Icons',  icon:'ni-planet text-blue', class: '' },
     { path: '/maps', title: 'Maps',  icon:'ni-pin-3 text-orange', class: '' },
     { path: '/user-profile', title: 'User profile',  icon:'ni-single-02 text-yellow', class: '' },
     { path: '/tables', title: 'Tables',  icon:'ni-bullet-list-67 text-purple', class: '' },
     { path: '/banner', title: 'Banner',  icon:'ni ni-image text-purple', class: '' },
-    { path: '/list-location', title: 'Location',  icon:'ni ni-square-pin text-purple', class: '' },
-    { path: '/list-role', title: 'Role',  icon:'ni ni-circle-08 text-purple', class: '' },
-    { path: '/list-employee', title: 'Employee',  icon:'ni ni-circle-08 text-purple', class: '' },
+    { path: '/list-location', title: 'Vị trí',  icon:'ni ni-square-pin text-purple', class: '' },
+    { path: '/list-role', title: 'Chức phụ',  icon:'ni ni-circle-08 text-purple', class: '' },
+    { path: '/list-employee', title: 'Nhân viên',  icon:'ni ni-circle-08 text-purple', class: '' },
+    { path: '/item-employee/:id1/:id2', title: 'Thông tin chi tiết',  icon:'', class: '' },
+
     { path: '/list-customer', title: 'Customer',  icon:'ni ni-single-02 text-purple', class: '' },
     { path: '/list-tour', title: 'Tour',  icon:'ni ni-world-2 text-purple', class: '' },
     { path: '/list-schedule', title: 'Schedule',  icon:'ni ni-calendar-grid-58 text-purple', class: '' },
