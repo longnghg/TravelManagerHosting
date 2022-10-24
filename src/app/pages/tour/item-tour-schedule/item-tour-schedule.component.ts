@@ -12,6 +12,14 @@ import { EmployeeService } from 'src/app/services_API/employee.service';
 import { PromotionModel } from 'src/app/models/promotion.model';
 import { PromotionService } from 'src/app/services_API/promotion.service';
 import { ActivatedRoute } from '@angular/router';
+import { CostTourModel } from 'src/app/models/costTour.model';
+import { CostTourService } from 'src/app/services_API/costtour.service';
+import { HotelService } from 'src/app/services_API/hotel.service';
+import { HotelModel } from 'src/app/models/hotel.model';
+import { PlaceService } from 'src/app/services_API/place.service';
+import { PlaceModel } from 'src/app/models/place.model';
+import { RestaurantService } from 'src/app/services_API/restaurant.service';
+import { RestaurantModel } from 'src/app/models/restaurant.model';
 @Component({
   selector: 'app-item-tour-schedule',
   templateUrl: './item-tour-schedule.component.html',
@@ -20,40 +28,48 @@ import { ActivatedRoute } from '@angular/router';
 export class ItemTourScheduleComponent implements OnInit {
   @Input() resSchedule: ScheduleModel
   @Input() type: string
+  resCostTour: CostTourModel
   resCar: CarModel[]
   resEmployee: EmployeeModel[]
   resPromotion: PromotionModel[]
+  resHotel: HotelModel[]
+  resPlace: PlaceModel[]
+  resRestaurant: RestaurantModel[]
   response: ResponseModel
   isEdit: boolean = false
   isChange: boolean = false
   resScheduleTmp: ScheduleModel
-  date: string
-  dateView: string
+  isHoliday = this.configService.listStatus()
   constructor(private scheduleService: ScheduleService, private configService: ConfigService, private notificationService: NotificationService,
-    private employeeService: EmployeeService, private carService: CarService, private promotionService: PromotionService, private activatedRoute: ActivatedRoute) { }
+    private employeeService: EmployeeService, private carService: CarService, private promotionService: PromotionService, private activatedRoute: ActivatedRoute,
+    private costtourService: CostTourService, private hotelService: HotelService, private placeService: PlaceService, private restaurantService: RestaurantService) { }
 
   ngOnInit(): void {
+    
+    
+
   }
 
   ngOnChanges(): void {
     this.init()
+    this.initCost()
 
     if(this.type == 'create'){
       this.resSchedule = new ScheduleModel()
+      this.resCostTour = new CostTourModel()
       this.isEdit = true
     }else{
       this.isEdit = false
+
     }
     this.resScheduleTmp = Object.assign({}, this.resSchedule)
-    // if(this.resScheduleTmp){
-
-    //     this.resScheduleTmp.departureDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.departureDate))
-    //     this.resScheduleTmp.returnDate = this.configService.formatFromUnixTimestampToFullDateView(Number.parseInt(this.resSchedule.returnDate))
-    //     this.resScheduleTmp.beginDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.beginDate))
-    //     this.resScheduleTmp.endDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.endDate))
-    //     this.resScheduleTmp.timePromotion = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.timePromotion))
-    // }
-
+    if(this.resSchedule){
+      this.resScheduleTmp.departureDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.departureDate))
+      this.resScheduleTmp.returnDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.returnDate))
+      this.resScheduleTmp.beginDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.beginDate))
+      this.resScheduleTmp.endDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.endDate))
+      this.resScheduleTmp.timePromotion = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.timePromotion))
+  }
   }
 
   init(e?){
@@ -65,6 +81,18 @@ export class ItemTourScheduleComponent implements OnInit {
     })
     this.promotionService.views().then(response =>{
       this.resPromotion = response
+    })
+  }
+
+  initCost(){
+    this.hotelService.views().then(response =>{
+      this.resHotel = response
+    })
+    this.restaurantService.views().then(response =>{
+      this.resRestaurant = response
+    })
+    this.placeService.views().then(response =>{
+      this.resPlace = response
     })
   }
 
@@ -100,6 +128,8 @@ export class ItemTourScheduleComponent implements OnInit {
         this.scheduleService.create(this.resSchedule).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
+          this.resSchedule.idTourGuide = res.content
+          this.resCostTour.idSchedule =  this.resSchedule.idTourGuide
 
           if(this.response.notification.type == "Error")
           {
@@ -114,6 +144,37 @@ export class ItemTourScheduleComponent implements OnInit {
 
       }
       this.close()
+  }
+
+  saveCostTour(){
+      if(this.type == "create")
+      {
+    this.costtourService.create(this.resCostTour).subscribe(res =>{
+      this.response = res
+      this.notificationService.handleAlertObj(res.notification)
+      
+      if(this.response.notification.type == "Success")
+      {}
+      console.log(this.response.content);
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, "Error")
+    })
+  }
+  else{
+    this.costtourService.update(this.resCostTour).subscribe(res =>{
+      this.response = res
+      this.notificationService.handleAlertObj(res.notification)
+      
+      if(this.response.notification.type == "Success")
+      {
+      }
+      console.log(this.response.content);
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, "Error")
+    })
+  }
   }
 
   close(){

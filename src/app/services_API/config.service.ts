@@ -185,10 +185,6 @@ export class ConfigService{
     err.push("[Điểm đến] không được để trống !")
     }
 
-          if(data.rating == null){
-            err.push("[VAT] không được để trống !")
-            }
-
     return err
 
    }

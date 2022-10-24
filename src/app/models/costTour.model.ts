@@ -1,6 +1,5 @@
 export class CostTourModel{
-  idCostTour: string
-  tourDetailId: string
+  idSchedule: string
   breakfast: number = 0
   water: number  = 0
   feeGas: number  = 0
