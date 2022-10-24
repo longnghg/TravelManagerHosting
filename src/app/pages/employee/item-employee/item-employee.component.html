@@ -36,7 +36,7 @@
                   <div class="row">
                     <div class="update ml-auto mr-auto">
                       <input id="file" type="file" class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeImg($event); inputChange()">
-                      <label for="file" style="margin-left: 20px;" [class]="auth.roleId != -1 || resEmployee.isDelete?'d-none':'btn text-white btn-primary btn-round'">Đổi hình đại diện</label>
+                      <label for="file" style="margin-left: 20px;" [class]="auth.roleId != -1 && auth.id != resEmployee.idEmployee || resEmployee.isDelete?'d-none':'btn text-white btn-primary btn-round'">Đổi hình đại diện</label>
                     </div>
                   </div>
                 </div>
@@ -80,7 +80,7 @@
               <div class="col-8">
                 <h3 class="mb-0">Thông tin</h3>
                 <div class="row custom-control custom-switch mt-3" style="margin-left: 5px;">
-                  <input type="checkbox" class="custom-control-input" id="customSwitch1" [(ngModel)]="resEmployee.isActive" (click)="resEmployee.isActive ? resEmployee.isActive = false : resEmployee.isActive = true; inputChange()" [disabled]="auth.roleId != -1 || resEmployee.isDelete">
+                  <input type="checkbox" class="custom-control-input" id="customSwitch1" [(ngModel)]="resEmployee.isActive" (click)="resEmployee.isActive ? resEmployee.isActive = false : resEmployee.isActive = true; inputChange()" [disabled]="auth.roleId != -1 && auth.id != resEmployee.idEmployee || resEmployee.isDelete">
                   <label class="custom-control-label" for="customSwitch1">Kích hoạt tài khoản</label>
                 </div>
               </div>
@@ -97,19 +97,19 @@
                   <div class="col-lg-6">
                     <div class="form-group">
                       <label class="form-control-label" for="nameEmployee">Họ & tên
-                        <span [class]="auth.roleId != -1 || resEmployee.isDelete ?'d-none':'text-red'">* {{this.validateEmployee.nameEmployee ? this.validateEmployee.nameEmployee : ''}}</span>
+                        <span [class]="auth.roleId != -1 && auth.id != resEmployee.idEmployee || resEmployee.isDelete ?'d-none':'text-red'">* {{this.validateEmployee.nameEmployee ? this.validateEmployee.nameEmployee : ''}}</span>
                       </label>
-                      <input [(ngModel)]="resEmployee.nameEmployee" (input)="inputChange()" name="nameEmployee" type="text" id="nameEmployee" class="form-control form-control-alternative" placeholder="Nhập họ tên"  [readonly]="auth.roleId != -1 || resEmployee.isDelete">
+                      <input [(ngModel)]="resEmployee.nameEmployee" (input)="inputChange()" name="nameEmployee" type="text" id="nameEmployee" class="form-control form-control-alternative" placeholder="Nhập họ tên"  [readonly]="auth.roleId != -1 && auth.id != resEmployee.idEmployee || resEmployee.isDelete">
                     </div>
                   </div>
                   <div class="col-lg-6">
                     <div class="form-group">
                       <label class="form-control-label" for="idRole">Chức vụ
-                        <span [class]="auth.roleId != -1 || resEmployee.isDelete ?'d-none':'text-red'">* {{this.validateEmployee.roleId ? this.validateEmployee.roleId : ''}}</span>
+                        <span [class]="auth.roleId != -1 && auth.id != resEmployee.idEmployee || resEmployee.isDelete ?'d-none':'text-red'">* {{this.validateEmployee.roleId ? this.validateEmployee.roleId : ''}}</span>
                       </label>
                       <ng-select
                                   [(ngModel)]="resEmployee.roleId"
-                                  [disabled]="auth.roleId != -1 || resEmployee.isDelete"
+                                  [disabled]="auth.roleId != -1 && auth.id != resEmployee.idEmployee || resEmployee.isDelete"
                                   placeholder="Chọn chức vụ..."
                                   name="idRole"
                                   id="idRole"
@@ -135,9 +135,9 @@
                   <div class="col-lg-6">
                     <div class="form-group">
                       <label class="form-control-label" for="gender">Giới tính
-                        <span [class]="auth.roleId != -1 || resEmployee.isDelete ?'d-none':'text-red'">* {{this.validateEmployee.gender ? this.validateEmployee.gender : ''}}</span>
+                        <span [class]="auth.roleId != -1 && auth.id != resEmployee.idEmployee || resEmployee.isDelete ?'d-none':'text-red'">* {{this.validateEmployee.gender ? this.validateEmployee.gender : ''}}</span>
                       </label>
-                      <ng-select [items]="listGender" [(ngModel)]="resEmployee.gender" bindValue="id" bindLabel="name" name="gender" id="gender" [disabled]="auth.roleId != -1 || resEmployee.isDelete"
+                      <ng-select [items]="listGender" [(ngModel)]="resEmployee.gender" bindValue="id" bindLabel="name" name="gender" id="gender" [disabled]="auth.roleId != -1 && auth.id != resEmployee.idEmployee || resEmployee.isDelete"
                       placeholder="Chọn giới tính..." (change)="inputChange()">
                      </ng-select>
                     </div>
@@ -145,9 +145,9 @@
                   <div class="col-lg-6">
                     <div class="form-group">
                       <label class="form-control-label" for="dp">Ngày sinh
-                        <span [class]="auth.roleId != -1 || resEmployee.isDelete ?'d-none':'text-red'">* {{this.validateEmployee.birthday ? this.validateEmployee.birthday : ''}}</span>
+                        <span [class]="auth.roleId != -1 && auth.id != resEmployee.idEmployee || resEmployee.isDelete ?'d-none':'text-red'">* {{this.validateEmployee.birthday ? this.validateEmployee.birthday : ''}}</span>
                       </label>
-                      <input  name="birthday"  (change)="inputDateChange();inputChange()" [(ngModel)]="resEmployee.birthday" class="form-control datepicker" placeholder="Chọn ngày" name="dp" id="dp" type="date" [disabled]="auth.roleId != -1 || resEmployee.isDelete"/>
+                      <input  name="birthday"  (change)="inputDateChange();inputChange()" [(ngModel)]="resEmployee.birthday" class="form-control datepicker" placeholder="Chọn ngày" name="dp" id="dp" type="date" [disabled]="auth.roleId != -1 && auth.id != resEmployee.idEmployee || resEmployee.isDelete"/>
                     </div>
                   </div>
                 </div>
@@ -160,15 +160,15 @@
                   <div class="col-lg-6">
                     <div class="form-group">
                       <label class="form-control-label" for="phone">Điện thoại
-                        <span [class]="auth.roleId != -1 || resEmployee.isDelete ?'d-none':'text-red'">* {{this.validateEmployee.phone ? this.validateEmployee.phone : ''}}</span>
+                        <span [class]="auth.roleId != -1 && auth.id != resEmployee.idEmployee || resEmployee.isDelete ?'d-none':'text-red'">* {{this.validateEmployee.phone ? this.validateEmployee.phone : ''}}</span>
                       </label>
-                      <input [(ngModel)]="resEmployee.phone" (input)="formatInput($any($event).target); inputChange()" name="phone" type="text" id="phone" class="form-control form-control-alternative" placeholder="Nhập điện thoại" [readonly]="auth.roleId != -1 || resEmployee.isDelete">
+                      <input [(ngModel)]="resEmployee.phone" (input)="formatInput($any($event).target); inputChange()" name="phone" type="text" id="phone" class="form-control form-control-alternative" placeholder="Nhập điện thoại" [readonly]="auth.roleId != -1 && auth.id != resEmployee.idEmployee || resEmployee.isDelete">
                     </div>
                   </div>
                   <div class="col-lg-6">
                     <div class="form-group">
                       <label class="form-control-label" for="email">Email
-                        <span [class]="auth.roleId != -1 || resEmployee.isDelete ?'d-none':'text-red'">* {{this.validateEmployee.email ? this.validateEmployee.email : ''}}</span>
+                        <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateEmployee.email ? this.validateEmployee.email : ''}}</span>
                       </label>
                       <input [(ngModel)]="resEmployee.email" (input)="inputChange()" name="email" type="email" id="email" class="form-control form-control-alternative" placeholder="Nhập email" [readonly]="type == 'detail'">
                     </div>
@@ -178,9 +178,9 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <label class="form-control-label" for="address">Địa chỉ
-                        <span [class]="auth.roleId != -1 || resEmployee.isDelete ?'d-none':'text-red'">* {{this.validateEmployee.address ? this.validateEmployee.address : ''}}</span>
+                        <span [class]="auth.roleId != -1 && auth.id != resEmployee.idEmployee || resEmployee.isDelete ?'d-none':'text-red'">* {{this.validateEmployee.address ? this.validateEmployee.address : ''}}</span>
                       </label>
-                      <textarea [(ngModel)]="resEmployee.address" (input)="inputChange()" id="address"  name="address" rows="4" class="form-control form-control-alternative" placeholder="Nhập địa chỉ" [readonly]="auth.roleId != -1 || resEmployee.isDelete"></textarea>
+                      <textarea [(ngModel)]="resEmployee.address" (input)="inputChange()" id="address"  name="address" rows="4" class="form-control form-control-alternative" placeholder="Nhập địa chỉ" [readonly]="auth.roleId != -1 && auth.id != resEmployee.idEmployee || resEmployee.isDelete"></textarea>
                     </div>
                   </div>
                 </div>
