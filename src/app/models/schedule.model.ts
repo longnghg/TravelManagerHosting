@@ -1,5 +1,5 @@
 export class ScheduleModel{
-  id: string
+  idSchedule: string
   departureDate: string
   returnDate :string
   beginDate: string

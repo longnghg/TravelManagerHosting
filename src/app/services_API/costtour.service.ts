@@ -15,9 +15,9 @@ export class CostTourService{
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/CostTour/gets-cost-tour");
   }
 
-  getCostbyTourDetailId(idtourdetail: any)
+  getCostbyidSchedule(idSchedule: any)
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/CostTour/gets-cost-tour-id-tour-detail?idtourdetail="+idtourdetail);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/CostTour/get-cost-tour-idSchedule?idSchedule="+idSchedule);
   }
 
   create(data: any)

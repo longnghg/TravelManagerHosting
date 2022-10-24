@@ -38,6 +38,7 @@ export class ItemTourScheduleComponent implements OnInit {
   response: ResponseModel
   isEdit: boolean = false
   isChange: boolean = false
+  isAdd: boolean = false
   resScheduleTmp: ScheduleModel
   isHoliday = this.configService.listStatus()
   constructor(private scheduleService: ScheduleService, private configService: ConfigService, private notificationService: NotificationService,
@@ -47,20 +48,20 @@ export class ItemTourScheduleComponent implements OnInit {
   ngOnInit(): void {
     
     
-
+    
   }
 
   ngOnChanges(): void {
     this.init()
     this.initCost()
-
+    console.log(this.resSchedule);
+    
     if(this.type == 'create'){
       this.resSchedule = new ScheduleModel()
       this.resCostTour = new CostTourModel()
       this.isEdit = true
     }else{
       this.isEdit = false
-
     }
     this.resScheduleTmp = Object.assign({}, this.resSchedule)
     if(this.resSchedule){
@@ -69,8 +70,18 @@ export class ItemTourScheduleComponent implements OnInit {
       this.resScheduleTmp.beginDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.beginDate))
       this.resScheduleTmp.endDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.endDate))
       this.resScheduleTmp.timePromotion = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.timePromotion))
+
+      this.costtourService.getCostbyidSchedule(this.resSchedule.idSchedule).subscribe(res =>{
+        this.response = res
+          this.resCostTour = this.response.content  
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, "Error")
+      })
+     }
+       this.btnAddCost()
   }
-  }
+
 
   init(e?){
     this.employeeService.views(e).then(response =>{
@@ -128,8 +139,8 @@ export class ItemTourScheduleComponent implements OnInit {
         this.scheduleService.create(this.resSchedule).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-          this.resSchedule.idTourGuide = res.content
-          this.resCostTour.idSchedule =  this.resSchedule.idTourGuide
+          this.resSchedule.idSchedule = res.content
+          this.resCostTour.idSchedule =  this.resSchedule.idSchedule
 
           if(this.response.notification.type == "Error")
           {
@@ -162,6 +173,7 @@ export class ItemTourScheduleComponent implements OnInit {
     })
   }
   else{
+    this.resCostTour.idSchedule =  this.resSchedule.idSchedule 
     this.costtourService.update(this.resCostTour).subscribe(res =>{
       this.response = res
       this.notificationService.handleAlertObj(res.notification)
@@ -175,6 +187,26 @@ export class ItemTourScheduleComponent implements OnInit {
       this.notificationService.handleAlert(message, "Error")
     })
   }
+  }
+
+  btnAddCost(){
+    this.resCostTour = new CostTourModel()
+    this.isAdd = true
+  }
+
+  createCostNot(){
+    this.resCostTour.idSchedule =  this.resSchedule.idSchedule 
+    this.costtourService.create(this.resCostTour).subscribe(res =>{
+      this.response = res
+      this.notificationService.handleAlertObj(res.notification)
+      
+      if(this.response.notification.type == "Success")
+      {}
+      console.log(this.response.content);
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, "Error")
+    })
   }
 
   close(){

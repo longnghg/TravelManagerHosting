@@ -36,7 +36,7 @@ export class ViewTourScheduleComponent implements OnInit {
     setTimeout(() => {
       this.columnDefs= [
         // { field: 'idSchedule', headerName: "Mã số", style: "width: 340px;", searchable: true, searchType: 'text', searchObj: 'idSchedule'},
-        { field: 'nameTour', headerName: "Tên tour", style: "width: 300px;", searchable: true, searchType: 'text', searchObj: 'nameTour'},
+        { field: 'nameTour', headerName: "Tên tour", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'nameTour'},
         // { field: 'departureDate',headerName: "Ngày khởi hành", filter: "date", style: "width: 200px;", searchable: true, searchType: 'date', searchObj: 'departureDate'},
         // { field: 'returnDate',headerName: "Ngày trở về", filter: "date", style: "width: 200px;", searchable: true, searchType: 'date', searchObj: 'returnDate'},
         { field: 'beginDate',headerName: "Ngày bắt đầu", filter: "date", style: "width: 200px;", searchable: true, searchType: 'date', searchObj: 'beginDate'},

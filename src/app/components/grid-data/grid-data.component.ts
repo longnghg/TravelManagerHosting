@@ -185,7 +185,7 @@ export class GridDataComponent implements OnInit {
     var month = split[0];
     var year =  split[2];
     var formattedDate = day + '/' + month + '/' + year;
-    console.log(date);
+    // console.log(date);
 
     return formattedDate
    }

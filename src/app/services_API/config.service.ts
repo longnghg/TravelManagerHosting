@@ -177,9 +177,6 @@ export class ConfigService{
       err.push("[Hình tour] không được để trống !")
    }
 
-   if(data.fromPlace == null || data.fromPlace == ""){
-    err.push("[Điểm đi] không được để trống !")
-    }
 
     if(data.toPlace == null || data.toPlace == ""){
     err.push("[Điểm đến] không được để trống !")
