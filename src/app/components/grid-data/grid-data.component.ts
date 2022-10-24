@@ -122,35 +122,35 @@ export class GridDataComponent implements OnInit {
   }
 
   selectSection(name){
+    var kw = ""
+     var i = 0
+     this.keywordTmp = Object.assign({}, this.keyword)
 
-   var kw = ""
-    var i = 0
-    this.keywordTmp = Object.assign({}, this.keyword)
-    if (this.keywordTmp[name]) {
-      if (this.keywordTmp[name].length > 1) {
-        this.keywordTmp[name].forEach(item => {
-          if ( i < this.keywordTmp[name].length-1) {
-            kw += item + ","
-          }
-          else{
-            kw += item
-          }
-          i++
-        });
-      }
-      else{
-        kw = this.keywordTmp[name][0]
+     if (this.keywordTmp[name]) {
 
-      }
-    }
-    else{
-      kw = this.keywordTmp[name]
-    }
+       if (this.keywordTmp[name].length > 0) {
+         this.keywordTmp[name].forEach(item => {
+           if ( i < this.keywordTmp[name].length-1) {
+             kw += item + ","
+           }
+           else{
+             kw += item
+           }
+           i++
+         });
+       }
+       else{
+         kw = this.keywordTmp[name]
+       }
+     }
+     else{
+       kw = this.keywordTmp[name]
+     }
+     this.keywordTmp[name] = kw
 
-    this.keywordTmp[name] = kw
-
-    this.setCache()
+     this.setCache()
   }
+
   search(name){
     if (this.keywordTmp) {
       this.keywordTmp[name] = this.keyword[name]
