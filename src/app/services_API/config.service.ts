@@ -96,7 +96,7 @@ export class ConfigService{
     if (data.phone == null || data.phone == "") {
       model.phone = "[Số điện thoại] không được để trống !"
       model.total += 1
-    }else if (data.phone.length > 10) {
+    }else if (data.phone.length > 15) {
       model.phone = "[Số điện thoại] vượt quá 10 số !"
       model.total += 1
     }else if (!data.phone.startsWith("0")) {
@@ -109,7 +109,6 @@ export class ConfigService{
     // }
     let timeDiff = Math.abs(Date.now() - Date.parse(data.birthday));
     let age = Math.floor((timeDiff / (1000 * 3600 * 24))/365);
-    console.log(age)
     //BirthDay
     if (data.birthday == null || data.birthday == "") {
       model.birthday = "[Ngày sinh] không được để trống !"
@@ -238,7 +237,6 @@ export class ConfigService{
     }else if (data.nameDistrict.length < 3) {
       err.push("[Tên quận/huyện] quá ngắn !")
     }
-    console.log(data);
 
     //province
     if (data.provinceId == null || data.provinceId == "") {
@@ -381,6 +379,15 @@ export class ConfigService{
       month = "0"+month
     }
     var year =  split[2];
+    var formattedDate = day + '/' + month + '/' + year;
+    return formattedDate
+   }
+
+   formatDateToDateView(date: string){
+    var split = date.split("-")
+    var day = split[2];
+    var month = split[1];
+    var year =  split[0];
     var formattedDate = day + '/' + month + '/' + year;
     return formattedDate
    }

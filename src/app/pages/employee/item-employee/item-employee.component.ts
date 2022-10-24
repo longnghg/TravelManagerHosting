@@ -21,12 +21,10 @@ export class ItemEmployeeComponent implements OnInit{
   @Output() parentDelete = new EventEmitter<any>()
   @Output() parentRestore = new EventEmitter<any>()
   listGender = this.configService.listGender()
-  isEdit: boolean = false
   isChange: boolean = false
   resRole: RoleModel[]
   resEmployeeTmp: EmployeeModel
   formData: any
-  birthday: string
   birthdayView: string
   img:any
   idEmployee: any
@@ -37,7 +35,6 @@ export class ItemEmployeeComponent implements OnInit{
     this.idEmployee = this.activatedRoute.snapshot.paramMap.get('id2')
     this.type = this.activatedRoute.snapshot.paramMap.get('id1')
     if(this.type == "detail"){
-      this.isEdit = false
       this.employeeService.get(this.idEmployee).subscribe(res => {
         this.response = res
 
@@ -56,7 +53,7 @@ export class ItemEmployeeComponent implements OnInit{
             }
 
             if(this.resEmployee.birthday){
-              this.birthday = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resEmployee.birthday))
+              this.resEmployee.birthday = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resEmployee.birthday))
               this.birthdayView = this.configService.formatFromUnixTimestampToFullDateView(Number.parseInt(this.resEmployee.birthday))
             }
           }
@@ -70,7 +67,6 @@ export class ItemEmployeeComponent implements OnInit{
     else{
       this.resEmployee = new EmployeeModel
       this.resEmployeeTmp = Object.assign({}, this.resEmployee)
-      this.isEdit = true
       if(this.resEmployee){
 
         if (this.resEmployee.image) {
@@ -101,23 +97,18 @@ export class ItemEmployeeComponent implements OnInit{
       }
 
       if(this.resEmployee.birthday){
-        this.birthday = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resEmployee.birthday))
+        this.resEmployee.birthday = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resEmployee.birthday))
         this.birthdayView = this.configService.formatFromUnixTimestampToFullDateView(Number.parseInt(this.resEmployee.birthday))
       }
     }
     if(this.type == "create"){
       this.close()
     }
-    else{
-      this.isEdit = false
-    }
-
     this.resEmployeeTmp = Object.assign({}, this.resEmployee)
 
 
   }
   inputChange(){
-    this.birthdayView = this.configService.formatFromUnixTimestampToFullDateView(Number.parseInt(this.resEmployee.birthday))
     if (JSON.stringify(this.resEmployee) != JSON.stringify(this.resEmployeeTmp)) {
       this.isChange = true
     }
@@ -126,15 +117,11 @@ export class ItemEmployeeComponent implements OnInit{
     }
   }
 
-  isEditChange(){
-    if (this.isEdit) {
-      this.isEdit = false
-      this.backup()
-    }
-    else{
-      this.isEdit = true
-    }
+  inputDateChange(){
+    this.birthdayView = this.configService.formatDateToDateView(this.resEmployee.birthday)
   }
+
+
 
   changeImg(e: any){
     this.formData = e
@@ -154,9 +141,8 @@ export class ItemEmployeeComponent implements OnInit{
   }
 
   save(){
+    this.validateEmployee = new ValidationEmployeeModel
     this.validateEmployee =  this.configService.validateEmployee(this.resEmployee, this.validateEmployee)
-    console.log(this.validateEmployee);
-
     if (this.validateEmployee.total == 0) {
       var file = new FormData();
       file.append('data', JSON.stringify(this.resEmployee))
@@ -169,10 +155,21 @@ export class ItemEmployeeComponent implements OnInit{
       {
         this.employeeService.create(file).subscribe(res =>{
           this.response = res
-          if (res.notification.type != "Error") {
-            this.close()
+          if (res.notification.type == "Validation") {
+            if (res.notification.description == "Phone") {
+              this.validateEmployee.phone = res.notification.messenge
+            }
+            else{
+              this.validateEmployee.email = res.notification.messenge
+            }
           }
-         this.notificationService.handleAlertObj(res.notification)
+          else{
+            this.notificationService.handleAlertObj(res.notification)
+            if (res.notification.type == "Success") {
+              this.close()
+              this.isChange = false
+            }
+          }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, "Error")
@@ -181,11 +178,21 @@ export class ItemEmployeeComponent implements OnInit{
       else{
         this.employeeService.update(file).subscribe(res =>{
           this.response = res
-          this.notificationService.handleAlertObj(res.notification)
-          if (this.type == 'detail') {
-            this.isEdit = false
+          if (res.notification.type == "Validation") {
+            if (res.notification.description == "Phone") {
+              this.validateEmployee.phone == res.notification.messenge
+            }
+            else{
+              this.validateEmployee.email == res.notification.messenge
+            }
           }
-          this.isChange = false
+          else{
+            this.notificationService.handleAlertObj(res.notification)
+            if (res.notification.type == "Success") {
+              this.close()
+              this.isChange = true
+            }
+          }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, "Error")
@@ -198,22 +205,18 @@ export class ItemEmployeeComponent implements OnInit{
 
   backup(){
     this.resEmployee = Object.assign({}, this.resEmployeeTmp)
-    this.birthday = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resEmployee.birthday))
+    this.resEmployee.birthday = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resEmployee.birthday))
     this.birthdayView = this.configService.formatFromUnixTimestampToFullDateView(Number.parseInt(this.resEmployee.birthday))
     this.isChange = false
     this.notificationService.handleAlert("Khôi phục dữ liệu ban đầu thành công !", "Info")
   }
 
   close(){
-    if (this.type == 'detail') {
-      this.isEdit = false
-    }
-    else{
+    if (this.type == 'create') {
       this.resEmployee = new EmployeeModel()
       this.img = "../../../../assets/img/employees/unknown.png"
-      this.birthday = null
+      this.resEmployee.birthday = null
       this.birthdayView = null
-      this.isEdit = true
     }
   }
 
