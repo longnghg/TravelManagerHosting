@@ -33,8 +33,6 @@ export class Grid2DataComponent implements OnInit {
   ngOnInit(): void {
   }
   ngOnChanges(): void {
-    console.log(this.gridConfig);
-
     if (this.rowData) {
       this.rowDataTmp = Object.assign(this.rowData)
     }
@@ -127,8 +125,10 @@ export class Grid2DataComponent implements OnInit {
    var kw = ""
     var i = 0
     this.keywordTmp = Object.assign({}, this.keyword)
+
     if (this.keywordTmp[name]) {
-      if (this.keywordTmp[name].length > 1) {
+
+      if (this.keywordTmp[name].length > 0) {
         this.keywordTmp[name].forEach(item => {
           if ( i < this.keywordTmp[name].length-1) {
             kw += item + ","
@@ -140,18 +140,17 @@ export class Grid2DataComponent implements OnInit {
         });
       }
       else{
-        kw = this.keywordTmp[name][0]
-
+        kw = this.keywordTmp[name]
       }
     }
     else{
       kw = this.keywordTmp[name]
     }
-
     this.keywordTmp[name] = kw
 
     this.setCache()
   }
+
   search(name){
     if (this.keywordTmp) {
       this.keywordTmp[name] = this.keyword[name]
@@ -172,7 +171,6 @@ export class Grid2DataComponent implements OnInit {
   }
   setCache(){
     this.pageNumber = 1
-
     if (this.keywordTmp)
     {
       this.keywordTmp.isDelete = this.gridConfig.isRestore
