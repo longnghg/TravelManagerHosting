@@ -110,8 +110,10 @@ export class ListEmployeeComponent implements OnInit {
   }
 
   search(e?){
+    console.log(e);
+
     if (e) {
-      this.employeeService.search(e).subscribe(res => {
+      this.employeeService.search(Object.assign({}, e)).subscribe(res => {
         this.response = res
         if(!this.response.notification.type)
         {
@@ -158,7 +160,7 @@ export class ListEmployeeComponent implements OnInit {
         { field: 'email',headerName: "Email", style: 'width: 15%', searchStyle: "width: 200px;", searchable: true, searchType: 'email', searchObj: 'email'},
         { field: 'phone',headerName: "Số điện thoại", style: 'width: 15%', filter: "number",  searchStyle: "width: 150px;", searchable: true, searchType: 'text', searchObj: 'phone'},
         { field: 'roleName',headerName: "Chức vụ", style: 'width: 25%', searchable: true, searchType: 'section', searchObj: 'roleId', searchStyle: "width: 300px;", multiple: true, closeOnSelect: false, bindLabel: 'nameRole', bindValue: "idRole", listSection: this.resRole},
-        { field: 'isActive',headerName: "Kích hoạt", style: 'width: 15%',  filter: "status", searchable: true, searchType: 'section', searchStyle: "width: 150px;", multiple: false, closeOnSelect: true, searchObj: 'isActive', bindLabel: "name", bindValue: "id", listSection: this.configService.listStatus()},
+        { field: 'isActive',headerName: "Kích hoạt", style: 'width: 15%',  filter: "status", searchable: true, searchType: 'section', searchStyle: "width: 200px;", multiple: false, closeOnSelect: true, searchObj: 'isActive', bindLabel: "name", bindValue: "id", listSection: this.configService.listStatus()},
       ];
     })
 

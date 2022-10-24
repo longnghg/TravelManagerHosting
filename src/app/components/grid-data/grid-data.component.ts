@@ -16,7 +16,6 @@ export class GridDataComponent implements OnInit {
   @Output() gdChild = new EventEmitter<any>()
   @Output() gdType = new EventEmitter<any>()
   totalResult: number
-  rowDataTmp: any
   rowDataRestore: any
   pageCount: number
   listPageSize = [1, 2, 5, 10, 15, 20, 25, 30]
@@ -28,15 +27,11 @@ export class GridDataComponent implements OnInit {
   btnPrev: boolean = false
   btnNext: boolean = true
   keyword: any = []
-  keywordTmp: any = []
   isDelete: boolean
   constructor(){}
   ngOnInit(): void {
   }
   ngOnChanges(): void {
-    if (this.rowData) {
-      this.rowDataTmp = Object.assign(this.rowData)
-    }
     this.calTotalResult()
     this.calStartEnd()
   }
@@ -124,13 +119,11 @@ export class GridDataComponent implements OnInit {
   selectSection(name){
     var kw = ""
      var i = 0
-     this.keywordTmp = Object.assign({}, this.keyword)
+     if (this.keyword[name+'Tmp']) {
 
-     if (this.keywordTmp[name]) {
-
-       if (this.keywordTmp[name].length > 0) {
-         this.keywordTmp[name].forEach(item => {
-           if ( i < this.keywordTmp[name].length-1) {
+       if (this.keyword[name+'Tmp'].length > 0) {
+         this.keyword[name+'Tmp'].forEach(item => {
+           if ( i < this.keyword[name+'Tmp'].length-1) {
              kw += item + ","
            }
            else{
@@ -140,23 +133,19 @@ export class GridDataComponent implements OnInit {
          });
        }
        else{
-         kw = this.keywordTmp[name]
+         kw = this.keyword[name+'Tmp']
        }
      }
      else{
-       kw = this.keywordTmp[name]
+       kw = this.keyword[name+'Tmp']
      }
-     this.keywordTmp[name] = kw
-
+     this.keyword[name] = kw
      this.setCache()
-  }
+   }
+
 
   search(name){
-    if (this.keywordTmp) {
-      this.keywordTmp[name] = this.keyword[name]
-    }
     this.setCache()
-
   }
   changeChecked(){
     if (this.isDelete) {
@@ -171,16 +160,8 @@ export class GridDataComponent implements OnInit {
     }
   }
   setCache(){
-    if (this.keywordTmp)
-    {
-      this.keywordTmp.isDelete = this.isDelete
-      this.gdSearch.emit(Object.assign({}, this.keywordTmp));
-    }
-    else
-    {
-      this.keyword.isDelete = this.isDelete
-       this.gdSearch.emit(this.keyword);
-    }
+    this.keyword.isDelete = this.isDelete
+    this.gdSearch.emit(this.keyword);
   }
 
   getDataDelete(data: any){

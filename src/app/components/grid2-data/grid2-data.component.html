@@ -5,7 +5,7 @@
           <th scope="col" style="width: 50px;"></th>
           <th scope="col" *ngFor="let column of columnDefs" [style]="column.style">{{column.headerName}}
             <ng-container *ngIf="column.searchType == 'section'; else elseSection">
-              <ng-select [style]="column.searchStyle" [virtualScroll]="true" [items]="column.listSection" (open)="ngOnChanges()"  placeholder="Tìm kiếm..." (change)="selectSection(column.searchObj)" id="section" name="section" [(ngModel)]="keyword[column.searchObj]" [bindLabel]="column.bindLabel" [bindValue]="column.bindValue" appendTo="body" [multiple]="column.multiple"  dropdownPosition="auto" [searchable]="false" [closeOnSelect]="column.closeOnSelect">
+              <ng-select [style]="column.searchStyle" [virtualScroll]="true" [items]="column.listSection" (open)="ngOnChanges()"  placeholder="Tìm kiếm..." (change)="selectSection(column.searchObj)" id="section" name="section" [(ngModel)]="keyword[column.searchObj+'Tmp']" [bindLabel]="column.bindLabel" [bindValue]="column.bindValue" appendTo="body" [multiple]="column.multiple"  dropdownPosition="auto" [searchable]="false" [closeOnSelect]="column.closeOnSelect">
                 <ng-container *ngIf="column.multiple;">
                   <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
                     <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item[column.bindLabel]}}

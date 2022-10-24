@@ -16,7 +16,6 @@ export class Grid2DataComponent implements OnInit {
   @Output() gdChild = new EventEmitter<any>()
   @Output() gdType = new EventEmitter<any>()
   totalResult: number
-  rowDataTmp: any
   rowDataRestore: any
   pageCount: number
   listPageSize = [1, 2, 5, 10, 15, 20, 25, 30]
@@ -28,16 +27,10 @@ export class Grid2DataComponent implements OnInit {
   btnPrev: boolean = false
   btnNext: boolean = true
   keyword: any = []
-  keywordTmp: any = []
   constructor(){}
   ngOnInit(): void {
   }
   ngOnChanges(): void {
-    console.log(this.gridConfig);
-
-    if (this.rowData) {
-      this.rowDataTmp = Object.assign(this.rowData)
-    }
     this.calTotalResult()
     this.calStartEnd()
   }
@@ -124,41 +117,34 @@ export class Grid2DataComponent implements OnInit {
   }
 
   selectSection(name){
-    var kw = ""
-     var i = 0
-     this.keywordTmp = Object.assign({}, this.keyword)
+   var kw = ""
+    var i = 0
+    if (this.keyword[name+'Tmp']) {
 
-     if (this.keywordTmp[name]) {
-
-       if (this.keywordTmp[name].length > 0) {
-         this.keywordTmp[name].forEach(item => {
-           if ( i < this.keywordTmp[name].length-1) {
-             kw += item + ","
-           }
-           else{
-             kw += item
-           }
-           i++
-         });
-       }
-       else{
-         kw = this.keywordTmp[name]
-       }
-     }
-     else{
-       kw = this.keywordTmp[name]
-     }
-     this.keywordTmp[name] = kw
-
-     this.setCache()
+      if (this.keyword[name+'Tmp'].length > 0) {
+        this.keyword[name+'Tmp'].forEach(item => {
+          if ( i < this.keyword[name+'Tmp'].length-1) {
+            kw += item + ","
+          }
+          else{
+            kw += item
+          }
+          i++
+        });
+      }
+      else{
+        kw = this.keyword[name+'Tmp']
+      }
+    }
+    else{
+      kw = this.keyword[name+'Tmp']
+    }
+    this.keyword[name] = kw
+    this.setCache()
   }
 
   search(name){
-    if (this.keywordTmp) {
-      this.keywordTmp[name] = this.keyword[name]
-    }
     this.setCache()
-
   }
   changeChecked(){
     if (this.gridConfig.isRestore) {
@@ -173,17 +159,18 @@ export class Grid2DataComponent implements OnInit {
   }
   setCache(){
     this.pageNumber = 1
-
-    if (this.keywordTmp)
-    {
-      this.keywordTmp.isDelete = this.gridConfig.isRestore
-      this.gdSearch.emit(Object.assign({}, this.keywordTmp));
-    }
-    else
-    {
-      this.keyword.isDelete = this.gridConfig.isRestore
+    this.keyword.isDelete = this.gridConfig.isRestore
        this.gdSearch.emit(this.keyword);
-    }
+    // if (this.keywordTmp)
+    // {
+    //   this.keywordTmp.isDelete = this.gridConfig.isRestore
+    //   this.gdSearch.emit(Object.assign({}, this.keywordTmp));
+    // }
+    // else
+    // {
+    //   this.keyword.isDelete = this.gridConfig.isRestore
+    //    this.gdSearch.emit(this.keyword);
+    // }
   }
 
   getDataDelete(data: any){
