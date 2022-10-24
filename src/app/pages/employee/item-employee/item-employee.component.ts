@@ -39,6 +39,16 @@ export class ItemEmployeeComponent implements OnInit{
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
     this.idEmployee = this.activatedRoute.snapshot.paramMap.get('id2')
     this.type = this.activatedRoute.snapshot.paramMap.get('id1')
+
+    this.init()
+
+    this.roleService.views().then(response =>{
+      this.resRole = response
+
+    })
+  }
+
+  init(){
     if(this.type == "detail"){
       this.employeeService.get(this.idEmployee).subscribe(res => {
         this.response = res
@@ -82,11 +92,6 @@ export class ItemEmployeeComponent implements OnInit{
         }
       }
     }
-
-    this.roleService.views().then(response =>{
-      this.resRole = response
-
-    })
   }
   ngOnChanges(): void {
     this.roleService.views().then(response =>{
