@@ -5,8 +5,11 @@ import { EmployeeService } from 'src/app/services_API/employee.service';
 import { EmployeeModel, ValidationEmployeeModel } from 'src/app/models/employee.model';
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { RoleModel } from 'src/app/models/role.model';
+import { AuthenticationModel } from 'src/app/models/authentication.model';
 import { RoleService } from 'src/app/services_API/role.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { RoleTitle } from "../../../enums/enum";
+
 const FILTER_PAG_REGEX = /[^0-9]/g;
 @Component({
   selector: 'app-item-employee',
@@ -15,6 +18,7 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
 })
 export class ItemEmployeeComponent implements OnInit{
   response: ResponseModel
+  auth: AuthenticationModel
   validateEmployee: ValidationEmployeeModel = new ValidationEmployeeModel
   @Input() resEmployee: EmployeeModel
   @Input() type: string
@@ -32,6 +36,7 @@ export class ItemEmployeeComponent implements OnInit{
     private configService: ConfigService, private roleService: RoleService) { }
 
   ngOnInit(): void {
+    this.auth = JSON.parse(localStorage.getItem("currentUser"))
     this.idEmployee = this.activatedRoute.snapshot.paramMap.get('id2')
     this.type = this.activatedRoute.snapshot.paramMap.get('id1')
     if(this.type == "detail"){

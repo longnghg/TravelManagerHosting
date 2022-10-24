@@ -2,13 +2,14 @@ import { Component, OnInit} from '@angular/core';
 import { EmployeeService } from "../../../services_API/employee.service";
 import { NotificationService } from "../../../services_API/notification.service";
 import { EmployeeModel } from "../../../models/employee.model";
-import { RoleTitle, RoleModel } from "../../../models/role.model";
+import { RoleModel } from "../../../models/role.model";
 import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.component';
 import { ColDef2, GridConfig2} from '../../../components/grid2-data/grid2-data.component';
 import { ConfigService } from "../../../services_API/config.service";
 import { RoleService } from "../../../services_API/role.service";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
-
+import { AuthenticationModel } from 'src/app/models/authentication.model';
+import { RoleTitle } from "../../../enums/enum";
 // signalr
 import { HubConnection } from '@microsoft/signalr';
 @Component({
@@ -17,6 +18,7 @@ import { HubConnection } from '@microsoft/signalr';
   styleUrls: ['./list-employee.component.scss']
 })
 export class ListEmployeeComponent implements OnInit {
+  auth: AuthenticationModel
   dataChild: EmployeeModel
   typeChild: string
   resEmployee: EmployeeModel[]
@@ -34,20 +36,13 @@ export class ListEmployeeComponent implements OnInit {
     idModalRestore: "restoreEmployeeModal",
     idModalDelete: "deleteEmployeeModal",
     idModal: "gridEmployee",
-    radioBox: true,
+    disableRadioBox: false,
     radioBoxName: "Kho lưu trữ",
     style: "height: 330px;"
   }
 
   public gridConfig2: GridConfig2 = {
-    idModalRestore: "restoreEmployeeModal1",
-    idModalDelete: "deleteEmployeeModal1",
-    isRestore: false,
-    route: "item-employee",
-    alias: "idEmployee",
-    radioBox: true,
-    radioBoxName: "Kho lưu trữ",
-    style: "height: 330px;"
+
   }
 
 
@@ -57,6 +52,34 @@ export class ListEmployeeComponent implements OnInit {
          private notificationService: NotificationService) {}
 
   ngOnInit() {
+    this.auth = JSON.parse(localStorage.getItem("currentUser"));
+    console.log( this.auth);
+
+    if(this.auth.roleId == RoleTitle.Admin)
+    {
+      this.gridConfig2 = {
+        idModalRestore: "restoreEmployeeModal1",
+        idModalDelete: "deleteEmployeeModal1",
+        route: "item-employee",
+        alias: "idEmployee",
+        style: "height: 330px;",
+        radioBoxName: "Kho lưu trữ",
+      }
+    }
+    else{
+      this.gridConfig2 = {
+        idModalRestore: "restoreEmployeeModal1",
+        idModalDelete: "deleteEmployeeModal1",
+        route: "item-employee",
+        alias: "idEmployee",
+        style: "height: 330px;",
+        disableRadioBox: true,
+        disableCreate: true,
+        disableDelete: true,
+        disableRestore: true,
+      }
+    }
+
     if (history.state.isDelete) {
       this.gridConfig2.isRestore = history.state.isDelete
       this.init(history.state.isDelete)

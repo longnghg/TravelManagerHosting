@@ -25,7 +25,6 @@ export class ListCustomerComponent implements OnInit {
       idModalRestore: "",
       idModalDelete: "",
       idModal: "gridCustomer",
-      radioBox: true,
       radioBoxName: "Kho lưu trữ",
     }
     ngOnInit(): void {

@@ -35,13 +35,13 @@
           </ng-template>
         </th>
         <th scope="col">
-          <div ngbDropdown placement="bottom-right" *ngIf="gridConfig">
+          <div ngbDropdown placement="bottom-right" *ngIf="!gridConfig.disableRadioBox || !gridConfig.disableCreate">
             <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
               <i class="fas fa-ellipsis-v" style="color: #4d4aef!important;"></i>
             </a>
             <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
-              <a class="dropdown-item" href="javascript:void(0)" data-bs-toggle="modal" (click)="childData(null, 'create')" [attr.data-bs-target]="'#'+gridConfig.idModal">Thêm</a>
-              <ng-container *ngIf="gridConfig.radioBox;">
+              <a *ngIf="!gridConfig.isRestore && !gridConfig.disableCreate" class="dropdown-item" href="javascript:void(0)" data-bs-toggle="modal" (click)="childData(null, 'create')" [attr.data-bs-target]="'#'+gridConfig.idModal">Thêm</a>
+              <ng-container *ngIf="!gridConfig.disableRadioBox;">
                 <div class="dropdown-divider" *ngIf="!gridConfig.isRestore"></div>
               <label class="custom-toggle" style="margin-left: 5px;">
                 <input type="checkbox" (change)="changeChecked()" [checked]="gridConfig.isRestore">
@@ -82,17 +82,17 @@
             </td>
 
             <td>
-              <div ngbDropdown [placement]="i >= rowData.length-2 && rowData.length > 2? 'top-right':'bottom-right'">
+              <div *ngIf="!gridConfig.disableDetail || !gridConfig.disableDelete || !gridConfig.disableRestore" ngbDropdown [placement]="i >= rowData.length-2 && rowData.length > 2? 'top-right':'bottom-right'">
                 <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
                   <i class="fas fa-ellipsis-v" style="color: #4d4aef!important;"></i>
                 </a>
                 <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
-                  <a class="dropdown-item" href="javascript:void(0)" data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModal" (click)="childData(row, 'detail')">Chi tiết</a>
+                  <a class="dropdown-item" href="javascript:void(0)" *ngIf="!gridConfig.disableDetail" data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModal" (click)="childData(row, 'detail')">Chi tiết</a>
                   <ng-container *ngIf="!isDelete; else elseRestoreOrDelete">
-                    <a class="dropdown-item" href="javascript:void(0)"  data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModalDelete" (click)="getDataDelete(row)">Xóa</a>
+                    <a class="dropdown-item" href="javascript:void(0)" *ngIf="!gridConfig.disableDelete"  data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModalDelete" (click)="getDataDelete(row)">Xóa</a>
                   </ng-container>
                   <ng-template #elseRestoreOrDelete>
-                    <a class="dropdown-item" href="javascript:void(0)"  data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModalRestore" (click)="getDataRestore(row)">Khôi phục</a>
+                    <a class="dropdown-item" href="javascript:void(0)"  *ngIf="!gridConfig.disableRestore"  data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModalRestore" (click)="getDataRestore(row)">Khôi phục</a>
                   </ng-template>
 
                 </div>

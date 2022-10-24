@@ -241,7 +241,13 @@ export class GridConfig{
   idModalRestore?: string
   idModalDelete?: string
   idModal?: string
-  radioBox?: boolean
+
+  disableCreate?: boolean
+  disableDetail?: boolean
+  disableDelete?: boolean
+  disableRestore?: boolean
+  disableRadioBox?: boolean
   radioBoxName?: string
   style?: string
+  isRestore?: boolean
 }

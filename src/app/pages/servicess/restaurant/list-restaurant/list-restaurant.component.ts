@@ -23,7 +23,6 @@ export class ListRestaurantComponent implements OnInit {
     idModalRestore: "",
     idModalDelete: "",
     idModal: "gridRestaurant",
-    radioBox: true,
     radioBoxName: "Kho lưu trữ",
   }
   ngOnInit(): void {

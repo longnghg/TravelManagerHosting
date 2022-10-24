@@ -30,7 +30,7 @@ export class ListTourComponent implements OnInit {
     idModalRestore: "restoreTourModal",
     idModalDelete: "deleteTourModal",
     idModal: "gridTour",
-    radioBox: true,
+    disableRadioBox: false,
     radioBoxName: "Kho lưu trữ",
   }
 
@@ -40,7 +40,7 @@ export class ListTourComponent implements OnInit {
     isRestore: false,
     route: "item-tour",
     alias: "idTour",
-    radioBox: true,
+    disableRadioBox: false,
     radioBoxName: "Kho lưu trữ",
   }
 

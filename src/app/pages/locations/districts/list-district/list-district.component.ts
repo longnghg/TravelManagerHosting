@@ -26,7 +26,6 @@ export class ListDistrictComponent implements OnInit {
   public gridConfig: GridConfig = {
     idModalDelete: "deleteDistrictModal",
     idModal: "gridDistrict",
-    radioBox: false,
   }
   constructor(private provinceService: ProvinceService, private wardService: WardService, private districtService: DistrictService, private notificationService: NotificationService,
     private configService: ConfigService){}

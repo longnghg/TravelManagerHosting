@@ -23,7 +23,6 @@ export class ListHotelComponent implements OnInit {
     idModalRestore: "",
     idModalDelete: "",
     idModal: "gridHotel",
-    radioBox: true,
     radioBoxName: "Kho lưu trữ",
   }
   public gridConfigWaiting: GridConfig = {

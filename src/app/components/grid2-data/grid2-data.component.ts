@@ -33,6 +33,8 @@ export class Grid2DataComponent implements OnInit {
   ngOnInit(): void {
   }
   ngOnChanges(): void {
+    console.log(this.gridConfig);
+
     if (this.rowData) {
       this.rowDataTmp = Object.assign(this.rowData)
     }
@@ -242,7 +244,11 @@ export class GridConfig2{
   route?: string
   alias?: string
 
-  radioBox?: boolean
+  disableCreate?: boolean
+  disableDetail?: boolean
+  disableDelete?: boolean
+  disableRestore?: boolean
+  disableRadioBox?: boolean
   radioBoxName?: string
   style?: string
   isRestore?: boolean

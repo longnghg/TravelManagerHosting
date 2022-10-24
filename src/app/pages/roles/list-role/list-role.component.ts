@@ -25,7 +25,6 @@ export class ListRoleComponent implements OnInit {
     idModalRestore: "restoreRoleModal",
     idModalDelete: "deleteRoleModal",
     idModal: "gridRole",
-    radioBox: true,
     radioBoxName: "Kho lưu trữ",
   }
 

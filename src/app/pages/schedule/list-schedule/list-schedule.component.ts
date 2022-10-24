@@ -23,7 +23,6 @@ export class ListScheduleComponent implements OnInit {
     idModalRestore: "",
     idModalDelete: "",
     idModal: "gridSchedule",
-    radioBox: true,
     radioBoxName: "Kho lưu trữ",
   }
   ngOnInit(): void {

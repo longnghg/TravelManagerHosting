@@ -26,7 +26,7 @@ export class ViewTourScheduleComponent implements OnInit {
     idModalRestore: "",
     idModalDelete: "",
     idModal: "gridSchedule1",
-    radioBox: true,
+    disableRadioBox: false,
     radioBoxName: "Kho lưu trữ",
   }
 

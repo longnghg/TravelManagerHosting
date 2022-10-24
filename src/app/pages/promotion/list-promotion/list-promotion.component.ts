@@ -27,7 +27,6 @@ export class ListPromotionComponent implements OnInit {
     idModalRestore: "",
     idModalDelete: "",
     idModal: "gridPromotion",
-    radioBox: true,
     radioBoxName: "Kho lưu trữ",
   }
   ngOnInit(): void {

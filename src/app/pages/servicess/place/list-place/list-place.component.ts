@@ -25,7 +25,6 @@ export class ListPlaceComponent implements OnInit {
     idModalRestore: "",
     idModalDelete: "",
     idModal: "gridHotel",
-    radioBox: true,
     radioBoxName: "Kho lưu trữ",
   }
   ngOnInit(): void {
