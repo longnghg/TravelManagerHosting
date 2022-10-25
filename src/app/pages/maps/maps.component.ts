@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from "../../services_API/employee.service";
 import { NotificationService } from "../../services_API/notification.service";
 import { EmployeeModel } from "../../models/employee.model";
-import { RoleTitle, RoleModel } from "../../models/role.model";
+import { RoleModel } from "../../models/role.model";
 import { ColDef} from '../../components/grid-data/grid-data.component';
 import { ConfigService } from "../../services_API/config.service";
 import { RoleService } from "../../services_API/role.service";

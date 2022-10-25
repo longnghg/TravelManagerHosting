@@ -56,8 +56,8 @@
         </th>
       </tr>
       </thead>
-      <tbody *ngIf="!rowData" [style]="gridConfig.style ? gridConfig.style :  'max-height: 410px;'"></tbody>
-      <tbody *ngIf="rowData" [style]="gridConfig.style ? gridConfig.style :  'max-height: 410px;'">
+      <tbody *ngIf="!rowData" [style]="gridConfig.style ? gridConfig.style :  'height: 330px'"></tbody>
+      <tbody *ngIf="rowData" [style]="gridConfig.style ? gridConfig.style :  'height: 330px'">
         <tr *ngFor="let row of rowData; let i=index" >
           <ng-container *ngIf="row.rowNum >= start && row.rowNum <= end">
             <td style="padding-left: 20px; width: 50px;">{{row.rowNum}}</td>

@@ -23,7 +23,7 @@
               <img [src]="img" alt="">
             </span>
             <div class="media-body ml-2 d-none d-lg-block">
-              <span class="mb-0 text-sm  font-weight-bold">{{currentUser.name}}</span>
+              <span class="mb-0 text-sm  font-weight-bold">{{auth.name}}</span>
             </div>
           </div>
         </a>
@@ -40,7 +40,7 @@
             <span>Support</span>
           </a>
           <div class="dropdown-divider" style="z-index: 2;"></div>
-          <a href="#!" class="dropdown-item">
+          <a href="javascript:void(0)" class="dropdown-item" (click)="logOut()">
             <i class="ni ni-user-run"></i>
             <span>Đăng xuất</span>
           </a>

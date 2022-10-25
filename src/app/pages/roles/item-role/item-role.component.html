@@ -5,19 +5,15 @@
 <div class="modal-body">
   <ng-container *ngIf="resRole">
     <div class="container-fluid" >
-      <div class="row align-items-center">
-        <div class="col-12 text-right">
-          <a href="javascript:void(0)" *ngIf="type == 'detail' && resRole.isDelete == false" class="btn btn-sm btn-primary" (click)="isEditChange()">{{!isEdit ? "Chỉnh sửa":"Quay lại"}}</a>
-        </div>
-      </div>
-
       <form>
         <div class="pl-lg-4">
           <div class="row">
             <div class="col-lg-12">
               <div class="form-group">
-                <label class="form-control-label" for="input-username">Tên chức vụ</label>
-                <input type="text" id="name" name="name" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập tên chức vụ" [(ngModel)]="resRole.nameRole" [readonly]="!isEdit">
+                <label class="form-control-label" for="input-username">Tên chức vụ
+                  <span [class]="resRole.isDelete ?'d-none':'text-red'">* {{this.validateRole.nameRole ? this.validateRole.nameRole : ''}}</span>
+                </label>
+                <input type="text" id="name" name="name" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập tên chức vụ" [(ngModel)]="resRole.nameRole" [readonly]="resRole.isDelete">
               </div>
             </div>
           </div>
@@ -25,7 +21,7 @@
             <div class="col-lg-12">
               <div class="form-group">
                 <label class="form-control-label" for="input-username">Mô tả</label>
-                <input type="text" id="description" name="description" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập mô tả" [(ngModel)]="resRole.description" [readonly]="!isEdit">
+                <input type="text" id="description" name="description" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập mô tả" [(ngModel)]="resRole.description" [readonly]="resRole.isDelete">
               </div>
             </div>
           </div>

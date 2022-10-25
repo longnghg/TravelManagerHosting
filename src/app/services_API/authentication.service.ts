@@ -15,12 +15,9 @@ export class AuthenticationService{
       return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Authentication/login-employee", {email, password});
   }
 
-  logOut()
+  logOut(empId: string)
   {
-      var empId = localStorage.getItem("empId")
-      localStorage.clear();
-      document.location.assign(this.configService.clientUrl +'/#/login');
-      return  this.http.post(this.configService.apiUrl + "/api/Authentication/Logout", {empId});
+      return  this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Authentication/logout-employee?idEmp="+empId);
   }
 
 

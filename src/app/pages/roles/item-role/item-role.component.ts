@@ -3,7 +3,7 @@ import { NotificationService } from "../../../services_API/notification.service"
 import { ConfigService } from "../../../services_API/config.service";
 import { RoleService } from "../../../services_API/role.service";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
-import { RoleModel } from 'src/app/models/role.model';
+import { RoleModel, ValidationRoleModel } from 'src/app/models/role.model';
 
 @Component({
   selector: 'app-item-role',
@@ -11,14 +11,13 @@ import { RoleModel } from 'src/app/models/role.model';
   styleUrls: ['./item-role.component.scss']
 })
 export class ItemRoleComponent implements OnInit {
-
   response: ResponseModel
+  validateRole: ValidationRoleModel = new ValidationRoleModel
   @Input() resRole: RoleModel
   @Input() type: string
   @Output() parentDelete = new EventEmitter<any>()
   @Output() parentRestore = new EventEmitter<any>()
   resRoleTmp: RoleModel
-  isEdit: boolean = false
   isChange: boolean = false
 
   constructor(private roleService: RoleService, private notificationService: NotificationService,
@@ -30,9 +29,6 @@ export class ItemRoleComponent implements OnInit {
   ngOnChanges(): void {
     if (this.type == "create") {
      this.resRole = new RoleModel()
-     this.isEdit = true
-    }else{
-      this.isEdit = false
     }
 
     this.resRoleTmp = Object.assign({}, this.resRole)
@@ -46,22 +42,11 @@ export class ItemRoleComponent implements OnInit {
     }
   }
 
-  isEditChange(){
-    if (this.isEdit) {
-      this.isEdit = false
-      this.backup()
 
-    }
-    else{
-      this.isEdit = true
-    }
-  }
   save(){
-    var valid = this.configService.validateRole(this.resRole)
-    valid.forEach(element => {
-        this.notificationService.handleAlert(element, "Error")
-    });
-    if (valid.length == 0) {
+    this.validateRole = new ValidationRoleModel
+    this.validateRole =  this.configService.validateRole(this.resRole, this.validateRole)
+    if (this.validateRole.total == 0) {
       if(this.type == "create"){
         this.roleService.create(this.resRole).subscribe(res =>{
           this.response = res
@@ -76,9 +61,7 @@ export class ItemRoleComponent implements OnInit {
         this.roleService.update(this.resRole).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-          if (this.type == 'detail') {
-            this.isEdit = false
-          }
+
           this.isChange = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -95,13 +78,7 @@ export class ItemRoleComponent implements OnInit {
   }
 
   close(){
-    if (this.type == 'detail') {
-      this.isEdit = false
-    }
-    else{
-      this.resRole = new RoleModel()
-      this.isEdit = true
-    }
+    this.resRole = new RoleModel()
   }
 
   getDataDelete(){

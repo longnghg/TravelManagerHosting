@@ -3,7 +3,7 @@ import { AuthenticationService } from "../../services_API/authentication.service
 import { ConfigService } from "../../services_API/config.service";
 import { NotificationService } from "../../services_API/notification.service";
 import { AuthenticationModel } from "../../models/authentication.model";
-import { RoleModel, RoleTitle } from "../../models/role.model";
+import { RoleModel} from "../../models/role.model";
 import { ResponseModel } from "../../models/responsiveModels/response.model";
 
 

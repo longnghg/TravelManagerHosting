@@ -203,20 +203,23 @@ export class ConfigService{
 
    }
 
-   validateRole(data: any){
+   validateRole(data: any, model: any){
+    model.total = 0
     var err = []
     //name
     if(data.nameRole == null || data.nameRole == ""){
-       err.push("[Tên chức vụ] không được để trống !")
+      model.nameRole = "[Tên chức vụ] không được để trống !"
+      model.total += 1
     }
     else if (data.nameRole.length > 30) {
-       err.push("[Tên chức vụ] quá dài !")
+       model.nameRole = "[Tên chức vụ] quá dài !"
+       model.total += 1
     }else if (data.nameRole.length < 3) {
-      err.push("[Tên chức vụ] quá ngắn !")
+      model.nameRole = "[Tên chức vụ] quá ngắn !"
+      model.total += 1
     }
 
-    return err
-
+    return model
    }
 
    validateDistrict(data: any){

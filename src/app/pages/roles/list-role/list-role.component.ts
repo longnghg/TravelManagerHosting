@@ -82,8 +82,8 @@ export class ListRoleComponent implements OnInit {
    setTimeout(() => {
     this.columnDefs= [
       // { field: 'idRole', headerName: "Mã số", searchable: true, searchType: 'text', searchObj: 'idRole'},
-      { field: 'nameRole',headerName: "Chức Vụ", searchable: true, searchType: 'text', searchObj: 'nameRole'},
-      { field: 'description',headerName: "Mô Tả", searchable: true, searchType: 'text', searchObj: 'description'},
+      { field: 'nameRole',headerName: "Chức Vụ", style: 'width: 45%', searchable: true, searchType: 'text', searchObj: 'nameRole'},
+      { field: 'description',headerName: "Mô Tả", style: 'width: 45%', searchable: true, searchType: 'text', searchObj: 'description'},
     ];
   }, 200);
   }
@@ -93,6 +93,7 @@ export class ListRoleComponent implements OnInit {
     if (e) {
       this.dataChild = e
     }
+    console.log(this.dataChild);
 
   }
 
