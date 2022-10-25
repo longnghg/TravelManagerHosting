@@ -154,7 +154,6 @@ export class ListEmployeeComponent implements OnInit {
 
     this.roleService.views().then(response => {
       this.resRole = response
-      console.log(this.resRole);
       this.columnDefs= [
         { field: 'nameEmployee',headerName: "Tên", style: 'width: 20%',  searchStyle: "width: 250px;", searchable: true, searchType: 'text', searchObj: 'nameEmployee'},
         { field: 'email',headerName: "Email", style: 'width: 15%', searchStyle: "width: 200px;", searchable: true, searchType: 'email', searchObj: 'email'},

@@ -11,9 +11,9 @@
             <div class="col-lg-12">
               <div class="form-group">
                 <label class="form-control-label" for="input-username">Tên chức vụ
-                  <span [class]="resRole.isDelete ?'d-none':'text-red'">* {{this.validateRole.nameRole ? this.validateRole.nameRole : ''}}</span>
+                  <span [class]="auth.roleId != -1 || resRole.isDelete ?'d-none':'text-red'">* {{this.validateRole.nameRole ? this.validateRole.nameRole : ''}}</span>
                 </label>
-                <input type="text" id="name" name="name" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập tên chức vụ" [(ngModel)]="resRole.nameRole" [readonly]="resRole.isDelete">
+                <input type="text" id="name" name="name" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập tên chức vụ" [(ngModel)]="resRole.nameRole" [readonly]="auth.roleId != -1 || resRole.isDelete">
               </div>
             </div>
           </div>
@@ -21,7 +21,7 @@
             <div class="col-lg-12">
               <div class="form-group">
                 <label class="form-control-label" for="input-username">Mô tả</label>
-                <input type="text" id="description" name="description" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập mô tả" [(ngModel)]="resRole.description" [readonly]="resRole.isDelete">
+                <input type="text" id="description" name="description" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập mô tả" [(ngModel)]="resRole.description" [readonly]="auth.roleId != -1 || resRole.isDelete">
               </div>
             </div>
           </div>
@@ -31,10 +31,10 @@
 
     <div class="row align-items-center">
       <div class="col-12 text-right">
-        <button  *ngIf="type == 'detail' && resRole.isDelete == false" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteRoleModal" (click)="getDataDelete()">Xóa</button>
+        <button  *ngIf="auth.roleId == -1 && type == 'detail' && !resRole.isDelete" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteRoleModal" (click)="getDataDelete()">Xóa</button>
         <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="backup()">Khôi phục</button>
         <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="save()">{{type == 'detail' ? "Lưu":"Thêm"}}</button>
-        <button *ngIf="resRole.isDelete == true" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreRoleModal" class="btn btn-warning" >Khôi phục người dùng</button>
+        <button *ngIf="resRole.isDelete" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreRoleModal" class="btn btn-warning" >Khôi phục người dùng</button>
       </div>
     </div>
 

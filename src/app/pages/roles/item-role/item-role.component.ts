@@ -4,7 +4,7 @@ import { ConfigService } from "../../../services_API/config.service";
 import { RoleService } from "../../../services_API/role.service";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { RoleModel, ValidationRoleModel } from 'src/app/models/role.model';
-
+import { AuthenticationModel } from 'src/app/models/authentication.model';
 @Component({
   selector: 'app-item-role',
   templateUrl: './item-role.component.html',
@@ -12,6 +12,7 @@ import { RoleModel, ValidationRoleModel } from 'src/app/models/role.model';
 })
 export class ItemRoleComponent implements OnInit {
   response: ResponseModel
+  auth: AuthenticationModel
   validateRole: ValidationRoleModel = new ValidationRoleModel
   @Input() resRole: RoleModel
   @Input() type: string
@@ -24,6 +25,7 @@ export class ItemRoleComponent implements OnInit {
     private configService: ConfigService) { }
 
   ngOnInit(): void {
+    this.auth = JSON.parse(localStorage.getItem("currentUser"))
   }
 
   ngOnChanges(): void {

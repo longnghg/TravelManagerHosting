@@ -4,8 +4,10 @@ import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { NotificationService } from "../../../services_API/notification.service";
 import { ConfigService } from "../../../services_API/config.service";
 import { RoleModel } from "../../../models/role.model";
+import { AuthenticationModel } from "../../../models/authentication.model";
 import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.component';
 import { HubConnection } from '@microsoft/signalr';
+import { RoleTitle } from "../../../enums/enum";
 
 @Component({
   selector: 'app-list-role',
@@ -13,6 +15,7 @@ import { HubConnection } from '@microsoft/signalr';
   styleUrls: ['./list-role.component.scss']
 })
 export class ListRoleComponent implements OnInit {
+  auth: AuthenticationModel
   dataChild: RoleModel
   data: RoleModel
   typeChild: string
@@ -32,6 +35,25 @@ export class ListRoleComponent implements OnInit {
     private configService: ConfigService ) { }
     public columnDefs: ColDef[]
   ngOnInit(): void {
+    this.auth = JSON.parse(localStorage.getItem("currentUser"));
+    if(this.auth.roleId == RoleTitle.Admin)
+    {
+      this.gridConfig = {
+        idModalRestore: "restoreRoleModal",
+        idModalDelete: "deleteRoleModal",
+        radioBoxName: "Kho lưu trữ",
+      }
+    }
+    else{
+      this.gridConfig = {
+        idModalRestore: "restoreRoleModal",
+        idModalDelete: "deleteRoleModal",
+        disableRadioBox: true,
+        disableCreate: true,
+        disableDelete: true,
+        disableRestore: true,
+      }
+    }
     this.init(this.type)
     this.hubConnectionBuilder = this.configService.signIR()
     this.hubConnectionBuilder.start();
