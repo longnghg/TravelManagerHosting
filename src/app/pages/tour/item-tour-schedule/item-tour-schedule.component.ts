@@ -76,7 +76,7 @@ export class ItemTourScheduleComponent implements OnInit {
         this.notificationService.handleAlert(message, "Error")
       })
      }
-       this.btnAddCost()
+
   }
 
 
@@ -171,6 +171,23 @@ export class ItemTourScheduleComponent implements OnInit {
     })
   }
   else{
+    if(this.isAdd == true){
+      this.resCostTour.idSchedule =  this.resSchedule.idSchedule
+      this.costtourService.create(this.resCostTour).subscribe(res =>{
+        this.response = res
+        this.notificationService.handleAlertObj(res.notification)
+
+        if(this.response.notification.type == "Success")
+        {
+          this.isAdd = false
+        }
+        console.log(this.response.content);
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, "Error")
+      })
+    }
+    else{
     this.resCostTour.idSchedule =  this.resSchedule.idSchedule
     this.costtourService.update(this.resCostTour).subscribe(res =>{
       this.response = res
@@ -184,6 +201,7 @@ export class ItemTourScheduleComponent implements OnInit {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, "Error")
     })
+  }
   }
   }
 
