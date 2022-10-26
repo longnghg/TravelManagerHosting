@@ -173,9 +173,9 @@ export class ConfigService{
       err.push("[Tên tour] quá ngắn !")
     }
 
-    if(data.thumbsnail == null || data.thumbsnail == ""){
-      err.push("[Hình tour] không được để trống !")
-   }
+  //   if(data.thumbsnail == null || data.thumbsnail == ""){
+  //     err.push("[Hình tour] không được để trống !")
+  //  }
 
 
     if(data.toPlace == null || data.toPlace == ""){

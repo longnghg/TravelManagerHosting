@@ -43,12 +43,15 @@ export class BannerComponent implements OnInit {
   save(){
     var name = this.nameBanner;
     var files = this.files.path[0].files
+    files[0].name = "kiet"
+    console.log(files[0]);
+
     var file = new FormData();
                 for (let index = 0; index < files.length; index++) {
                   file.append('files', files[index]);
                 }
                 file.append("nameBanner",name);
-                this._bannerService.UploadBanner(file).subscribe(res =>{
-                })
+                // this._bannerService.UploadBanner(file).subscribe(res =>{
+                // })
   }
 }

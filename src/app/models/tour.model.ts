@@ -1,7 +1,7 @@
 export class TourModel{
   idTour: string
   nameTour: string
-  thumbsnail: string
+  thumbnail: string
   fromPlace: string
   toPlace: string
   approveStatus: number

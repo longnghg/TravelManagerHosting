@@ -115,8 +115,14 @@
                   </div>
                   <div class="col-lg-6">
                     <div class="form-group">
-                      <label class="form-control-label" for="input-thumbsnail">Hình ảnh</label>
-                      <input type="text" id="thumbsnail" name="thumbsnail" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập hình ảnh" [(ngModel)]="resTour.thumbsnail" [readonly]="!isEdit">
+                      <div class="card-profile-image">
+                        <a href="javascript:void(0)">
+                          <img style="width: 200px; height: 200px;" [src]="img" class="rounded-circle">
+                        </a>
+                      </div>
+                      <input id="file" type="file" class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeImg($event); inputChange()">
+                      <label for="file" style="margin-left: 20px;" >Hình tour nhỏ</label>
+
                     </div>
                   </div>
                 </div>

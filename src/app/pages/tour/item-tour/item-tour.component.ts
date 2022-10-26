@@ -32,6 +32,8 @@ export class ItemTourComponent implements OnInit {
   resPlace: PlaceModel[]
   resRestaurant: RestaurantModel[]
   isHoliday = this.configService.listStatus()
+  img: any
+  formData: any
   constructor(private tourService: TourService, private configService: ConfigService, private notificationService: NotificationService,
       private hotelService: HotelService, private placeService: PlaceService, private restaurantService: RestaurantService, private activatedRoute: ActivatedRoute) { }
 
@@ -50,6 +52,14 @@ export class ItemTourComponent implements OnInit {
           this.resTour = this.response.content
           this.resTourTmp = Object.assign({}, this.resTour)
 
+          if(this.resTour){
+            if (this.resTour.thumbnail) {
+              this.img = this.configService.apiUrl + this.resTour.thumbnail
+            }
+            else{
+              this.img = "../../../../assets/img/employees/unknown.png"
+            }
+          }
         }
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -61,10 +71,18 @@ export class ItemTourComponent implements OnInit {
       this.resTour = new TourModel
       this.resTourTmp = Object.assign({}, this.resTour)
       this.isEdit = true
+      if(this.resTour){
+        if (this.resTour.thumbnail) {
+          this.img = this.configService.apiUrl + this.resTour.thumbnail
+        }
+        else{
+          this.img = "../../../../assets/img/employees/unknown.png"
+        }
+      }
     }
   }
   ngOnChanges(): void {
-    
+
   }
 
 
@@ -105,20 +123,42 @@ export class ItemTourComponent implements OnInit {
     this.isChange = false
   }
 
+  changeImg(e: any){
+    this.formData = e
+    if (e.target.files[0].type == "image/jpg" || e.target.files[0].type == "image/jpeg" || e.target.files[0].type == "image/png") {
+      if (e.target.files && e.target.files[0]){
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = e => this.img = reader.result;
+        reader.readAsDataURL(file)
+
+        this.resTour.thumbnail = this.img
+      }
+    }
+    else{
+      this.notificationService.handleAlert("Không đúng định dạng hình ảnh !", "Error")
+    }
+  }
+
   save(){
     var valid =  this.configService.validateTour(this.resTour)
     valid.forEach(element => {
         this.notificationService.handleAlert(element, "Error")
     });
     if (valid.length == 0) {
+      var file = new FormData();
+      file.append('data', JSON.stringify(this.resTour))
+
+      if (this.formData) {
+        file.append('file', this.formData.path[0].files[0])
+      }
       if(this.type == "create")
       {
-        this.tourService.create(this.resTour).subscribe(res =>{
+        this.tourService.create(file).subscribe(res =>{
           this.response = res
 
           // this.resCostTour.idCostTour = this.response.content
-          if(res.notification.type != "Error")
-          {
+          if (res.notification.type == "Success") {
             this.close()
           }
           this.notificationService.handleAlertObj(res.notification)
