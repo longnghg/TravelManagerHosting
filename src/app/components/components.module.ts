@@ -10,6 +10,7 @@ import { Grid2DataComponent } from './grid2-data/grid2-data.component';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule }           from '@ng-select/ng-select';
 import { NgOptionHighlightModule }  from '@ng-select/ng-option-highlight';
+import { PipesModule } from "../pipes/pipes.module";
 @NgModule({
   imports: [
     CommonModule,
@@ -18,6 +19,7 @@ import { NgOptionHighlightModule }  from '@ng-select/ng-option-highlight';
     FormsModule,
     NgSelectModule,
     NgOptionHighlightModule,
+    PipesModule
   ],
   declarations: [
     FooterComponent,

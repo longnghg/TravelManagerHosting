@@ -383,6 +383,14 @@ export class ConfigService{
     var split = date.split("-")
     var day = split[2];
     var month = split[1];
+    if (Number.parseInt(day) < 10) {
+      day = "0"+day
+    }
+    var month = split[0];
+    if (Number.parseInt(month) < 10) {
+      month = "0"+month
+    }
+
     var year =  split[0];
     var formattedDate = day + '/' + month + '/' + year;
     return formattedDate

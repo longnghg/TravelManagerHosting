@@ -61,6 +61,9 @@ import { NgOptionHighlightModule }  from '@ng-select/ng-option-highlight';
 import { ListTourBookingComponent } from '../../pages/tourBooking/list-tour-booking/list-tour-booking.component';
 import { ViewTourScheduleComponent } from '../../pages/tour/view-tour-schedule/view-tour-schedule.component';
 import { ItemTourScheduleComponent } from '../../pages/tour/item-tour-schedule/item-tour-schedule.component';
+
+
+import { PipesModule } from "../../pipes/pipes.module";
 @NgModule({
   imports: [
     CommonModule,
@@ -72,8 +75,10 @@ import { ItemTourScheduleComponent } from '../../pages/tour/item-tour-schedule/i
     ComponentsModule,
     NgSelectModule,
     NgOptionHighlightModule,
+    PipesModule
   ],
   declarations: [
+
     DashboardComponent,
     UserProfileComponent,
     TablesComponent,

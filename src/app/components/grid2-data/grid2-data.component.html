@@ -73,7 +73,7 @@
               </ng-container>
               <ng-template #elseStatus>
                 <ng-container *ngIf="column.filter == 'date'; else elseDate">
-                  {{formatFromUnixTimestampToFullDateView(row[column.field])}}
+                  {{row[column.field] | formatFromUnixTimestampToFullDateView}}
                 </ng-container>
                 <ng-template #elseDate>
                   {{row[column.field]}}

@@ -53,8 +53,6 @@ export class ListEmployeeComponent implements OnInit {
 
   ngOnInit() {
     this.auth = JSON.parse(localStorage.getItem("currentUser"));
-    console.log( this.auth);
-
     if(this.auth.roleId == RoleTitle.Admin)
     {
       this.gridConfig2 = {

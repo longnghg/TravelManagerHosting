@@ -186,27 +186,6 @@ export class Grid2DataComponent implements OnInit {
     this.gdChild.emit(data);
     this.gdType.emit(type);
   }
-
-  formatFromUnixTimestampToFullDateView(unix_timestamp: any){
-    var date = new Date(unix_timestamp).toLocaleDateString("en-US");
-    var split = date.split("/")
-    var day = split[1];
-    var month = split[0];
-    var year =  split[2];
-    var formattedDate = day + '/' + month + '/' + year;
-    return formattedDate
-   }
-
-
-   formatFromUnixTimestampToFullDate(unix_timestamp: any){
-    var date = new Date(unix_timestamp).toLocaleDateString("en-US");
-    var split = date.split("/")
-    var day = split[1];
-    var month = split[0];
-    var year =  split[2];
-    var formattedDate = year + '-' + month + '-' + day;
-    return formattedDate
-   }
 }
 
 export interface ColDef2{

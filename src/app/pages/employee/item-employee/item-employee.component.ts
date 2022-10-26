@@ -29,7 +29,6 @@ export class ItemEmployeeComponent implements OnInit{
   resRole: RoleModel[]
   resEmployeeTmp: EmployeeModel
   formData: any
-  birthdayView: string
   img:any
   idEmployee: any
   constructor(private router: Router, private activatedRoute: ActivatedRoute,private employeeService: EmployeeService, private notificationService: NotificationService,
@@ -69,7 +68,6 @@ export class ItemEmployeeComponent implements OnInit{
 
             if(this.resEmployee.birthday){
               this.resEmployee.birthday = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resEmployee.birthday))
-              this.birthdayView = this.configService.formatFromUnixTimestampToFullDateView(Number.parseInt(this.resEmployee.birthday))
             }
           }
         }
@@ -93,31 +91,31 @@ export class ItemEmployeeComponent implements OnInit{
       }
     }
   }
-  ngOnChanges(): void {
-    this.roleService.views().then(response =>{
-      this.resRole = response
-    })
-    if(this.resEmployee){
+  // ngOnChanges(): void {
+  //   this.roleService.views().then(response =>{
+  //     this.resRole = response
+  //   })
+  //   if(this.resEmployee){
 
-      if (this.resEmployee.image) {
-        this.img = this.configService.apiUrl + this.resEmployee.image
-      }
-      else{
-        this.img = "../../../../assets/img/employees/unknown.png"
-      }
+  //     if (this.resEmployee.image) {
+  //       this.img = this.configService.apiUrl + this.resEmployee.image
+  //     }
+  //     else{
+  //       this.img = "../../../../assets/img/employees/unknown.png"
+  //     }
 
-      if(this.resEmployee.birthday){
-        this.resEmployee.birthday = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resEmployee.birthday))
-        this.birthdayView = this.configService.formatFromUnixTimestampToFullDateView(Number.parseInt(this.resEmployee.birthday))
-      }
-    }
-    if(this.type == "create"){
-      this.close()
-    }
-    this.resEmployeeTmp = Object.assign({}, this.resEmployee)
+  //     if(this.resEmployee.birthday){
+  //       this.resEmployee.birthday = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resEmployee.birthday))
+  //       // this.birthdayView = this.configService.formatFromUnixTimestampToFullDateView(Number.parseInt(this.resEmployee.birthday))
+  //     }
+  //   }
+  //   if(this.type == "create"){
+  //     this.close()
+  //   }
+  //   this.resEmployeeTmp = Object.assign({}, this.resEmployee)
 
 
-  }
+  // }
   inputChange(){
     if (JSON.stringify(this.resEmployee) != JSON.stringify(this.resEmployeeTmp)) {
       this.isChange = true
@@ -128,7 +126,7 @@ export class ItemEmployeeComponent implements OnInit{
   }
 
   inputDateChange(){
-    this.birthdayView = this.configService.formatDateToDateView(this.resEmployee.birthday)
+    // this.birthdayView = this.configService.formatDateToDateView(this.resEmployee.birthday)
   }
 
 
@@ -153,6 +151,7 @@ export class ItemEmployeeComponent implements OnInit{
   save(){
     this.validateEmployee = new ValidationEmployeeModel
     this.validateEmployee =  this.configService.validateEmployee(this.resEmployee, this.validateEmployee)
+
     if (this.validateEmployee.total == 0) {
       var file = new FormData();
       file.append('data', JSON.stringify(this.resEmployee))
@@ -216,7 +215,6 @@ export class ItemEmployeeComponent implements OnInit{
   backup(){
     this.resEmployee = Object.assign({}, this.resEmployeeTmp)
     this.resEmployee.birthday = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resEmployee.birthday))
-    this.birthdayView = this.configService.formatFromUnixTimestampToFullDateView(Number.parseInt(this.resEmployee.birthday))
     this.isChange = false
     this.notificationService.handleAlert("Khôi phục dữ liệu ban đầu thành công !", "Info")
   }
@@ -225,8 +223,6 @@ export class ItemEmployeeComponent implements OnInit{
     if (this.type == 'create') {
       this.resEmployee = new EmployeeModel()
       this.img = "../../../../assets/img/employees/unknown.png"
-      this.resEmployee.birthday = null
-      this.birthdayView = null
     }
   }
 

@@ -23,6 +23,7 @@ export class ListWardComponent implements OnInit {
   public gridConfig: GridConfig = {
     idModalDelete: "deleteWardModal",
     idModal: "gridWard",
+    disableRadioBox: true
   }
 
   private hubConnectionBuilder: HubConnection

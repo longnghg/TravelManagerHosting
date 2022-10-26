@@ -27,6 +27,7 @@ export class ListProvinceComponent implements OnInit {
   public gridConfig: GridConfig = {
     idModalDelete: "deleteProvinceModal",
     idModal: "gridProvince",
+    disableRadioBox: true
   }
 
   private hubConnectionBuilder!: HubConnection;

@@ -50,7 +50,7 @@
                 <i class="ni education_hat mr-2"></i>{{resEmployee.roleName}}
               </div>
               <hr class="my-4" />
-              <p>Ngày sinh: {{birthdayView}}</p>
+              <p>Ngày sinh: {{resEmployee.birthday | formatDateToDateView}}</p>
               <p>Email: {{resEmployee.email}}</p>
               <p>Điện thoại: {{resEmployee.phone}}</p>
               <p>Địa chỉ: {{resEmployee.address}}</p>
@@ -113,7 +113,7 @@
                                   placeholder="Chọn chức vụ..."
                                   name="idRole"
                                   id="idRole"
-                                  (change)="inputChange()">x
+                                  (change)="inputChange()">
 
                                   <ng-container *ngIf="resEmployee.roleId != -1 && type == 'detail'; else elseADM">
                                     <ng-container *ngFor="let role of resRole">
@@ -147,7 +147,7 @@
                       <label class="form-control-label" for="dp">Ngày sinh
                         <span [class]="auth.roleId != -1 && auth.id != resEmployee.idEmployee || resEmployee.isDelete ?'d-none':'text-red'">* {{this.validateEmployee.birthday ? this.validateEmployee.birthday : ''}}</span>
                       </label>
-                      <input  name="birthday"  (change)="inputDateChange();inputChange()" [(ngModel)]="resEmployee.birthday" class="form-control datepicker" placeholder="Chọn ngày" name="dp" id="dp" type="date" [disabled]="auth.roleId != -1 && auth.id != resEmployee.idEmployee || resEmployee.isDelete"/>
+                      <input  name="birthday" onkeydown="return false" (change)="inputDateChange();inputChange()" [(ngModel)]="resEmployee.birthday" class="form-control datepicker" placeholder="Chọn ngày" name="dp" id="dp" type="date" [disabled]="auth.roleId != -1 && auth.id != resEmployee.idEmployee || resEmployee.isDelete"/>
                     </div>
                   </div>
                 </div>
