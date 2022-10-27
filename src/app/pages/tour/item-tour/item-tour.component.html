@@ -97,7 +97,7 @@
     <ng-template ngbNavContent>
       <div class="modal-body">
         <ng-container *ngIf="resTour">
-          <div class="col-xl-8 align-items-center order-xl-1">
+          <div class="col-xl-8 align-items-center order-xl-1" style="left: 15rem;">
             <div class="card bg-secondary shadow">
             <div class="row align-items-center">
               <div class="col-12 text-right">
@@ -108,42 +108,44 @@
               <div class="pl-lg-4">
                 <div class="row">
                   <div class="col-lg-6">
-                    <div class="form-group">
-                      <label class="form-control-label" for="input-tourName">Tên Chuyến Du Lịch</label>
-                      <input type="text" id="nameTour" name="nameTour" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số tên chuyến du lịch" [(ngModel)]="resTour.nameTour" [readonly]="!isEdit">
-                    </div>
-                  </div>
-                  <div class="col-lg-6">
-                    <div class="form-group">
-                      <div class="card-profile-image">
-                        <a href="javascript:void(0)">
-                          <img style="width: 200px; height: 200px;" [src]="img" class="rounded-circle">
-                        </a>
+                    <div class="row">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-tourName">Tên Chuyến Du Lịch</label>
+                        <input type="text" id="nameTour" name="nameTour" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số tên chuyến du lịch" [(ngModel)]="resTour.nameTour" [readonly]="!isEdit">
                       </div>
-                      <input id="file" type="file" class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeImg($event); inputChange()">
-                      <label for="file" style="margin-left: 20px;" >Hình tour nhỏ</label>
-
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-8">
+                        <div class="form-group">
+                        <label class="form-control-label" for="input-toPlace">Điểm đến </label>
+                        <input type="text" id="toPlace" name="toPlace" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập điểm đến " [(ngModel)]="resTour.toPlace" [readonly]="!isEdit">
+                       </div>
+                      </div>
+                      <div class="col-lg-4">
+                        <div class="form-group">
+                          <label class="form-control-label" for="input-toPlace">Chọn hình</label>
+                          <label for="file"  class="btn text-white btn-primary btn-round">Hình tour</label>  
+                          <input id="file" type="file" class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeImg($event); inputChange()">                     
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="form-group">
+                      <div class="card-img-top">
+                          <img style="width: 350px; height: 200px;" [src]="img" class="img-thumbnail">
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="row">
-                  <!-- <div class="col-lg-6">
-                    <label class="form-control-label" for="input-fromPlace">Điểm đi</label>
-                    <input type="text" id="fromPlace" name="fromPlace" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập điểm đi " [(ngModel)]="resTour.fromPlace" [readonly]="!isEdit">
-                  </div> -->
-                  <div class="col-lg-6">
-                    <label class="form-control-label" for="input-toPlace">Điểm đến </label>
-                    <input type="text" id="toPlace" name="toPlace" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập điểm đến " [(ngModel)]="resTour.toPlace" [readonly]="!isEdit">
-                  </div>
-                </div>
-                <hr>
+                
               </div>
             </form>
             <div class="row align-items-center">
               <div class="col-12 text-right">
                 <button  *ngIf="type == 'detail'" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteTourModal" (click)="delete()">Xóa</button>
                 <button *ngIf="isChange && type == 'detail'" class="btn btn-lg btn-info" (click)="restore()">Khôi phục</button>
-                <button *ngIf="isChange" class="btn btn-lg btn-success"  (click)="save()">{{type == 'detail' ? "Cập nhật thông tin/ giá":"Thêm"}}</button>
+                <button *ngIf="isChange" class="btn btn-lg btn-success"  (click)="save()">{{type == 'detail' ? "Cập nhật":"Thêm"}}</button>
               </div>
             </div>
           </div>

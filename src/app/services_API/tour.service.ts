@@ -47,6 +47,10 @@ export class TourService{
   {
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Tour/create-tour", data);
   }
+  update(data: any)
+  {
+    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Tour/update-tour", data);
+  }
 
   delete(idTour: any)
   {

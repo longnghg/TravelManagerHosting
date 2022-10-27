@@ -168,7 +168,24 @@ export class ItemTourComponent implements OnInit {
         })
       }
       else{
+        var file = new FormData();
+        file.append('data', JSON.stringify(this.resTour))
+  
+        if (this.formData) {
+          file.append('file', this.formData.path[0].files[0])
+        }
+        this.tourService.update(file).subscribe(res =>{
+          this.response = res
 
+          // this.resCostTour.idCostTour = this.response.content
+          if (res.notification.type == "Success") {
+            this.close()
+          }
+          this.notificationService.handleAlertObj(res.notification)
+        }, error => {
+          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+          this.notificationService.handleAlert(message, "Error")
+        })
       }
       this.close()
     }
