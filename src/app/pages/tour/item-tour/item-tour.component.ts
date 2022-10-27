@@ -207,4 +207,28 @@ export class ItemTourComponent implements OnInit {
   getDataRestore(){
     this.parentRestore.emit(this.resTour);
   }
+
+  delete(){
+    if (this.resTour) {
+     this.tourService.delete(this.resTour.idTour).subscribe(res =>{
+       this.response = res
+       this.notificationService.handleAlertObj(res.notification)
+     }, error => {
+       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+       this.notificationService.handleAlert(message, "Error")
+     })
+    }
+   }
+
+   restoreTour(){
+    if (this.resTour) {
+      this.tourService.restore(this.resTour.idTour).subscribe(res =>{
+        this.response = res
+        this.notificationService.handleAlertObj(res.notification)
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, "Error")
+      })
+    }
+  }
 }

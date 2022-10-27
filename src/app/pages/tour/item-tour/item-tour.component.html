@@ -143,7 +143,7 @@
             </form>
             <div class="row align-items-center">
               <div class="col-12 text-right">
-                <button  *ngIf="type == 'detail'" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteTourModal" (click)="delete()">Xóa</button>
+                <button  *ngIf="type == 'detail'" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemTourModal">Xóa</button>
                 <button *ngIf="isChange && type == 'detail'" class="btn btn-lg btn-info" (click)="restore()">Khôi phục</button>
                 <button *ngIf="isChange" class="btn btn-lg btn-success"  (click)="save()">{{type == 'detail' ? "Cập nhật":"Thêm"}}</button>
               </div>
@@ -180,7 +180,7 @@
         Bạn có chắc muốn xóa [<span class="text-red">{{resTour.nameTour}}</span>] !
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"  >Xóa</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="delete()">Xóa</button>
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
       </div>
     </div>

@@ -36,7 +36,7 @@ export class ListTourComponent implements OnInit {
 
   public gridConfig2: GridConfig2 = {
     idModalRestore: "restoreItemTourModal",
-    idModalDelete: "deleteItemTourModal",
+    idModalDelete: "deleteTourModalLabel",
     isRestore: false,
     route: "item-tour",
     alias: "idTour",
