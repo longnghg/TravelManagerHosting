@@ -6,3 +6,9 @@ export class AuthenticationModel{
   image: string = ""
   dateTime: string = ""
 }
+
+export class ValidationLoginModel{
+  total: number = 0
+  email: string = ""
+  password: string = ""
+}

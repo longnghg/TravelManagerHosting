@@ -347,6 +347,26 @@ export class ConfigService{
         return err
    }
 
+   validateLogin(data: any, model: any){
+    model.total = 0
+    var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+    if (data.email == null || data.email == "") {
+      model.email = "[Email] không được để trống !"
+      model.total += 1
+    }else if (!filter.test(data.email)) {
+      model.email = "[Email] không hợp lệ !"
+      model.total += 1
+    }
+
+    if(data.password == null || data.password == ""){
+      model.password = "[Mật khẩu] không được để trống !"
+      model.total += 1
+    }
+
+    return model
+   }
+
    formatFromUnixTimestampToFullDate(unix_timestamp: number){
     var date = new Date(unix_timestamp).toLocaleDateString("en-US");
     var split = date.split("/")
@@ -395,4 +415,6 @@ export class ConfigService{
     var formattedDate = day + '/' + month + '/' + year;
     return formattedDate
    }
+
+
 }

@@ -43,16 +43,19 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                 </div>
-                <input class="form-control" placeholder="Email" type="email" name="email" [(ngModel)]="email">
+                <input class="form-control" placeholder="Email" type="email" name="email" [(ngModel)]="resEmployee.email">
               </div>
+              <span class="text-danger" style="position: relative; top: 5px; font-weight: bold;">{{validateAuth.email ? validateAuth.email : ''}}</span>
             </div>
             <div class="form-group">
               <div class="input-group input-group-alternative">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                 </div>
-                <input class="form-control" placeholder="Password" type="password" name="password" [(ngModel)]="password">
+                <input class="form-control" placeholder="Password" type="password" name="password" [(ngModel)]="resEmployee.password">
               </div>
+              <span class="text-danger" style="position: relative; top: 5px; font-weight: bold;">{{validateAuth.password ? validateAuth.password : ''}}</span>
+
             </div>
             <div class="custom-control custom-control-alternative custom-checkbox">
               <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
@@ -86,3 +89,22 @@
   </div>
 </div>
 
+<button #modalBlock type="button" class="d-none" data-bs-toggle="modal" data-bs-target="#timeBlock"></button>
+
+<!-- Modal -->
+<div class="modal fade" id="timeBlock" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="timeBlockLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="timeBlockLabel">Thông báo</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Tài khoản của bạn bị khóa tới <span class="text-danger" style="font-weight: 700;">{{timeBlock | formatFromUnixTimestampToFullDateTimeView}}</span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+      </div>
+    </div>
+  </div>
+</div>

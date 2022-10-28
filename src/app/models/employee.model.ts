@@ -2,6 +2,7 @@ export class EmployeeModel {
   idEmployee: string = null
   nameEmployee: string = null
   email: string = null
+  password: string = null
   phone: string = null
   gender: boolean = null
   address: string = null

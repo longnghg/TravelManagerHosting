@@ -10,9 +10,9 @@ import { ResponseModel } from "../models/responsiveModels/response.model";
 export class AuthenticationService{
   constructor(private http:HttpClient, private configService:ConfigService){ }
 
-  login(email: any, password: any)
+  login(data: any)
   {
-      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Authentication/login-employee", {email, password});
+      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Authentication/login-employee", data);
   }
 
   logOut(empId: string)
