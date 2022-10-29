@@ -148,7 +148,20 @@ export class ItemTourScheduleComponent implements OnInit {
         })
       }
       else{
+        // this.resSchedule.tourId = idTour
+        this.scheduleService.update(this.resSchedule).subscribe(res =>{
+          this.response = res
+          this.notificationService.handleAlertObj(res.notification)
+          this.resSchedule.idSchedule = res.content
 
+
+          if(this.response.notification.type == "Error")
+          {
+          }
+        }, error => {
+          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+          this.notificationService.handleAlert(message, "Error")
+        })
 
       }
       this.close()
@@ -210,22 +223,6 @@ export class ItemTourScheduleComponent implements OnInit {
     this.isAdd = true
   }
 
-  createCostNot(){
-    this.resCostTour.idSchedule =  this.resSchedule.idSchedule
-    this.costtourService.create(this.resCostTour).subscribe(res =>{
-      this.response = res
-      this.notificationService.handleAlertObj(res.notification)
-
-      if(this.response.notification.type == "Success")
-      {
-        this.isAdd = false
-      }
-      console.log(this.response.content);
-    }, error => {
-      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
-    })
-  }
 
   close(){
     if (this.type == 'detail') {

@@ -28,5 +28,8 @@ create(data: any)
 {
   return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Schedule/create-schedule", data);
 }
-
+update(data: any)
+{
+  return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Schedule/update-schedule", data);
+}
 }

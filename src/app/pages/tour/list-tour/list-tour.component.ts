@@ -27,16 +27,16 @@ export class ListTourComponent implements OnInit {
 
   public columnDefs: ColDef[]
   public gridConfig: GridConfig = {
-    idModalRestore: "restoreTourModal",
-    idModalDelete: "deleteTourModal",
-    idModal: "gridTour",
-    disableRadioBox: false,
-    radioBoxName: "Kho lưu trữ",
+    // idModalRestore: "restoreTourModal",
+    // idModalDelete: "deleteTourModal",
+    // idModal: "gridTour",
+    // disableRadioBox: false,
+    // radioBoxName: "Kho lưu trữ",
   }
 
   public gridConfig2: GridConfig2 = {
-    idModalRestore: "restoreItemTourModal",
-    idModalDelete: "deleteTourModalLabel",
+    idModalRestore: "restoreTourModal",
+    idModalDelete: "deleteTourModal",
     isRestore: false,
     route: "item-tour",
     alias: "idTour",
@@ -65,6 +65,16 @@ export class ListTourComponent implements OnInit {
       this.hubConnectionBuilder.on('InitWaiting', (result: any) => {
         this.initWaiting(this.type)
       })
+
+      if (history.state.isDelete) {
+        this.gridConfig2.isRestore = history.state.isDelete
+        this.init(history.state.isDelete)
+        console.log(this.resTour);
+
+      }
+      else{
+        this.init(this.type)
+      }
     }
 
     initWaiting(e?){
@@ -92,7 +102,6 @@ export class ListTourComponent implements OnInit {
         }
         else{
           this.resTour = null
-          this.notificationService.handleAlertObj(res.notification)
         }
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");

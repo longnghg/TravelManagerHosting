@@ -1,6 +1,7 @@
 export class ScheduleModel{
   idSchedule: string
   departureDate: string
+  departurePlace: string
   returnDate :string
   beginDate: string
   endDate: string

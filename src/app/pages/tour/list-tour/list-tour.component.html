@@ -124,11 +124,11 @@
   </div>
 </div> -->
 
-<div class="modal fade" [id]="gridConfig.idModalDelete" tabindex="-1" aria-labelledby="deleteTourModalLabel" aria-hidden="true">
+<div class="modal fade" [id]="gridConfig2.idModalDelete" tabindex="-1" aria-labelledby="deleteTourModal" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="deleteTourModalLabel">Xác nhận</h1>
+        <h1 class="modal-title fs-5" id="deleteTourModal">Xác nhận</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" *ngIf="data">
@@ -136,6 +136,24 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="delete()" >Xóa</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" [id]="gridConfig2.idModalRestore" tabindex="-1" aria-labelledby="restoreTourModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="restoreTourModal">Xác nhận</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="data">
+        Bạn có chắc muốn khôi phục [<span class="text-red">{{data.nameEmployee}}</span>] !
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="restore()" >Khôi phục</button>
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
       </div>
     </div>
