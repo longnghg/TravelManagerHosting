@@ -34,12 +34,15 @@ export class LoginComponent implements OnInit {
     if (this.validateAuth.total == 0) {
       this.isloading = true
       this.timeBlock = Number.parseInt(localStorage.getItem("MY3t/ez6Q0yEwHMr0/Cy/Q=="+this.resEmployee.email))
-    if (this.timeBlock) {
-      this.modalBlock.nativeElement.click()
+
       if (new Date().getTime() >= this.timeBlock) {
-        localStorage.removeItem("MY3t/ez6Q0yEwHMr0/Cy/Q==")
+        localStorage.removeItem("MY3t/ez6Q0yEwHMr0/Cy/Q=="+this.resEmployee.email)
+        this.timeBlock = null
         this.countLoginFail = 0
       }
+
+    if (this.timeBlock) {
+      this.modalBlock.nativeElement.click()
       this.isloading = false
     }
     else{
