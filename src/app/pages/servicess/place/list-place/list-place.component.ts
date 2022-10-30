@@ -32,8 +32,6 @@ export class ListPlaceComponent implements OnInit {
     this.initWaiting()
     setTimeout(() => {
       this.columnDefs= [
-        { field: 'idPlace', headerName: "Mã số", style: "width: 330px;", searchable: true, searchType: 'text', searchObj: 'idPlace'},
-        { field: 'contractId',headerName: "Mã hợp đồng", style: "width: 330px;", searchable: true, searchType: 'text', searchObj: 'contractId'},
         { field: 'name',headerName: "Tên địa điểm ", style: "width: 250px;", searchable: true, searchType: 'text', searchObj: 'name'},
         { field: 'address',headerName: "Địa chỉ", style: "width: 250px;", searchable: true, searchType: 'text', searchObj: 'address'},
         { field: 'phone',headerName: "Số điện thoại", style: "width: 250px;", searchable: true, searchType: 'text', searchObj: 'phone'},
