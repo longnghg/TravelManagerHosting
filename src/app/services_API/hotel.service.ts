@@ -46,5 +46,9 @@ create(data: any)
 {
   return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Service/create-hotel", data);
 }
+update(data: any)
+{
+  return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Service/update-hotel", data);
+}
 
 }

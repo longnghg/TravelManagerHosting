@@ -35,16 +35,16 @@ export class ListHotelComponent implements OnInit {
     setTimeout(() => {
 
       this.columnDefs= [
-        { field: 'idHotel', headerName: "Mã số", style: "width: 330px;", searchable: true, searchType: 'text', searchObj: 'idHotel'},
-        { field: 'contractId',headerName: "Mã hợp đồng", style: "width: 330px;", searchable: true, searchType: 'text', searchObj: 'contractId'},
-        { field: 'name',headerName: "Tên khách sạn", style: "width: 250px;", searchable: true, searchType: 'text', searchObj: 'name'},
-        { field: 'address',headerName: "Địa chỉ", style: "width: 250px;", searchable: true, searchType: 'text', searchObj: 'address'},
-        { field: 'phone',headerName: "Số điện thoại", style: "width: 250px;", searchable: true, searchType: 'text', searchObj: 'phone'},
+     // { field: 'idHotel', headerName: "Mã số", style: "width: 330px;", searchable: true, searchType: 'text', searchObj: 'idHotel'},
+      //{ field: 'contractId',headerName: "Mã hợp đồng", style: "width: 330px;", searchable: true, searchType: 'text', searchObj: 'contractId'},
+        { field: 'name',headerName: "Tên khách sạn", style: "width: 200px;", searchable: true, searchType: 'text', searchObj: 'name'},
+        { field: 'address',headerName: "Địa chỉ", style: "width: 200px;", searchable: true, searchType: 'text', searchObj: 'address'},
+        { field: 'phone',headerName: "Số điện thoại", style: "width: 150px;", searchable: true, searchType: 'text', searchObj: 'phone'},
         { field: 'star',headerName: "Số sao", style: "width: 150px;", searchable: true, searchType: 'text', searchObj: 'star'},
-        { field: 'quantitySR',headerName: "Số lượng phòng đơn", style: "width: 150px;", searchable: true, searchType: 'text', searchObj: 'quantitySR'},
-        { field: 'singleRoomPrice',headerName: "Giá phòng đơn", style: "width: 200px;", searchable: true, searchType: 'text', searchObj: 'singleRoomPrice'},
-        { field: 'quantityDBR',headerName: "Số lượng phòng đôi", style: "width: 150px;", searchable: true, searchType: 'text', searchObj: 'quantityDBR'},
-        { field: 'doubleRoomPrice',headerName: "Giá phòng đôi", style: "width: 200px;", searchable: true, searchType: 'text', searchObj: 'doubleRoomPrice'},
+      { field: 'quantitySR',headerName: "Số lượng phòng đơn", style: "width: 150px;", searchable: true, searchType: 'text', searchObj: 'quantitySR'},
+        { field: 'singleRoomPrice',headerName: "Giá phòng đơn", style: "width: 150px;", searchable: true, searchType: 'text', searchObj: 'singleRoomPrice'},
+      { field: 'quantityDBR',headerName: "Số lượng phòng đôi", style: "width: 150px;", searchable: true, searchType: 'text', searchObj: 'quantityDBR'},
+        { field: 'doubleRoomPrice',headerName: "Giá phòng đôi", style: "width: 150px;", searchable: true, searchType: 'text', searchObj: 'doubleRoomPrice'},
       ];
     }, 200);
   }
@@ -83,7 +83,7 @@ export class ListHotelComponent implements OnInit {
 
   childData(e){
     if (e) {
-      this.dataChild = e
+      this.dataChild = Object.assign({}, e)
     }
 
   }
