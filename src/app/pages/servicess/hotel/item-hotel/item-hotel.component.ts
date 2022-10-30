@@ -1,10 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { HotelModel } from 'src/app/models/hotel.model';
+import { HotelModel ,ValidationHotelModel} from 'src/app/models/hotel.model';
 import { HotelService } from "src/app/services_API/hotel.service"
 import { NotificationService } from "../../../../services_API/notification.service";
 import { ColDef, GridConfig} from '../../../../components/grid-data/grid-data.component';
 import { ConfigService } from "../../../../services_API/config.service";
 import { ResponseModel } from "../../../../models/responsiveModels/response.model";
+import { AuthenticationModel } from 'src/app/models/authentication.model';
 @Component({
   selector: 'app-item-hotel',
   templateUrl: './item-hotel.component.html',
@@ -13,10 +14,12 @@ import { ResponseModel } from "../../../../models/responsiveModels/response.mode
 export class ItemHotelComponent implements OnInit {
   @Input() resHotel: HotelModel
   @Input() type: string
+  auth: AuthenticationModel
+  validateHotel: ValidationHotelModel = new ValidationHotelModel
   response: ResponseModel
-  isEdit: boolean = false
   isChange: boolean = false
   resHotelTmp: HotelModel
+  formData: any
   constructor(private hotelService: HotelService, private configService: ConfigService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
@@ -26,23 +29,11 @@ export class ItemHotelComponent implements OnInit {
 
     if(this.type == 'create'){
       this.resHotel = new HotelModel()
-      this.isEdit = true
-    }else{
-      this.isEdit = false
     }
     this.resHotelTmp = Object.assign({}, this.resHotel)
   }
 
-  isEditChange(){
-    if (this.isEdit) {
-      this.isEdit = false
-      this.restore()
 
-    }
-    else{
-      this.isEdit = true
-    }
-  }
   inputChange(){
     if (JSON.stringify(this.resHotel) != JSON.stringify(this.resHotelTmp)) {
       this.isChange = true
@@ -52,39 +43,84 @@ export class ItemHotelComponent implements OnInit {
     }
   }
 
-  restore(){
+  backup(){
     this.resHotel = Object.assign({}, this.resHotelTmp)
+
     this.isChange = false
   }
-
   save(){
-    var valid = this.configService.validateHotel(this.resHotel)
-    valid.forEach(element => {
-        this.notificationService.handleAlert(element, "Error")
-    });
-    if (valid.length == 0) {
-      if(this.type == "create"){
+    this.validateHotel = new ValidationHotelModel
+    this.validateHotel =  this.configService.validateHotel(this.resHotel, this.validateHotel)
+
+    if (this.validateHotel.total == 0) {
+      var file = new FormData();
+      file.append('data', JSON.stringify(this.resHotel))
+
+      if (this.formData) {
+        file.append('file', this.formData.path[0].files[0])
+      }
+
+      if(this.type == "create")
+      {
         this.hotelService.create(this.resHotel).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-          this.close()
+
+          if(this.response.notification.type == "Error")
+          {
+          }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, "Error")
+
         })
       }
       else{
-        this.close();
+        this.hotelService.update(this.resHotel).subscribe(res =>{
+          this.response = res
+          this.notificationService.handleAlertObj(res.notification)
+
+          if(this.response.notification.type == "Error")
+          {
+          }
+        }, error => {
+          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+          this.notificationService.handleAlert(message, "Error")
+
+        })
       }
+
+      }
+      // else{
+      //   this.hotelService.update(file).subscribe(res =>{
+      //     this.response = res
+      //     if (res.notification.type == "Validation") {
+      //       if (res.notification.description == "Phone") {
+      //         this.validateEmployee.phone == res.notification.messenge
+      //       }
+      //       else{
+      //         this.validateEmployee.email == res.notification.messenge
+      //       }
+      //     }
+      //     else{
+      //       this.notificationService.handleAlertObj(res.notification)
+      //       if (res.notification.type == "Success") {
+      //         this.close()
+      //         this.isChange = true
+      //       }
+      //     }
+      //   }, error => {
+      //     var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      //     this.notificationService.handleAlert(message, "Error")
+      //   })
+      // }
+
     }
 
-  }
+
 
   close(){
-    if (this.type == 'detail') {
-      this.isEdit = false
-    }
-     this.restore()
+     this.backup()
   }
 
 }

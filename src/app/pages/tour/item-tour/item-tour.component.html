@@ -97,57 +97,71 @@
     <ng-template ngbNavContent>
       <div class="modal-body">
         <ng-container *ngIf="resTour">
-          <div class="col-xl-8 align-items-center order-xl-1" style="left: 15rem;">
-            <div class="card bg-secondary shadow">
+          <div class="col-xl-10 align-items-center order-xl-1" style="margin: auto;">
+            <div class="card bg-secondary shadow" style="border: 3px double #5e72e4;">
             <div class="row align-items-center">
-              <div class="col-12 text-right">
+              <div class="col-12 text-right" style="right: 1.5rem; margin-top: 1rem;">
                 <a href="javascript:void(0)" *ngIf="type == 'detail'" class="btn btn-xl btn-primary" (click)="isEditChange()">{{!isEdit ? "Chỉnh sửa":"Quay lại"}}</a>
               </div>
             </div>
-            <form>
+
+            <form style="margin-top: 1rem;">
               <div class="pl-lg-4">
                 <div class="row">
                   <div class="col-lg-6">
                     <div class="row">
                       <div class="form-group">
-                        <label class="form-control-label" for="input-tourName">Tên Chuyến Du Lịch</label>
+                        <label class="form-control-label" for="input-tourName">Tên Chuyến Du Lịch
+                          <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateTourModel.nameTour ? this.validateTourModel.nameTour : ''}}</span>
+                        </label>
                         <input type="text" id="nameTour" name="nameTour" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số tên chuyến du lịch" [(ngModel)]="resTour.nameTour" [readonly]="!isEdit">
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-lg-8">
                         <div class="form-group">
-                        <label class="form-control-label" for="input-toPlace">Điểm đến </label>
+                        <label class="form-control-label" for="input-toPlace">Điểm đến
+                          <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateTourModel.toPlace ? this.validateTourModel.toPlace : ''}}</span>
+                         </label>
                         <input type="text" id="toPlace" name="toPlace" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập điểm đến " [(ngModel)]="resTour.toPlace" [readonly]="!isEdit">
                        </div>
                       </div>
                       <div class="col-lg-4">
                         <div class="form-group">
-                          <label class="form-control-label" for="input-toPlace">Chọn hình</label>
-                          <label for="file"  class="btn text-white btn-primary btn-round">Hình tour</label>  
-                          <input id="file" type="file" class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeImg($event); inputChange()">                     
+                          <label class="form-control-label" for="input-toPlace">Chọn hình
+                            <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateTourModel.thumbnail ? this.validateTourModel.thumbnail : ''}}</span>
+                          </label>
+                          <label for="file"  class="btn text-white btn-primary btn-round">Hình tour</label>
+                          <input id="file" type="file" class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeImg($event); inputChange()">
                         </div>
                       </div>
                     </div>
+                    <div class="align-items-center">
+                        <button  *ngIf="type == 'detail' && resTour.isDelete == false " class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemTourModal">Xóa</button>
+                        <button *ngIf="isChange && type == 'detail'" class="btn btn-lg btn-info" (click)="restore()">Khôi phục</button>
+                        <button *ngIf="isChange" class="btn btn-lg btn-success"  (click)="save()">{{type == 'detail' ? "Cập nhật":"Thêm"}}</button>
+                        <ng-container *ngIf="idTour; else elseGrid1">
+                          <button *ngIf="resTour.isDelete" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreItemTourModal" class="btn btn-sm btn-warning">Khôi phục tour</button>
+                        </ng-container>
+                        <ng-template #elseGrid1>
+                          <button *ngIf="resTour.isDelete" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreItemTourModal" class="btn btn-sm btn-warning">Khôi phục tour</button>
+                        </ng-template>
+
+                    </div>
                   </div>
-                  <div class="col-lg-4">
+
+                  <div class="col-lg-6">
                     <div class="form-group">
-                      <div class="card-img-top">
-                          <img style="width: 350px; height: 200px;" [src]="img" class="img-thumbnail">
+                      <div class="card-img-top" style=" border-radius: 50px; box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px; width: 94%; height: 300px; ">
+                          <img style="width:100%; height: 300px; border-radius: 50px;" [src]="img" class="img">
                       </div>
                     </div>
                   </div>
                 </div>
-                
+
               </div>
             </form>
-            <div class="row align-items-center">
-              <div class="col-12 text-right">
-                <button  *ngIf="type == 'detail'" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemTourModal">Xóa</button>
-                <button *ngIf="isChange && type == 'detail'" class="btn btn-lg btn-info" (click)="restore()">Khôi phục</button>
-                <button *ngIf="isChange" class="btn btn-lg btn-success"  (click)="save()">{{type == 'detail' ? "Cập nhật":"Thêm"}}</button>
-              </div>
-            </div>
+
           </div>
           </div>
           <hr>
@@ -199,7 +213,7 @@
         Bạn có chắc muốn khôi phục [<span class="text-red">{{resTour.nameTour}}</span>] !
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"   [routerLink]="['','list-employee']" [state]="{isDelete: true}" >Khôi phục</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="restoreTour()">Khôi phục</button>
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
       </div>
     </div>

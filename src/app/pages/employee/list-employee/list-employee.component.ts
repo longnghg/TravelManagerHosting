@@ -153,11 +153,11 @@ export class ListEmployeeComponent implements OnInit {
     this.roleService.views().then(response => {
       this.resRole = response
       this.columnDefs= [
-        { field: 'nameEmployee',headerName: "Tên", style: 'width: 20%',  searchStyle: "width: 250px;", searchable: true, searchType: 'text', searchObj: 'nameEmployee'},
-        { field: 'email',headerName: "Email", style: 'width: 15%', searchStyle: "width: 200px;", searchable: true, searchType: 'email', searchObj: 'email'},
-        { field: 'phone',headerName: "Số điện thoại", style: 'width: 15%', filter: "number",  searchStyle: "width: 150px;", searchable: true, searchType: 'text', searchObj: 'phone'},
-        { field: 'roleName',headerName: "Chức vụ", style: 'width: 25%', searchable: true, searchType: 'section', searchObj: 'roleId', searchStyle: "width: 300px;", multiple: true, closeOnSelect: false, bindLabel: 'nameRole', bindValue: "idRole", listSection: this.resRole},
-        { field: 'isActive',headerName: "Kích hoạt", style: 'width: 15%',  filter: "status", searchable: true, searchType: 'section', searchStyle: "width: 200px;", multiple: false, closeOnSelect: true, searchObj: 'isActive', bindLabel: "name", bindValue: "id", listSection: this.configService.listStatus()},
+        { field: 'nameEmployee',headerName: "Tên", style: 'width: 20%',   searchable: true, searchType: 'text', searchObj: 'nameEmployee'},
+        { field: 'email',headerName: "Email", style: 'width: 15%', searchable: true, searchType: 'email', searchObj: 'email'},
+        { field: 'phone',headerName: "Số điện thoại", style: 'width: 15%', filter: "number",searchable: true, searchType: 'text', searchObj: 'phone'},
+        { field: 'roleName',headerName: "Chức vụ", style: 'width: 25%', searchable: true, searchType: 'section', searchObj: 'roleId', multiple: true, closeOnSelect: false, bindLabel: 'nameRole', bindValue: "idRole", listSection: this.resRole},
+        { field: 'isActive',headerName: "Kích hoạt", style: 'width: 15%',  filter: "status", searchable: true, searchType: 'section', multiple: false, closeOnSelect: true, searchObj: 'isActive', bindLabel: "name", bindValue: "id", listSection: this.configService.listStatus()},
       ];
     })
 

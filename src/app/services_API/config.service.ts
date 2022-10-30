@@ -161,28 +161,35 @@ export class ConfigService{
       return err
    }
 
-   validateTour(data: any){
-    var err = []
-    //name
-    if(data.nameTour == null || data.nameTour == ""){
-       err.push("[Tên tour] không được để trống !")
-    }
-    else if (data.nameTour.length > 150) {
-       err.push("[Tên tour] quá dài !")
+   validateTour(data: any, model: any){
+    model.total = 0
+    //
+    if (data.nameTour == null || data.nameTour == "") {
+      model.nameTour = "[Tên tour]  không được để trống !"
+      model.total += 1
+    }else if (data.nameTour.length > 100) {
+      model.nameTour = "[Tên tour]  quá dài !"
+      model.total += 1
     }else if (data.nameTour.length < 5) {
-      err.push("[Tên tour] quá ngắn !")
+      model.nameTour = "[Tên tour]  quá ngắn !"
+      model.total += 1
     }
-
-  //   if(data.thumbsnail == null || data.thumbsnail == ""){
-  //     err.push("[Hình tour] không được để trống !")
-  //  }
-
 
     if(data.toPlace == null || data.toPlace == ""){
-    err.push("[Điểm đến] không được để trống !")
+     model.toPlace = ("[Điểm đến] không được để trống !")
+     model.total += 1
+    }else if (data.toPlace.length > 50) {
+      model.toPlace = "[Điểm đến]  quá dài !"
+      model.total += 1
+    }else if (data.toPlace.length < 3) {
+      model.toPlace = "[Điểm đến]  quá ngắn !"
+      model.total += 1
     }
-
-    return err
+    if (data.thumbnail == null || data.thumbnail == "") {
+      model.thumbnail = ("[Hình] không để trống!")
+      model.total += 1
+    }
+    return model
 
    }
 
@@ -262,49 +269,62 @@ export class ConfigService{
 
    }
 // hotel
-   validateHotel(data : any)
-   {
-    // name hotel
-        var err = []
-        if(data.name == null || data.name == ""){
-          err.push("[tên khách sạn] không được để trống !")
-      }else if (data.name.length > 100) {
-          err.push("[tên khách sạn] quá dài !")
-      }else if (data.name.length < 1) {
-        err.push("[tên khách sạn] quá ngắn !")
-      }
-      // phone
-      if (data.phone == null || data.phone == "") {
-        err.push("[Số điện thoại] không được để trống !")
-     }else if (data.phone.length > 10) {
-        err.push("[Số điện thoại] vượt quá 10 số !")
-     }else if (!data.phone.startsWith("0")) {
-        err.push("[Số điện thoại] không hợp lệ !")
+validateHotel(data : any,model: any)
+{
+ model.total= 0
+     if(data.name == null || data.name == ""){
+       model.name= "[Tên khách sạn] không được để trống !"
+       model.total +=1
+     }else if (data.name.length > 100) {
+       model.name= "[Tên khách sạn] quá dài !"
+       model.total +=1
+     }else if (data.name.length < 1) {
+       model.name= "[Tên khách sạn] quá ngắn !"
+       model.total +=1
      }
-       //Address
-     if (data.address == null || data.address == "") {
-        err.push("[Địa chỉ] không được để trống !")
-     }else if (data.address.length > 255) {
-       err.push("[Địa chỉ] quá dài !")
-    }
-    // quantity
-    if(data.quantitySR == null || data.quantitySR == ""){
-      err.push("[Số lượng] phòng đơn không được để trống !")
-      }
 
-    if(data.singleRoomPrice == null || data.singleRoomPrice == ""){
-      err.push("[Giá vé] phòng đơn không được để trống !")
-      }
-// double room
-      if(data.quantityDBR == null || data.quantityDBR == ""){
-        err.push("[Số lượng] phòng đôi không được để trống !")
-        }
-
-      if(data.doubleRoomPrice == null || data.doubleRoomPrice == ""){
-        err.push("[Giá vé] phòng đôi không được để trống !")
-        }
-        return err
+   // phone
+   if (data.phone == null || data.phone == "") {
+     model.phone= "[Số điện thoại] không được để trống !"
+     model.total +=1
+   }else if (data.phone.length > 10) {
+     model.phone= "[Số điện thoại] vượt quá 10 số !"
+     model.total +=1
+   }else if (!data.phone.startsWith("0")) {
+     model.phone= "[Số điện thoại] không hợp lệ !"
+     model.total +=1
    }
+    //Address
+  if (data.address == null || data.address == "") {
+   model.address= "[Địa chỉ] không được để trống !"
+   model.total +=1
+  }else if (data.address.length > 255) {
+   model.address= "[Địa chỉ] quá dài !"
+   model.total +=1
+ }
+ // quantity
+ if(data.quantitySR == null || data.quantitySR == ""){
+   model.quantitySR= "[Số lượng] phòng đơn không được để trống !"
+   model.total +=1
+   }
+
+ if(data.singleRoomPrice == null || data.singleRoomPrice == ""){
+   model.singleRoomPrice= "[Giá vé] phòng đơn không được để trống !"
+   model.total +=1
+   }
+// double room
+   if(data.quantityDBR == null || data.quantityDBR == ""){
+     model.quantityDBR= "[Số lượng] phòng đôi không được để trống !"
+     model.total +=1
+     }
+
+       if(data.doubleRoomPrice == null || data.doubleRoomPrice == ""){
+     model.doubleRoomPrice= "[Giá vé] phòng đôi không được để trống !"
+     model.total +=1
+     }
+     return model
+
+}
 
    validateCar(data: any, model: any){
     model.total = 0

@@ -17,10 +17,11 @@ import { HubConnection } from '@microsoft/signalr';
 export class ListTourComponent implements OnInit {
   resTour: TourModel[]
   resTourWaiting: TourModel[]
+  restourTmp: TourModel[]
   response: ResponseModel
   dataChild: TourModel
   data: TourModel
-  type: boolean
+  type: boolean = false
   typeChild: string
   private hubConnectionBuilder: HubConnection
 
@@ -37,34 +38,26 @@ export class ListTourComponent implements OnInit {
   public gridConfig2: GridConfig2 = {
     idModalRestore: "restoreTourModal",
     idModalDelete: "deleteTourModal",
-    isRestore: false,
+    // isRestore: false,
     route: "item-tour",
     alias: "idTour",
     disableRadioBox: false,
     radioBoxName: "Kho lưu trữ",
   }
+  public gridConfigApprove: GridConfig2 = {
 
+    route: "item-tour",
+    alias: "idTour",
+    disableRadioBox: true,
+    disableCreate: true,
+    disableDelete: true
+  }
   constructor(
     private configService: ConfigService,
      private tourService: TourService,
       private notificationService: NotificationService) {}
 
     ngOnInit(): void {
-
-      this.init(this.type)
-
-      this.hubConnectionBuilder = this.configService.signIR()
-      this.hubConnectionBuilder.start();
-      this.hubConnectionBuilder.on('Init', (result: any) => {
-        this.init(this.type)
-      })
-
-      this.initWaiting(this.type)
-      this.hubConnectionBuilder = this.configService.signIR()
-      this.hubConnectionBuilder.start();
-      this.hubConnectionBuilder.on('InitWaiting', (result: any) => {
-        this.initWaiting(this.type)
-      })
 
       if (history.state.isDelete) {
         this.gridConfig2.isRestore = history.state.isDelete
@@ -75,9 +68,24 @@ export class ListTourComponent implements OnInit {
       else{
         this.init(this.type)
       }
+
+      this.initWaiting()
+      // this.hubConnectionBuilder = this.configService.signIR()
+      // this.hubConnectionBuilder.start();
+      // this.hubConnectionBuilder.on('Init', (result: any) => {
+      //   this.init(this.type)
+      // })
+
+      // this.initWaiting(this.type)
+      // this.hubConnectionBuilder = this.configService.signIR()
+      // this.hubConnectionBuilder.start();
+      // this.hubConnectionBuilder.on('InitWaiting', (result: any) => {
+      //   this.initWaiting(this.type)
+      // })
+
     }
 
-    initWaiting(e?){
+    initWaiting(){
       this.tourService.getwaiting().subscribe(res =>{
         this.response = res
         if(!this.response.notification.type){
@@ -94,10 +102,12 @@ export class ListTourComponent implements OnInit {
     }
 
     init(e?){
-      this.tourService.gets().subscribe(res =>{
+      this.type = e
+      this.tourService.gets(this.type).subscribe(res =>{
         this.response = res
         if(!this.response.notification.type){
           this.resTour = this.response.content
+          this.restourTmp = Object.assign([], this.resTour)
           console.log(this.resTour);
         }
         else{

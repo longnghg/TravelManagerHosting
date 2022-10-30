@@ -58,7 +58,7 @@ export class ItemPlaceComponent implements OnInit {
   }
 
   save(){
-    var valid = this.configService.validateHotel(this.resPlace)
+    var valid = this.configService.validatePlace(this.resPlace)
     valid.forEach(element => {
         this.notificationService.handleAlert(element, "Error")
     });
