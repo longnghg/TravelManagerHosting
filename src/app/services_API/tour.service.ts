@@ -32,9 +32,9 @@ export class TourService{
     return value
   }
 
-  gets()
+  gets(isDelete: any)
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/gets-tour");
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/gets-tour?isDelete="+isDelete);
   }
   getwaiting(){
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/gets-tour-waiting");

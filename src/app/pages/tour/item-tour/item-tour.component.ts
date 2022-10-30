@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { TourModel } from 'src/app/models/tour.model';
+import { TourModel, ValidateTourModel } from 'src/app/models/tour.model';
 import { TourService } from "src/app/services_API/tour.service"
 import { NotificationService } from "./../../../services_API/notification.service";
 import { ColDef, GridConfig} from './../../../components/grid-data/grid-data.component';
@@ -12,6 +12,7 @@ import { PlaceModel } from 'src/app/models/place.model';
 import { RestaurantService } from 'src/app/services_API/restaurant.service';
 import { RestaurantModel } from 'src/app/models/restaurant.model';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-item-tour',
   templateUrl: './item-tour.component.html',
@@ -23,7 +24,7 @@ export class ItemTourComponent implements OnInit {
   @Input() type: string
   @Output() parentDelete = new EventEmitter<any>()
   @Output() parentRestore = new EventEmitter<any>()
-
+  validateTourModel: ValidateTourModel = new ValidateTourModel
   response: ResponseModel
   isEdit: boolean = false
   isChange: boolean = false
@@ -34,7 +35,7 @@ export class ItemTourComponent implements OnInit {
   isHoliday = this.configService.listStatus()
   img: any
   formData: any
-  constructor(private tourService: TourService, private configService: ConfigService, private notificationService: NotificationService,
+  constructor(private router: Router, private tourService: TourService, private configService: ConfigService, private notificationService: NotificationService,
       private hotelService: HotelService, private placeService: PlaceService, private restaurantService: RestaurantService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -76,7 +77,7 @@ export class ItemTourComponent implements OnInit {
           this.img = this.configService.apiUrl + this.resTour.thumbnail
         }
         else{
-          this.img = "../../../../assets/img/employees/unknown.png"
+          this.img = "../../../../assets/img/tours/cross-sign.jpg"
         }
       }
     }
@@ -141,11 +142,10 @@ export class ItemTourComponent implements OnInit {
   }
 
   save(){
-    var valid =  this.configService.validateTour(this.resTour)
-    valid.forEach(element => {
-        this.notificationService.handleAlert(element, "Error")
-    });
-    if (valid.length == 0) {
+    this.validateTourModel = new ValidateTourModel
+    this.validateTourModel =  this.configService.validateTour(this.resTour, this.validateTourModel)
+
+    if (this.validateTourModel.total == 0) {
       var file = new FormData();
       file.append('data', JSON.stringify(this.resTour))
 
@@ -170,7 +170,7 @@ export class ItemTourComponent implements OnInit {
       else{
         var file = new FormData();
         file.append('data', JSON.stringify(this.resTour))
-  
+
         if (this.formData) {
           file.append('file', this.formData.path[0].files[0])
         }
@@ -213,6 +213,9 @@ export class ItemTourComponent implements OnInit {
      this.tourService.delete(this.resTour.idTour).subscribe(res =>{
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
+       if (res.notification.type == "Success") {
+        this.router.navigate(['','list-tour']);
+       }
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
        this.notificationService.handleAlert(message, "Error")
@@ -225,6 +228,9 @@ export class ItemTourComponent implements OnInit {
       this.tourService.restore(this.resTour.idTour).subscribe(res =>{
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
+        if (res.notification.type == "Success") {
+          this.router.navigate(['','list-tour'], { state: { isDelete: true } });
+         }
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, "Error")

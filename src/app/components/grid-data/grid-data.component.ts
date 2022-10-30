@@ -207,7 +207,7 @@ export interface ColDef{
   headerName?: string
   filter?: string
   style?: string
-  searchStyle?: string
+  // searchStyle?: string
   searchable?: boolean
   searchObj?: any
   searchType?: string

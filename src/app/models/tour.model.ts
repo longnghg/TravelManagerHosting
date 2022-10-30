@@ -2,7 +2,6 @@ export class TourModel{
   idTour: string
   nameTour: string
   thumbnail: string
-  fromPlace: string
   toPlace: string
   approveStatus: number
   status: string
@@ -14,4 +13,11 @@ export class TourModel{
   description:string
   vat: number
   rating: number
+}
+
+export class ValidateTourModel{
+  total: number
+  nameTour: string = null
+  toPlace: string = null
+  thumbnail: string = null
 }

@@ -161,28 +161,35 @@ export class ConfigService{
       return err
    }
 
-   validateTour(data: any){
-    var err = []
-    //name
-    if(data.nameTour == null || data.nameTour == ""){
-       err.push("[Tên tour] không được để trống !")
-    }
-    else if (data.nameTour.length > 150) {
-       err.push("[Tên tour] quá dài !")
+   validateTour(data: any, model: any){
+    model.total = 0
+    //
+    if (data.nameTour == null || data.nameTour == "") {
+      model.nameTour = "[Tên tour]  không được để trống !"
+      model.total += 1
+    }else if (data.nameTour.length > 100) {
+      model.nameTour = "[Tên tour]  quá dài !"
+      model.total += 1
     }else if (data.nameTour.length < 5) {
-      err.push("[Tên tour] quá ngắn !")
+      model.nameTour = "[Tên tour]  quá ngắn !"
+      model.total += 1
     }
-
-  //   if(data.thumbsnail == null || data.thumbsnail == ""){
-  //     err.push("[Hình tour] không được để trống !")
-  //  }
-
 
     if(data.toPlace == null || data.toPlace == ""){
-    err.push("[Điểm đến] không được để trống !")
+     model.toPlace = ("[Điểm đến] không được để trống !")
+     model.total += 1
+    }else if (data.toPlace.length > 50) {
+      model.toPlace = "[Điểm đến]  quá dài !"
+      model.total += 1
+    }else if (data.toPlace.length < 3) {
+      model.toPlace = "[Điểm đến]  quá ngắn !"
+      model.total += 1
     }
-
-    return err
+    if (data.thumbnail == null || data.thumbnail == "") {
+      model.thumbnail = ("[Hình] không để trống!")
+      model.total += 1
+    }
+    return model
 
    }
 
