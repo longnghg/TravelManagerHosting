@@ -30,11 +30,8 @@ export class ListCarComponent implements OnInit {
     }
   ngOnInit(): void {
     this.init()
-    console.log(this.resCar);
-
     setTimeout(() => {
       this.columnDefs= [
-        { field: 'idCar', headerName: "Mã số", style: "width: 340px;", searchable: true, searchType: 'text', searchObj: 'idCar'},
         { field: 'nameDriver', headerName: "Tên người lái", style: "width: 270px;", searchable: true, searchType: 'text', searchObj: 'nameDriver'},
         { field: 'liscensePlate', headerName: "Biển số xe", style: "width: 200px;", searchable: true, searchType: 'number', searchObj: 'liscensePlate'},
         { field: 'amountSeat',headerName: "Số lượng chỗ ngồi", style: "width: 200px;", searchable: true, searchType: 'number', searchObj: 'amountSeat'},
@@ -63,7 +60,7 @@ export class ListCarComponent implements OnInit {
 
   childData(e){
     if (e) {
-      this.dataChild = e
+      this.dataChild = Object.assign({},e)
     }
 
   }
@@ -72,6 +69,8 @@ export class ListCarComponent implements OnInit {
     if (e) {
       this.typeChild = e
     }
+    console.log(e);
+
   }
 
 }

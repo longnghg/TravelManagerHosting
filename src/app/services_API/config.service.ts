@@ -305,6 +305,28 @@ export class ConfigService{
         }
         return err
    }
+
+   validateCar(data: any, model: any){
+    model.total = 0
+    var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+    if (data.liscensePlate == null || data.liscensePlate == "") {
+      model.liscensePlate = "[Biển số xe] không được để trống !"
+      model.total += 1
+    }else if (data.liscensePlate.length > 9) {
+      model.liscensePlate = "[Biển số xe] không được lớn hơn 9"
+      model.total += 1
+    }
+    if(data.amountSeat == null || data.amountSeat == ""){
+      model.amountSeat = "[Số chỗ] không được để trống !"
+      model.total += 1
+    }else if(data.amountSeat < 4){
+      model.amountSeat = "[Số chỗ] không được nhỏ hơn 4"
+      model.total += 1
+    }
+    return model
+  }
+
    // place
    validatePlace(data : any)
    {

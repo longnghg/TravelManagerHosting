@@ -3,7 +3,7 @@ import { NotificationService } from "../../../services_API/notification.service"
 import { ConfigService } from "../../../services_API/config.service";
 import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.component';
 import { CarService } from 'src/app/services_API/car.service';
-import { CarModel } from 'src/app/models/Car.model';
+import { CarModel, ValidationCarModel } from 'src/app/models/Car.model';
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 
 @Component({
@@ -12,13 +12,12 @@ import { ResponseModel } from "../../../models/responsiveModels/response.model";
   styleUrls: ['./item-car.component.scss']
 })
 export class ItemCarComponent implements OnInit {
-
+  validateCar: ValidationCarModel = new ValidationCarModel
   response: ResponseModel
   @Input() resCar: CarModel
   @Input() type: string
   date: string
   dateView: string
-  isEdit: boolean = false
   isChange: boolean = false
   resCarTmp: CarModel
 
@@ -30,26 +29,17 @@ export class ItemCarComponent implements OnInit {
   }
 
   ngOnChanges(): void {
-    if(this.type == 'create'){
+    if (this.type == "create") {
       this.resCar = new CarModel()
-      this.isEdit = true
-    }else{
-      this.isEdit = false
-    }
-    this.resCarTmp = Object.assign({}, this.resCar)
+     }
+
+     this.resCarTmp = Object.assign({}, this.resCar)
   }
 
-  isEditChange(){
-    if (this.isEdit) {
-      this.isEdit = false
-      this.restore()
 
-    }
-    else{
-      this.isEdit = true
-    }
-  }
   inputChange(){
+    console.log(JSON.stringify(this.resCar));
+    console.log(JSON.stringify(this.resCarTmp));
     if (JSON.stringify(this.resCar) != JSON.stringify(this.resCarTmp)) {
       this.isChange = true
     }
@@ -64,32 +54,38 @@ export class ItemCarComponent implements OnInit {
   }
 
   save(){
+    console.log(this.resCar);
 
-      if(this.type == "create")
-      {
+    this.validateCar = new ValidationCarModel
+    this.validateCar =  this.configService.validateCar(this.resCar, this.validateCar)
+    console.log(this.validateCar);
+
+    if (this.validateCar.total == 0) {
+      if(this.type == "create"){
         this.carService.create(this.resCar).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-
-          if(this.response.notification.type == "Error")
-          {
-          }
+          this.close()
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, "Error")
         })
       }
-      else{
+      // else{
+      //   this.carService.update(this.resRole).subscribe(res =>{
+      //     this.response = res
+      //     this.notificationService.handleAlertObj(res.notification)
 
-
-      }
-      this.close()
+      //     this.isChange = false
+      //   }, error => {
+      //     var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      //     this.notificationService.handleAlert(message, "Error")
+      //   })
+      // }
+    }
   }
 
   close(){
-    if (this.type == 'detail') {
-      this.isEdit = false
-    }
      this.restore()
   }
 }

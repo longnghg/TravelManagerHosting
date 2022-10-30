@@ -7,3 +7,11 @@ export class CarModel{
   nameDriver: string
   idEmployee: number
 }
+
+export class ValidationCarModel {
+  liscensePlate: string
+  amountSeat: number
+  phone: string
+  nameDriver: string
+  total: number = 0
+}
