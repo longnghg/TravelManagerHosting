@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ScheduleModel } from 'src/app/models/schedule.model';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ScheduleModel, ValidateScheduleModel } from 'src/app/models/schedule.model';
 import { ScheduleService } from "../../../services_API/schedule.service";
 import { NotificationService } from "../../../services_API/notification.service";
 import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.component';
@@ -28,6 +28,9 @@ import { RestaurantModel } from 'src/app/models/restaurant.model';
 export class ItemTourScheduleComponent implements OnInit {
   @Input() resSchedule: ScheduleModel
   @Input() type: string
+  @Output() parentDelete = new EventEmitter<any>()
+  @Output() parentRestore = new EventEmitter<any>()
+  validateScheduleModel: ValidateScheduleModel = new ValidateScheduleModel
   resCostTour: CostTourModel
   resCar: CarModel[]
   resEmployee: EmployeeModel[]
@@ -36,7 +39,6 @@ export class ItemTourScheduleComponent implements OnInit {
   resPlace: PlaceModel[]
   resRestaurant: RestaurantModel[]
   response: ResponseModel
-  isEdit: boolean = false
   isChange: boolean = false
   isAdd: boolean = false
   resScheduleTmp: ScheduleModel
@@ -52,12 +54,11 @@ export class ItemTourScheduleComponent implements OnInit {
     this.init()
     this.initCost()
     
+    
     if(this.type == 'create'){
       this.resSchedule = new ScheduleModel()
       this.resCostTour = new CostTourModel()
-      this.isEdit = true
     }else{
-      this.isEdit = false
       this.isAdd = false
     }
     this.resScheduleTmp = Object.assign({}, this.resSchedule)
@@ -75,6 +76,8 @@ export class ItemTourScheduleComponent implements OnInit {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, "Error")
       })
+
+      console.log(this.resSchedule.isDelete);
      }
 
   }
@@ -95,7 +98,7 @@ export class ItemTourScheduleComponent implements OnInit {
   initCost(){
     this.hotelService.gets().subscribe(response =>{
       this.response = response
-      this.resHotel = this.response.content 
+      this.resHotel = this.response.content       
     })
     this.restaurantService.gets().subscribe(response =>{
       this.response = response
@@ -107,16 +110,6 @@ export class ItemTourScheduleComponent implements OnInit {
     })
   }
 
-  isEditChange(){
-    if (this.isEdit) {
-      this.isEdit = false
-      this.restore()
-
-    }
-    else{
-      this.isEdit = true
-    }
-  }
   inputChange(){
     if (JSON.stringify(this.resSchedule) != JSON.stringify(this.resScheduleTmp)) {
       this.isChange = true
@@ -132,6 +125,10 @@ export class ItemTourScheduleComponent implements OnInit {
   }
 
   save(){
+    this.validateScheduleModel = new ValidateScheduleModel
+    this.validateScheduleModel =  this.configService.validateSchedule(this.resSchedule, this.validateScheduleModel)
+
+    if (this.validateScheduleModel.total == 0) {
     var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
       if(this.type == "create")
       {
@@ -168,6 +165,7 @@ export class ItemTourScheduleComponent implements OnInit {
 
       }
       this.close()
+    }
   }
 
   saveCostTour(){
@@ -229,9 +227,39 @@ export class ItemTourScheduleComponent implements OnInit {
 
   close(){
     if (this.type == 'detail') {
-      this.isEdit = false
       this.isAdd = false
     }
      this.restore()
+  }
+
+  getDataDelete(){
+    this.parentDelete.emit(this.resSchedule);
+  }
+  getDataRestore(){
+    this.parentRestore.emit(this.resSchedule);
+  }
+
+  delete(){
+    if (this.resSchedule) {
+     this.scheduleService.delete(this.resSchedule.idSchedule).subscribe(res =>{
+       this.response = res
+       this.notificationService.handleAlertObj(res.notification)
+     }, error => {
+       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+       this.notificationService.handleAlert(message, "Error")
+     })
+    }
+   }
+
+   restoreSchedule(){
+    if (this.resSchedule) {
+      this.scheduleService.restore(this.resSchedule.idSchedule).subscribe(res =>{
+        this.response = res
+        this.notificationService.handleAlertObj(res.notification)
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, "Error")
+      })
+    }
   }
 }

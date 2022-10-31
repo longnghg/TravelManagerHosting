@@ -20,7 +20,6 @@ export class ItemTourComponent implements OnInit {
   @Output() parentRestore = new EventEmitter<any>()
   validateTourModel: ValidateTourModel = new ValidateTourModel
   response: ResponseModel
-  isEdit: boolean = false
   isChange: boolean = false
   resTourTmp: TourModel
   isHoliday = this.configService.listStatus()
@@ -34,7 +33,7 @@ export class ItemTourComponent implements OnInit {
     this.type = this.activatedRoute.snapshot.paramMap.get('id1')
 
     if(this.type == "detail"){
-      this.isEdit = false
+      
       this.tourService.getTour(idTour).subscribe(res => {
         this.response = res
 
@@ -61,7 +60,7 @@ export class ItemTourComponent implements OnInit {
     else{
       this.resTour = new TourModel
       this.resTourTmp = Object.assign({}, this.resTour)
-      this.isEdit = true
+   
       if(this.resTour){
         if (this.resTour.thumbnail) {
           this.img = this.configService.apiUrl + this.resTour.thumbnail
@@ -77,16 +76,6 @@ export class ItemTourComponent implements OnInit {
   }
 
 
-  isEditChange(){
-    if (this.isEdit) {
-      this.isEdit = false
-      this.restore()
-
-    }
-    else{
-      this.isEdit = true
-    }
-  }
   inputChange(){
     if (JSON.stringify(this.resTour) != JSON.stringify(this.resTourTmp)) {
       this.isChange = true
@@ -172,7 +161,7 @@ export class ItemTourComponent implements OnInit {
 
   close(){
     if (this.type == 'detail') {
-      this.isEdit = false
+      
     }
 
      this.restore()

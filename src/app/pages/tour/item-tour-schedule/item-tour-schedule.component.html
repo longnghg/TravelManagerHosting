@@ -5,23 +5,20 @@
 <div class="modal-body">
   <ng-container *ngIf="resSchedule">
     <div class="container-fluid" >
-      <div class="row align-items-center">
-        <div class="col-12 text-right">
-          <a href="javascript:void(0)" *ngIf="type == 'detail'" class="btn btn-sm btn-primary" (click)="isEditChange()">{{!isEdit ? "Chỉnh sửa":"Quay lại"}}</a>
-        </div>
-      </div>
       <form>
         <div class="pl-lg-4">
           <div class="row">
 
             <div class="col-lg-4">
               <div class="form-group">
-                <label class="form-control-label" for="employeeId">Chọn nhân viên</label>
+                <label class="form-control-label" for="employeeId">Chọn nhân viên
+                  <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateScheduleModel.employeeId ? this.validateScheduleModel.employeeId : ''}}</span>
+                </label>
                 <ng-select [items]="resEmployee"
                             bindLabel="nameEmployee"
                             bindValue="idEmployee"
                             [(ngModel)]="resSchedule.employeeId"
-                            [disabled]="!isEdit"
+                             
                             placeholder="Chọn nhân viên..."
                             name="employeeId"
                             id="employeeId"
@@ -31,12 +28,14 @@
             </div>
             <div class="col-lg-4">
               <div class="form-group">
-                <label class="form-control-label" for="carId">Chọn xe</label>
+                <label class="form-control-label" for="carId">Chọn xe
+                  <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateScheduleModel.carId ? this.validateScheduleModel.carId : ''}}</span>
+                </label>
                 <ng-select [items]="resCar"
                             bindLabel="liscensePlate"
                             bindValue="idCar"
                             [(ngModel)]="resSchedule.carId"
-                            [disabled]="!isEdit"
+                             
                             placeholder="Chọn xe..."
                             name="carId"
                             id="carId"
@@ -46,22 +45,28 @@
             </div>
             <div class="col-lg-4">
               <div class="form-group">
-                <label class="form-control-label" for="input-minCapacity">Mô tả</label>
-                <input type="text" name="resSchedule.departurePlace" id="departurePlace" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập nơi khởi hành" [(ngModel)]="resSchedule.departurePlace" [readonly]="!isEdit">
+                <label class="form-control-label" for="input-minCapacity">Nơi Khởi Hành
+                  <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateScheduleModel.departurePlace ? this.validateScheduleModel.departurePlace : ''}}</span>
+                </label>
+                <input type="text" name="resSchedule.departurePlace" id="departurePlace" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập nơi khởi hành" [(ngModel)]="resSchedule.departurePlace"  >
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-lg-6">
               <div class="form-group">
-                <label class="form-control-label" for="input-departureDate">Chọn ngày khởi hành</label>
-                <input   (change)="resSchedule.departureDate = resScheduleTmp.departureDate; inputChange()" [(ngModel)]="resScheduleTmp.departureDate" class="form-control datepicker" placeholder="Chọn ngày" name="departureDate" id="departureDate" type="date" [disabled]="!isEdit"/>
+                <label class="form-control-label" for="input-beginDate">Chọn ngày bắt đầu
+                  <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateScheduleModel.beginDate ? this.validateScheduleModel.beginDate : ''}}</span>
+                </label>
+                <input   (change)="resSchedule.beginDate = resScheduleTmp.beginDate; inputChange()" [(ngModel)]="resScheduleTmp.beginDate" class="form-control datepicker" placeholder="Chọn ngày" name="beginDate" id="beginDate" type="date"  />
               </div>
             </div>
             <div class="col-lg-6">
               <div class="form-group">
-                <label class="form-control-label" for="input-returnDate">Chọn ngày trở về</label>
-                <input   (change)="resSchedule.returnDate = resScheduleTmp.returnDate; inputChange()" [(ngModel)]="resScheduleTmp.returnDate" class="form-control datepicker" placeholder="Chọn ngày" name="returnDate" id="returnDate" type="date" [disabled]="!isEdit"/>
+                <label class="form-control-label" for="input-endDate">Chọn ngày kết thúc
+                  <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateScheduleModel.endDate ? this.validateScheduleModel.endDate : ''}}</span>
+                </label>
+                <input   (change)="resSchedule.endDate = resScheduleTmp.endDate; inputChange()" [(ngModel)]="resScheduleTmp.endDate" class="form-control datepicker" placeholder="Chọn ngày" name="endDate" id="endDate" type="date"  />
               </div>
             </div>
           </div>
@@ -73,7 +78,7 @@
                 bindLabel="value"
                 bindValue="idPromotion"
                 [(ngModel)]="resSchedule.promotionId"
-                [disabled]="!isEdit"
+                 
                 placeholder="Chọn khuyến mãi..."
                 name="promotionId"
                 id="promotionId"
@@ -83,58 +88,78 @@
             </div>
             <div class="col-lg-6">
               <div class="form-group">
-                <label class="form-control-label" for="input-timePromotion">Chọn thời gian khuyến mãi</label>
-                <input   (change)="resSchedule.timePromotion = resScheduleTmp.timePromotion; inputChange()" [(ngModel)]="resScheduleTmp.timePromotion" class="form-control datepicker" placeholder="Chọn ngày" name="timePromotion" id="timePromotion" type="date" [disabled]="!isEdit"/>
+                <label class="form-control-label" for="input-timePromotion">Chọn thời gian khuyến mãi
+                  <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateScheduleModel.timePromotion ? this.validateScheduleModel.timePromotion : ''}}</span>
+                </label>
+                <input   (change)="resSchedule.timePromotion = resScheduleTmp.timePromotion; inputChange()" [(ngModel)]="resScheduleTmp.timePromotion" class="form-control datepicker" placeholder="Chọn ngày" name="timePromotion" id="timePromotion" type="date"  />
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-lg-6">
               <div class="form-group">
-                <label class="form-control-label" for="input-beginDate">Chọn ngày bắt đầu</label>
-                <input   (change)="resSchedule.beginDate = resScheduleTmp.beginDate; inputChange()" [(ngModel)]="resScheduleTmp.beginDate" class="form-control datepicker" placeholder="Chọn ngày" name="beginDate" id="beginDate" type="date" [disabled]="!isEdit"/>
+                <label class="form-control-label" for="input-departureDate">Chọn ngày khởi hành
+                  <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateScheduleModel.departureDate ? this.validateScheduleModel.departureDate : ''}}</span>
+                </label>
+                <input   (change)="resSchedule.departureDate = resScheduleTmp.departureDate; inputChange()" [(ngModel)]="resScheduleTmp.departureDate" class="form-control datepicker" placeholder="Chọn ngày" name="departureDate" id="departureDate" type="date"  />
               </div>
             </div>
             <div class="col-lg-6">
               <div class="form-group">
-                <label class="form-control-label" for="input-endDate">Chọn ngày kết thúc</label>
-                <input   (change)="resSchedule.endDate = resScheduleTmp.endDate; inputChange()" [(ngModel)]="resScheduleTmp.endDate" class="form-control datepicker" placeholder="Chọn ngày" name="endDate" id="endDate" type="date" [disabled]="!isEdit"/>
+                <label class="form-control-label" for="input-returnDate">Chọn ngày trở về
+                  <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateScheduleModel.returnDate ? this.validateScheduleModel.returnDate : ''}}</span>
+                </label>
+                <input   (change)="resSchedule.returnDate = resScheduleTmp.returnDate; inputChange()" [(ngModel)]="resScheduleTmp.returnDate" class="form-control datepicker" placeholder="Chọn ngày" name="returnDate" id="returnDate" type="date"  />
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-lg-6">
               <div class="form-group">
-                <label class="form-control-label" for="input-minCapacity">Tối thiểu số người</label>
-                <input type="text" name="minCapacity" id="minCapacity" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số lượng tối thiểu" [(ngModel)]="resSchedule.minCapacity" [readonly]="!isEdit">
+                <label class="form-control-label" for="input-minCapacity">Tối thiểu số người
+                  <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateScheduleModel.minCapacity ? this.validateScheduleModel.minCapacity : ''}}</span>
+                </label>
+                <input type="number" name="minCapacity" id="minCapacity" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số lượng tối thiểu" [(ngModel)]="resSchedule.minCapacity"  >
               </div>
             </div>
             <div class="col-lg-6">
               <div class="form-group">
-                <label class="form-control-label" for="input-maxCapacity">Tối đa số người</label>
-                <input type="text" name="maxCapacity" id="maxCapacity" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số lượng tối đa" [(ngModel)]="resSchedule.maxCapacity" [readonly]="!isEdit">
+                <label class="form-control-label" for="input-maxCapacity">Tối đa số người
+                  <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateScheduleModel.maxCapacity ? this.validateScheduleModel.maxCapacity : ''}}</span>
+                </label>
+                <input type="number" name="maxCapacity" id="maxCapacity" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số lượng tối đa" [(ngModel)]="resSchedule.maxCapacity"  >
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-lg-10">
               <div class="form-group">
-                <label class="form-control-label" for="input-minCapacity">Mô tả</label>
-                <input type="text" name="description" id="description" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập mô tả" [(ngModel)]="resSchedule.description" [readonly]="!isEdit">
+                <label class="form-control-label" for="description">Mô tả
+                  <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateScheduleModel.description ? this.validateScheduleModel.description : ''}}</span>
+                </label>
+                <input type="text" name="description" id="description" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập mô tả" [(ngModel)]="resSchedule.description"  >
               </div>
             </div>
             <div class="col-lg-2">
               <div class="form-group">
-                <label class="form-control-label" for="input-maxCapacity">Vat</label>
-                <input type="text" name="vat" id="vat" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập VAT" [(ngModel)]="resSchedule.vat" [readonly]="!isEdit">
+                <label class="form-control-label" for="vat">Vat
+                  <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateScheduleModel.vat ? this.validateScheduleModel.vat : ''}}</span>
+                </label>
+                <input type="number" name="vat" id="vat" (input)="inputChange()" min="0" class="form-control form-control-alternative" placeholder="Nhập VAT" [(ngModel)]="resSchedule.vat"  >
               </div>
             </div>
           </div>
           <div class="row align-items-center">
             <div class="col-12 text-right">
-              <button  *ngIf="type == 'detail'" class="btn btn-xl btn-danger" data-bs-toggle="modal" data-bs-target="#deleteProvinceModal" (click)="getDataDelete()">Xóa</button>
+              <!-- <button  *ngIf="type == 'detail' && resSchedule.isDelete == false " class="btn btn-xl btn-danger" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#deleteScheduleIdTourModal">Xóa</button> -->
               <button *ngIf="isChange && type == 'detail'" class="btn btn-xl btn-info" (click)="restore()">Khôi phục</button>
               <button *ngIf="isChange" class="btn btn-xl btn-success"  (click)="save()">{{type == 'detail' ? "Lưu":"Thêm"}}</button>
+              <!-- <ng-container *ngIf="idSchedule; else elseGrid1">
+                <button *ngIf="resSchedule.isDelete" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreScheduleIdTourModal" class="btn btn-sm btn-warning">Khôi phục lịch trình</button>
+              </ng-container>
+              <ng-template #elseGrid1>
+                <button *ngIf="resSchedule.isDelete" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreScheduleIdTourModal" class="btn btn-sm btn-warning">Khôi phục lịch trình</button>
+              </ng-template> -->
             </div>
           </div>
         </div>
@@ -153,50 +178,50 @@
                         <div class="col-lg-3">
                           <div class="form-group">
                             <label class="form-control-label" for="input-breakfast">Chi phí ăn</label>
-                            <input type="text" id="breakfast" name="breakfast" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập giá phần ăn" [(ngModel)]="resCostTour.breakfast" [readonly]="!isEdit">
+                            <input type="text" id="breakfast" name="breakfast" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập giá phần ăn" [(ngModel)]="resCostTour.breakfast"  >
                           </div>
                         </div>
                         <div class="col-lg-3">
                           <div class="form-group">
                             <label class="form-control-label" for="input-water">Chi phí nước</label>
-                            <input type="text" id="water" name="water" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập giá nước" [(ngModel)]="resCostTour.water" [readonly]="!isEdit">
+                            <input type="text" id="water" name="water" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập giá nước" [(ngModel)]="resCostTour.water"  >
                           </div>
                         </div>
                         <div class="col-lg-3">
                           <label class="form-control-label" for="input-fromPlace">Chi phí xăng</label>
-                          <input type="text" id="feeGas" name="feeGas" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập chi phí xăng " [(ngModel)]="resCostTour.feeGas" [readonly]="!isEdit">
+                          <input type="text" id="feeGas" name="feeGas" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập chi phí xăng " [(ngModel)]="resCostTour.feeGas"  >
                         </div>
                         <div class="col-lg-3">
                           <label class="form-control-label" for="input-toPlace">khoảng cách</label>
-                          <input type="text" id="distance" name="distance" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập khoảng cách " [(ngModel)]="resCostTour.distance" [readonly]="!isEdit">
+                          <input type="text" id="distance" name="distance" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập khoảng cách " [(ngModel)]="resCostTour.distance"  >
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-lg-3">
                           <label class="form-control-label" for="input-toPlace">Chi phí bán</label>
-                          <input type="text" id="sellCost" name="sellCost" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập chi phí bán tour " [(ngModel)]="resCostTour.sellCost" [readonly]="!isEdit">
+                          <input type="text" id="sellCost" name="sellCost" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập chi phí bán tour " [(ngModel)]="resCostTour.sellCost"  >
                         </div>
                         <div class="col-lg-3">
                           <label class="form-control-label" for="input-toPlace">Khấu hao</label>
-                          <input type="text" id="depreciation" name="depreciation" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập khấu hao " [(ngModel)]="resCostTour.depreciation" [readonly]="!isEdit">
+                          <input type="text" id="depreciation" name="depreciation" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập khấu hao " [(ngModel)]="resCostTour.depreciation"  >
                         </div>
                         <div class="col-lg-3">
                           <label class="form-control-label" for="input-toPlace">Chi phí khác</label>
-                          <input type="text" id="otherPrice" name="otherPrice" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập chi phí khác " [(ngModel)]="resCostTour.otherPrice" [readonly]="!isEdit">
+                          <input type="text" id="otherPrice" name="otherPrice" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập chi phí khác " [(ngModel)]="resCostTour.otherPrice"  >
                         </div>
                         <div class="col-lg-3">
                           <label class="form-control-label" for="input-toPlace">Chi phí cầu đường</label>
-                          <input type="text" id="tolls" name="tolls" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập chi phí bán " [(ngModel)]="resCostTour.tolls" [readonly]="!isEdit">
+                          <input type="text" id="tolls" name="tolls" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập chi phí bán " [(ngModel)]="resCostTour.tolls"  >
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-lg-3">
                           <label class="form-control-label" for="input-toPlace">Khách dự kiến </label>
-                          <input type="text" id="cusExpected" name="cusExpected" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số khách dự kiến " [(ngModel)]="resCostTour.cusExpected" [readonly]="!isEdit">
+                          <input type="text" id="cusExpected" name="cusExpected" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số khách dự kiến " [(ngModel)]="resCostTour.cusExpected"  >
                         </div>
                         <div class="col-lg-3">
                           <label class="form-control-label" for="input-toPlace">Chi phí bảo hiểm</label>
-                          <input type="text" id="insuranceFee" name="insuranceFee" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập chi phí bảo hiểm" [(ngModel)]="resCostTour.insuranceFee" [readonly]="!isEdit">
+                          <input type="text" id="insuranceFee" name="insuranceFee" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập chi phí bảo hiểm" [(ngModel)]="resCostTour.insuranceFee"  >
                         </div>
                         <div class="col-lg-3">
                           <label class="form-control-label" for="input-toPlace">Ngày lễ</label>
@@ -204,7 +229,7 @@
                           bindLabel="name"
                           bindValue="id"
                           [(ngModel)]="resCostTour.isHoliday"
-                          [disabled]="!isEdit"
+                           
                           placeholder="Kích hoạt..."
                           name="isHoliday"
                           id="isHoliday"
@@ -221,7 +246,7 @@
                                         bindLabel="name"
                                         bindValue="idHotel"
                                         [(ngModel)]="resCostTour.hotelId"
-                                        [disabled]="!isEdit"
+                                         
                                         placeholder="Chọn khách sạn..."
                                         name="hotelId"
                                         id="hotelId"
@@ -236,7 +261,7 @@
                                         bindLabel="name"
                                         bindValue="idRestaurant"
                                         [(ngModel)]="resCostTour.restaurantId"
-                                        [disabled]="!isEdit"
+                                         
                                         placeholder="Chọn nhà hàng..."
                                         name="restaurantId"
                                         id="restaurantId"
@@ -251,7 +276,7 @@
                                         bindLabel="name"
                                         bindValue="idPlace"
                                         [(ngModel)]="resCostTour.placeId"
-                                        [disabled]="!isEdit"
+                                         
                                         placeholder="Chọn địa điểm..."
                                         name="placeId"
                                         id="placeId"
@@ -276,8 +301,43 @@
         </ngb-accordion>
       </form>
     </div>
-
-
-
   </ng-container>
+</div>
+
+
+<div class="modal fade" id="deleteScheduleIdTourModal" tabindex="-1" aria-labelledby="deleteScheduleIdTourModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="deleteScheduleIdTourModal">Xác nhận</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="resSchedule">
+        Bạn có chắc muốn xóa [<span class="text-red">{{resSchedule.nameTour}}</span>] !
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="delete()">Xóa</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="restoreScheduleIdTourModal" tabindex="-1" aria-labelledby="restoreScheduleIdTourModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="restoreScheduleIdTourModal">Xác nhận</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="resSchedule">
+        Bạn có chắc muốn khôi phục [<span class="text-red">{{resSchedule.nameTour}}</span>] !
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="restoreSchedule()">Khôi phục</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+      </div>
+    </div>
+  </div>
 </div>

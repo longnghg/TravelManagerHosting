@@ -193,6 +193,128 @@ export class ConfigService{
 
    }
 
+   validateSchedule(data: any, model: any){
+    model.total = 0
+    var min = 0
+    var dateNow = Date.now()
+    //
+    if (data.employeeId == null || data.employeeId == "") {
+      model.employeeId = "Chọn nhân viên !"
+      model.total += 1
+    }
+
+    if(data.carId == null || data.carId == ""){
+     model.carId = ("Chọn xe!")
+     model.total += 1
+    }
+
+    if(data.promotionId == null || data.promotionId == ""){
+      model.promotionId = ("Chọn khuyến mãi!")
+      model.total += 1
+     }
+
+     if (data.departurePlace == null || data.departurePlace == "") {
+      model.departurePlace = ("[Mô tả] không bỏ trống!")
+      model.total += 1
+    }else if (data.departurePlace.length > 100) {
+      model.departurePlace = "[Mô tả]  quá dài !"
+      model.total += 1
+    }else if (data.departurePlace.length < 3) {
+      model.departurePlace = "[Mô tả]  quá ngắn !"
+      model.total += 1
+    }
+
+    if(data.departureDate == null || data.departureDate == ""){
+      model.departureDate = ("Chọn ngày khởi hành!")
+      model.total += 1
+     }else if(data.departureDate <= data.beginDate){
+      model.departureDate = ("Ngày khởi hành không được trước ngày bắt đầu!")
+      model.total += 1
+     }else if(data.departureDate >= data.endDate){
+      model.departureDate = ("Ngày khởi hành không được sau ngày kết thúc!")
+      model.total += 1
+     }
+    //  else if(data.departureDate < dateNow){
+    //   model.departureDate = ("Ngày khởi hành không được sau ngày hiện tại!")
+    //   model.total += 1
+    //  }
+
+     if(data.returnDate == null || data.returnDate == ""){
+      model.returnDate = ("Chọn ngày trở về!")
+      model.total += 1
+     }else if(data.returnDate <= data.departureDate){
+      model.returnDate = ("Ngày trở về không được trước ngày khởi hành!")
+      model.total += 1
+     }else if(data.returnDate >= data.endDate){
+      model.returnDate = ("Ngày trở về không được sau ngày kết thúc!")
+      model.total += 1
+     }
+
+     if(data.timePromotion == null || data.timePromotion == ""){
+      model.timePromotion = ("Chọn khuyển mãi")
+      model.total += 1
+     }
+
+     if(data.beginDate == null || data.beginDate == ""){
+      model.beginDate = ("Chọn ngày bắt đầu!")
+      model.total += 1
+     }
+
+     if(data.endDate == null || data.endDate == ""){
+      model.endDate = ("Chọn ngày kết thúc!")
+      model.total += 1
+     }else if(data.endDate <= data.beginDate){
+      model.endDate = ("Ngày kết thúc không được trước ngày bắt đầu!")
+      model.total += 1
+     }
+
+     if(data.minCapacity == null || data.minCapacity == ""){
+      model.minCapacity = ("Nhập tối thiểu số người!")
+      model.total += 1
+     }else if (data.minCapacity.length > 2) {
+      model.minCapacity = "[Số người tối thiểu] quá dài!"
+      model.total += 1
+    } else if (data.minCapacity <= 0) {
+      model.minCapacity = "[Số người tối thiểu] không được nhỏ hơn 0!"
+      model.total += 1
+    }
+
+    if(data.maxCapacity == null || data.maxCapacity == ""){
+      model.maxCapacity = ("Nhập tối đa số người!")
+      model.total += 1
+     }else if (data.maxCapacity.length > 2) {
+      model.maxCapacity = "[Số người tối đa] quá dài!"
+      model.total += 1
+    }else if (data.maxCapacity < data.minCapacity) {
+      model.maxCapacity = "[Số người tối đa] không nhỏ hơn tối thiểu!"
+      model.total += 1
+    }else if (data.maxCapacity <= 0) {
+      model.maxCapacity = "[Số người tối đa] không được nhỏ hơn 0!"
+      model.total += 1
+    }
+
+    if (data.description == null || data.description == "") {
+      model.description = ("[Mô tả] không bỏ trống!")
+      model.total += 1
+    }else if (data.description.length > 200) {
+      model.description = "[Mô tả]  quá dài !"
+      model.total += 1
+    }else if (data.description.length < 3) {
+      model.description = "[Mô tả]  quá ngắn !"
+      model.total += 1
+    }
+
+    if(data.vat == null || data.vat == ""){
+      model.vat = ("Nhập VAT!")
+      model.total += 1
+     }else if (data.minCapacity <= 0) {
+      model.minCapacity = "[Số người tối thiểu] không được nhỏ hơn 0!"
+      model.total += 1
+    }
+
+    return model
+   }
+
    validateProvince(data: any){
     var err = []
     //name

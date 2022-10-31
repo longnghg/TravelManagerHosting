@@ -28,4 +28,22 @@ export class ScheduleModel{
   finalHoliday: number
   vat: number
   description: string
+  isDelete: boolean
+}
+
+export class ValidateScheduleModel{
+  total: number
+  employeeId: string = null
+  carId: string = null
+  departurePlace: string = null
+  departureDate: string = null
+  returnDate: string = null
+  promotionId: string = null
+  timePromotion: string = null
+  beginDate: string = null
+  endDate: string = null
+  minCapacity: string = null
+  maxCapacity: string = null
+  description: string = null
+  vat: string = null
 }
