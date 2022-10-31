@@ -7,6 +7,8 @@ import { ConfigService } from "./../../../services_API/config.service";
 import { ResponseModel } from "./../../../models/responsiveModels/response.model";
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+
+import { StatusNotification } from "../../../enums/enum";
 @Component({
   selector: 'app-item-tour',
   templateUrl: './item-tour.component.html',
@@ -33,7 +35,7 @@ export class ItemTourComponent implements OnInit {
     this.type = this.activatedRoute.snapshot.paramMap.get('id1')
 
     if(this.type == "detail"){
-      
+
       this.tourService.getTour(idTour).subscribe(res => {
         this.response = res
 
@@ -53,14 +55,14 @@ export class ItemTourComponent implements OnInit {
         }
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, "Error")
+        this.notificationService.handleAlert(message, StatusNotification.Error)
       })
 
     }
     else{
       this.resTour = new TourModel
       this.resTourTmp = Object.assign({}, this.resTour)
-   
+
       if(this.resTour){
         if (this.resTour.thumbnail) {
           this.img = this.configService.apiUrl + this.resTour.thumbnail
@@ -103,7 +105,7 @@ export class ItemTourComponent implements OnInit {
       }
     }
     else{
-      this.notificationService.handleAlert("Không đúng định dạng hình ảnh !", "Error")
+      this.notificationService.handleAlert("Không đúng định dạng hình ảnh !", StatusNotification.Error)
     }
   }
 
@@ -124,13 +126,13 @@ export class ItemTourComponent implements OnInit {
           this.response = res
 
           // this.resCostTour.idCostTour = this.response.content
-          if (res.notification.type == "Success") {
+          if (res.notification.type == StatusNotification.Success) {
             this.close()
           }
           this.notificationService.handleAlertObj(res.notification)
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
+          this.notificationService.handleAlert(message, StatusNotification.Error)
         })
       }
       else{
@@ -144,13 +146,13 @@ export class ItemTourComponent implements OnInit {
           this.response = res
 
           // this.resCostTour.idCostTour = this.response.content
-          if (res.notification.type == "Success") {
+          if (res.notification.type == StatusNotification.Success) {
             this.close()
           }
           this.notificationService.handleAlertObj(res.notification)
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
+          this.notificationService.handleAlert(message, StatusNotification.Error)
         })
       }
       this.close()
@@ -161,7 +163,7 @@ export class ItemTourComponent implements OnInit {
 
   close(){
     if (this.type == 'detail') {
-      
+
     }
 
      this.restore()
@@ -179,12 +181,12 @@ export class ItemTourComponent implements OnInit {
      this.tourService.delete(this.resTour.idTour).subscribe(res =>{
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
-       if (res.notification.type == "Success") {
+       if (res.notification.type == StatusNotification.Success) {
         this.router.navigate(['','list-tour']);
        }
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-       this.notificationService.handleAlert(message, "Error")
+       this.notificationService.handleAlert(message, StatusNotification.Error)
      })
     }
    }
@@ -194,12 +196,12 @@ export class ItemTourComponent implements OnInit {
       this.tourService.restore(this.resTour.idTour).subscribe(res =>{
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
-        if (res.notification.type == "Success") {
+        if (res.notification.type == StatusNotification.Success) {
           this.router.navigate(['','list-tour'], { state: { isDelete: true } });
          }
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, "Error")
+        this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
   }

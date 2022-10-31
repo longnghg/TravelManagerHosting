@@ -8,6 +8,7 @@ import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.compo
 import { ColDef2, GridConfig2} from '../../../components/grid2-data/grid2-data.component';
 // signalr
 import { HubConnection } from '@microsoft/signalr';
+import { StatusNotification } from "../../../enums/enum";
 
 @Component({
   selector: 'app-list-tour',
@@ -97,7 +98,7 @@ export class ListTourComponent implements OnInit {
         }
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, "Error")
+        this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
 
@@ -115,7 +116,7 @@ export class ListTourComponent implements OnInit {
         }
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, "Error")
+        this.notificationService.handleAlert(message, StatusNotification.Error)
       })
 
 
@@ -155,7 +156,7 @@ export class ListTourComponent implements OnInit {
          this.notificationService.handleAlertObj(res.notification)
        }, error => {
          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-         this.notificationService.handleAlert(message, "Error")
+         this.notificationService.handleAlert(message, StatusNotification.Error)
        })
       }
      }
@@ -167,7 +168,7 @@ export class ListTourComponent implements OnInit {
           this.notificationService.handleAlertObj(res.notification)
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
+          this.notificationService.handleAlert(message, StatusNotification.Error)
         })
       }
     }

@@ -5,6 +5,8 @@ import { CarService } from '../../../services_API/car.service'
 import { CarModel } from '../../../models/car.model';
 import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.component';
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
+import { StatusNotification } from "../../../enums/enum";
+
 
 @Component({
   selector: 'app-list-car',
@@ -54,7 +56,7 @@ export class ListCarComponent implements OnInit {
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
+      this.notificationService.handleAlert(message, StatusNotification.Error)
     })
   }
 

@@ -6,6 +6,7 @@ import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.compo
 import { ConfigService } from "../../../services_API/config.service";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { ActivatedRoute } from '@angular/router';
+import { StatusNotification } from "../../../enums/enum";
 
 @Component({
   selector: 'app-view-tour-schedule',
@@ -87,7 +88,7 @@ export class ViewTourScheduleComponent implements OnInit {
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
+      this.notificationService.handleAlert(message, StatusNotification.Error)
     })
   }
 
@@ -105,7 +106,7 @@ export class ViewTourScheduleComponent implements OnInit {
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
+      this.notificationService.handleAlert(message, StatusNotification.Error)
     })
   }
 
@@ -132,7 +133,7 @@ export class ViewTourScheduleComponent implements OnInit {
        this.notificationService.handleAlertObj(res.notification)
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-       this.notificationService.handleAlert(message, "Error")
+       this.notificationService.handleAlert(message, StatusNotification.Error)
      })
     }
    }
@@ -144,7 +145,7 @@ export class ViewTourScheduleComponent implements OnInit {
         this.notificationService.handleAlertObj(res.notification)
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, "Error")
+        this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
   }

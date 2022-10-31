@@ -4,6 +4,7 @@ import { ProvinceService } from "../../../../services_API/province.service";
 import { ConfigService } from "../../../../services_API/config.service";
 import { LocationModel } from 'src/app/models/location.model';
 import { ResponseModel } from "../../../../models/responsiveModels/response.model";
+import { StatusNotification } from "../../../../enums/enum";
 @Component({
   selector: 'app-item-province',
   templateUrl: './item-province.component.html',
@@ -60,7 +61,7 @@ export class ItemProvinceComponent implements OnInit {
   save(){
     var valid =  this.configService.validateProvince(this.resProvince)
     valid.forEach(element => {
-        this.notificationService.handleAlert(element, "Error")
+        this.notificationService.handleAlert(element, StatusNotification.Error)
     });
     if (valid.length == 0) {
       if(this.type == "create")
@@ -71,14 +72,14 @@ export class ItemProvinceComponent implements OnInit {
           this.close()
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
+          this.notificationService.handleAlert(message, StatusNotification.Error)
         })
       }
       else{
         this.provinceService.update(this.resProvince).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-          if(this.response.notification.type == "Success")
+          if(this.response.notification.type == StatusNotification.Success)
           {
             this.resProvinceTmp = Object.assign({}, this.resProvince)
           }
@@ -92,7 +93,7 @@ export class ItemProvinceComponent implements OnInit {
           this.isChange = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
+          this.notificationService.handleAlert(message, StatusNotification.Error)
         })
 
       }

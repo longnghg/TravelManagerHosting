@@ -7,6 +7,9 @@ import { WardService } from 'src/app/services_API/ward.service';
 import { LocationModel } from "../../../models/location.model";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.component';
+
+import { StatusNotification } from "../../../enums/enum";
+
 @Component({
   selector: 'app-list-location',
   templateUrl: './list-location.component.html',
@@ -43,7 +46,7 @@ export class ListLocationComponent implements OnInit {
       this.notificationService.handleAlertObj(res.notification)
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
+      this.notificationService.handleAlert(message, StatusNotification.Error)
     })
    }
   }
@@ -55,7 +58,7 @@ export class ListLocationComponent implements OnInit {
        this.notificationService.handleAlertObj(res.notification)
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-       this.notificationService.handleAlert(message, "Error")
+       this.notificationService.handleAlert(message, StatusNotification.Error)
      })
     }
    }
@@ -67,7 +70,7 @@ export class ListLocationComponent implements OnInit {
        this.notificationService.handleAlertObj(res.notification)
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-       this.notificationService.handleAlert(message, "Error")
+       this.notificationService.handleAlert(message, StatusNotification.Error)
      })
     }
    }

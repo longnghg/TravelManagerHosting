@@ -5,6 +5,8 @@ import { DistrictService } from "../../../../services_API/district.service";
 import { ConfigService } from "../../../../services_API/config.service";
 import { LocationModel } from 'src/app/models/location.model';
 import { ResponseModel } from "../../../../models/responsiveModels/response.model";
+import { StatusNotification } from "../../../../enums/enum";
+
 @Component({
   selector: 'app-item-district',
   templateUrl: './item-district.component.html',
@@ -63,7 +65,7 @@ export class ItemDistrictComponent implements OnInit {
   save(){
     var valid =  this.configService.validateDistrict(this.resDistrict)
     valid.forEach(element => {
-        this.notificationService.handleAlert(element, "Error")
+        this.notificationService.handleAlert(element, StatusNotification.Error)
     });
     if (valid.length == 0) {
       if(this.type == "create")
@@ -75,27 +77,28 @@ export class ItemDistrictComponent implements OnInit {
 
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
+          this.notificationService.handleAlert(message, StatusNotification.Error)
         })
       }
       else{
         this.districtService.update(this.resDistrict).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-          if(this.response.notification.type == "Success")
+          if(this.response.notification.type == StatusNotification.Success)
           {
             this.resDistrictTmp = Object.assign({}, this.resDistrict)
           }
           else{
             this.resDistrict = Object.assign({},this.resDistrictTmp)
           }
+
           if (this.type == 'detail') {
             this.isEdit = false
           }
           this.isChange = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
+          this.notificationService.handleAlert(message, StatusNotification.Success)
         })
 
       }

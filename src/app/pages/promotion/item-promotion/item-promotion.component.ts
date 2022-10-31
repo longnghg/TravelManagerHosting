@@ -5,7 +5,7 @@ import { NotificationService } from "../../../services_API/notification.service"
 import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.component';
 import { ConfigService } from "../../../services_API/config.service";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
-
+import { StatusNotification } from "../../../enums/enum";
 
 @Component({
   selector: 'app-item-promotion',
@@ -69,13 +69,9 @@ export class ItemPromotionComponent implements OnInit {
         this.promotionService.create(this.resPromotion).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-
-          if(this.response.notification.type == "Error")
-          {
-          }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
+          this.notificationService.handleAlert(message, StatusNotification.Error)
         })
       }
       else{

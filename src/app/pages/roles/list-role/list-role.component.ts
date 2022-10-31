@@ -7,7 +7,7 @@ import { RoleModel } from "../../../models/role.model";
 import { AuthenticationModel } from "../../../models/authentication.model";
 import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.component';
 import { HubConnection } from '@microsoft/signalr';
-import { RoleTitle } from "../../../enums/enum";
+import { RoleTitle, StatusNotification } from "../../../enums/enum";
 
 @Component({
   selector: 'app-list-role',
@@ -79,7 +79,7 @@ export class ListRoleComponent implements OnInit {
 
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, "Error")
+        this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
   }
@@ -98,7 +98,7 @@ export class ListRoleComponent implements OnInit {
 
   }, error => {
     var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-    this.notificationService.handleAlert(message, "Error")
+    this.notificationService.handleAlert(message, StatusNotification.Error)
   })
 
    setTimeout(() => {
@@ -136,7 +136,7 @@ export class ListRoleComponent implements OnInit {
        this.notificationService.handleAlertObj(res.notification)
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-       this.notificationService.handleAlert(message, "Error")
+       this.notificationService.handleAlert(message, StatusNotification.Error)
      })
     }
    }
@@ -148,7 +148,7 @@ export class ListRoleComponent implements OnInit {
         this.notificationService.handleAlertObj(res.notification)
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, "Error")
+        this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
   }

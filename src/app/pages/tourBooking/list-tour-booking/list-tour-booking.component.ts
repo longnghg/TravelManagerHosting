@@ -4,6 +4,7 @@ import { TourookingService } from "../../../services_API/tourBooking.service";
 import { NotificationService } from "../../../services_API/notification.service";
 import { ConfigService } from "../../../services_API/config.service";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
+import { StatusNotification } from "../../../enums/enum";
 @Component({
   selector: 'app-list-tour-booking',
   templateUrl: './list-tour-booking.component.html',
@@ -22,7 +23,7 @@ export class ListTourBookingComponent implements OnInit {
     this.tourookingService.gets().subscribe(res => {
       this.response = res
 
-      if(this.response.notification.type == "Error")
+      if(this.response.notification.type == StatusNotification.Error)
       {
         this.notificationService.handleAlertObj(res.notification)
       }

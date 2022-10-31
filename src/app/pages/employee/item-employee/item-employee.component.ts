@@ -8,7 +8,7 @@ import { RoleModel } from 'src/app/models/role.model';
 import { AuthenticationModel } from 'src/app/models/authentication.model';
 import { RoleService } from 'src/app/services_API/role.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RoleTitle } from "../../../enums/enum";
+import { StatusNotification } from "../../../enums/enum";
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
 @Component({
@@ -73,7 +73,7 @@ export class ItemEmployeeComponent implements OnInit{
         }
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, "Error")
+        this.notificationService.handleAlert(message, StatusNotification.Error)
       })
 
     }
@@ -144,7 +144,7 @@ export class ItemEmployeeComponent implements OnInit{
       }
     }
     else{
-      this.notificationService.handleAlert("Không đúng định dạng hình ảnh !", "Error")
+      this.notificationService.handleAlert("Không đúng định dạng hình ảnh !", StatusNotification.Error)
     }
   }
 
@@ -174,14 +174,14 @@ export class ItemEmployeeComponent implements OnInit{
           }
           else{
             this.notificationService.handleAlertObj(res.notification)
-            if (res.notification.type == "Success") {
+            if (res.notification.type == StatusNotification.Success) {
               this.close()
               this.isChange = false
             }
           }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
+          this.notificationService.handleAlert(message, StatusNotification.Error)
         })
       }
       else{
@@ -197,14 +197,14 @@ export class ItemEmployeeComponent implements OnInit{
           }
           else{
             this.notificationService.handleAlertObj(res.notification)
-            if (res.notification.type == "Success") {
+            if (res.notification.type == StatusNotification.Success) {
               this.close()
               this.isChange = true
             }
           }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
+          this.notificationService.handleAlert(message, StatusNotification.Error)
         })
       }
 
@@ -216,7 +216,7 @@ export class ItemEmployeeComponent implements OnInit{
     this.resEmployee = Object.assign({}, this.resEmployeeTmp)
     this.resEmployee.birthday = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resEmployee.birthday))
     this.isChange = false
-    this.notificationService.handleAlert("Khôi phục dữ liệu ban đầu thành công !", "Info")
+    this.notificationService.handleAlert("Khôi phục dữ liệu ban đầu thành công !", StatusNotification.Info)
   }
 
   close(){
@@ -246,16 +246,16 @@ export class ItemEmployeeComponent implements OnInit{
           this.response = res
 
           this.notificationService.handleAlertObj(res.notification)
-          if (res.notification.type == "Success") {
+          if (res.notification.type == StatusNotification.Success) {
            this.router.navigate(['','list-employee']);
           }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
+          this.notificationService.handleAlert(message, StatusNotification.Error)
         })
        }
        else{
-        this.notificationService.handleAlert("Bạn không thể xóa tài khoản đang đăng nhập !", "Error")
+        this.notificationService.handleAlert("Bạn không thể xóa tài khoản đang đăng nhập !", StatusNotification.Error)
       }
     }
    }
@@ -265,12 +265,12 @@ export class ItemEmployeeComponent implements OnInit{
       this.employeeService.restore(this.resEmployee.idEmployee).subscribe(res =>{
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
-        if (res.notification.type == "Success") {
+        if (res.notification.type == StatusNotification.Success) {
           this.router.navigate(['','list-employee'], { state: { isDelete: true } });
          }
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, "Error")
+        this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
   }

@@ -5,6 +5,7 @@ import { NotificationService } from "../../../../services_API/notification.servi
 import { ColDef, GridConfig} from '../../../../components/grid-data/grid-data.component';
 import { ConfigService } from "../../../../services_API/config.service";
 import { ResponseModel } from "../../../../models/responsiveModels/response.model";
+import { StatusNotification } from "../../../../enums/enum";
 
 @Component({
   selector: 'app-list-place',
@@ -56,7 +57,7 @@ export class ListPlaceComponent implements OnInit {
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
+      this.notificationService.handleAlert(message, StatusNotification.Error)
     })
   }
 
@@ -74,7 +75,7 @@ export class ListPlaceComponent implements OnInit {
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
+      this.notificationService.handleAlert(message, StatusNotification.Error)
     })
   }
 

@@ -6,6 +6,8 @@ import { ColDef, GridConfig} from '../../../../components/grid-data/grid-data.co
 import { ConfigService } from "../../../../services_API/config.service";
 import { ResponseModel } from "../../../../models/responsiveModels/response.model";
 import { AuthenticationModel } from 'src/app/models/authentication.model';
+import { StatusNotification } from "../../../../enums/enum";
+
 @Component({
   selector: 'app-item-hotel',
   templateUrl: './item-hotel.component.html',
@@ -65,13 +67,9 @@ export class ItemHotelComponent implements OnInit {
         this.hotelService.create(this.resHotel).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-
-          if(this.response.notification.type == "Error")
-          {
-          }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
+          this.notificationService.handleAlert(message, StatusNotification.Error)
 
         })
       }
@@ -80,12 +78,12 @@ export class ItemHotelComponent implements OnInit {
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
 
-          if(this.response.notification.type == "Error")
+          if(this.response.notification.type == StatusNotification.Success)
           {
           }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
+          this.notificationService.handleAlert(message, StatusNotification.Error)
 
         })
       }
@@ -104,14 +102,14 @@ export class ItemHotelComponent implements OnInit {
       //     }
       //     else{
       //       this.notificationService.handleAlertObj(res.notification)
-      //       if (res.notification.type == "Success") {
+      //       if (res.notification.type == StatusNotification.Success) {
       //         this.close()
       //         this.isChange = true
       //       }
       //     }
       //   }, error => {
       //     var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      //     this.notificationService.handleAlert(message, "Error")
+      //     this.notificationService.handleAlert(message, StatusNotification.Error)
       //   })
       // }
 

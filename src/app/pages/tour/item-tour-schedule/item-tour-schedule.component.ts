@@ -20,6 +20,7 @@ import { PlaceService } from 'src/app/services_API/place.service';
 import { PlaceModel } from 'src/app/models/place.model';
 import { RestaurantService } from 'src/app/services_API/restaurant.service';
 import { RestaurantModel } from 'src/app/models/restaurant.model';
+import { StatusNotification } from "../../../enums/enum";
 @Component({
   selector: 'app-item-tour-schedule',
   templateUrl: './item-tour-schedule.component.html',
@@ -53,8 +54,8 @@ export class ItemTourScheduleComponent implements OnInit {
   ngOnChanges(): void {
     this.init()
     this.initCost()
-    
-    
+
+
     if(this.type == 'create'){
       this.resSchedule = new ScheduleModel()
       this.resCostTour = new CostTourModel()
@@ -74,7 +75,7 @@ export class ItemTourScheduleComponent implements OnInit {
           this.resCostTour = this.response.content
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, "Error")
+        this.notificationService.handleAlert(message, StatusNotification.Error)
       })
 
       console.log(this.resSchedule.isDelete);
@@ -98,7 +99,7 @@ export class ItemTourScheduleComponent implements OnInit {
   initCost(){
     this.hotelService.gets().subscribe(response =>{
       this.response = response
-      this.resHotel = this.response.content       
+      this.resHotel = this.response.content
     })
     this.restaurantService.gets().subscribe(response =>{
       this.response = response
@@ -138,13 +139,9 @@ export class ItemTourScheduleComponent implements OnInit {
           this.notificationService.handleAlertObj(res.notification)
           this.resSchedule.idSchedule = res.content
 
-
-          if(this.response.notification.type == "Error")
-          {
-          }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
+          this.notificationService.handleAlert(message, StatusNotification.Error)
         })
       }
       else{
@@ -155,12 +152,12 @@ export class ItemTourScheduleComponent implements OnInit {
           this.resSchedule.idSchedule = res.content
 
 
-          if(this.response.notification.type == "Error")
+          if(this.response.notification.type == StatusNotification.Success)
           {
           }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
+          this.notificationService.handleAlert(message, StatusNotification.Error)
         })
 
       }
@@ -175,13 +172,10 @@ export class ItemTourScheduleComponent implements OnInit {
     this.costtourService.create(this.resCostTour).subscribe(res =>{
       this.response = res
       this.notificationService.handleAlertObj(res.notification)
-
-      if(this.response.notification.type == "Success")
-      {}
       console.log(this.response.content);
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
+      this.notificationService.handleAlert(message, StatusNotification.Error)
     })
   }
   else{
@@ -191,14 +185,14 @@ export class ItemTourScheduleComponent implements OnInit {
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
 
-        if(this.response.notification.type == "Success")
+        if(this.response.notification.type == StatusNotification.Success)
         {
           this.isAdd = false
         }
         console.log(this.response.content);
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, "Error")
+        this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
     else{
@@ -207,13 +201,13 @@ export class ItemTourScheduleComponent implements OnInit {
       this.response = res
       this.notificationService.handleAlertObj(res.notification)
 
-      if(this.response.notification.type == "Success")
+      if(this.response.notification.type == StatusNotification.Success)
       {
       }
       console.log(this.response.content);
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
+      this.notificationService.handleAlert(message, StatusNotification.Error)
     })
   }
   }
@@ -246,7 +240,7 @@ export class ItemTourScheduleComponent implements OnInit {
        this.notificationService.handleAlertObj(res.notification)
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-       this.notificationService.handleAlert(message, "Error")
+       this.notificationService.handleAlert(message, StatusNotification.Error)
      })
     }
    }
@@ -258,7 +252,7 @@ export class ItemTourScheduleComponent implements OnInit {
         this.notificationService.handleAlertObj(res.notification)
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, "Error")
+        this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
   }

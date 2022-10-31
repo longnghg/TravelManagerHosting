@@ -5,6 +5,7 @@ import { DistrictService } from "../../../../services_API/district.service";
 import { ConfigService } from "../../../../services_API/config.service";
 import { LocationModel } from 'src/app/models/location.model';
 import { ResponseModel } from "../../../../models/responsiveModels/response.model";
+import { StatusNotification } from "../../../../enums/enum";
 @Component({
   selector: 'app-item-ward',
   templateUrl: './item-ward.component.html',
@@ -63,7 +64,7 @@ export class ItemWardComponent implements OnInit {
   save(){
     var valid =  this.configService.validateWard(this.resWard)
     valid.forEach(element => {
-        this.notificationService.handleAlert(element, "Error")
+        this.notificationService.handleAlert(element, StatusNotification.Error)
     });
     if (valid.length == 0) {
       if(this.type == "create")
@@ -74,14 +75,14 @@ export class ItemWardComponent implements OnInit {
           this.close()
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
+          this.notificationService.handleAlert(message, StatusNotification.Error)
         })
       }
       else{
         this.wardService.update(this.resWard).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-          if(this.response.notification.type == "Success")
+          if(this.response.notification.type == StatusNotification.Success)
           {
             this.resWardTmp = Object.assign({}, this.resWard)
           }
@@ -94,7 +95,7 @@ export class ItemWardComponent implements OnInit {
           this.isChange = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
+          this.notificationService.handleAlert(message, StatusNotification.Error)
         })
 
       }

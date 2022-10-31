@@ -4,6 +4,7 @@ import { ConfigService } from "../../../services_API/config.service";
 import { CustomerService } from 'src/app/services_API/customer.service';
 import { CustomerModel } from 'src/app/models/customer.model';
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
+import { StatusNotification } from "../../../enums/enum";
 
 
 @Component({
@@ -25,9 +26,9 @@ export class ItemCustomerComponent implements OnInit {
   ngOnInit(): void {
   }
   ngOnChanges(): void {
-    
+
     if(this.type = 'create'){
-      
+
     }else{
       this.isEdit = false
     }
@@ -62,13 +63,13 @@ export class ItemCustomerComponent implements OnInit {
   save(){
    this.customerService.create(this.resCustomer).subscribe(res =>{
         this.response = res
-        if(this.response.notification.type == "Error")
+        if(this.response.notification.type == StatusNotification.Error)
         {
           this.notificationService.handleAlertObj(res.notification)
         }
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, "Error")
+        this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
 

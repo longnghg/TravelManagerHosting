@@ -9,7 +9,7 @@ import { ConfigService } from "../../../services_API/config.service";
 import { RoleService } from "../../../services_API/role.service";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { AuthenticationModel } from 'src/app/models/authentication.model';
-import { RoleTitle } from "../../../enums/enum";
+import { RoleTitle, StatusNotification } from "../../../enums/enum";
 // signalr
 import { HubConnection } from '@microsoft/signalr';
 @Component({
@@ -126,7 +126,7 @@ export class ListEmployeeComponent implements OnInit {
 
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, "Error")
+        this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
   }
@@ -147,7 +147,7 @@ export class ListEmployeeComponent implements OnInit {
 
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
+      this.notificationService.handleAlert(message, StatusNotification.Error)
     })
 
     this.roleService.views().then(response => {
@@ -192,11 +192,11 @@ export class ListEmployeeComponent implements OnInit {
           this.notificationService.handleAlertObj(res.notification)
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
+          this.notificationService.handleAlert(message, StatusNotification.Error)
         })
       }
       else{
-        this.notificationService.handleAlert("Bạn không thể xóa tài khoản đang đăng nhập !", "Error")
+        this.notificationService.handleAlert("Bạn không thể xóa tài khoản đang đăng nhập !", StatusNotification.Error)
       }
     }
    }
@@ -208,7 +208,7 @@ export class ListEmployeeComponent implements OnInit {
         this.notificationService.handleAlertObj(res.notification)
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, "Error")
+        this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
   }
