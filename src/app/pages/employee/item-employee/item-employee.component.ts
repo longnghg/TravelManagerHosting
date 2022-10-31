@@ -125,10 +125,6 @@ export class ItemEmployeeComponent implements OnInit{
     }
   }
 
-  inputDateChange(){
-    // this.birthdayView = this.configService.formatDateToDateView(this.resEmployee.birthday)
-  }
-
 
 
   changeImg(e: any){
