@@ -177,54 +177,76 @@
                       <div class="row">
                         <div class="col-lg-3">
                           <div class="form-group">
-                            <label class="form-control-label" for="input-breakfast">Chi phí ăn</label>
+                            <label class="form-control-label" for="input-breakfast">Chi phí ăn
+                              <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateCostTourModel.breakfast ? this.validateCostTourModel.breakfast : ''}}</span>
+                            </label>
                             <input type="text" id="breakfast" name="breakfast" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập giá phần ăn" [(ngModel)]="resCostTour.breakfast"  >
                           </div>
                         </div>
                         <div class="col-lg-3">
                           <div class="form-group">
-                            <label class="form-control-label" for="input-water">Chi phí nước</label>
+                            <label class="form-control-label" for="input-water">Chi phí nước
+                              <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateCostTourModel.water ? this.validateCostTourModel.water : ''}}</span>
+                            </label>
                             <input type="text" id="water" name="water" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập giá nước" [(ngModel)]="resCostTour.water"  >
                           </div>
                         </div>
                         <div class="col-lg-3">
-                          <label class="form-control-label" for="input-fromPlace">Chi phí xăng</label>
+                          <label class="form-control-label" for="input-fromPlace">Chi phí xăng
+                            <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateCostTourModel.feeGas ? this.validateCostTourModel.feeGas : ''}}</span>
+                          </label>
                           <input type="text" id="feeGas" name="feeGas" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập chi phí xăng " [(ngModel)]="resCostTour.feeGas"  >
                         </div>
                         <div class="col-lg-3">
-                          <label class="form-control-label" for="input-toPlace">khoảng cách</label>
+                          <label class="form-control-label" for="input-toPlace">khoảng cách
+                            <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateCostTourModel.distance ? this.validateCostTourModel.distance : ''}}</span>
+                          </label>
                           <input type="text" id="distance" name="distance" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập khoảng cách " [(ngModel)]="resCostTour.distance"  >
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-lg-3">
-                          <label class="form-control-label" for="input-toPlace">Chi phí bán</label>
+                          <label class="form-control-label" for="input-toPlace">Chi phí bán tour
+                            <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateCostTourModel.sellCost ? this.validateCostTourModel.sellCost : ''}}</span>
+                          </label>
                           <input type="text" id="sellCost" name="sellCost" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập chi phí bán tour " [(ngModel)]="resCostTour.sellCost"  >
                         </div>
                         <div class="col-lg-3">
-                          <label class="form-control-label" for="input-toPlace">Khấu hao</label>
+                          <label class="form-control-label" for="input-toPlace">Khấu hao
+                            <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateCostTourModel.depreciation ? this.validateCostTourModel.depreciation : ''}}</span>
+                          </label>
                           <input type="text" id="depreciation" name="depreciation" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập khấu hao " [(ngModel)]="resCostTour.depreciation"  >
                         </div>
                         <div class="col-lg-3">
-                          <label class="form-control-label" for="input-toPlace">Chi phí khác</label>
+                          <label class="form-control-label" for="input-toPlace">Chi phí khác
+                            <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateCostTourModel.otherPrice ? this.validateCostTourModel.otherPrice : ''}}</span>
+                          </label>
                           <input type="text" id="otherPrice" name="otherPrice" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập chi phí khác " [(ngModel)]="resCostTour.otherPrice"  >
                         </div>
                         <div class="col-lg-3">
-                          <label class="form-control-label" for="input-toPlace">Chi phí cầu đường</label>
+                          <label class="form-control-label" for="input-toPlace">Chi phí cầu đường
+                            <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateCostTourModel.tolls ? this.validateCostTourModel.tolls : ''}}</span>
+                          </label>
                           <input type="text" id="tolls" name="tolls" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập chi phí bán " [(ngModel)]="resCostTour.tolls"  >
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-lg-3">
-                          <label class="form-control-label" for="input-toPlace">Khách dự kiến </label>
+                          <label class="form-control-label" for="input-toPlace">Khách dự kiến
+                            <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateCostTourModel.cusExpected ? this.validateCostTourModel.cusExpected : ''}}</span>
+                          </label>
                           <input type="text" id="cusExpected" name="cusExpected" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số khách dự kiến " [(ngModel)]="resCostTour.cusExpected"  >
                         </div>
                         <div class="col-lg-3">
-                          <label class="form-control-label" for="input-toPlace">Chi phí bảo hiểm</label>
+                          <label class="form-control-label" for="input-toPlace">Chi phí bảo hiểm
+                            <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateCostTourModel.insuranceFee ? this.validateCostTourModel.insuranceFee : ''}}</span>
+                          </label>
                           <input type="text" id="insuranceFee" name="insuranceFee" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập chi phí bảo hiểm" [(ngModel)]="resCostTour.insuranceFee"  >
                         </div>
                         <div class="col-lg-3">
-                          <label class="form-control-label" for="input-toPlace">Ngày lễ</label>
+                          <label class="form-control-label" for="input-toPlace">Ngày lễ
+                            <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateCostTourModel.isHoliday ? this.validateCostTourModel.isHoliday : ''}}</span>
+                          </label>
                           <ng-select [items]="isHoliday"
                           bindLabel="name"
                           bindValue="id"
@@ -241,7 +263,9 @@
 
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <label class="form-control-label" for="employeeId">Khách sạn</label>
+                            <label class="form-control-label" for="employeeId">Khách sạn
+                              <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateCostTourModel.hotelId ? this.validateCostTourModel.hotelId : ''}}</span>
+                            </label>
                             <ng-select [items]="resHotel"
                                         bindLabel="name"
                                         bindValue="idHotel"
@@ -256,7 +280,9 @@
                         </div>
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <label class="form-control-label" for="carId">Nhà hàng</label>
+                            <label class="form-control-label" for="carId">Nhà hàng
+                              <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateCostTourModel.restaurantId ? this.validateCostTourModel.restaurantId : ''}}</span>
+                            </label>
                             <ng-select [items]="resRestaurant"
                                         bindLabel="name"
                                         bindValue="idRestaurant"
@@ -271,7 +297,9 @@
                         </div>
                         <div class="col-lg-4">
                           <div class="form-group">
-                            <label class="form-control-label" for="carId">Địa điểm</label>
+                            <label class="form-control-label" for="carId">Địa điểm
+                              <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateCostTourModel.placeId ? this.validateCostTourModel.placeId : ''}}</span>
+                            </label>
                             <ng-select [items]="resPlace"
                                         bindLabel="name"
                                         bindValue="idPlace"

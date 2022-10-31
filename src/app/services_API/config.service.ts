@@ -193,6 +193,110 @@ export class ConfigService{
 
    }
 
+   validateCostTour(data: any, model: any){
+    model.total = 0
+    var min = 0
+    if (data.breakfast == null || data.breakfast == "") {
+      model.breakfast = "[Chi phí ăn]  không được để trống !"
+      model.total += 1
+    }else if (data.breakfast <= 0) {
+      model.breakfast = "[Chi phí ăn] không được nhỏ hơn 0!"
+      model.total += 1
+    }
+
+    if(data.water == null || data.water == ""){
+     model.water = ("[Chi phí nước] không được để trống !")
+     model.total += 1
+    }else if (data.water <= 0) {
+      model.water = "[Chi phí nước] không được nhỏ hơn 0!"
+      model.total += 1
+    }
+
+    if(data.feeGas == null || data.feeGas == ""){
+      model.feeGas = ("[Chi phí xăng] không được để trống !")
+      model.total += 1
+     }else if (data.feeGas <= 0) {
+       model.feeGas = "[Chi phí xăng] không được nhỏ hơn 0!"
+       model.total += 1
+     }
+
+     if(data.distance == null || data.distance == ""){
+      model.distance = ("[Khoảng cách] không được để trống !")
+      model.total += 1
+     }else if (data.distance <= 0) {
+       model.distance = "[Khoảng cách] không được nhỏ hơn 0!"
+       model.total += 1
+     }
+
+     if(data.sellCost == null || data.sellCost == ""){
+      model.sellCost = ("[Chi phí bán tour] không được để trống !")
+      model.total += 1
+     }else if (data.sellCost <= 0) {
+       model.sellCost = "[Chi phí bán tour] không được nhỏ hơn 0!"
+       model.total += 1
+     }
+
+     if(data.depreciation == null || data.depreciation == ""){
+      model.depreciation = ("[Khấu hao] không được để trống !")
+      model.total += 1
+     }else if (data.depreciation <= 0) {
+       model.depreciation = "[Khấu hao] không được nhỏ hơn 0!"
+       model.total += 1
+     }
+
+     if(data.otherPrice == null || data.otherPrice == ""){
+      model.otherPrice = ("[Chi phí khác] không được để trống !")
+      model.total += 1
+     }else if (data.otherPrice <= 0) {
+       model.otherPrice = "[Chi phí khác] không được nhỏ hơn 0!"
+       model.total += 1
+     }
+
+     if(data.tolls == null || data.tolls == ""){
+      model.tolls = ("[Chi phí cầu đường] không được để trống !")
+      model.total += 1
+     }else if (data.tolls <= 0) {
+       model.tolls = "[Chi phí cầu đường] không được nhỏ hơn 0!"
+       model.total += 1
+     }
+
+     if(data.cusExpected == null || data.cusExpected == ""){
+      model.cusExpected = ("[Khách dự kiến] không được để trống !")
+      model.total += 1
+     }else if (data.cusExpected <= 0) {
+       model.cusExpected = "[Khách dự kiến] không được nhỏ hơn 0!"
+       model.total += 1
+     }
+     if(data.insuranceFee == null || data.insuranceFee == ""){
+      model.insuranceFee = ("[Chi phí bảo hiểm] không được để trống !")
+      model.total += 1
+     }else if (data.insuranceFee <= 0) {
+       model.insuranceFee = "[Chi phí bảo hiểm] không được nhỏ hơn 0!"
+       model.total += 1
+     }
+
+    if (data.isHoliday == null || data.isHoliday == "") {
+      model.isHoliday = ("[Ngày lễ] chưa chọn!")
+      model.total += 1
+    }
+
+    if (data.hotelId == null || data.hotelId == "") {
+      model.hotelId = ("[Khách sạn] chưa chọn!")
+      model.total += 1
+    }
+
+    if (data.restaurantId == null || data.restaurantId == "") {
+      model.restaurantId = ("[Nhà hàng] chưa chọn!")
+      model.total += 1
+    }
+    if (data.placeId == null || data.placeId == "") {
+      model.placeId = ("[Địa điểm] chưa chọn!")
+      model.total += 1
+    }
+
+    return model
+   }
+
    validateSchedule(data: any, model: any){
     model.total = 0
     var min = 0

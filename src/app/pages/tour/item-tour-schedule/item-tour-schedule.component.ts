@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ScheduleModel, ValidateScheduleModel } from 'src/app/models/schedule.model';
 import { ScheduleService } from "../../../services_API/schedule.service";
 import { NotificationService } from "../../../services_API/notification.service";
-import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.component';
+import { ColDef, GridConfig } from '../../../components/grid-data/grid-data.component';
 import { ConfigService } from "../../../services_API/config.service";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { CarModel } from 'src/app/models/car.model';
@@ -12,7 +12,7 @@ import { EmployeeService } from 'src/app/services_API/employee.service';
 import { PromotionModel } from 'src/app/models/promotion.model';
 import { PromotionService } from 'src/app/services_API/promotion.service';
 import { ActivatedRoute } from '@angular/router';
-import { CostTourModel } from 'src/app/models/costTour.model';
+import { CostTourModel, ValidateCostTourModel } from 'src/app/models/costTour.model';
 import { CostTourService } from 'src/app/services_API/costtour.service';
 import { HotelService } from 'src/app/services_API/hotel.service';
 import { HotelModel } from 'src/app/models/hotel.model';
@@ -32,6 +32,7 @@ export class ItemTourScheduleComponent implements OnInit {
   @Output() parentDelete = new EventEmitter<any>()
   @Output() parentRestore = new EventEmitter<any>()
   validateScheduleModel: ValidateScheduleModel = new ValidateScheduleModel
+  validateCostTourModel: ValidateCostTourModel = new ValidateCostTourModel
   resCostTour: CostTourModel
   resCar: CarModel[]
   resEmployee: EmployeeModel[]
@@ -56,107 +57,105 @@ export class ItemTourScheduleComponent implements OnInit {
     this.initCost()
 
 
-    if(this.type == 'create'){
+    if (this.type == 'create') {
       this.resSchedule = new ScheduleModel()
       this.resCostTour = new CostTourModel()
-    }else{
+    } else {
       this.isAdd = false
     }
     this.resScheduleTmp = Object.assign({}, this.resSchedule)
-    if(this.resSchedule){
+    if (this.resSchedule) {
       this.resScheduleTmp.departureDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.departureDate))
       this.resScheduleTmp.returnDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.returnDate))
       this.resScheduleTmp.beginDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.beginDate))
       this.resScheduleTmp.endDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.endDate))
       this.resScheduleTmp.timePromotion = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.timePromotion))
 
-      this.costtourService.getCostbyidSchedule(this.resSchedule.idSchedule).subscribe(res =>{
+      this.costtourService.getCostbyidSchedule(this.resSchedule.idSchedule).subscribe(res => {
         this.response = res
-          this.resCostTour = this.response.content
+        this.resCostTour = this.response.content
       }, error => {
-        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
         this.notificationService.handleAlert(message, StatusNotification.Error)
       })
 
       console.log(this.resSchedule.isDelete);
-     }
+    }
 
   }
 
 
-  init(e?){
-    this.employeeService.views(e).then(response =>{
+  init(e?) {
+    this.employeeService.views(e).then(response => {
       this.resEmployee = response
     })
-    this.carService.views().then(response =>{
+    this.carService.views().then(response => {
       this.resCar = response
     })
-    this.promotionService.views().then(response =>{
+    this.promotionService.views().then(response => {
       this.resPromotion = response
     })
   }
 
-  initCost(){
-    this.hotelService.gets().subscribe(response =>{
+  initCost() {
+    this.hotelService.gets().subscribe(response => {
       this.response = response
       this.resHotel = this.response.content
     })
-    this.restaurantService.gets().subscribe(response =>{
+    this.restaurantService.gets().subscribe(response => {
       this.response = response
       this.resRestaurant = this.response.content
     })
-    this.placeService.gets().subscribe(response =>{
+    this.placeService.gets().subscribe(response => {
       this.response = response
       this.resPlace = this.response.content
     })
   }
 
-  inputChange(){
+  inputChange() {
     if (JSON.stringify(this.resSchedule) != JSON.stringify(this.resScheduleTmp)) {
       this.isChange = true
     }
-    else{
+    else {
       this.isChange = false
     }
   }
 
-  restore(){
+  restore() {
     this.resSchedule = Object.assign({}, this.resScheduleTmp)
     this.isChange = false
   }
 
-  save(){
+  save() {
     this.validateScheduleModel = new ValidateScheduleModel
-    this.validateScheduleModel =  this.configService.validateSchedule(this.resSchedule, this.validateScheduleModel)
+    this.validateScheduleModel = this.configService.validateSchedule(this.resSchedule, this.validateScheduleModel)
 
     if (this.validateScheduleModel.total == 0) {
-    var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
-      if(this.type == "create")
-      {
+      var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
+      if (this.type == "create") {
         this.resSchedule.tourId = idTour
-        this.scheduleService.create(this.resSchedule).subscribe(res =>{
+        this.scheduleService.create(this.resSchedule).subscribe(res => {
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
           this.resSchedule.idSchedule = res.content
 
         }, error => {
-          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+          var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
           this.notificationService.handleAlert(message, StatusNotification.Error)
         })
       }
-      else{
+      else {
         // this.resSchedule.tourId = idTour
-        this.scheduleService.update(this.resSchedule).subscribe(res =>{
+        this.scheduleService.update(this.resSchedule).subscribe(res => {
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
           this.resSchedule.idSchedule = res.content
 
 
-          if(this.response.notification.type == StatusNotification.Success)
-          {
+          if (this.response.notification.type == StatusNotification.Success) {
           }
         }, error => {
-          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+          var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
           this.notificationService.handleAlert(message, StatusNotification.Error)
         })
 
@@ -165,93 +164,95 @@ export class ItemTourScheduleComponent implements OnInit {
     }
   }
 
-  saveCostTour(){
-      if(this.type == "create")
-      {
-        this.resCostTour.idSchedule =  this.resSchedule.idSchedule
-    this.costtourService.create(this.resCostTour).subscribe(res =>{
-      this.response = res
-      this.notificationService.handleAlertObj(res.notification)
-      console.log(this.response.content);
-    }, error => {
-      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, StatusNotification.Error)
-    })
-  }
-  else{
-    if(this.isAdd == true){
-      this.resCostTour.idSchedule =  this.resSchedule.idSchedule
-      this.costtourService.create(this.resCostTour).subscribe(res =>{
-        this.response = res
-        this.notificationService.handleAlertObj(res.notification)
+  saveCostTour() {
+    // this.validateCostTourModel = new ValidateCostTourModel
+    // this.validateCostTourModel = this.configService.validateCostTour(this.resSchedule, this.validateCostTourModel)
 
-        if(this.response.notification.type == StatusNotification.Success)
-        {
-          this.isAdd = false
-        }
-        console.log(this.response.content);
-      }, error => {
-        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, StatusNotification.Error)
-      })
-    }
-    else{
-    this.resCostTour.idSchedule =  this.resSchedule.idSchedule
-    this.costtourService.update(this.resCostTour).subscribe(res =>{
-      this.response = res
-      this.notificationService.handleAlertObj(res.notification)
-
-      if(this.response.notification.type == StatusNotification.Success)
-      {
+    // if (this.validateCostTourModel.total == 0) {
+      if (this.type == "create") {
+        this.resCostTour.idSchedule = this.resSchedule.idSchedule
+        this.costtourService.create(this.resCostTour).subscribe(res => {
+          this.response = res
+          this.notificationService.handleAlertObj(res.notification)
+          console.log(this.response.content);
+        }, error => {
+          var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+          this.notificationService.handleAlert(message, StatusNotification.Error)
+        })
       }
-      console.log(this.response.content);
-    }, error => {
-      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, StatusNotification.Error)
-    })
-  }
-  }
+      else {
+        if (this.isAdd == true) {
+          this.resCostTour.idSchedule = this.resSchedule.idSchedule
+          this.costtourService.create(this.resCostTour).subscribe(res => {
+            this.response = res
+            this.notificationService.handleAlertObj(res.notification)
+
+            if (this.response.notification.type == StatusNotification.Success) {
+              this.isAdd = false
+            }
+            console.log(this.response.content);
+          }, error => {
+            var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+            this.notificationService.handleAlert(message, StatusNotification.Error)
+          })
+        }
+        else {
+          this.resCostTour.idSchedule = this.resSchedule.idSchedule
+          this.costtourService.update(this.resCostTour).subscribe(res => {
+            this.response = res
+            this.notificationService.handleAlertObj(res.notification)
+
+            if (this.response.notification.type == StatusNotification.Success) {
+            }
+            console.log(this.response.content);
+          }, error => {
+            var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+            this.notificationService.handleAlert(message, StatusNotification.Error)
+          })
+        }
+      }
+    
   }
 
-  btnAddCost(){
+  btnAddCost() {
     this.resCostTour = new CostTourModel()
     this.isAdd = true
   }
 
 
-  close(){
+  close() {
     if (this.type == 'detail') {
       this.isAdd = false
     }
-     this.restore()
+    this.restore()
   }
 
-  getDataDelete(){
+  getDataDelete() {
     this.parentDelete.emit(this.resSchedule);
   }
-  getDataRestore(){
+  getDataRestore() {
     this.parentRestore.emit(this.resSchedule);
   }
 
-  delete(){
+  delete() {
     if (this.resSchedule) {
-     this.scheduleService.delete(this.resSchedule.idSchedule).subscribe(res =>{
-       this.response = res
-       this.notificationService.handleAlertObj(res.notification)
-     }, error => {
-       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-       this.notificationService.handleAlert(message, StatusNotification.Error)
-     })
-    }
-   }
-
-   restoreSchedule(){
-    if (this.resSchedule) {
-      this.scheduleService.restore(this.resSchedule.idSchedule).subscribe(res =>{
+      this.scheduleService.delete(this.resSchedule.idSchedule).subscribe(res => {
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
       }, error => {
-        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+        this.notificationService.handleAlert(message, StatusNotification.Error)
+      })
+    }
+  }
+
+  restoreSchedule() {
+    if (this.resSchedule) {
+      this.scheduleService.restore(this.resSchedule.idSchedule).subscribe(res => {
+        this.response = res
+        this.notificationService.handleAlertObj(res.notification)
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
         this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
