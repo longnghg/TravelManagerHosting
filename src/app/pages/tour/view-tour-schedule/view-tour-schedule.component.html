@@ -1,9 +1,10 @@
 <div class="row"></div>
-  <div class="container-fluid mt-5" >
+  <div class="container-fluid" >
+    <h1 class="mt-3 mb-3" style="border-bottom: 1px solid; padding-bottom:10px;">Danh sách Schedule: {{idTour}}</h1>
     <div class="row">
       <div class="col">
         <div class="card shadow border-0">
-          <app-grid-data [rowData]="resSchedule" [columnDefs]="columnDefs" [gridConfig]="gridConfig" (gdChecked)="init($event)" (gdType)="childType($event)" (gdChild)="childData($event)"></app-grid-data>
+          <app-grid-data [rowData]="resSchedule" [columnDefs]="columnDefs" [gridConfig]="gridConfig" (gdChecked)="init($event)" (gdType)="childType($event)" (gdChild)="childData($event)" (gdChild)="childData($event)" (gdRestore)="getData($event)" (gdDelete)="getData($event)"></app-grid-data>
         </div>
       </div>
     </div>
@@ -19,14 +20,50 @@
 
   <div class="row"></div>
   <div class="container-fluid mt-5" >
+    <h1 class="mt-3 mb-3" style="border-bottom: 1px solid; padding-bottom:10px;">Danh sách lịch trình chờ duyệt</h1>
     <div class="row">
       <div class="col">
         <div class="card shadow border-0">
-          <app-grid-data [rowData]="resScheduleWaiting" [columnDefs]="columnDefs" [gridConfig]="gridConfig" (gdChecked)="init()" (gdType)="childType($event)" (gdChild)="childData($event)"></app-grid-data>
+          <app-grid-data [rowData]="resScheduleWaiting" [columnDefs]="columnDefs" [gridConfig]="gridConfigApprove" (gdChecked)="init()" (gdType)="childType($event)" (gdChild)="childData($event)"></app-grid-data>
         </div>
       </div>
     </div>
   </div>
 
 
+  <div class="modal fade" [id]="gridConfig.idModalDelete" tabindex="-1" aria-labelledby="deleteScheduleModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="deleteScheduleModal">Xác nhận</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" *ngIf="data">
+          Bạn có chắc muốn xóa [<span class="text-red">{{data.nameTour}}</span>] !
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="delete()" >Xóa</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade" [id]="gridConfig.idModalRestore" tabindex="-1" aria-labelledby="restoreScheduleModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="restoreScheduleModal">Xác nhận</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" *ngIf="data">
+          Bạn có chắc muốn khôi phục [<span class="text-red">{{data.nameTour}}</span>] !
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="restore()" >Khôi phục</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+        </div>
+      </div>
+    </div>
+  </div>
 

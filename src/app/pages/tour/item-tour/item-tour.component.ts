@@ -5,12 +5,6 @@ import { NotificationService } from "./../../../services_API/notification.servic
 import { ColDef, GridConfig} from './../../../components/grid-data/grid-data.component';
 import { ConfigService } from "./../../../services_API/config.service";
 import { ResponseModel } from "./../../../models/responsiveModels/response.model";
-import { HotelService } from 'src/app/services_API/hotel.service';
-import { HotelModel } from 'src/app/models/hotel.model';
-import { PlaceService } from 'src/app/services_API/place.service';
-import { PlaceModel } from 'src/app/models/place.model';
-import { RestaurantService } from 'src/app/services_API/restaurant.service';
-import { RestaurantModel } from 'src/app/models/restaurant.model';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 @Component({
@@ -29,17 +23,13 @@ export class ItemTourComponent implements OnInit {
   isEdit: boolean = false
   isChange: boolean = false
   resTourTmp: TourModel
-  resHotel: HotelModel[]
-  resPlace: PlaceModel[]
-  resRestaurant: RestaurantModel[]
   isHoliday = this.configService.listStatus()
   img: any
   formData: any
   constructor(private router: Router, private tourService: TourService, private configService: ConfigService, private notificationService: NotificationService,
-      private hotelService: HotelService, private placeService: PlaceService, private restaurantService: RestaurantService, private activatedRoute: ActivatedRoute) { }
+      private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.init()
     var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
     this.type = this.activatedRoute.snapshot.paramMap.get('id1')
 
@@ -58,7 +48,7 @@ export class ItemTourComponent implements OnInit {
               this.img = this.configService.apiUrl + this.resTour.thumbnail
             }
             else{
-              this.img = "../../../../assets/img/employees/unknown.png"
+              this.img = "../../../../assets/img/tours/cross-sign.jpg"
             }
           }
         }
@@ -86,19 +76,6 @@ export class ItemTourComponent implements OnInit {
 
   }
 
-
-
-  init(){
-    this.hotelService.views().then(response =>{
-      this.resHotel = response
-    })
-    this.restaurantService.views().then(response =>{
-      this.resRestaurant = response
-    })
-    this.placeService.views().then(response =>{
-      this.resPlace = response
-    })
-  }
 
   isEditChange(){
     if (this.isEdit) {

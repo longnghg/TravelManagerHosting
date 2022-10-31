@@ -32,4 +32,12 @@ update(data: any)
 {
   return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Schedule/update-schedule", data);
 }
+delete(idSchedule: any)
+{
+  return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/delete-schedule?idSchedule="+idSchedule);
+}
+restore(idSchedule: any)
+{
+  return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/restore-schedule?idSchedule="+idSchedule);
+}
 }

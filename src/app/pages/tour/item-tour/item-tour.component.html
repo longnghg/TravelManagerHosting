@@ -127,12 +127,10 @@
                        </div>
                       </div>
                       <div class="col-lg-4">
-                        <div class="form-group">
-                          <label class="form-control-label" for="input-toPlace">Chọn hình
-                            <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateTourModel.thumbnail ? this.validateTourModel.thumbnail : ''}}</span>
-                          </label>
-                          <label for="file"  class="btn text-white btn-primary btn-round">Hình tour</label>
+                        <div class="form-group"> 
+                          <label for="file"  class="btn text-white btn-primary btn-round" style="margin-top: 30px;">Hình tour</label>
                           <input id="file" type="file" class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeImg($event); inputChange()">
+                          <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateTourModel.thumbnail ? this.validateTourModel.thumbnail : ''}}</span>
                         </div>
                       </div>
                     </div>

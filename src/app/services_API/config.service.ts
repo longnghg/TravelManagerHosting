@@ -186,7 +186,7 @@ export class ConfigService{
       model.total += 1
     }
     if (data.thumbnail == null || data.thumbnail == "") {
-      model.thumbnail = ("[Hình] không để trống!")
+      model.thumbnail = ("[Hình] chưa chọn!")
       model.total += 1
     }
     return model

@@ -51,7 +51,7 @@ export class ItemTourScheduleComponent implements OnInit {
   ngOnChanges(): void {
     this.init()
     this.initCost()
-
+    
     if(this.type == 'create'){
       this.resSchedule = new ScheduleModel()
       this.resCostTour = new CostTourModel()
@@ -93,14 +93,17 @@ export class ItemTourScheduleComponent implements OnInit {
   }
 
   initCost(){
-    this.hotelService.views().then(response =>{
-      this.resHotel = response
+    this.hotelService.gets().subscribe(response =>{
+      this.response = response
+      this.resHotel = this.response.content 
     })
-    this.restaurantService.views().then(response =>{
-      this.resRestaurant = response
+    this.restaurantService.gets().subscribe(response =>{
+      this.response = response
+      this.resRestaurant = this.response.content
     })
-    this.placeService.views().then(response =>{
-      this.resPlace = response
+    this.placeService.gets().subscribe(response =>{
+      this.response = response
+      this.resPlace = this.response.content
     })
   }
 

@@ -6,6 +6,7 @@ import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.compo
 import { ConfigService } from "../../../services_API/config.service";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-view-tour-schedule',
   templateUrl: './view-tour-schedule.component.html',
@@ -18,13 +19,15 @@ export class ViewTourScheduleComponent implements OnInit {
   dataChild: ScheduleModel
   typeChild: string
   type: boolean = false
+  data: any
+  idTour = this.activatedRoute.snapshot.paramMap.get('id2')
   constructor(private scheduleService: ScheduleService, private configService: ConfigService, private notificationService: NotificationService,
     private activatedRoute: ActivatedRoute) { }
 
   public columnDefs: ColDef[]
   public gridConfig: GridConfig = {
-    idModalRestore: "",
-    idModalDelete: "",
+    idModalRestore: "restoreScheduleModal",
+    idModalDelete: "deleteScheduleModal",
     idModal: "gridSchedule1",
     disableRadioBox: false,
     radioBoxName: "Kho lưu trữ",
@@ -68,11 +71,8 @@ export class ViewTourScheduleComponent implements OnInit {
       ];
     }, 200);
   }
-  ngOnChanges(): void {
 
-
-
-  }
+  ngOnChanges(): void {}
 
   initWaiting(){
     var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
@@ -113,7 +113,6 @@ export class ViewTourScheduleComponent implements OnInit {
     if (e) {
       this.dataChild = e
     }
-
   }
 
   childType(e){
@@ -122,5 +121,32 @@ export class ViewTourScheduleComponent implements OnInit {
     }
   }
 
+  getData(data: any){
+    this.data = data
+  }
+
+  delete(){
+    if (this.data) {
+     this.scheduleService.delete(this.data.idSchedule).subscribe(res =>{
+       this.response = res
+       this.notificationService.handleAlertObj(res.notification)
+     }, error => {
+       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+       this.notificationService.handleAlert(message, "Error")
+     })
+    }
+   }
+
+   restore(){
+    if (this.data) {
+      this.scheduleService.restore(this.data.idSchedule).subscribe(res =>{
+        this.response = res
+        this.notificationService.handleAlertObj(res.notification)
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, "Error")
+      })
+    }
+  }
 }
 
