@@ -33,13 +33,13 @@ export class ItemTourComponent implements OnInit {
   ngOnInit(): void {
     var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
     this.type = this.activatedRoute.snapshot.paramMap.get('id1')
-
+    
     if(this.type == "detail"){
 
       this.tourService.getTour(idTour).subscribe(res => {
         this.response = res
 
-        if(!this.response.notification.type)
+        if(this.response.notification.type == StatusNotification.Success)
         {
           this.resTour = this.response.content
           this.resTourTmp = Object.assign({}, this.resTour)
