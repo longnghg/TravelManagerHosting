@@ -44,7 +44,7 @@ export class ItemTourComponent implements OnInit {
           this.resTour = this.response.content
           this.resTourTmp = Object.assign({}, this.resTour)
 
-          if(this.resTour){
+          if(this.resTour){ 
             if (this.resTour.thumbnail) {
               this.img = this.configService.apiUrl + this.resTour.thumbnail
             }
@@ -136,9 +136,12 @@ export class ItemTourComponent implements OnInit {
         })
       }
       else{
+        var idUser = localStorage.getItem("idUser")
+        this.resTour.idUserModify = idUser
+        this.resTour.typeAction = "Cập nhật"
         var file = new FormData();
         file.append('data', JSON.stringify(this.resTour))
-
+        
         if (this.formData) {
           file.append('file', this.formData.path[0].files[0])
         }
