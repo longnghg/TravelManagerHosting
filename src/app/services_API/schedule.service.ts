@@ -14,9 +14,9 @@ gets()
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/gets-schedule");
 }
 
-getsSchedulebyIdTour(idTour: any)
+getsSchedulebyIdTour(idTour: any, isDelete: any)
 {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/gets-schedule-idtour?idTour="+idTour);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/gets-schedule-idtour?idTour="+idTour+"&isDelete="+isDelete);
 }
 
 getsSchedulebyIdTourWaiting(idTour: any)

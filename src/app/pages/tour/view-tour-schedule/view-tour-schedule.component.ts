@@ -17,7 +17,7 @@ export class ViewTourScheduleComponent implements OnInit {
   response: ResponseModel
   dataChild: ScheduleModel
   typeChild: string
-
+  type: boolean = false
   constructor(private scheduleService: ScheduleService, private configService: ConfigService, private notificationService: NotificationService,
     private activatedRoute: ActivatedRoute) { }
 
@@ -29,9 +29,21 @@ export class ViewTourScheduleComponent implements OnInit {
     disableRadioBox: false,
     radioBoxName: "Kho lưu trữ",
   }
-
+  public gridConfigApprove: GridConfig = {
+    disableRadioBox: true,
+    disableCreate: true,
+    disableDelete: true
+  }
   ngOnInit(): void {
-    this.init()
+
+    if (history.state.isDelete) {
+      this.gridConfig.isRestore = history.state.isDelete
+      this.init(history.state.isDelete)
+    }
+    else{
+      this.init(this.type)
+    }
+
     this.initWaiting()
     setTimeout(() => {
       this.columnDefs= [
@@ -39,18 +51,18 @@ export class ViewTourScheduleComponent implements OnInit {
         { field: 'nameTour', headerName: "Tên tour", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'nameTour'},
         // { field: 'departureDate',headerName: "Ngày khởi hành", filter: "date", style: "width: 200px;", searchable: true, searchType: 'date', searchObj: 'departureDate'},
         // { field: 'returnDate',headerName: "Ngày trở về", filter: "date", style: "width: 200px;", searchable: true, searchType: 'date', searchObj: 'returnDate'},
-        { field: 'beginDate',headerName: "Ngày bắt đầu", filter: "date", style: "width: 200px;", searchable: true, searchType: 'date', searchObj: 'beginDate'},
-        { field: 'endDate',headerName: "Ngày kết thúc", filter: "date", style: "width: 200px;", searchable: true, searchType: 'date', searchObj: 'endDate'},
+        { field: 'beginDate',headerName: "Ngày bắt đầu", filter: "date", style: "width: 15%;", searchable: true, searchType: 'date', searchObj: 'beginDate'},
+        { field: 'endDate',headerName: "Ngày kết thúc", filter: "date", style: "width: 15%;", searchable: true, searchType: 'date', searchObj: 'endDate'},
         // { field: 'timePromotion',headerName: "Thời gian khuyến mãi", filter: "date", style: "width: 180px;", searchable: true, searchType: 'time', searchObj: 'timePromotion'},
         // { field: 'minCapacity',headerName: "Tối thiểu", style: "width: 130px;", searchable: true, searchType: 'number', searchObj: 'minCapacity'},
         // { field: 'maxCapacity',headerName: "Tối đa", style: "width: 130px;", searchable: true, searchType: 'number', searchObj: 'maxCapacity'},
         // { field: 'quantityAdult',headerName: "Số lượng người lớn", style: "width: 130px;", searchable: true, searchType: 'number', searchObj: 'quantityAdult'},
         // { field: 'quantityChild',headerName: "Số lượng trẻ em", style: "width: 130px;", searchable: true, searchType: 'number', searchObj: 'quantityChild'},
         // { field: 'quantityBaby',headerName: "Số lượng em bé", style: "width: 130px;", searchable: true, searchType: 'number', searchObj: 'quantityBaby'},
-        { field: 'vat',headerName: "Số lượng khách", style: "width: 150px;", searchable: true, searchType: 'number', searchObj: 'vat'},
-        { field: 'totalCostTour',headerName: "Tổng chi phí", style: "width: 150px;", searchable: true, searchType: 'number', searchObj: 'TotalCostTour'},
-        { field: 'finalPrice',headerName: "Tổng tiền", style: "width: 150px;", searchable: true, searchType: 'number', searchObj: 'FinalPrice'},
-        { field: 'finalPriceHoliday',headerName: "Tổng tiền ngày lễ", style: "width: 150px;", searchable: true, searchType: 'number', searchObj: 'FinalPriceHoliday'},
+        // { field: 'vat',headerName: "Số lượng khách", style: "width: 150px;", searchable: true, searchType: 'number', searchObj: 'vat'},
+        { field: 'totalCostTourNotService',headerName: "Tổng chi phí", style: "width: 10%;", searchable: true, searchType: 'number', searchObj: 'TotalCostTour'},
+        { field: 'finalPrice',headerName: "Tổng tiền", style: "width: 10%;", searchable: true, searchType: 'number', searchObj: 'FinalPrice'},
+        { field: 'finalPriceHoliday',headerName: "Tổng tiền ngày lễ", style: "width: 10%;", searchable: true, searchType: 'number', searchObj: 'FinalPriceHoliday'},
 
         // { field: 'status',headerName: "Trạng thái", style: "width: 180px;", filter: "status", searchable: true, searchType: 'section', searchObj: 'status', multiple: false, closeOnSelect: true, bindLabel: "name", bindValue: "id", listSection: this.configService.listStatus()},
       ];
@@ -79,9 +91,10 @@ export class ViewTourScheduleComponent implements OnInit {
     })
   }
 
-  init(){
+  init(e?){
+    this.type = e
     var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
-    this.scheduleService.getsSchedulebyIdTour(idTour).subscribe(res =>{
+    this.scheduleService.getsSchedulebyIdTour(idTour, this.type).subscribe(res =>{
       this.response = res
       if(!this.response.notification.type){
         this.resSchedule = this.response.content

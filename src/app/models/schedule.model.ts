@@ -24,7 +24,7 @@ export class ScheduleModel{
   nameEmployee:string
   valuePromotion: number
   quantityCustomer: number
-  totalCostTour: number
+  totalCostTourNotService: number
   finalHoliday: number
   vat: number
   description: string
