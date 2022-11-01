@@ -133,6 +133,9 @@ export class ItemTourScheduleComponent implements OnInit {
     if (this.validateScheduleModel.total == 0) {
       var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
       if (this.type == "create") {
+        var idUser = localStorage.getItem("idUser")
+        this.resSchedule.idUserModify = idUser
+        this.resSchedule.typeAction = "insert"
         this.resSchedule.tourId = idTour
         this.scheduleService.create(this.resSchedule).subscribe(res => {
           this.response = res
@@ -169,7 +172,7 @@ export class ItemTourScheduleComponent implements OnInit {
     // this.validateCostTourModel = this.configService.validateCostTour(this.resSchedule, this.validateCostTourModel)
 
     // if (this.validateCostTourModel.total == 0) {
-      if (this.type == "create") {
+      if (this.type == "create") { 
         this.resCostTour.idSchedule = this.resSchedule.idSchedule
         this.costtourService.create(this.resCostTour).subscribe(res => {
           this.response = res

@@ -135,16 +135,17 @@
                       </div>
                     </div>
                     <div class="align-items-center">
-                        <button  *ngIf="type == 'detail' && resTour.isDelete == false " class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemTourModal">Xóa</button>
+                        <button  *ngIf="type == 'detail' && !resTour.isDelete && !resTour.typeAction" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemTourModal">Xóa</button>
                         <button *ngIf="isChange && type == 'detail'" class="btn btn-lg btn-info" (click)="restore()">Khôi phục</button>
                         <button *ngIf="isChange" class="btn btn-lg btn-success"  (click)="save()">{{type == 'detail' ? "Cập nhật":"Thêm"}}</button>
                         <ng-container *ngIf="idTour; else elseGrid1">
-                          <button *ngIf="resTour.isDelete" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreItemTourModal" class="btn btn-sm btn-warning">Khôi phục tour</button>
+                          <button *ngIf="resTour.isDelete && !resTour.typeAction" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreItemTourModal" class="btn btn-lg btn-warning">Khôi phục tour</button>
                         </ng-container>
                         <ng-template #elseGrid1>
-                          <button *ngIf="resTour.isDelete" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreItemTourModal" class="btn btn-sm btn-warning">Khôi phục tour</button>
+                          <button *ngIf="resTour.isDelete && !resTour.typeAction" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreItemTourModal" class="btn btn-lg btn-warning">Khôi phục tour</button>
                         </ng-template>
 
+                        <button *ngIf="type == 'detail' && resTour.typeAction" class="btn btn-lg btn-success"  (click)="approve()">Duyệt</button>
                     </div>
                   </div>
 

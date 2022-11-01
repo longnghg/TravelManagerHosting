@@ -29,6 +29,9 @@ export class ScheduleModel{
   vat: number
   description: string
   isDelete: boolean
+  idUserModify:string
+  typeAction: string
+  isTempdata: boolean
 }
 
 export class ValidateScheduleModel{

@@ -43,7 +43,7 @@ export class ItemTourComponent implements OnInit {
         {
           this.resTour = this.response.content
           this.resTourTmp = Object.assign({}, this.resTour)
-
+          
           if(this.resTour){ 
             if (this.resTour.thumbnail) {
               this.img = this.configService.apiUrl + this.resTour.thumbnail
@@ -114,6 +114,9 @@ export class ItemTourComponent implements OnInit {
     this.validateTourModel =  this.configService.validateTour(this.resTour, this.validateTourModel)
 
     if (this.validateTourModel.total == 0) {
+      var idUser = localStorage.getItem("idUser")
+      this.resTour.idUserModify = idUser
+      this.resTour.typeAction = "insert"
       var file = new FormData();
       file.append('data', JSON.stringify(this.resTour))
 
@@ -138,7 +141,7 @@ export class ItemTourComponent implements OnInit {
       else{
         var idUser = localStorage.getItem("idUser")
         this.resTour.idUserModify = idUser
-        this.resTour.typeAction = "Cập nhật"
+        this.resTour.typeAction = "update"
         var file = new FormData();
         file.append('data', JSON.stringify(this.resTour))
         
@@ -180,8 +183,9 @@ export class ItemTourComponent implements OnInit {
   }
 
   delete(){
+    var idUser = localStorage.getItem("idUser")
     if (this.resTour) {
-     this.tourService.delete(this.resTour.idTour).subscribe(res =>{
+     this.tourService.delete(this.resTour.idTour, idUser).subscribe(res =>{
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
        if (res.notification.type == StatusNotification.Success) {
@@ -195,12 +199,28 @@ export class ItemTourComponent implements OnInit {
    }
 
    restoreTour(){
+    var idUser = localStorage.getItem("idUser")
     if (this.resTour) {
-      this.tourService.restore(this.resTour.idTour).subscribe(res =>{
+      this.tourService.restore(this.resTour.idTour, idUser).subscribe(res =>{
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
         if (res.notification.type == StatusNotification.Success) {
           this.router.navigate(['','list-tour'], { state: { isDelete: true } });
+         }
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, StatusNotification.Error)
+      })
+    }
+  }
+
+  approve(){
+    if (this.resTour) {
+      this.tourService.approve(this.resTour.idTour).subscribe(res =>{
+        this.response = res
+        this.notificationService.handleAlertObj(res.notification)
+        if (res.notification.type == StatusNotification.Success) {
+          this.router.navigate(['','list-tour'], { state: { isDelete: false } });
          }
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");

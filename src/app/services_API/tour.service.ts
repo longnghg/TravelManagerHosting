@@ -52,13 +52,17 @@ export class TourService{
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Tour/update-tour", data);
   }
 
-  delete(idTour: any)
+  delete(idTour: any, idUser: any)
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/delete-tour?idTour="+idTour);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/delete-tour?idTour="+idTour+"&idUser="+idUser);
   }
-  restore(idTour: any)
+  restore(idTour: any, idUser: any)
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/restore-tour?idTour="+idTour);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/restore-tour?idTour="+idTour+"&idUser="+idUser);
+  }
+
+  approve(idTour: any){
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/approve-tour?idTour="+idTour);
   }
 }
 

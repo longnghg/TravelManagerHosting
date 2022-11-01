@@ -87,9 +87,8 @@ export class ListTourComponent implements OnInit {
       var idUser = localStorage.getItem("idUser")
       this.tourService.getwaiting(idUser).subscribe(res =>{
         this.response = res 
-        this.resTourWaiting = this.response.content
         if(this.response.notification.type == StatusNotification.Success){
-          
+          this.resTourWaiting = this.response.content
         }
         else{
           this.resTourWaiting = null
@@ -99,6 +98,18 @@ export class ListTourComponent implements OnInit {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, StatusNotification.Error)
       })
+
+      setTimeout(() => {
+        this.columnDefs= [
+        { field: 'idTour', headerName: "Mã số", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'idTour'},
+        { field: 'nameTour',headerName: "Tên", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'tourName'},
+        { field: 'thumbnail',headerName: "Thumbnail", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'thumbnail'},
+        { field: 'toPlace',headerName: "Đến", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'address'},
+        { field: 'typeAction',headerName: "Hành động", style: "width: 10%;", searchable: true, searchType: 'text', searchObj: 'typeAction'},
+        // { field: 'status: string',headerName: "Trạng thái", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'status'},
+        // { field: 'createDate: string',headerName: "Ngày tạo", style: "width: 160px;", searchable: true, searchType: 'date', searchObj: 'createDate'},
+        ];
+      }, 200);
     }
 
     init(e?){
@@ -117,9 +128,6 @@ export class ListTourComponent implements OnInit {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, StatusNotification.Error)
       })
-
-
-
 
       setTimeout(() => {
         this.columnDefs= [
@@ -149,8 +157,9 @@ export class ListTourComponent implements OnInit {
     }
 
     delete(){
+      var idUser = localStorage.getItem("idUser")
       if (this.data) {
-       this.tourService.delete(this.data.idTour).subscribe(res =>{
+       this.tourService.delete(this.data.idTour, idUser).subscribe(res =>{
          this.response = res
          this.notificationService.handleAlertObj(res.notification)
        }, error => {
@@ -161,8 +170,9 @@ export class ListTourComponent implements OnInit {
      }
 
      restore(){
+      var idUser = localStorage.getItem("idUser")
       if (this.data) {
-        this.tourService.restore(this.data.idTour).subscribe(res =>{
+        this.tourService.restore(this.data.idTour, idUser).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
         }, error => {
