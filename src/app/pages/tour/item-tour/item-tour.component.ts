@@ -7,7 +7,7 @@ import { ConfigService } from "./../../../services_API/config.service";
 import { ResponseModel } from "./../../../models/responsiveModels/response.model";
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
-
+import { AuthenticationModel } from 'src/app/models/authentication.model';
 import { StatusNotification } from "../../../enums/enum";
 @Component({
   selector: 'app-item-tour',
@@ -27,14 +27,18 @@ export class ItemTourComponent implements OnInit {
   isHoliday = this.configService.listStatus()
   img: any
   formData: any
+  resAuth: AuthenticationModel
   constructor(private router: Router, private tourService: TourService, private configService: ConfigService, private notificationService: NotificationService,
       private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    var currentUser = localStorage.getItem("currentUser")
+    this.resAuth = JSON.parse(currentUser)
+    
+
     var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
     this.type = this.activatedRoute.snapshot.paramMap.get('id1')
-    
-    if(this.type == "detail"){
+    if(this.type == "detail"){  
 
       this.tourService.getTour(idTour).subscribe(res => {
         this.response = res
@@ -43,6 +47,7 @@ export class ItemTourComponent implements OnInit {
         {
           this.resTour = this.response.content
           this.resTourTmp = Object.assign({}, this.resTour)
+          console.log(this.resTour.idUserModify);
           
           if(this.resTour){ 
             if (this.resTour.thumbnail) {
@@ -116,7 +121,7 @@ export class ItemTourComponent implements OnInit {
     if (this.validateTourModel.total == 0) {
       var idUser = localStorage.getItem("idUser")
       this.resTour.idUserModify = idUser
-      this.resTour.typeAction = "insert"
+      // this.resTour.typeAction = "insert"
       var file = new FormData();
       file.append('data', JSON.stringify(this.resTour))
 
@@ -128,8 +133,8 @@ export class ItemTourComponent implements OnInit {
         this.tourService.create(file).subscribe(res =>{
           this.response = res
 
-          // this.resCostTour.idCostTour = this.response.content
           if (res.notification.type == StatusNotification.Success) {
+            this.router.navigate(['','list-tour']);
             this.close()
           }
           this.notificationService.handleAlertObj(res.notification)
@@ -141,7 +146,7 @@ export class ItemTourComponent implements OnInit {
       else{
         var idUser = localStorage.getItem("idUser")
         this.resTour.idUserModify = idUser
-        this.resTour.typeAction = "update"
+        // this.resTour.typeAction = "update"
         var file = new FormData();
         file.append('data', JSON.stringify(this.resTour))
         
@@ -151,8 +156,8 @@ export class ItemTourComponent implements OnInit {
         this.tourService.update(file).subscribe(res =>{
           this.response = res
 
-          // this.resCostTour.idCostTour = this.response.content
           if (res.notification.type == StatusNotification.Success) {
+            this.router.navigate(['','list-tour']);
             this.close()
           }
           this.notificationService.handleAlertObj(res.notification)
@@ -217,6 +222,21 @@ export class ItemTourComponent implements OnInit {
   approve(){
     if (this.resTour) {
       this.tourService.approve(this.resTour.idTour).subscribe(res =>{
+        this.response = res
+        this.notificationService.handleAlertObj(res.notification)
+        if (res.notification.type == StatusNotification.Success) {
+          this.router.navigate(['','list-tour'], { state: { isDelete: false } });
+         }
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, StatusNotification.Error)
+      })
+    }
+  }
+
+  refuse(){
+    if (this.resTour) {
+      this.tourService.refused(this.resTour.idTour).subscribe(res =>{
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
         if (res.notification.type == StatusNotification.Success) {

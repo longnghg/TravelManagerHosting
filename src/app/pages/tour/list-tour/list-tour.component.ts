@@ -92,7 +92,37 @@ export class ListTourComponent implements OnInit {
         }
         else{
           this.resTourWaiting = null
-          this.notificationService.handleAlertObj(res.notification)
+          
+        }
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, StatusNotification.Error)
+      })
+
+      // setTimeout(() => {
+      //   this.columnDefs= [
+      //   { field: 'idTour', headerName: "Mã số", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'idTour'},
+      //   { field: 'nameTour',headerName: "Tên", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'tourName'},
+      //   { field: 'thumbnail',headerName: "Thumbnail", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'thumbnail'},
+      //   { field: 'toPlace',headerName: "Đến", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'address'},
+      //   { field: 'typeAction',headerName: "Hành động", style: "width: 10%;", searchable: true, searchType: 'text', searchObj: 'typeAction'},
+      //   // { field: 'status: string',headerName: "Trạng thái", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'status'},
+      //   // { field: 'createDate: string',headerName: "Ngày tạo", style: "width: 160px;", searchable: true, searchType: 'date', searchObj: 'createDate'},
+      //   ];
+      // }, 200);
+    }
+
+    init(e?){
+      this.type = e
+      this.tourService.gets(this.type).subscribe(res =>{
+        this.response = res
+        if(this.response.notification.type  == StatusNotification.Success){
+          this.resTour = this.response.content
+          this.restourTmp = Object.assign([], this.resTour)
+        }
+        else{
+          this.resTour = null
+         
         }
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -106,36 +136,6 @@ export class ListTourComponent implements OnInit {
         { field: 'thumbnail',headerName: "Thumbnail", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'thumbnail'},
         { field: 'toPlace',headerName: "Đến", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'address'},
         { field: 'typeAction',headerName: "Hành động", style: "width: 10%;", searchable: true, searchType: 'text', searchObj: 'typeAction'},
-        // { field: 'status: string',headerName: "Trạng thái", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'status'},
-        // { field: 'createDate: string',headerName: "Ngày tạo", style: "width: 160px;", searchable: true, searchType: 'date', searchObj: 'createDate'},
-        ];
-      }, 200);
-    }
-
-    init(e?){
-      this.type = e
-      this.tourService.gets(this.type).subscribe(res =>{
-        this.response = res
-        if(this.response.notification.type  == StatusNotification.Success){
-          this.resTour = this.response.content
-          this.restourTmp = Object.assign([], this.resTour)
-        }
-        else{
-          this.resTour = null
-          this.notificationService.handleAlertObj(res.notification)
-        }
-      }, error => {
-        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, StatusNotification.Error)
-      })
-
-      setTimeout(() => {
-        this.columnDefs= [
-        { field: 'idTour', headerName: "Mã số", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'idTour'},
-        { field: 'nameTour',headerName: "Tên", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'tourName'},
-        { field: 'thumbnail',headerName: "Thumbnail", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'thumbnail'},
-        // { field: 'fromPlace',headerName: "Từ", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'phone'},
-        { field: 'toPlace',headerName: "Đến", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'address'},
         // { field: 'rating',headerName: "Số sao", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'rating'},
         // { field: 'status: string',headerName: "Trạng thái", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'status'},
         // { field: 'createDate: string',headerName: "Ngày tạo", style: "width: 160px;", searchable: true, searchType: 'date', searchObj: 'createDate'},

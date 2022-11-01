@@ -64,5 +64,9 @@ export class TourService{
   approve(idTour: any){
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/approve-tour?idTour="+idTour);
   }
+
+  refused(idTour: any){
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/refused-tour?idTour="+idTour);
+  }
 }
 
