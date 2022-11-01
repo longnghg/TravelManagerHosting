@@ -1,3 +1,4 @@
+
 <div class="modal-header">
   <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin chi tiết</h1>
   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
@@ -13,7 +14,7 @@
                 <label class="form-control-label" for="name">Tên Khách Sạn
                   <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateHotel.name ? this.validateHotel.name : ''}}</span>
                 </label>
-                <input type="text" id="name" name="name" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số điện thoại" [(ngModel)]="resHotel.name" >
+                <input type="text" id="name" name="name" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập tên khách sạn" [(ngModel)]="resHotel.name" >
               </div>
             </div>
             <div class="col-lg-6">
@@ -29,7 +30,6 @@
             <div class="col-lg-10">
               <label class="form-control-label" for="input-address">Địa chỉ
                 <span [class]="!isEdit?'d-none':'text-danger'">* {{this.validateHotel.address ? this.validateHotel.address : ''}}</span>
-
               </label>
               <input type="text" id="address" name="address" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số điạ chỉ" [(ngModel)]="resHotel.address" >
             </div>
@@ -71,7 +71,6 @@
               <div class="form-group">
                 <label class="form-control-label" for="input-doubleRoomPrice">Giá phòng đôi
                   <span [class]="!isEdit?'d-none':'text-danger'">* {{this.validateHotel.doubleRoomPrice ? this.validateHotel.doubleRoomPrice : ''}}</span>
-
                 </label>
                 <input type="number" name="doubleRoomPrice" id="doubleRoomPrice" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập giá tiền phòng đôi" [(ngModel)]="resHotel.doubleRoomPrice" >
               </div>
@@ -83,7 +82,7 @@
 
     <div class="row align-items-center">
       <div class="col-12 text-right">
-        <button  *ngIf="type == 'detail'" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteProvinceModal" (click)="getDataDelete()">Xóa</button>
+        <button  *ngIf="type == 'detail'" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteHotelModal" (click)="getDataDelete()">Xóa</button>
         <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="backup()">Khôi phục</button>
         <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="save()">{{type == 'detail' ? "Lưu":"Thêm"}}</button>
       </div>
