@@ -34,6 +34,10 @@ export class ListHotelComponent implements OnInit {
   }
   public gridConfigWaiting: GridConfig = {
     idModal: "gridHotel",
+    disableDelete: true,
+    disableRadioBox: true,
+    disableCreate: true,
+    disableRestore: true
   }
   ngOnInit(): void {
     this.init();
@@ -45,9 +49,8 @@ export class ListHotelComponent implements OnInit {
       if(this.response.notification.type){
         this.resHotel = this.response.content
       }
-      else{
-        this.resHotel = null
-        this.notificationService.handleAlertObj(res.notification)
+      else if(this.resHotel == null){
+        // this.notificationService.handleAlertObj(res.notification)
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -70,13 +73,11 @@ export class ListHotelComponent implements OnInit {
 
     this.hotelService.getsWaiting().subscribe(res =>{
       this.response = res
-      if(this.response.notification.type){
-
+      if(this.response.notification.type == StatusNotification.Success){
         this.resHotelWaiting = this.response.content
       }
-      else{
-        this.resHotel = null
-        this.notificationService.handleAlertObj(res.notification)
+      else if(this.resHotel == null){
+        // this.notificationService.handleAlertObj(res.notification)
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -98,6 +99,8 @@ export class ListHotelComponent implements OnInit {
   }
   getData(data: any){
     this.data = data
+    console.log(data);
+
   }
 
   delete(){
@@ -111,8 +114,7 @@ export class ListHotelComponent implements OnInit {
        this.notificationService.handleAlertObj(res.notification)
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-       this.notificationService.handleAlert(message, "Error")
-       console.log("sảioi");
+       this.notificationService.handleAlert(message, StatusNotification.Error)
      })
     }
    }

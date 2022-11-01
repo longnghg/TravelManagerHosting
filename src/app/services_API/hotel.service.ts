@@ -58,7 +58,7 @@ delete(idHotel: any)
 {
   console.log("idHotel");
   console.log(idHotel); // kiểm tra xem nó nhận đc ko , để lẹ hơn thì tui kiểm tra luôn đường dẫn api
- var b = this.configService.apiUrl + "api/service/delete-hotel?idHotel="+idHotel+"&idUser=b07a87d7-c378-4e6c-9af8-447a3ee852b1";
+ var b = this.configService.apiUrl + "/api/service/delete-hotel?idHotel="+idHotel+"&idUser=b07a87d7-c378-4e6c-9af8-447a3ee852b1";
  console.log(b);
 
   return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/service/delete-hotel?idHotel="+idHotel+"&idUser=b07a87d7-c378-4e6c-9af8-447a3ee852b1");
