@@ -7,7 +7,7 @@ import { ResponseModel } from "../../models/responsiveModels/response.model";
 import { ConfigService } from "../../services_API/config.service";
 import { AuthenticationService } from "../../services_API/authentication.service";
 import { NotificationService } from "../../services_API/notification.service";
-
+import { StatusNotification } from "../../enums/enum";
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -60,7 +60,7 @@ export class NavbarComponent implements OnInit {
       location.reload()
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
+      this.notificationService.handleAlert(message, StatusNotification.Error)
     })
   }
 

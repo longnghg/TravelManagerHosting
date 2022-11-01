@@ -4,7 +4,7 @@ import { ResponseModel } from 'src/app/models/responsiveModels/response.model';
 import { BannerService } from "../../services_API/banner.service";
 import { NotificationService } from "../../services_API/notification.service";
 import { ConfigService } from "../../services_API/config.service";
-
+import { StatusNotification } from "../../enums/enum";
 @Component({
   selector: 'app-banner',
   templateUrl: './banner.component.html',
@@ -32,7 +32,7 @@ export class BannerComponent implements OnInit {
     }
   }, error => {
     var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-    this.notificationService.handleAlert(message, "Error")
+    this.notificationService.handleAlert(message, StatusNotification.Error)
   })
 
 }

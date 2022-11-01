@@ -8,7 +8,7 @@ import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.compo
 import { ColDef2, GridConfig2} from '../../../components/grid2-data/grid2-data.component';
 // signalr
 import { HubConnection } from '@microsoft/signalr';
-
+import { StatusNotification } from "../../../enums/enum";
 @Component({
   selector: 'app-list-tour',
   templateUrl: './list-tour.component.html',
@@ -23,6 +23,7 @@ export class ListTourComponent implements OnInit {
   data: TourModel
   type: boolean = false
   typeChild: string
+
   private hubConnectionBuilder: HubConnection
 
 
@@ -58,12 +59,9 @@ export class ListTourComponent implements OnInit {
       private notificationService: NotificationService) {}
 
     ngOnInit(): void {
-
       if (history.state.isDelete) {
         this.gridConfig2.isRestore = history.state.isDelete
         this.init(history.state.isDelete)
-        console.log(this.resTour);
-
       }
       else{
         this.init(this.type)
@@ -86,10 +84,12 @@ export class ListTourComponent implements OnInit {
     }
 
     initWaiting(){
-      this.tourService.getwaiting().subscribe(res =>{
-        this.response = res
-        if(!this.response.notification.type){
-          this.resTourWaiting = this.response.content
+      var idUser = localStorage.getItem("idUser")
+      this.tourService.getwaiting(idUser).subscribe(res =>{
+        this.response = res 
+        this.resTourWaiting = this.response.content
+        if(this.response.notification.type == StatusNotification.Success){
+          
         }
         else{
           this.resTourWaiting = null
@@ -97,7 +97,7 @@ export class ListTourComponent implements OnInit {
         }
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, "Error")
+        this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
 
@@ -105,17 +105,17 @@ export class ListTourComponent implements OnInit {
       this.type = e
       this.tourService.gets(this.type).subscribe(res =>{
         this.response = res
-        if(!this.response.notification.type){
+        if(this.response.notification.type  == StatusNotification.Success){
           this.resTour = this.response.content
           this.restourTmp = Object.assign([], this.resTour)
-          console.log(this.resTour);
         }
         else{
           this.resTour = null
+          this.notificationService.handleAlertObj(res.notification)
         }
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, "Error")
+        this.notificationService.handleAlert(message, StatusNotification.Error)
       })
 
 

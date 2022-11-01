@@ -6,6 +6,8 @@ import { ColDef, GridConfig} from '../../../../components/grid-data/grid-data.co
 import { ConfigService } from "../../../../services_API/config.service";
 import { ResponseModel } from "../../../../models/responsiveModels/response.model";
 import { AuthenticationModel } from 'src/app/models/authentication.model';
+import { StatusNotification } from "../../../../enums/enum";
+
 @Component({
   selector: 'app-item-hotel',
   templateUrl: './item-hotel.component.html',
@@ -55,29 +57,73 @@ export class ItemHotelComponent implements OnInit {
     this.validateHotel =  this.configService.validateHotel(this.resHotel, this.validateHotel)
 
     if (this.validateHotel.total == 0) {
+      //var file = new FormData();
+      //file.append('data', JSON.stringify(this.resHotel))
+
+      //if (this.formData) {
+        //file.append('file', this.formData.path[0].files[0])
+      //}
+
       if(this.type == "create")
       {
         this.hotelService.create(this.resHotel).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-          this.close()
+	if(this.response.notification.type == StatusNotification.Success)
+        {
+		 this.close()
+        }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
+          this.notificationService.handleAlert(message, StatusNotification.Error)
+
         })
       }
       else{
         this.hotelService.update(this.resHotel).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-          this.isChange = false
+
+          if(this.response.notification.type == StatusNotification.Success)
+          {
+		this.isChange = false
+          }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
+          this.notificationService.handleAlert(message, StatusNotification.Error)
+
         })
       }
+
       }
+      // else{
+      //   this.hotelService.update(file).subscribe(res =>{
+      //     this.response = res
+      //     if (res.notification.type == "Validation") {
+      //       if (res.notification.description == "Phone") {
+      //         this.validateEmployee.phone == res.notification.messenge
+      //       }
+      //       else{
+      //         this.validateEmployee.email == res.notification.messenge
+      //       }
+      //     }
+      //     else{
+      //       this.notificationService.handleAlertObj(res.notification)
+      //       if (res.notification.type == StatusNotification.Success) {
+      //         this.close()
+      //         this.isChange = true
+      //       }
+      //     }
+      //   }, error => {
+      //     var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      //     this.notificationService.handleAlert(message, StatusNotification.Error)
+      //   })
+      // }
+
     }
+
+
+
   close(){
      this.backup()
   }

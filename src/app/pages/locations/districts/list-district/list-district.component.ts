@@ -8,6 +8,8 @@ import { LocationModel } from "../../../../models/location.model";
 import { ResponseModel } from "../../../../models/responsiveModels/response.model";
 import { ColDef, GridConfig} from '../../../../components/grid-data/grid-data.component';
 import { HubConnection } from '@microsoft/signalr';
+import { StatusNotification } from "../../../../enums/enum";
+
 @Component({
   selector: 'app-list-district',
   templateUrl: './list-district.component.html',
@@ -55,7 +57,7 @@ export class ListDistrictComponent implements OnInit {
 
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
+      this.notificationService.handleAlert(message, StatusNotification.Error);
     })
 
 
@@ -91,7 +93,7 @@ export class ListDistrictComponent implements OnInit {
 
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, "Error")
+        this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
   }

@@ -5,6 +5,7 @@ import { NotificationService } from "../../../../services_API/notification.servi
 import { ColDef, GridConfig} from '../../../../components/grid-data/grid-data.component';
 import { ConfigService } from "../../../../services_API/config.service";
 import { ResponseModel } from "../../../../models/responsiveModels/response.model";
+import { StatusNotification } from "../../../../enums/enum";
 import { AuthenticationModel } from "../../../../models/authentication.model"
 
 @Component({
@@ -50,7 +51,7 @@ export class ListHotelComponent implements OnInit {
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
+      this.notificationService.handleAlert(message, StatusNotification.Error)
     })
 
     setTimeout(() => {
@@ -70,6 +71,7 @@ export class ListHotelComponent implements OnInit {
     this.hotelService.getsWaiting().subscribe(res =>{
       this.response = res
       if(this.response.notification.type){
+
         this.resHotelWaiting = this.response.content
       }
       else{
@@ -78,7 +80,7 @@ export class ListHotelComponent implements OnInit {
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
+      this.notificationService.handleAlert(message, StatusNotification.Error)
     })
   }
 

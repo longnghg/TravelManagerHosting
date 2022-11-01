@@ -12,6 +12,8 @@ import { EmployeeService } from 'src/app/services_API/employee.service';
 import { TourModel } from 'src/app/models/tour.model';
 import { TourService } from 'src/app/services_API/tour.service';
 import { PromotionModel } from 'src/app/models/promotion.model';
+import { StatusNotification } from "../../../enums/enum";
+
 @Component({
   selector: 'app-item-schedule',
   templateUrl: './item-schedule.component.html',
@@ -102,13 +104,9 @@ export class ItemScheduleComponent implements OnInit {
         this.scheduleService.create(this.resSchedule).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-
-          if(this.response.notification.type == "Error")
-          {
-          }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
+          this.notificationService.handleAlert(message, StatusNotification.Error)
         })
       }
       else{

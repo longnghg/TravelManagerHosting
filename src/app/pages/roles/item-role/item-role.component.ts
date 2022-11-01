@@ -5,6 +5,7 @@ import { RoleService } from "../../../services_API/role.service";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { RoleModel, ValidationRoleModel } from 'src/app/models/role.model';
 import { AuthenticationModel } from 'src/app/models/authentication.model';
+import { StatusNotification } from "../../../enums/enum";
 @Component({
   selector: 'app-item-role',
   templateUrl: './item-role.component.html',
@@ -56,18 +57,17 @@ export class ItemRoleComponent implements OnInit {
           this.close()
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
+          this.notificationService.handleAlert(message, StatusNotification.Error)
         })
       }
       else{
         this.roleService.update(this.resRole).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-
           this.isChange = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
+          this.notificationService.handleAlert(message, StatusNotification.Error)
         })
       }
     }

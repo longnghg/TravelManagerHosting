@@ -6,7 +6,7 @@ import { AuthenticationModel, ValidationLoginModel } from "../../models/authenti
 import { EmployeeModel } from "../../models/employee.model";
 import { RoleModel} from "../../models/role.model";
 import { ResponseModel } from "../../models/responsiveModels/response.model";
-
+import { StatusNotification } from "../../enums/enum";
 
 @Component({
   selector: 'app-login',
@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
       this.authentication.login(this.resEmployee).subscribe(res=>{
         this.response = res
 
-        if(this.response.notification.type == "Success")
+        if(this.response.notification.type == StatusNotification.Success)
         {
           this.resAthentication = this.response.content
           localStorage.setItem("token", this.resAthentication.token)
@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit {
       }, error => {
         this.isloading = false
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, "Error")
+        this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
     }}

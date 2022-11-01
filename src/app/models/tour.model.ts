@@ -10,9 +10,8 @@ export class TourModel{
   modifyDate: number
   isDelete: boolean
   isActive: boolean
-  description:string
-  vat: number
-  rating: number
+  idUserModify:string
+  typeAction: string
 }
 
 export class ValidateTourModel{
