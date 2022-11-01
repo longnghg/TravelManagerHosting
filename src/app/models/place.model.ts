@@ -8,3 +8,11 @@ export class PlaceModel{
   modifyBy: string
   modifyDate: number
 }
+export class ValidationPlaceModel{
+  total: number
+  name: string= null
+  phone: string= null
+  address: string= null
+  priceTicket: number= null
+
+}

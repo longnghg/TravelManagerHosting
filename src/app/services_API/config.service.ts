@@ -574,45 +574,57 @@ validateHotel(data : any,model: any)
   }
 
    // place
-   validatePlace(data : any)
+   validatePlace(data : any,model: any)
    {
-        var err = []
+    model.total = 0
         if(data.name == null || data.name == ""){
-          err.push("[Tên địa điểm] không được để trống !")
+         model.name =("[Tên địa điểm] không được để trống !")
+         model.total += 1
       }else if (data.name.length > 100) {
-          err.push("[Tên địa điểm] quá dài !")
+        model.name =("[Tên địa điểm] quá dài !")
+        model.total += 1
       }else if (data.name.length < 1) {
-        err.push("[Tên địa điểm] quá ngắn !")
+        model.name =("[Tên địa điểm] quá ngắn !")
+        model.total += 1
       } // phone
       if (data.phone == null || data.phone == "") {
-        err.push("[Số điện thoại] không được để trống !")
+        model.phone =("[Số điện thoại] không được để trống !")
+        model.total += 1
      }else if (data.phone.length > 10) {
-        err.push("[Số điện thoại] vượt quá 10 số !")
+      model.phone =("[Số điện thoại] vượt quá 10 số !")
+      model.total += 1
      }else if (!data.phone.startsWith("0")) {
-        err.push("[Số điện thoại] không hợp lệ !")
+      model.phone =("[Số điện thoại] không hợp lệ !")
+      model.total += 1
      }
        //Address
      if (data.address == null || data.address == "") {
-        err.push("[Địa chỉ] không được để trống !")
+      model.address =("[Địa chỉ] không được để trống !")
+      model.total += 1
      }else if (data.address.length > 255) {
-       err.push("[Địa chỉ] quá dài !")
-
+      model.address =("[Địa chỉ] quá dài !")
+      model.total += 1
     }
     //priceTicket
     if(data.priceTicket == null || data.priceTicket == ""){
-      err.push("[Giá vé] không được để trống !")
+      model.priceTicket =("[Giá vé] không được để trống !")
+      model.total += 1
       }
       if(data.modifyBy == null || data.modifyBy == ""){
-        err.push("[Tên người sửa] không được để trống !")
+        model.modifyBy =("[Tên người sửa] không được để trống !")
+        model.total += 1
     }else if (data.modifyBy.length > 100) {
-        err.push("[Tên người sửa] quá dài !")
+      model.modifyBy =("[Tên người sửa] quá dài !")
+      model.total += 1
     }else if (data.modifyBy.length < 1) {
-      err.push("[Tên người sửa]  quá ngắn !")
+      model.modifyBy =("[Tên người sửa]  quá ngắn !")
+      model.total += 1
     }
     if (data.modifyDate == null || data.modifyDate == "") {
-      err.push("[Ngày] không được để trống !")
+      model.modifyDate =("[Ngày] không được để trống !")
+      model.total += 1
    }
-        return err
+        return model
    }
 
    validateLogin(data: any, model: any){

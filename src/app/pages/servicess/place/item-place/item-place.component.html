@@ -5,53 +5,56 @@
 <div class="modal-body">
   <ng-container *ngIf="resPlace">
     <div class="container-fluid" >
-      <div class="row align-items-center">
-        <div class="col-12 text-right">
-          <a href="javascript:void(0)" *ngIf="type == 'detail'" class="btn btn-sm btn-primary" (click)="isEditChange()">{{!isEdit ? "Chỉnh sửa":"Quay lại"}}</a>
-        </div>
-      </div>
       <form>
         <div class="pl-lg-4">
           <div class="row">
-            <div class="col-lg-6">
+            <div class="col-6">
               <div class="form-group">
-                <label class="form-control-label" for="input-name">Tên Địa Điểm</label>
-                <input type="text" id="name" name="name" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số tên địa điểm" [(ngModel)]="resPlace.name" [readonly]="!isEdit">
+                <label class="form-control-label" for="name">Tên Địa Điểm
+                  <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validatePlace.name ? this.validatePlace.name : ''}}</span>
+                </label>
+                <input type="text" id="name" name="name" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập tên khách sạn" [(ngModel)]="resPlace.name" >
               </div>
             </div>
             <div class="col-lg-6">
               <div class="form-group">
-                <label class="form-control-label" for="input-phone">Số điện thoại</label>
-                <input type="text" id="phone" name="phone" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số điện thoại" [(ngModel)]="resPlace.phone" [readonly]="!isEdit">
+                <label class="form-control-label" for="phone">Số điện thoại
+                  <span [class]="type == 'detail'?'d-none':'text-danger'">* {{this.validatePlace.phone ? this.validatePlace.phone : ''}}</span>
+                </label>
+                <input type="text" id="phone" name="phone" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số điện thoại" [(ngModel)]="resPlace.phone" >
               </div>
             </div>
           </div>
           <div class="row">
-            <div class="col-lg-12">
-              <label class="form-control-label" for="input-address">Địa chỉ</label>
-              <input type="text" id="address" name="address" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số điạ chỉ" [(ngModel)]="resPlace.address" [readonly]="!isEdit">
+            <div class="col-lg-6">
+              <label class="form-control-label" for="input-address">Địa chỉ
+                <span [class]="type == 'detail'?'d-none':'text-danger'">* {{this.validatePlace.address ? this.validatePlace.address : ''}}</span>
+              </label>
+              <input type="text" id="address" name="address" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số điạ chỉ" [(ngModel)]="resPlace.address" >
             </div>
-
+            <div class="col-lg-6">
+              <label class="form-control-label" for="input-priceTicket">Giá vé
+                <span [class]="type == 'detail'?'d-none':'text-danger'">* {{this.validatePlace.priceTicket ? this.validatePlace.priceTicket : ''}}</span>
+              </label>
+              <input type="number" id="priceTicket" name="priceTicket" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập giá vé" [(ngModel)]="resPlace.priceTicket" >
+            </div>
           </div>
           <hr>
           <div class="row">
-
-            <div class="col-lg-4">
+            <div class="col-6">
               <div class="form-group">
-                <label class="form-control-label" for="input-singleRoomPrice">Giá vé</label>
-                <input type="number" name="singleRoomPrice" id="singleRoomPrice" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập giá vé" [(ngModel)]="resPlace.priceTicket" [readonly]="!isEdit">
+                <label class="form-control-label" for="name">Tên người Sửa
+                  <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validatePlace.modifyBy ? this.validatePlace.modifyBy : ''}}</span>
+                </label>
+                <input type="text" id="name" name="name" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập tên người sửa" [(ngModel)]="resPlace.modifyBy" >
               </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-6">
               <div class="form-group">
-                <label class="form-control-label" for="input-singleRoomPrice">Người Sửa</label>
-                <input type="text" name="singleRoomPrice" id="singleRoomPrice" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập Người Sửa" [(ngModel)]="resPlace.modifyBy" [readonly]="!isEdit">
-              </div>
-            </div>
-            <div class="col-lg-4">
-              <div class="form-group">
-                <label class="form-control-label" for="input-singleRoomPrice">Ngày Sửa</label>
-                <input type="date" name="singleRoomPrice" id="singleRoomPrice" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập ngày sửa" [(ngModel)]="resPlace.modifyDate" [readonly]="!isEdit">
+                <label class="form-control-label" for="modifyDate">Ngày Sửa
+                  <span [class]="type == 'detail'?'d-none':'text-danger'">* {{this.validatePlace.modifyDate ? this.validatePlace.modifyDate : ''}}</span>
+                </label>
+                <input type="date" id="modifyDate" name="modifyDate" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số điện thoại" [(ngModel)]="resPlace.modifyDate" >
               </div>
             </div>
           </div>
@@ -61,12 +64,13 @@
 
     <div class="row align-items-center">
       <div class="col-12 text-right">
-        <button  *ngIf="type == 'detail'" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteProvinceModal" (click)="getDataDelete()">Xóa</button>
-        <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="restore()">Khôi phục</button>
+        <button  *ngIf="type == 'detail'" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deletePlaceModal" (click)="getDataDelete()">Xóa</button>
+        <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="backup()">Khôi phục</button>
         <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="save()">{{type == 'detail' ? "Lưu":"Thêm"}}</button>
       </div>
     </div>
 
   </ng-container>
 </div>
+
 
