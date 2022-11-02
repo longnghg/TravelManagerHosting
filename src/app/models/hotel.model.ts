@@ -11,7 +11,7 @@ export class HotelModel{
   doubleRoomPrice: number
   quantityDBR: number
   quantitySR: number
-  modifyBy: string
+  IdUserModify: string
   modifyDate: number
 }
 

@@ -26,12 +26,13 @@ export class ItemHotelComponent implements OnInit {
   constructor(private hotelService: HotelService, private configService: ConfigService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
-    this.auth = JSON.parse(localStorage.getItem("currentUser"))
+
   }
 
   ngOnChanges(): void {
     if(this.type == 'create'){
       this.resHotel = new HotelModel()
+
     }
     this.resHotelTmp = Object.assign({}, this.resHotel)
   }
@@ -63,15 +64,16 @@ export class ItemHotelComponent implements OnInit {
       //if (this.formData) {
         //file.append('file', this.formData.path[0].files[0])
       //}
-
+      var idUser = localStorage.getItem("idUser")
+      this.resHotel.IdUserModify = idUser
       if(this.type == "create")
       {
         this.hotelService.create(this.resHotel).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-	if(this.response.notification.type == StatusNotification.Success)
+	    if(this.response.notification.type == StatusNotification.Success)
         {
-		 this.close()
+		      this.close()
         }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -86,7 +88,7 @@ export class ItemHotelComponent implements OnInit {
 
           if(this.response.notification.type == StatusNotification.Success)
           {
-		this.isChange = false
+		        this.isChange = false
           }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");

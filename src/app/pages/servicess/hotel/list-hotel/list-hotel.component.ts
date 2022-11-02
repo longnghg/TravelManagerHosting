@@ -46,7 +46,7 @@ export class ListHotelComponent implements OnInit {
   init(){
     this.hotelService.gets().subscribe(res =>{
       this.response = res
-      if(this.response.notification.type){
+      if(this.response.notification.type== StatusNotification.Success){
         this.resHotel = this.response.content
       }
       else if(this.resHotel == null){
@@ -105,11 +105,8 @@ export class ListHotelComponent implements OnInit {
 
   delete(){
     if (this.data) {
-     // giờ tới bước check api , do gọi api, api nó trả về trường hợp error, cú pháp đúng hết r giờ mình check dữ liêu jtruyeefn vào
-
-     // dữ liệu trtuyeefn vào đúng, nhưng mà vẫn lỗi, v có thể lỗi ở api hoặc db
-
-     this.hotelService.delete(this.data.idHotel).subscribe(res =>{
+      var idUser = localStorage.getItem("idUser")
+      this.hotelService.delete(this.data.idHotel, idUser).subscribe(res =>{
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
      }, error => {
