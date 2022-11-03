@@ -6,7 +6,7 @@ export class EmployeeModel {
   phone: string = null
   gender: boolean = null
   address: string = null
-  birthday: string = null
+  birthday: string = "0"
   image: string = null
   roleId: string = null
   roleName: string = null
