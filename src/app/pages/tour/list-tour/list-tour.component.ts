@@ -8,7 +8,7 @@ import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.compo
 import { ColDef2, GridConfig2} from '../../../components/grid2-data/grid2-data.component';
 // signalr
 import { HubConnection } from '@microsoft/signalr';
-import { StatusNotification } from "../../../enums/enum";
+import { StatusApprove, StatusNotification, TypeAction } from "../../../enums/enum";
 import { AuthenticationModel } from 'src/app/models/authentication.model';
 @Component({
   selector: 'app-list-tour',
@@ -29,13 +29,7 @@ export class ListTourComponent implements OnInit {
 
 
   public columnDefs: ColDef[]
-  public gridConfig: GridConfig = {
-    // idModalRestore: "restoreTourModal",
-    // idModalDelete: "deleteTourModal",
-    // idModal: "gridTour",
-    // disableRadioBox: false,
-    // radioBoxName: "Kho lưu trữ",
-  }
+  public columnDefsWaiting: ColDef[]
 
   public gridConfig2: GridConfig2 = {
     idModalRestore: "restoreTourModal",
@@ -45,6 +39,7 @@ export class ListTourComponent implements OnInit {
     alias: "idTour",
     disableRadioBox: false,
     radioBoxName: "Kho lưu trữ",
+    disableApprove: true
   }
   public gridConfigApprove: GridConfig2 = {
 
@@ -69,7 +64,7 @@ export class ListTourComponent implements OnInit {
         this.init(this.type)
       }
 
-      this.initWaiting()
+
       // this.hubConnectionBuilder = this.configService.signIR()
       // this.hubConnectionBuilder.start();
       // this.hubConnectionBuilder.on('Init', (result: any) => {
@@ -83,34 +78,6 @@ export class ListTourComponent implements OnInit {
       //   this.initWaiting(this.type)
       // })
 
-    }
-
-    initWaiting(){
-      this.tourService.getwaiting(this.auth.id).subscribe(res =>{
-        this.response = res
-        if(this.response.notification.type == StatusNotification.Success){
-          this.resTourWaiting = this.response.content
-        }
-        else{
-          this.resTourWaiting = null
-
-        }
-      }, error => {
-        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, StatusNotification.Error)
-      })
-
-      // setTimeout(() => {
-      //   this.columnDefs= [
-      //   { field: 'idTour', headerName: "Mã số", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'idTour'},
-      //   { field: 'nameTour',headerName: "Tên", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'tourName'},
-      //   { field: 'thumbnail',headerName: "Thumbnail", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'thumbnail'},
-      //   { field: 'toPlace',headerName: "Đến", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'address'},
-      //   { field: 'typeAction',headerName: "Hành động", style: "width: 10%;", searchable: true, searchType: 'text', searchObj: 'typeAction'},
-      //   // { field: 'status: string',headerName: "Trạng thái", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'status'},
-      //   // { field: 'createDate: string',headerName: "Ngày tạo", style: "width: 160px;", searchable: true, searchType: 'date', searchObj: 'createDate'},
-      //   ];
-      // }, 200);
     }
 
     init(e?){
@@ -136,12 +103,34 @@ export class ListTourComponent implements OnInit {
         { field: 'nameTour',headerName: "Tên", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'tourName'},
         { field: 'thumbnail',headerName: "Thumbnail", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'thumbnail'},
         { field: 'toPlace',headerName: "Đến", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'address'},
-        { field: 'typeAction',headerName: "Hành động", style: "width: 10%;", searchable: true, searchType: 'text', searchObj: 'typeAction'},
-        // { field: 'rating',headerName: "Số sao", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'rating'},
+        { field: 'rating',headerName: "Số sao", style: "width: 10%;", searchable: true, searchType: 'text', searchObj: 'rating'},
         // { field: 'status: string',headerName: "Trạng thái", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'status'},
         // { field: 'createDate: string',headerName: "Ngày tạo", style: "width: 160px;", searchable: true, searchType: 'date', searchObj: 'createDate'},
         ];
+
+        this.columnDefsWaiting= [
+          { field: 'idTour', headerName: "Mã số", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'idTour'},
+          { field: 'nameTour',headerName: "Tên", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'tourName'},
+          { field: 'thumbnail',headerName: "Thumbnail", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'thumbnail'},
+          { field: 'toPlace',headerName: "Đến", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'address'},
+          { field: 'approveName',headerName: "Trạng thái phê duyệt", style: "width: 15%;", searchable: true, searchType: 'section', searchObj: 'approve' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listApprove()},
+          { field: 'typeAction',headerName: "Loại phê duyệt", style: "width: 10%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()},
+       ];
       }, 200);
+
+      this.tourService.getwaiting(this.auth.id).subscribe(res =>{
+        this.response = res
+        if(this.response.notification.type == StatusNotification.Success){
+          this.resTourWaiting = this.response.content
+          this.resTourWaiting.forEach(tour => {
+            tour.approveName = StatusApprove[tour.approveStatus]
+            tour.typeAction = TypeAction[tour.typeAction]
+          });
+        }
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, StatusNotification.Error)
+      })
     }
     childData(e){
       if (e) {

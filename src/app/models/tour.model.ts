@@ -4,6 +4,7 @@ export class TourModel{
   thumbnail: string
   toPlace: string
   approveStatus: number
+  approveName: string
   status: string
   createDate: number
   modifyBy: string

@@ -38,7 +38,7 @@ export class ItemTourComponent implements OnInit {
 
     var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
     this.type = this.activatedRoute.snapshot.paramMap.get('id1')
-    if(this.type == "detail"){
+    if(this.type == "detail" || this.type == "approve"){
 
       this.tourService.getTour(idTour).subscribe(res => {
         this.response = res
@@ -48,6 +48,7 @@ export class ItemTourComponent implements OnInit {
           this.resTour = this.response.content
           this.resTourTmp = Object.assign({}, this.resTour)
           console.log(this.resTour.idUserModify);
+          console.log(this.resTour);
 
           if(this.resTour){
             if (this.resTour.thumbnail) {
@@ -77,6 +78,8 @@ export class ItemTourComponent implements OnInit {
         }
       }
     }
+
+
   }
   ngOnChanges(): void {
 
