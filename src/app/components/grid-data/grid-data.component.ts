@@ -12,6 +12,7 @@ export class GridDataComponent implements OnInit {
   @Output() gdSearch = new EventEmitter<any>()
   @Output() gdChecked = new EventEmitter<any>()
   @Output() gdDelete = new EventEmitter<any>()
+  @Output() gdApprove = new EventEmitter<any>()
   @Output() gdRestore = new EventEmitter<any>()
   @Output() gdChild = new EventEmitter<any>()
   @Output() gdType = new EventEmitter<any>()
@@ -169,6 +170,10 @@ export class GridDataComponent implements OnInit {
     this.gdDelete.emit(data);
   }
 
+  getDataApprove(data: any){
+    this.gdApprove.emit(data);
+  }
+
   getDataRestore(data: any){
     this.gdRestore.emit(data);
   }
@@ -221,8 +226,10 @@ export interface ColDef{
 export class GridConfig{
   idModalRestore?: string
   idModalDelete?: string
+  idModalApprove?: string
   idModal?: string
 
+  disableApprove?: boolean
   disableCreate?: boolean
   disableDetail?: boolean
   disableDelete?: boolean

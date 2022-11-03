@@ -20,6 +20,8 @@ export class AuthenticationService{
       return  this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Authentication/logout-employee?idEmp="+empId);
   }
 
-
+  block(email: string){
+    return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Authentication/block-customer?email="+email);
+  }
 
 }

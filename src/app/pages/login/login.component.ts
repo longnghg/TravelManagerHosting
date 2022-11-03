@@ -21,12 +21,13 @@ export class LoginComponent implements OnInit {
   response: ResponseModel
   token: string
   isloading = false
-  email = "test1@gmail.com"
-  password = "123"
   countLoginFail = 0
   timeBlock: any
-  constructor( private configService:ConfigService, private notificationService:NotificationService, private authentication:AuthenticationService) { }
-  ngOnInit() {}
+  constructor( private configService:ConfigService, private notificationService:NotificationService, private authenticationService:AuthenticationService) { }
+  ngOnInit() {
+    this.resEmployee.email = "test1@gmail.com"
+    this.resEmployee.password = "123"
+  }
 
   login(){
     this.validateAuth = new ValidationLoginModel
@@ -46,20 +47,31 @@ export class LoginComponent implements OnInit {
       this.isloading = false
     }
     else{
-      this.authentication.login(this.resEmployee).subscribe(res=>{
+      this.authenticationService.login(this.resEmployee).subscribe(res=>{
         this.response = res
 
         if(this.response.notification.type == StatusNotification.Success)
         {
           this.resAthentication = this.response.content
           localStorage.setItem("token", this.resAthentication.token)
-          localStorage.setItem("idUser", this.resAthentication.id)
           localStorage.setItem("currentUser", JSON.stringify(this.resAthentication))
           document.location.assign( this.configService.clientUrl + "/#/dashboard")
-        } else{
+        }
+        else if(this.response.notification.type == StatusNotification.Block){
+          this.timeBlock = this.response.content
+          this.modalBlock.nativeElement.click()
+          this.isloading = false
+        }
+        else{
           this.countLoginFail +=1
           if (this.countLoginFail > 5) {
-           localStorage.setItem("MY3t/ez6Q0yEwHMr0/Cy/Q=="+this.resEmployee.email,(new Date(new Date().getTime() +30*60000).getTime()).toString())
+            this.authenticationService.block(this.resEmployee.email).subscribe(res => {
+              this.response = res
+              if (this.response.notification.type == StatusNotification.Error) {
+                localStorage.setItem("MY3t/ez6Q0yEwHMr0/Cy/Q=="+this.resEmployee.email,(new Date(new Date().getTime() +30*60000).getTime()).toString())
+              }
+              this.countLoginFail = 0
+            })
           }
         }
 

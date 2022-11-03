@@ -42,9 +42,9 @@ getHotel(idHotel: string)
 {
   return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/get-hotel?idHotel="+idHotel);
 }
-getsWaiting()
+getsWaiting(idUser: any)
 {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/gets-hotel-waiting?idUser=b07a87d7-c378-4e6c-9af8-447a3ee852b1");
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/gets-hotel-waiting?idUser="+idUser);
 }
 create(data: any)
 {
@@ -57,5 +57,15 @@ update(data: any)
 delete(idHotel: any, idUser: any)
 {
   return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/service/delete-hotel?idHotel="+idHotel+"&idUser="+idUser);
+}
+
+approve(idHotel: string)
+{
+  return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/approve-hotel?idHotel="+idHotel);
+}
+
+refuse(idHotel: string)
+{
+  return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/refuse-hotel?idHotel="+idHotel);
 }
 }

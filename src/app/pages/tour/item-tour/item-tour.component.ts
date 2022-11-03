@@ -34,11 +34,11 @@ export class ItemTourComponent implements OnInit {
   ngOnInit(): void {
     var currentUser = localStorage.getItem("currentUser")
     this.resAuth = JSON.parse(currentUser)
-    
+
 
     var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
     this.type = this.activatedRoute.snapshot.paramMap.get('id1')
-    if(this.type == "detail"){  
+    if(this.type == "detail"){
 
       this.tourService.getTour(idTour).subscribe(res => {
         this.response = res
@@ -48,8 +48,8 @@ export class ItemTourComponent implements OnInit {
           this.resTour = this.response.content
           this.resTourTmp = Object.assign({}, this.resTour)
           console.log(this.resTour.idUserModify);
-          
-          if(this.resTour){ 
+
+          if(this.resTour){
             if (this.resTour.thumbnail) {
               this.img = this.configService.apiUrl + this.resTour.thumbnail
             }
@@ -119,8 +119,7 @@ export class ItemTourComponent implements OnInit {
     this.validateTourModel =  this.configService.validateTour(this.resTour, this.validateTourModel)
 
     if (this.validateTourModel.total == 0) {
-      var idUser = localStorage.getItem("idUser")
-      this.resTour.idUserModify = idUser
+      this.resTour.idUserModify = this.resAuth.id
       // this.resTour.typeAction = "insert"
       var file = new FormData();
       file.append('data', JSON.stringify(this.resTour))
@@ -144,12 +143,11 @@ export class ItemTourComponent implements OnInit {
         })
       }
       else{
-        var idUser = localStorage.getItem("idUser")
-        this.resTour.idUserModify = idUser
+        this.resTour.idUserModify = this.resAuth.id
         // this.resTour.typeAction = "update"
         var file = new FormData();
         file.append('data', JSON.stringify(this.resTour))
-        
+
         if (this.formData) {
           file.append('file', this.formData.path[0].files[0])
         }
@@ -188,9 +186,8 @@ export class ItemTourComponent implements OnInit {
   }
 
   delete(){
-    var idUser = localStorage.getItem("idUser")
     if (this.resTour) {
-     this.tourService.delete(this.resTour.idTour, idUser).subscribe(res =>{
+     this.tourService.delete(this.resTour.idTour, this.resAuth.id).subscribe(res =>{
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
        if (res.notification.type == StatusNotification.Success) {
@@ -204,9 +201,8 @@ export class ItemTourComponent implements OnInit {
    }
 
    restoreTour(){
-    var idUser = localStorage.getItem("idUser")
     if (this.resTour) {
-      this.tourService.restore(this.resTour.idTour, idUser).subscribe(res =>{
+      this.tourService.restore(this.resTour.idTour, this.resAuth.id).subscribe(res =>{
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
         if (res.notification.type == StatusNotification.Success) {

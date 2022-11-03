@@ -16,7 +16,8 @@ import { StatusNotification } from "../../../../enums/enum";
 export class ItemHotelComponent implements OnInit {
   @Input() resHotel: HotelModel
   @Input() type: string
-  @Output() parentDelete = new EventEmitter<any>()
+  @Output() parentData = new EventEmitter<any>()
+  @Output() parentType = new EventEmitter<any>()
   auth: AuthenticationModel
   validateHotel: ValidationHotelModel = new ValidationHotelModel
   response: ResponseModel
@@ -26,13 +27,12 @@ export class ItemHotelComponent implements OnInit {
   constructor(private hotelService: HotelService, private configService: ConfigService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
-
+    this.auth = JSON.parse(localStorage.getItem("currentUser"))
   }
 
   ngOnChanges(): void {
     if(this.type == 'create'){
       this.resHotel = new HotelModel()
-
     }
     this.resHotelTmp = Object.assign({}, this.resHotel)
   }
@@ -64,8 +64,7 @@ export class ItemHotelComponent implements OnInit {
       //if (this.formData) {
         //file.append('file', this.formData.path[0].files[0])
       //}
-      var idUser = localStorage.getItem("idUser")
-      this.resHotel.IdUserModify = idUser
+      this.resHotel.IdUserModify = this.auth.id
       if(this.type == "create")
       {
         this.hotelService.create(this.resHotel).subscribe(res =>{
@@ -124,12 +123,13 @@ export class ItemHotelComponent implements OnInit {
 
     }
 
-
-
   close(){
      this.backup()
+     this.parentType.emit(null);
   }
-  getDataDelete(){
-    this.parentDelete.emit(this.resHotel);
+
+  getParentData(type?: string){
+    this.parentType.emit(type);
+    this.parentData.emit(this.resHotel);
   }
 }

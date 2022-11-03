@@ -11,11 +11,19 @@ export enum StatusBooking {
   'Chưa thanh toán',
 }
 
-enum ApprovalStatus {
-  'Đã duyệt',
-  'Chưa duyệt',
-  'Từ chối'
+export enum StatusApprove {
+  'Đợi phê duyệt' = 0,
+  'Phê duyệt' = 1,
+  'Từ chối phê duyệt' = 2,
+  'Hủy phê duyệt' = 3
 };
+
+export enum TypeAction{
+  insert = "Thêm mới",
+  delete = "Xóa",
+  update = "Chỉnh sửa",
+  restore = "Khôi phục"
+}
 
 export enum StatusBooking
 {
@@ -33,8 +41,10 @@ export enum StatusBooking
 
 export enum StatusNotification
 {
-    Success = "Success",
-    Error = "Error",
-    Warning = "Warning",
-    Info = "Info"
+  Success = "Success",
+  Error = "Error",
+  Warning = "Warning",
+  Info = "Info",
+  Block = "Block",
+  Validation = "Validation"
 }

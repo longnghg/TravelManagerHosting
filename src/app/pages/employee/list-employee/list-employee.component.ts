@@ -186,7 +186,7 @@ export class ListEmployeeComponent implements OnInit {
 
   delete(){
     if (this.data) {
-      if (this.data.idEmployee != localStorage.getItem("idUser")) {
+      if (this.data.idEmployee != this.auth.id) {
         this.employeeService.delete(this.data.idEmployee).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)

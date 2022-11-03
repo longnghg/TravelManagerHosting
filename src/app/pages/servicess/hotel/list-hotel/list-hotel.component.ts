@@ -5,7 +5,7 @@ import { NotificationService } from "../../../../services_API/notification.servi
 import { ColDef, GridConfig} from '../../../../components/grid-data/grid-data.component';
 import { ConfigService } from "../../../../services_API/config.service";
 import { ResponseModel } from "../../../../models/responsiveModels/response.model";
-import { StatusNotification } from "../../../../enums/enum";
+import { StatusNotification, StatusApprove, TypeAction } from "../../../../enums/enum";
 import { AuthenticationModel } from "../../../../models/authentication.model"
 
 @Component({
@@ -26,31 +26,33 @@ export class ListHotelComponent implements OnInit {
     private notificationService: NotificationService) { }
 
   public columnDefs: ColDef[]
+  public columnDefsWaiting: ColDef[]
+
   public gridConfig: GridConfig = {
     idModalRestore: "",
     idModalDelete: "deleteHotelModal",
     idModal: "gridHotel",
     radioBoxName: "Kho lưu trữ",
+    disableApprove: true
   }
   public gridConfigWaiting: GridConfig = {
     idModal: "gridHotel",
+    idModalApprove: "approveHotelModal",
     disableDelete: true,
     disableRadioBox: true,
     disableCreate: true,
     disableRestore: true
   }
   ngOnInit(): void {
+    this.auth = JSON.parse(localStorage.getItem("currentUser"))
     this.init();
   }
 
   init(){
     this.hotelService.gets().subscribe(res =>{
       this.response = res
-      if(this.response.notification.type== StatusNotification.Success){
+      if(this.response.notification.type == StatusNotification.Success){
         this.resHotel = this.response.content
-      }
-      else if(this.resHotel == null){
-        // this.notificationService.handleAlertObj(res.notification)
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -60,24 +62,31 @@ export class ListHotelComponent implements OnInit {
     setTimeout(() => {
 
       this.columnDefs= [
-        { field: 'name',headerName: "Tên khách sạn", style: "width: 200px;", searchable: true, searchType: 'text', searchObj: 'name'},
-        { field: 'address',headerName: "Địa chỉ", style: "width: 200px;", searchable: true, searchType: 'text', searchObj: 'address'},
-        { field: 'phone',headerName: "Số điện thoại", style: "width: 150px;", searchable: true, searchType: 'text', searchObj: 'phone'},
-        { field: 'star',headerName: "Số sao", style: "width: 150px;", searchable: true, searchType: 'text', searchObj: 'star'},
-        { field: 'quantitySR',headerName: "Số lượng phòng đơn", style: "width: 150px;", searchable: true, searchType: 'text', searchObj: 'quantitySR'},
-        { field: 'singleRoomPrice',headerName: "Giá phòng đơn", style: "width: 150px;", searchable: true, searchType: 'text', searchObj: 'singleRoomPrice'},
-        { field: 'quantityDBR',headerName: "Số lượng phòng đôi", style: "width: 150px;", searchable: true, searchType: 'text', searchObj: 'quantityDBR'},
-        { field: 'doubleRoomPrice',headerName: "Giá phòng đôi", style: "width: 150px;", searchable: true, searchType: 'text', searchObj: 'doubleRoomPrice'},
+        { field: 'name',headerName: "Tên khách sạn", style: "width: 25%;", searchable: true, searchType: 'text', searchObj: 'name'},
+        { field: 'address',headerName: "Địa chỉ", style: "width: 29%;", searchable: true, searchType: 'text', searchObj: 'address'},
+        { field: 'phone',headerName: "Số điện thoại", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'phone'},
+        { field: 'star',headerName: "Số sao", style: "width: 21%;", filter: "star",searchable: true, searchType: 'section', searchObj: 'star' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listStar()},
+      ];
+
+      this.columnDefsWaiting= [
+        { field: 'name',headerName: "Tên khách sạn", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'name'},
+        { field: 'address',headerName: "Địa chỉ", style: "width: 25%;", searchable: true, searchType: 'text', searchObj: 'address'},
+        { field: 'phone',headerName: "Số điện thoại", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'phone'},
+        { field: 'approveName',headerName: "Trạng thái phê duyệt", style: "width: 15%;", searchable: true, searchType: 'section', searchObj: 'approve' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listApprove()},
+        { field: 'typeActionName',headerName: "Loại phê duyệt", style: "width: 15%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()},
       ];
     }, 200);
 
-    this.hotelService.getsWaiting().subscribe(res =>{
+    this.hotelService.getsWaiting(this.auth.id).subscribe(res =>{
       this.response = res
       if(this.response.notification.type == StatusNotification.Success){
+
         this.resHotelWaiting = this.response.content
-      }
-      else if(this.resHotel == null){
-        // this.notificationService.handleAlertObj(res.notification)
+
+        this.resHotelWaiting.forEach(hotel => {
+          hotel.approveName = StatusApprove[hotel.approve]
+          hotel.typeActionName = TypeAction[hotel.typeAction]
+        });
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -86,34 +95,52 @@ export class ListHotelComponent implements OnInit {
   }
 
   childData(e){
-    if (e) {
-      this.dataChild = Object.assign({}, e)
-    }
-
+    this.dataChild = Object.assign({}, e)
   }
 
   childType(e){
-    if (e) {
-      this.typeChild = e
-    }
+    this.typeChild = e
   }
   getData(data: any){
     this.data = data
-    console.log(data);
-
   }
 
   delete(){
     if (this.data) {
-      var idUser = localStorage.getItem("idUser")
-      this.hotelService.delete(this.data.idHotel, idUser).subscribe(res =>{
+      this.hotelService.delete(this.data.idHotel, this.auth.id).subscribe(res =>{
        this.response = res
+       console.log(res);
+
        this.notificationService.handleAlertObj(res.notification)
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
        this.notificationService.handleAlert(message, StatusNotification.Error)
      })
     }
-   }
+  }
 
+  approve(){
+   if(this.data){
+    this.hotelService.approve(this.data.idHotel).subscribe(res =>{
+      this.response = res
+      this.notificationService.handleAlertObj(res.notification)
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+
+    })
+   }
+  }
+
+  refuse(){
+   if(this.data){
+    this.hotelService.refuse(this.data.idHotel).subscribe(res =>{
+      this.response = res
+      this.notificationService.handleAlertObj(res.notification)
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
+   }
+  }
 }

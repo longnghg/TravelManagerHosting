@@ -20,7 +20,6 @@ export class AppComponent {
 
       if (Math.round(Math.abs(days)) == 1) {
         localStorage.removeItem("currentUser")
-        localStorage.removeItem("idUser")
         localStorage.removeItem("token")
         sessionStorage.clear()
       }

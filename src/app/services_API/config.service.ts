@@ -31,6 +31,43 @@ export class ConfigService{
 
     return message
   }
+  listStar(){
+    var listStar = [
+      {id: 1, name: "01"},
+      {id: 2, name: "02"},
+      {id: 3, name: "03"},
+      {id: 4, name: "04"},
+      {id: 5, name: "05"},
+      {id: 6, name: "06"},
+      {id: 7, name: "07"},
+      {id: 8, name: "08"},
+      {id: 9, name: "09"},
+      {id: 10, name: "10"}
+    ]
+    return listStar
+  }
+
+  listApprove(){
+    var listApprove = [
+      {id: 0, name: "Đợi phê duyệt"},
+      {id: 1, name: "Phê duyệt"},
+      {id: 2, name: "Từ chối phê duyệt"},
+      {id: 3, name: "Hủy phê duyệt"}
+    ]
+
+    return listApprove
+  }
+
+  listTypeAction(){
+    var listTypeAction = [
+      {id: "insert", name: "Thêm mới"},
+      {id: "delete", name: "Xóa"},
+      {id: "update", name: "Chỉnh sửa"},
+      {id: "restore", name: "Khôi phục"}
+    ]
+
+    return listTypeAction
+  }
 
   listGender(){
     var listGender = [

@@ -52,7 +52,6 @@ export class NavbarComponent implements OnInit {
       this.response = res
       this.notificationService.handleAlertObj(res.notification)
       localStorage.removeItem("currentUser")
-      localStorage.removeItem("idUser")
       localStorage.removeItem("token")
       sessionStorage.clear()
       this.auth = null

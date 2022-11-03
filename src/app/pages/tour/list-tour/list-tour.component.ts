@@ -9,6 +9,7 @@ import { ColDef2, GridConfig2} from '../../../components/grid2-data/grid2-data.c
 // signalr
 import { HubConnection } from '@microsoft/signalr';
 import { StatusNotification } from "../../../enums/enum";
+import { AuthenticationModel } from 'src/app/models/authentication.model';
 @Component({
   selector: 'app-list-tour',
   templateUrl: './list-tour.component.html',
@@ -23,7 +24,7 @@ export class ListTourComponent implements OnInit {
   data: TourModel
   type: boolean = false
   typeChild: string
-
+  auth: AuthenticationModel
   private hubConnectionBuilder: HubConnection
 
 
@@ -59,6 +60,7 @@ export class ListTourComponent implements OnInit {
       private notificationService: NotificationService) {}
 
     ngOnInit(): void {
+      this.auth = JSON.parse(localStorage.getItem("currentUser"))
       if (history.state.isDelete) {
         this.gridConfig2.isRestore = history.state.isDelete
         this.init(history.state.isDelete)
@@ -84,15 +86,14 @@ export class ListTourComponent implements OnInit {
     }
 
     initWaiting(){
-      var idUser = localStorage.getItem("idUser")
-      this.tourService.getwaiting(idUser).subscribe(res =>{
-        this.response = res 
+      this.tourService.getwaiting(this.auth.id).subscribe(res =>{
+        this.response = res
         if(this.response.notification.type == StatusNotification.Success){
           this.resTourWaiting = this.response.content
         }
         else{
           this.resTourWaiting = null
-          
+
         }
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -122,7 +123,7 @@ export class ListTourComponent implements OnInit {
         }
         else{
           this.resTour = null
-         
+
         }
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -157,9 +158,8 @@ export class ListTourComponent implements OnInit {
     }
 
     delete(){
-      var idUser = localStorage.getItem("idUser")
       if (this.data) {
-       this.tourService.delete(this.data.idTour, idUser).subscribe(res =>{
+       this.tourService.delete(this.data.idTour, this.auth.id).subscribe(res =>{
          this.response = res
          this.notificationService.handleAlertObj(res.notification)
        }, error => {
@@ -170,9 +170,8 @@ export class ListTourComponent implements OnInit {
      }
 
      restore(){
-      var idUser = localStorage.getItem("idUser")
       if (this.data) {
-        this.tourService.restore(this.data.idTour, idUser).subscribe(res =>{
+        this.tourService.restore(this.data.idTour, this.auth.id).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
         }, error => {

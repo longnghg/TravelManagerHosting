@@ -7,12 +7,15 @@ export class HotelModel{
   star: number
   idAction: boolean
   typeAction: string
+  typeActionName: string
   singleRoomPrice: number
   doubleRoomPrice: number
   quantityDBR: number
   quantitySR: number
   IdUserModify: string
   modifyDate: number
+  approve: number
+  approveName: string
 }
 
 export class ValidationHotelModel{

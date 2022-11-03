@@ -237,7 +237,7 @@ export class ItemEmployeeComponent implements OnInit{
 
   delete(){
     if (this.resEmployee) {
-      if (this.resEmployee.idEmployee != localStorage.getItem("idUser")) {
+      if (this.resEmployee.idEmployee != this.auth.id) {
         this.employeeService.delete(this.resEmployee.idEmployee).subscribe(res =>{
           this.response = res
 

@@ -30,6 +30,10 @@ export class NotificationService{
         {
             this.toastr.warning(data.messenge, 'Cảnh báo');
         }
+        else if(data.type === 'Info')
+        {
+            this.toastr.info(data.messenge, 'Thông báo');
+        }
         else
         {
             this.toastr.error(data.messenge, 'Lỗi');

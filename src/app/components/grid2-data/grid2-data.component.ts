@@ -12,6 +12,7 @@ export class Grid2DataComponent implements OnInit {
   @Output() gdSearch = new EventEmitter<any>()
   @Output() gdChecked = new EventEmitter<any>()
   @Output() gdDelete = new EventEmitter<any>()
+  @Output() gdApprove = new EventEmitter<any>()
   @Output() gdRestore = new EventEmitter<any>()
   @Output() gdChild = new EventEmitter<any>()
   @Output() gdType = new EventEmitter<any>()
@@ -173,6 +174,9 @@ export class Grid2DataComponent implements OnInit {
     // }
   }
 
+  getDataApprove(data: any){
+    this.gdApprove.emit(data);
+  }
   getDataDelete(data: any){
 
     this.gdDelete.emit(data);
@@ -207,10 +211,12 @@ export interface ColDef2{
 export class GridConfig2{
   idModalRestore?: string
   idModalDelete?: string
+  idModalApprove?: string
 
   route?: string
   alias?: string
 
+  disableApprove?: boolean
   disableCreate?: boolean
   disableDetail?: boolean
   disableDelete?: boolean

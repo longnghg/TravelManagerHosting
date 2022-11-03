@@ -21,6 +21,7 @@ import { PlaceModel } from 'src/app/models/place.model';
 import { RestaurantService } from 'src/app/services_API/restaurant.service';
 import { RestaurantModel } from 'src/app/models/restaurant.model';
 import { StatusNotification } from "../../../enums/enum";
+import { AuthenticationModel} from "../../../models/authentication.model";
 @Component({
   selector: 'app-item-tour-schedule',
   templateUrl: './item-tour-schedule.component.html',
@@ -43,6 +44,7 @@ export class ItemTourScheduleComponent implements OnInit {
   response: ResponseModel
   isChange: boolean = false
   isAdd: boolean = false
+  auth: AuthenticationModel
   resScheduleTmp: ScheduleModel
   isHoliday = this.configService.listStatus()
   constructor(private scheduleService: ScheduleService, private configService: ConfigService, private notificationService: NotificationService,
@@ -50,6 +52,7 @@ export class ItemTourScheduleComponent implements OnInit {
     private costtourService: CostTourService, private hotelService: HotelService, private placeService: PlaceService, private restaurantService: RestaurantService) { }
 
   ngOnInit(): void {
+    this.auth = JSON.parse(localStorage.getItem("currentUser"))
   }
 
   ngOnChanges(): void {
@@ -133,8 +136,7 @@ export class ItemTourScheduleComponent implements OnInit {
     if (this.validateScheduleModel.total == 0) {
       var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
       if (this.type == "create") {
-        var idUser = localStorage.getItem("idUser")
-        this.resSchedule.idUserModify = idUser
+        this.resSchedule.idUserModify = this.auth.id
         this.resSchedule.typeAction = "insert"
         this.resSchedule.tourId = idTour
         this.scheduleService.create(this.resSchedule).subscribe(res => {
@@ -172,7 +174,7 @@ export class ItemTourScheduleComponent implements OnInit {
     // this.validateCostTourModel = this.configService.validateCostTour(this.resSchedule, this.validateCostTourModel)
 
     // if (this.validateCostTourModel.total == 0) {
-      if (this.type == "create") { 
+      if (this.type == "create") {
         this.resCostTour.idSchedule = this.resSchedule.idSchedule
         this.costtourService.create(this.resCostTour).subscribe(res => {
           this.response = res
@@ -214,7 +216,7 @@ export class ItemTourScheduleComponent implements OnInit {
           })
         }
       }
-    
+
   }
 
   btnAddCost() {

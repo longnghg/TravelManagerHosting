@@ -5,13 +5,27 @@
         <th scope="col" style="width: 50px;"></th>
         <th scope="col" *ngFor="let column of columnDefs" [style]="column.style">{{column.headerName}}
           <ng-container *ngIf="column.searchType == 'section'; else elseSection">
-            <ng-select style="width: 100%;" [virtualScroll]="true" [items]="column.listSection" (open)="ngOnChanges()"  placeholder="Tìm kiếm..." (change)="selectSection(column.searchObj)" id="section" name="section" [(ngModel)]="keyword[column.searchObj]" [bindLabel]="column.bindLabel" [bindValue]="column.bindValue" appendTo="body" [multiple]="column.multiple"  dropdownPosition="auto" [searchable]="false" [closeOnSelect]="column.closeOnSelect">
-              <ng-container *ngIf="column.multiple;">
-                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                  <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item[column.bindLabel]}}
-                </ng-template>
-              </ng-container>
-            </ng-select>
+            <ng-container *ngIf="column.filter == 'star'; else elseStar">
+              <ng-select style="width: 100%;" [virtualScroll]="true" [items]="column.listSection" (open)="ngOnChanges()"  placeholder="Tìm kiếm..." (change)="selectSection(column.searchObj)" id="section" name="section" [(ngModel)]="keyword[column.searchObj]" [bindLabel]="column.bindLabel" [bindValue]="column.bindValue" appendTo="body" [multiple]="column.multiple"  dropdownPosition="auto" [searchable]="false" [closeOnSelect]="column.closeOnSelect">
+                <ng-container *ngIf="column.multiple;">
+                  <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                    <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/>
+                    {{item[column.bindLabel]}} -
+                    <i class="fa-solid fa-star text-yellow" *ngFor='let star of item[column.bindValue] | forNumber'></i>
+                    <i class="fa-solid fa-star" *ngFor='let star of 10 - item[column.bindValue] | forNumber'></i>
+                  </ng-template>
+                </ng-container>
+              </ng-select>
+            </ng-container>
+            <ng-template #elseStar>
+              <ng-select style="width: 100%;" [virtualScroll]="true" [items]="column.listSection" (open)="ngOnChanges()"  placeholder="Tìm kiếm..." (change)="selectSection(column.searchObj)" id="section" name="section" [(ngModel)]="keyword[column.searchObj]" [bindLabel]="column.bindLabel" [bindValue]="column.bindValue" appendTo="body" [multiple]="column.multiple"  dropdownPosition="auto" [searchable]="false" [closeOnSelect]="column.closeOnSelect">
+                <ng-container *ngIf="column.multiple;">
+                  <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                    <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item[column.bindLabel]}}
+                  </ng-template>
+                </ng-container>
+              </ng-select>
+            </ng-template>
           </ng-container>
           <ng-template #elseSection>
             <ng-container *ngIf="column.searchType == 'date'; else elseDateTime">
@@ -75,21 +89,35 @@
                   {{formatFromUnixTimestampToFullDateView(row[column.field])}}
                 </ng-container>
                 <ng-template #elseDate>
-                  {{row[column.field]}}
+                  <ng-container *ngIf="column.filter == 'star'; else elseStar">
+                    {{row[column.field] < 10 ? '0'+row[column.field] : row[column.field]}} -
+                    <i class="fa-solid fa-star text-yellow" *ngFor='let star of row[column.field] | forNumber'></i>
+                    <i class="fa-solid fa-star" *ngFor='let star of 10 - row[column.field] | forNumber'></i>
+                  </ng-container>
+                  <ng-template #elseStar>
+                    {{row[column.field]}}
+                  </ng-template>
                 </ng-template>
-
               </ng-template>
             </td>
 
             <td>
-              <div *ngIf="!gridConfig.disableDetail || !gridConfig.disableDelete || !gridConfig.disableRestore" ngbDropdown [placement]="i >= rowData.length-2 && rowData.length > 2? 'top-right':'bottom-right'">
+              <div *ngIf="!gridConfig.disableDetail || !gridConfig.disableDelete || !gridConfig.disableRestore || !gridConfig.disableRestore" ngbDropdown [placement]="i >= rowData.length-2 && rowData.length > 2? 'top-right':'bottom-right'">
                 <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
                   <i class="fas fa-ellipsis-v" style="color: #4d4aef!important;"></i>
                 </a>
                 <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
-                  <a class="dropdown-item" href="javascript:void(0)" *ngIf="!gridConfig.disableDetail" data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModal" (click)="childData(row, 'detail')">Chi tiết</a>
+                  <ng-container *ngIf="gridConfig.disableApprove; else elseApprove">
+                    <a class="dropdown-item" href="javascript:void(0)" *ngIf="!gridConfig.disableDetail" data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModal" (click)="childData(row, 'detail')">Chi tiết</a>
+                  </ng-container>
+                  <ng-template #elseApprove>
+                    <a class="dropdown-item" href="javascript:void(0)" *ngIf="!gridConfig.disableDetail" data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModal" (click)="childData(row, 'approve')">Chi tiết</a>
+                  </ng-template>
+
+
                   <ng-container *ngIf="!isDelete; else elseRestoreOrDelete">
                     <a class="dropdown-item" href="javascript:void(0)" *ngIf="!gridConfig.disableDelete"  data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModalDelete" (click)="getDataDelete(row)">Xóa</a>
+                    <a class="dropdown-item" href="javascript:void(0)" *ngIf="!gridConfig.disableApprove"  data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModalApprove" (click)="getDataApprove(row)">Hủy yêu cầu</a>
                   </ng-container>
                   <ng-template #elseRestoreOrDelete>
                     <a class="dropdown-item" href="javascript:void(0)"  *ngIf="!gridConfig.disableRestore"  data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModalRestore" (click)="getDataRestore(row)">Khôi phục</a>
