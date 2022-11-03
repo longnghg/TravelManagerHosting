@@ -49,8 +49,8 @@ export class ItemHotelComponent implements OnInit {
 
   backup(){
     this.resHotel = Object.assign({}, this.resHotelTmp)
-
     this.isChange = false
+    this.notificationService.handleAlert("Khôi phục dữ liệu ban đầu thành công !", StatusNotification.Info)
   }
 
   save(){
@@ -97,30 +97,6 @@ export class ItemHotelComponent implements OnInit {
       }
 
       }
-      // else{
-      //   this.hotelService.update(file).subscribe(res =>{
-      //     this.response = res
-      //     if (res.notification.type == "Validation") {
-      //       if (res.notification.description == "Phone") {
-      //         this.validateEmployee.phone == res.notification.messenge
-      //       }
-      //       else{
-      //         this.validateEmployee.email == res.notification.messenge
-      //       }
-      //     }
-      //     else{
-      //       this.notificationService.handleAlertObj(res.notification)
-      //       if (res.notification.type == StatusNotification.Success) {
-      //         this.close()
-      //         this.isChange = true
-      //       }
-      //     }
-      //   }, error => {
-      //     var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      //     this.notificationService.handleAlert(message, StatusNotification.Error)
-      //   })
-      // }
-
     }
 
   close(){
