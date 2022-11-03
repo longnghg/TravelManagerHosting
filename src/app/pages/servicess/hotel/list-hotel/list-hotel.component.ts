@@ -20,6 +20,7 @@ export class ListHotelComponent implements OnInit {
   response: ResponseModel
   dataChild: HotelModel
   typeChild: string
+  isDelete: boolean = false
   data: HotelModel
   constructor(private hotelService: HotelService,
     private configService: ConfigService,
@@ -29,7 +30,7 @@ export class ListHotelComponent implements OnInit {
   public columnDefsWaiting: ColDef[]
 
   public gridConfig: GridConfig = {
-    idModalRestore: "",
+    idModalRestore: "restoreHotelModal",
     idModalDelete: "deleteHotelModal",
     idModal: "gridHotel",
     radioBoxName: "Kho lưu trữ",
@@ -45,11 +46,11 @@ export class ListHotelComponent implements OnInit {
   }
   ngOnInit(): void {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
-    this.init();
+    this.init(this.isDelete);
   }
 
-  init(){
-    this.hotelService.gets().subscribe(res =>{
+  init(isDelete){
+    this.hotelService.gets(isDelete).subscribe(res =>{
       this.response = res
       if(this.response.notification.type == StatusNotification.Success){
         this.resHotel = this.response.content
@@ -109,8 +110,18 @@ export class ListHotelComponent implements OnInit {
     if (this.data) {
       this.hotelService.delete(this.data.idHotel, this.auth.id).subscribe(res =>{
        this.response = res
-       console.log(res);
+       this.notificationService.handleAlertObj(res.notification)
+     }, error => {
+       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+       this.notificationService.handleAlert(message, StatusNotification.Error)
+     })
+    }
+  }
 
+  restore(){
+    if (this.data) {
+      this.hotelService.restore(this.data.idHotel, this.auth.id).subscribe(res =>{
+       this.response = res
        this.notificationService.handleAlertObj(res.notification)
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");

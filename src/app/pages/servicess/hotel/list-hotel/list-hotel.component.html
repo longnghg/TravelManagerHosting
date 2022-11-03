@@ -97,7 +97,7 @@
   <div class="row">
     <div class="col">
       <div class="card shadow border-0">
-        <app-grid-data [rowData]="resHotel" [columnDefs]="columnDefs" [gridConfig]="gridConfig" (gdChecked)="init()" (gdType)="childType($event)" (gdChild)="childData($event)" (gdRestore)="getData($event)" (gdDelete)="getData($event)"></app-grid-data>
+        <app-grid-data [rowData]="resHotel" [columnDefs]="columnDefs" [gridConfig]="gridConfig" (gdChecked)="init($event)" (gdType)="childType($event)" (gdChild)="childData($event)" (gdRestore)="getData($event)" (gdDelete)="getData($event)"></app-grid-data>
       </div>
     </div>
   </div>
@@ -123,7 +123,37 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="delete()" >Xóa</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+        <ng-container *ngIf="typeChild; else elseType">
+          <button type="button" class="btn btn-primary" [attr.data-bs-target]="'#'+gridConfig.idModal" data-bs-toggle="modal">Không</button>
+        </ng-container>
+        <ng-template #elseType>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+        </ng-template>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" [id]="gridConfig.idModalRestore" tabindex="-1" aria-labelledby="restoreHotelModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="restoreHotelModalLabel">Xác nhận</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="data">
+        Bạn có chắc muốn khôi phục [<span class="text-red">{{data.name}}</span>] !
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="restore()" >Khôi phục</button>
+        <ng-container *ngIf="typeChild; else elseType">
+          <button type="button" class="btn btn-primary" [attr.data-bs-target]="'#'+gridConfig.idModal" data-bs-toggle="modal">Không</button>
+        </ng-container>
+        <ng-template #elseType>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+        </ng-template>
+
       </div>
     </div>
   </div>
@@ -180,9 +210,8 @@
           <button type="button" class="btn btn-primary" [attr.data-bs-target]="'#'+gridConfigWaiting.idModal" data-bs-toggle="modal">Không</button>
         </ng-container>
         <ng-template #elseType>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{typeChild}}Không</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
         </ng-template>
-
       </div>
     </div>
   </div>
