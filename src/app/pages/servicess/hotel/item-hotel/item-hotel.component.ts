@@ -100,7 +100,8 @@ export class ItemHotelComponent implements OnInit {
     }
 
   close(){
-     this.backup()
+    this.resHotel = Object.assign({}, this.resHotelTmp)
+    this.isChange = false
      this.parentType.emit(null);
   }
 

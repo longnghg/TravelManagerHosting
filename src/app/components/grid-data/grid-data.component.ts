@@ -210,12 +210,12 @@ export class GridDataComponent implements OnInit {
 export interface ColDef{
   field?: string
   headerName?: string
-  filter?: string
+  filter?: GridFilter
   style?: string
   // searchStyle?: string
   searchable?: boolean
   searchObj?: any
-  searchType?: string
+  searchType?: GridSearchType
   bindValue?: string
   bindLabel?: string
   multiple?: boolean
@@ -239,3 +239,6 @@ export class GridConfig{
   style?: string
   isRestore?: boolean
 }
+
+export declare type GridFilter = 'star' | 'number' | 'date' | 'status' | 'text' ;
+export declare type GridSearchType = 'section' | 'number' | 'date' | 'text' | 'email';
