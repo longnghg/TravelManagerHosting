@@ -40,14 +40,16 @@ export class ListTourComponent implements OnInit {
     disableRadioBox: false,
     radioBoxName: "Kho lưu trữ",
     disableApprove: true
+
   }
   public gridConfigApprove: GridConfig2 = {
-
+    idModalApprove: "approveTourModel",
     route: "item-tour",
     alias: "idTour",
     disableRadioBox: true,
     disableCreate: true,
-    disableDelete: true
+    disableDelete: true,
+    disableRestore: true
   }
   constructor(
     private configService: ConfigService,

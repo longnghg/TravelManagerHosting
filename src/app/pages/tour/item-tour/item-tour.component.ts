@@ -233,7 +233,7 @@ export class ItemTourComponent implements OnInit {
     }
   }
 
-  refuse(){
+  refused(){
     if (this.resTour) {
       this.tourService.refused(this.resTour.idTour).subscribe(res =>{
         this.response = res
