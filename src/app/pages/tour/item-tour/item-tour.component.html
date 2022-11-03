@@ -193,7 +193,7 @@
       <div class="modal-body" *ngIf="resTour">
         Bạn có chắc muốn {{!resTour.typeAction ? "Xóa":"Hủy yêu cầu"}} [<span class="text-red">{{resTour.nameTour}}</span>] !
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer" *ngIf="resTour">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="delete()">{{!resTour.typeAction ? "Xóa":"Hủy yêu cầu"}}</button>
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
       </div>
