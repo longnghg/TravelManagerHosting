@@ -62,6 +62,7 @@ export class ListEmployeeComponent implements OnInit {
         alias: "idEmployee",
         style: "height: 330px;",
         radioBoxName: "Kho lưu trữ",
+        disableApprove: true
       }
     }
     else{
@@ -75,6 +76,7 @@ export class ListEmployeeComponent implements OnInit {
         disableCreate: true,
         disableDelete: true,
         disableRestore: true,
+        disableApprove: true
       }
     }
 

@@ -110,10 +110,10 @@
                 </a>
                 <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
                   <ng-container *ngIf="gridConfig.disableApprove; else elseApprove">
-                    <a class="dropdown-item" href="javascript:void(0)" *ngIf="!gridConfig.disableDetail" data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModal" (click)="childData(row, 'detail')">Chi tiết</a>
+                    <a class="dropdown-item" href="javascript:void(0)" *ngIf="!gridConfig.disableDetail" [routerLink]="['',gridConfig.route, 'detail', row[gridConfig.alias]]">Chi tiết</a>
                   </ng-container>
                   <ng-template #elseApprove>
-                    <a class="dropdown-item" href="javascript:void(0)" *ngIf="!gridConfig.disableDetail" data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModal" (click)="childData(row, 'approve')">Chi tiết</a>
+                    <a class="dropdown-item" href="javascript:void(0)" *ngIf="!gridConfig.disableDetail"  [routerLink]="['',gridConfig.route, 'approve', row[gridConfig.alias]]">Chi tiết</a>
                   </ng-template>
 
 
