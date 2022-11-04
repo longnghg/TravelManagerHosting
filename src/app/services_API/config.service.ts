@@ -1,7 +1,6 @@
 import { Injectable, Inject } from "@angular/core";
 import { DOCUMENT } from '@angular/common';
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -31,7 +30,7 @@ export class ConfigService{
 
     return message
   }
-  listStar(){
+  list10Star(){
     var listStar = [
       {id: 1, name: "01"},
       {id: 2, name: "02"},
@@ -43,6 +42,17 @@ export class ConfigService{
       {id: 8, name: "08"},
       {id: 9, name: "09"},
       {id: 10, name: "10"}
+    ]
+    return listStar
+  }
+
+  list5Star(){
+    var listStar = [
+      {id: 1, name: "01"},
+      {id: 2, name: "02"},
+      {id: 3, name: "03"},
+      {id: 4, name: "04"},
+      {id: 5, name: "05"},
     ]
     return listStar
   }
@@ -564,7 +574,11 @@ validateHotel(data : any,model: any)
   }else if (data.address.length > 255) {
    model.address= "[Địa chỉ] quá dài !"
    model.total +=1
- }
+  }
+  if (data.star == null || data.star == "") {
+    model.star= "[Số sao] không được để trống !"
+    model.total +=1
+  }
  // quantity
  if(data.quantitySR == null || data.quantitySR == ""){
    model.quantitySR= "[Số lượng] phòng đơn không được để trống !"
@@ -574,7 +588,7 @@ validateHotel(data : any,model: any)
  if(data.singleRoomPrice == null || data.singleRoomPrice == ""){
    model.singleRoomPrice= "[Giá vé] phòng đơn không được để trống !"
    model.total +=1
-   }
+  }
 // double room
    if(data.quantityDBR == null || data.quantityDBR == ""){
      model.quantityDBR= "[Số lượng] phòng đôi không được để trống !"
@@ -732,6 +746,7 @@ validateHotel(data : any,model: any)
     var formattedDate = day + '/' + month + '/' + year;
     return formattedDate
    }
+
 
 
 }

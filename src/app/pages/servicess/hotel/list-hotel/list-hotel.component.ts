@@ -63,10 +63,10 @@ export class ListHotelComponent implements OnInit {
     setTimeout(() => {
 
       this.columnDefs= [
-        { field: 'name',headerName: "Tên khách sạn", style: "width: 25%;", searchable: true, searchType: 'text', searchObj: 'name'},
-        { field: 'address',headerName: "Địa chỉ", style: "width: 29%;", searchable: true, searchType: 'text', searchObj: 'address'},
+        { field: 'name',headerName: "Tên khách sạn", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'name'},
+        { field: 'address',headerName: "Địa chỉ", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'address'},
         { field: 'phone',headerName: "Số điện thoại", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'phone'},
-        { field: 'star',headerName: "Số sao", style: "width: 21%;", filter: "star",searchable: true, searchType: 'section', searchObj: 'star' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listStar()},
+        { field: 'star',headerName: "Số sao", style: "width: 15%;", filter: "star",searchable: true, searchType: 'section', searchObj: 'star' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.list5Star()},
       ];
 
       this.columnDefsWaiting= [
