@@ -624,6 +624,50 @@ validateHotel(data : any,model: any)
     return model
   }
 
+  validateRestaurant(data : any,model: any)
+  {
+   model.total= 0
+       if(data.name == null || data.name == ""){
+         model.name= "[Tên nhà hàng] không được để trống !"
+         model.total +=1
+       }else if (data.name.length > 100) {
+         model.name= "[Tên nhà hàng] quá dài !"
+         model.total +=1
+       }else if (data.name.length < 1) {
+         model.name= "[Tên nhà hàng] quá ngắn !"
+         model.total +=1
+       }
+
+     // phone
+     if (data.phone == null || data.phone == "") {
+       model.phone= "[Số điện thoại] không được để trống !"
+       model.total +=1
+     }else if (data.phone.length > 10) {
+       model.phone= "[Số điện thoại] vượt quá 10 số !"
+       model.total +=1
+     }else if (!data.phone.startsWith("0")) {
+       model.phone= "[Số điện thoại] không hợp lệ !"
+       model.total +=1
+     }
+      //Address
+    if (data.address == null || data.address == "") {
+     model.address= "[Địa chỉ] không được để trống !"
+     model.total +=1
+    }else if (data.address.length > 255) {
+     model.address= "[Địa chỉ] quá dài !"
+     model.total +=1
+   }
+   // price
+   if(data.comboPrice == null || data.comboPrice == ""){
+     model.comboPrice= "[Giá] không được để trống !"
+     model.total +=1
+     }else if(data.comboPrice < 0 || data.comboPrice > 99999999){
+      model.comboPrice= "[Giá] phải lớn hơn 0 và nhỏ hơn 10000000 !"
+      model.total +=1
+     }
+     return model
+  }
+
    // place
    validatePlace(data : any,model: any)
    {
