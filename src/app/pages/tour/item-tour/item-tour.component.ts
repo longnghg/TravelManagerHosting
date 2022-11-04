@@ -46,9 +46,6 @@ export class ItemTourComponent implements OnInit {
         {
           this.resTour = this.response.content
           this.resTourTmp = Object.assign({}, this.resTour)
-          console.log(this.resTour.idUserModify);
-          console.log(this.resTour.isDelete);
-
           if(this.resTour){
             if (this.resTour.thumbnail) {
               this.img = this.configService.apiUrl + this.resTour.thumbnail

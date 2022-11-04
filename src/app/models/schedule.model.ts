@@ -32,6 +32,8 @@ export class ScheduleModel{
   idUserModify:string
   typeAction: string
   isTempdata: boolean
+  approve: number
+  approveName: string
 }
 
 export class ValidateScheduleModel{

@@ -30,8 +30,10 @@ import { AuthenticationModel} from "../../../models/authentication.model";
 export class ItemTourScheduleComponent implements OnInit {
   @Input() resSchedule: ScheduleModel
   @Input() type: string
-  @Output() parentDelete = new EventEmitter<any>()
-  @Output() parentRestore = new EventEmitter<any>()
+  // @Output() parentDelete = new EventEmitter<any>()
+  // @Output() parentRestore = new EventEmitter<any>()
+  @Output() parentData = new EventEmitter<any>()
+  @Output() parentType = new EventEmitter<any>()
   validateScheduleModel: ValidateScheduleModel = new ValidateScheduleModel
   validateCostTourModel: ValidateCostTourModel = new ValidateCostTourModel
   resCostTour: CostTourModel
@@ -57,7 +59,7 @@ export class ItemTourScheduleComponent implements OnInit {
 
   ngOnChanges(): void {
     this.init()
-    this.initCost()
+    // this.initCost()
 
 
     if (this.type == 'create') {
@@ -121,10 +123,6 @@ export class ItemTourScheduleComponent implements OnInit {
     }
   }
 
-  restore() {
-    this.resSchedule = Object.assign({}, this.resScheduleTmp)
-    this.isChange = false
-  }
 
   save() {
     this.validateScheduleModel = new ValidateScheduleModel
@@ -226,19 +224,27 @@ export class ItemTourScheduleComponent implements OnInit {
     if (this.type == 'detail') {
       this.isAdd = false
     }
-    this.restore()
+    this.resSchedule = Object.assign({}, this.resScheduleTmp)
+    this.isChange = false
+     this.parentType.emit(null);
   }
 
-  getDataDelete() {
-    this.parentDelete.emit(this.resSchedule);
+  backup(){
+    this.resSchedule = Object.assign({}, this.resScheduleTmp)
+    this.isChange = false
+    this.notificationService.handleAlert("Khôi phục dữ liệu ban đầu thành công !", StatusNotification.Info)
   }
-  getDataRestore() {
-    this.parentRestore.emit(this.resSchedule);
-  }
+
+  // getDataDelete() {
+  //   this.parentDelete.emit(this.resSchedule);
+  // }
+  // getDataRestore() {
+  //   this.parentRestore.emit(this.resSchedule);
+  // }
 
   delete() {
     if (this.resSchedule) {
-      this.scheduleService.delete(this.resSchedule.idSchedule).subscribe(res => {
+      this.scheduleService.delete(this.resSchedule.idSchedule, this.auth.id).subscribe(res => {
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
       }, error => {
@@ -250,7 +256,7 @@ export class ItemTourScheduleComponent implements OnInit {
 
   restoreSchedule() {
     if (this.resSchedule) {
-      this.scheduleService.restore(this.resSchedule.idSchedule).subscribe(res => {
+      this.scheduleService.restore(this.resSchedule.idSchedule, this.auth.id).subscribe(res => {
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
       }, error => {
@@ -258,5 +264,10 @@ export class ItemTourScheduleComponent implements OnInit {
         this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
+  }
+
+  getParentData(type?: string){
+    this.parentType.emit(type);
+    this.parentData.emit(this.resSchedule);
   }
 }
