@@ -16,14 +16,17 @@ import { StatusNotification } from "../../../../enums/enum";
 export class ItemPlaceComponent implements OnInit {
   @Input() resPlace: PlaceModel
   @Input() type: string
-  @Output() parentDelete = new EventEmitter<any>()
+  @Output() parentData = new EventEmitter<any>()
+  @Output() parentType = new EventEmitter<any>()
   auth: AuthenticationModel
   validatePlace: ValidationPlaceModel = new ValidationPlaceModel
   response: ResponseModel
   isChange: boolean = false
   resPlaceTmp: PlaceModel
   formData: any
-  constructor(private placeService: PlaceService, private configService: ConfigService, private notificationService: NotificationService) { }
+  constructor(private placeService: PlaceService,
+    private configService: ConfigService,
+    private notificationService: NotificationService) { }
 
 
   ngOnInit(): void {
@@ -36,11 +39,7 @@ export class ItemPlaceComponent implements OnInit {
     }
     this.resPlaceTmp = Object.assign({}, this.resPlace)
   }
-  backup(){
-    this.resPlace = Object.assign({}, this.resPlaceTmp)
 
-    this.isChange = false
-  }
 
   inputChange(){
     if (JSON.stringify(this.resPlace) != JSON.stringify(this.resPlaceTmp)) {
@@ -51,30 +50,32 @@ export class ItemPlaceComponent implements OnInit {
     }
   }
 
-
-
-
+  backup(){
+    this.resPlace = Object.assign({}, this.resPlaceTmp)
+    this.isChange = false
+    this.notificationService.handleAlert("Khôi phục dữ liệu ban đầu thành công !", StatusNotification.Info)
+  }
 
   save(){
     this.validatePlace = new ValidationPlaceModel
     this.validatePlace =  this.configService.validatePlace(this.resPlace, this.validatePlace)
 
     if (this.validatePlace.total == 0) {
-
+      this.resPlace.IdUserModify = this.auth.id
       if(this.type == "create")
       {
         this.placeService.create(this.resPlace).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-        if(this.response.notification.type == StatusNotification.Success)
-              {
-          this.close()
-              }
-              }, error => {
-                var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-                this.notificationService.handleAlert(message, StatusNotification.Error)
+	    if(this.response.notification.type == StatusNotification.Success)
+        {
+		      this.close()
+        }
+        }, error => {
+          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+          this.notificationService.handleAlert(message, StatusNotification.Error)
 
-              })
+        })
       }
       else{
         this.placeService.update(this.resPlace).subscribe(res =>{
@@ -83,7 +84,7 @@ export class ItemPlaceComponent implements OnInit {
 
           if(this.response.notification.type == StatusNotification.Success)
           {
-		this.isChange = false
+		        this.isChange = false
           }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -93,37 +94,16 @@ export class ItemPlaceComponent implements OnInit {
       }
 
       }
-      // else{
-      //   this.hotelService.update(file).subscribe(res =>{
-      //     this.response = res
-      //     if (res.notification.type == "Validation") {
-      //       if (res.notification.description == "Phone") {
-      //         this.validateEmployee.phone == res.notification.messenge
-      //       }
-      //       else{
-      //         this.validateEmployee.email == res.notification.messenge
-      //       }
-      //     }
-      //     else{
-      //       this.notificationService.handleAlertObj(res.notification)
-      //       if (res.notification.type == StatusNotification.Success) {
-      //         this.close()
-      //         this.isChange = true
-      //       }
-      //     }
-      //   }, error => {
-      //     var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      //     this.notificationService.handleAlert(message, StatusNotification.Error)
-      //   })
-      // }
-
     }
 
-
   close(){
-     this.backup()
+    this.resPlace = Object.assign({}, this.resPlaceTmp)
+    this.isChange = false
+     this.parentType.emit(null);
   }
-  getDataDelete(){
-    this.parentDelete.emit(this.resPlace);
+
+  getParentData(type?: string){
+    this.parentType.emit(type);
+    this.parentData.emit(this.resPlace);
   }
 }

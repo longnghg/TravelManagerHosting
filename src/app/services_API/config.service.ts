@@ -683,44 +683,33 @@ validateHotel(data : any,model: any)
         model.total += 1
       } // phone
       if (data.phone == null || data.phone == "") {
-        model.phone =("[Số điện thoại] không được để trống !")
-        model.total += 1
-     }else if (data.phone.length > 10) {
-      model.phone =("[Số điện thoại] vượt quá 10 số !")
-      model.total += 1
-     }else if (!data.phone.startsWith("0")) {
-      model.phone =("[Số điện thoại] không hợp lệ !")
-      model.total += 1
-     }
-       //Address
-     if (data.address == null || data.address == "") {
-      model.address =("[Địa chỉ] không được để trống !")
-      model.total += 1
-     }else if (data.address.length > 255) {
-      model.address =("[Địa chỉ] quá dài !")
-      model.total += 1
-    }
-    //priceTicket
-    if(data.priceTicket == null || data.priceTicket == ""){
-      model.priceTicket =("[Giá vé] không được để trống !")
-      model.total += 1
+        model.phone= "[Số điện thoại] không được để trống !"
+        model.total +=1
+      }else if (data.phone.length > 10) {
+        model.phone= "[Số điện thoại] vượt quá 10 số !"
+        model.total +=1
+      }else if (!data.phone.startsWith("0")) {
+        model.phone= "[Số điện thoại] không hợp lệ !"
+        model.total +=1
       }
-      if(data.modifyBy == null || data.modifyBy == ""){
-        model.modifyBy =("[Tên người sửa] không được để trống !")
-        model.total += 1
-    }else if (data.modifyBy.length > 100) {
-      model.modifyBy =("[Tên người sửa] quá dài !")
-      model.total += 1
-    }else if (data.modifyBy.length < 1) {
-      model.modifyBy =("[Tên người sửa]  quá ngắn !")
-      model.total += 1
+      //Address
+    if (data.address == null || data.address == "") {
+      model.address= "[Địa chỉ] không được để trống !"
+      model.total +=1
+    }else if (data.address.length > 255) {
+      model.address= "[Địa chỉ] quá dài !"
+      model.total +=1
     }
-    if (data.modifyDate == null || data.modifyDate == "") {
-      model.modifyDate =("[Ngày] không được để trống !")
-      model.total += 1
-   }
+    // price
+    if(data.priceTicket == null || data.priceTicket == ""){
+      model.priceTicket= "[Giá] không được để trống !"
+      model.total +=1
+      }else if(data.priceTicket < 0 || data.priceTicket > 99999999){
+      model.priceTicket= "[Giá] phải lớn hơn 0 và nhỏ hơn 10000000 !"
+      model.total +=1
+      }
         return model
-   }
+    }
 
    validateLogin(data: any, model: any){
     model.total = 0

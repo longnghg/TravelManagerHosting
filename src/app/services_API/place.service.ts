@@ -9,14 +9,15 @@ import { NotificationService } from "../services_API/notification.service";
 })
 
 export class PlaceService{
-constructor(private http:HttpClient, private configService:ConfigService, private notificationService: NotificationService){ }
+constructor(private http:HttpClient, private configService:ConfigService,
+  private notificationService: NotificationService){ }
 
 response: ResponseModel
 resPlace: PlaceModel[]
 async views()
 {
   var value = <any>await new Promise<any>(resolve => {
-    this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/gets-place").subscribe(res => {
+    this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/gets-place?isDelete="+false).subscribe(res => {
       this.response = res
       if(!this.response.notification.type)
       {
@@ -34,18 +35,18 @@ async views()
 
 }
 
-gets()
+gets(isDelete)
 {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/gets-place");
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/gets-place?isDelete="+isDelete);
 }
 getPlace(idPlace: string)
 {
   return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/get-place?idPlace="+idPlace);
 }
-getwaiting(){
-  return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/gets-place-waiting?idUser=b07a87d7-c378-4e6c-9af8-447a3ee852b1");
+getsWaiting(idUser: any)
+{
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/gets-place-waiting?idUser="+idUser);
 }
-
 create(data: any)
 {
   return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Service/create-place", data);
@@ -54,15 +55,23 @@ update(data: any)
 {
   return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Service/update-place", data);
 }
-
-delete(idPlace: any)
+delete(idPlace: any, idUser: any)
 {
-  console.log("idPlace");
-  console.log(idPlace); // kiểm tra xem nó nhận đc ko , để lẹ hơn thì tui kiểm tra luôn đường dẫn api
- var b = this.configService.apiUrl + "api/service/delete-hotel?idPlace="+idPlace+"&idUser=b07a87d7-c378-4e6c-9af8-447a3ee852b1";
- console.log(b);
-
-  return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/service/delete-hotel?idPlace="+idPlace+"&idUser=b07a87d7-c378-4e6c-9af8-447a3ee852b1");
+  return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/delete-place?idPlace="+idPlace+"&idUser="+idUser);
 }
 
+approve(idPlace: string)
+{
+  return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/approve-place?idPlace="+idPlace);
 }
+
+refuse(idPlace: string)
+{
+  return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/refuse-place?idPlace="+idPlace);
+}
+restore(idPlace: string, idUser: string)
+{
+  return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/restore-place?idPlace="+idPlace+"&idUser="+idUser);
+}
+}
+

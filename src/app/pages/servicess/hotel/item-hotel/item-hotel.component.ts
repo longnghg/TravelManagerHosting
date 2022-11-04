@@ -7,7 +7,6 @@ import { ConfigService } from "../../../../services_API/config.service";
 import { ResponseModel } from "../../../../models/responsiveModels/response.model";
 import { AuthenticationModel } from 'src/app/models/authentication.model';
 import { StatusNotification } from "../../../../enums/enum";
-const FILTER_PAG_REGEX = /[^0-9]/g;
 
 @Component({
   selector: 'app-item-hotel',
@@ -22,7 +21,6 @@ export class ItemHotelComponent implements OnInit {
   auth: AuthenticationModel
   validateHotel: ValidationHotelModel = new ValidationHotelModel
   response: ResponseModel
-  listStar: any
   isChange: boolean = false
   resHotelTmp: HotelModel
   formData: any
@@ -30,17 +28,12 @@ export class ItemHotelComponent implements OnInit {
 
   ngOnInit(): void {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
-    this.listStar = this.configService.list5Star()
   }
 
   ngOnChanges(): void {
     if(this.type == 'create'){
       this.resHotel = new HotelModel()
     }
-
-    this.resHotel.doubleRoomPrice = Number(this.resHotel.doubleRoomPrice).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
-    this.resHotel.singleRoomPrice = Number(this.resHotel.singleRoomPrice).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
-
     this.resHotelTmp = Object.assign({}, this.resHotel)
   }
 
@@ -63,7 +56,6 @@ export class ItemHotelComponent implements OnInit {
   save(){
     this.validateHotel = new ValidationHotelModel
     this.validateHotel =  this.configService.validateHotel(this.resHotel, this.validateHotel)
-    console.log( this.validateHotel);
 
     if (this.validateHotel.total == 0) {
       //var file = new FormData();
@@ -85,7 +77,6 @@ export class ItemHotelComponent implements OnInit {
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
-
         })
       }
       else{
@@ -116,25 +107,5 @@ export class ItemHotelComponent implements OnInit {
   getParentData(type?: string){
     this.parentType.emit(type);
     this.parentData.emit(this.resHotel);
-  }
-
-  formatInput(input: HTMLInputElement, property: string) {
-    input.value = input.value.replace(FILTER_PAG_REGEX, '');
-    if (property == "phone") {
-      this.resHotel[property] = input.value
-    }
-    else{
-      if (input.value) {
-        if (Number(input.value) > 0) {
-          this.resHotel[property] = Number(input.value).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
-        }
-        else{
-          this.resHotel[property] = Number(input.value)
-        }
-      }
-    }
-
-
-
   }
 }
