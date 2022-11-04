@@ -135,7 +135,7 @@
                       </div>
                     </div>
                     <div class="align-items-center">
-                        <button  *ngIf="type == 'detail' && !resTour.isDelete && !resTour.typeAction || resAuth.id == resTour.idUserModify" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemTourModal">{{!resTour.typeAction ? "Xóa":"Hủy yêu cầu"}}</button>
+                        <!-- <button  *ngIf="type == 'detail' && !resTour.isDelete && !resTour.typeAction || resAuth.id == resTour.idUserModify " class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemTourModal">{{!resTour.typeAction ? "Xóa":"Hủy yêu cầu"}}</button>
                         <button *ngIf="isChange && type == 'detail'" class="btn btn-lg btn-info" (click)="restore()">Khôi phục</button>
                         <button *ngIf="isChange" class="btn btn-lg btn-success"  (click)="save()">{{type == 'detail' ? "Cập nhật":"Thêm"}}</button>
                         <ng-container *ngIf="idTour; else elseGrid1">
@@ -146,8 +146,21 @@
                         </ng-template>
 
                         <button *ngIf="type == 'approve' && resTour.typeAction && resAuth.roleId == -1" class="btn btn-lg btn-warning" data-bs-toggle="modal" data-bs-target="#refusedItemTourModal">Từ chối duyệt</button>
-                        <button *ngIf="type == 'approve' && resTour.typeAction && resAuth.roleId == -1" class="btn btn-lg btn-success" data-bs-toggle="modal" data-bs-target="#approveItemTourModal" >Phê Duyệt</button>
-                    </div>
+                        <button *ngIf="type == 'approve' && resTour.typeAction && resAuth.roleId == -1" class="btn btn-lg btn-success" data-bs-toggle="modal" data-bs-target="#approveItemTourModal" >Phê Duyệt</button> -->
+                        <ng-container *ngIf="type != 'approve' && type != 'refuse' && type != 'cancelRequire'; else elseApprove">
+
+                              <button  *ngIf="type == 'detail' && !resTour.isDelete" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemTourModal" >Xóa</button>
+                              <button *ngIf="isChange && type == 'detail'" class="btn btn-lg btn-info" (click)="backup()">Khôi phục</button>
+                              <button *ngIf="isChange" class="btn btn-lg btn-success"  (click)="save()">{{type == 'detail' ? "Cập nhật":"Thêm"}}</button>
+                              <button *ngIf="resTour.isDelete"  data-bs-toggle="modal" data-bs-target="#restoreItemTourModal" class="btn btn-lg btn-warning">Khôi phục tour</button>
+
+                        </ng-container>
+                        <ng-template #elseApprove>
+                          <button *ngIf="resAuth.id == resTour.idUserModify" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemTourModal">Hủy yêu cầu</button>
+                          <button *ngIf="type == 'approve' && resTour.typeAction && resAuth.roleId == -1" class="btn btn-lg btn-warning" data-bs-toggle="modal" data-bs-target="#refusedItemTourModal">Từ chối duyệt</button>
+                          <button *ngIf="type == 'approve' && resTour.typeAction && resAuth.roleId == -1" class="btn btn-lg btn-success" data-bs-toggle="modal" data-bs-target="#approveItemTourModal" >Phê Duyệt</button>
+                        </ng-template>
+                      </div>
                   </div>
 
                   <div class="col-lg-6">
@@ -232,7 +245,7 @@
         Bạn có chắc muốn phê duyệt [<span class="text-red">{{resTour.nameTour}}</span>] !
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="approve()">Phê Duyệt</button>
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="approve()">Phê Duyệt</button>
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
       </div>
     </div>
@@ -251,7 +264,7 @@
         Bạn có chắc muốn từ chối phê duyệt [<span class="text-red">{{resTour.nameTour}}</span>] !
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="refused()">Từ chối phê duyệt</button>
+        <button type="button" class="btn btn-warning" data-bs-dismiss="modal" (click)="refused()">Từ chối phê duyệt</button>
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
       </div>
     </div>

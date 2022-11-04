@@ -32,7 +32,7 @@ export class TourService{
     return value
   }
 
-  gets(isDelete: any)
+  gets(isDelete)
   {
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/gets-tour?isDelete="+isDelete);
   }

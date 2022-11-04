@@ -25,6 +25,7 @@ export class ListTourComponent implements OnInit {
   type: boolean = false
   typeChild: string
   auth: AuthenticationModel
+  isDelete: boolean = false
   private hubConnectionBuilder: HubConnection
 
 
@@ -58,14 +59,16 @@ export class ListTourComponent implements OnInit {
 
     ngOnInit(): void {
       this.auth = JSON.parse(localStorage.getItem("currentUser"))
-      if (history.state.isDelete) {
-        this.gridConfig2.isRestore = history.state.isDelete
-        this.init(history.state.isDelete)
+      if (this.isDelete) {
+
+        this.gridConfig2.isRestore = this.isDelete
+        this.init(this.isDelete)
+        console.log(this.isDelete);
+
       }
       else{
-        this.init(this.type)
+        this.init(this.isDelete)
       }
-
 
       // this.hubConnectionBuilder = this.configService.signIR()
       // this.hubConnectionBuilder.start();
@@ -82,9 +85,8 @@ export class ListTourComponent implements OnInit {
 
     }
 
-    init(e?){
-      this.type = e
-      this.tourService.gets(this.type).subscribe(res =>{
+    init(isDelete){
+      this.tourService.gets(isDelete).subscribe(res =>{
         this.response = res
         if(this.response.notification.type  == StatusNotification.Success){
           this.resTour = this.response.content
@@ -101,11 +103,12 @@ export class ListTourComponent implements OnInit {
 
       setTimeout(() => {
         this.columnDefs= [
-        { field: 'idTour', headerName: "Mã số", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'idTour'},
+        { field: 'idTour', headerName: "Mã số", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'idTour'},
         { field: 'nameTour',headerName: "Tên", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'tourName'},
         { field: 'thumbnail',headerName: "Thumbnail", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'thumbnail'},
-        { field: 'toPlace',headerName: "Đến", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'address'},
-        { field: 'rating',headerName: "Số sao", style: "width: 10%;", searchable: true, searchType: 'text', searchObj: 'rating'},
+        { field: 'toPlace',headerName: "Đến", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'address'},
+        // { field: 'rating',headerName: "Số sao", style: "width: 10%;", searchable: true, searchType: 'text', searchObj: 'rating'},
+        { field: 'rating',headerName: "Số sao", style: "width: 20%;", filter: "star",searchable: true, searchType: 'section', searchObj: 'rating' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.list10Star()},
         // { field: 'status: string',headerName: "Trạng thái", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'status'},
         // { field: 'createDate: string',headerName: "Ngày tạo", style: "width: 160px;", searchable: true, searchType: 'date', searchObj: 'createDate'},
         ];

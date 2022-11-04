@@ -113,7 +113,7 @@
   <div class="row">
     <div class="col">
       <div class="card shadow border-0">
-        <app-grid2-data [rowData]="resTourWaiting" [columnDefs]="columnDefsWaiting" [gridConfig]="gridConfigApprove" (gdChecked)="init($event)" (gdType)="childType($event)"  (gdChild)="childData($event)" (gdRestore)="getData($event)" (gdDelete)="getData($event)"></app-grid2-data>
+        <app-grid2-data [rowData]="resTourWaiting" [columnDefs]="columnDefsWaiting"  [gridConfig]="gridConfigApprove" (gdChecked)="init($event)" (gdType)="childType($event)"  (gdChild)="childData($event)" (gdRestore)="getData($event)" (gdDelete)="getData($event)" (gdApprove)="getData($event)"></app-grid2-data>
       </div>
     </div>
   </div>
@@ -162,3 +162,21 @@
     </div>
   </div>
 </div>
+<div class="modal fade" [id]="gridConfig2.idModalApprove" tabindex="-1" aria-labelledby="approveTourModel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="approveTourModel">Xác nhận</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="data">
+        Bạn có chắc muốn khôi phục [<span class="text-red">{{data.nameTour}}</span>] !
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="restore()" >Khôi phục</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+      </div>
+    </div>
+  </div>
+</div>
+

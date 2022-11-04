@@ -32,8 +32,7 @@ export class ItemTourComponent implements OnInit {
       private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    var currentUser = localStorage.getItem("currentUser")
-    this.resAuth = JSON.parse(currentUser)
+    this.resAuth = JSON.parse(localStorage.getItem("currentUser"))
 
 
     var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
@@ -48,7 +47,7 @@ export class ItemTourComponent implements OnInit {
           this.resTour = this.response.content
           this.resTourTmp = Object.assign({}, this.resTour)
           console.log(this.resTour.idUserModify);
-          console.log(this.resTour);
+          console.log(this.resTour.isDelete);
 
           if(this.resTour){
             if (this.resTour.thumbnail) {
