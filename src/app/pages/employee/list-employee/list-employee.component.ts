@@ -115,13 +115,11 @@ export class ListEmployeeComponent implements OnInit {
     if (e) {
       this.employeeService.search(Object.assign({}, e)).subscribe(res => {
         this.response = res
-        if(!this.response.notification.type)
+        if(this.response.notification.type == StatusNotification.Success)
         {
           this.resEmployee = this.response.content
         }
         else{
-          console.log(this.resEmployeeTmp);
-
           this.resEmployee = this.resEmployeeTmp
           this.notificationService.handleAlertObj(res.notification)
         }
