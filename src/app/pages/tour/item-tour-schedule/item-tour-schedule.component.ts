@@ -55,6 +55,8 @@ export class ItemTourScheduleComponent implements OnInit {
 
   ngOnInit(): void {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
+    console.log(this.auth.id);
+
   }
 
   ngOnChanges(): void {
@@ -65,28 +67,29 @@ export class ItemTourScheduleComponent implements OnInit {
     if (this.type == 'create') {
       this.resSchedule = new ScheduleModel()
       this.resCostTour = new CostTourModel()
+      this.resScheduleTmp = Object.assign({}, this.resSchedule)
     } else {
       this.isAdd = false
+
+      if (this.resSchedule) {
+        this.resSchedule.departureDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.departureDate)
+        this.resSchedule.returnDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.returnDate)
+        this.resSchedule.beginDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.beginDate)
+        this.resSchedule.endDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.endDate)
+        this.resSchedule.timePromotionDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.timePromotion)
+
+        this.resScheduleTmp = Object.assign({}, this.resSchedule)
+        console.log(this.resSchedule.idUserModify);
+
+        this.costtourService.getCostbyidSchedule(this.resSchedule.idSchedule).subscribe(res => {
+          this.response = res
+          this.resCostTour = this.response.content
+        }, error => {
+          var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+          this.notificationService.handleAlert(message, StatusNotification.Error)
+        })
+      }
     }
-    this.resScheduleTmp = Object.assign({}, this.resSchedule)
-    if (this.resSchedule) {
-      this.resScheduleTmp.departureDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.departureDate))
-      this.resScheduleTmp.returnDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.returnDate))
-      this.resScheduleTmp.beginDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.beginDate))
-      this.resScheduleTmp.endDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.endDate))
-      this.resScheduleTmp.timePromotion = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.timePromotion))
-
-      this.costtourService.getCostbyidSchedule(this.resSchedule.idSchedule).subscribe(res => {
-        this.response = res
-        this.resCostTour = this.response.content
-      }, error => {
-        var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
-        this.notificationService.handleAlert(message, StatusNotification.Error)
-      })
-
-      console.log(this.resSchedule.isDelete);
-    }
-
   }
 
 
@@ -114,6 +117,13 @@ export class ItemTourScheduleComponent implements OnInit {
     })
   }
 
+  dateChange(){
+    this.resSchedule.beginDate = new Date(this.resSchedule.beginDateDisplay).getTime()
+    this.resSchedule.endDate = new Date(this.resSchedule.endDateDisplay).getTime()
+    this.resSchedule.departureDate = new Date(this.resSchedule.departureDateDisplay).getTime()
+    this.resSchedule.returnDate = new Date(this.resSchedule.returnDateDisplay).getTime()
+    this.resSchedule.timePromotion = new Date(this.resSchedule.timePromotionDisplay).getTime()
+  }
   inputChange() {
     if (JSON.stringify(this.resSchedule) != JSON.stringify(this.resScheduleTmp)) {
       this.isChange = true
@@ -132,8 +142,9 @@ export class ItemTourScheduleComponent implements OnInit {
       var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
       if (this.type == "create") {
         this.resSchedule.idUserModify = this.auth.id
-        this.resSchedule.typeAction = "insert"
         this.resSchedule.tourId = idTour
+        console.log(this.resSchedule);
+
         this.scheduleService.create(this.resSchedule).subscribe(res => {
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
@@ -146,13 +157,15 @@ export class ItemTourScheduleComponent implements OnInit {
       }
       else {
         // this.resSchedule.tourId = idTour
+         this.resSchedule.idUserModify = this.auth.id
+         console.log(this.resSchedule);
+
         this.scheduleService.update(this.resSchedule).subscribe(res => {
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-          this.resSchedule.idSchedule = res.content
-
 
           if (this.response.notification.type == StatusNotification.Success) {
+            this.resSchedule.idSchedule = res.content
           }
         }, error => {
           var message = this.configService.error(error.status, error.error != null ? error.error.text : "");

@@ -4,162 +4,165 @@
 </div>
 <div class="modal-body">
   <ng-container *ngIf="resSchedule">
-    <div class="container-fluid" >
-      <form>
+    <div class="container-fluid border" >
+      <form style="margin-top: 2rem">
         <div class="pl-lg-4">
           <div class="row">
+            <fieldset style="border: 1px solid #ced4da; border-radius: 0.375rem;">
+              <legend>Chi tiết</legend>
 
-            <div class="col-lg-4">
-              <div class="form-group">
-                <label class="form-control-label" for="employeeId">Chọn nhân viên
-                  <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateScheduleModel.employeeId ? this.validateScheduleModel.employeeId : ''}}</span>
-                </label>
-                <ng-select [items]="resEmployee"
-                            bindLabel="nameEmployee"
-                            bindValue="idEmployee"
-                            [(ngModel)]="resSchedule.employeeId"
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="employeeId">Chọn nhân viên
+                      <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.employeeId ? this.validateScheduleModel.employeeId : ''}}</span>
+                    </label>
+                    <ng-select [items]="resEmployee"
+                                bindLabel="nameEmployee"
+                                bindValue="idEmployee"
+                                [(ngModel)]="resSchedule.employeeId"
 
-                            placeholder="Chọn nhân viên..."
-                            name="employeeId"
-                            id="employeeId"
-                            (change)="inputChange()">
-                </ng-select>
-              </div>
-            </div>
-            <div class="col-lg-4">
-              <div class="form-group">
-                <label class="form-control-label" for="carId">Chọn xe
-                  <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateScheduleModel.carId ? this.validateScheduleModel.carId : ''}}</span>
-                </label>
-                <ng-select [items]="resCar"
-                            bindLabel="liscensePlate"
-                            bindValue="idCar"
-                            [(ngModel)]="resSchedule.carId"
+                                placeholder="Chọn nhân viên..."
+                                name="employeeId"
+                                id="employeeId"
+                                (change)="inputChange()">
+                    </ng-select>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="carId">Chọn xe
+                      <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.carId ? this.validateScheduleModel.carId : ''}}</span>
+                    </label>
+                    <ng-select [items]="resCar"
+                                bindLabel="liscensePlate"
+                                bindValue="idCar"
+                                [(ngModel)]="resSchedule.carId"
 
-                            placeholder="Chọn xe..."
-                            name="carId"
-                            id="carId"
-                            (change)="inputChange()">
-                </ng-select>
-              </div>
-            </div>
-            <div class="col-lg-4">
-              <div class="form-group">
-                <label class="form-control-label" for="input-minCapacity">Nơi Khởi Hành
-                  <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateScheduleModel.departurePlace ? this.validateScheduleModel.departurePlace : ''}}</span>
-                </label>
-                <input type="text" name="resSchedule.departurePlace" id="departurePlace" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập nơi khởi hành" [(ngModel)]="resSchedule.departurePlace"  >
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label class="form-control-label" for="input-beginDate">Chọn ngày bắt đầu
-                  <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateScheduleModel.beginDate ? this.validateScheduleModel.beginDate : ''}}</span>
-                </label>
-                <input   (change)="resSchedule.beginDate = resScheduleTmp.beginDate; inputChange()" [(ngModel)]="resScheduleTmp.beginDate" class="form-control datepicker" placeholder="Chọn ngày" name="beginDate" id="beginDate" type="date"  />
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label class="form-control-label" for="input-endDate">Chọn ngày kết thúc
-                  <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateScheduleModel.endDate ? this.validateScheduleModel.endDate : ''}}</span>
-                </label>
-                <input   (change)="resSchedule.endDate = resScheduleTmp.endDate; inputChange()" [(ngModel)]="resScheduleTmp.endDate" class="form-control datepicker" placeholder="Chọn ngày" name="endDate" id="endDate" type="date"  />
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label class="form-control-label" for="input-promotionId">Chọn khuyến mãi</label>
-                <ng-select [items]="resPromotion"
-                bindLabel="value"
-                bindValue="idPromotion"
-                [(ngModel)]="resSchedule.promotionId"
+                                placeholder="Chọn xe..."
+                                name="carId"
+                                id="carId"
+                                (change)="inputChange()">
+                    </ng-select>
+                  </div>
+                </div>
 
-                placeholder="Chọn khuyến mãi..."
-                name="promotionId"
-                id="promotionId"
-                (change)="inputChange()">
-          </ng-select>
               </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label class="form-control-label" for="input-timePromotion">Chọn thời gian khuyến mãi
-                  <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateScheduleModel.timePromotion ? this.validateScheduleModel.timePromotion : ''}}</span>
-                </label>
-                <input   (change)="resSchedule.timePromotion = resScheduleTmp.timePromotion; inputChange()" [(ngModel)]="resScheduleTmp.timePromotion" class="form-control datepicker" placeholder="Chọn ngày" name="timePromotion" id="timePromotion" type="date"  />
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-beginDate">Chọn ngày bắt đầu
+                      <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.beginDate ? this.validateScheduleModel.beginDate : ''}}</span>
+                    </label>
+                    <input   (change)=" inputChange(); dateChange() " [(ngModel)]="resSchedule.beginDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="beginDate" id="beginDate" type="date"  />
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-endDate">Chọn ngày kết thúc
+                      <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.endDate ? this.validateScheduleModel.endDate : ''}}</span>
+                    </label>
+                    <input   (change)="inputChange(); dateChange()" [(ngModel)]="resSchedule.endDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="endDate" id="endDate" type="date"  />
+                  </div>
+                </div>
               </div>
-            </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-departureDate">Chọn ngày khởi hành
+                      <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.departureDate ? this.validateScheduleModel.departureDate : ''}}</span>
+                    </label>
+                    <input   (change)="inputChange(); dateChange()" [(ngModel)]="resSchedule.departureDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="departureDate" id="departureDate" type="date"  />
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-returnDate">Chọn ngày trở về
+                      <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.returnDate ? this.validateScheduleModel.returnDate : ''}}</span>
+                    </label>
+                    <input   (change)="inputChange(); dateChange()" [(ngModel)]="resSchedule.returnDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="returnDate" id="returnDate" type="date"  />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-minCapacity">Tối thiểu số người
+                      <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.minCapacity ? this.validateScheduleModel.minCapacity : ''}}</span>
+                    </label>
+                    <input type="number" name="minCapacity" id="minCapacity" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số lượng tối thiểu" [(ngModel)]="resSchedule.minCapacity"  >
+                  </div>
+                </div>
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-maxCapacity">Tối đa số người
+                      <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.maxCapacity ? this.validateScheduleModel.maxCapacity : ''}}</span>
+                    </label>
+                    <input type="number" name="maxCapacity" id="maxCapacity" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số lượng tối đa" [(ngModel)]="resSchedule.maxCapacity"  >
+                  </div>
+                </div>
+                <div class="col-lg-8">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-minCapacity">Nơi Khởi Hành
+                      <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.departurePlace ? this.validateScheduleModel.departurePlace : ''}}</span>
+                    </label>
+                    <input type="text" name="resSchedule.departurePlace" id="departurePlace" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập nơi khởi hành" [(ngModel)]="resSchedule.departurePlace"  >
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-10">
+                  <div class="form-group">
+                    <label class="form-control-label" for="description">Mô tả
+                      <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.description ? this.validateScheduleModel.description : ''}}</span>
+                    </label>
+                    <input type="text" name="description" id="description" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập mô tả" [(ngModel)]="resSchedule.description"  >
+                  </div>
+                </div>
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label class="form-control-label" for="vat">Vat
+                      <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.vat ? this.validateScheduleModel.vat : ''}}</span>
+                    </label>
+                    <input type="number" name="vat" id="vat" (input)="inputChange()" min="0" class="form-control form-control-alternative" placeholder="Nhập VAT" [(ngModel)]="resSchedule.vat"  >
+                  </div>
+                </div>
+              </div>
+            </fieldset>
           </div>
+
           <div class="row">
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label class="form-control-label" for="input-departureDate">Chọn ngày khởi hành
-                  <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateScheduleModel.departureDate ? this.validateScheduleModel.departureDate : ''}}</span>
-                </label>
-                <input   (change)="resSchedule.departureDate = resScheduleTmp.departureDate; inputChange()" [(ngModel)]="resScheduleTmp.departureDate" class="form-control datepicker" placeholder="Chọn ngày" name="departureDate" id="departureDate" type="date"  />
+            <fieldset style="border: 1px solid #ced4da; border-radius: 0.375rem;">
+              <legend>Khuyến mãi</legend>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-promotionId">Chọn khuyến mãi</label>
+                    <ng-select [items]="resPromotion"
+                    bindLabel="value"
+                    bindValue="idPromotion"
+                    [(ngModel)]="resSchedule.promotionId"
+
+                    placeholder="Chọn khuyến mãi..."
+                    name="promotionId"
+                    id="promotionId"
+                    (change)="inputChange()">
+                   </ng-select>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-timePromotion">Chọn thời gian khuyến mãi
+                      <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.timePromotion ? this.validateScheduleModel.timePromotion : ''}}</span>
+                    </label>
+                    <input   (change)="inputChange(); dateChange()" [(ngModel)]="resSchedule.timePromotionDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="timePromotion" id="timePromotion" type="date"  />
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label class="form-control-label" for="input-returnDate">Chọn ngày trở về
-                  <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateScheduleModel.returnDate ? this.validateScheduleModel.returnDate : ''}}</span>
-                </label>
-                <input   (change)="resSchedule.returnDate = resScheduleTmp.returnDate; inputChange()" [(ngModel)]="resScheduleTmp.returnDate" class="form-control datepicker" placeholder="Chọn ngày" name="returnDate" id="returnDate" type="date"  />
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label class="form-control-label" for="input-minCapacity">Tối thiểu số người
-                  <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateScheduleModel.minCapacity ? this.validateScheduleModel.minCapacity : ''}}</span>
-                </label>
-                <input type="number" name="minCapacity" id="minCapacity" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số lượng tối thiểu" [(ngModel)]="resSchedule.minCapacity"  >
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label class="form-control-label" for="input-maxCapacity">Tối đa số người
-                  <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateScheduleModel.maxCapacity ? this.validateScheduleModel.maxCapacity : ''}}</span>
-                </label>
-                <input type="number" name="maxCapacity" id="maxCapacity" min="0" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số lượng tối đa" [(ngModel)]="resSchedule.maxCapacity"  >
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-10">
-              <div class="form-group">
-                <label class="form-control-label" for="description">Mô tả
-                  <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateScheduleModel.description ? this.validateScheduleModel.description : ''}}</span>
-                </label>
-                <input type="text" name="description" id="description" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập mô tả" [(ngModel)]="resSchedule.description"  >
-              </div>
-            </div>
-            <div class="col-lg-2">
-              <div class="form-group">
-                <label class="form-control-label" for="vat">Vat
-                  <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateScheduleModel.vat ? this.validateScheduleModel.vat : ''}}</span>
-                </label>
-                <input type="number" name="vat" id="vat" (input)="inputChange()" min="0" class="form-control form-control-alternative" placeholder="Nhập VAT" [(ngModel)]="resSchedule.vat"  >
-              </div>
-            </div>
+            </fieldset>
           </div>
           <div class="row align-items-center">
             <div class="col-12 text-right">
-              <!-- <button  *ngIf="type == 'detail' && resSchedule.isDelete == false " class="btn btn-xl btn-danger" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#deleteScheduleIdTourModal">Xóa</button> -->
-              <!-- <button *ngIf="isChange && type == 'detail'" class="btn btn-xl btn-info" (click)="restore()">Khôi phục</button>
-              <button *ngIf="isChange" class="btn btn-xl btn-success"  (click)="save()">{{type == 'detail' ? "Lưu":"Thêm"}}</button> -->
-              <!-- <ng-container *ngIf="idSchedule; else elseGrid1">
-                <button *ngIf="resSchedule.isDelete" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreScheduleIdTourModal" class="btn btn-sm btn-warning">Khôi phục lịch trình</button>
-              </ng-container>
-              <ng-template #elseGrid1>
-                <button *ngIf="resSchedule.isDelete" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreScheduleIdTourModal" class="btn btn-sm btn-warning">Khôi phục lịch trình</button>
-              </ng-template> -->
               <ng-container *ngIf="type != 'approve' && type != 'refuse' && type != 'cancelRequire'; else elseApprove">
                 <div class="mt-3 row align-items-center">
                   <div class="col-12 text-right">

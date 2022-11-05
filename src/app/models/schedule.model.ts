@@ -1,11 +1,19 @@
 export class ScheduleModel{
   idSchedule: string
-  departureDate: string
+
+  departureDate: number
+  departureDateDisplay: string
+  returnDate :number
+  returnDateDisplay: string
+  beginDate: number
+  beginDateDisplay: string
+  endDate: number
+  endDateDisplay: string
+  timePromotion: number
+  timePromotionDisplay: string
+
+
   departurePlace: string
-  returnDate :string
-  beginDate: string
-  endDate: string
-  timePromotion: string
   status: number
   finalPrice: number
   quantityAdult: number
@@ -20,7 +28,7 @@ export class ScheduleModel{
   nameDriver:string
   employeeId: string
   idTourGuide: string
-  promotionId: string
+  promotionId: number
   nameEmployee:string
   valuePromotion: number
   quantityCustomer: number
@@ -41,12 +49,12 @@ export class ValidateScheduleModel{
   employeeId: string = null
   carId: string = null
   departurePlace: string = null
-  departureDate: string = null
-  returnDate: string = null
-  promotionId: string = null
-  timePromotion: string = null
-  beginDate: string = null
-  endDate: string = null
+  departureDate: number = 0
+  returnDate: number = 0
+  promotionId: number = 0
+  timePromotion: number = 0
+  beginDate: number = 0
+  endDate: number = 0
   minCapacity: string = null
   maxCapacity: string = null
   description: string = null

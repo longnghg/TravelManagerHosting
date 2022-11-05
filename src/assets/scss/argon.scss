@@ -75,3 +75,12 @@
 @import "~ngx-toastr/toastr";
 
 @import "~@ng-select/ng-select/themes/default.theme.css";
+
+legend{
+  width: unset;
+  float: unset;
+}
+
+fieldset{
+  padding: 20px;
+}

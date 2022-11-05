@@ -28,6 +28,7 @@ export class ItemTourComponent implements OnInit {
   img: any
   formData: any
   resAuth: AuthenticationModel
+  active = 1;
   constructor(private router: Router, private tourService: TourService, private configService: ConfigService, private notificationService: NotificationService,
       private activatedRoute: ActivatedRoute) { }
 
@@ -81,6 +82,12 @@ export class ItemTourComponent implements OnInit {
 
   }
 
+  backup(){
+    this.resTour = Object.assign({}, this.resTourTmp)
+    this.img = this.resTour.thumbnail
+    this.isChange = false
+    this.notificationService.handleAlert("Khôi phục dữ liệu ban đầu thành công !", StatusNotification.Info)
+  }
 
   inputChange(){
     if (JSON.stringify(this.resTour) != JSON.stringify(this.resTourTmp)) {
