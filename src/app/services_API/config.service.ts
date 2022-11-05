@@ -11,7 +11,18 @@ export class ConfigService{
   public clientUrl = this.document.location.origin
 
   signIR(){
-   return this.hubConnectionBuilder = new HubConnectionBuilder().withUrl(`${this.apiUrl}/travelhub`).configureLogging(LogLevel.Information).build();
+     return this.hubConnectionBuilder = new HubConnectionBuilder()
+    .configureLogging(LogLevel.Information).withUrl(`${this.apiUrl}/travelhub`,
+    {
+        accessTokenFactory: () => localStorage.getItem("token")
+    })
+    .withAutomaticReconnect()
+    .build();
+   }
+   goivui(): void{
+    console.log("da keu");
+    
+    this.hubConnectionBuilder.invoke('GetInfo')
   }
   error(status: any, message: any){
     console.log('Status:  '  + status);

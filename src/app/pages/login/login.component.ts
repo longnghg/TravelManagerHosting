@@ -55,6 +55,7 @@ export class LoginComponent implements OnInit {
           this.resAthentication = this.response.content
           localStorage.setItem("token", this.resAthentication.token)
           localStorage.setItem("currentUser", JSON.stringify(this.resAthentication))
+          
           document.location.assign( this.configService.clientUrl + "/#/dashboard")
         }
         else if(this.response.notification.type == StatusNotification.Block){

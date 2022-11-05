@@ -145,6 +145,7 @@ export class ItemEmployeeComponent implements OnInit{
   }
 
   save(){
+    this.configService.goivui();
     this.validateEmployee = new ValidationEmployeeModel
     this.validateEmployee =  this.configService.validateEmployee(this.resEmployee, this.validateEmployee)
 
