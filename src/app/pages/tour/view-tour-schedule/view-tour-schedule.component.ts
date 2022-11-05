@@ -38,7 +38,7 @@ export class ViewTourScheduleComponent implements OnInit {
     disableApprove: true
   }
   public gridConfigWaiting: GridConfig = {
-    idModal: "gridSchedule",
+    idModal: "gridSchedule1",
     idModalApprove: "approveScheduleModal",
     disableDelete: true,
     disableRadioBox: true,
@@ -47,9 +47,9 @@ export class ViewTourScheduleComponent implements OnInit {
   }
   ngOnInit(): void {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
-    if (history.state.isDelete) {
-      this.gridConfig.isRestore = history.state.isDelete
-      this.init(history.state.isDelete)
+    if (this.isDelete) {
+      this.gridConfig.isRestore = this.isDelete
+      this.init(this.isDelete)
     }
     else{
       this.init(this.isDelete)
@@ -61,12 +61,11 @@ export class ViewTourScheduleComponent implements OnInit {
 
   init(isDelete){
     var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
-    this.scheduleService.getsSchedulebyIdTour(idTour, this.isDelete).subscribe(res =>{
+    this.scheduleService.getsSchedulebyIdTour(idTour, isDelete).subscribe(res =>{
       this.response = res;
+
      if(this.response.notification.type == StatusNotification.Success){
       this.resSchedule = this.response.content
-      console.log(this.resSchedule);
-
     }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -75,19 +74,9 @@ export class ViewTourScheduleComponent implements OnInit {
 
     setTimeout(() => {
       this.columnDefs= [
-        // { field: 'idSchedule', headerName: "Mã số", style: "width: 340px;", searchable: true, searchType: 'text', searchObj: 'idSchedule'},
-        { field: 'nameTour', headerName: "Tên tour", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'nameTour'},
-        // { field: 'departureDate',headerName: "Ngày khởi hành", filter: "date", style: "width: 200px;", searchable: true, searchType: 'date', searchObj: 'departureDate'},
-        // { field: 'returnDate',headerName: "Ngày trở về", filter: "date", style: "width: 200px;", searchable: true, searchType: 'date', searchObj: 'returnDate'},
+        { field: 'idSchedule', headerName: "Mã số", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'idSchedule'},
         { field: 'beginDate',headerName: "Ngày bắt đầu", filter: "date", style: "width: 15%;", searchable: true, searchType: 'date', searchObj: 'beginDate'},
         { field: 'endDate',headerName: "Ngày kết thúc", filter: "date", style: "width: 15%;", searchable: true, searchType: 'date', searchObj: 'endDate'},
-        // { field: 'timePromotion',headerName: "Thời gian khuyến mãi", filter: "date", style: "width: 180px;", searchable: true, searchType: 'time', searchObj: 'timePromotion'},
-        // { field: 'minCapacity',headerName: "Tối thiểu", style: "width: 130px;", searchable: true, searchType: 'number', searchObj: 'minCapacity'},
-        // { field: 'maxCapacity',headerName: "Tối đa", style: "width: 130px;", searchable: true, searchType: 'number', searchObj: 'maxCapacity'},
-        // { field: 'quantityAdult',headerName: "Số lượng người lớn", style: "width: 130px;", searchable: true, searchType: 'number', searchObj: 'quantityAdult'},
-        // { field: 'quantityChild',headerName: "Số lượng trẻ em", style: "width: 130px;", searchable: true, searchType: 'number', searchObj: 'quantityChild'},
-        // { field: 'quantityBaby',headerName: "Số lượng em bé", style: "width: 130px;", searchable: true, searchType: 'number', searchObj: 'quantityBaby'},
-        // { field: 'vat',headerName: "Số lượng khách", style: "width: 150px;", searchable: true, searchType: 'number', searchObj: 'vat'},
         { field: 'totalCostTourNotService',headerName: "Tổng chi phí", style: "width: 10%;", searchable: true, searchType: 'number', searchObj: 'TotalCostTour'},
         { field: 'finalPrice',headerName: "Tổng tiền", style: "width: 10%;", searchable: true, searchType: 'number', searchObj: 'FinalPrice'},
         { field: 'finalPriceHoliday',headerName: "Tổng tiền ngày lễ", style: "width: 10%;", searchable: true, searchType: 'number', searchObj: 'FinalPriceHoliday'},
@@ -97,7 +86,7 @@ export class ViewTourScheduleComponent implements OnInit {
 
 
       this.columnDefsWaiting= [
-        { field: 'nameTour', headerName: "Tên tour", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'nameTour'},
+        { field: 'idSchedule', headerName: "Mã số", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'idSchedule'},
         { field: 'beginDate',headerName: "Ngày bắt đầu", filter: "date", style: "width: 15%;", searchable: true, searchType: 'date', searchObj: 'beginDate'},
         { field: 'endDate',headerName: "Ngày kết thúc", filter: "date", style: "width: 15%;", searchable: true, searchType: 'date', searchObj: 'endDate'},
         { field: 'finalPrice',headerName: "Tổng tiền", style: "width: 10%;", searchable: true, searchType: 'number', searchObj: 'FinalPrice'},
@@ -112,8 +101,6 @@ export class ViewTourScheduleComponent implements OnInit {
       this.response = res
       if(this.response.notification.type == StatusNotification.Success){
         this.resScheduleWaiting = this.response.content
-        console.log(this.resScheduleWaiting);
-
         this.resScheduleWaiting.forEach(schedule => {
           schedule.approveName = StatusApprove[schedule.approve]
           schedule.typeAction = TypeAction[schedule.typeAction]

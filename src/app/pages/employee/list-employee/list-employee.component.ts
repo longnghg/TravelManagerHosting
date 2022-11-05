@@ -87,24 +87,7 @@ export class ListEmployeeComponent implements OnInit {
     else{
       this.init(this.type)
     }
-
-    this.hubConnectionBuilder = this.configService.signIR()
-    this.hubConnectionBuilder.start();
-    this.hubConnectionBuilder.on('Init', (result: any) => {
-      if (history.state.isDelete) {
-        if (!this.type) {
-          this.init(this.type)
-        }
-        else{
-          this.gridConfig2.isRestore = history.state.isDelete
-          this.init(history.state.isDelete)
-        }
-      }
-      else{
-        this.init(this.type)
-      }
-    })
-
+   
 
 
   }

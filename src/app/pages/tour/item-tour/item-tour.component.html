@@ -91,20 +91,14 @@
     </div>
   </div>
 </div>
-<ul ngbNav #nav="ngbNav" class="nav-tabs">
-  <li ngbNavItem>
+<ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+  <li [ngbNavItem]="1">
     <a ngbNavLink> <h1>Thông tin chi tiết tour</h1></a>
     <ng-template ngbNavContent>
       <div class="modal-body">
         <ng-container *ngIf="resTour">
           <div class="col-xl-10 align-items-center order-xl-1" style="margin: auto;">
             <div class="card bg-secondary shadow" style="border: 3px double #5e72e4;">
-            <!-- <div class="row align-items-center">
-              <div class="col-12 text-right" style="right: 1.5rem; margin-top: 1rem;">
-                <a href="javascript:void(0)" *ngIf="type == 'detail'" class="btn btn-xl btn-primary" (click)="isEditChange()">{{!isEdit ? "Chỉnh sửa":"Quay lại"}}</a>
-              </div>
-            </div> -->
-
             <form style="margin-top: 1rem;">
               <div class="pl-lg-4">
                 <div class="row">
@@ -112,42 +106,30 @@
                     <div class="row">
                       <div class="form-group">
                         <label class="form-control-label" for="input-tourName">Tên Chuyến Du Lịch
-                          <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateTourModel.nameTour ? this.validateTourModel.nameTour : ''}}</span>
+                          <span [class]="this.type != 'create' && resTour.isDelete ?'d-none':'text-red'">* {{this.validateTourModel.nameTour ? this.validateTourModel.nameTour : ''}}</span>
                         </label>
-                        <input type="text" id="nameTour" name="nameTour" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số tên chuyến du lịch" [(ngModel)]="resTour.nameTour" [readonly]="this.type == 'approve'" >
+                        <input type="text" id="nameTour" name="nameTour" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số tên chuyến du lịch" [(ngModel)]="resTour.nameTour" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resTour.isDelete" >
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-lg-8">
                         <div class="form-group">
                         <label class="form-control-label" for="input-toPlace">Điểm đến
-                          <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateTourModel.toPlace ? this.validateTourModel.toPlace : ''}}</span>
+                          <span [class]="this.type != 'create' && resTour.isDelete ?'d-none':'text-red'">* {{this.validateTourModel.toPlace ? this.validateTourModel.toPlace : ''}}</span>
                          </label>
-                        <input type="text" id="toPlace" name="toPlace" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập điểm đến " [(ngModel)]="resTour.toPlace" [readonly]="this.type == 'approve'">
+                        <input type="text" id="toPlace" name="toPlace" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập điểm đến " [(ngModel)]="resTour.toPlace" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resTour.isDelete">
                        </div>
                       </div>
                       <div class="col-lg-4">
-                        <div class="form-group" *ngIf="this.type != 'approve'">
-                          <label for="file"  class="btn text-white btn-primary btn-round" style="margin-top: 30px;">Hình tour</label>
+                        <div class="form-group" *ngIf="this.type != 'create' && !resTour.isDelete">
+                          <label for="file"  class="btn text-white btn-primary btn-round" style="margin-top: 30px;">Chọn Hình</label>
                           <input id="file" type="file" class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeImg($event); inputChange()">
-                          <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateTourModel.thumbnail ? this.validateTourModel.thumbnail : ''}}</span>
+                          <span [class]="this.type != 'create' && resTour.isDelete ?'d-none':'text-red'">* {{this.validateTourModel.thumbnail ? this.validateTourModel.thumbnail : ''}}</span>
                         </div>
                       </div>
                     </div>
                     <div class="align-items-center">
-                        <!-- <button  *ngIf="type == 'detail' && !resTour.isDelete && !resTour.typeAction || resAuth.id == resTour.idUserModify " class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemTourModal">{{!resTour.typeAction ? "Xóa":"Hủy yêu cầu"}}</button>
-                        <button *ngIf="isChange && type == 'detail'" class="btn btn-lg btn-info" (click)="restore()">Khôi phục</button>
-                        <button *ngIf="isChange" class="btn btn-lg btn-success"  (click)="save()">{{type == 'detail' ? "Cập nhật":"Thêm"}}</button>
-                        <ng-container *ngIf="idTour; else elseGrid1">
-                          <button *ngIf="resTour.isDelete && !resTour.typeAction" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreItemTourModal" class="btn btn-lg btn-warning">Khôi phục tour</button>
-                        </ng-container>
-                        <ng-template #elseGrid1>
-                          <button *ngIf="resTour.isDelete && !resTour.typeAction" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreItemTourModal" class="btn btn-lg btn-warning">Khôi phục tour</button>
-                        </ng-template>
-
-                        <button *ngIf="type == 'approve' && resTour.typeAction && resAuth.roleId == -1" class="btn btn-lg btn-warning" data-bs-toggle="modal" data-bs-target="#refusedItemTourModal">Từ chối duyệt</button>
-                        <button *ngIf="type == 'approve' && resTour.typeAction && resAuth.roleId == -1" class="btn btn-lg btn-success" data-bs-toggle="modal" data-bs-target="#approveItemTourModal" >Phê Duyệt</button> -->
-                        <ng-container *ngIf="type != 'approve' && type != 'refuse' && type != 'cancelRequire'; else elseApprove">
+                             <ng-container *ngIf="type != 'approve' && type != 'refuse' && type != 'cancelRequire'; else elseApprove">
 
                               <button  *ngIf="type == 'detail' && !resTour.isDelete" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemTourModal" >Xóa</button>
                               <button *ngIf="isChange && type == 'detail'" class="btn btn-lg btn-info" (click)="backup()">Khôi phục</button>
@@ -156,9 +138,9 @@
 
                         </ng-container>
                         <ng-template #elseApprove>
-                          <button *ngIf="resAuth.id == resTour.idUserModify" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemTourModal">Hủy yêu cầu</button>
-                          <button *ngIf="type == 'approve' && resTour.typeAction && resAuth.roleId == -1" class="btn btn-lg btn-warning" data-bs-toggle="modal" data-bs-target="#refusedItemTourModal">Từ chối duyệt</button>
                           <button *ngIf="type == 'approve' && resTour.typeAction && resAuth.roleId == -1" class="btn btn-lg btn-success" data-bs-toggle="modal" data-bs-target="#approveItemTourModal" >Phê Duyệt</button>
+                          <button *ngIf="type == 'approve' && resTour.typeAction && resAuth.roleId == -1" class="btn btn-lg btn-warning" data-bs-toggle="modal" data-bs-target="#refusedItemTourModal">Từ chối duyệt</button>
+                          <button *ngIf="resAuth.id == resTour.idUserModify" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemTourModal">Hủy yêu cầu</button>
                         </ng-template>
                       </div>
                   </div>
@@ -183,7 +165,7 @@
 
     </ng-template>
   </li>
-  <li ngbNavItem *ngIf="type == 'detail'">
+  <li [ngbNavItem]="2" *ngIf="type == 'detail'">
     <a ngbNavLink><h1>Lịch trình</h1></a>
     <ng-template ngbNavContent>
       <app-view-tour-schedule></app-view-tour-schedule>
@@ -191,7 +173,6 @@
   </li>
 </ul>
 <div [ngbNavOutlet]="nav"></div>
-
 
 
 

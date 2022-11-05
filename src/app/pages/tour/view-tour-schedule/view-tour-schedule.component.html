@@ -9,10 +9,9 @@
       </div>
     </div>
   </div>
-
   <div class="modal fade" [id]="gridConfig.idModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="gridDataLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
-      <div class="modal-content">
+      <div class="modal-content" *ngIf="resSchedule || resScheduleWaiting">
         <app-item-tour-schedule [resSchedule]="dataChild" [type]="typeChild" (parentData)="getData($event)"  (parentType)="childType($event)"></app-item-tour-schedule>
       </div>
     </div>
@@ -65,23 +64,23 @@
     </div>
   </div>
 
-  <div class="modal fade" [id]="gridConfigWaiting.idModalApprove" tabindex="-1" aria-labelledby="approveScheduleModal" aria-hidden="true">
+  <div class="modal fade" [id]="gridConfigWaiting.idModalApprove" tabindex="-1" aria-labelledby="approveScheduleModalLabel" aria-hidden="true">
   <div class="modal-dialog  modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="approveScheduleModal">Xác nhận</h1>
+        <h1 class="modal-title fs-5" id="approveScheduleModalLabel">Xác nhận</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" *ngIf="data">
         <ng-container *ngIf="typeChild == 'approve'; else elseApprove">
-            Bạn có chắc muốn phê duyệt [<span class="text-red">{{data.name}}</span>] !
+            Bạn có chắc muốn phê duyệt [<span class="text-red">{{data.idSchedule}}</span>] !
         </ng-container>
         <ng-template #elseApprove>
           <ng-container *ngIf="typeChild == 'refuse'; else elseRefuse">
-            Bạn có chắc muốn từ chối phê duyệt [<span class="text-red">{{data.name}}</span>] !
+            Bạn có chắc muốn từ chối phê duyệt [<span class="text-red">{{data.idSchedule}}</span>] !
           </ng-container>
           <ng-template #elseRefuse>
-            Bạn có chắc muốn hủy yêu cầu phê duyệt [<span class="text-red">{{data.name}}</span>] !
+            Bạn có chắc muốn hủy yêu cầu phê duyệt [<span class="text-red">{{data.idSchedule}}</span>] !
           </ng-template>
         </ng-template>
 
