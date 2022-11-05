@@ -121,7 +121,7 @@
                        </div>
                       </div>
                       <div class="col-lg-4">
-                        <div class="form-group" *ngIf="this.type != 'create' && !resTour.isDelete">
+                        <div class="form-group" *ngIf="type == 'create'|| type == 'detail'  && !resTour.isDelete">
                           <label for="file"  class="btn text-white btn-primary btn-round" style="margin-top: 30px;">Chọn Hình</label>
                           <input id="file" type="file" class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeImg($event); inputChange()">
                           <span [class]="this.type != 'create' && resTour.isDelete ?'d-none':'text-red'">* {{this.validateTourModel.thumbnail ? this.validateTourModel.thumbnail : ''}}</span>
