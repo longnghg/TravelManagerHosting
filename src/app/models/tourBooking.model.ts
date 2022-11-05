@@ -18,3 +18,9 @@ export class TourBookingModel{
   modifyBy: string
   modifyDate: number
 }
+
+export class TourBookingStatisticModel{
+  paying: string
+  paid: string
+  cancel: string
+}
