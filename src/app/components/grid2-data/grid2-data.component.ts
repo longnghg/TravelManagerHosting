@@ -157,6 +157,8 @@ export class Grid2DataComponent implements OnInit {
       this.gridConfig.isRestore = true
       this.gdChecked.emit(true);
     }
+    console.log(this.gridConfig.isRestore);
+
   }
   setCache(){
     this.pageNumber = 1

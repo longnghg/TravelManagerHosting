@@ -114,7 +114,7 @@
                         <label class="form-control-label" for="input-tourName">Tên Chuyến Du Lịch
                           <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateTourModel.nameTour ? this.validateTourModel.nameTour : ''}}</span>
                         </label>
-                        <input type="text" id="nameTour" name="nameTour" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số tên chuyến du lịch" [(ngModel)]="resTour.nameTour" >
+                        <input type="text" id="nameTour" name="nameTour" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số tên chuyến du lịch" [(ngModel)]="resTour.nameTour" [readonly]="this.type == 'approve'" >
                       </div>
                     </div>
                     <div class="row">
@@ -123,11 +123,11 @@
                         <label class="form-control-label" for="input-toPlace">Điểm đến
                           <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateTourModel.toPlace ? this.validateTourModel.toPlace : ''}}</span>
                          </label>
-                        <input type="text" id="toPlace" name="toPlace" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập điểm đến " [(ngModel)]="resTour.toPlace" >
+                        <input type="text" id="toPlace" name="toPlace" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập điểm đến " [(ngModel)]="resTour.toPlace" [readonly]="this.type == 'approve'">
                        </div>
                       </div>
                       <div class="col-lg-4">
-                        <div class="form-group">
+                        <div class="form-group" *ngIf="this.type != 'approve'">
                           <label for="file"  class="btn text-white btn-primary btn-round" style="margin-top: 30px;">Hình tour</label>
                           <input id="file" type="file" class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeImg($event); inputChange()">
                           <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateTourModel.thumbnail ? this.validateTourModel.thumbnail : ''}}</span>

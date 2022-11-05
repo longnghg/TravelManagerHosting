@@ -44,7 +44,6 @@ export class ListTourComponent implements OnInit {
 
   }
   public gridConfigApprove: GridConfig2 = {
-    idModalApprove: "approveTourModel",
     route: "item-tour",
     alias: "idTour",
     disableRadioBox: true,
