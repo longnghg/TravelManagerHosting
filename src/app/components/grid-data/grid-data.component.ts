@@ -119,10 +119,12 @@ export class GridDataComponent implements OnInit {
   selectSection(name){
     var kw = ""
      var i = 0
-     if (this.keyword[name+'Tmp']) {
+     console.log(this.keyword);
 
+     if (this.keyword[name+'Tmp']) {
        if (this.keyword[name+'Tmp'].length > 0) {
          this.keyword[name+'Tmp'].forEach(item => {
+
            if ( i < this.keyword[name+'Tmp'].length-1) {
              kw += item + ","
            }
