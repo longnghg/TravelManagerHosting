@@ -45,6 +45,11 @@ export class ItemHotelComponent implements OnInit {
 
 
   inputChange(){
+    console.log(this.type);
+
+    console.log(this.resHotel);
+    console.log(this.resHotelTmp);
+
     if (JSON.stringify(this.resHotel) != JSON.stringify(this.resHotelTmp)) {
       this.isChange = true
     }
@@ -79,7 +84,10 @@ export class ItemHotelComponent implements OnInit {
           this.notificationService.handleAlertObj(res.notification)
 	    if(this.response.notification.type == StatusNotification.Success)
         {
-		      this.close()
+		      this.resHotel = Object.assign({}, new HotelModel)
+          this.resHotelTmp = Object.assign({}, new HotelModel)
+          this.validateHotel = new ValidationHotelModel
+          this.isChange = false
         }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -111,7 +119,7 @@ export class ItemHotelComponent implements OnInit {
     this.validateHotel = new ValidationHotelModel
 
     this.isChange = false
-     this.parentType.emit(null);
+    this.parentType.emit(null);
   }
 
   getParentData(type?: string){
