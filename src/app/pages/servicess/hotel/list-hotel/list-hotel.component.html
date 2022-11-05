@@ -180,14 +180,14 @@
       </div>
       <div class="modal-body" *ngIf="data">
         <ng-container *ngIf="typeChild == 'approve'; else elseApprove">
-            Bạn có chắc muốn phê duyệt [<span class="text-red">{{data.name}}</span>] !
+          Đồng ý phê duyệt [<span class="text-red">{{data.name}}</span>] ?
         </ng-container>
         <ng-template #elseApprove>
           <ng-container *ngIf="typeChild == 'refuse'; else elseRefuse">
-            Bạn có chắc muốn từ chối phê duyệt [<span class="text-red">{{data.name}}</span>] !
+            Đồng ý từ chối phê duyệt [<span class="text-red">{{data.name}}</span>] ?
           </ng-container>
           <ng-template #elseRefuse>
-            Bạn có chắc muốn hủy yêu cầu phê duyệt [<span class="text-red">{{data.name}}</span>] !
+           Đồng ý hủy yêu cầu phê duyệt [<span class="text-red">{{data.name}}</span>] ?
           </ng-template>
         </ng-template>
 
