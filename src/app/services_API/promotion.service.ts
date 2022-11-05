@@ -4,6 +4,7 @@ import { ConfigService } from "./config.service";
 import { ResponseModel } from "../models/responsiveModels/response.model";
 import { PromotionModel } from "../models/promotion.model";
 import { NotificationService } from "../services_API/notification.service"
+import { StatusNotification } from "../enums/enum";
 
 @Injectable({
     providedIn: 'root'
@@ -13,12 +14,12 @@ export class PromotionService{
   constructor(private http:HttpClient, private configService:ConfigService,private notificationService: NotificationService){ }
   response: ResponseModel
   resPromotion: PromotionModel[]
-  async views()
+  async views(isDelete)
   {
     var value = <any>await new Promise<any>(resolve => {
-      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Promotion/gets-promotion").subscribe(res => {
+      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Promotion/gets-promotion?isDelete="+isDelete).subscribe(res => {
         this.response = res
-        if(!this.response.notification.type)
+        if(this.response.notification.type == StatusNotification.Success)
         {
           this.resPromotion =  this.response.content
           resolve(this.resPromotion);

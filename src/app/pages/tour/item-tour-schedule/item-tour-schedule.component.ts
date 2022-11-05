@@ -49,21 +49,20 @@ export class ItemTourScheduleComponent implements OnInit {
   auth: AuthenticationModel
   resScheduleTmp: ScheduleModel
   isHoliday = this.configService.listStatus()
+  isDelete: boolean = false
   constructor(private scheduleService: ScheduleService, private configService: ConfigService, private notificationService: NotificationService,
     private employeeService: EmployeeService, private carService: CarService, private promotionService: PromotionService, private activatedRoute: ActivatedRoute,
     private costtourService: CostTourService, private hotelService: HotelService, private placeService: PlaceService, private restaurantService: RestaurantService) { }
 
   ngOnInit(): void {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
-    console.log(this.auth.id);
-
   }
 
   ngOnChanges(): void {
     this.init()
     // this.initCost()
 
-
+    console.log(this.resPromotion);
     if (this.type == 'create') {
       this.resSchedule = new ScheduleModel()
       this.resCostTour = new CostTourModel()
@@ -100,8 +99,10 @@ export class ItemTourScheduleComponent implements OnInit {
     this.carService.views().then(response => {
       this.resCar = response
     })
-    this.promotionService.views().then(response => {
+    this.promotionService.views(this.isDelete).then(response => {
       this.resPromotion = response
+      console.log(this.resPromotion);
+
     })
   }
 
