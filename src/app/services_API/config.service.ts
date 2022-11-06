@@ -363,7 +363,8 @@ export class ConfigService{
    validateSchedule(data: any, model: any){
     model.total = 0
     var min = 0
-    var dateNow = Date.now()
+    var dateNow =  Date.now()
+    var checkDate = new Date(dateNow).getTime()
     //
     if (data.employeeId == null || data.employeeId == "") {
       model.employeeId = "Chọn nhân viên !"
@@ -391,47 +392,62 @@ export class ConfigService{
       model.total += 1
     }
 
-    if(data.departureDate == null || data.departureDate == ""){
+    if(data.departureDate == 0 || data.departureDate == ""){
       model.departureDate = ("Chọn ngày khởi hành!")
       model.total += 1
-     }else if(data.departureDate <= data.beginDate){
-      model.departureDate = ("Ngày khởi hành không được trước ngày bắt đầu!")
+     }else if(data.departureDate <= data.endDate){
+      model.departureDate = ("Ngày khởi hành không trước ngày kết thúc bán vé!")
       model.total += 1
-     }else if(data.departureDate >= data.endDate){
-      model.departureDate = ("Ngày khởi hành không được sau ngày kết thúc!")
+     }else if(data.departureDate < checkDate){
+      model.departureDate = ("Ngày khởi hành không trước ngày hiện tại!")
       model.total += 1
      }
-    //  else if(data.departureDate < dateNow){
-    //   model.departureDate = ("Ngày khởi hành không được sau ngày hiện tại!")
-    //   model.total += 1
-    //  }
 
-     if(data.returnDate == null || data.returnDate == ""){
+     if(data.returnDate == 0 || data.returnDate == ""){
       model.returnDate = ("Chọn ngày trở về!")
       model.total += 1
      }else if(data.returnDate <= data.departureDate){
       model.returnDate = ("Ngày trở về không được trước ngày khởi hành!")
       model.total += 1
-     }else if(data.returnDate >= data.endDate){
-      model.returnDate = ("Ngày trở về không được sau ngày kết thúc!")
+     }else if(data.returnDate <= data.endDate){
+      model.returnDate = ("Ngày trở về không trước ngày kết thúc bán vé!")
+      model.total += 1
+     }else if(data.returnDate < checkDate){
+      model.returnDate = ("Ngày trở về không trước ngày hiện tại!")
       model.total += 1
      }
 
-     if(data.timePromotion == null || data.timePromotion == ""){
-      model.timePromotion = ("Chọn khuyển mãi")
+     if(data.timePromotion == 0 || data.timePromotion == ""){
+      model.timePromotion = ("Chọn ngày khuyến mãi")
+      model.total += 1
+     }else if(data.timePromotion < checkDate){
+      model.timePromotion = ("Ngày khuyến mãi không trước ngày hiện tại!")
+      model.total += 1
+     }else if(data.timePromotion > data.endDate){
+      model.timePromotion = ("Ngày khuyến mãi không sau ngày kết thúc bán vé!")
+      model.total += 1
+     }
+     else if(data.timePromotion < data.beginDate){
+      model.timePromotion = ("Ngày khuyến mãi không trước ngày bắt đầu bán vé!")
       model.total += 1
      }
 
-     if(data.beginDate == null || data.beginDate == ""){
+     if(data.beginDate == 0 || data.beginDate == ""){
       model.beginDate = ("Chọn ngày bắt đầu!")
       model.total += 1
+     }else if(data.beginDate < checkDate){
+      model.beginDate = ("Ngày bắt đầu không trước ngày hiện tại!")
+      model.total += 1
      }
 
-     if(data.endDate == null || data.endDate == ""){
+     if(data.endDate == 0 || data.endDate == ""){
       model.endDate = ("Chọn ngày kết thúc!")
       model.total += 1
      }else if(data.endDate <= data.beginDate){
-      model.endDate = ("Ngày kết thúc không được trước ngày bắt đầu!")
+      model.endDate = ("Ngày kết thúc không trước ngày bắt đầu!")
+      model.total += 1
+     }else if(data.endDate < checkDate){
+      model.endDate = ("Ngày kết thúc không trước ngày hiện tại!")
       model.total += 1
      }
 

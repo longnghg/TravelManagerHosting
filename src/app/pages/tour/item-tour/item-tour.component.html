@@ -132,20 +132,20 @@
                       </div>
                       <div class="row">
                         <div class="col-lg-6">
-                          <label class="form-control-label" for="input-tourName">Chọn sao
+                          <label class="form-control-label" for="input-tourName">Đánh giá
                             <!-- <span [class]="this.type != 'create' && resTour.isDelete ?'d-none':'text-red'">* {{this.validateTourModel.nameTour ? this.validateTourModel.nameTour : ''}}</span> -->
                           </label>
                           <ng-select
                           [items]="listStar"
                           [(ngModel)]="resTour.rating"
-                          [disabled]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resTour.isDelete"
+                          [disabled]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resTour.isDelete || resAuth.roleId != 3"
                           placeholder="Chọn số sao..."
                           name="star"
                           id="rating"
                           bindLabel="name"
                           bindValue="id"
                           [searchable]="false">
-
+                          (change)="inputChange()">
                           <ng-template ng-label-tmp let-item="item" let-item$="item$" let-index="index">
                             {{item.name}} -
                             <i class="fa-solid fa-star text-yellow" *ngFor='let star of resTour.rating | forNumber'></i>
@@ -160,7 +160,7 @@
                         </ng-select>
                         </div>
                         <div class="col-lg-4">
-                          <div class="form-group"  *ngIf="type == 'create'|| type == 'detail'  && !resTour.isDelete">
+                          <div class="form-group"  *ngIf="type == 'detail'  && !resTour.isDelete && resAuth.roleId == 3">
                             <label for="updateRating" class="btn text-white btn-primary btn-round" style="margin-top: 30px;">Cập nhật sao</label>
                             <input id="updateRating" type="button" class="d-none" (click)="ratingTour()">
                           </div>
@@ -187,7 +187,7 @@
                   <div class="col-lg-6">
                     <div class="form-group">
                       <div class="card-img-top" style=" border-radius: 50px; box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px; width: 94%; height: 380px; ">
-                          <img style="width:100%; height: 380px; border-radius: 50px;" [src]="img" class="img">
+                          <img style="width:102%; height: 380px; border-radius: 50px;" [src]="img" class="img">
                       </div>
                     </div>
                   </div>

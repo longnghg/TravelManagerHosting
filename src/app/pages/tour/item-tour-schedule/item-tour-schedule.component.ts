@@ -50,6 +50,7 @@ export class ItemTourScheduleComponent implements OnInit {
   resScheduleTmp: ScheduleModel
   isHoliday = this.configService.listStatus()
   isDelete: boolean = false
+
   constructor(private scheduleService: ScheduleService, private configService: ConfigService, private notificationService: NotificationService,
     private employeeService: EmployeeService, private carService: CarService, private promotionService: PromotionService, private activatedRoute: ActivatedRoute,
     private costtourService: CostTourService, private hotelService: HotelService, private placeService: PlaceService, private restaurantService: RestaurantService) { }
@@ -62,7 +63,6 @@ export class ItemTourScheduleComponent implements OnInit {
     this.init()
     // this.initCost()
 
-    console.log(this.resPromotion);
     if (this.type == 'create') {
       this.resSchedule = new ScheduleModel()
       this.resCostTour = new CostTourModel()

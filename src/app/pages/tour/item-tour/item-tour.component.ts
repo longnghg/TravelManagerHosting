@@ -86,7 +86,6 @@ export class ItemTourComponent implements OnInit {
   backup(){
     this.resTour = Object.assign({}, this.resTourTmp)
     this.img = this.resTour.thumbnail
-    console.log(this.img);
 
     this.isChange = false
     this.notificationService.handleAlert("Khôi phục dữ liệu ban đầu thành công !", StatusNotification.Info)

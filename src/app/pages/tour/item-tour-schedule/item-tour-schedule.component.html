@@ -1,6 +1,6 @@
-<div class="modal-header">
-  <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin chi tiết</h1>
-  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
+<div class="modal-header bg-secondary">
+  <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin</h1>
+  <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
 </div>
 <div class="modal-body">
   <ng-container *ngIf="resSchedule">
@@ -9,7 +9,7 @@
         <div class="pl-lg-4">
           <div class="row">
             <fieldset style="border: 1px solid #ced4da; border-radius: 0.375rem;">
-              <legend>Chi tiết</legend>
+              <legend>Chi tiết lịch trình</legend>
 
               <div class="row">
                 <div class="col-lg-6">
@@ -51,7 +51,7 @@
               <div class="row">
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-beginDate">Chọn ngày bắt đầu
+                    <label class="form-control-label" for="input-beginDate">Chọn ngày bắt đầu bán vé
                       <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.beginDate ? this.validateScheduleModel.beginDate : ''}}</span>
                     </label>
                     <input   (change)=" inputChange(); dateChange() " [(ngModel)]="resSchedule.beginDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="beginDate" id="beginDate" type="date"  />
@@ -59,7 +59,7 @@
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-endDate">Chọn ngày kết thúc
+                    <label class="form-control-label" for="input-endDate">Chọn ngày kết thúc bán vé
                       <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.endDate ? this.validateScheduleModel.endDate : ''}}</span>
                     </label>
                     <input   (change)="inputChange(); dateChange()" [(ngModel)]="resSchedule.endDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="endDate" id="endDate" type="date"  />
@@ -132,12 +132,14 @@
           </div>
 
           <div class="row" style="margin-top: 10;">
-            <fieldset style="border: 1px solid #ced4da; border-radius: 0.375rem;">
+            <fieldset style="border: 1px solid #ced4da; border-radius: 0.375rem; margin-top: 10px">
               <legend>Khuyến mãi</legend>
               <div class="row">
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-promotionId">Chọn khuyến mãi</label>
+                    <label class="form-control-label" for="input-promotionId">Chọn khuyến mãi
+                      <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.promotionId ? this.validateScheduleModel.promotionId : ''}}</span>
+                    </label>
                     <ng-select [items]="resPromotion"
                     bindLabel="value"
                     bindValue="idPromotion"
