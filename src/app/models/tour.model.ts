@@ -13,6 +13,7 @@ export class TourModel{
   isActive: boolean
   idUserModify:string
   typeAction: string
+  rating: number
 }
 
 export class ValidateTourModel{

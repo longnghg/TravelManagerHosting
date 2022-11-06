@@ -21,7 +21,7 @@ export class ConfigService{
    }
    goivui(): void{
     console.log("da keu");
-    
+
     this.hubConnectionBuilder.invoke('GetInfo')
   }
   error(status: any, message: any){
@@ -221,6 +221,8 @@ export class ConfigService{
 
    validateTour(data: any, model: any){
     model.total = 0
+    var check = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+    var checkWhiteSpace = /\S\s/;
     //
     if (data.nameTour == null || data.nameTour == "") {
       model.nameTour = "[Tên tour]  không được để trống !"
@@ -230,6 +232,9 @@ export class ConfigService{
       model.total += 1
     }else if (data.nameTour.length < 5) {
       model.nameTour = "[Tên tour]  quá ngắn !"
+      model.total += 1
+    }else if (check.test(data.nameTour)) {
+      model.nameTour = "[Tên tour] không được để ký tự đặt biệt !"
       model.total += 1
     }
 

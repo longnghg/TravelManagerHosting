@@ -29,12 +29,13 @@ export class ItemTourComponent implements OnInit {
   formData: any
   resAuth: AuthenticationModel
   active = 1;
+  listStar: any
   constructor(private router: Router, private tourService: TourService, private configService: ConfigService, private notificationService: NotificationService,
       private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.resAuth = JSON.parse(localStorage.getItem("currentUser"))
-
+    this.listStar = this.configService.list10Star()
 
     var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
     this.type = this.activatedRoute.snapshot.paramMap.get('id1')
@@ -85,6 +86,8 @@ export class ItemTourComponent implements OnInit {
   backup(){
     this.resTour = Object.assign({}, this.resTourTmp)
     this.img = this.resTour.thumbnail
+    console.log(this.img);
+
     this.isChange = false
     this.notificationService.handleAlert("Khôi phục dữ liệu ban đầu thành công !", StatusNotification.Info)
   }
@@ -249,5 +252,20 @@ export class ItemTourComponent implements OnInit {
         this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
+  }
+
+  ratingTour(){
+    this.tourService.ratingTour(this.resTour.rating, this.resTour.idTour).subscribe(res =>{
+      this.response = res
+
+      if (res.notification.type == StatusNotification.Success) {
+        this.router.navigate(['','list-tour']);
+        this.close()
+      }
+      this.notificationService.handleAlertObj(res.notification)
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
   }
 }
