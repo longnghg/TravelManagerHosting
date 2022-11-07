@@ -48,11 +48,12 @@ export class ItemTourScheduleComponent implements OnInit {
   isAdd: boolean = false
   auth: AuthenticationModel
   resScheduleTmp: ScheduleModel
+  resCostTourTmp: CostTourModel
   isHoliday = this.configService.listStatus()
   isDelete: boolean = false
-
+  active;
   constructor(private scheduleService: ScheduleService, private configService: ConfigService, private notificationService: NotificationService,
-    private employeeService: EmployeeService, private carService: CarService, private promotionService: PromotionService, private activatedRoute: ActivatedRoute,
+private employeeService: EmployeeService, private carService: CarService, private promotionService: PromotionService, private activatedRoute: ActivatedRoute,
     private costtourService: CostTourService, private hotelService: HotelService, private placeService: PlaceService, private restaurantService: RestaurantService) { }
 
   ngOnInit(): void {
@@ -61,15 +62,24 @@ export class ItemTourScheduleComponent implements OnInit {
 
   ngOnChanges(): void {
     this.init()
-    // this.initCost()
+    this.initCost()
+
+    // this.resCostTour.breakfast = Number(this.resCostTour.breakfast).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+    // this.resCostTour.water = Number(this.resCostTour.water).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+    // this.resCostTour.feeGas = Number(this.resCostTour.feeGas).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+    // this.resCostTour.distance = Number(this.resCostTour.distance).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+    // this.resCostTour.sellCost = Number(this.resCostTour.sellCost).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+    // this.resCostTour.depreciation = Number(this.resCostTour.depreciation).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+    // this.resCostTour.otherPrice = Number(this.resCostTour.otherPrice).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+    // this.resCostTour.tolls = Number(this.resCostTour.tolls).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+    // this.resCostTour.insuranceFee = Number(this.resCostTour.insuranceFee).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
 
     if (this.type == 'create') {
       this.resSchedule = new ScheduleModel()
       this.resCostTour = new CostTourModel()
       this.resScheduleTmp = Object.assign({}, this.resSchedule)
-    } else {
-      this.isAdd = false
-
+    } 
+    else {
       if (this.resSchedule) {
         this.resSchedule.departureDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.departureDate)
         this.resSchedule.returnDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.returnDate)
@@ -78,7 +88,8 @@ export class ItemTourScheduleComponent implements OnInit {
         this.resSchedule.timePromotionDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.timePromotion)
 
         this.resScheduleTmp = Object.assign({}, this.resSchedule)
-        console.log(this.resSchedule.idUserModify);
+        this.resCostTourTmp = Object.assign({}, this.resCostTour)
+    
 
         this.costtourService.getCostbyidSchedule(this.resSchedule.idSchedule).subscribe(res => {
           this.response = res
@@ -101,8 +112,6 @@ export class ItemTourScheduleComponent implements OnInit {
     })
     this.promotionService.views(this.isDelete).then(response => {
       this.resPromotion = response
-      console.log(this.resPromotion);
-
     })
   }
 
@@ -125,8 +134,10 @@ export class ItemTourScheduleComponent implements OnInit {
     this.resSchedule.returnDate = new Date(this.resSchedule.returnDateDisplay).getTime()
     this.resSchedule.timePromotion = new Date(this.resSchedule.timePromotionDisplay).getTime()
   }
+
   inputChange() {
-    if (JSON.stringify(this.resSchedule) != JSON.stringify(this.resScheduleTmp)) {
+    if (JSON.stringify(this.resSchedule) != JSON.stringify(this.resScheduleTmp) || 
+       JSON.stringify(this.resCostTour) != JSON.stringify(this.resCostTourTmp)) {
       this.isChange = true
     }
     else {
@@ -134,12 +145,14 @@ export class ItemTourScheduleComponent implements OnInit {
     }
   }
 
-
   save() {
     this.validateScheduleModel = new ValidateScheduleModel
     this.validateScheduleModel = this.configService.validateSchedule(this.resSchedule, this.validateScheduleModel)
+    this.validateCostTourModel = new ValidateCostTourModel
+    this.validateCostTourModel = this.configService.validateCostTour(this.resCostTour, this.validateCostTourModel)
 
     if (this.validateScheduleModel.total == 0) {
+      if (this.validateCostTourModel.total == 0) {
       var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
       if (this.type == "create") {
         this.resSchedule.idUserModify = this.auth.id
@@ -150,7 +163,14 @@ export class ItemTourScheduleComponent implements OnInit {
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
           this.resSchedule.idSchedule = res.content
-
+          
+          this.resCostTour.idSchedule = this.resSchedule.idSchedule
+          this.costtourService.create(this.resCostTour).subscribe(res => {
+            this.response = res
+          }, error => {
+            var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+            this.notificationService.handleAlert(message, StatusNotification.Error)
+          })
         }, error => {
           var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
           this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -175,42 +195,29 @@ export class ItemTourScheduleComponent implements OnInit {
 
       }
       this.close()
+    }else{
+      this.notificationService.handleAlert("Bạn cần nhập chi phí !", StatusNotification.Info)
+    }
     }
   }
 
   saveCostTour() {
-    // this.validateCostTourModel = new ValidateCostTourModel
-    // this.validateCostTourModel = this.configService.validateCostTour(this.resSchedule, this.validateCostTourModel)
+    this.validateCostTourModel = new ValidateCostTourModel
+    this.validateCostTourModel = this.configService.validateCostTour(this.resCostTour, this.validateCostTourModel)
 
-    // if (this.validateCostTourModel.total == 0) {
+    if (this.validateCostTourModel.total == 0) {
       if (this.type == "create") {
         this.resCostTour.idSchedule = this.resSchedule.idSchedule
         this.costtourService.create(this.resCostTour).subscribe(res => {
           this.response = res
-          this.notificationService.handleAlertObj(res.notification)
+        this.notificationService.handleAlertObj(res.notification)
           console.log(this.response.content);
         }, error => {
           var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
           this.notificationService.handleAlert(message, StatusNotification.Error)
         })
       }
-      else {
-        if (this.isAdd == true) {
-          this.resCostTour.idSchedule = this.resSchedule.idSchedule
-          this.costtourService.create(this.resCostTour).subscribe(res => {
-            this.response = res
-            this.notificationService.handleAlertObj(res.notification)
-
-            if (this.response.notification.type == StatusNotification.Success) {
-              this.isAdd = false
-            }
-            console.log(this.response.content);
-          }, error => {
-            var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
-            this.notificationService.handleAlert(message, StatusNotification.Error)
-          })
-        }
-        else {
+      else { 
           this.resCostTour.idSchedule = this.resSchedule.idSchedule
           this.costtourService.update(this.resCostTour).subscribe(res => {
             this.response = res
@@ -225,12 +232,6 @@ export class ItemTourScheduleComponent implements OnInit {
           })
         }
       }
-
-  }
-
-  btnAddCost() {
-    this.resCostTour = new CostTourModel()
-    this.isAdd = true
   }
 
 
@@ -245,16 +246,11 @@ export class ItemTourScheduleComponent implements OnInit {
 
   backup(){
     this.resSchedule = Object.assign({}, this.resScheduleTmp)
+    this.resCostTour = Object.assign({}, this.resCostTourTmp)
     this.isChange = false
     this.notificationService.handleAlert("Khôi phục dữ liệu ban đầu thành công !", StatusNotification.Info)
   }
 
-  // getDataDelete() {
-  //   this.parentDelete.emit(this.resSchedule);
-  // }
-  // getDataRestore() {
-  //   this.parentRestore.emit(this.resSchedule);
-  // }
 
   delete() {
     if (this.resSchedule) {
@@ -271,7 +267,7 @@ export class ItemTourScheduleComponent implements OnInit {
   restoreSchedule() {
     if (this.resSchedule) {
       this.scheduleService.restore(this.resSchedule.idSchedule, this.auth.id).subscribe(res => {
-        this.response = res
+this.response = res
         this.notificationService.handleAlertObj(res.notification)
       }, error => {
         var message = this.configService.error(error.status, error.error != null ? error.error.text : "");

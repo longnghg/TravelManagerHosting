@@ -6,7 +6,7 @@ import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.compo
 import { ConfigService } from "../../../services_API/config.service";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { ActivatedRoute } from '@angular/router';
-import { StatusApprove, StatusNotification, TypeAction } from "../../../enums/enum";
+import { RoleTitle, StatusApprove, StatusNotification, TypeAction } from "../../../enums/enum";
 import { AuthenticationModel } from 'src/app/models/authentication.model';
 @Component({
   selector: 'app-view-tour-schedule',
@@ -30,12 +30,12 @@ export class ViewTourScheduleComponent implements OnInit {
   public columnDefs: ColDef[]
   public columnDefsWaiting: ColDef[]
   public gridConfig: GridConfig = {
-    idModalRestore: "restoreScheduleModal",
-    idModalDelete: "deleteScheduleModal",
-    idModal: "gridSchedule1",
-    disableRadioBox: false,
-    radioBoxName: "Kho lưu trữ",
-    disableApprove: true
+    // idModalRestore: "restoreScheduleModal",
+    // idModalDelete: "deleteScheduleModal",
+    // idModal: "gridSchedule1",
+    // disableRadioBox: false,
+    // radioBoxName: "Kho lưu trữ",
+    // disableApprove: true
   }
   public gridConfigWaiting: GridConfig = {
     idModal: "gridSchedule1",
@@ -47,6 +47,29 @@ export class ViewTourScheduleComponent implements OnInit {
   }
   ngOnInit(): void {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
+    if(this.auth.roleId == RoleTitle['Quản lý tour'])
+    {
+      this.gridConfig = {
+        idModalRestore: "restoreScheduleModal",
+        idModalDelete: "deleteScheduleModal",
+        idModal: "gridSchedule1",
+        disableRadioBox: false,
+        radioBoxName: "Kho lưu trữ",
+        disableApprove: true
+      }
+    }
+    else{
+      this.gridConfig = {
+        idModalRestore: "restoreScheduleModal",
+         idModalDelete: "deleteScheduleModal",
+        idModal: "gridSchedule1",
+        disableRadioBox: true,
+         disableCreate: true,
+         disableDelete: true,
+         disableRestore: true,
+        disableApprove: true
+      }
+    }
     if (this.isDelete) {
       this.gridConfig.isRestore = this.isDelete
       this.init(this.isDelete)

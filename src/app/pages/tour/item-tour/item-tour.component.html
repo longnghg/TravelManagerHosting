@@ -91,9 +91,10 @@
     </div>
   </div>
 </div>
-<ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
-  <li [ngbNavItem]="1">
-    <a ngbNavLink> <h1>Thông tin chi tiết tour</h1></a>
+
+<nav ngbNav #nav="ngbNav" class="nav-tabs">
+	<ng-container ngbNavItem>
+		<a ngbNavLink style="font-size: 25px;">Thông tin chi tiết</a>
     <ng-template ngbNavContent>
       <div class="modal-body">
         <ng-container *ngIf="resTour">
@@ -203,17 +204,15 @@
       </div>
 
     </ng-template>
-  </li>
-  <li [ngbNavItem]="2" *ngIf="type == 'detail'">
-    <a ngbNavLink><h1>Lịch trình</h1></a>
+	</ng-container>
+	<ng-container ngbNavItem>
+		<a ngbNavLink style="font-size: 25px;">Lịch trình</a>
     <ng-template ngbNavContent>
       <app-view-tour-schedule></app-view-tour-schedule>
     </ng-template>
-  </li>
-</ul>
-<div [ngbNavOutlet]="nav"></div>
-
-
+	</ng-container>
+</nav>
+<div [ngbNavOutlet]="nav" class="mt-2"></div>
 
 
 <div class="modal fade" id="deleteItemTourModal" tabindex="-1" aria-labelledby="deleteItemTourModal" aria-hidden="true">

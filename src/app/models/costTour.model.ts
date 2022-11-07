@@ -1,17 +1,17 @@
 export class CostTourModel{
   idSchedule: string
-  breakfast: number = 0
-  water: number  = 0
-  feeGas: number  = 0
-  distance: number = 0
-  sellCost: number = 0
-  depreciation: number = 0
-  otherPrice: number = 0
-  tolls: number = 0
-  cusExpected: number = 0
-  insuranceFee: number = 0
+  breakfast: number | string = 0
+  water: number  | string = 0
+  feeGas: number  | string = 0
+  distance: number | string = 0
+  sellCost: number | string = 0
+  depreciation: number | string = 0
+  otherPrice: number | string = 0
+  tolls: number | string = 0
+  cusExpected: number | string = 0
+  insuranceFee: number | string = 0
   isHoliday: boolean = null
-  totalCostTour: number = 0
+  totalCostTour: number 
   hotelId: string
   priceHotel: number = 0
   restaurantId: string
@@ -22,16 +22,16 @@ export class CostTourModel{
 
 export class ValidateCostTourModel{
   total: number
-  breakfast: string = null
-  water: string = null
-  feeGas: string = null
-  distance: string = null
-  sellCost: string = null
-  depreciation: string = null
-  otherPrice: string = null
-  tolls: string = null
-  cusExpected: string = null
-  insuranceFee: string = null
+  breakfast: number = null
+  water: number = null
+  feeGas: number = null
+  distance: number = null
+  sellCost: number = null
+  depreciation: number = null
+  otherPrice: number = null
+  tolls: number = null
+  cusExpected: number = null
+  insuranceFee: number = null
   isHoliday: string = null
   hotelId: string = null
   restaurantId: string = null
