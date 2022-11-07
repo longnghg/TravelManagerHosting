@@ -32,7 +32,7 @@ export class TourService{
     return value
   }
 
-  gets(isDelete: any)
+  gets(isDelete)
   {
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/gets-tour?isDelete="+isDelete);
   }
@@ -67,6 +67,11 @@ export class TourService{
 
   refused(idTour: any){
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/refused-tour?idTour="+idTour);
+  }
+
+  ratingTour(rating: any, idTour: any)
+  {
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/update-rating-tour?rating="+rating+"&idTour="+idTour);
   }
 }
 

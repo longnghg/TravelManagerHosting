@@ -30,8 +30,10 @@ import { AuthenticationModel} from "../../../models/authentication.model";
 export class ItemTourScheduleComponent implements OnInit {
   @Input() resSchedule: ScheduleModel
   @Input() type: string
-  @Output() parentDelete = new EventEmitter<any>()
-  @Output() parentRestore = new EventEmitter<any>()
+  // @Output() parentDelete = new EventEmitter<any>()
+  // @Output() parentRestore = new EventEmitter<any>()
+  @Output() parentData = new EventEmitter<any>()
+  @Output() parentType = new EventEmitter<any>()
   validateScheduleModel: ValidateScheduleModel = new ValidateScheduleModel
   validateCostTourModel: ValidateCostTourModel = new ValidateCostTourModel
   resCostTour: CostTourModel
@@ -47,6 +49,8 @@ export class ItemTourScheduleComponent implements OnInit {
   auth: AuthenticationModel
   resScheduleTmp: ScheduleModel
   isHoliday = this.configService.listStatus()
+  isDelete: boolean = false
+
   constructor(private scheduleService: ScheduleService, private configService: ConfigService, private notificationService: NotificationService,
     private employeeService: EmployeeService, private carService: CarService, private promotionService: PromotionService, private activatedRoute: ActivatedRoute,
     private costtourService: CostTourService, private hotelService: HotelService, private placeService: PlaceService, private restaurantService: RestaurantService) { }
@@ -57,34 +61,34 @@ export class ItemTourScheduleComponent implements OnInit {
 
   ngOnChanges(): void {
     this.init()
-    this.initCost()
-
+    // this.initCost()
 
     if (this.type == 'create') {
       this.resSchedule = new ScheduleModel()
       this.resCostTour = new CostTourModel()
+      this.resScheduleTmp = Object.assign({}, this.resSchedule)
     } else {
       this.isAdd = false
+
+      if (this.resSchedule) {
+        this.resSchedule.departureDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.departureDate)
+        this.resSchedule.returnDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.returnDate)
+        this.resSchedule.beginDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.beginDate)
+        this.resSchedule.endDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.endDate)
+        this.resSchedule.timePromotionDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.timePromotion)
+
+        this.resScheduleTmp = Object.assign({}, this.resSchedule)
+        console.log(this.resSchedule.idUserModify);
+
+        this.costtourService.getCostbyidSchedule(this.resSchedule.idSchedule).subscribe(res => {
+          this.response = res
+          this.resCostTour = this.response.content
+        }, error => {
+          var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+          this.notificationService.handleAlert(message, StatusNotification.Error)
+        })
+      }
     }
-    this.resScheduleTmp = Object.assign({}, this.resSchedule)
-    if (this.resSchedule) {
-      this.resScheduleTmp.departureDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.departureDate))
-      this.resScheduleTmp.returnDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.returnDate))
-      this.resScheduleTmp.beginDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.beginDate))
-      this.resScheduleTmp.endDate = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.endDate))
-      this.resScheduleTmp.timePromotion = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resSchedule.timePromotion))
-
-      this.costtourService.getCostbyidSchedule(this.resSchedule.idSchedule).subscribe(res => {
-        this.response = res
-        this.resCostTour = this.response.content
-      }, error => {
-        var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
-        this.notificationService.handleAlert(message, StatusNotification.Error)
-      })
-
-      console.log(this.resSchedule.isDelete);
-    }
-
   }
 
 
@@ -95,8 +99,10 @@ export class ItemTourScheduleComponent implements OnInit {
     this.carService.views().then(response => {
       this.resCar = response
     })
-    this.promotionService.views().then(response => {
+    this.promotionService.views(this.isDelete).then(response => {
       this.resPromotion = response
+      console.log(this.resPromotion);
+
     })
   }
 
@@ -112,6 +118,13 @@ export class ItemTourScheduleComponent implements OnInit {
     })
   }
 
+  dateChange(){
+    this.resSchedule.beginDate = new Date(this.resSchedule.beginDateDisplay).getTime()
+    this.resSchedule.endDate = new Date(this.resSchedule.endDateDisplay).getTime()
+    this.resSchedule.departureDate = new Date(this.resSchedule.departureDateDisplay).getTime()
+    this.resSchedule.returnDate = new Date(this.resSchedule.returnDateDisplay).getTime()
+    this.resSchedule.timePromotion = new Date(this.resSchedule.timePromotionDisplay).getTime()
+  }
   inputChange() {
     if (JSON.stringify(this.resSchedule) != JSON.stringify(this.resScheduleTmp)) {
       this.isChange = true
@@ -121,10 +134,6 @@ export class ItemTourScheduleComponent implements OnInit {
     }
   }
 
-  restore() {
-    this.resSchedule = Object.assign({}, this.resScheduleTmp)
-    this.isChange = false
-  }
 
   save() {
     this.validateScheduleModel = new ValidateScheduleModel
@@ -134,8 +143,9 @@ export class ItemTourScheduleComponent implements OnInit {
       var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
       if (this.type == "create") {
         this.resSchedule.idUserModify = this.auth.id
-        this.resSchedule.typeAction = "insert"
         this.resSchedule.tourId = idTour
+        console.log(this.resSchedule);
+
         this.scheduleService.create(this.resSchedule).subscribe(res => {
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
@@ -148,13 +158,15 @@ export class ItemTourScheduleComponent implements OnInit {
       }
       else {
         // this.resSchedule.tourId = idTour
+         this.resSchedule.idUserModify = this.auth.id
+         console.log(this.resSchedule);
+
         this.scheduleService.update(this.resSchedule).subscribe(res => {
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-          this.resSchedule.idSchedule = res.content
-
 
           if (this.response.notification.type == StatusNotification.Success) {
+            this.resSchedule.idSchedule = res.content
           }
         }, error => {
           var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
@@ -226,19 +238,27 @@ export class ItemTourScheduleComponent implements OnInit {
     if (this.type == 'detail') {
       this.isAdd = false
     }
-    this.restore()
+    this.resSchedule = Object.assign({}, this.resScheduleTmp)
+    this.isChange = false
+     this.parentType.emit(null);
   }
 
-  getDataDelete() {
-    this.parentDelete.emit(this.resSchedule);
+  backup(){
+    this.resSchedule = Object.assign({}, this.resScheduleTmp)
+    this.isChange = false
+    this.notificationService.handleAlert("Khôi phục dữ liệu ban đầu thành công !", StatusNotification.Info)
   }
-  getDataRestore() {
-    this.parentRestore.emit(this.resSchedule);
-  }
+
+  // getDataDelete() {
+  //   this.parentDelete.emit(this.resSchedule);
+  // }
+  // getDataRestore() {
+  //   this.parentRestore.emit(this.resSchedule);
+  // }
 
   delete() {
     if (this.resSchedule) {
-      this.scheduleService.delete(this.resSchedule.idSchedule).subscribe(res => {
+      this.scheduleService.delete(this.resSchedule.idSchedule, this.auth.id).subscribe(res => {
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
       }, error => {
@@ -250,7 +270,7 @@ export class ItemTourScheduleComponent implements OnInit {
 
   restoreSchedule() {
     if (this.resSchedule) {
-      this.scheduleService.restore(this.resSchedule.idSchedule).subscribe(res => {
+      this.scheduleService.restore(this.resSchedule.idSchedule, this.auth.id).subscribe(res => {
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
       }, error => {
@@ -258,5 +278,10 @@ export class ItemTourScheduleComponent implements OnInit {
         this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
+  }
+
+  getParentData(type?: string){
+    this.parentType.emit(type);
+    this.parentData.emit(this.resSchedule);
   }
 }

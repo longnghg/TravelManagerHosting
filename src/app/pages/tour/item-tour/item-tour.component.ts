@@ -28,13 +28,14 @@ export class ItemTourComponent implements OnInit {
   img: any
   formData: any
   resAuth: AuthenticationModel
+  active = 1;
+  listStar: any
   constructor(private router: Router, private tourService: TourService, private configService: ConfigService, private notificationService: NotificationService,
       private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    var currentUser = localStorage.getItem("currentUser")
-    this.resAuth = JSON.parse(currentUser)
-
+    this.resAuth = JSON.parse(localStorage.getItem("currentUser"))
+    this.listStar = this.configService.list10Star()
 
     var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
     this.type = this.activatedRoute.snapshot.paramMap.get('id1')
@@ -47,9 +48,6 @@ export class ItemTourComponent implements OnInit {
         {
           this.resTour = this.response.content
           this.resTourTmp = Object.assign({}, this.resTour)
-          console.log(this.resTour.idUserModify);
-          console.log(this.resTour);
-
           if(this.resTour){
             if (this.resTour.thumbnail) {
               this.img = this.configService.apiUrl + this.resTour.thumbnail
@@ -85,6 +83,13 @@ export class ItemTourComponent implements OnInit {
 
   }
 
+  backup(){
+    this.resTour = Object.assign({}, this.resTourTmp)
+    this.img = this.resTour.thumbnail
+
+    this.isChange = false
+    this.notificationService.handleAlert("Khôi phục dữ liệu ban đầu thành công !", StatusNotification.Info)
+  }
 
   inputChange(){
     if (JSON.stringify(this.resTour) != JSON.stringify(this.resTourTmp)) {
@@ -246,5 +251,20 @@ export class ItemTourComponent implements OnInit {
         this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
+  }
+
+  ratingTour(){
+    this.tourService.ratingTour(this.resTour.rating, this.resTour.idTour).subscribe(res =>{
+      this.response = res
+
+      if (res.notification.type == StatusNotification.Success) {
+        this.router.navigate(['','list-tour']);
+        this.close()
+      }
+      this.notificationService.handleAlertObj(res.notification)
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
   }
 }

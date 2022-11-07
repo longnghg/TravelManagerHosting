@@ -18,4 +18,10 @@ export class TourookingService{
   {
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/create-tourBooking", data);
   }
+
+  statisticTourBooking()
+  {
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/statistic-tourbooking");
+
+  }
 }

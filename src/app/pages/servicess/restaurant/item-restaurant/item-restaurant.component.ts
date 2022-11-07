@@ -1,11 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { RestaurantModel } from 'src/app/models/restaurant.model';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { RestaurantModel, ValidationRestaurantModel } from 'src/app/models/restaurant.model';
 import { RestaurantService } from "src/app/services_API/restaurant.service"
 import { NotificationService } from "../../../../services_API/notification.service";
 import { ColDef, GridConfig} from '../../../../components/grid-data/grid-data.component';
 import { ConfigService } from "../../../../services_API/config.service";
 import { ResponseModel } from "../../../../models/responsiveModels/response.model";
 import { StatusNotification } from "../../../../enums/enum";
+import { AuthenticationModel } from 'src/app/models/authentication.model';
 
 @Component({
   selector: 'app-item-restaurant',
@@ -15,35 +16,27 @@ import { StatusNotification } from "../../../../enums/enum";
 export class ItemRestaurantComponent implements OnInit {
   @Input() resRestaurant: RestaurantModel
   @Input() type: string
+  @Output() parentData = new EventEmitter<any>()
+  @Output() parentType = new EventEmitter<any>()
+  auth: AuthenticationModel
+  validateRestaurant: ValidationRestaurantModel = new ValidationRestaurantModel
   response: ResponseModel
-  isEdit: boolean = false
   isChange: boolean = false
   resRestaurantTmp: RestaurantModel
-  constructor(private restaurantService: RestaurantService, private configService: ConfigService, private notificationService: NotificationService) { }
+  formData: any
+  constructor(private restaurantService: RestaurantService,
+    private configService: ConfigService,
+    private notificationService: NotificationService) { }
 
   ngOnInit(): void {
+    this.auth = JSON.parse(localStorage.getItem("currentUser"))
   }
 
   ngOnChanges(): void {
-
     if(this.type == 'create'){
       this.resRestaurant = new RestaurantModel()
-      this.isEdit = true
-    }else{
-      this.isEdit = false
     }
     this.resRestaurantTmp = Object.assign({}, this.resRestaurant)
-  }
-
-  isEditChange(){
-    if (this.isEdit) {
-      this.isEdit = false
-      this.restore()
-
-    }
-    else{
-      this.isEdit = true
-    }
   }
 
   inputChange(){
@@ -55,35 +48,63 @@ export class ItemRestaurantComponent implements OnInit {
     }
   }
 
-  restore(){
+  backup(){
     this.resRestaurant = Object.assign({}, this.resRestaurantTmp)
     this.isChange = false
+    this.notificationService.handleAlert("Khôi phục dữ liệu ban đầu thành công !", StatusNotification.Info)
   }
 
   save(){
+    this.validateRestaurant = new ValidationRestaurantModel
+    this.validateRestaurant =  this.configService.validateRestaurant(this.resRestaurant, this.validateRestaurant)
 
+    if (this.validateRestaurant.total == 0) {
+
+      this.resRestaurant.IdUserModify = this.auth.id
       if(this.type == "create")
       {
-        this.restaurantService.create(this.resRestaurant).subscribe(res =>{
+          this.restaurantService.create(this.resRestaurant).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
+	    if(this.response.notification.type == StatusNotification.Success)
+        {
+		      this.close()
+        }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
+
         })
       }
       else{
+        this.restaurantService.update(this.resRestaurant).subscribe(res =>{
+          this.response = res
+          console.log(this.resRestaurant.idRestaurant);
 
+          this.notificationService.handleAlertObj(res.notification)
+
+          if(this.response.notification.type == StatusNotification.Success)
+          {
+		        this.isChange = false
+          }
+        }, error => {
+          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+          this.notificationService.handleAlert(message, StatusNotification.Error)
+
+        })
+      }
 
       }
-      this.close()
-  }
-
-  close(){
-    if (this.type == 'detail') {
-      this.isEdit = false
     }
-     this.restore()
-  }
 
-}
+    close(){
+      this.resRestaurant = Object.assign({}, this.resRestaurantTmp)
+      this.isChange = false
+       this.parentType.emit(null);
+    }
+
+    getParentData(type?: string){
+      this.parentType.emit(type);
+      this.parentData.emit(this.resRestaurant);
+    }
+  }

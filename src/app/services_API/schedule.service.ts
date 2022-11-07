@@ -32,12 +32,19 @@ update(data: any)
 {
   return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Schedule/update-schedule", data);
 }
-delete(idSchedule: any)
+delete(idSchedule: any, idUser: any)
 {
-  return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/delete-schedule?idSchedule="+idSchedule);
+  return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/delete-schedule?idSchedule="+idSchedule+"&idUser="+idUser);
 }
-restore(idSchedule: any)
+restore(idSchedule: any, idUser: any)
 {
-  return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/restore-schedule?idSchedule="+idSchedule);
+  return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/restore-schedule?idSchedule="+idSchedule+"&idUser="+idUser);
+}
+approve(idSchedule: any){
+  return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/approve-schedule?idSchedule="+idSchedule);
+}
+
+refused(idSchedule: any){
+  return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/refused-schedule?idSchedule="+idSchedule);
 }
 }

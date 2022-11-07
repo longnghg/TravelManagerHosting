@@ -8,6 +8,10 @@ import { ConfigService } from "../../services_API/config.service";
 import { AuthenticationService } from "../../services_API/authentication.service";
 import { NotificationService } from "../../services_API/notification.service";
 import { StatusNotification } from "../../enums/enum";
+
+
+// signalr
+import { HubConnection } from '@microsoft/signalr';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -20,11 +24,25 @@ export class NavbarComponent implements OnInit {
   auth: AuthenticationModel
   img = "../../../assets/img/employees/unknown.png"
   response: ResponseModel
+
+   // mo dau
+     //signalr
+     private hubConnectionBuilder: HubConnection
   constructor(private notificationService: NotificationService, private authenticationService: AuthenticationService, location: Location,  private element: ElementRef, private router: Router, public configService:ConfigService) {
     this.location = location;
   }
 
   ngOnInit() {
+     this.hubConnectionBuilder = this.configService.signIR()
+    this.hubConnectionBuilder.start().then(function(){
+
+    });
+    this.hubConnectionBuilder.on('Init', (result: any) => {
+      console.log("da nah ndc tin hieu");
+    })
+
+
+    // ket thuc
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
     if(this.auth){
       if(this.auth.image){

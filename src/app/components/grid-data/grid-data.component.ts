@@ -28,7 +28,6 @@ export class GridDataComponent implements OnInit {
   btnPrev: boolean = false
   btnNext: boolean = true
   keyword: any = []
-  isDelete: boolean
   constructor(){}
   ngOnInit(): void {
   }
@@ -120,10 +119,12 @@ export class GridDataComponent implements OnInit {
   selectSection(name){
     var kw = ""
      var i = 0
-     if (this.keyword[name+'Tmp']) {
+     console.log(this.keyword);
 
+     if (this.keyword[name+'Tmp']) {
        if (this.keyword[name+'Tmp'].length > 0) {
          this.keyword[name+'Tmp'].forEach(item => {
+
            if ( i < this.keyword[name+'Tmp'].length-1) {
              kw += item + ","
            }
@@ -149,19 +150,19 @@ export class GridDataComponent implements OnInit {
     this.setCache()
   }
   changeChecked(){
-    if (this.isDelete) {
-      this.isDelete = false
+    if (this.gridConfig.isRestore) {
+      this.gridConfig.isRestore = false
       this.gdChecked.emit(false);
 
     }
     else{
-      this.isDelete = true
+      this.gridConfig.isRestore = true
       this.gdChecked.emit(true);
 
     }
   }
   setCache(){
-    this.keyword.isDelete = this.isDelete
+    this.keyword.isDelete = this.gridConfig.isRestore
     this.gdSearch.emit(this.keyword);
   }
 

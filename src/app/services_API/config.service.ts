@@ -11,7 +11,18 @@ export class ConfigService{
   public clientUrl = this.document.location.origin
 
   signIR(){
-   return this.hubConnectionBuilder = new HubConnectionBuilder().withUrl(`${this.apiUrl}/travelhub`).configureLogging(LogLevel.Information).build();
+     return this.hubConnectionBuilder = new HubConnectionBuilder()
+    .configureLogging(LogLevel.Information).withUrl(`${this.apiUrl}/travelhub`,
+    {
+        accessTokenFactory: () => localStorage.getItem("token")
+    })
+    .withAutomaticReconnect()
+    .build();
+   }
+   goivui(): void{
+    console.log("da keu");
+
+    this.hubConnectionBuilder.invoke('GetInfo')
   }
   error(status: any, message: any){
     console.log('Status:  '  + status);
@@ -210,6 +221,8 @@ export class ConfigService{
 
    validateTour(data: any, model: any){
     model.total = 0
+    var check = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+    var checkWhiteSpace = /\S\s/;
     //
     if (data.nameTour == null || data.nameTour == "") {
       model.nameTour = "[Tên tour]  không được để trống !"
@@ -219,6 +232,9 @@ export class ConfigService{
       model.total += 1
     }else if (data.nameTour.length < 5) {
       model.nameTour = "[Tên tour]  quá ngắn !"
+      model.total += 1
+    }else if (check.test(data.nameTour)) {
+      model.nameTour = "[Tên tour] không được để ký tự đặt biệt !"
       model.total += 1
     }
 
@@ -347,7 +363,8 @@ export class ConfigService{
    validateSchedule(data: any, model: any){
     model.total = 0
     var min = 0
-    var dateNow = Date.now()
+    var dateNow =  Date.now()
+    var checkDate = new Date(dateNow).getTime()
     //
     if (data.employeeId == null || data.employeeId == "") {
       model.employeeId = "Chọn nhân viên !"
@@ -375,47 +392,62 @@ export class ConfigService{
       model.total += 1
     }
 
-    if(data.departureDate == null || data.departureDate == ""){
+    if(data.departureDate == 0 || data.departureDate == ""){
       model.departureDate = ("Chọn ngày khởi hành!")
       model.total += 1
-     }else if(data.departureDate <= data.beginDate){
-      model.departureDate = ("Ngày khởi hành không được trước ngày bắt đầu!")
+     }else if(data.departureDate <= data.endDate){
+      model.departureDate = ("Ngày khởi hành không trước ngày kết thúc bán vé!")
       model.total += 1
-     }else if(data.departureDate >= data.endDate){
-      model.departureDate = ("Ngày khởi hành không được sau ngày kết thúc!")
+     }else if(data.departureDate < checkDate){
+      model.departureDate = ("Ngày khởi hành không trước ngày hiện tại!")
       model.total += 1
      }
-    //  else if(data.departureDate < dateNow){
-    //   model.departureDate = ("Ngày khởi hành không được sau ngày hiện tại!")
-    //   model.total += 1
-    //  }
 
-     if(data.returnDate == null || data.returnDate == ""){
+     if(data.returnDate == 0 || data.returnDate == ""){
       model.returnDate = ("Chọn ngày trở về!")
       model.total += 1
      }else if(data.returnDate <= data.departureDate){
       model.returnDate = ("Ngày trở về không được trước ngày khởi hành!")
       model.total += 1
-     }else if(data.returnDate >= data.endDate){
-      model.returnDate = ("Ngày trở về không được sau ngày kết thúc!")
+     }else if(data.returnDate <= data.endDate){
+      model.returnDate = ("Ngày trở về không trước ngày kết thúc bán vé!")
+      model.total += 1
+     }else if(data.returnDate < checkDate){
+      model.returnDate = ("Ngày trở về không trước ngày hiện tại!")
       model.total += 1
      }
 
-     if(data.timePromotion == null || data.timePromotion == ""){
-      model.timePromotion = ("Chọn khuyển mãi")
+     if(data.timePromotion == 0 || data.timePromotion == ""){
+      model.timePromotion = ("Chọn ngày khuyến mãi")
+      model.total += 1
+     }else if(data.timePromotion < checkDate){
+      model.timePromotion = ("Ngày khuyến mãi không trước ngày hiện tại!")
+      model.total += 1
+     }else if(data.timePromotion > data.endDate){
+      model.timePromotion = ("Ngày khuyến mãi không sau ngày kết thúc bán vé!")
+      model.total += 1
+     }
+     else if(data.timePromotion < data.beginDate){
+      model.timePromotion = ("Ngày khuyến mãi không trước ngày bắt đầu bán vé!")
       model.total += 1
      }
 
-     if(data.beginDate == null || data.beginDate == ""){
+     if(data.beginDate == 0 || data.beginDate == ""){
       model.beginDate = ("Chọn ngày bắt đầu!")
       model.total += 1
+     }else if(data.beginDate < checkDate){
+      model.beginDate = ("Ngày bắt đầu không trước ngày hiện tại!")
+      model.total += 1
      }
 
-     if(data.endDate == null || data.endDate == ""){
+     if(data.endDate == 0 || data.endDate == ""){
       model.endDate = ("Chọn ngày kết thúc!")
       model.total += 1
      }else if(data.endDate <= data.beginDate){
-      model.endDate = ("Ngày kết thúc không được trước ngày bắt đầu!")
+      model.endDate = ("Ngày kết thúc không trước ngày bắt đầu!")
+      model.total += 1
+     }else if(data.endDate < checkDate){
+      model.endDate = ("Ngày kết thúc không trước ngày hiện tại!")
       model.total += 1
      }
 
@@ -624,6 +656,50 @@ validateHotel(data : any,model: any)
     return model
   }
 
+  validateRestaurant(data : any,model: any)
+  {
+   model.total= 0
+       if(data.name == null || data.name == ""){
+         model.name= "[Tên nhà hàng] không được để trống !"
+         model.total +=1
+       }else if (data.name.length > 100) {
+         model.name= "[Tên nhà hàng] quá dài !"
+         model.total +=1
+       }else if (data.name.length < 1) {
+         model.name= "[Tên nhà hàng] quá ngắn !"
+         model.total +=1
+       }
+
+     // phone
+     if (data.phone == null || data.phone == "") {
+       model.phone= "[Số điện thoại] không được để trống !"
+       model.total +=1
+     }else if (data.phone.length > 10) {
+       model.phone= "[Số điện thoại] vượt quá 10 số !"
+       model.total +=1
+     }else if (!data.phone.startsWith("0")) {
+       model.phone= "[Số điện thoại] không hợp lệ !"
+       model.total +=1
+     }
+      //Address
+    if (data.address == null || data.address == "") {
+     model.address= "[Địa chỉ] không được để trống !"
+     model.total +=1
+    }else if (data.address.length > 255) {
+     model.address= "[Địa chỉ] quá dài !"
+     model.total +=1
+   }
+   // price
+   if(data.comboPrice == null || data.comboPrice == ""){
+     model.comboPrice= "[Giá] không được để trống !"
+     model.total +=1
+     }else if(data.comboPrice < 0 || data.comboPrice > 99999999){
+      model.comboPrice= "[Giá] phải lớn hơn 0 và nhỏ hơn 10000000 !"
+      model.total +=1
+     }
+     return model
+  }
+
    // place
    validatePlace(data : any,model: any)
    {
@@ -639,44 +715,33 @@ validateHotel(data : any,model: any)
         model.total += 1
       } // phone
       if (data.phone == null || data.phone == "") {
-        model.phone =("[Số điện thoại] không được để trống !")
-        model.total += 1
-     }else if (data.phone.length > 10) {
-      model.phone =("[Số điện thoại] vượt quá 10 số !")
-      model.total += 1
-     }else if (!data.phone.startsWith("0")) {
-      model.phone =("[Số điện thoại] không hợp lệ !")
-      model.total += 1
-     }
-       //Address
-     if (data.address == null || data.address == "") {
-      model.address =("[Địa chỉ] không được để trống !")
-      model.total += 1
-     }else if (data.address.length > 255) {
-      model.address =("[Địa chỉ] quá dài !")
-      model.total += 1
-    }
-    //priceTicket
-    if(data.priceTicket == null || data.priceTicket == ""){
-      model.priceTicket =("[Giá vé] không được để trống !")
-      model.total += 1
+        model.phone= "[Số điện thoại] không được để trống !"
+        model.total +=1
+      }else if (data.phone.length > 10) {
+        model.phone= "[Số điện thoại] vượt quá 10 số !"
+        model.total +=1
+      }else if (!data.phone.startsWith("0")) {
+        model.phone= "[Số điện thoại] không hợp lệ !"
+        model.total +=1
       }
-      if(data.modifyBy == null || data.modifyBy == ""){
-        model.modifyBy =("[Tên người sửa] không được để trống !")
-        model.total += 1
-    }else if (data.modifyBy.length > 100) {
-      model.modifyBy =("[Tên người sửa] quá dài !")
-      model.total += 1
-    }else if (data.modifyBy.length < 1) {
-      model.modifyBy =("[Tên người sửa]  quá ngắn !")
-      model.total += 1
+      //Address
+    if (data.address == null || data.address == "") {
+      model.address= "[Địa chỉ] không được để trống !"
+      model.total +=1
+    }else if (data.address.length > 255) {
+      model.address= "[Địa chỉ] quá dài !"
+      model.total +=1
     }
-    if (data.modifyDate == null || data.modifyDate == "") {
-      model.modifyDate =("[Ngày] không được để trống !")
-      model.total += 1
-   }
+    // price
+    if(data.priceTicket == null || data.priceTicket == ""){
+      model.priceTicket= "[Giá] không được để trống !"
+      model.total +=1
+      }else if(data.priceTicket < 0 || data.priceTicket > 99999999){
+      model.priceTicket= "[Giá] phải lớn hơn 0 và nhỏ hơn 10000000 !"
+      model.total +=1
+      }
         return model
-   }
+    }
 
    validateLogin(data: any, model: any){
     model.total = 0

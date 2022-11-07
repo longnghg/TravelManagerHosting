@@ -25,6 +25,7 @@ export class ListTourComponent implements OnInit {
   type: boolean = false
   typeChild: string
   auth: AuthenticationModel
+  isDelete: boolean = false
   private hubConnectionBuilder: HubConnection
 
 
@@ -43,7 +44,7 @@ export class ListTourComponent implements OnInit {
 
   }
   public gridConfigApprove: GridConfig2 = {
-    idModalApprove: "approveTourModel",
+    idModalApprove: "approveTourModal",
     route: "item-tour",
     alias: "idTour",
     disableRadioBox: true,
@@ -58,14 +59,16 @@ export class ListTourComponent implements OnInit {
 
     ngOnInit(): void {
       this.auth = JSON.parse(localStorage.getItem("currentUser"))
-      if (history.state.isDelete) {
-        this.gridConfig2.isRestore = history.state.isDelete
-        this.init(history.state.isDelete)
+      if (this.isDelete) {
+
+        this.gridConfig2.isRestore = this.isDelete
+        this.init(this.isDelete)
+        console.log(this.isDelete);
+
       }
       else{
-        this.init(this.type)
+        this.init(this.isDelete)
       }
-
 
       // this.hubConnectionBuilder = this.configService.signIR()
       // this.hubConnectionBuilder.start();
@@ -82,12 +85,13 @@ export class ListTourComponent implements OnInit {
 
     }
 
-    init(e?){
-      this.type = e
-      this.tourService.gets(this.type).subscribe(res =>{
+    init(isDelete){
+      this.tourService.gets(isDelete).subscribe(res =>{
         this.response = res
         if(this.response.notification.type  == StatusNotification.Success){
           this.resTour = this.response.content
+          console.log(this.resTour);
+
           this.restourTmp = Object.assign([], this.resTour)
         }
         else{
@@ -103,20 +107,19 @@ export class ListTourComponent implements OnInit {
         this.columnDefs= [
         { field: 'idTour', headerName: "Mã số", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'idTour'},
         { field: 'nameTour',headerName: "Tên", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'tourName'},
-        { field: 'thumbnail',headerName: "Thumbnail", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'thumbnail'},
         { field: 'toPlace',headerName: "Đến", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'address'},
-        { field: 'rating',headerName: "Số sao", style: "width: 10%;", searchable: true, searchType: 'text', searchObj: 'rating'},
-        // { field: 'status: string',headerName: "Trạng thái", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'status'},
+        // { field: 'rating',headerName: "Số sao", style: "width: 10%;", searchable: true, searchType: 'text', searchObj: 'rating'},
+        { field: 'rating',headerName: "Số sao", style: "width: 20%;", filter: "star",searchable: true, searchType: 'section', searchObj: 'rating' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.list10Star()},
+        { field: 'status',headerName: "Trạng thái", style: 'width: 10%',  filter: "status", searchable: true, searchType: 'section', multiple: false, closeOnSelect: true, searchObj: 'isActive', bindLabel: "name", bindValue: "id", listSection: this.configService.listStatus()},
         // { field: 'createDate: string',headerName: "Ngày tạo", style: "width: 160px;", searchable: true, searchType: 'date', searchObj: 'createDate'},
         ];
 
         this.columnDefsWaiting= [
-          { field: 'idTour', headerName: "Mã số", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'idTour'},
-          { field: 'nameTour',headerName: "Tên", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'tourName'},
-          { field: 'thumbnail',headerName: "Thumbnail", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'thumbnail'},
-          { field: 'toPlace',headerName: "Đến", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'address'},
+          { field: 'idTour', headerName: "Mã số", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'idTour'},
+          { field: 'nameTour',headerName: "Tên", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'tourName'},
+          { field: 'toPlace',headerName: "Đến", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'address'},
           { field: 'approveName',headerName: "Trạng thái phê duyệt", style: "width: 15%;", searchable: true, searchType: 'section', searchObj: 'approve' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listApprove()},
-          { field: 'typeAction',headerName: "Loại phê duyệt", style: "width: 10%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()},
+          { field: 'typeAction',headerName: "Loại phê duyệt", style: "width: 15%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()},
        ];
       }, 200);
 
