@@ -75,3 +75,13 @@
 @import "~ngx-toastr/toastr";
 
 @import "~@ng-select/ng-select/themes/default.theme.css";
+
+
+.form-control{
+  color: black !important;
+}
+
+.ng-select.ng-select-single .ng-select-container {
+  height: 43px !important;
+  border-radius: 0.375rem !important;
+}
