@@ -2,6 +2,8 @@
 tbody {
   display: block;
   // height: 410px;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 thead, tbody tr {
   display: table;
@@ -12,7 +14,7 @@ thead {
   z-index: 1;
   position: sticky;
   top: -1px;
-  width: calc( 100.9% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
+  width: calc( 100.9% - 1rem )/* scrollbar is average 1em/16px width, remove it from thead width */
 }
 table {
   width: 100%;

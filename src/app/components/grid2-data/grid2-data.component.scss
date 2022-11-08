@@ -2,6 +2,8 @@
 tbody {
   display: block;
   // height: 410px;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 thead, tbody tr {
   display: table;
