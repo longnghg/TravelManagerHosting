@@ -3,7 +3,7 @@
   <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
 </div>
 <div class="modal-body">
-  <ng-container *ngIf="resSchedule">
+  <ng-container *ngIf="resSchedule && resCostTour">
     <div class="container-fluid" >
       <form>
         <ul ngbNav #nav="ngbNav" [(activeId)]="active"  class="nav-tabs">
@@ -170,7 +170,7 @@
           <li [ngbNavItem]="2">
             <a ngbNavLink style="font-size: 25px;" #target>Chi phí</a>
             <ng-template ngbNavContent>
-              <div class="row" style="margin-top: 10px;" *ngIf="resCostTour">
+              <div class="row" style="margin-top: 10px;">
                 <div class="row align-items-center">
                   <div class="col-12 text-right">
                     <button *ngIf="isChange && type=='detail' && auth.roleId == 3" class="btn btn-md btn-success"  (click)="saveCostTour()">{{type == 'detail' ? "Cập nhật thông tin/ giá":"Thêm"}}</button>     

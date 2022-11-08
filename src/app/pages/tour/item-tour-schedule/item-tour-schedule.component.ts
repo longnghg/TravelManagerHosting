@@ -22,6 +22,7 @@ import { RestaurantService } from 'src/app/services_API/restaurant.service';
 import { RestaurantModel } from 'src/app/models/restaurant.model';
 import { StatusNotification } from "../../../enums/enum";
 import { AuthenticationModel} from "../../../models/authentication.model";
+
 @Component({
   selector: 'app-item-tour-schedule',
   templateUrl: './item-tour-schedule.component.html',
@@ -37,6 +38,7 @@ export class ItemTourScheduleComponent implements OnInit {
   validateScheduleModel: ValidateScheduleModel = new ValidateScheduleModel
   validateCostTourModel: ValidateCostTourModel = new ValidateCostTourModel
   resCostTour: CostTourModel
+  costtour: CostTourModel
   resCar: CarModel[]
   resEmployee: EmployeeModel[]
   resPromotion: PromotionModel[]
@@ -45,7 +47,6 @@ export class ItemTourScheduleComponent implements OnInit {
   resRestaurant: RestaurantModel[]
   response: ResponseModel
   isChange: boolean = false
-  isAdd: boolean = false
   auth: AuthenticationModel
   resScheduleTmp: ScheduleModel
   resCostTourTmp: CostTourModel
@@ -147,11 +148,14 @@ private employeeService: EmployeeService, private carService: CarService, privat
   }
 
   save() {
+    this.costtour = new CostTourModel
+    this.costtour = this.resCostTour
+    
     this.validateScheduleModel = new ValidateScheduleModel
     this.validateScheduleModel = this.configService.validateSchedule(this.resSchedule, this.validateScheduleModel)
     this.validateCostTourModel = new ValidateCostTourModel
     this.validateCostTourModel = this.configService.validateCostTour(this.resCostTour, this.validateCostTourModel)
-
+    
     if (this.validateScheduleModel.total == 0) {
       if (this.validateCostTourModel.total == 0) {
       var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
@@ -164,17 +168,21 @@ private employeeService: EmployeeService, private carService: CarService, privat
           
           if(this.response.notification.type == StatusNotification.Success){
             this.resSchedule.idSchedule = res.content
-
-            this.resCostTour.idSchedule = this.resSchedule.idSchedule
-            this.costtourService.create(this.resCostTour).subscribe(res => {
-              this.response = res
-              if(this.response.notification.type == StatusNotification.Success){
-
-              }
-            }, error => {
-              var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
-              this.notificationService.handleAlert(message, StatusNotification.Error)
-            })
+            
+            if(this.costtour){
+              this.costtour.idSchedule = this.resSchedule.idSchedule
+              this.costtourService.create(this.costtour).subscribe(res => {
+                this.response = res
+                if(this.response.notification.type == StatusNotification.Success){
+  
+                }
+              }, error => {
+                var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+                this.notificationService.handleAlert(message, StatusNotification.Error)
+              })
+            }
+            
+           
           }
           this.notificationService.handleAlertObj(res.notification)
         }, error => {
@@ -243,7 +251,6 @@ private employeeService: EmployeeService, private carService: CarService, privat
 
   close() {
     if (this.type == 'detail') {
-      this.isAdd = false
     }
     this.resSchedule = Object.assign({}, this.resScheduleTmp)
     this.isChange = false
