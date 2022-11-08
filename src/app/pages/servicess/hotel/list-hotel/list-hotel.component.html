@@ -97,7 +97,7 @@
   <div class="row">
     <div class="col">
       <div class="card shadow border-0">
-        <app-grid-data [rowData]="resHotel" [columnDefs]="columnDefs" [gridConfig]="gridConfig" (gdChecked)="init($event)" (gdType)="childType($event)" (gdChild)="childData($event)" (gdRestore)="getData($event)" (gdDelete)="getData($event)"></app-grid-data>
+        <app-grid-data [rowData]="resHotel" [columnDefs]="columnDefs" [gridConfig]="gridConfig"(gdSearch)="search($event)"  (gdChecked)="init($event)" (gdType)="childType($event)" (gdChild)="childData($event)" (gdRestore)="getData($event)" (gdDelete)="getData($event)"></app-grid-data>
       </div>
     </div>
   </div>
@@ -106,7 +106,7 @@
 <div class="modal fade" [id]="gridConfig.idModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="gridDataLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
-      <app-item-hotel [resHotel]="dataChild" [type]="typeChild" (parentData)="getData($event)"  (parentType)="childType($event)"></app-item-hotel>
+      <app-item-hotel [resHotel]="dataChild" [type]="typeChild" (parentData)="getData($event)" (parentType)="childType($event)"></app-item-hotel>
     </div>
   </div>
 </div>

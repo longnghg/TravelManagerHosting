@@ -50,6 +50,30 @@ export class ListHotelComponent implements OnInit {
     this.initWaiting()
   }
 
+  search(e?){
+    console.log(e);
+
+    if (e) {
+      this.hotelService.search(Object.assign({}, e)).subscribe(res => {
+        this.response = res
+        if(this.response.notification.type == StatusNotification.Success)
+        {
+          this.resHotel = this.response.content
+        }
+        else{
+          console.log(this.resHotelWaiting);
+
+          this.resHotel = this.resHotelWaiting
+          this.notificationService.handleAlertObj(res.notification)
+        }
+
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, StatusNotification.Error)
+      })
+    }
+  }
+
   init(isDelete){
     this.hotelService.gets(isDelete).subscribe(res =>{
       this.response = res
