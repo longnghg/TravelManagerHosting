@@ -99,6 +99,29 @@ export class ListPlaceComponent implements OnInit {
     childData(e){
       this.dataChild = Object.assign({}, e)
     }
+    search(e?){
+      console.log(e);
+
+      if (e) {
+        this.placeService.search(Object.assign({}, e)).subscribe(res => {
+          this.response = res
+          if(this.response.notification.type == StatusNotification.Success)
+          {
+            this.resPlace = this.response.content
+          }
+          else{
+            console.log(this.resPlaceWaiting);
+
+            this.resPlace = this.resPlaceWaiting
+            this.notificationService.handleAlertObj(res.notification)
+          }
+
+        }, error => {
+          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+          this.notificationService.handleAlert(message, StatusNotification.Error)
+        })
+      }
+    }
 
     childType(e){
       this.typeChild = e

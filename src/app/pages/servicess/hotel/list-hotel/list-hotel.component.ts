@@ -49,6 +49,30 @@ export class ListHotelComponent implements OnInit {
     this.init(this.isDelete);
   }
 
+  search(e?){
+    console.log(e);
+
+    if (e) {
+      this.hotelService.search(Object.assign({}, e)).subscribe(res => {
+        this.response = res
+        if(this.response.notification.type == StatusNotification.Success)
+        {
+          this.resHotel = this.response.content
+        }
+        else{
+          console.log(this.resHotelWaiting);
+
+          this.resHotel = this.resHotelWaiting
+          this.notificationService.handleAlertObj(res.notification)
+        }
+
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, StatusNotification.Error)
+      })
+    }
+  }
+
   init(isDelete){
     this.hotelService.gets(isDelete).subscribe(res =>{
       this.response = res
@@ -75,7 +99,6 @@ export class ListHotelComponent implements OnInit {
         { field: 'phone',headerName: "Số điện thoại", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'phone'},
         { field: 'approveName',headerName: "Trạng thái phê duyệt", style: "width: 15%;", searchable: true, searchType: 'section', searchObj: 'approve' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listApprove()},
         { field: 'typeActionName',headerName: "Loại phê duyệt", style: "width: 15%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()},
-
       ];
     }, 200);
 

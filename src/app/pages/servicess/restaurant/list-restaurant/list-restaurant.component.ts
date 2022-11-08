@@ -48,6 +48,29 @@ export class ListRestaurantComponent implements OnInit {
       this.auth = JSON.parse(localStorage.getItem("currentUser"))
       this.init(this.isDelete);
     }
+    search(e?){
+      console.log(e);
+
+      if (e) {
+        this.restaurantService.search(Object.assign({}, e)).subscribe(res => {
+          this.response = res
+          if(this.response.notification.type == StatusNotification.Success)
+          {
+            this.resRestaurant = this.response.content
+          }
+          else{
+            console.log(this.resRestaurantWaiting);
+
+            this.resRestaurant = this.resRestaurantWaiting
+            this.notificationService.handleAlertObj(res.notification)
+          }
+
+        }, error => {
+          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+          this.notificationService.handleAlert(message, StatusNotification.Error)
+        })
+      }
+    }
 
     init(isDelete){
       this.restaurantService.gets(isDelete).subscribe(res =>{

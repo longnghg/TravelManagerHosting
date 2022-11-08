@@ -73,5 +73,8 @@ restore(idPlace: string, idUser: string)
 {
   return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/restore-place?idPlace="+idPlace+"&idUser="+idUser);
 }
+search(data){
+  return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Service/search-hotel", data);
+}
 }
 
