@@ -22,7 +22,7 @@
                 <label class="form-control-label" for="phone">Số điện thoại
                   <span [class]="type != 'create' ?'d-none':'text-danger'">* {{this.validateRestaurant.phone ? this.validateRestaurant.phone : ''}}</span>
                 </label>
-                <input type="text" id="phone" name="phone" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số điện thoại" [(ngModel)]="resRestaurant.phone" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resRestaurant.isDelete">
+                <input type="number" id="phone" name="phone" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số điện thoại" [(ngModel)]="resRestaurant.phone" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resRestaurant.isDelete">
               </div>
             </div>
           </div>
@@ -38,7 +38,7 @@
               <label class="form-control-label" for="input-address">Giá nhà hàng
                 <span [class]="type != 'create'?'d-none':'text-danger'">* {{this.validateRestaurant.comboPrice ? this.validateRestaurant.comboPrice : ''}}</span>
               </label>
-              <input type="text" id="comboPrice" name="comboPrice" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập giá" [(ngModel)]="resRestaurant.comboPrice" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resRestaurant.isDelete">
+              <input type="number" id="comboPrice" name="comboPrice" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập giá" [(ngModel)]="resRestaurant.comboPrice" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resRestaurant.isDelete">
             </div>
           </div>
           <hr>
