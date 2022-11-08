@@ -21,7 +21,7 @@ export class ConfigService{
    }
    goivui(): void{
     console.log("da keu");
-    
+
     this.hubConnectionBuilder.invoke('GetInfo')
   }
   error(status: any, message: any){
@@ -198,29 +198,12 @@ export class ConfigService{
 
    }
 
-   validateCost(data: any){
-    var err = []
-    if(data.hotelId == null || data.hotelId == ""){
-      err.push("[Khách sạn] không được để trống !")
-   }
-
-   if(data.restaurantId == null || data.restaurantId == ""){
-    err.push("[Nhà hàng] không được để trống !")
-    }
-
-    if(data.placeId == null || data.placeId == ""){
-    err.push("[Địa Điểm] không được để trống !")
-    }
-
-    if(data.isHoliday == null || data.isHoliday == ""){
-      err.push("[Ngày lễ] không được để trống !")
-      }
-
-      return err
-   }
+   
 
    validateTour(data: any, model: any){
     model.total = 0
+    var check = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+    var checkWhiteSpace = /\S\s/;
     //
     if (data.nameTour == null || data.nameTour == "") {
       model.nameTour = "[Tên tour]  không được để trống !"
@@ -230,6 +213,9 @@ export class ConfigService{
       model.total += 1
     }else if (data.nameTour.length < 5) {
       model.nameTour = "[Tên tour]  quá ngắn !"
+      model.total += 1
+    }else if (check.test(data.nameTour)) {
+      model.nameTour = "[Tên tour] không được để ký tự đặt biệt !"
       model.total += 1
     }
 
@@ -333,7 +319,7 @@ export class ConfigService{
        model.total += 1
      }
 
-    if (data.isHoliday == null || data.isHoliday == "") {
+    if (data.isHoliday == null) {
       model.isHoliday = ("[Ngày lễ] chưa chọn!")
       model.total += 1
     }
@@ -358,7 +344,8 @@ export class ConfigService{
    validateSchedule(data: any, model: any){
     model.total = 0
     var min = 0
-    var dateNow = Date.now()
+    var dateNow =  Date.now()
+    var checkDate = new Date(dateNow).getTime()
     //
     if (data.employeeId == null || data.employeeId == "") {
       model.employeeId = "Chọn nhân viên !"
@@ -386,47 +373,62 @@ export class ConfigService{
       model.total += 1
     }
 
-    if(data.departureDate == null || data.departureDate == ""){
+    if(data.departureDate == 0 || data.departureDate == ""){
       model.departureDate = ("Chọn ngày khởi hành!")
       model.total += 1
-     }else if(data.departureDate <= data.beginDate){
-      model.departureDate = ("Ngày khởi hành không được trước ngày bắt đầu!")
+     }else if(data.departureDate <= data.endDate){
+      model.departureDate = ("Ngày khởi hành không trước ngày kết thúc bán vé!")
       model.total += 1
-     }else if(data.departureDate >= data.endDate){
-      model.departureDate = ("Ngày khởi hành không được sau ngày kết thúc!")
+     }else if(data.departureDate < checkDate){
+      model.departureDate = ("Ngày khởi hành không trước ngày hiện tại!")
       model.total += 1
      }
-    //  else if(data.departureDate < dateNow){
-    //   model.departureDate = ("Ngày khởi hành không được sau ngày hiện tại!")
-    //   model.total += 1
-    //  }
 
-     if(data.returnDate == null || data.returnDate == ""){
+     if(data.returnDate == 0 || data.returnDate == ""){
       model.returnDate = ("Chọn ngày trở về!")
       model.total += 1
      }else if(data.returnDate <= data.departureDate){
       model.returnDate = ("Ngày trở về không được trước ngày khởi hành!")
       model.total += 1
-     }else if(data.returnDate >= data.endDate){
-      model.returnDate = ("Ngày trở về không được sau ngày kết thúc!")
+     }else if(data.returnDate <= data.endDate){
+      model.returnDate = ("Ngày trở về không trước ngày kết thúc bán vé!")
+      model.total += 1
+     }else if(data.returnDate < checkDate){
+      model.returnDate = ("Ngày trở về không trước ngày hiện tại!")
       model.total += 1
      }
 
-     if(data.timePromotion == null || data.timePromotion == ""){
-      model.timePromotion = ("Chọn khuyển mãi")
+     if(data.timePromotion == 0 || data.timePromotion == ""){
+      model.timePromotion = ("Chọn ngày khuyến mãi")
+      model.total += 1
+     }else if(data.timePromotion < checkDate){
+      model.timePromotion = ("Ngày khuyến mãi không trước ngày hiện tại!")
+      model.total += 1
+     }else if(data.timePromotion > data.endDate){
+      model.timePromotion = ("Ngày khuyến mãi không sau ngày kết thúc bán vé!")
+      model.total += 1
+     }
+     else if(data.timePromotion < data.beginDate){
+      model.timePromotion = ("Ngày khuyến mãi không trước ngày bắt đầu bán vé!")
       model.total += 1
      }
 
-     if(data.beginDate == null || data.beginDate == ""){
+     if(data.beginDate == 0 || data.beginDate == ""){
       model.beginDate = ("Chọn ngày bắt đầu!")
       model.total += 1
+     }else if(data.beginDate < checkDate){
+      model.beginDate = ("Ngày bắt đầu không trước ngày hiện tại!")
+      model.total += 1
      }
 
-     if(data.endDate == null || data.endDate == ""){
+     if(data.endDate == 0 || data.endDate == ""){
       model.endDate = ("Chọn ngày kết thúc!")
       model.total += 1
      }else if(data.endDate <= data.beginDate){
-      model.endDate = ("Ngày kết thúc không được trước ngày bắt đầu!")
+      model.endDate = ("Ngày kết thúc không trước ngày bắt đầu!")
+      model.total += 1
+     }else if(data.endDate < checkDate){
+      model.endDate = ("Ngày kết thúc không trước ngày hiện tại!")
       model.total += 1
      }
 

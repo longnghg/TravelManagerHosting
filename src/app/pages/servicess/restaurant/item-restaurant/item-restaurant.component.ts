@@ -68,6 +68,9 @@ export class ItemRestaurantComponent implements OnInit {
           this.notificationService.handleAlertObj(res.notification)
 	    if(this.response.notification.type == StatusNotification.Success)
         {
+          this.resRestaurant = Object.assign({}, new RestaurantModel)
+          this.resRestaurantTmp = Object.assign({}, new RestaurantModel)
+          this.validateRestaurant = new ValidationRestaurantModel
 		      this.close()
         }
         }, error => {
@@ -99,6 +102,7 @@ export class ItemRestaurantComponent implements OnInit {
 
     close(){
       this.resRestaurant = Object.assign({}, this.resRestaurantTmp)
+      this.validateRestaurant = new ValidationRestaurantModel
       this.isChange = false
        this.parentType.emit(null);
     }

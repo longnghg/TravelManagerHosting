@@ -84,3 +84,12 @@ legend{
 fieldset{
   padding: 20px;
 }
+
+.form-control{
+  color: black !important;
+}
+
+.ng-select.ng-select-single .ng-select-container {
+  height: 43px !important;
+  border-radius: 0.375rem !important;
+}

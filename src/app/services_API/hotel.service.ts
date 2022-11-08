@@ -4,6 +4,7 @@ import { ConfigService } from "./config.service";
 import { ResponseModel } from "../models/responsiveModels/response.model";
 import { HotelModel } from "../models/hotel.model";
 import { NotificationService } from "../services_API/notification.service";
+import { StatusNotification } from "../enums/enum";
 @Injectable({
   providedIn: 'root'
 })
@@ -18,7 +19,7 @@ async views()
   var value = <any>await new Promise<any>(resolve => {
     this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/gets-hotel?isDelete="+false).subscribe(res => {
       this.response = res
-      if(!this.response.notification.type)
+      if(this.response.notification.type == StatusNotification.Success)
       {
         this.resHotel =  this.response.content
         resolve(this.resHotel);

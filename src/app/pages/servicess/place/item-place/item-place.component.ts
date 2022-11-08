@@ -69,7 +69,10 @@ export class ItemPlaceComponent implements OnInit {
           this.notificationService.handleAlertObj(res.notification)
 	    if(this.response.notification.type == StatusNotification.Success)
         {
-		      this.close()
+		      this.resPlace = Object.assign({}, new PlaceModel)
+          this.resPlaceTmp = Object.assign({}, new PlaceModel)
+          this.validatePlace = new ValidationPlaceModel
+          this.isChange = false
         }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -98,6 +101,8 @@ export class ItemPlaceComponent implements OnInit {
 
   close(){
     this.resPlace = Object.assign({}, this.resPlaceTmp)
+    this.validatePlace = new ValidationPlaceModel
+
     this.isChange = false
      this.parentType.emit(null);
   }
