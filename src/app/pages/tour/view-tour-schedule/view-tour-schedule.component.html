@@ -92,7 +92,7 @@
       </ng-container>
       <ng-template #elseApprove>
         <ng-container *ngIf="typeChild == 'refuse'; else elseRefuse">
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="refuse()" >Từ chối</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="refused()" >Từ chối</button>
         </ng-container>
         <ng-template #elseRefuse>
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="delete()" >Hủy yêu cầu</button>

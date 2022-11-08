@@ -4,6 +4,7 @@ import { ConfigService } from "./config.service";
 import { ResponseModel } from "../models/responsiveModels/response.model";
 import { CarModel } from "../models/car.model";
 import { NotificationService } from "../services_API/notification.service";
+import { StatusNotification } from "../enums/enum";
 @Injectable({
   providedIn: 'root'
 })
@@ -17,7 +18,7 @@ async views()
   var value = <any>await new Promise<any>(resolve => {
     this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/gets-car").subscribe(res => {
       this.response = res
-      if(!this.response.notification.type)
+      if(this.response.notification.type == StatusNotification.Success)
       {
         this.resCar =  this.response.content
         resolve(this.resCar);

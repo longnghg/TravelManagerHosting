@@ -78,6 +78,7 @@ private employeeService: EmployeeService, private carService: CarService, privat
       this.resSchedule = new ScheduleModel()
       this.resCostTour = new CostTourModel()
       this.resScheduleTmp = Object.assign({}, this.resSchedule)
+      this.resCostTourTmp = Object.assign({}, this.resCostTour)
     } 
     else {
       if (this.resSchedule) {
@@ -157,20 +158,25 @@ private employeeService: EmployeeService, private carService: CarService, privat
       if (this.type == "create") {
         this.resSchedule.idUserModify = this.auth.id
         this.resSchedule.tourId = idTour
-        console.log(this.resSchedule);
-
+ 
         this.scheduleService.create(this.resSchedule).subscribe(res => {
           this.response = res
-          this.notificationService.handleAlertObj(res.notification)
-          this.resSchedule.idSchedule = res.content
           
-          this.resCostTour.idSchedule = this.resSchedule.idSchedule
-          this.costtourService.create(this.resCostTour).subscribe(res => {
-            this.response = res
-          }, error => {
-            var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
-            this.notificationService.handleAlert(message, StatusNotification.Error)
-          })
+          if(this.response.notification.type == StatusNotification.Success){
+            this.resSchedule.idSchedule = res.content
+
+            this.resCostTour.idSchedule = this.resSchedule.idSchedule
+            this.costtourService.create(this.resCostTour).subscribe(res => {
+              this.response = res
+              if(this.response.notification.type == StatusNotification.Success){
+
+              }
+            }, error => {
+              var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+              this.notificationService.handleAlert(message, StatusNotification.Error)
+            })
+          }
+          this.notificationService.handleAlertObj(res.notification)
         }, error => {
           var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
           this.notificationService.handleAlert(message, StatusNotification.Error)

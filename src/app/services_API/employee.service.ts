@@ -4,6 +4,7 @@ import { ConfigService } from "./config.service";
 import { ResponseModel } from "../models/responsiveModels/response.model";
 import { EmployeeModel } from "../models/employee.model";
 import { NotificationService } from "../services_API/notification.service";
+import { StatusNotification } from "../enums/enum";
 @Injectable({
     providedIn: 'root'
 })
@@ -21,7 +22,7 @@ export class EmployeeService{
       }
       this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/gets-employee?isDelete="+isDelete).subscribe(res => {
         this.response = res
-        if(!this.response.notification.type)
+        if(this.response.notification.type == StatusNotification.Success)
         {
           this.resEmployee =  this.response.content
           resolve(this.resEmployee);

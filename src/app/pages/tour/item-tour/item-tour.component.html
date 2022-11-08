@@ -131,7 +131,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="row">
+                      <div class="row" *ngIf="type == 'detail' ||type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resTour.isDelete">
                         <div class="col-lg-6">
                           <label class="form-control-label" for="input-tourName">Đánh giá
                             <!-- <span [class]="this.type != 'create' && resTour.isDelete ?'d-none':'text-red'">* {{this.validateTourModel.nameTour ? this.validateTourModel.nameTour : ''}}</span> -->
@@ -205,7 +205,7 @@
 
     </ng-template>
 	</ng-container>
-	<ng-container ngbNavItem>
+	<ng-container *ngIf="type == 'detail'" ngbNavItem>
 		<a ngbNavLink style="font-size: 25px;">Lịch trình</a>
     <ng-template ngbNavContent>
       <app-view-tour-schedule></app-view-tour-schedule>
