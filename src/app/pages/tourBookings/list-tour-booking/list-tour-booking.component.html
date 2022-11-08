@@ -92,81 +92,92 @@
   </div>
 </div>
 
-<div class="col-xl-12 mb-5 mb-xl-0 mt--7">
-  <div class="card shadow">
-    <div class="card-header border-0">
-      <div class="row align-items-center">
-        <div class="col">
-          <h3 class="mb-0">Đặt Du Lịch</h3>
-        </div>
-        <div class="col text-right">
-          <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-            TourBooking
-          </button>
-        </div>
+<div class="container-fluid">
+  <h1 class="mt-3 mb-3" style="border-bottom: 1px solid; padding-bottom:10px;">Danh sách khách sạn</h1>
+  <div class="row">
+    <div class="col">
+      <div class="card shadow border-0">
+        <app-grid-data [rowData]="resTourBooking" [columnDefs]="columnDefs" [gridConfig]="gridConfig" (gdChecked)="init()" (gdType)="childType($event)" (gdChild)="childData($event)" (gdRestore)="getData($event)" (gdDelete)="getData($event)"></app-grid-data>
       </div>
-    </div>
-    <div class="table-responsive">
-      <!-- Projects table -->
-      <table class="table align-items-center table-flush">
-        <thead class="thead-light">
-          <tr>
-            <th scope="col">STT</th>
-            <th scope="col">Địa Chỉ</th>
-            <th scope="col">Email</th>
-            <th scope="col">Số ĐT</th>
-            <th scope="col">Tên Liên Hệ</th>
-            <th scope="col">Ngày Đặt</th>
-            <th scope="col">Ngày Kết Thúc</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr  *ngFor="let item of resTourBooking let i=index">
-            <th scope="row">
-              <strong>{{i + 1}}</strong>
-            </th>
-            <td>
-              {{item.address}}
-           </td>
-            <td>
-              {{item.email}}
-           </td>
-           <td>
-            {{item.phone}}
-          </td>
-          <td>
-            {{item.nameContact}}
-          </td>
-           <td>
-            {{convertDate(item.dateBooking)}}
-          </td>
-            <td>
-              {{convertDate(item.lastDate)}}
-           </td>
-            <td>
-              <!-- <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="childData(item, 'detail')">
-                Chi tiết
-              </button> -->
-            </td>
-            <td>
-            </td>
-          </tr>
-        </tbody>
-      </table>
     </div>
   </div>
 </div>
 
-<!-- Thêm - Sửa -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+<div class="modal fade" [id]="gridConfig.idModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="gridDataLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <app-item-tour-booking [resTourBooking]="dataChild" [type]="typeChild" (parentData)="getData($event)"  (parentType)="childType($event)"></app-item-tour-booking>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="updateTour" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateTourLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Thông tin</h1>
+        <h1 class="modal-title fs-5" id="updateTourLabel">Xác nhận thay đổi tour</h1>
+        <button #updateTour type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="data">
+        <div class="row mb-3 mt-3">
+          <label class="form-label col-4" style="font-weight: 600;">Mã tour</label>
+          <p class="col-8" style="color: #2d4271;">{{data.schedule.idSchedule}}</p>
+        </div>
+        <div class="row">
+          <label class="form-label col-4" style="font-weight: 600;">Hành trình</label>
+           <p class="col-8" style="color: #2d4271;">{{data.schedule.departurePlace + ' => ' + data.schedule.tour.toPlace}}</p>
+        </div>
+        <div class="row">
+          <label class="form-label col-4" style="font-weight: 600;">Ngày đi</label>
+           <p class="col-8" style="color: #2d4271;">{{data.schedule.departureDate | formatFromUnixTimestampToFullDateView}}</p>
+        </div>
+        <div class="row">
+          <label class="form-label col-4" style="font-weight: 600;">Ngày về</label>
+           <p class="col-8" style="color: #2d4271;">{{data.schedule.endDate | formatFromUnixTimestampToFullDateView}}</p>
+        </div>
+        <div class="row mb-3">
+          <label class="form-label col-4" style="font-weight: 600;">Nơi khởi hành</label>
+           <p class="col-8" style="color: #2d4271;">{{data.schedule.departurePlace}}</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <ng-container *ngIf="typeChild; else elseType">
+          <button type="button" class="btn btn-primary" [attr.data-bs-target]="'#'+gridConfig.idModal" data-bs-toggle="modal">Không</button>
+        </ng-container>
+        <ng-template #elseType>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+        </ng-template>
+
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal"  >Cập nhật</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="called" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="calledLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="calledLabel">Gọi xác nhận</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        <!-- <app-item-customer [resCustomer]="child" [type]="type"></app-item-customer> -->
+      <div class="modal-body" *ngIf="data">
+        <div class="row mb-3 mt-3">
+          <label class="form-label col-5" style="font-weight: 600;">Tên người liên lạc</label>
+          <p class="col-7" style="color: #2d4271;">{{data.nameContact}}</p>
+        </div>
+        <div class="row">
+          <label class="form-label col-5" style="font-weight: 600;">Số điện thoại</label>
+           <p class="col-7" style="color: #2d4271;">{{data.phone}}</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button #closeCalled type="button" class="btn btn-primary" [attr.data-bs-target]="'#'+gridConfig.idModal" data-bs-toggle="modal">Không</button>
+        <button type="button" class="btn btn-success" (click)="called()">Gọi thành công</button>
       </div>
     </div>
   </div>

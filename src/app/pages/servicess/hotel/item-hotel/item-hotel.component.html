@@ -12,7 +12,7 @@
             <div class="col-6">
               <div class="form-group">
                 <label class="form-control-label" for="name">Tên Khách Sạn
-                  <span [class]="type != 'create' && resHotel.isDelete ?'d-none':'text-danger'">* {{validateHotel.name ? validateHotel.name : ''}}</span>
+                  <span [class]="type != 'detail' && type != 'create' || resHotel.isDelete ?'d-none':'text-danger'">* {{validateHotel.name ? validateHotel.name : ''}}</span>
                 </label>
                 <input type="text" id="name" name="name" (input)="inputChange()" class="form-control " placeholder="Nhập tên khách sạn" [(ngModel)]="resHotel.name" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resHotel.isDelete">
               </div>
@@ -20,14 +20,14 @@
             <div class="col-3">
               <div class="form-group">
                 <label class="form-control-label" for="phone">Số điện thoại
-                  <span [class]="type != 'create' && resHotel.isDelete ?'d-none':'text-danger'">* {{validateHotel.phone ? validateHotel.phone : ''}}</span>
+                  <span [class]="type != 'detail' && type != 'create' || resHotel.isDelete ?'d-none':'text-danger'">* {{validateHotel.phone ? validateHotel.phone : ''}}</span>
                 </label>
                 <input type="text" id="phone" name="phone" (input)="formatInput($any($event).target, 'phone'); inputChange()" class="form-control " placeholder="Nhập số điện thoại" [(ngModel)]="resHotel.phone" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resHotel.isDelete">
               </div>
             </div>
             <div class="col-3">
               <label class="form-control-label" for="star">Số sao</label>
-              <span [class]="type != 'create' && resHotel.isDelete ?'d-none':'text-danger'" style="font-weight: 600;">* {{validateHotel.star ? validateHotel.star : ''}}</span>
+              <span [class]="type != 'detail' && type != 'create' || resHotel.isDelete ?'d-none':'text-danger'" style="font-weight: 600;">* {{validateHotel.star ? validateHotel.star : ''}}</span>
               <ng-select
                 [items]="listStar"
                 [(ngModel)]="resHotel.star"
@@ -58,7 +58,7 @@
             <div class="col-lg-3">
               <div class="form-group">
                 <label class="form-control-label" for="input-quantitySR">Số lượng phòng đơn
-                <span [class]="type != 'create' && resHotel.isDelete ?'d-none':'text-danger'">* {{validateHotel.quantitySR ? validateHotel.quantitySR : ''}}</span>
+                <span [class]="type != 'detail' && type != 'create' || resHotel.isDelete ?'d-none':'text-danger'">* {{validateHotel.quantitySR ? validateHotel.quantitySR : ''}}</span>
               </label>
                 <input type="text" name="quantitySR" id="quantitySR" (input)="formatInput($any($event).target, 'quantitySR'); inputChange()" class="form-control " placeholder="Nhập số lượng phòng đơn" [(ngModel)]="resHotel.quantitySR" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resHotel.isDelete">
               </div>
@@ -66,7 +66,7 @@
             <div class="col-lg-3">
               <div class="form-group">
                 <label class="form-control-label" for="input-singleRoomPrice">Giá phòng đơn
-                  <span [class]="type != 'create' && resHotel.isDelete ?'d-none':'text-danger'">* {{validateHotel.singleRoomPrice ? validateHotel.singleRoomPrice : ''}}</span>
+                  <span [class]="type != 'detail' && type != 'create' || resHotel.isDelete ?'d-none':'text-danger'">* {{validateHotel.singleRoomPrice ? validateHotel.singleRoomPrice : ''}}</span>
                 </label>
                 <input type="text" name="singleRoomPrice" id="singleRoomPrice" (input)="formatInput($any($event).target, 'singleRoomPrice'); inputChange()" class="form-control " placeholder="Nhập giá tiền phòng đơn" [(ngModel)]="resHotel.singleRoomPrice" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resHotel.isDelete">
               </div>
@@ -74,8 +74,7 @@
             <div class="col-lg-3">
               <div class="form-group">
                 <label class="form-control-label" for="input-quantityDBR">Số lượng phòng đôi
-                  <span [class]="type != 'create' && resHotel.isDelete ?'d-none':'text-danger'">* {{validateHotel.quantityDBR ? validateHotel.quantityDBR : ''}}</span>
-
+                  <span [class]="type != 'detail' && type != 'create' || resHotel.isDelete ?'d-none':'text-danger'">* {{validateHotel.quantityDBR ? validateHotel.quantityDBR : ''}}</span>
                 </label>
                 <input type="text" name="quantityDBR" id="quantityDBR" (input)="formatInput($any($event).target, 'quantityDBR');inputChange()" class="form-control " placeholder="Nhập số lượng phòng đôi" [(ngModel)]="resHotel.quantityDBR" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resHotel.isDelete">
               </div>
@@ -83,7 +82,7 @@
             <div class="col-lg-3">
               <div class="form-group">
                 <label class="form-control-label" for="input-doubleRoomPrice">Giá phòng đôi
-                  <span [class]="type != 'create' && resHotel.isDelete ?'d-none':'text-danger'">* {{validateHotel.doubleRoomPrice ? validateHotel.doubleRoomPrice : ''}}</span>
+                  <span [class]="type != 'detail' && type != 'create' || resHotel.isDelete ?'d-none':'text-danger'">* {{validateHotel.doubleRoomPrice ? validateHotel.doubleRoomPrice : ''}}</span>
                 </label>
                 <input type="text" name="doubleRoomPrice" id="doubleRoomPrice" (input)="formatInput($any($event).target, 'doubleRoomPrice'); inputChange()" class="form-control " placeholder="Nhập giá tiền phòng đôi" [(ngModel)]="resHotel.doubleRoomPrice" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resHotel.isDelete">
               </div>
@@ -93,12 +92,30 @@
           <div class="row">
             <div class="col">
               <label class="form-control-label" for="input-address">Địa chỉ
-                <span [class]="type != 'create' && resHotel.isDelete && resHotel.isDelete ?'d-none':'text-danger'">* {{validateHotel.address ? validateHotel.address : ''}}</span>
+                <span [class]="type != 'detail' && type != 'create' || resHotel.isDelete && resHotel.isDelete ?'d-none':'text-danger'">* {{validateHotel.address ? validateHotel.address : ''}}</span>
               </label>
               <input type="text" id="address" name="address" (input)="inputChange()" class="form-control " placeholder="Nhập số điạ chỉ" [(ngModel)]="resHotel.address" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resHotel.isDelete">
             </div>
-
           </div>
+          <fieldset class="mt-4" *ngIf="type == 'approve' || type == 'refuse' || type == 'cancelRequire'">
+            <legend>Thông tin người yêu cầu</legend>
+            <div class="row" style="margin-top: -20px;">
+              <div class="col-4">
+                <label class="form-control-label" for="input-address">Mã số</label>
+                <input type="text" id="idUserModify" name="idUserModify" class="form-control " placeholder="Mã người yêu cầu" [(ngModel)]="resHotel.idUserModify" readonly>
+              </div>
+              <div class="col-6">
+                <label class="form-control-label" for="input-address">Tên</label>
+                <input type="text" id="modifyBy" name="modifyBy" class="form-control " placeholder="Tên người yêu cầu" [(ngModel)]="resHotel.modifyBy" readonly>
+              </div>
+              <div class="col-2">
+                <label class="form-control-label" for="input-address">Ngày yêu cầu</label>
+                <input type="date" id="modifyDate" name="modifyDate" class="form-control " placeholder="Ngày yêu cầu" [(ngModel)]="resHotel.modifyDateDisplay" readonly>
+              </div>
+            </div>
+          </fieldset>
+
+
         </div>
       </form>
     </div>

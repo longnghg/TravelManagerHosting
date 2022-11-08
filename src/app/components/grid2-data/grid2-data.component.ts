@@ -228,5 +228,5 @@ export class GridConfig2{
   style?: string
   isRestore?: boolean
 }
-export declare type GridFilter = 'star' | 'number' | 'date' | 'status' | 'text' ;
+export declare type GridFilter = 'star' | 'number' | 'date' | 'status' | 'text' | 'call' ;
 export declare type GridSearchType = 'section' | 'number' | 'date' | 'text' | 'email';

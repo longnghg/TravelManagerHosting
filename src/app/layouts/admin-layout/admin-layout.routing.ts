@@ -21,7 +21,7 @@ import { ListTourComponent } from 'src/app/pages/tour/list-tour/list-tour.compon
 
 import { ListScheduleComponent } from 'src/app/pages/schedule/list-schedule/list-schedule.component';
 
-import { ListTourBookingComponent } from 'src/app/pages/tourBooking/list-tour-booking/list-tour-booking.component';
+import { ListTourBookingComponent } from 'src/app/pages/tourBookings/list-tour-booking/list-tour-booking.component';
 
 import { ListHotelComponent } from 'src/app/pages/servicess/hotel/list-hotel/list-hotel.component';
 import { ListPlaceComponent } from '../../pages/servicess/place/list-place/list-place.component';

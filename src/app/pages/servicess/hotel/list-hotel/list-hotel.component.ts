@@ -47,6 +47,7 @@ export class ListHotelComponent implements OnInit {
   ngOnInit(): void {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
     this.init(this.isDelete);
+    this.initWaiting()
   }
 
   init(isDelete){
@@ -54,13 +55,9 @@ export class ListHotelComponent implements OnInit {
       this.response = res
       if(this.response.notification.type == StatusNotification.Success){
         this.resHotel = this.response.content
+      }else{
+        this.notificationService.handleAlertObj(res.notification)
       }
-    }, error => {
-      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, StatusNotification.Error)
-    })
-
-    setTimeout(() => {
 
       this.columnDefs= [
         { field: 'name',headerName: "Tên khách sạn", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'name'},
@@ -68,19 +65,20 @@ export class ListHotelComponent implements OnInit {
         { field: 'phone',headerName: "Số điện thoại", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'phone'},
         { field: 'star',headerName: "Số sao", style: "width: 15%;", filter: "star",searchable: true, searchType: 'section', searchObj: 'star' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.list5Star()},
       ];
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
 
-      this.columnDefsWaiting= [
-        { field: 'name',headerName: "Tên khách sạn", style: "width: 20%;", searchable: true, searchType: "text", searchObj: 'name'},
-        { field: 'address',headerName: "Địa chỉ", style: "width: 25%;", searchable: true, searchType: 'text', searchObj: 'address'},
-        { field: 'phone',headerName: "Số điện thoại", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'phone'},
-        { field: 'approveName',headerName: "Trạng thái phê duyệt", style: "width: 15%;", searchable: true, searchType: 'section', searchObj: 'approve' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listApprove()},
-        { field: 'typeActionName',headerName: "Loại phê duyệt", style: "width: 15%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()},
 
-      ];
-    }, 200);
 
+  }
+
+  initWaiting(){
     this.hotelService.getsWaiting(this.auth.id).subscribe(res =>{
       this.response = res
+      console.log(res);
+
       if(this.response.notification.type == StatusNotification.Success){
 
         this.resHotelWaiting = this.response.content
@@ -89,7 +87,19 @@ export class ListHotelComponent implements OnInit {
           hotel.approveName = StatusApprove[hotel.approve]
           hotel.typeActionName = TypeAction[hotel.typeAction]
         });
+      }else{
+        this.notificationService.handleAlertObj(res.notification)
       }
+
+      this.columnDefsWaiting= [
+        { field: 'name',headerName: "Tên khách sạn", style: "width: 20%;", searchable: true, searchType: "text", searchObj: 'name'},
+        { field: 'phone',headerName: "Số điện thoại", style: "width: 12%;", searchable: true, searchType: 'text', searchObj: 'phone'},
+        { field: 'modifyBy',headerName: "Người yêu cầu", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'modifyBy'},
+        { field: 'modifyDate',headerName: "Ngày yêu cầu", style: "width: 12%;", filter: 'date', searchable: true, searchType: 'date', searchObj: 'modifyDate'},
+        { field: 'approveName',headerName: "Trạng thái phê duyệt", style: "width: 15%;", searchable: true, searchType: 'section', searchObj: 'approve' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listApprove()},
+        { field: 'typeActionName',headerName: "Loại phê duyệt", style: "width: 11%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()},
+
+      ];
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)

@@ -12,7 +12,7 @@ export class TourookingService{
 
   gets()
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/get-tourbooking");
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/gets-tourbooking");
   }
   create(data: any)
   {
@@ -23,5 +23,9 @@ export class TourookingService{
   {
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/statistic-tourbooking");
 
+  }
+
+  checkCalled(idTourBooking: string){
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/check-called?idTourBooking="+idTourBooking);
   }
 }

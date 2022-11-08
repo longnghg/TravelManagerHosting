@@ -68,6 +68,19 @@ export class ConfigService{
     return listStar
   }
 
+  listStatusBooking(){
+    var listStatusBooking = [
+      {id: -2, name: "Đã huỷ và đang chờ hoàn tiền"},
+      {id: -1, name: "Đã hoàn tiền"},
+      {id: 1, name: "Đã đặt tour nhưng chưa thanh toán"},
+      {id: 2, name: "Đã đặt tour và có đặt cọc"},
+      {id: 3, name: "Đã thanh toán hết"},
+      {id: 4, name: "Hủy tour"},
+      {id: 5, name: "Tour đã hoàn thành"},
+    ]
+    return listStatusBooking
+  }
+
   listApprove(){
     var listApprove = [
       {id: 0, name: "Đợi phê duyệt"},
@@ -97,6 +110,15 @@ export class ConfigService{
     ]
 
     return listGender
+  }
+
+  listCalled(){
+    var listCalled = [
+      {id: false, name: "Chưa gọi"},
+      {id: true, name: "Đã gọi"}
+    ]
+
+    return listCalled
   }
 
   listStatus(){
@@ -198,7 +220,7 @@ export class ConfigService{
 
    }
 
-   
+
 
    validateTour(data: any, model: any){
     model.total = 0

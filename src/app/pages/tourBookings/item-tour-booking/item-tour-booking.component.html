@@ -1,0 +1,193 @@
+<div class="modal-header">
+  <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin chi tiết</h1>
+  <button #closeModal type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
+</div>
+<div class="modal-body">
+  <div class="container" *ngIf="resTourBooking">
+    <div class="row">
+      <div class="row">
+        <div class="container col-7" >
+          <div style="border: 1px solid #2d4271; border-radius: 10px; padding: 20px;">
+            <h4  style="color: #2d4271; font-weight: 600;">THÔNG TIN LIÊN LẠC</h4>
+            <div class="container" style="border-top: 1px solid #2d4271;">
+              <div class="row">
+               <div class="mb-3 col-6 mt-3">
+                 <label for="name" class="form-label">Họ và tên</label>
+                 <p style="color: #2d4271; font-weight: 600;">{{resTourBooking.nameContact}}</p>
+               </div>
+               <div class="mb-3 col-6 mt-3">
+                 <label for="email" class="form-label">Email</label>
+                 <p style="color: #2d4271; font-weight: 600;">{{resTourBooking.email}}</p>
+               </div>
+              </div>
+              <div class="row">
+               <div class="col-6">
+                 <label for="phone" class="form-label">Số điện thoại</label>
+                 <p style="color: #2d4271; font-weight: 600;">{{resTourBooking.phone}}</p>
+               </div>
+               <div class="col-6">
+                 <label for="address" class="form-label">Địa chỉ</label>
+                 <p style="color: #2d4271; font-weight: 600;">{{resTourBooking.address}}</p>
+               </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-5" style="border: 1px solid #2d4271; border-radius: 10px; padding: 20px;">
+            <h4  style="color: #2d4271; font-weight: 600;">CHI TIẾT BOOKING</h4>
+            <div class="container" style="border-top: 1px solid #2d4271;">
+              <div class="row mb-3 mt-3">
+                <label class="form-label col-4" style="font-weight: 600;">Mã giao dịch</label>
+                <p class="col-8" style="color: #2d4271;"><span class="text-danger" style="font-weight: 600;">{{resTourBooking.pincode}}</span> (Quý khách vui lòng nhớ mã giao dịch để thuận tiện cho các giao dịch sau này)</p>
+              </div>
+              <div class="row">
+                <label class="form-label col-4" style="font-weight: 600;">Người lớn</label>
+                 <p class="col-8" style="color: #2d4271;">{{resTourBooking.tourBookingDetails.adult}} người</p>
+              </div>
+              <div class="row">
+                <label class="form-label col-4" style="font-weight: 600;">Trẻ em</label>
+                 <p class="col-8" style="color: #2d4271;">{{resTourBooking.tourBookingDetails.child}} người</p>
+              </div>
+              <div class="row">
+                <label class="form-label col-4" style="font-weight: 600;">Trẻ nhỏ</label>
+                 <p class="col-8" style="color: #2d4271;">{{resTourBooking.tourBookingDetails.baby}} người</p>
+              </div>
+              <div class="row">
+                <label class="form-label col-4" style="font-weight: 600;">Trị giá booking</label>
+                 <p class="col-8" style="color: #2d4271;">{{resTourBooking.totalPrice | formatPriceVi}}₫</p>
+              </div>
+              <div class="row">
+                <label class="form-label col-4" style="font-weight: 600;">Số tiền đã thanh toán</label>
+                 <p class="col-8" style="color: #2d4271;">{{resTourBooking.deposit | formatPriceVi}}₫</p>
+              </div>
+              <div class="row">
+                <label class="form-label col-4" style="font-weight: 600;">Số tiền còn lại</label>
+                 <p class="col-8" style="color: #2d4271;">{{resTourBooking.remainPrice | formatPriceVi}}₫</p>
+              </div>
+              <div class="row">
+                <label class="form-label col-4" style="font-weight: 600;">Ngày đăng ký</label>
+                 <p class="col-8" style="color: #2d4271;">{{resTourBooking.dateBooking | formatFromUnixTimestampToFullDateTimeView}}</p>
+              </div>
+              <div class="row">
+                <label class="form-label col-4" style="font-weight: 600;">Hình thức đăng ký</label>
+                 <p class="col-8" style="color: #2d4271;">{{resTourBooking.payment.namePayment}}</p>
+              </div>
+              <div class="row">
+                <label class="form-label col-4" style="font-weight: 600;">Tình trạng</label>
+
+                <p class="col-8" style="color: #2d4271;" *ngIf="resTourBooking.status == -1 || resTourBooking.status == 5">
+                  <span class="badge badge-success" >{{resTourBooking.status | formatStatusBooking}}</span>
+                </p>
+
+                <p class="col-8" style="color: #2d4271;" *ngIf="resTourBooking.status == 3">
+                  <span class="badge badge-info" >{{resTourBooking.status | formatStatusBooking}}</span>
+
+                </p>
+
+                <p class="col-8" style="color: #2d4271;" *ngIf="resTourBooking.status == -2 || resTourBooking.status == 1 || resTourBooking.status == 2">
+                  <span class="badge badge-warning" >{{resTourBooking.status | formatStatusBooking}}</span>
+                </p>
+
+                <p class="col-8" style="color: #2d4271;" *ngIf="resTourBooking.status == 4 ">
+                  <span class="badge badge-danger" >{{resTourBooking.status | formatStatusBooking}}</span>
+                </p>
+              </div>
+              <div class="row">
+                <label class="form-label col-4" style="font-weight: 600;">Thời hạn thanh toán</label>
+                 <p class="col-8" style="color: #2d4271;"><span class="text-danger" style="font-weight: 600;">{{resTourBooking.lastDate | formatFromUnixTimestampToFullDateTimeView}}</span> (Theo giờ Việt Nam, Booking sẽ tự động hủy nếu quá thời hạn thanh toán trên)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container col-5">
+          <div class="row">
+            <div style="border: 1px solid #2d4271; border-radius: 10px; padding: 20px;">
+              <h4  style="color: #2d4271; font-weight: 600;">PHIẾU XÁC NHẬN BOOKING</h4>
+              <div class="container" style="border-top: 1px solid #2d4271;">
+                <div class="mb-3 mt-3 row">
+                  <div class="col-4">
+                    <img  [src]="resTourBooking.schedule.tour.thumbnail" style="border-radius: 0.375rem;"  class="card-img-top">
+                  </div>
+                  <div class="col-8">
+                    <p style="color: #2d4271; font-weight: 600;">{{resTourBooking.schedule.tour.nameTour}}</p>
+                    <P style="color: #2d4271">Mã giao dịch: <span class="text-danger">{{resTourBooking.pincode}}</span></P>
+                    <h6 class="card-subtitle mb-2 text-muted">{{resTourBooking.schedule.description}}</h6>
+                  </div>
+                </div>
+                <div class="container" style="border-top: 1px solid #2d4271;">
+                  <div class="row mb-3 mt-3">
+                    <label class="form-label col-4" style="font-weight: 600;">Mã tour</label>
+                    <p class="col-8" style="color: #2d4271;">{{resTourBooking.schedule.idSchedule}}</p>
+                  </div>
+                  <div class="row">
+                    <label class="form-label col-4" style="font-weight: 600;">Hành trình</label>
+                     <p class="col-8" style="color: #2d4271;">{{resTourBooking.schedule.departurePlace + ' => ' + resTourBooking.schedule.tour.toPlace}}</p>
+                  </div>
+                  <div class="row">
+                    <label class="form-label col-4" style="font-weight: 600;">Ngày đi</label>
+                     <p class="col-8" style="color: #2d4271;">{{resTourBooking.schedule.departureDate | formatFromUnixTimestampToFullDateView}}</p>
+                  </div>
+                  <div class="row">
+                    <label class="form-label col-4" style="font-weight: 600;">Ngày về</label>
+                     <p class="col-8" style="color: #2d4271;">{{resTourBooking.schedule.endDate | formatFromUnixTimestampToFullDateView}}</p>
+                  </div>
+                  <div class="row ">
+                    <label class="form-label col-4" style="font-weight: 600;">Nơi khởi hành</label>
+                     <p class="col-8" style="color: #2d4271;">{{resTourBooking.schedule.departurePlace}}</p>
+                  </div>
+                </div>
+
+                <div class="container mt-3" style="border-top: 1px solid #2d4271;">
+                  <div class="row mt-3">
+                    <label class="form-label col-5" style="font-weight: 600;">Gọi xác nhận </label>
+                    <p class="col-7" style="color: #2d4271;" *ngIf="resTourBooking.isCalled">
+                      <i class="fa-solid fa-check text-success"></i> {{resTourBooking.isCalled | formatStatusCalled}}
+                      <button style="height: 30px; margin-top: -5px;" class="ml-3 btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#called" (click)="getParentData('detail')">
+                        <i style="position: relative; top: -5px;" class="fa-solid fa-phone"></i>
+                      </button>
+                    </p>
+                    <p class="col-7" style="color: #2d4271;" *ngIf="!resTourBooking.isCalled">
+                      <i class="mr-1 fa-solid fa-xmark text-danger"></i> {{resTourBooking.isCalled | formatStatusCalled}}
+                      <button style="height: 30px; margin-top: -5px;" class="ml-3 btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#called" (click)="getParentData('detail')">
+                        <i style="position: relative; top: -5px;" class="fa-solid fa-phone"></i>
+                      </button>
+                    </p>
+                  </div>
+                  <div class="row">
+                    <label class="form-label col-5" style="font-weight: 600;">Hạn chót gọi</label>
+                     <p class="col-7" style="color: #2d4271;">{{resTourBooking.lastDate | formatFromUnixTimestampToFullDateView}}</p>
+                  </div>
+                  <div class="row">
+                    <label class="form-label col-4" style="font-weight: 600;padding-top: 8px;">Tình trạng</label>
+                    <div class="col-8">
+                      <ng-select
+                        [items]="listStatusBooking"
+                        [(ngModel)]="resTourBooking.status"
+                        [clearable]="false"
+                        name="tourbooking"
+                        id="tourbooking"
+                        bindLabel="name"
+                        bindValue="id"
+                        [searchable]="false"
+                        (change)="inputChange()"
+                        class="row">
+                      </ng-select>
+                    </div>
+                  </div>
+
+                  <div class="row mt-3" *ngIf="isChange">
+                    <!-- <button class="btn btn-info mb-3" (click)="getParentData('detail')">
+                      Khôi phục
+                    </button> -->
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateTour" (click)="getParentData('detail')">
+                      Cập nhật
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

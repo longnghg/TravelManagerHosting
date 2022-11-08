@@ -79,10 +79,13 @@
 legend{
   width: unset;
   float: unset;
+  font-size: 20px;
 }
 
 fieldset{
+  border: 1px solid;
   padding: 20px;
+  border-radius: 0.375rem;
 }
 
 .form-control{
@@ -93,3 +96,9 @@ fieldset{
   height: 43px !important;
   border-radius: 0.375rem !important;
 }
+
+.modal{
+  overflow: unset !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+ }

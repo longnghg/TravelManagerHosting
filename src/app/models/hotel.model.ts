@@ -13,6 +13,7 @@ export class HotelModel{
   quantitySR: number = 0
   IdUserModify: string
   modifyDate: number
+  modifyDateDisplay: string
   approve: number
   approveName: string
 }

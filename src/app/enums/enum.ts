@@ -6,9 +6,14 @@ export enum RoleTitle {
   'Quản lý tour booking' = 4
 }
 
-export enum StatusBooking {
-  'Đã thanh toán',
-  'Chưa thanh toán',
+// export enum StatusBooking {
+//   'Đã thanh toán',
+//   'Chưa thanh toán',
+// }
+
+export enum StatusCalled {
+  true = 'Đã gọi',
+  false = 'Chưa gọi',
 }
 
 export enum StatusApprove {

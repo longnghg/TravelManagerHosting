@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild }
 import { HotelModel ,ValidationHotelModel} from 'src/app/models/hotel.model';
 import { HotelService } from "src/app/services_API/hotel.service"
 import { NotificationService } from "../../../../services_API/notification.service";
-import { ColDef, GridConfig} from '../../../../components/grid-data/grid-data.component';
 import { ConfigService } from "../../../../services_API/config.service";
 import { ResponseModel } from "../../../../models/responsiveModels/response.model";
 import { AuthenticationModel } from 'src/app/models/authentication.model';
@@ -38,18 +37,17 @@ export class ItemHotelComponent implements OnInit {
     if(this.type == 'create'){
       this.resHotel = new HotelModel()
     }
-    this.resHotel.doubleRoomPrice = Number(this.resHotel.doubleRoomPrice).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
-    this.resHotel.singleRoomPrice = Number(this.resHotel.singleRoomPrice).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+
+    if (this.resHotel) {
+      this.resHotel.doubleRoomPrice = Number(this.resHotel.doubleRoomPrice).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+      this.resHotel.singleRoomPrice = Number(this.resHotel.singleRoomPrice).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+      this.resHotel.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resHotel.modifyDate)
+    }
     this.resHotelTmp = Object.assign({}, this.resHotel)
   }
 
 
   inputChange(){
-    console.log(this.type);
-
-    console.log(this.resHotel);
-    console.log(this.resHotelTmp);
-
     if (JSON.stringify(this.resHotel) != JSON.stringify(this.resHotelTmp)) {
       this.isChange = true
     }
@@ -67,8 +65,6 @@ export class ItemHotelComponent implements OnInit {
   save(){
     this.validateHotel = new ValidationHotelModel
     this.validateHotel =  this.configService.validateHotel(this.resHotel, this.validateHotel)
-    console.log( this.validateHotel);
-
     if (this.validateHotel.total == 0) {
       //var file = new FormData();
       //file.append('data', JSON.stringify(this.resHotel))

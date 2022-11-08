@@ -37,9 +37,9 @@
               <ng-container *ngIf="column.searchType == 'date'; else elseDateTime">
                 <div class="form-group">
                   <div class="input-group input-group-alternative">
-                    <div class="input-group-prepend">
+                    <!-- <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
-                    </div>
+                    </div> -->
                     <input style="width: 100%;" class="form-control datepicker" name="dp" [(ngModel)]="model" onkeydown="return false"   placeholder="DD/MM/YYYY"  type="date"/>
                   </div>
                 </div>
@@ -102,7 +102,18 @@
                     <i class="fa-solid fa-star" *ngFor='let star of column.listSection.length - row[column.field] | forNumber'></i>
                   </ng-container>
                   <ng-template #elseStar>
-                    {{row[column.field]}}
+                    <ng-container *ngIf="column.filter == 'call'; else elseCalled">
+                      <ng-container *ngIf="row[column.field]">
+                        <i class="fa-solid fa-check text-success"></i> {{row[column.field] | formatStatusCalled}}
+                      </ng-container>
+
+                      <ng-container *ngIf="!row[column.field]">
+                        <i class="fa-solid fa-xmark text-danger"></i> {{row[column.field] | formatStatusCalled}}
+                      </ng-container>
+                    </ng-container>
+                    <ng-template #elseCalled>
+                      {{row[column.field]}}
+                    </ng-template>
                   </ng-template>
                 </ng-template>
 

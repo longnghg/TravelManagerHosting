@@ -87,14 +87,12 @@ export class ListEmployeeComponent implements OnInit {
     else{
       this.init(this.type)
     }
-   
+
 
 
   }
 
   search(e?){
-    console.log(e);
-
     if (e) {
       this.employeeService.search(Object.assign({}, e)).subscribe(res => {
         this.response = res
