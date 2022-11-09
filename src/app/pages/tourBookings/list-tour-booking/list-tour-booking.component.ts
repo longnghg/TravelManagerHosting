@@ -16,6 +16,7 @@ export class ListTourBookingComponent implements OnInit {
   @ViewChild('closeCalled') closeCalled: ElementRef
   resTourBookingStatistic: TourBookingStatisticModel = new TourBookingStatisticModel
   resTourBooking: TourBookingModel[]
+  resTourBookingWaiting: TourBookingModel[]
   resStatistic:string
   response: ResponseModel
   child: TourBookingModel
@@ -40,7 +41,29 @@ export class ListTourBookingComponent implements OnInit {
     this.initStatistic()
     this.init()
   }
+  search(e?){
+    console.log(e);
 
+    if (e) {
+      this.tourookingService.search(Object.assign({}, e)).subscribe(res => {
+        this.response = res
+        if(this.response.notification.type == StatusNotification.Success)
+        {
+          this.resTourBooking = this.response.content
+        }
+        else{
+          console.log(this.resTourBookingWaiting);
+
+          this.resTourBooking = this.resTourBooking
+          this.notificationService.handleAlertObj(res.notification)
+        }
+
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, StatusNotification.Error)
+      })
+    }
+  }
   init(){
     this.tourookingService.gets().subscribe(res => {
       this.response = res
