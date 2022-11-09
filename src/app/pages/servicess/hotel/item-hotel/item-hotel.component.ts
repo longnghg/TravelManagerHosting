@@ -130,7 +130,7 @@ export class ItemHotelComponent implements OnInit {
     }
     else{
       if (input.value) {
-        if (property.includes("Price")) {
+        if (property.includes("Price") || property.includes("price")) {
           this.resHotel[property] = Number(input.value).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
         }
         else{

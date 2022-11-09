@@ -24,6 +24,8 @@ import { StatusNotification } from "../../../enums/enum";
 import { AuthenticationModel} from "../../../models/authentication.model";
 import { TimeLineModel } from 'src/app/models/timeLine.model';
 import { TimelineService } from 'src/app/services_API/timeline.service';
+const FILTER_PAG_REGEX = /[^0-9]/g;
+
 @Component({
   selector: 'app-item-tour-schedule',
   templateUrl: './item-tour-schedule.component.html',
@@ -41,7 +43,7 @@ export class ItemTourScheduleComponent implements OnInit {
   resCostTour: CostTourModel
   costtour: CostTourModel
   resTimeline: TimeLineModel
-  resTimelinelist: TimeLineModel[]
+  resTimelinelist: TimeLineModel[] = []
   resCar: CarModel[]
   resEmployee: EmployeeModel[]
   resPromotion: PromotionModel[]
@@ -69,15 +71,7 @@ export class ItemTourScheduleComponent implements OnInit {
     this.init()
     this.initCost()
 
-    // this.resCostTour.breakfast = Number(this.resCostTour.breakfast).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
-    // this.resCostTour.water = Number(this.resCostTour.water).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
-    // this.resCostTour.feeGas = Number(this.resCostTour.feeGas).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
-    // this.resCostTour.distance = Number(this.resCostTour.distance).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
-    // this.resCostTour.sellCost = Number(this.resCostTour.sellCost).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
-    // this.resCostTour.depreciation = Number(this.resCostTour.depreciation).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
-    // this.resCostTour.otherPrice = Number(this.resCostTour.otherPrice).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
-    // this.resCostTour.tolls = Number(this.resCostTour.tolls).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
-    // this.resCostTour.insuranceFee = Number(this.resCostTour.insuranceFee).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+
 
     if (this.type == 'create') {
       this.resSchedule = new ScheduleModel()
@@ -85,7 +79,7 @@ export class ItemTourScheduleComponent implements OnInit {
       this.resTimeline = new TimeLineModel()
       this.resScheduleTmp = Object.assign({}, this.resSchedule)
       this.resCostTourTmp = Object.assign({}, this.resCostTour)
-    } 
+    }
     else {
       if (this.resSchedule) {
         this.resSchedule.departureDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.departureDate)
@@ -96,11 +90,22 @@ export class ItemTourScheduleComponent implements OnInit {
 
         this.resScheduleTmp = Object.assign({}, this.resSchedule)
         this.resCostTourTmp = Object.assign({}, this.resCostTour)
-    
+
 
         this.costtourService.getCostbyidSchedule(this.resSchedule.idSchedule).subscribe(res => {
           this.response = res
           this.resCostTour = this.response.content
+          if(this.resCostTour){
+          this.resCostTour.breakfast = Number(this.resCostTour.breakfast).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+          this.resCostTour.water = Number(this.resCostTour.water).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+          this.resCostTour.feeGas = Number(this.resCostTour.feeGas).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+          this.resCostTour.distance = Number(this.resCostTour.distance).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+          this.resCostTour.sellCost = Number(this.resCostTour.sellCost).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+          this.resCostTour.depreciation = Number(this.resCostTour.depreciation).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+          this.resCostTour.otherPrice = Number(this.resCostTour.otherPrice).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+          this.resCostTour.tolls = Number(this.resCostTour.tolls).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+          this.resCostTour.insuranceFee = Number(this.resCostTour.insuranceFee).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+          }
         }, error => {
           var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
           this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -110,12 +115,13 @@ export class ItemTourScheduleComponent implements OnInit {
           this.resTimeline.fromTimeDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resTimeline.fromTime)
           this.resTimeline.toTimeDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resTimeline.toTime)
         }
+        this.resTimeline = new TimeLineModel()
 
         this.timelineService.getTimelineidSchedule(this.resSchedule.idSchedule).subscribe(res => {
           this.response = res
           this.resTimelinelist = this.response.content
-          console.log(this.resTimelinelist);
-          
+
+
         }, error => {
           var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
           this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -161,7 +167,7 @@ export class ItemTourScheduleComponent implements OnInit {
   }
 
   inputChange() {
-    if (JSON.stringify(this.resSchedule) != JSON.stringify(this.resScheduleTmp) || 
+    if (JSON.stringify(this.resSchedule) != JSON.stringify(this.resScheduleTmp) ||
        JSON.stringify(this.resCostTour) != JSON.stringify(this.resCostTourTmp)) {
       this.isChange = true
     }
@@ -173,52 +179,58 @@ export class ItemTourScheduleComponent implements OnInit {
   save() {
     this.costtour = new CostTourModel
     this.costtour = this.resCostTour
-    
+
     this.validateScheduleModel = new ValidateScheduleModel
     this.validateScheduleModel = this.configService.validateSchedule(this.resSchedule, this.validateScheduleModel)
     this.validateCostTourModel = new ValidateCostTourModel
     this.validateCostTourModel = this.configService.validateCostTour(this.resCostTour, this.validateCostTourModel)
-    
+
     if (this.validateScheduleModel.total == 0) {
       if (this.validateCostTourModel.total == 0) {
       var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
       if (this.type == "create") {
         this.resSchedule.idUserModify = this.auth.id
         this.resSchedule.tourId = idTour
- 
+
         this.scheduleService.create(this.resSchedule).subscribe(res => {
           this.response = res
-          
+
           if(this.response.notification.type == StatusNotification.Success){
             this.resSchedule.idSchedule = res.content
-            
+
             if(this.costtour){
               this.costtour.idSchedule = this.resSchedule.idSchedule
               this.costtourService.create(this.costtour).subscribe(res => {
                 this.response = res
                 if(this.response.notification.type == StatusNotification.Success){
-  
+
                 }
               }, error => {
                 var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
                 this.notificationService.handleAlert(message, StatusNotification.Error)
               })
             }
-            
-            // if(this.resTimeline){
-            //   this.resTimeline.idSchedule = this.resSchedule.idSchedule
-            //   this.timelineService.create(this.resTimeline).subscribe(res => {
-            //     this.response = res
-            //     if(this.response.notification.type == StatusNotification.Success){
-  
-            //     }
-            //   }, error => {
-            //     var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
-            //     this.notificationService.handleAlert(message, StatusNotification.Error)
-            //   })
-            // }
-            
-           
+
+            if(this.resTimelinelist){
+              this.resTimelinelist.forEach(timeline => {
+                timeline.idSchedule = this.resSchedule.idSchedule
+
+                console.log(timeline);
+
+              });
+              console.log(this.resTimelinelist);
+              this.timelineService.create(this.resTimelinelist).subscribe(res => {
+                this.response = res
+                if(this.response.notification.type == StatusNotification.Success){
+
+                }
+              }, error => {
+                var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+                this.notificationService.handleAlert(message, StatusNotification.Error)
+              })
+            }
+
+
           }
           this.notificationService.handleAlertObj(res.notification)
         }, error => {
@@ -233,10 +245,12 @@ export class ItemTourScheduleComponent implements OnInit {
 
         this.scheduleService.update(this.resSchedule).subscribe(res => {
           this.response = res
-          this.notificationService.handleAlertObj(res.notification)
 
           if (this.response.notification.type == StatusNotification.Success) {
             this.resSchedule.idSchedule = res.content
+          }
+          else{
+          this.notificationService.handleAlertObj(res.notification)
           }
         }, error => {
           var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
@@ -272,7 +286,7 @@ export class ItemTourScheduleComponent implements OnInit {
           this.notificationService.handleAlert(message, StatusNotification.Error)
         })
       }
-      else { 
+      else {
           this.resCostTour.idSchedule = this.resSchedule.idSchedule
           this.costtourService.update(this.resCostTour).subscribe(res => {
             this.response = res
@@ -289,6 +303,24 @@ export class ItemTourScheduleComponent implements OnInit {
       }
   }
 
+
+  btnTimeline(){
+    console.log(this.resTimelinelist);
+    console.log(this.resTimeline);
+    this.resTimelinelist.push(Object.assign({}, this.resTimeline))
+    this.resTimeline = new TimeLineModel()
+  }
+
+  promotionChange(id: number){
+    this.resPromotion.forEach(promotion => {
+      if(promotion.idPromotion == id){
+        this.resSchedule.timePromotion = promotion.fromDate
+        this.resSchedule.valuePromotion = promotion.value
+
+        this.resSchedule.timePromotionDisplay = promotion.fromDateDisplay
+      }
+    });
+  }
 
   close() {
     if (this.type == 'detail') {
@@ -333,5 +365,11 @@ this.response = res
   getParentData(type?: string){
     this.parentType.emit(type);
     this.parentData.emit(this.resSchedule);
+  }
+
+  formatInput(input: HTMLInputElement, property: string) {
+    input.value = input.value.replace(FILTER_PAG_REGEX, '');
+    this.resCostTour[property] = Number(input.value).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+
   }
 }

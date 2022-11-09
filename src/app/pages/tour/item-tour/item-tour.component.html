@@ -131,7 +131,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="row" *ngIf="type == 'detail' ||type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resTour.isDelete">
+                      <div class="row">
                         <div class="col-lg-6">
                           <label class="form-control-label" for="input-tourName">Đánh giá
                             <!-- <span [class]="this.type != 'create' && resTour.isDelete ?'d-none':'text-red'">* {{this.validateTourModel.nameTour ? this.validateTourModel.nameTour : ''}}</span> -->
@@ -161,7 +161,7 @@
                         </ng-select>
                         </div>
                         <div class="col-lg-4">
-                          <div class="form-group"  *ngIf="type == 'detail'  && !resTour.isDelete && resAuth.roleId == 3 || resAuth.roleId == -1">
+                          <div class="form-group"  *ngIf="type == 'detail'  && !resTour.isDelete && resAuth.roleId == -1">
                             <label for="updateRating" class="btn text-white btn-primary btn-round" style="margin-top: 30px;">Cập nhật sao</label>
                             <input id="updateRating" type="button" class="d-none" (click)="ratingTour()">
                           </div>

@@ -420,20 +420,20 @@ export class ConfigService{
       model.total += 1
      }
 
-     if(data.timePromotion == 0 || data.timePromotion == ""){
-      model.timePromotion = ("Chọn ngày khuyến mãi")
-      model.total += 1
-     }else if(data.timePromotion < checkDate){
-      model.timePromotion = ("Ngày khuyến mãi không trước ngày hiện tại!")
-      model.total += 1
-     }else if(data.timePromotion > data.endDate){
-      model.timePromotion = ("Ngày khuyến mãi không sau ngày kết thúc bán vé!")
-      model.total += 1
-     }
-     else if(data.timePromotion < data.beginDate){
-      model.timePromotion = ("Ngày khuyến mãi không trước ngày bắt đầu bán vé!")
-      model.total += 1
-     }
+    //  if(data.timePromotion == 0 || data.timePromotion == ""){
+    //   model.timePromotion = ("Chọn ngày khuyến mãi")
+    //   model.total += 1
+    //  }else if(data.timePromotion < checkDate){
+    //   model.timePromotion = ("Ngày khuyến mãi không trước ngày hiện tại!")
+    //   model.total += 1
+    //  }else if(data.timePromotion > data.endDate){
+    //   model.timePromotion = ("Ngày khuyến mãi không sau ngày kết thúc bán vé!")
+    //   model.total += 1
+    //  }
+    //  else if(data.timePromotion < data.beginDate){
+    //   model.timePromotion = ("Ngày khuyến mãi không trước ngày bắt đầu bán vé!")
+    //   model.total += 1
+    //  }
 
      if(data.beginDate == 0 || data.beginDate == ""){
       model.beginDate = ("Chọn ngày bắt đầu!")

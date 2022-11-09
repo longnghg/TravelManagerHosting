@@ -161,12 +161,16 @@ export class ItemTourComponent implements OnInit {
         }
         this.tourService.update(file).subscribe(res =>{
           this.response = res
+          console.log(res);
 
           if (res.notification.type == StatusNotification.Success) {
             this.router.navigate(['','list-tour']);
             this.close()
           }
-          this.notificationService.handleAlertObj(res.notification)
+          else{
+            this.notificationService.handleAlertObj(res.notification)
+          }
+
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)

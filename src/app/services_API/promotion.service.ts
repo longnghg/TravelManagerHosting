@@ -22,6 +22,11 @@ export class PromotionService{
         if(this.response.notification.type == StatusNotification.Success)
         {
           this.resPromotion =  this.response.content
+          this.resPromotion.forEach(promotion => {
+            promotion.fromDateDisplay = this.configService.formatFromUnixTimestampToFullDate(promotion.fromDate)
+            promotion.toDateDisplay = this.configService.formatFromUnixTimestampToFullDate(promotion.toDate)
+          });
+
           resolve(this.resPromotion);
         }
         else{

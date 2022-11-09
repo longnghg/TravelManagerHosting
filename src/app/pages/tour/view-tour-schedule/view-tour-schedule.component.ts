@@ -47,7 +47,7 @@ export class ViewTourScheduleComponent implements OnInit {
   }
   ngOnInit(): void {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
-    if(this.auth.roleId == RoleTitle['Quản lý tour'])
+    if(this.auth.roleId == RoleTitle.Admin || this.auth.roleId == RoleTitle['Quản lý tour'])
     {
       this.gridConfig = {
         idModalRestore: "restoreScheduleModal",

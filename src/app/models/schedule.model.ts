@@ -1,3 +1,4 @@
+
 export class ScheduleModel{
   idSchedule: string
 
@@ -9,7 +10,7 @@ export class ScheduleModel{
   beginDateDisplay: string
   endDate: number
   endDateDisplay: string
-  timePromotion: number
+  timePromotion: number = 0
   timePromotionDisplay: string
 
 
@@ -28,7 +29,7 @@ export class ScheduleModel{
   nameDriver:string
   employeeId: string
   idTourGuide: string
-  promotionId: number
+  promotionId: number = 1
   nameEmployee:string
   valuePromotion: number
   quantityCustomer: number
