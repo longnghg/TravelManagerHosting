@@ -7,6 +7,7 @@ import { ConfigService } from "../../../../services_API/config.service";
 import { ResponseModel } from "../../../../models/responsiveModels/response.model";
 import { AuthenticationModel } from 'src/app/models/authentication.model';
 import { StatusNotification } from "../../../../enums/enum";
+const FILTER_PAG_REGEX = /[^0-9]/g;
 
 @Component({
   selector: 'app-item-place',
@@ -110,5 +111,21 @@ export class ItemPlaceComponent implements OnInit {
   getParentData(type?: string){
     this.parentType.emit(type);
     this.parentData.emit(this.resPlace);
+  }
+  formatInput(input: HTMLInputElement, property: string) {
+    input.value = input.value.replace(FILTER_PAG_REGEX, '');
+    if (property == "phone") {
+      this.resPlace[property] = input.value
+    }
+    else{
+      if (input.value) {
+        if (property.includes("Price")) {
+          this.resPlace[property] = Number(input.value).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+        }
+        else{
+          this.resPlace[property] = Number(input.value)
+        }
+      }
+    }
   }
 }
