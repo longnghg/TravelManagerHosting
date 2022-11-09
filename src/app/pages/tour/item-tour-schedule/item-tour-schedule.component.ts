@@ -22,7 +22,8 @@ import { RestaurantService } from 'src/app/services_API/restaurant.service';
 import { RestaurantModel } from 'src/app/models/restaurant.model';
 import { StatusNotification } from "../../../enums/enum";
 import { AuthenticationModel} from "../../../models/authentication.model";
-
+import { TimeLineModel } from 'src/app/models/timeLine.model';
+import { TimelineService } from 'src/app/services_API/timeline.service';
 @Component({
   selector: 'app-item-tour-schedule',
   templateUrl: './item-tour-schedule.component.html',
@@ -39,6 +40,8 @@ export class ItemTourScheduleComponent implements OnInit {
   validateCostTourModel: ValidateCostTourModel = new ValidateCostTourModel
   resCostTour: CostTourModel
   costtour: CostTourModel
+  resTimeline: TimeLineModel
+  resTimelinelist: TimeLineModel[]
   resCar: CarModel[]
   resEmployee: EmployeeModel[]
   resPromotion: PromotionModel[]
@@ -54,8 +57,9 @@ export class ItemTourScheduleComponent implements OnInit {
   isDelete: boolean = false
   active;
   constructor(private scheduleService: ScheduleService, private configService: ConfigService, private notificationService: NotificationService,
-private employeeService: EmployeeService, private carService: CarService, private promotionService: PromotionService, private activatedRoute: ActivatedRoute,
-    private costtourService: CostTourService, private hotelService: HotelService, private placeService: PlaceService, private restaurantService: RestaurantService) { }
+    private employeeService: EmployeeService, private carService: CarService, private promotionService: PromotionService, private activatedRoute: ActivatedRoute,
+    private costtourService: CostTourService, private hotelService: HotelService, private placeService: PlaceService, private restaurantService: RestaurantService,
+    private timelineService: TimelineService) { }
 
   ngOnInit(): void {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
@@ -78,6 +82,7 @@ private employeeService: EmployeeService, private carService: CarService, privat
     if (this.type == 'create') {
       this.resSchedule = new ScheduleModel()
       this.resCostTour = new CostTourModel()
+      this.resTimeline = new TimeLineModel()
       this.resScheduleTmp = Object.assign({}, this.resSchedule)
       this.resCostTourTmp = Object.assign({}, this.resCostTour)
     } 
@@ -96,6 +101,21 @@ private employeeService: EmployeeService, private carService: CarService, privat
         this.costtourService.getCostbyidSchedule(this.resSchedule.idSchedule).subscribe(res => {
           this.response = res
           this.resCostTour = this.response.content
+        }, error => {
+          var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+          this.notificationService.handleAlert(message, StatusNotification.Error)
+        })
+
+        if(this.resTimeline){
+          this.resTimeline.fromTimeDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resTimeline.fromTime)
+          this.resTimeline.toTimeDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resTimeline.toTime)
+        }
+
+        this.timelineService.getTimelineidSchedule(this.resSchedule.idSchedule).subscribe(res => {
+          this.response = res
+          this.resTimelinelist = this.response.content
+          console.log(this.resTimelinelist);
+          
         }, error => {
           var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
           this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -135,6 +155,9 @@ private employeeService: EmployeeService, private carService: CarService, privat
     this.resSchedule.departureDate = new Date(this.resSchedule.departureDateDisplay).getTime()
     this.resSchedule.returnDate = new Date(this.resSchedule.returnDateDisplay).getTime()
     this.resSchedule.timePromotion = new Date(this.resSchedule.timePromotionDisplay).getTime()
+
+    this.resTimeline.fromTime = new Date(this.resTimeline.fromTimeDisplay).getTime()
+    this.resTimeline.toTime = new Date(this.resTimeline.toTimeDisplay).getTime()
   }
 
   inputChange() {
@@ -182,6 +205,19 @@ private employeeService: EmployeeService, private carService: CarService, privat
               })
             }
             
+            // if(this.resTimeline){
+            //   this.resTimeline.idSchedule = this.resSchedule.idSchedule
+            //   this.timelineService.create(this.resTimeline).subscribe(res => {
+            //     this.response = res
+            //     if(this.response.notification.type == StatusNotification.Success){
+  
+            //     }
+            //   }, error => {
+            //     var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+            //     this.notificationService.handleAlert(message, StatusNotification.Error)
+            //   })
+            // }
+            
            
           }
           this.notificationService.handleAlertObj(res.notification)
@@ -209,10 +245,15 @@ private employeeService: EmployeeService, private carService: CarService, privat
 
       }
       this.close()
-    }else{
-      this.notificationService.handleAlert("Bạn cần nhập chi phí !", StatusNotification.Info)
+        }else{
+          this.notificationService.handleAlert("Bạn cần nhập đầy đủ chi phí !", StatusNotification.Info)
+          this.active = 2
+      }
     }
-    }
+    else{
+      this.notificationService.handleAlert("Bạn cần nhập đầy đủ lịch trình !", StatusNotification.Info)
+      this.active = 1
+   }
   }
 
   saveCostTour() {

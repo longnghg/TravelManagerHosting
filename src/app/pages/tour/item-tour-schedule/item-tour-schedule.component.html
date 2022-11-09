@@ -324,7 +324,7 @@
                   </div>
                 </fieldset>
                 
-                <fieldset *ngIf="type == 'detail'" style="border: 1px solid #ced4da; border-radius: 0.375rem; margin-top: 10px;"><legend>Tổng chi phí</legend>
+                <fieldset *ngIf="type != 'create'" style="border: 1px solid #ced4da; border-radius: 0.375rem; margin-top: 10px;"><legend>Tổng chi phí</legend>
                   <div class="row">
                     <div class="col-lg-5">
                       <h4>Các chi phí (không bao gồm dịch vụ):</h4>
@@ -353,20 +353,57 @@
               </div>
             </ng-template>
           </li>
-          <li [ngbNavItem]="3">
+          <!-- <li [ngbNavItem]="3" *ngIf="resTimeline || resTimelinelist">
             <a ngbNavLink style="font-size: 25px;">Timeline</a>
             <ng-template ngbNavContent>
-              <p>
-                Sed commodo, leo at suscipit dictum, quam est porttitor sapien, eget sodales nibh elit id diam. Nulla facilisi.
-                Donec egestas ligula vitae odio interdum aliquet. Duis lectus turpis, luctus eget tincidunt eu, congue et odio.
-                Duis pharetra et nisl at faucibus. Quisque luctus pulvinar arcu, et molestie lectus ultrices et. Sed diam urna,
-                egestas ut ipsum vel, volutpat volutpat neque. Praesent fringilla tortor arcu. Vivamus faucibus nisl enim, nec
-                tristique ipsum euismod facilisis. Morbi ut bibendum est, eu tincidunt odio. Orci varius natoque penatibus et
-                magnis dis parturient montes, nascetur ridiculus mus. Mauris aliquet odio ac lorem aliquet ultricies in eget
-                neque. Phasellus nec tortor vel tellus pulvinar feugiat.
-              </p>
+              <fieldset style="border: 1px solid #ced4da; border-radius: 0.375rem; margin-top: 10px;"><legend>TimeLine</legend>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-fromTime">Chọn thời gian bắt đầu
+                       
+                      </label>
+                      <input   (change)=" inputChange(); dateChange() " [(ngModel)]="resTimeline.fromTimeDisplay" class="form-control datepicker" placeholder="Chọn thời gian" name="fromTime" id="fromTime" type="date" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" />
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-toTime">Chọn thời gian kết thúc
+                       
+                      </label>
+                      <input   (change)="inputChange(); dateChange()" [(ngModel)]="resTimeline.toTimeDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="toTime" id="toTime" type="date" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <label class="form-control-label" for="">Mô tả nội dung timeline</label>
+                      <textarea class="form-control form-control-alternative" [(ngModel)]="resTimeline.description" name="description" id="description"  rows="4" placeholder="Nhập thông tin timeline"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+              
+              <fieldset style="border: 1px solid #ced4da; border-radius: 0.375rem; margin-top: 10px;"><legend>Danh sách TimeLine</legend>
+                <div class="row" *ngIf="resTimelinelist">
+                  <ngb-accordion [closeOthers]="true" activeIds="static-1" *ngFor="let item of resTimelinelist" >
+                    <ngb-panel id="static-1" title="{{item.toTime}} đến {{item.fromTime}}">
+                      <ng-template ngbPanelContent>
+                        {{item.description}}
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon
+                        officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf
+                        moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim
+                        keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher
+                        vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't
+                        heard of them accusamus labore sustainable VHS.
+                      </ng-template>
+                    </ngb-panel>     
+                  </ngb-accordion>
+                </div>
+              </fieldset>
             </ng-template>
-          </li>
+          </li> -->
           
         </ul>
         <div [ngbNavOutlet]="nav" class="mt-2"></div>
@@ -378,7 +415,7 @@
                   <button  *ngIf="type == 'detail' && !resSchedule.isDelete" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteScheduleModal" (click)="getParentData('detail')">Xóa</button>
                   <button *ngIf="isChange && type == 'detail'" class="btn btn-lg btn-info" (click)="backup()">Khôi phục</button>
                   <button *ngIf="isChange && type == 'detail'" class="btn btn-lg btn-success"  (click)="save()">Lưu</button>
-                  <button *ngIf="isChange && type == 'create'" class="btn btn-lg btn-success"  (click)="save()" ngbPopover="Bạn cần thêm chi phí!" [positionTarget]="target">Thêm</button>
+                  <button *ngIf="isChange && type == 'create'" class="btn btn-lg btn-success"  (click)="save()">Thêm</button>
                   <button *ngIf="resSchedule.isDelete" (click)="getParentData('detail')" data-bs-toggle="modal" data-bs-target="#restoreScheduleModal" class="btn btn-lg btn-warning">Khôi phục lịch trình</button>
                 </div>
               </div>
