@@ -90,7 +90,7 @@ export class ListRestaurantComponent implements OnInit {
           { field: 'name',headerName: "Tên nhà hàng", style: "width: 25%;", searchable: true, searchType: 'text', searchObj: 'name'},
           { field: 'address',headerName: "Địa chỉ", style: "width: 29%;", searchable: true, searchType: 'text', searchObj: 'address'},
           { field: 'phone',headerName: "Số điện thoại", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'phone'},
-          { field: 'comboPrice',headerName: "Giá", style: "width: 21%;",searchable: true, searchType: 'section', searchObj: 'comboPrice'},
+          { field: 'comboPrice',headerName: "Giá", style: "width: 21%;",searchable: true, searchType: 'number', searchObj: 'comboPrice'},
         ];
 
         this.columnDefsWaiting= [

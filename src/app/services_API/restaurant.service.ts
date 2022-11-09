@@ -74,6 +74,6 @@ restore(idRestaurant: string, idUser: string)
   return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/restore-restaurant?idRestaurant="+idRestaurant+"&idUser="+idUser);
 }
 search(data){
-  return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Service/search-hotel", data);
+  return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Service/search-Restaurant", data);
 }
 }
