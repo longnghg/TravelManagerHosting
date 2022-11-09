@@ -139,7 +139,7 @@
                           <ng-select
                           [items]="listStar"
                           [(ngModel)]="resTour.rating"
-                          [disabled]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resTour.isDelete || resAuth.roleId != 3"
+                          [disabled]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resTour.isDelete ||  resAuth.roleId != -1"
                           placeholder="Chọn số sao..."
                           name="star"
                           id="rating"
@@ -161,7 +161,7 @@
                         </ng-select>
                         </div>
                         <div class="col-lg-4">
-                          <div class="form-group"  *ngIf="type == 'detail'  && !resTour.isDelete && resAuth.roleId == 3">
+                          <div class="form-group"  *ngIf="type == 'detail'  && !resTour.isDelete && resAuth.roleId == 3 || resAuth.roleId == -1">
                             <label for="updateRating" class="btn text-white btn-primary btn-round" style="margin-top: 30px;">Cập nhật sao</label>
                             <input id="updateRating" type="button" class="d-none" (click)="ratingTour()">
                           </div>
