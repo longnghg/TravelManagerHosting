@@ -30,7 +30,7 @@ export class ConfigService{
 
     if (status == 401){
         message = "Hết hạn đăng nhập !"
-        document.location.assign(this.clientUrl +'/#/login');
+        document.location.assign(this.clientUrl +'/login');
     }
     else if (status == 200) {
         message = message;

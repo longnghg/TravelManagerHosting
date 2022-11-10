@@ -73,8 +73,7 @@ export class NavbarComponent implements OnInit {
       localStorage.removeItem("token")
       sessionStorage.clear()
       this.auth = null
-      location.assign(this.configService.clientUrl + "/#/login")
-      location.reload()
+      location.assign(this.configService.clientUrl + "/login")
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)
