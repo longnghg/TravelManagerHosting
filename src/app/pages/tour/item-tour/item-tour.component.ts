@@ -55,6 +55,7 @@ export class ItemTourComponent implements OnInit {
             else{
               this.img = "../../../../assets/img/tours/cross-sign.jpg"
             }
+            this.resTour.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resTour.modifyDate)
           }
         }
       }, error => {

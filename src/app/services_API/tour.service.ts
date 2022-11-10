@@ -76,6 +76,10 @@ export class TourService{
 
   search(data){
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Tour/search-tour", data);
-}
+  }
+
+  searchWaiting(data){
+    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Tour/search-tour-waiting", data);
+  }
 }
 

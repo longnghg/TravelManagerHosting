@@ -119,8 +119,8 @@ export class ListTourComponent implements OnInit {
           { field: 'nameTour',headerName: "Tên", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'tourName'},
           { field: 'toPlace',headerName: "Đến", style: "width: 10%;", searchable: true, searchType: 'text', searchObj: 'address'},
           { field: 'rating',headerName: "Số sao", style: "width: 15%;", filter: "star",searchable: true, searchType: 'section', searchObj: 'rating' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.list10Star()},
-          { field: 'approveName',headerName: "Trạng thái phê duyệt", style: "width: 10%;", searchable: true, searchType: 'section', searchObj: 'approve' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listApprove()},
           { field: 'typeAction',headerName: "Loại phê duyệt", style: "width: 10%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()}, 
+          { field: 'approveName',headerName: "Trạng thái phê duyệt", style: "width: 10%;"},
           { field: 'status',headerName: "Trạng thái", style: 'width: 10%',  filter: "status"},
         ];
       }, 200);
@@ -147,6 +147,30 @@ export class ListTourComponent implements OnInit {
           if(this.response.notification.type == StatusNotification.Success)
           {
             this.resTour = this.response.content
+          }
+          else{
+            this.resTour = this.restourTmp
+            this.notificationService.handleAlertObj(res.notification)
+          }
+  
+        }, error => {
+          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+          this.notificationService.handleAlert(message, StatusNotification.Error)
+        })
+      }
+    }
+
+    searchWaiting(e?){
+      if (e) {
+        this.tourService.searchWaiting(Object.assign({}, e)).subscribe(res => {
+          this.response = res
+          if(this.response.notification.type == StatusNotification.Success)
+          {
+            this.resTourWaiting = this.response.content
+            this.resTourWaiting.forEach(tour => {
+              tour.approveName = StatusApprove[tour.approveStatus]
+              tour.typeAction = TypeAction[tour.typeAction]
+            });
           }
           else{
             this.resTour = this.restourTmp

@@ -9,6 +9,7 @@ export class TourModel{
   createDate: number
   modifyBy: string
   modifyDate: number
+  modifyDateDisplay: string
   isDelete: boolean
   isActive: boolean
   idUserModify:string
