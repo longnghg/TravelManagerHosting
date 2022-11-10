@@ -501,6 +501,41 @@ export class ConfigService{
     return model
    }
 
+   validateTimeline(data: any, model: any){
+    model.total = 0
+    var dateNow =  Date.now()
+    var checkDate = new Date(dateNow).getTime()
+
+    if(data.fromTime == 0 || data.fromTime == ""){
+      model.fromTime = ("Chọn thời gian bắt đầu!")
+      model.total += 1
+     }else if(data.fromTime <= checkDate){
+      model.fromTime = ("Thời gian bắt đầu không trước ngày hiện tại!")
+      model.total += 1
+     }
+
+     if(data.toTime == 0 || data.toTime == ""){
+      model.toTime = ("Chọn thời gian kết thúc!")
+      model.total += 1
+     }else if(data.toTime <= checkDate){
+      model.toTime = ("Thời gian kết thúc không trước ngày hiện tại!")
+      model.total += 1
+     }
+
+     if (data.description == null || data.description == "") {
+      model.description = ("[Mô tả] không bỏ trống!")
+      model.total += 1
+    }else if (data.description.length > 200) {
+      model.description = "[Mô tả]  quá dài !"
+      model.total += 1
+    }else if (data.description.length < 3) {
+      model.description = "[Mô tả]  quá ngắn !"
+      model.total += 1
+    }
+
+     return model
+   }
+
    validateProvince(data: any){
     var err = []
     //name
