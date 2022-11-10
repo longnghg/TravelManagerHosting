@@ -73,5 +73,13 @@ export class TourService{
   {
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/update-rating-tour?rating="+rating+"&idTour="+idTour);
   }
+
+  search(data){
+    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Tour/search-tour", data);
+  }
+
+  searchWaiting(data){
+    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Tour/search-tour-waiting", data);
+  }
 }
 

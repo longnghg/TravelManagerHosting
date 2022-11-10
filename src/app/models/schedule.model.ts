@@ -2,13 +2,13 @@
 export class ScheduleModel{
   idSchedule: string
 
-  departureDate: number
+  departureDate: number = 0
   departureDateDisplay: string
-  returnDate :number
+  returnDate :number = 0
   returnDateDisplay: string
-  beginDate: number
+  beginDate: number = 0
   beginDateDisplay: string
-  endDate: number
+  endDate: number = 0
   endDateDisplay: string
   timePromotion: number = 0
   timePromotionDisplay: string
