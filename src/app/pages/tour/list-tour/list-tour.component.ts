@@ -106,21 +106,23 @@ export class ListTourComponent implements OnInit {
       setTimeout(() => {
         this.columnDefs= [
         { field: 'idTour', headerName: "Mã số", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'idTour'},
-        { field: 'nameTour',headerName: "Tên", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'tourName'},
-        { field: 'toPlace',headerName: "Đến", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'address'},
+        { field: 'nameTour',headerName: "Tên", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'nameTour'},
+        { field: 'toPlace',headerName: "Đến", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'toPlace'},
         // { field: 'rating',headerName: "Số sao", style: "width: 10%;", searchable: true, searchType: 'text', searchObj: 'rating'},
         { field: 'rating',headerName: "Số sao", style: "width: 20%;", filter: "star",searchable: true, searchType: 'section', searchObj: 'rating' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.list10Star()},
-        { field: 'status',headerName: "Trạng thái", style: 'width: 10%',  filter: "status", searchable: true, searchType: 'section', multiple: false, closeOnSelect: true, searchObj: 'isActive', bindLabel: "name", bindValue: "id", listSection: this.configService.listStatus()},
+        { field: 'status',headerName: "Trạng thái", style: 'width: 10%',  filter: "status"},
         // { field: 'createDate: string',headerName: "Ngày tạo", style: "width: 160px;", searchable: true, searchType: 'date', searchObj: 'createDate'},
         ];
 
         this.columnDefsWaiting= [
           { field: 'idTour', headerName: "Mã số", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'idTour'},
-          { field: 'nameTour',headerName: "Tên", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'tourName'},
-          { field: 'toPlace',headerName: "Đến", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'address'},
-          { field: 'approveName',headerName: "Trạng thái phê duyệt", style: "width: 15%;", searchable: true, searchType: 'section', searchObj: 'approve' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listApprove()},
-          { field: 'typeAction',headerName: "Loại phê duyệt", style: "width: 15%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()},
-       ];
+          { field: 'nameTour',headerName: "Tên", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'tourName'},
+          { field: 'toPlace',headerName: "Đến", style: "width: 10%;", searchable: true, searchType: 'text', searchObj: 'address'},
+          { field: 'rating',headerName: "Số sao", style: "width: 15%;", filter: "star",searchable: true, searchType: 'section', searchObj: 'rating' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.list10Star()},
+          { field: 'approveName',headerName: "Trạng thái phê duyệt", style: "width: 10%;", searchable: true, searchType: 'section', searchObj: 'approve' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listApprove()},
+          { field: 'typeAction',headerName: "Loại phê duyệt", style: "width: 10%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()}, 
+          { field: 'status',headerName: "Trạng thái", style: 'width: 10%',  filter: "status"},
+        ];
       }, 200);
 
       this.tourService.getwaiting(this.auth.id).subscribe(res =>{
@@ -137,6 +139,27 @@ export class ListTourComponent implements OnInit {
         this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
+
+    search(e?){
+      if (e) {
+        this.tourService.search(Object.assign({}, e)).subscribe(res => {
+          this.response = res
+          if(this.response.notification.type == StatusNotification.Success)
+          {
+            this.resTour = this.response.content
+          }
+          else{
+            this.resTour = this.restourTmp
+            this.notificationService.handleAlertObj(res.notification)
+          }
+  
+        }, error => {
+          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+          this.notificationService.handleAlert(message, StatusNotification.Error)
+        })
+      }
+    }
+
     childData(e){
       if (e) {
         this.dataChild = e
