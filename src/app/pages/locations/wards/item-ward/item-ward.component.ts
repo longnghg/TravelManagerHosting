@@ -3,7 +3,7 @@ import { NotificationService } from "../../../../services_API/notification.servi
 import { WardService } from "../../../../services_API/ward.service";
 import { DistrictService } from "../../../../services_API/district.service";
 import { ConfigService } from "../../../../services_API/config.service";
-import { LocationModel } from 'src/app/models/location.model';
+import { LocationModel, ValidateLocationModel } from 'src/app/models/location.model';
 import { ResponseModel } from "../../../../models/responsiveModels/response.model";
 import { StatusNotification } from "../../../../enums/enum";
 @Component({
@@ -17,10 +17,10 @@ export class ItemWardComponent implements OnInit {
   @Input() type: string
   @Output() parentDel = new EventEmitter<any>()
   response: ResponseModel
-  isEdit: boolean = false
   isChange: boolean = false
   resWardTmp: LocationModel
   resDistrict: LocationModel
+  validateLocation: ValidateLocationModel = new ValidateLocationModel
   constructor(private districtService: DistrictService, private wardService: WardService, private notificationService: NotificationService,
     private configService: ConfigService) { }
 
@@ -31,23 +31,11 @@ export class ItemWardComponent implements OnInit {
   ngOnChanges(): void {
     if(this.type == "create"){
       this.resWard = new LocationModel()
-      this.isEdit = true
-    }else{
-      this.isEdit = false
     }
     this.resWardTmp = Object.assign({}, this.resWard)
   }
 
-  isEditChange(){
-    if (this.isEdit) {
-      this.isEdit = false
-      this.restore()
 
-    }
-    else{
-      this.isEdit = true
-    }
-  }
   inputChange(){
     if (JSON.stringify(this.resWard) != JSON.stringify(this.resWardTmp)) {
       this.isChange = true
@@ -57,16 +45,15 @@ export class ItemWardComponent implements OnInit {
     }
   }
 
-  restore(){
+  backup(){
     this.resWard = Object.assign({}, this.resWardTmp)
+    this.notificationService.handleAlert("Khôi phục dữ liệu ban đầu thành công !", StatusNotification.Info)
     this.isChange = false
   }
   save(){
-    var valid =  this.configService.validateWard(this.resWard)
-    valid.forEach(element => {
-        this.notificationService.handleAlert(element, StatusNotification.Error)
-    });
-    if (valid.length == 0) {
+    this.validateLocation = new ValidateLocationModel
+    this.validateLocation =  this.configService.validateWard(this.resWard, this.validateLocation)
+    if (this.validateLocation.total == 0) {
       if(this.type == "create")
       {
         this.wardService.create(this.resWard).subscribe(res =>{
@@ -89,9 +76,7 @@ export class ItemWardComponent implements OnInit {
           else{
             this.resWard = Object.assign({},this.resWardTmp)
           }
-          if (this.type == 'detail') {
-            this.isEdit = false
-          }
+
           this.isChange = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -108,9 +93,8 @@ export class ItemWardComponent implements OnInit {
   }
 
   close(){
-    if (this.type == 'detail') {
-      this.isEdit = false
-    }
-     this.restore()
+    this.validateLocation = new ValidateLocationModel
+    this.resWard = Object.assign({}, this.resWardTmp)
+    this.isChange = false
   }
 }

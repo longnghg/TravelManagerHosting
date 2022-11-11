@@ -123,7 +123,7 @@ export class ListEmployeeComponent implements OnInit {
 
   childData(e){
     if (e) {
-      this.dataChild = e
+      this.dataChild = Object.assign({}, e)
     }
 
   }

@@ -14,7 +14,7 @@
                 <label class="form-control-label" for="name">Tên nhà hàng
                   <span [class]="type != 'create' ?'d-none':'text-red'">* {{this.validateRestaurant.name ? this.validateRestaurant.name : ''}}</span>
                 </label>
-                <input type="text" id="name" name="name" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập tên nhà hàng" [(ngModel)]="resRestaurant.name" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resRestaurant.isDelete">
+                <input type="text" id="name" name="name" (input)="inputChange()" class="form-control " placeholder="Nhập tên nhà hàng" [(ngModel)]="resRestaurant.name" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resRestaurant.isDelete">
               </div>
             </div>
             <div class="col-lg-6">
@@ -22,7 +22,7 @@
                 <label class="form-control-label" for="phone">Số điện thoại
                   <span [class]="type != 'create' ?'d-none':'text-danger'">* {{this.validateRestaurant.phone ? this.validateRestaurant.phone : ''}}</span>
                 </label>
-                <input type="number" id="phone" name="phone" (input)="formatInput($any($event).target, 'phone'); inputChange()" class="form-control form-control-alternative" placeholder="Nhập số điện thoại" [(ngModel)]="resRestaurant.phone" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resRestaurant.isDelete">
+                <input type="number" id="phone" name="phone" (input)="formatInput($any($event).target, 'phone'); inputChange()" class="form-control " placeholder="Nhập số điện thoại" [(ngModel)]="resRestaurant.phone" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resRestaurant.isDelete">
               </div>
             </div>
           </div>
@@ -31,14 +31,14 @@
               <label class="form-control-label" for="input-address">Địa chỉ
                 <span [class]="type != 'create'?'d-none':'text-danger'">* {{this.validateRestaurant.address ? this.validateRestaurant.address : ''}}</span>
               </label>
-              <input type="text" id="address" name="address" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số điạ chỉ" [(ngModel)]="resRestaurant.address" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resRestaurant.isDelete">
+              <input type="text" id="address" name="address" (input)="inputChange()" class="form-control " placeholder="Nhập số điạ chỉ" [(ngModel)]="resRestaurant.address" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resRestaurant.isDelete">
             </div>
 
             <div class="col-lg-6">
               <label class="form-control-label" for="input-address">Giá nhà hàng
                 <span [class]="type != 'create'?'d-none':'text-danger'">* {{this.validateRestaurant.comboPrice ? this.validateRestaurant.comboPrice : ''}}</span>
               </label>
-              <input type="number" id="comboPrice" name="comboPrice" (input)="formatInput($any($event).target, 'comboPrice');inputChange()" class="form-control form-control-alternative" placeholder="Nhập giá" [(ngModel)]="resRestaurant.comboPrice" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resRestaurant.isDelete">
+              <input type="number" id="comboPrice" name="comboPrice" (input)="formatInput($any($event).target, 'comboPrice');inputChange()" class="form-control " placeholder="Nhập giá" [(ngModel)]="resRestaurant.comboPrice" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resRestaurant.isDelete">
             </div>
           </div>
           <hr>

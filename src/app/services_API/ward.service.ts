@@ -4,6 +4,7 @@ import { ConfigService } from "./config.service";
 import { ResponseModel } from "../models/responsiveModels/response.model";
 import { LocationModel } from "../models/location.model";
 import { NotificationService } from "../services_API/notification.service";
+import { StatusNotification } from "../enums/enum";
 @Injectable({
     providedIn: 'root'
 })
@@ -18,7 +19,7 @@ export class WardService{
     var value = <any>await new Promise<any>(resolve => {
       this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/gets-ward").subscribe(res => {
         this.response = res
-        if(!this.response.notification.type)
+        if(this.response.notification.type == StatusNotification.Success)
         {
           this.resWard =  this.response.content
           resolve(this.resWard);
@@ -28,7 +29,7 @@ export class WardService{
         }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
+      this.notificationService.handleAlert(message, StatusNotification.Error)
     })})
     return value
   }

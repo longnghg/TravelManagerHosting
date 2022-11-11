@@ -28,7 +28,8 @@ export class ListDistrictComponent implements OnInit {
   public gridConfig: GridConfig = {
     idModalDelete: "deleteDistrictModal",
     idModal: "gridDistrict",
-    disableRadioBox: true
+    disableRadioBox: true,
+    disableApprove: true,
   }
   constructor(private provinceService: ProvinceService, private wardService: WardService, private districtService: DistrictService, private notificationService: NotificationService,
     private configService: ConfigService){}
@@ -45,7 +46,7 @@ export class ListDistrictComponent implements OnInit {
   init(){
     this.districtService.gets().subscribe(res => {
       this.response = res
-      if(!this.response.notification.type)
+      if(this.response.notification.type == StatusNotification.Success)
       {
         this.resDistrict = this.response.content
         this.totalWard()
@@ -63,25 +64,20 @@ export class ListDistrictComponent implements OnInit {
 
     this.provinceService.views().then(response => {
       this.resProvince = response
-    })
-
-     setTimeout(() => {
-
-
-       this.columnDefs= [
+      this.columnDefs= [
         // { field: 'idDistrict', headerName: "Mã quận/huyện", searchable: true, searchType: 'text', searchObj: 'idDistrict'},
         { field: 'nameDistrict',headerName: "Tên quận/huyện", searchable: true, searchType: 'text', searchObj: 'nameDistrict'},
         { field: 'provinceName',headerName: "Tên thành phố/tỉnh", searchable: true, searchType: 'section', searchObj: 'provinceId', multiple: true, closeOnSelect: false, bindLabel: 'nameProvince', bindValue: "idProvince", listSection: this.resProvince},
         { field: 'total',headerName: "Tổng số phường/xã", searchable: false},
       ];
-    }, 200);
+    })
   }
 
   search(e?){
     if (e) {
       this.districtService.search(e).subscribe(res => {
         this.response = res
-        if(!this.response.notification.type)
+        if(this.response.notification.type == StatusNotification.Success)
         {
           this.resDistrict = this.response.content
           this.totalWard()
@@ -117,7 +113,7 @@ export class ListDistrictComponent implements OnInit {
   }
   childData(e){
     if (e) {
-      this.dataChild = e
+      this.dataChild = Object.assign({}, e)
     }
 
   }

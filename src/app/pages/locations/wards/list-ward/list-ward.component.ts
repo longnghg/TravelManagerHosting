@@ -24,7 +24,8 @@ export class ListWardComponent implements OnInit {
   public gridConfig: GridConfig = {
     idModalDelete: "deleteWardModal",
     idModal: "gridWard",
-    disableRadioBox: true
+    disableRadioBox: true,
+    disableApprove: true,
   }
 
   private hubConnectionBuilder: HubConnection
@@ -42,7 +43,7 @@ export class ListWardComponent implements OnInit {
   init(){
     this.wardService.gets().subscribe(res => {
       this.response = res
-      if(!this.response.notification.type)
+      if(this.response.notification.type == StatusNotification.Success)
       {
         this.resWard = this.response.content
       }
@@ -58,23 +59,20 @@ export class ListWardComponent implements OnInit {
 
     this.districtService.views().then(response => {
       this.resDistrict = response
-    })
-    setTimeout(() => {
-
       this.columnDefs= [
         // { field: 'idWard', headerName: "Mã phường/xã", searchable: true, searchType: 'text', searchObj: 'idWard'},
         { field: 'nameWard',headerName: "Tên phường/xã", searchable: true, searchType: 'text', searchObj: 'nameWard'},
         { field: 'districtName',headerName: "Tên quận/huyện", searchable: true, searchType: 'section', searchObj: 'districtId', multiple: true, closeOnSelect: false, bindLabel: 'nameDistrict', bindValue: "idDistrict", listSection: this.resDistrict},
       ];
+    })
 
-    }, 200);
   }
 
   search(e?){
     if (e) {
       this.wardService.search(e).subscribe(res => {
         this.response = res
-        if(!this.response.notification.type)
+        if(this.response.notification.type == StatusNotification.Success)
         {
           this.resWard = this.response.content
         }
@@ -92,7 +90,7 @@ export class ListWardComponent implements OnInit {
 
   childData(e){
     if (e) {
-      this.dataChild = e
+      this.dataChild = Object.assign({}, e)
     }
 
   }

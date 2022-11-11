@@ -15,3 +15,19 @@ export class LocationModel{
 
   total?: number = 0
 }
+
+
+export class ValidateLocationModel{
+  nameProvince: string = null
+  nameDistrict: string = null
+  nameWard: string = null
+
+  provinceName: string = null
+  districtName: string = null
+
+  provinceId: string = null
+  districtId: string = null
+
+
+  total: number = 0
+}

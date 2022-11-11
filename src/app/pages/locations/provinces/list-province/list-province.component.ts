@@ -27,7 +27,8 @@ export class ListProvinceComponent implements OnInit {
   public gridConfig: GridConfig = {
     idModalDelete: "deleteProvinceModal",
     idModal: "gridProvince",
-    disableRadioBox: true
+    disableRadioBox: true,
+    disableApprove: true,
   }
 
   private hubConnectionBuilder!: HubConnection;
@@ -47,7 +48,7 @@ export class ListProvinceComponent implements OnInit {
   init(){
     this.provinceService.gets().subscribe(res => {
       this.response = res
-      if(!this.response.notification.type)
+      if(this.response.notification.type == StatusNotification.Success)
       {
         this.resProvince = this.response.content
 
@@ -93,7 +94,7 @@ export class ListProvinceComponent implements OnInit {
     if (e) {
       this.provinceService.search(e).subscribe(res => {
         this.response = res
-        if(!this.response.notification.type)
+        if(this.response.notification.type == StatusNotification.Success)
         {
           this.resProvince = this.response.content
         }

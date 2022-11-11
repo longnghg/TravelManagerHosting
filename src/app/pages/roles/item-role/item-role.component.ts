@@ -76,11 +76,14 @@ export class ItemRoleComponent implements OnInit {
 
   backup(){
     this.resRole = Object.assign({}, this.resRoleTmp)
+    this.notificationService.handleAlert("Khôi phục dữ liệu ban đầu thành công !", StatusNotification.Info)
     this.isChange = false
   }
 
   close(){
-    this.resRole = new RoleModel()
+    this.resRole = Object.assign({}, this.resRoleTmp)
+    this.isChange = false
+    this.validateRole = new ValidationRoleModel
   }
 
   getDataDelete(){

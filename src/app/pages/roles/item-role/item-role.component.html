@@ -13,7 +13,7 @@
                 <label class="form-control-label" for="input-username">Tên chức vụ
                   <span [class]="auth.roleId != -1 || resRole.isDelete ?'d-none':'text-red'">* {{this.validateRole.nameRole ? this.validateRole.nameRole : ''}}</span>
                 </label>
-                <input type="text" id="name" name="name" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập tên chức vụ" [(ngModel)]="resRole.nameRole" [readonly]="auth.roleId != -1 || resRole.isDelete">
+                <input type="text" id="name" name="name" (input)="inputChange()" class="form-control " placeholder="Nhập tên chức vụ" [(ngModel)]="resRole.nameRole" [readonly]="auth.roleId != -1 || resRole.isDelete">
               </div>
             </div>
           </div>
@@ -21,7 +21,7 @@
             <div class="col-lg-12">
               <div class="form-group">
                 <label class="form-control-label" for="input-username">Mô tả</label>
-                <input type="text" id="description" name="description" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập mô tả" [(ngModel)]="resRole.description" [readonly]="auth.roleId != -1 || resRole.isDelete">
+                <input type="text" id="description" name="description" (input)="inputChange()" class="form-control " placeholder="Nhập mô tả" [(ngModel)]="resRole.description" [readonly]="auth.roleId != -1 || resRole.isDelete">
               </div>
             </div>
           </div>

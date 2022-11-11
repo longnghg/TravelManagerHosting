@@ -20,7 +20,7 @@ export class ListRoleComponent implements OnInit {
   data: RoleModel
   typeChild: string
   response: ResponseModel
-  type: boolean
+  type: boolean = false
   resRole: RoleModel[]
   private hubConnectionBuilder!: HubConnection;
 
@@ -29,6 +29,7 @@ export class ListRoleComponent implements OnInit {
     idModalDelete: "deleteRoleModal",
     idModal: "gridRole",
     radioBoxName: "Kho lưu trữ",
+    disableApprove: true,
   }
 
   constructor(private roleService: RoleService, private notificationService: NotificationService,
@@ -36,24 +37,7 @@ export class ListRoleComponent implements OnInit {
     public columnDefs: ColDef[]
   ngOnInit(): void {
     this.auth = JSON.parse(localStorage.getItem("currentUser"));
-    if(this.auth.roleId == RoleTitle.Admin)
-    {
-      this.gridConfig = {
-        idModalRestore: "restoreRoleModal",
-        idModalDelete: "deleteRoleModal",
-        radioBoxName: "Kho lưu trữ",
-      }
-    }
-    else{
-      this.gridConfig = {
-        idModalRestore: "restoreRoleModal",
-        idModalDelete: "deleteRoleModal",
-        disableRadioBox: true,
-        disableCreate: true,
-        disableDelete: true,
-        disableRestore: true,
-      }
-    }
+
     this.init(this.type)
     this.hubConnectionBuilder = this.configService.signIR()
     this.hubConnectionBuilder.start();
@@ -68,7 +52,7 @@ export class ListRoleComponent implements OnInit {
     if (e) {
       this.roleService.search(e).subscribe(res => {
         this.response = res
-        if(!this.response.notification.type)
+        if(this.response.notification.type == StatusNotification.Success)
         {
           this.resRole = this.response.content
         }
@@ -88,7 +72,7 @@ export class ListRoleComponent implements OnInit {
    this.type = e
    this.roleService.gets(this.type).subscribe(res => {
     this.response = res
-    if(!this.response.notification.type)
+    if(this.response.notification.type == StatusNotification.Success)
     {
       this.resRole = this.response.content
     }
@@ -113,10 +97,8 @@ export class ListRoleComponent implements OnInit {
 
   childData(e){
     if (e) {
-      this.dataChild = e
+      this.dataChild = Object.assign({}, e)
     }
-    console.log(this.dataChild);
-
   }
 
   childType(e){

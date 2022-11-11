@@ -16,26 +16,26 @@
             <div class="col-lg-6">
               <div class="form-group">
                 <label class="form-control-label" for="input-name">Giá trị</label>
-                <input type="text" id="value" name="value" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập giá trị mã giảm giá" [(ngModel)]="resPromotion.value" [readonly]="!isEdit">
+                <input type="text" id="value" name="value" (input)="inputChange()" class="form-control " placeholder="Nhập giá trị mã giảm giá" [(ngModel)]="resPromotion.value" [readonly]="!isEdit">
               </div>
             </div>
             <div class="col-lg-6">
               <div class="form-group">
                 <label class="form-control-label" for="input-phone">Đến nay</label>
-                <input type="text" id="toDate" name="toDate" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập mã đến nay" [(ngModel)]="resPromotion.toDate" [readonly]="!isEdit">
+                <input type="text" id="toDate" name="toDate" (input)="inputChange()" class="form-control " placeholder="Nhập mã đến nay" [(ngModel)]="resPromotion.toDate" [readonly]="!isEdit">
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-lg-12">
               <label class="form-control-label" for="input-address">Từ ngày</label>
-              <input type="text" id="fromDate" name="fromDate" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập mã từ ngày" [(ngModel)]="resPromotion.fromDate" [readonly]="!isEdit">
+              <input type="text" id="fromDate" name="fromDate" (input)="inputChange()" class="form-control " placeholder="Nhập mã từ ngày" [(ngModel)]="resPromotion.fromDate" [readonly]="!isEdit">
             </div>
           </div>
           <!-- <div class="row">
             <div class="col-lg-12">
               <label class="form-control-label" for="input-address">Số lượng chỗ ngồi</label>
-              <input type="text" id="amountSeat" name="amountSeat" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số lượng chỗ ngồi" [(ngModel)]="resCar.amountSeat" [readonly]="!isEdit">
+              <input type="text" id="amountSeat" name="amountSeat" (input)="inputChange()" class="form-control " placeholder="Nhập số lượng chỗ ngồi" [(ngModel)]="resCar.amountSeat" [readonly]="!isEdit">
             </div>
           </div> -->
           <hr>

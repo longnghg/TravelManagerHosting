@@ -16,23 +16,28 @@
           <div class="row">
             <div class="col-lg-12">
               <div class="form-group">
-                <label class="form-control-label" for="name">Tên phường/xã</label>
-                <input type="text" id="name" name="name" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập tên quận/huyện" [(ngModel)]="resWard.nameWard" [readonly]="!isEdit">
+                <label class="form-control-label" for="name">Tên phường/xã
+                  <span class="text-red">* {{this.validateLocation.nameWard ? this.validateLocation.nameWard : ''}}</span>
+                </label>
+                <input type="text" id="name" name="name" (input)="inputChange()" class="form-control " placeholder="Nhập tên quận/huyện" [(ngModel)]="resWard.nameWard" >
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-lg-12">
               <div class="form-group">
-                <label class="form-control-label" for="idDistrict">Quận/huyện</label>
+                <label class="form-control-label" for="idDistrict">Quận/huyện
+                  <span class="text-red">* {{this.validateLocation.districtId ? this.validateLocation.districtId : ''}}</span>
+                </label>
                 <ng-select [items]="resDistrict"
                 bindLabel="nameDistrict"
                 bindValue="idDistrict"
                 [(ngModel)]="resWard.districtId"
-                [disabled]="!isEdit"
                 placeholder="Chọn quận/huyện..."
                 name="idDistrict"
                 id="idDistrict"
+                [clearable]="false"
+                [searchable]="false"
                 (change)="inputChange()">
               </ng-select>
               </div>
@@ -45,7 +50,7 @@
     <div class="row align-items-center">
       <div class="col-12 text-right">
         <button  *ngIf="type == 'detail'" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteDistrictModal" (click)="getDataDelete()">Xóa</button>
-        <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="restore()">Khôi phục</button>
+        <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="backup()">Khôi phục</button>
         <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="save()">{{type == 'detail' ? "Lưu":"Thêm"}}</button>
       </div>
     </div>

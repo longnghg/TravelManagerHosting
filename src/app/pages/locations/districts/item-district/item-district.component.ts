@@ -3,7 +3,7 @@ import { NotificationService } from "../../../../services_API/notification.servi
 import { ProvinceService } from "../../../../services_API/province.service";
 import { DistrictService } from "../../../../services_API/district.service";
 import { ConfigService } from "../../../../services_API/config.service";
-import { LocationModel } from 'src/app/models/location.model';
+import { LocationModel, ValidateLocationModel } from 'src/app/models/location.model';
 import { ResponseModel } from "../../../../models/responsiveModels/response.model";
 import { StatusNotification } from "../../../../enums/enum";
 
@@ -18,9 +18,9 @@ export class ItemDistrictComponent implements OnInit {
   @Input() type: string
   @Output() parentDel = new EventEmitter<any>()
   response: ResponseModel
-  isEdit: boolean = false
   isChange: boolean = false
   resDistrictTmp: LocationModel
+  validateLocation: ValidateLocationModel = new ValidateLocationModel
   resProvince: LocationModel
   constructor(private districtService: DistrictService, private provinceService: ProvinceService, private notificationService: NotificationService,
     private configService: ConfigService) { }
@@ -32,23 +32,10 @@ export class ItemDistrictComponent implements OnInit {
   ngOnChanges(): void {
     if(this.type == "create"){
       this.resDistrict = new LocationModel()
-      this.isEdit = true
-    }else{
-      this.isEdit = false
     }
     this.resDistrictTmp = Object.assign({}, this.resDistrict)
   }
 
-  isEditChange(){
-    if (this.isEdit) {
-      this.isEdit = false
-      this.restore()
-
-    }
-    else{
-      this.isEdit = true
-    }
-  }
   inputChange(){
     if (JSON.stringify(this.resDistrict) != JSON.stringify(this.resDistrictTmp)) {
       this.isChange = true
@@ -58,16 +45,15 @@ export class ItemDistrictComponent implements OnInit {
     }
   }
 
-  restore(){
+  backup(){
     this.resDistrict = Object.assign({}, this.resDistrictTmp)
+    this.notificationService.handleAlert("Khôi phục dữ liệu ban đầu thành công !", StatusNotification.Info)
     this.isChange = false
   }
   save(){
-    var valid =  this.configService.validateDistrict(this.resDistrict)
-    valid.forEach(element => {
-        this.notificationService.handleAlert(element, StatusNotification.Error)
-    });
-    if (valid.length == 0) {
+    this.validateLocation = new ValidateLocationModel
+    this.validateLocation =  this.configService.validateDistrict(this.resDistrict, this.validateLocation)
+    if (this.validateLocation.total == 0) {
       if(this.type == "create")
       {
         this.districtService.create(this.resDistrict).subscribe(res =>{
@@ -91,10 +77,6 @@ export class ItemDistrictComponent implements OnInit {
           else{
             this.resDistrict = Object.assign({},this.resDistrictTmp)
           }
-
-          if (this.type == 'detail') {
-            this.isEdit = false
-          }
           this.isChange = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -111,9 +93,8 @@ export class ItemDistrictComponent implements OnInit {
   }
 
   close(){
-    if (this.type == 'detail') {
-      this.isEdit = false
-    }
-     this.restore()
+    this.validateLocation = new ValidateLocationModel
+    this.resDistrict = Object.assign({}, this.resDistrictTmp)
+    this.isChange = false
   }
 }

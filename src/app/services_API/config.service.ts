@@ -541,26 +541,8 @@ export class ConfigService{
      return model
    }
 
-   validateProvince(data: any){
-    var err = []
-    //name
-    if(data.nameProvince == null || data.nameProvince == ""){
-       err.push("[Tên thành phố/tỉnh] không được để trống !")
-    }
-    else if (data.nameProvince.length > 30) {
-       err.push("[Tên thành phố/tỉnh] quá dài !")
-    }else if (data.nameProvince.length < 3) {
-      err.push("[Tên thành phố/tỉnh] quá ngắn !")
-    }
-
-
-    return err
-
-   }
-
-   validateRole(data: any, model: any){
+  validateRole(data: any, model: any){
     model.total = 0
-    var err = []
     //name
     if(data.nameRole == null || data.nameRole == ""){
       model.nameRole = "[Tên chức vụ] không được để trống !"
@@ -575,47 +557,65 @@ export class ConfigService{
     }
 
     return model
-   }
+  }
 
-   validateDistrict(data: any){
-    var err = []
-    //name
-    if(data.nameDistrict == null || data.nameDistrict == ""){
-       err.push("[Tên quận/huyện] không được để trống !")
+
+  validateProvince(data: any, model: any){
+    model.total = 0
+    if (data.nameProvince == null || data.nameProvince == "") {
+      model.nameProvince = "[Tên thành phố/tỉnh] không được để trống !"
+      model.total += 1
+    }else if (data.nameProvince.length > 30) {
+      model.nameProvince = "[Tên thành phố/tỉnh] quá dài !"
+      model.total += 1
+    }else if (data.nameProvince.length < 3) {
+      model.nameProvince = "[Tên thành phố/tỉnh] quá ngắn !"
+      model.total += 1
     }
-    else if (data.nameDistrict.length > 30) {
-       err.push("[Tên quận/huyện] quá dài !")
+
+    return model
+  }
+
+  validateDistrict(data: any, model: any){
+    model.total = 0
+    if (data.nameDistrict == null || data.nameDistrict == "") {
+      model.nameDistrict = "[Tên quận/huyện] không được để trống !"
+      model.total += 1
+    }else if (data.nameDistrict.length > 30) {
+      model.nameDistrict = "[Tên quận/huyện] quá dài !"
+      model.total += 1
     }else if (data.nameDistrict.length < 3) {
-      err.push("[Tên quận/huyện] quá ngắn !")
+      model.nameDistrict = "[Tên quận/huyện] quá ngắn !"
+      model.total += 1
     }
 
-    //province
-    if (data.provinceId == null || data.provinceId == "") {
-      err.push("[Thành phố/tỉnh] không được để trống !")
+    if(data.provinceId == null || data.provinceId == ""){
+      model.provinceId = "[Thành phố/tỉnh] không được để trống !"
+      model.total += 1
     }
-    return err
+    return model
+  }
 
-   }
-
-   validateWard(data: any){
-    var err = []
-    //name
-    if(data.nameWard == null || data.nameWard == ""){
-       err.push("[Tên phường/xã] không được để trống !")
-    }
-    else if (data.nameWard.length > 30) {
-       err.push("[Tên phường/xã] quá dài !")
+  validateWard(data: any, model: any){
+    model.total = 0
+    if (data.nameWard == null || data.nameWard == "") {
+      model.nameWard = "[Tên phường/xã] không được để trống !"
+      model.total += 1
+    }else if (data.nameWard.length > 30) {
+      model.nameWard = "[Tên phường/xã] quá dài !"
+      model.total += 1
     }else if (data.nameWard.length < 3) {
-      err.push("[Tên phường/xã] quá ngắn !")
+      model.nameWard = "[Tên phường/xã] quá ngắn !"
+      model.total += 1
     }
 
-    //province
-    if (data.districtId == null || data.districtId == "") {
-      err.push("[Quận/huyện] không được để trống !")
+    if(data.districtId == null || data.districtId == ""){
+      model.districtId = "[Quận/huyện] không được để trống !"
+      model.total += 1
     }
-    return err
+    return model
+  }
 
-   }
 // hotel
 validateHotel(data : any,model: any)
 {

@@ -5,34 +5,33 @@
 <div class="modal-body">
   <ng-container *ngIf="resDistrict">
     <div class="container-fluid" >
-      <div class="row align-items-center">
-        <div class="col-12 text-right">
-          <a href="javascript:void(0)" *ngIf="type == 'detail'" class="btn btn-sm btn-primary" (click)="isEditChange()">{{!isEdit ? "Chỉnh sửa":"Quay lại"}}</a>
-        </div>
-      </div>
-
       <form>
         <div class="pl-lg-4">
           <div class="row">
             <div class="col-lg-12">
               <div class="form-group">
-                <label class="form-control-label" for="name">Tên quận/huyện</label>
-                <input type="text" id="name" name="name" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập tên quận/huyện" [(ngModel)]="resDistrict.nameDistrict" [readonly]="!isEdit">
+                <label class="form-control-label" for="name">Tên quận/huyện
+                  <span class="text-red">* {{this.validateLocation.nameDistrict ? this.validateLocation.nameDistrict : ''}}</span>
+                </label>
+                <input type="text" id="name" name="name" (input)="inputChange()" class="form-control " placeholder="Nhập tên quận/huyện" [(ngModel)]="resDistrict.nameDistrict">
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-lg-12">
               <div class="form-group">
-                <label class="form-control-label" for="idProvince">Thành phố/tỉnh</label>
+                <label class="form-control-label" for="idProvince">Thành phố/tỉnh
+                  <span class="text-red">* {{this.validateLocation.provinceId ? this.validateLocation.provinceId : ''}}</span>
+                </label>
                 <ng-select [items]="resProvince"
                 bindLabel="nameProvince"
                 bindValue="idProvince"
                 [(ngModel)]="resDistrict.provinceId"
-                [disabled]="!isEdit"
                 placeholder="Chọn thành phố/tỉnh..."
                 name="idProvince"
                 id="idProvince"
+                [clearable]="false"
+                [searchable]="false"
                 (change)="inputChange()">
               </ng-select>
               </div>
@@ -45,7 +44,7 @@
     <div class="row align-items-center">
       <div class="col-12 text-right">
         <button  *ngIf="type == 'detail'" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteDistrictModal" (click)="getDataDelete()">Xóa</button>
-        <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="restore()">Khôi phục</button>
+        <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="backup()">Khôi phục</button>
         <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="save()">{{type == 'detail' ? "Lưu":"Thêm"}}</button>
       </div>
     </div>

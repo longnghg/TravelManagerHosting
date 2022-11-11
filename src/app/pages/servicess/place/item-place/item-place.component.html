@@ -14,7 +14,7 @@
                 <label class="form-control-label" for="name">Tên điểm tham quan
                   <span [class]="type != 'create' ?'d-none':'text-red'">* {{this.validatePlace.name ? this.validatePlace.name : ''}}</span>
                 </label>
-                <input type="text" id="name" name="name" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập tên điểm tham quan" [(ngModel)]="resPlace.name" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete">
+                <input type="text" id="name" name="name" (input)="inputChange()" class="form-control " placeholder="Nhập tên điểm tham quan" [(ngModel)]="resPlace.name" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete">
               </div>
             </div>
             <div class="col-lg-6">
@@ -22,7 +22,7 @@
                 <label class="form-control-label" for="phone">Số điện thoại
                   <span [class]="type != 'create' ?'d-none':'text-danger'">* {{this.validatePlace.phone ? this.validatePlace.phone : ''}}</span>
                 </label>
-                <input type="text" id="phone" name="phone" (input)="formatInput($any($event).target, 'phone'); inputChange()" class="form-control form-control-alternative" placeholder="Nhập số điện thoại" [(ngModel)]="resPlace.phone" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete">
+                <input type="text" id="phone" name="phone" (input)="formatInput($any($event).target, 'phone'); inputChange()" class="form-control " placeholder="Nhập số điện thoại" [(ngModel)]="resPlace.phone" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete">
               </div>
             </div>
           </div>
@@ -31,14 +31,14 @@
               <label class="form-control-label" for="input-address">Địa chỉ
                 <span [class]="type != 'create'?'d-none':'text-danger'">* {{this.validatePlace.address ? this.validatePlace.address : ''}}</span>
               </label>
-              <input type="text" id="address" name="address" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập điạ chỉ" [(ngModel)]="resPlace.address" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete">
+              <input type="text" id="address" name="address" (input)="inputChange()" class="form-control " placeholder="Nhập địa chỉ" [(ngModel)]="resPlace.address" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete">
             </div>
 
             <div class="col-lg-6">
               <label class="form-control-label" for="input-address">Giá vé
                 <span [class]="type != 'create'?'d-none':'text-danger'">* {{this.validatePlace.priceTicket ? this.validatePlace.priceTicket : ''}}</span>
               </label>
-              <input type="text" id="priceTicket" name="priceTicket" (input)="formatInput($any($event).target, 'priceTicket');inputChange() " class="form-control form-control-alternative" placeholder="Nhập giá" [(ngModel)]="resPlace.priceTicket" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete">
+              <input type="text" id="priceTicket" name="priceTicket" (input)="formatInput($any($event).target, 'priceTicket');inputChange() " class="form-control " placeholder="Nhập giá" [(ngModel)]="resPlace.priceTicket" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete">
             </div>
           </div>
           <hr>

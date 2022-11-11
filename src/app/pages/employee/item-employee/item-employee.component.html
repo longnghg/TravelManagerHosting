@@ -99,7 +99,7 @@
                       <label class="form-control-label" for="nameEmployee">Họ & tên
                         <span [class]="resEmployee.isDelete ?'d-none':'text-red'">* {{this.validateEmployee.nameEmployee ? this.validateEmployee.nameEmployee : ''}}</span>
                       </label>
-                      <input [(ngModel)]="resEmployee.nameEmployee" (input)="inputChange()" name="nameEmployee" type="text" id="nameEmployee" class="form-control form-control-alternative" placeholder="Nhập họ tên"  [readonly]="resEmployee.isDelete">
+                      <input [(ngModel)]="resEmployee.nameEmployee" (input)="inputChange()" name="nameEmployee" type="text" id="nameEmployee" class="form-control " placeholder="Nhập họ tên"  [readonly]="resEmployee.isDelete">
                     </div>
                   </div>
                   <div class="col-lg-6">
@@ -162,7 +162,7 @@
                       <label class="form-control-label" for="phone">Điện thoại
                         <span [class]="resEmployee.isDelete ?'d-none':'text-red'">* {{this.validateEmployee.phone ? this.validateEmployee.phone : ''}}</span>
                       </label>
-                      <input [(ngModel)]="resEmployee.phone" (input)="formatInput($any($event).target); inputChange()" name="phone" type="text" id="phone" class="form-control form-control-alternative" placeholder="Nhập điện thoại" [readonly]="resEmployee.isDelete">
+                      <input [(ngModel)]="resEmployee.phone" (input)="formatInput($any($event).target); inputChange()" name="phone" type="text" id="phone" class="form-control " placeholder="Nhập điện thoại" [readonly]="resEmployee.isDelete">
                     </div>
                   </div>
                   <div class="col-lg-6">
@@ -170,7 +170,7 @@
                       <label class="form-control-label" for="email">Email
                         <span [class]="type == 'detail' ?'d-none':'text-red'">* {{this.validateEmployee.email ? this.validateEmployee.email : ''}}</span>
                       </label>
-                      <input [(ngModel)]="resEmployee.email" (input)="inputChange()" name="email" type="email" id="email" class="form-control form-control-alternative" placeholder="Nhập email" [readonly]="type == 'detail'">
+                      <input [(ngModel)]="resEmployee.email" (input)="inputChange()" name="email" type="email" id="email" class="form-control " placeholder="Nhập email" [readonly]="type == 'detail'">
                     </div>
                   </div>
                 </div>
@@ -180,7 +180,7 @@
                       <label class="form-control-label" for="address">Địa chỉ
                         <span [class]="resEmployee.isDelete ?'d-none':'text-red'">* {{this.validateEmployee.address ? this.validateEmployee.address : ''}}</span>
                       </label>
-                      <textarea [(ngModel)]="resEmployee.address" (input)="inputChange()" id="address"  name="address" rows="4" class="form-control form-control-alternative" placeholder="Nhập địa chỉ" [readonly]="resEmployee.isDelete"></textarea>
+                      <textarea [(ngModel)]="resEmployee.address" (input)="inputChange()" id="address"  name="address" rows="4" class="form-control " placeholder="Nhập địa chỉ" [readonly]="resEmployee.isDelete"></textarea>
                     </div>
                   </div>
                 </div>
