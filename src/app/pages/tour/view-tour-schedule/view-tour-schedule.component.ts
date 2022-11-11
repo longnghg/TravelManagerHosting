@@ -99,8 +99,9 @@ export class ViewTourScheduleComponent implements OnInit {
     setTimeout(() => {
       this.columnDefs= [
         { field: 'idSchedule', headerName: "Mã số", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'idSchedule'},
-        { field: 'beginDate',headerName: "Ngày bắt đầu", filter: "date", style: "width: 15%;", searchable: true, searchType: 'date', searchObj: 'beginDate'},
-        { field: 'endDate',headerName: "Ngày kết thúc", filter: "date", style: "width: 15%;", searchable: true, searchType: 'date', searchObj: 'endDate'},
+        { field: 'beginDate',headerName: "Ngày bán vé", style: "width: 15%;", filter: 'date', searchable: true, searchType: 'date', typeDate: 'range', searchObj: 'beginDate'},
+        // { field: 'beginDate',headerName: "Ngày bắt đầu", filter: "date", style: "width: 15%;", searchable: true, searchType: 'date', searchObj: 'beginDate'},
+        // { field: 'endDate',headerName: "Ngày kết thúc", filter: "date", style: "width: 15%;", searchable: true, searchType: 'date', searchObj: 'endDate'},
         { field: 'totalCostTourNotService',headerName: "Tổng chi phí", style: "width: 10%;", searchable: true, searchType: 'number', searchObj: 'TotalCostTour'},
         { field: 'finalPrice',headerName: "Tổng tiền", style: "width: 10%;", searchable: true, searchType: 'number', searchObj: 'FinalPrice'},
         { field: 'finalPriceHoliday',headerName: "Tổng tiền ngày lễ", style: "width: 10%;", searchable: true, searchType: 'number', searchObj: 'FinalPriceHoliday'},
