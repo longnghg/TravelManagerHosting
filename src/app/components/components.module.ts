@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { NgSelectModule }           from '@ng-select/ng-select';
 import { NgOptionHighlightModule }  from '@ng-select/ng-option-highlight';
 import { PipesModule } from "../pipes/pipes.module";
+import { DateTimePickerComponent } from './date-time-picker/date-time-picker.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -26,14 +27,16 @@ import { PipesModule } from "../pipes/pipes.module";
     NavbarComponent,
     SidebarComponent,
     GridDataComponent,
-    Grid2DataComponent
+    Grid2DataComponent,
+    DateTimePickerComponent
   ],
   exports: [
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
     GridDataComponent,
-    Grid2DataComponent
+    Grid2DataComponent,
+    DateTimePickerComponent
   ]
 })
 export class ComponentsModule { }

@@ -116,7 +116,9 @@ export class ListEmployeeComponent implements OnInit {
     this.type = e
     this.employeeService.gets(this.type).subscribe(res => {
       this.response = res
-      if(!this.response.notification.type)
+      console.log(res);
+
+      if(this.response.notification.type == StatusNotification.Success)
       {
         this.resEmployee = this.response.content
         this.resEmployeeTmp = Object.assign([], this.resEmployee)

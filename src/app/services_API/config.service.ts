@@ -1,15 +1,20 @@
 import { Injectable, Inject } from "@angular/core";
 import { DOCUMENT } from '@angular/common';
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
+import { Router } from '@angular/router';
+import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { ROUTES } from '../components/sidebar/sidebar.component';
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigService{
-  constructor(@Inject(DOCUMENT) private document: Document){}
+  public location: Location;
+  constructor(@Inject(DOCUMENT) private document: Document, location: Location){
+    this.location = location;
+  }
   private hubConnectionBuilder: HubConnection
   public apiUrl = "https://localhost:44394";
   public clientUrl = this.document.location.origin
-
   signIR(){
      return this.hubConnectionBuilder = new HubConnectionBuilder()
     .configureLogging(LogLevel.Information).withUrl(`${this.apiUrl}/travelhub`,
@@ -851,5 +856,20 @@ validateHotel(data : any,model: any)
    }
 
 
-
+   checkRole(){
+    var check = 0
+    var auth = JSON.parse(localStorage.getItem("currentUser"))
+    var titlee = this.location.prepareExternalUrl(this.location.path());
+    var menuItem = ROUTES.filter(menuItem => menuItem);
+    menuItem.forEach(item => {
+      item.roles.forEach(role => {
+        if (role == auth.roleId && item.path == titlee) {
+          check++
+        }
+      });
+    });
+    if (check == 0) {
+      location.assign(this.clientUrl + "/login")
+    }
+   }
 }

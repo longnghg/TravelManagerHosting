@@ -17,6 +17,8 @@ export class ListHotelComponent implements OnInit {
   auth: AuthenticationModel
   resHotel: HotelModel[]
   resHotelWaiting: HotelModel[]
+  resHotelTmp: HotelModel[]
+  resHotelWaitingTmp: HotelModel[]
   response: ResponseModel
   dataChild: HotelModel
   typeChild: string
@@ -61,9 +63,32 @@ export class ListHotelComponent implements OnInit {
           this.resHotel = this.response.content
         }
         else{
-          console.log(this.resHotelWaiting);
+          this.resHotel = this.resHotelTmp
+          this.notificationService.handleAlertObj(res.notification)
+        }
 
-          this.resHotel = this.resHotelWaiting
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, StatusNotification.Error)
+      })
+    }
+  }
+
+  searchWaiting(e?){
+    if (e) {
+      this.hotelService.searchWaiting(Object.assign({}, e)).subscribe(res => {
+        this.response = res
+        if(this.response.notification.type == StatusNotification.Success)
+        {
+          this.resHotelWaiting = this.response.content
+
+          this.resHotelWaiting.forEach(hotel => {
+            hotel.approveName = StatusApprove[hotel.approve]
+            hotel.typeActionName = TypeAction[hotel.typeAction]
+          });
+        }
+        else{
+          this.resHotelWaiting = this.resHotelWaitingTmp
           this.notificationService.handleAlertObj(res.notification)
         }
 
@@ -79,6 +104,8 @@ export class ListHotelComponent implements OnInit {
       this.response = res
       if(this.response.notification.type == StatusNotification.Success){
         this.resHotel = this.response.content
+        this.resHotelTmp = Object.assign([], this.resHotel)
+
       }else{
         this.notificationService.handleAlertObj(res.notification)
       }
@@ -111,17 +138,19 @@ export class ListHotelComponent implements OnInit {
           hotel.approveName = StatusApprove[hotel.approve]
           hotel.typeActionName = TypeAction[hotel.typeAction]
         });
+
+        this.resHotelWaitingTmp = Object.assign([], this.resHotelWaiting)
+
       }else{
         this.notificationService.handleAlertObj(res.notification)
       }
 
       this.columnDefsWaiting= [
-        { field: 'name',headerName: "Tên khách sạn", style: "width: 20%;", searchable: true, searchType: "text", searchObj: 'name'},
+        { field: 'name',headerName: "Tên khách sạn", style: "width: 30%;", searchable: true, searchType: "text", searchObj: 'name'},
         { field: 'phone',headerName: "Số điện thoại", style: "width: 12%;", searchable: true, searchType: 'text', searchObj: 'phone'},
-        { field: 'modifyBy',headerName: "Người yêu cầu", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'modifyBy'},
-        { field: 'modifyDate',headerName: "Ngày yêu cầu", style: "width: 12%;", filter: 'date', searchable: true, searchType: 'date', searchObj: 'modifyDate'},
-        { field: 'approveName',headerName: "Trạng thái phê duyệt", style: "width: 15%;", searchable: true, searchType: 'section', searchObj: 'approve' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listApprove()},
-        { field: 'typeActionName',headerName: "Loại phê duyệt", style: "width: 11%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()},
+        { field: 'modifyBy',headerName: "Người yêu cầu", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'modifyBy'},
+        { field: 'modifyDate',headerName: "Ngày yêu cầu", style: "width: 20%;", filter: 'date', searchable: true, searchType: 'date', typeDate: 'range', searchObj: 'modifyDate'},
+        { field: 'typeActionName',headerName: "Loại phê duyệt", style: "width: 13%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()},
 
       ];
     }, error => {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { ConfigService } from "../../services_API/config.service";
 @Component({
   selector: 'app-admin-layout',
   templateUrl: './admin-layout.component.html',
@@ -7,10 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminLayoutComponent implements OnInit {
 
-  constructor() { }
+  constructor(private configService: ConfigService) { }
 
   ngOnInit() {
-   
+    this.configService.checkRole()
   }
 
 }

@@ -90,10 +90,12 @@
 
       <ul class="navbar-nav">
           <li *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
-              <a routerLinkActive="active" [routerLink]="[menuItem.path]" class="nav-link">
-                  <i class="{{menuItem.icon}}"></i>
-                  {{menuItem.title}}
-              </a>
+             <ng-container *ngFor="let role of menuItem.roles">
+              <a *ngIf="auth.roleId == role" routerLinkActive="active" [routerLink]="[menuItem.path]" class="nav-link">
+                <i class="{{menuItem.icon}}"></i>
+                {{menuItem.title}}
+            </a>
+             </ng-container>
           </li>
       </ul>
 

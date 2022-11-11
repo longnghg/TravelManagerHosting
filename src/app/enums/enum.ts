@@ -1,10 +1,11 @@
 export enum RoleTitle {
   'Admin' = -1,
-  'Quản lý cục bộ' = 1,
-  'Quản lý dịch vụ' = 2,
-  'Quản lý tour' = 3,
-  'Quản lý tour booking' = 4
+  'Quản lý cục bộ', LocalManager = 1,
+  'Quản lý dịch vụ', ServiceManager = 2,
+  'Quản lý tour', TourManager = 3,
+  'Quản lý tour booking', TourBookingManager = 4
 }
+
 
 // export enum StatusBooking {
 //   'Đã thanh toán',

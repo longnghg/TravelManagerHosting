@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js';
-
+import { ConfigService } from "../../services_API/config.service";
 // core components
 import {
   chartOptions,
@@ -21,7 +21,9 @@ export class DashboardComponent implements OnInit {
   public salesChart;
   public clicked: boolean = true;
   public clicked1: boolean = false;
+  constructor(private configService: ConfigService){
 
+  }
   ngOnInit() {
 
     this.datasets = [

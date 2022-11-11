@@ -6,7 +6,7 @@
         <th scope="col" *ngFor="let column of columnDefs" [style]="column.style">{{column.headerName}}
           <ng-container *ngIf="column.searchType == 'section'; else elseSection">
             <ng-container *ngIf="column.filter == 'star'; else elseStar">
-              <ng-select style="width: 100%;" [virtualScroll]="true" [items]="column.listSection" (open)="ngOnChanges()"  placeholder="Tìm kiếm..." (change)="selectSection(column.searchObj)" id="section" name="section" [(ngModel)]="keyword[column.searchObj+'Tmp']" [bindLabel]="column.bindLabel" [bindValue]="column.bindValue" appendTo="body" [multiple]="column.multiple"  dropdownPosition="auto" [searchable]="false" [closeOnSelect]="column.closeOnSelect">
+              <ng-select  [virtualScroll]="true" [items]="column.listSection" (open)="ngOnChanges()"  placeholder="Tìm kiếm..." (change)="selectSection(column.searchObj)" id="section" name="section" [(ngModel)]="keyword[column.searchObj+'Tmp']" [bindLabel]="column.bindLabel" [bindValue]="column.bindValue" appendTo="body" [multiple]="column.multiple"  dropdownPosition="auto" [searchable]="false" [closeOnSelect]="column.closeOnSelect">
                 <ng-container *ngIf="column.multiple;">
                   <ng-template ng-label-tmp let-item="item" let-item$="item$" let-index="index">
                     {{item[column.bindLabel]}} -
@@ -25,7 +25,7 @@
               </ng-select>
             </ng-container>
             <ng-template #elseStar>
-              <ng-select style="width: 100%;" [virtualScroll]="true" [items]="column.listSection" (open)="ngOnChanges()"  placeholder="Tìm kiếm..." (change)="selectSection(column.searchObj)" id="section" name="section" [(ngModel)]="keyword[column.searchObj+'Tmp']" [bindLabel]="column.bindLabel" [bindValue]="column.bindValue" appendTo="body" [multiple]="column.multiple"  dropdownPosition="auto" [searchable]="false" [closeOnSelect]="column.closeOnSelect">
+              <ng-select  [virtualScroll]="true" [items]="column.listSection" (open)="ngOnChanges()"  placeholder="Tìm kiếm..." (change)="selectSection(column.searchObj)" id="section" name="section" [(ngModel)]="keyword[column.searchObj+'Tmp']" [bindLabel]="column.bindLabel" [bindValue]="column.bindValue" appendTo="body" [multiple]="column.multiple"  dropdownPosition="auto" [searchable]="false" [closeOnSelect]="column.closeOnSelect">
                 <ng-container *ngIf="column.multiple;">
                   <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
                     <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item[column.bindLabel]}}
@@ -35,16 +35,47 @@
             </ng-template>
           </ng-container>
           <ng-template #elseSection>
-            <ng-container *ngIf="column.searchType == 'date'; else elseDateTime">
-              <input style="width: 100%;" class="form-control custom-pages-input" style="height: 30px" name="dp" [(ngModel)]="keyword[column.searchObj+'Tmp']" onkeydown="return false"   placeholder="DD/MM/YYYY"  type="date"/>
+            <ng-container *ngIf="column.searchType == 'date'; else elseDate">
+              <ng-container *ngIf="column.typeDate == 'range'; else elseTypeDate">
+                <div class="row">
+                  <div class="col-4" style="padding-top: 8px;">Từ ngày </div>
+                  <input  class="col-8 form-control custom-pages-input" style="height: 30px;" name="dp" (change)="search(column.searchObj)" [(ngModel)]="keyword[column.searchObj+'From']" onkeydown="return false"   placeholder="DD/MM/YYYY"  type="date"/>
+                 </div>
+                 <div class="row">
+                  <div class="col-4" style="padding-top: 8px;">Đến ngày </div>
+                  <input  class="col-8 form-control custom-pages-input" style="height: 30px;" name="dp" (change)="search(column.searchObj)" [(ngModel)]="keyword[column.searchObj+'To']" onkeydown="return false"   placeholder="DD/MM/YYYY"  type="date"/>
+                 </div>
+              </ng-container>
+              <ng-template #elseTypeDate>
+                <input  class="form-control custom-pages-input" style="height: 30px" name="dp" (change)="search(column.searchObj)" [(ngModel)]="keyword[column.searchObj]" onkeydown="return false"  type="date"/>
+              </ng-template>
+
             </ng-container>
-            <ng-template #elseDateTime>
+            <ng-template #elseDate>
+             <ng-container *ngIf="column.searchType == 'dateTime'; else elseDateTime">
+              <ng-container *ngIf="column.typeDate == 'range'; else elseTypeDateTime">
+                <div class="row">
+                  <div class="col-4" style="padding-top: 8px;">Từ ngày </div>
+                  <input  class="col-8 form-control custom-pages-input" style="height: 30px;" (change)="search(column.searchObj)" name="dp" [(ngModel)]="keyword[column.searchObj+'From']" onkeydown="return false"   placeholder="DD/MM/YYYY"  type="datetime-local"/>
+                 </div>
+                 <div class="row">
+                   <div class="col-4" style="padding-top: 8px;">Đến ngày </div>
+                   <input  class="col-8 form-control custom-pages-input" style="height: 30px;" (change)="search(column.searchObj)" name="dp" [(ngModel)]="keyword[column.searchObj+'To']" onkeydown="return false"   placeholder="DD/MM/YYYY"  type="datetime-local"/>
+                  </div>
+              </ng-container>
+              <ng-template #elseTypeDateTime>
+                <input  class="form-control custom-pages-input" style="height: 30px" name="dp" (change)="search(column.searchObj)" [(ngModel)]="keyword[column.searchObj]" onkeydown="return false"  type="date"/>
+              </ng-template>
+             </ng-container>
+             <ng-template #elseDateTime>
               <ng-container *ngIf="column.filter == 'number'; else elseNumber">
-                <input *ngIf="column.searchable" style="width: 100%;"  placeholder="Tìm kiếm..." (input)="formatInput($any($event).target, keyword, column.field)" (blur)="search(column.searchObj)" [(ngModel)]="keyword[column.field]" [type]="column.searchType" class="form-control custom-pages-input" style="height: 30px" [name]="column.field" [id]="column.field">
+                <input *ngIf="column.searchable"   placeholder="Tìm kiếm..." (input)="formatInput($any($event).target, keyword, column.field)" (blur)="search(column.searchObj)" [(ngModel)]="keyword[column.field]" [type]="column.searchType" class="form-control custom-pages-input" style="height: 30px" [name]="column.field" [id]="column.field">
                </ng-container>
                <ng-template #elseNumber>
-                <input *ngIf="column.searchable" style="width: 100%;"  placeholder="Tìm kiếm..."  (blur)="search(column.searchObj)" [(ngModel)]="keyword[column.field]" [type]="column.searchType" class="form-control custom-pages-input" style="height: 30px" [name]="column.field" [id]="column.field">
+                <input *ngIf="column.searchable"   placeholder="Tìm kiếm..."  (blur)="search(column.searchObj)" [(ngModel)]="keyword[column.field]" [type]="column.searchType" class="form-control custom-pages-input" style="height: 30px" [name]="column.field" [id]="column.field">
                </ng-template>
+             </ng-template>
+
             </ng-template>
           </ng-template>
         </th>

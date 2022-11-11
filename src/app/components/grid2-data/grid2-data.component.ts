@@ -121,7 +121,6 @@ export class Grid2DataComponent implements OnInit {
    var kw = ""
     var i = 0
     if (this.keyword[name+'Tmp']) {
-
       if (this.keyword[name+'Tmp'].length > 0) {
         this.keyword[name+'Tmp'].forEach(item => {
           if ( i < this.keyword[name+'Tmp'].length-1) {
@@ -151,14 +150,11 @@ export class Grid2DataComponent implements OnInit {
     if (this.gridConfig.isRestore) {
       this.gridConfig.isRestore = false
       this.gdChecked.emit(false);
-
     }
     else{
       this.gridConfig.isRestore = true
       this.gdChecked.emit(true);
     }
-    console.log(this.gridConfig.isRestore);
-
   }
   setCache(){
     this.pageNumber = 1
@@ -199,7 +195,7 @@ export interface ColDef2{
   headerName?: string
   filter?: GridFilter
   style?: string
-  // searchStyle?: string
+  typeDate?: GridTypeDate
   searchable?: boolean
   searchObj?: any
   searchType?: GridSearchType
@@ -229,4 +225,5 @@ export class GridConfig2{
   isRestore?: boolean
 }
 export declare type GridFilter = 'star' | 'number' | 'date' | 'status' | 'text' | 'call' ;
-export declare type GridSearchType = 'section' | 'number' | 'date' | 'text' | 'email';
+export declare type GridSearchType = 'section' | 'number' | 'date' | 'dateTime' | 'text' | 'email';
+export declare type  GridTypeDate = 'single' | 'range' ;

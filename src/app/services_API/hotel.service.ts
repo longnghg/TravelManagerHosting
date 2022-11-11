@@ -77,4 +77,7 @@ search(data){
   return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Service/search-hotel", data);
 }
 
+searchWaiting(data){
+  return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Service/search-hotel-waiting", data);
+}
 }

@@ -7,7 +7,8 @@ import { EmployeeModel } from "../../models/employee.model";
 import { RoleModel} from "../../models/role.model";
 import { ResponseModel } from "../../models/responsiveModels/response.model";
 import { StatusNotification } from "../../enums/enum";
-
+import { Router } from '@angular/router';
+import { ROUTES } from '../../components/sidebar/sidebar.component';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -23,7 +24,7 @@ export class LoginComponent implements OnInit {
   isloading = false
   countLoginFail = 0
   timeBlock: any
-  constructor( private configService:ConfigService, private notificationService:NotificationService, private authenticationService:AuthenticationService) { }
+  constructor(private router: Router, private configService:ConfigService, private notificationService:NotificationService, private authenticationService:AuthenticationService) { }
   ngOnInit() {
     this.resEmployee.email = "test1@gmail.com"
     this.resEmployee.password = "123"
@@ -53,9 +54,10 @@ export class LoginComponent implements OnInit {
         if(this.response.notification.type == StatusNotification.Success)
         {
           this.resAthentication = this.response.content
+          var path = this.checkRole(this.resAthentication.roleId)
           localStorage.setItem("token", this.resAthentication.token)
           localStorage.setItem("currentUser", JSON.stringify(this.resAthentication))
-          document.location.assign(this.configService.clientUrl + "/dashboard")
+          document.location.assign(this.configService.clientUrl + path)
         }
         else if(this.response.notification.type == StatusNotification.Block){
           this.timeBlock = this.response.content
@@ -86,4 +88,17 @@ export class LoginComponent implements OnInit {
       })
     }
     }}
+
+    checkRole(roleId){
+      var path = ""
+      var menuItem = ROUTES.filter(menuItem => menuItem);
+      menuItem.forEach(item => {
+        item.roles.forEach(role => {
+          if (role == roleId && !path) {
+            path = item.path
+          }
+        });
+      });
+      return path
+    }
   }

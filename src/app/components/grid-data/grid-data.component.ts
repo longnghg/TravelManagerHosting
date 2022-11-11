@@ -119,8 +119,6 @@ export class GridDataComponent implements OnInit {
   selectSection(name){
     var kw = ""
      var i = 0
-     console.log(this.keyword);
-
      if (this.keyword[name+'Tmp']) {
        if (this.keyword[name+'Tmp'].length > 0) {
          this.keyword[name+'Tmp'].forEach(item => {
@@ -163,6 +161,8 @@ export class GridDataComponent implements OnInit {
   }
   setCache(){
     this.keyword.isDelete = this.gridConfig.isRestore
+    console.log(this.keyword);
+
     this.gdSearch.emit(this.keyword);
   }
 
@@ -189,8 +189,8 @@ export interface ColDef{
   field?: string
   headerName?: string
   filter?: GridFilter
+  typeDate?: GridTypeDate
   style?: string
-  // searchStyle?: string
   searchable?: boolean
   searchObj?: any
   searchType?: GridSearchType
@@ -219,4 +219,5 @@ export class GridConfig{
 }
 
 export declare type GridFilter = 'star' | 'number' | 'date' | 'status' | 'text' | 'call' ;
-export declare type GridSearchType = 'section' | 'number' | 'date' | 'text' | 'email';
+export declare type GridSearchType = 'section' | 'number' | 'date' | 'dateTime' | 'text' | 'email';
+export declare type  GridTypeDate = 'single' | 'range' ;

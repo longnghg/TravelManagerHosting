@@ -34,22 +34,45 @@
               </ng-template>
             </ng-container>
             <ng-template #elseSection>
-              <ng-container *ngIf="column.searchType == 'date'; else elseDateTime">
-                <div class="form-group">
-                  <div class="input-group input-group-alternative">
-                    <!-- <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
-                    </div> -->
-                    <input style="width: 100%;" class="form-control datepicker" name="dp" [(ngModel)]="model" onkeydown="return false"   placeholder="DD/MM/YYYY"  type="date"/>
-                  </div>
-                </div>
+              <ng-container *ngIf="column.searchType == 'date'; else elseDate">
+                <ng-container *ngIf="column.typeDate == 'range'; else elseTypeDate">
+                  <div class="row">
+                    <div class="col-4" style="padding-top: 8px;">Từ ngày </div>
+                    <input  class="col-8 form-control custom-pages-input" style="height: 30px;" name="dp" (change)="search(column.searchObj)" [(ngModel)]="keyword[column.searchObj+'From']" onkeydown="return false"   placeholder="DD/MM/YYYY"  type="date"/>
+                   </div>
+                   <div class="row">
+                    <div class="col-4" style="padding-top: 8px;">Đến ngày </div>
+                    <input  class="col-8 form-control custom-pages-input" style="height: 30px;" name="dp" (change)="search(column.searchObj)" [(ngModel)]="keyword[column.searchObj+'To']" onkeydown="return false"   placeholder="DD/MM/YYYY"  type="date"/>
+                   </div>
+                </ng-container>
+                <ng-template #elseTypeDate>
+                  <input  class="form-control custom-pages-input" style="height: 30px" name="dp" (change)="search(column.searchObj)" [(ngModel)]="keyword[column.searchObj]" onkeydown="return false"  type="date"/>
+                </ng-template>
+
               </ng-container>
-              <ng-template #elseDateTime>
-               <ng-container *ngIf="column.filter == 'number'; else elseNumber">
-                <input *ngIf="column.searchable" style="width: 100%;"  placeholder="Tìm kiếm..." (input)="formatInput($any($event).target, keyword, column.field)" (blur)="search(column.searchObj)" [(ngModel)]="keyword[column.field]" [type]="column.searchType" class="form-control custom-pages-input" style="height: 30px" [name]="column.field" [id]="column.field">
+              <ng-template #elseDate>
+               <ng-container *ngIf="column.searchType == 'dateTime'; else elseDateTime">
+                <ng-container *ngIf="column.typeDate == 'range'; else elseTypeDateTime">
+                  <div class="row">
+                    <div class="col-4" style="padding-top: 8px;">Từ ngày </div>
+                    <input  class="col-8 form-control custom-pages-input" style="height: 30px;" (change)="search(column.searchObj)" name="dp" [(ngModel)]="keyword[column.searchObj+'From']" onkeydown="return false"   placeholder="DD/MM/YYYY"  type="datetime-local"/>
+                   </div>
+                   <div class="row">
+                     <div class="col-4" style="padding-top: 8px;">Đến ngày </div>
+                     <input  class="col-8 form-control custom-pages-input" style="height: 30px;" (change)="search(column.searchObj)" name="dp" [(ngModel)]="keyword[column.searchObj+'To']" onkeydown="return false"   placeholder="DD/MM/YYYY"  type="datetime-local"/>
+                    </div>
+                </ng-container>
+                <ng-template #elseTypeDateTime>
+                  <input  class="form-control custom-pages-input" style="height: 30px" name="dp" (change)="search(column.searchObj)" [(ngModel)]="keyword[column.searchObj]" onkeydown="return false"  type="date"/>
+                </ng-template>
                </ng-container>
-               <ng-template #elseNumber>
-                <input *ngIf="column.searchable" style="width: 100%;"  placeholder="Tìm kiếm..."  (blur)="search(column.searchObj)" [(ngModel)]="keyword[column.field]" style="width: 100%;" class="form-control custom-pages-input" style="height: 30px" [name]="column.field" [id]="column.field">
+               <ng-template #elseDateTime>
+                <ng-container *ngIf="column.filter == 'number'; else elseNumber">
+                  <input *ngIf="column.searchable"   placeholder="Tìm kiếm..." (input)="formatInput($any($event).target, keyword, column.field)" (blur)="search(column.searchObj)" [(ngModel)]="keyword[column.field]" [type]="column.searchType" class="form-control custom-pages-input" style="height: 30px" [name]="column.field" [id]="column.field">
+                 </ng-container>
+                 <ng-template #elseNumber>
+                  <input *ngIf="column.searchable"   placeholder="Tìm kiếm..."  (blur)="search(column.searchObj)" [(ngModel)]="keyword[column.field]" [type]="column.searchType" class="form-control custom-pages-input" style="height: 30px" [name]="column.field" [id]="column.field">
+                 </ng-template>
                </ng-template>
 
               </ng-template>
