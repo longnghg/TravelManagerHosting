@@ -51,4 +51,8 @@ refused(idSchedule: any){
 search(data, idTour: any){
   return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Schedule/search-schedule?idTour="+idTour, data);
 }
+
+searchWaiting(data, idTour: any){
+  return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Schedule/search-schedule-waiting?idTour="+idTour, data);
+}
 }

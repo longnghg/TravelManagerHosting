@@ -115,13 +115,14 @@ export class ListTourComponent implements OnInit {
         ];
 
         this.columnDefsWaiting= [
-          { field: 'idTour', headerName: "Mã số", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'idTour'},
+          { field: 'idTour', headerName: "Mã số", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'idTour'},
           { field: 'nameTour',headerName: "Tên", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'tourName'},
           { field: 'toPlace',headerName: "Đến", style: "width: 10%;", searchable: true, searchType: 'text', searchObj: 'address'},
-          { field: 'rating',headerName: "Số sao", style: "width: 15%;", filter: "star",searchable: true, searchType: 'section', searchObj: 'rating' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.list10Star()},
+          { field: 'modifyBy',headerName: "Người yêu cầu", style: "width: 10%;", searchable: true, searchType: 'text', searchObj: 'modifyBy'},
+          { field: 'modifyDate',headerName: "Ngày yêu cầu", style: "width: 15%;", filter: 'date', searchable: true, searchType: 'date', typeDate: 'range', searchObj: 'modifyDate'},
           { field: 'typeAction',headerName: "Loại phê duyệt", style: "width: 10%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()}, 
           { field: 'approveName',headerName: "Trạng thái phê duyệt", style: "width: 10%;"},
-          { field: 'status',headerName: "Trạng thái", style: 'width: 10%',  filter: "status"},
+          { field: 'status',headerName: "Trạng thái", style: 'width: 5%',  filter: "status"},
         ];
       }, 200);
 
@@ -173,7 +174,6 @@ export class ListTourComponent implements OnInit {
             });
           }
           else{
-            this.resTour = this.restourTmp
             this.notificationService.handleAlertObj(res.notification)
           }
   

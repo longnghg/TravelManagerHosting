@@ -22,4 +22,5 @@ export class ValidateTourModel{
   nameTour: string = null
   toPlace: string = null
   thumbnail: string = null
+  rating: number = null
 }
