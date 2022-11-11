@@ -100,7 +100,7 @@ export class ItemTourScheduleComponent implements OnInit {
         this.resScheduleTmp = Object.assign({}, this.resSchedule)
         this.resCostTourTmp = Object.assign({}, this.resCostTour)
 
-        
+
         this.costtourService.getCostbyidSchedule(this.resSchedule.idSchedule).subscribe(res => {
           this.response = res
           this.resCostTour = this.response.content
@@ -141,7 +141,7 @@ export class ItemTourScheduleComponent implements OnInit {
 
 
   init(e?) {
-    this.employeeService.views(e).then(response => {
+    this.employeeService.views().then(response => {
       this.resEmployee = response
     })
     this.carService.views().then(response => {
@@ -151,7 +151,7 @@ export class ItemTourScheduleComponent implements OnInit {
       this.resPromotion = response
     })
     this.provinceService.views().then(response => {
-      this.resProvince = response 
+      this.resProvince = response
     })
   }
 
@@ -206,7 +206,7 @@ export class ItemTourScheduleComponent implements OnInit {
           if (this.type == "create") {
             this.resSchedule.idUserModify = this.auth.id
             this.resSchedule.tourId = idTour
-            
+
             this.scheduleService.create(this.resSchedule).subscribe(res => {
               this.response = res
 
@@ -233,7 +233,7 @@ export class ItemTourScheduleComponent implements OnInit {
                     console.log(timeline);
 
                   });
-                  
+
                   this.timelineService.create(this.timelineList).subscribe(res => {
                     this.response = res
                     if (this.response.notification.type == StatusNotification.Success) {
@@ -327,12 +327,12 @@ export class ItemTourScheduleComponent implements OnInit {
     this.validateTimeline = new ValidateTimelineModel
     this.validateTimeline = this.configService.validateTimeline(this.resTimeline, this.validateTimeline)
     console.log(this.validateTimeline);
-    
+
     if (this.validateTimeline.total == 0) {
       this.resTimelinelist.push(Object.assign({}, this.resTimeline))
       this.resTimeline = new TimeLineModel()
     }
-    
+
   }
 
   btnDeleteTimeline(){

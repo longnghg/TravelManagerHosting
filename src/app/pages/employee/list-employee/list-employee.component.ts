@@ -42,9 +42,14 @@ export class ListEmployeeComponent implements OnInit {
   }
 
   public gridConfig2: GridConfig2 = {
-
+    idModalRestore: "restoreEmployeeModal1",
+    idModalDelete: "deleteEmployeeModal1",
+    route: "item-employee",
+    alias: "idEmployee",
+    style: "height: 330px;",
+    radioBoxName: "Kho lưu trữ",
+    disableApprove: true
   }
-
 
     constructor(private roleService: RoleService,
        private configService: ConfigService,
@@ -53,33 +58,6 @@ export class ListEmployeeComponent implements OnInit {
 
   ngOnInit() {
     this.auth = JSON.parse(localStorage.getItem("currentUser"));
-    if(this.auth.roleId == RoleTitle.Admin)
-    {
-      this.gridConfig2 = {
-        idModalRestore: "restoreEmployeeModal1",
-        idModalDelete: "deleteEmployeeModal1",
-        route: "item-employee",
-        alias: "idEmployee",
-        style: "height: 330px;",
-        radioBoxName: "Kho lưu trữ",
-        disableApprove: true
-      }
-    }
-    else{
-      this.gridConfig2 = {
-        idModalRestore: "restoreEmployeeModal1",
-        idModalDelete: "deleteEmployeeModal1",
-        route: "item-employee",
-        alias: "idEmployee",
-        style: "height: 330px;",
-        disableRadioBox: true,
-        disableCreate: true,
-        disableDelete: true,
-        disableRestore: true,
-        disableApprove: true
-      }
-    }
-
     if (history.state.isDelete) {
       this.gridConfig2.isRestore = history.state.isDelete
       this.init(history.state.isDelete)
@@ -87,9 +65,6 @@ export class ListEmployeeComponent implements OnInit {
     else{
       this.init(this.type)
     }
-
-
-
   }
 
   search(e?){
@@ -116,8 +91,6 @@ export class ListEmployeeComponent implements OnInit {
     this.type = e
     this.employeeService.gets(this.type).subscribe(res => {
       this.response = res
-      console.log(res);
-
       if(this.response.notification.type == StatusNotification.Success)
       {
         this.resEmployee = this.response.content
@@ -133,21 +106,19 @@ export class ListEmployeeComponent implements OnInit {
       this.notificationService.handleAlert(message, StatusNotification.Error)
     })
 
-    this.roleService.views().then(response => {
-      this.resRole = response
-      this.columnDefs= [
+
+    this.roleService.views().then(response =>
+      {
+        this.resRole = response
+      this.columnDefs = [
         { field: 'nameEmployee',headerName: "Tên", style: 'width: 20%',   searchable: true, searchType: 'text', searchObj: 'nameEmployee'},
         { field: 'email',headerName: "Email", style: 'width: 15%', searchable: true, searchType: 'email', searchObj: 'email'},
         { field: 'phone',headerName: "Số điện thoại", style: 'width: 15%', filter: "number",searchable: true, searchType: 'text', searchObj: 'phone'},
         { field: 'roleName',headerName: "Chức vụ", style: 'width: 25%', searchable: true, searchType: 'section', searchObj: 'roleId', multiple: true, closeOnSelect: false, bindLabel: 'nameRole', bindValue: "idRole", listSection: this.resRole},
         { field: 'isActive',headerName: "Kích hoạt", style: 'width: 15%',  filter: "status", searchable: true, searchType: 'section', multiple: false, closeOnSelect: true, searchObj: 'isActive', bindLabel: "name", bindValue: "id", listSection: this.configService.listStatus()},
       ];
-    })
-
-    setTimeout(() => {
-
-
-    }, 500);
+      }
+    )
   }
 
   childData(e){

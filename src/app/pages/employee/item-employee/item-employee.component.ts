@@ -52,7 +52,7 @@ export class ItemEmployeeComponent implements OnInit{
       this.employeeService.get(this.idEmployee).subscribe(res => {
         this.response = res
 
-        if(!this.response.notification.type)
+        if(this.response.notification.type == StatusNotification.Success)
         {
           this.resEmployee = this.response.content
           this.resEmployeeTmp = Object.assign({}, this.resEmployee)

@@ -4,7 +4,7 @@ import { ConfigService } from "./config.service";
 import { ResponseModel } from "../models/responsiveModels/response.model";
 import { RoleModel } from "../models/role.model";
 import { NotificationService } from "../services_API/notification.service";
-
+import { StatusNotification } from "../enums/enum";
 @Injectable({
     providedIn: 'root'
 })
@@ -18,26 +18,20 @@ export class RoleService{
     var value = <any>await new Promise<any>(resolve => {
       this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/gets-role?isDelete="+false).subscribe(res => {
         this.response = res
-        if(!this.response.notification.type)
+        if(this.response.notification.type == StatusNotification.Success)
         {
           this.resRole =  this.response.content
           resolve(this.resRole);
         }
-        else{
-          this.notificationService.handleAlertObj(res.notification)
-        }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
+      this.notificationService.handleAlert(message, StatusNotification.Error)
     })})
     return value
 
   }
   gets(isDelete: any)
   {
-    if (!isDelete) {
-      isDelete = false
-    }
       return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/gets-role?isDelete="+isDelete);
   }
   search(data: any)

@@ -62,7 +62,7 @@ export class ItemScheduleComponent implements OnInit {
   }
 
   init(e?){
-    this.employeeService.views(e).then(response =>{
+    this.employeeService.views().then(response =>{
       this.resEmployee = response
     })
     this.carService.views().then(response =>{

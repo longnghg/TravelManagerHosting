@@ -14,13 +14,10 @@ export class EmployeeService{
 
   response: ResponseModel
   resEmployee: EmployeeModel[]
-  async views(isDelete: any)
+  async views()
   {
     var value = <any>await new Promise<any>(resolve => {
-      if (!isDelete) {
-        isDelete = false
-      }
-      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/gets-employee?isDelete="+isDelete).subscribe(res => {
+      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/gets-employee?isDelete="+false).subscribe(res => {
         this.response = res
         if(this.response.notification.type == StatusNotification.Success)
         {
@@ -39,9 +36,6 @@ export class EmployeeService{
   }
   gets(isDelete: any)
   {
-    // if (!isDelete) {
-    //   isDelete = false
-    // }
       return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/gets-employee?isDelete="+isDelete);
   }
 
