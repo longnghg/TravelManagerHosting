@@ -177,6 +177,22 @@
                   </div>
                 </fieldset>
               </div>
+
+              <div class="row"  style="margin-top: 10px;">
+                <fieldset class="mt-4" *ngIf="type == 'approve' || type == 'refuse' || type == 'cancelRequire'">
+                  <legend>Thông tin người yêu cầu</legend>
+                  <div class="row" style="margin-top: -20px;">
+                    <div class="col-4">
+                      <label class="form-control-label" for="input-address">Mã số</label>
+                      <input type="text" id="idUserModify" name="idUserModify" class="form-control " placeholder="Mã người yêu cầu" [(ngModel)]="resSchedule.idUserModify" readonly>
+                    </div>
+                    <div class="col-4">
+                      <label class="form-control-label" for="input-address">Tên</label>
+                      <input type="text" id="modifyBy" name="modifyBy" class="form-control " placeholder="Tên người yêu cầu" [(ngModel)]="resSchedule.modifyBy" readonly>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
             </ng-template>
           </li>
           <li [ngbNavItem]="2">

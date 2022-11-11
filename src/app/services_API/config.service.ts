@@ -260,6 +260,11 @@ export class ConfigService{
       model.thumbnail = ("[Hình] chưa chọn!")
       model.total += 1
     }
+
+    if (data.rating == null || data.rating == "") {
+      model.rating = ("[Sao] chưa chọn!")
+      model.total += 1
+    }
     return model
 
    }

@@ -39,10 +39,12 @@ export class ScheduleModel{
   description: string
   isDelete: boolean
   idUserModify:string
+  modifyBy: string
   typeAction: string
   isTempdata: boolean
   approve: number
   approveName: string
+  
 }
 
 export class ValidateScheduleModel{

@@ -115,8 +115,8 @@ export class ViewTourScheduleComponent implements OnInit {
         { field: 'endDate',headerName: "Ngày kết thúc", filter: "date", style: "width: 15%;", searchable: true, searchType: 'date', searchObj: 'endDate'},
         { field: 'finalPrice',headerName: "Tổng tiền", style: "width: 10%;", searchable: true, searchType: 'number', searchObj: 'FinalPrice'},
         { field: 'finalPriceHoliday',headerName: "Tổng tiền ngày lễ", style: "width: 10%;", searchable: true, searchType: 'number', searchObj: 'FinalPriceHoliday'},
-        { field: 'approveName',headerName: "Trạng thái phê duyệt", style: "width: 10%;", searchable: true, searchType: 'section', searchObj: 'approve' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listApprove()},
         { field: 'typeAction',headerName: "Loại phê duyệt", style: "width: 10%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()},
+        { field: 'approveName',headerName: "Trạng thái phê duyệt", style: "width: 10%;"}
       ];
     }, 200);
 
@@ -157,6 +157,29 @@ export class ViewTourScheduleComponent implements OnInit {
     }
   }
 
+  searchWaiting(e?){
+    if (e) {
+      var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
+      this.scheduleService.searchWaiting(Object.assign({}, e,),idTour).subscribe(res => {
+        this.response = res
+        if(this.response.notification.type == StatusNotification.Success)
+        {
+          this.resScheduleWaiting = this.response.content
+          this.resScheduleWaiting.forEach(schedule => {
+            schedule.approveName = StatusApprove[schedule.approve]
+            schedule.typeAction = TypeAction[schedule.typeAction]
+          });
+        }
+        else{
+          this.notificationService.handleAlertObj(res.notification)
+        }
+
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, StatusNotification.Error)
+      })
+    }
+  }
   childData(e){
     this.dataChild = Object.assign({}, e)
   }
