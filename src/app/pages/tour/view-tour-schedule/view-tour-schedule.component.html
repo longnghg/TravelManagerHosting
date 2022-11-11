@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col">
         <div class="card shadow border-0">
-          <app-grid-data [rowData]="resSchedule" [columnDefs]="columnDefs" [gridConfig]="gridConfig" (gdChecked)="init($event)" (gdType)="childType($event)" (gdChild)="childData($event)" (gdChild)="childData($event)" (gdRestore)="getData($event)" (gdDelete)="getData($event)"></app-grid-data>
+          <app-grid-data [rowData]="resSchedule" (gdSearch)="search($event)" [columnDefs]="columnDefs" [gridConfig]="gridConfig" (gdChecked)="init($event)" (gdType)="childType($event)" (gdChild)="childData($event)" (gdChild)="childData($event)" (gdRestore)="getData($event)" (gdDelete)="getData($event)"></app-grid-data>
         </div>
       </div>
     </div>

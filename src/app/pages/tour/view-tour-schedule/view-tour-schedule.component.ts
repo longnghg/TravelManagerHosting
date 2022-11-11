@@ -16,6 +16,7 @@ import { AuthenticationModel } from 'src/app/models/authentication.model';
 export class ViewTourScheduleComponent implements OnInit {
   auth: AuthenticationModel
   resSchedule: ScheduleModel[]
+  resScheduleTmp: ScheduleModel[]
   resScheduleWaiting: ScheduleModel[]
   response: ResponseModel
   dataChild: ScheduleModel
@@ -133,6 +134,27 @@ export class ViewTourScheduleComponent implements OnInit {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)
     })
+  }
+
+  search(e?){
+    if (e) {
+      var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
+      this.scheduleService.search(Object.assign({}, e,),idTour).subscribe(res => {
+        this.response = res
+        if(this.response.notification.type == StatusNotification.Success)
+        {
+          this.resSchedule = this.response.content
+        }
+        else{
+          this.resSchedule = this.resScheduleTmp
+          this.notificationService.handleAlertObj(res.notification)
+        }
+
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, StatusNotification.Error)
+      })
+    }
   }
 
   childData(e){
