@@ -47,4 +47,8 @@ approve(idSchedule: any){
 refused(idSchedule: any){
   return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/refused-schedule?idSchedule="+idSchedule);
 }
+
+search(data, idTour: any){
+  return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Schedule/search-schedule?idTour="+idTour, data);
+}
 }
