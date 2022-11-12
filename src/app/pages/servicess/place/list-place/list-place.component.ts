@@ -17,6 +17,7 @@ export class ListPlaceComponent implements OnInit {
   auth: AuthenticationModel
   resPlace: PlaceModel[]
   resPlaceWaiting: PlaceModel[]
+  respPlaceWaitingTmp: PlaceModel[]
   response: ResponseModel
   dataChild: PlaceModel
   typeChild: string
@@ -48,7 +49,30 @@ export class ListPlaceComponent implements OnInit {
       this.auth = JSON.parse(localStorage.getItem("currentUser"))
       this.init(this.isDelete);
     }
+    searchWaiting(e?){
+      if (e) {
+        this.placeService.searchWaiting(Object.assign({}, e)).subscribe(res => {
+          this.response = res
+          if(this.response.notification.type == StatusNotification.Success)
+          {
+            this.resPlaceWaiting = this.response.content
 
+            this.resPlaceWaiting.forEach(hotel => {
+              hotel.approveName = StatusApprove[hotel.approve]
+              hotel.typeActionName = TypeAction[hotel.typeAction]
+            });
+          }
+          else{
+            this.resPlaceWaiting = this.resPlaceWaiting
+            this.notificationService.handleAlertObj(res.notification)
+          }
+
+        }, error => {
+          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+          this.notificationService.handleAlert(message, StatusNotification.Error)
+        })
+      }
+    }
     init(isDelete){
       this.placeService.gets(isDelete).subscribe(res =>{
         this.response = res
@@ -71,11 +95,12 @@ export class ListPlaceComponent implements OnInit {
         ];
 
         this.columnDefsWaiting= [
-          { field: 'name',headerName: "Tên điểm tham quan", style: "width: 20%;", searchable: true, searchType: "text", searchObj: 'name'},
-          { field: 'address',headerName: "Địa chỉ", style: "width: 25%;", searchable: true, searchType: 'text', searchObj: 'address'},
-          { field: 'phone',headerName: "Số điện thoại", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'phone'},
-          { field: 'approveName',headerName: "Trạng thái phê duyệt", style: "width: 15%;", searchable: true, searchType: 'section', searchObj: 'approve' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listApprove()},
-          { field: 'typeActionName',headerName: "Loại phê duyệt", style: "width: 15%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()},
+          { field: 'name',headerName: "Tên địa điểm sạn", style: "width: 30%;", searchable: true, searchType: "text", searchObj: 'name'},
+          { field: 'phone',headerName: "Số điện thoại", style: "width: 12%;", searchable: true, searchType: 'text', searchObj: 'phone'},
+          { field: 'modifyBy',headerName: "Người yêu cầu", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'modifyBy'},
+          { field: 'modifyDate',headerName: "Ngày yêu cầu", style: "width: 20%;", filter: 'date', searchable: true, searchType: 'date', typeDate: 'range', searchObj: 'modifyDate'},
+          { field: 'typeActionName',headerName: "Loại phê duyệt", style: "width: 13%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()},
+
         ];
       }, 200);
 
@@ -84,6 +109,7 @@ export class ListPlaceComponent implements OnInit {
         if(this.response.notification.type == StatusNotification.Success){
 
           this.resPlaceWaiting = this.response.content
+            console.log(this.response.content);
 
           this.resPlaceWaiting.forEach(place => {
             place.approveName = StatusApprove[place.approve]

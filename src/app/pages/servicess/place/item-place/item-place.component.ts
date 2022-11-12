@@ -1,4 +1,4 @@
-import { Component, OnInit, Input ,Output,EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
 import { PlaceModel ,ValidationPlaceModel} from 'src/app/models/place.model';
 import { PlaceService } from "src/app/services_API/place.service"
 import { NotificationService } from "../../../../services_API/notification.service";
@@ -15,6 +15,7 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
   styleUrls: ['./item-place.component.scss']
 })
 export class ItemPlaceComponent implements OnInit {
+  @ViewChild('closeModal') closeModal: ElementRef
   @Input() resPlace: PlaceModel
   @Input() type: string
   @Output() parentData = new EventEmitter<any>()
@@ -38,6 +39,11 @@ export class ItemPlaceComponent implements OnInit {
     if(this.type == 'create'){
       this.resPlace = new PlaceModel()
     }
+    if (this.resPlace) {
+      this.resPlace.priceTicket = Number(this.resPlace.priceTicket).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+      this.resPlace.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resPlace.modifyDate)
+    }
+
     this.resPlaceTmp = Object.assign({}, this.resPlace)
   }
 
@@ -88,7 +94,8 @@ export class ItemPlaceComponent implements OnInit {
 
           if(this.response.notification.type == StatusNotification.Success)
           {
-		        this.isChange = false
+            this.isChange = false
+            this.closeModal.nativeElement.click()
           }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
