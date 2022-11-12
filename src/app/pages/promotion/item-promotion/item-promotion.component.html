@@ -1,3 +1,4 @@
+
 <div class="modal-header">
   <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin chi tiết</h1>
   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
@@ -5,53 +6,67 @@
 <div class="modal-body">
   <ng-container *ngIf="resPromotion">
     <div class="container-fluid" >
-      <div class="row align-items-center">
-        <div class="col-12 text-right">
-          <a href="javascript:void(0)" *ngIf="type == 'detail'" class="btn btn-sm btn-primary" (click)="isEditChange()">{{!isEdit ? "Chỉnh sửa":"Quay lại"}}</a>
-        </div>
-      </div>
       <form>
         <div class="pl-lg-4">
           <div class="row">
-            <div class="col-lg-6">
+            <div class="col-6">
               <div class="form-group">
-                <label class="form-control-label" for="input-name">Giá trị</label>
-                <input type="text" id="value" name="value" (input)="inputChange()" class="form-control " placeholder="Nhập giá trị mã giảm giá" [(ngModel)]="resPromotion.value" [readonly]="!isEdit">
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label class="form-control-label" for="input-phone">Đến nay</label>
-                <input type="text" id="toDate" name="toDate" (input)="inputChange()" class="form-control " placeholder="Nhập mã đến nay" [(ngModel)]="resPromotion.toDate" [readonly]="!isEdit">
+                <label class="form-control-label" for="name">Nhập giá trị giảm giá
+                  <span [class]="type != 'create' ?'d-none':'text-red'">* {{this.validatePromotion.value ? this.validatePromotion.value : ''}}</span>
+                </label>
+                <input type="number" id="value" name="value" (input)="inputChange()" class="form-control " placeholder="Nhập giá trị giảm giá" [(ngModel)]="resPromotion.value" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPromotion.isDelete">
               </div>
             </div>
           </div>
           <div class="row">
-            <div class="col-lg-12">
-              <label class="form-control-label" for="input-address">Từ ngày</label>
-              <input type="text" id="fromDate" name="fromDate" (input)="inputChange()" class="form-control " placeholder="Nhập mã từ ngày" [(ngModel)]="resPromotion.fromDate" [readonly]="!isEdit">
+            <div class="col-lg-6">
+              <label class="form-control-label" for="input-address">Từ ngày
+                <span [class]="type != 'create'?'d-none':'text-danger'">* {{this.validatePromotion.fromDate ? this.validatePromotion.fromDate : ''}}</span>
+              </label>
+              <input (change)="inputChange(); dateChange()" [(ngModel)]="resPromotion.fromDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="fromDate" id="fromDate" type="date" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPromotion.isDelete" />
+            </div>
+
+            <div class="col-lg-6">
+              <label class="form-control-label" for="input-address">Đến ngày
+                <span [class]="type != 'create'?'d-none':'text-danger'">* {{this.validatePromotion.toDate ? this.validatePromotion.toDate : ''}}</span>
+              </label>
+              <input (change)="inputChange(); dateChange()" [(ngModel)]="resPromotion.toDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="toDate" id="toDate" type="date" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPromotion.isDelete" />
             </div>
           </div>
-          <!-- <div class="row">
-            <div class="col-lg-12">
-              <label class="form-control-label" for="input-address">Số lượng chỗ ngồi</label>
-              <input type="text" id="amountSeat" name="amountSeat" (input)="inputChange()" class="form-control " placeholder="Nhập số lượng chỗ ngồi" [(ngModel)]="resCar.amountSeat" [readonly]="!isEdit">
-            </div>
-          </div> -->
           <hr>
         </div>
       </form>
     </div>
 
-    <div class="row align-items-center">
-      <div class="col-12 text-right">
-        <button  *ngIf="type == 'detail'" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteProvinceModal" (click)="getDataDelete()">Xóa</button>
-        <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="restore()">Khôi phục</button>
-        <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="save()">{{type == 'detail' ? "Lưu":"Thêm"}}</button>
+    <ng-container *ngIf="type != 'approve' && type != 'refuse' && type != 'cancelRequire'; else elseApprove">
+      <div class="row align-items-center">
+        <div class="col-12 text-right">
+          <button  *ngIf="type == 'detail' && !resPromotion.isDelete" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deletePromotionModal" (click)="getParentData('detail')">Xóa</button>
+          <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="backup()">Khôi phục</button>
+          <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-success"  (click)="save()">Lưu</button>
+          <button *ngIf="isChange && type == 'create'" class="btn btn-sm btn-success"  (click)="save()">Thêm</button>
+          <button *ngIf="resPromotion.isDelete" (click)="getParentData('detail')" data-bs-toggle="modal" data-bs-target="#restorePromotionModal" class="btn btn-sm btn-warning">Khôi phục điểm tham quan</button>
+        </div>
       </div>
-    </div>
-
+    </ng-container>
+    <ng-template #elseApprove>
+      <div class="row mt-2" style="border-top: 1.5px solid; padding-top: 20px;">
+        <div [class]="auth.roleId == -1 && auth.id == resPromotion.idUserModify ? 'col-4' : 'col-6'"
+        [style]="auth.roleId == -1 && auth.id == resPromotion.idUserModify ? 'text-align: end' : 'padding-left: 8%; text-align: center'"
+        *ngIf="auth.roleId == -1">
+          <button class="btn btn-success"  data-bs-toggle="modal" data-bs-target="#approvePromotionModal" (click)="getParentData('approve')">Phê duyệt</button>
+        </div>
+        <div [class]="auth.roleId == -1 && auth.id == resPromotion.idUserModify ? 'col-4' : 'col-6'"
+         style="text-align: center" *ngIf="auth.roleId == -1">
+          <button class="btn btn-warning"  data-bs-toggle="modal" data-bs-target="#approvePromotionModal" (click)="getParentData('refuse')">Từ chối phê duyệt</button>
+        </div>
+        <div [class]="auth.roleId != -1 && auth.id == resPromotion.idUserModify ? 'col' : 'col-4'"
+        [style]="auth.roleId != -1 && auth.id == resPromotionidUserModify ? 'padding-right: 4.9%; text-align: end' : ''"
+        *ngIf="auth.id == resPromotion.idUserModify">
+          <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#approvePromotionModal" (click)="getParentData('cancelRequire')">Hủy yêu cầu phê duyệt</button>
+        </div>
+      </div>
+    </ng-template>
   </ng-container>
 </div>
-
 

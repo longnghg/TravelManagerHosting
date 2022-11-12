@@ -580,6 +580,40 @@ export class ConfigService{
 
     return model
   }
+  validatePromotion(data: any, model: any){
+    model.total = 0
+    if (data.value == null || data.value == "") {
+      model.value = "[Mã giảm giá] không được để trống !"
+      model.total += 1
+    }else if (data.value.length > 30) {
+      model.value = "[Mã giảm giá] quá dài !"
+      model.total += 1
+    }else if (data.value.length < 3) {
+      model.value = "[Mã giảm giá] quá ngắn !"
+      model.total += 1
+    }
+
+    if (data.fromDate == null || data.fromDate == "") {
+      model.fromDate = "[Ngày giảm giá] không được để trống !"
+      model.total += 1
+    }else if(data.fromDate < Date.now ){
+      model.fromDate = "[Ngày giảm giá] không hợp lệ !"
+      model.total += 1
+    }else if(data.fromDate > data.toDate){
+      model.toDate = "[Ngày giảm giá] không được trước ngày kết thúc !"
+      model.total += 1
+    }
+
+    if (data.toDate == null || data.toDate == "") {
+      model.toDate = "[Ngày kết thúc giảm giá] không được để trống !"
+      model.total += 1
+    }else if(data.toDate < data.fromDate ){
+      model.toDate = "[Ngày kết thúc giảm giá] không được trước ngày giảm giá !"
+      model.total += 1
+    }
+
+    return model
+  }
 
   validateDistrict(data: any, model: any){
     model.total = 0

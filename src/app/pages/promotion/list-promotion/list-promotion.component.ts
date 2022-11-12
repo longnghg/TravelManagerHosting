@@ -5,7 +5,8 @@ import { NotificationService } from "../../../services_API/notification.service"
 import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.component';
 import { ConfigService } from "../../../services_API/config.service";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
-import { StatusNotification } from "../../../enums/enum";
+import { StatusNotification, StatusApprove, TypeAction } from "../../../enums/enum";
+import { AuthenticationModel } from "../../../models/authentication.model";
 
 @Component({
   selector: 'app-list-promotion',
@@ -13,86 +14,143 @@ import { StatusNotification } from "../../../enums/enum";
   styleUrls: ['./list-promotion.component.scss']
 })
 export class ListPromotionComponent implements OnInit {
-
+  auth: AuthenticationModel
   resPromotion: PromotionModel[]
   resPromotionWaiting: PromotionModel[]
   response: ResponseModel
   dataChild: PromotionModel
   typeChild: string
+  isDelete: boolean = false
+  data: PromotionModel
+  constructor(private promotionService: PromotionService,
+    private configService: ConfigService,
+    private notificationService: NotificationService) { }
 
-  constructor(private promotionService: PromotionService, private configService: ConfigService, private notificationService: NotificationService) { }
+    public columnDefs: ColDef[]
+    public columnDefsWaiting: ColDef[]
 
-  public columnDefs: ColDef[]
-  public gridConfig: GridConfig = {
-    idModalRestore: "",
-    idModalDelete: "",
-    idModal: "gridPromotion",
-    radioBoxName: "Kho lưu trữ",
-  }
+    public gridConfig: GridConfig = {
+      idModalRestore: "restorePromotionModal",
+      idModalDelete: "deletePromotionModal",
+      idModal: "gridPromotion",
+      radioBoxName: "Kho lưu trữ",
+      disableApprove: true
+    }
+    public gridConfigWaiting: GridConfig = {
+      idModal: "gridPromotion",
+      idModalApprove: "approvePromotionModal",
+      disableDelete: true,
+      disableRadioBox: true,
+      disableCreate: true,
+      disableRestore: true
+    }
   ngOnInit(): void {
+    this.auth = JSON.parse(localStorage.getItem("currentUser"))
+    this.init(this.isDelete);
+  }
 
-    this.init()
-    this.initWaiting();
-    console.log(this.resPromotion);
+  init(isDelete){
+    this.promotionService.gets(isDelete).subscribe(res =>{
+      this.response = res
+      if(this.response.notification.type == StatusNotification.Success){
+        this.resPromotion = this.response.content
+      }
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
 
     setTimeout(() => {
+
       this.columnDefs= [
-        { field: 'idPromotion', headerName: "Mã số", style: "width: 340px;", searchable: true, searchType: 'text', searchObj: 'idPromotion'},
-        { field: 'value', headerName: "Giá trị", style: "width: 300px;", searchable: true, searchType: 'text', searchObj: 'value'},
-        { field: 'toDate', headerName: "Đến nay", style: "width: 270px;", searchable: true, searchType: 'text', searchObj: 'toDate'},
-        { field: 'fromDate', headerName: "Từ ngày", style: "width: 200px;", searchable: true, searchType: 'text', searchObj: 'fromDate'},
-        // { field: 'idSchedule',headerName: "Mã số", style: "width: 200px;", filter: "avatar", searchable: true, searchType: 'date', searchObj: 'idSchedule'},
+        { field: 'value',headerName: "Mã giảm giá", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'value'},
+        { field: 'toDate',headerName: "Từ ngày", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'toDate',filter: 'date'},
+        { field: 'fromDate',headerName: "Đến ngày", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'fromDate', filter: 'date'},
+      ];
+
+      this.columnDefsWaiting= [
+        { field: 'value',headerName: "Mã giảm giá", style: "width: 20%;", searchable: true, searchType: "text", searchObj: 'name'},
+        { field: 'toDate',headerName: "Từ ngày", style: "width: 25%;", searchable: true, searchType: 'text', searchObj: 'toDate', filter: 'date'},
+        { field: 'fromDate',headerName: "Đến ngày", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'fromDate',filter: 'date'},
+        { field: 'approveName',headerName: "Trạng thái phê duyệt", style: "width: 15%;", searchable: true, searchType: 'section', searchObj: 'approve' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listApprove()},
+        { field: 'typeActionName',headerName: "Loại phê duyệt", style: "width: 15%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()},
       ];
     }, 200);
 
-  }
-
-  init(){
-    this.promotionService.gets().subscribe(res =>{
+    this.promotionService.getsWaiting(this.auth.id).subscribe(res =>{
       this.response = res
-      if(!this.response.notification.type){
-        this.resPromotion = this.response.content
-      }
-      else{
-        this.resPromotion = null
-
-      }
-    }, error => {
-      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, StatusNotification.Error)
-    })
-  }
-
-  initWaiting(){
-    this.promotionService.getsWaiting().subscribe(res =>{
-      this.response = res
-      if(!this.response.notification.type){
+      if(this.response.notification.type == StatusNotification.Success){
         this.resPromotionWaiting = this.response.content
-        console.log(this.resPromotionWaiting);
 
-      }
-      else{
-        this.resPromotionWaiting = null
-
+        this.resPromotionWaiting.forEach(promotion => {
+          promotion.approveName = StatusApprove[promotion.approve]
+          promotion.typeActionName = TypeAction[promotion.typeAction]
+        });
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)
     })
   }
-
 
   childData(e){
-    if (e) {
-      this.dataChild = e
-    }
-
+    this.dataChild = Object.assign({}, e)
   }
 
   childType(e){
-    if (e) {
-      this.typeChild = e
+    this.typeChild = e
+  }
+  getData(data: any){
+    this.data = data
+  }
+
+  delete(){
+    if (this.data) {
+      this.promotionService.delete(this.data.idPromotion, this.auth.id).subscribe(res =>{
+       this.response = res
+       this.notificationService.handleAlertObj(res.notification)
+     }, error => {
+       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+       this.notificationService.handleAlert(message, StatusNotification.Error)
+     })
     }
   }
 
+  restore(){
+    if (this.data) {
+      this.promotionService.restore(this.data.idPromotion, this.auth.id).subscribe(res =>{
+       this.response = res
+       this.notificationService.handleAlertObj(res.notification)
+     }, error => {
+       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+       this.notificationService.handleAlert(message, StatusNotification.Error)
+     })
+    }
+  }
+
+  approve(){
+   if(this.data){
+    this.promotionService.approve(this.data.idPromotion).subscribe(res =>{
+      this.response = res
+      this.notificationService.handleAlertObj(res.notification)
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+
+    })
+   }
+  }
+
+  refuse(){
+   if(this.data){
+    this.promotionService.refuse(this.data.idPromotion).subscribe(res =>{
+      this.response = res
+      this.notificationService.handleAlertObj(res.notification)
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
+   }
+  }
 }
+

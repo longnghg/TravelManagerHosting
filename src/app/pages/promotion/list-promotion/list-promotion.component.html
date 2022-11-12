@@ -91,32 +91,126 @@
     </div>
   </div>
 </div>
-<div class="container-fluid mt--7">
+<div class="container-fluid">
+  <h1 class="mt-3 mb-3" style="border-bottom: 1px solid; padding-bottom:10px;">Danh sách khuyến mãi</h1>
   <div class="row">
     <div class="col">
       <div class="card shadow border-0">
-        <app-grid-data [rowData]="resPromotion" [columnDefs]="columnDefs" [gridConfig]="gridConfig" (gdChecked)="init()" (gdType)="childType($event)" (gdChild)="childData($event)"></app-grid-data>
+        <app-grid-data [rowData]="resPromotion" [columnDefs]="columnDefs" [gridConfig]="gridConfig" (gdChecked)="init($event)" (gdType)="childType($event)" (gdChild)="childData($event)" (gdRestore)="getData($event)" (gdDelete)="getData($event)"></app-grid-data>
       </div>
     </div>
   </div>
 </div>
-
-<div class="container-fluid mt--7">
-  <div class="row">
-    <div class="col">
-      <div class="card shadow border-0">
-        <app-grid-data [rowData]="resPromotionWaiting" [columnDefs]="columnDefs" [gridConfig]="gridConfig" (gdChecked)="initWaiting()" (gdType)="childType($event)" (gdChild)="childData($event)"></app-grid-data>
-      </div>
-    </div>
-  </div>
-</div>
-
-
 
 <div class="modal fade" [id]="gridConfig.idModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="gridDataLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
-      <app-item-promotion [resPromotion]="dataChild" [type]="typeChild"></app-item-promotion>
+      <app-item-promotion [resPromotion]="dataChild" [type]="typeChild" (parentData)="getData($event)"  (parentType)="childType($event)"></app-item-promotion>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" [id]="gridConfig.idModalDelete" tabindex="-1" aria-labelledby="deletePromotionModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="deletePromotionModalLabel">Xác nhận</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="data">
+        Bạn có chắc muốn xóa [<span class="text-red">{{data.value}}</span>] !
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="delete()" >Xóa</button>
+        <ng-container *ngIf="typeChild; else elseType">
+          <button type="button" class="btn btn-primary" [attr.data-bs-target]="'#'+gridConfig.idModal" data-bs-toggle="modal">Không</button>
+        </ng-container>
+        <ng-template #elseType>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+        </ng-template>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" [id]="gridConfig.idModalRestore" tabindex="-1" aria-labelledby="restorePromotionModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="restorePromotionModalLabel">Xác nhận</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="data">
+        Bạn có chắc muốn khôi phục [<span class="text-red">{{data.value}}</span>] !
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="restore()" >Khôi phục</button>
+        <ng-container *ngIf="typeChild; else elseType">
+          <button type="button" class="btn btn-primary" [attr.data-bs-target]="'#'+gridConfig.idModal" data-bs-toggle="modal">Không</button>
+        </ng-container>
+        <ng-template #elseType>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+        </ng-template>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--  waiting -->
+<div class="container-fluid mt-5">
+  <h1 class="mt-3 mb-3" style="border-bottom: 1px solid; padding-bottom:10px;">Danh sách điểm tham quan chờ duyệt</h1>
+  <div class="row">
+    <div class="col">
+      <div class="card shadow border-0">
+        <app-grid-data [rowData]="resPromotionWaiting" [columnDefs]="columnDefsWaiting" [gridConfig]="gridConfigWaiting" (gdApprove)="getData($event)" (gdType)="childType($event)" (gdChild)="childData($event)"></app-grid-data>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" [id]="gridConfigWaiting.idModalApprove" tabindex="-1" aria-labelledby="approvePromotionModalLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="data">
+        <ng-container *ngIf="typeChild == 'approve'; else elseApprove">
+            Bạn có chắc muốn phê duyệt [<span class="text-red">{{data.name}}</span>] !
+        </ng-container>
+        <ng-template #elseApprove>
+          <ng-container *ngIf="typeChild == 'refuse'; else elseRefuse">
+            Bạn có chắc muốn từ chối phê duyệt [<span class="text-red">{{data.name}}</span>] !
+          </ng-container>
+          <ng-template #elseRefuse>
+            Bạn có chắc muốn hủy yêu cầu phê duyệt [<span class="text-red">{{data.name}}</span>] !
+          </ng-template>
+        </ng-template>
+
+
+      </div>
+      <div class="modal-footer">
+        <ng-container *ngIf="typeChild == 'approve'; else elseApprove">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="approve()" >Phê duyệt</button>
+      </ng-container>
+      <ng-template #elseApprove>
+        <ng-container *ngIf="typeChild == 'refuse'; else elseRefuse">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="refuse()" >Từ chối</button>
+        </ng-container>
+        <ng-template #elseRefuse>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="delete()" >Hủy yêu cầu</button>
+        </ng-template>
+      </ng-template>
+
+        <ng-container *ngIf="typeChild; else elseType">
+          <button type="button" class="btn btn-primary" [attr.data-bs-target]="'#'+gridConfigWaiting.idModal" data-bs-toggle="modal">Không</button>
+        </ng-container>
+        <ng-template #elseType>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+        </ng-template>
+      </div>
     </div>
   </div>
 </div>
