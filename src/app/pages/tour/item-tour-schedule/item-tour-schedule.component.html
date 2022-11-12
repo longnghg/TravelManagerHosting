@@ -211,7 +211,7 @@
                               <label class="form-control-label" for="input-breakfast">Chi phí ăn
                                 <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateCostTourModel.breakfast ? this.validateCostTourModel.breakfast : ''}}</span>
                               </label>
-                              <input type="text" id="breakfast" name="breakfast" (input)="formatInput($any($event).target, 'breakfast');inputChange() " class="form-control " placeholder="Nhập giá phần ăn" [(ngModel)]="resCostTour.breakfast" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete ||  auth.roleId != -1" >
+                              <input type="text" id="breakfast" name="breakfast" (input)="formatInput($any($event).target, 'breakfast');inputChange() " class="form-control " placeholder="Nhập giá phần ăn" [(ngModel)]="resCostTour.breakfast" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" >
                             </div>
                           </div>
                           <div class="col-lg-6">
@@ -219,7 +219,7 @@
                               <label class="form-control-label" for="input-water">Chi phí nước
                                 <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateCostTourModel.water ? this.validateCostTourModel.water : ''}}</span>
                               </label>
-                              <input type="text" id="water" name="water" (input)="formatInput($any($event).target, 'water');inputChange()" class="form-control " placeholder="Nhập giá nước" [(ngModel)]="resCostTour.water" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete ||  auth.roleId != -1" >
+                              <input type="text" id="water" name="water" (input)="formatInput($any($event).target, 'water');inputChange()" class="form-control " placeholder="Nhập giá nước" [(ngModel)]="resCostTour.water" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete " >
                             </div>
                           </div>
                         </div>
@@ -231,25 +231,25 @@
                       <label class="form-control-label" for="input-fromPlace">Chi phí xăng
                         <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateCostTourModel.feeGas ? this.validateCostTourModel.feeGas : ''}}</span>
                       </label>
-                      <input type="text" id="feeGas" name="feeGas" (input)="formatInput($any($event).target, 'feeGas');inputChange()" class="form-control " placeholder="Nhập chi phí xăng " [(ngModel)]="resCostTour.feeGas" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete || auth.roleId != -1" >
+                      <input type="text" id="feeGas" name="feeGas" (input)="formatInput($any($event).target, 'feeGas');inputChange()" class="form-control " placeholder="Nhập chi phí xăng " [(ngModel)]="resCostTour.feeGas" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" >
                     </div>
                     <div class="col-lg-3">
                       <label class="form-control-label" for="input-toPlace">Chi phí cầu đường
                         <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateCostTourModel.tolls ? this.validateCostTourModel.tolls : ''}}</span>
                       </label>
-                      <input type="text" id="tolls" name="tolls" (input)="formatInput($any($event).target, 'tolls');inputChange()" class="form-control " placeholder="Nhập chi phí bán " [(ngModel)]="resCostTour.tolls" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete || auth.roleId != -1" >
+                      <input type="text" id="tolls" name="tolls" (input)="formatInput($any($event).target, 'tolls');inputChange()" class="form-control " placeholder="Nhập chi phí bán " [(ngModel)]="resCostTour.tolls" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" >
                     </div>
                     <div class="col-lg-3">
                       <label class="form-control-label" for="input-toPlace">Chi phí bảo hiểm
                         <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateCostTourModel.insuranceFee ? this.validateCostTourModel.insuranceFee : ''}}</span>
                       </label>
-                      <input type="text" id="insuranceFee" name="insuranceFee" (input)="formatInput($any($event).target, 'insuranceFee');inputChange()" class="form-control " placeholder="Nhập chi phí bảo hiểm" [(ngModel)]="resCostTour.insuranceFee" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete ||  auth.roleId != -1" >
+                      <input type="text" id="insuranceFee" name="insuranceFee" (input)="formatInput($any($event).target, 'insuranceFee');inputChange()" class="form-control " placeholder="Nhập chi phí bảo hiểm" [(ngModel)]="resCostTour.insuranceFee" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" >
                     </div>
                     <div class="col-lg-3">
                       <label class="form-control-label" for="input-toPlace">khoảng cách
                         <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateCostTourModel.distance ? this.validateCostTourModel.distance : ''}}</span>
                       </label>
-                      <input type="text" id="distance" name="distance" (input)="inputChange()" class="form-control " placeholder="Nhập khoảng cách " [(ngModel)]="resCostTour.distance" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete ||  auth.roleId != -1" >
+                      <input type="text" id="distance" name="distance" (input)="inputChange()" class="form-control " placeholder="Nhập khoảng cách " [(ngModel)]="resCostTour.distance" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" >
                     </div>
                   </div>
                   <div class="row" style="margin-top: 10px;">
@@ -257,25 +257,25 @@
                       <label class="form-control-label" for="input-toPlace">Số lượng khách dự kiến
                         <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateCostTourModel.cusExpected ? this.validateCostTourModel.cusExpected : ''}}</span>
                       </label>
-                      <input type="text" id="cusExpected" name="cusExpected" (input)="inputChange()" class="form-control " placeholder="Nhập số khách dự kiến " [(ngModel)]="resCostTour.cusExpected" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete|| auth.roleId != -1"  >
+                      <input type="text" id="cusExpected" name="cusExpected" (input)="inputChange()" class="form-control " placeholder="Nhập số khách dự kiến " [(ngModel)]="resCostTour.cusExpected" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete "  >
                     </div>
                     <div class="col-lg-3">
                       <label class="form-control-label" for="input-toPlace">Chi phí bán tour
                         <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateCostTourModel.sellCost ? this.validateCostTourModel.sellCost : ''}}</span>
                       </label>
-                      <input type="text" id="sellCost" name="sellCost" (input)="formatInput($any($event).target, 'sellCost');inputChange()" class="form-control " placeholder="Nhập chi phí bán tour " [(ngModel)]="resCostTour.sellCost" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete|| auth.roleId != -1" >
+                      <input type="text" id="sellCost" name="sellCost" (input)="formatInput($any($event).target, 'sellCost');inputChange()" class="form-control " placeholder="Nhập chi phí bán tour " [(ngModel)]="resCostTour.sellCost" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" >
                     </div>
                     <div class="col-lg-3">
                       <label class="form-control-label" for="input-toPlace">Khấu hao
                         <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateCostTourModel.depreciation ? this.validateCostTourModel.depreciation : ''}}</span>
                       </label>
-                      <input type="text" id="depreciation" name="depreciation" (input)="formatInput($any($event).target, 'depreciation');inputChange()" class="form-control " placeholder="Nhập khấu hao " [(ngModel)]="resCostTour.depreciation" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete || auth.roleId != -1" >
+                      <input type="text" id="depreciation" name="depreciation" (input)="formatInput($any($event).target, 'depreciation');inputChange()" class="form-control " placeholder="Nhập khấu hao " [(ngModel)]="resCostTour.depreciation" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" >
                     </div>
                     <div class="col-lg-3">
                       <label class="form-control-label" for="input-toPlace">Chi phí khác
                         <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateCostTourModel.otherPrice ? this.validateCostTourModel.otherPrice : ''}}</span>
                       </label>
-                      <input type="text" id="otherPrice" name="otherPrice" (input)="formatInput($any($event).target, 'otherPrice');inputChange()" class="form-control " placeholder="Nhập chi phí khác " [(ngModel)]="resCostTour.otherPrice" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete ||  auth.roleId != -1" >
+                      <input type="text" id="otherPrice" name="otherPrice" (input)="formatInput($any($event).target, 'otherPrice');inputChange()" class="form-control " placeholder="Nhập chi phí khác " [(ngModel)]="resCostTour.otherPrice" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" >
                     </div>
                   </div>
 
@@ -292,7 +292,7 @@
                                     bindLabel="name"
                                     bindValue="idHotel"
                                     [(ngModel)]="resCostTour.hotelId"
-                                    [disabled]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete || auth.roleId != -1"
+                                    [disabled]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete"
                                     placeholder="Chọn khách sạn..."
                                     name="hotelId"
                                     id="hotelId"
@@ -309,7 +309,7 @@
                                     bindLabel="name"
                                     bindValue="idRestaurant"
                                     [(ngModel)]="resCostTour.restaurantId"
-                                    [disabled]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete || auth.roleId != -1"
+                                    [disabled]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete"
                                     placeholder="Chọn nhà hàng..."
                                     name="restaurantId"
                                     id="restaurantId"
@@ -326,7 +326,7 @@
                                     bindLabel="name"
                                     bindValue="idPlace"
                                     [(ngModel)]="resCostTour.placeId"
-                                    [disabled]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete || auth.roleId != -1"
+                                    [disabled]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete"
                                     placeholder="Chọn địa điểm..."
                                     name="placeId"
                                     id="placeId"
@@ -342,7 +342,7 @@
                       bindLabel="name"
                       bindValue="id"
                       [(ngModel)]="resCostTour.isHoliday"
-                      [disabled]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete || auth.roleId != -1"
+                      [disabled]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete"
                       placeholder="Kích hoạt..."
                       name="isHoliday"
                       id="isHoliday"

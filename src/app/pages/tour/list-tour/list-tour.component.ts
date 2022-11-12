@@ -63,8 +63,6 @@ export class ListTourComponent implements OnInit {
 
         this.gridConfig2.isRestore = this.isDelete
         this.init(this.isDelete)
-        console.log(this.isDelete);
-
       }
       else{
         this.init(this.isDelete)
@@ -120,7 +118,7 @@ export class ListTourComponent implements OnInit {
           { field: 'toPlace',headerName: "Đến", style: "width: 10%;", searchable: true, searchType: 'text', searchObj: 'address'},
           { field: 'modifyBy',headerName: "Người yêu cầu", style: "width: 10%;", searchable: true, searchType: 'text', searchObj: 'modifyBy'},
           { field: 'modifyDate',headerName: "Ngày yêu cầu", style: "width: 15%;", filter: 'date', searchable: true, searchType: 'date', typeDate: 'range', searchObj: 'modifyDate'},
-          { field: 'typeAction',headerName: "Loại phê duyệt", style: "width: 10%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()}, 
+          { field: 'typeAction',headerName: "Loại phê duyệt", style: "width: 10%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()},
           { field: 'approveName',headerName: "Trạng thái phê duyệt", style: "width: 10%;"},
           { field: 'status',headerName: "Trạng thái", style: 'width: 5%',  filter: "status"},
         ];
@@ -153,7 +151,7 @@ export class ListTourComponent implements OnInit {
             this.resTour = this.restourTmp
             this.notificationService.handleAlertObj(res.notification)
           }
-  
+
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -176,7 +174,7 @@ export class ListTourComponent implements OnInit {
           else{
             this.notificationService.handleAlertObj(res.notification)
           }
-  
+
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
