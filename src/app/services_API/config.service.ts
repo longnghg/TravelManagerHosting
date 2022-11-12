@@ -865,10 +865,12 @@ validateHotel(data : any,model: any)
     var check = 0
     var auth = JSON.parse(localStorage.getItem("currentUser"))
     var titlee = this.location.prepareExternalUrl(this.location.path());
+    var titleeSplit = []
+    titleeSplit = titlee.split("/")
     var menuItem = ROUTES.filter(menuItem => menuItem);
     menuItem.forEach(item => {
       item.roles.forEach(role => {
-        if (role == auth.roleId && item.path == titlee) {
+        if (role == auth.roleId && item.path.includes(titleeSplit[1])) {
           check++
         }
       });
