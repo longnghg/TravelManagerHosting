@@ -72,6 +72,7 @@ export class ItemHotelComponent implements OnInit {
       //if (this.formData) {
         //file.append('file', this.formData.path[0].files[0])
       //}
+
       this.resHotel.IdUserModify = this.auth.id
       if(this.type == "create")
       {

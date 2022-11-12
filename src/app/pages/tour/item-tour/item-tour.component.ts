@@ -15,14 +15,12 @@ import { StatusNotification } from "../../../enums/enum";
   styleUrls: ['./item-tour.component.scss']
 })
 export class ItemTourComponent implements OnInit {
-
-  @Input() resTour: TourModel
-  @Input() type: string
-  @Output() parentDelete = new EventEmitter<any>()
-  @Output() parentRestore = new EventEmitter<any>()
+  resTour: TourModel
+  type: string
   validateTourModel: ValidateTourModel = new ValidateTourModel
   response: ResponseModel
   isChange: boolean = false
+  isChangeStar: boolean = false
   resTourTmp: TourModel
   isHoliday = this.configService.listStatus()
   img: any
@@ -39,32 +37,8 @@ export class ItemTourComponent implements OnInit {
 
     var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
     this.type = this.activatedRoute.snapshot.paramMap.get('id1')
-    if(this.type == "detail" || this.type == "approve"){
+    if(this.type == "create"){
 
-      this.tourService.getTour(idTour).subscribe(res => {
-        this.response = res
-
-        if(this.response.notification.type == StatusNotification.Success)
-        {
-          this.resTour = this.response.content
-          this.resTourTmp = Object.assign({}, this.resTour)
-          if(this.resTour){
-            if (this.resTour.thumbnail) {
-              this.img = this.configService.apiUrl + this.resTour.thumbnail
-            }
-            else{
-              this.img = "../../../../assets/img/tours/cross-sign.jpg"
-            }
-            this.resTour.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resTour.modifyDate)
-          }
-        }
-      }, error => {
-        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, StatusNotification.Error)
-      })
-
-    }
-    else{
       this.resTour = new TourModel
       this.resTourTmp = Object.assign({}, this.resTour)
 
@@ -76,19 +50,49 @@ export class ItemTourComponent implements OnInit {
           this.img = "../../../../assets/img/tours/cross-sign.jpg"
         }
       }
+
+    }
+    else{
+      this.init(idTour)
     }
 
 
   }
-  ngOnChanges(): void {
+  init(idTour){
+    this.tourService.getTour(idTour).subscribe(res => {
+      this.response = res
 
+      if(this.response.notification.type == StatusNotification.Success)
+      {
+        this.resTour = this.response.content
+        this.resTourTmp = Object.assign({}, this.resTour)
+        if(this.resTour){
+          if (this.resTour.thumbnail) {
+            this.img = this.configService.apiUrl + this.resTour.thumbnail
+          }
+          else{
+            this.img = "../../../../assets/img/tours/cross-sign.jpg"
+          }
+          this.resTour.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resTour.modifyDate)
+        }
+      }
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
   }
 
   backup(){
     this.resTour = Object.assign({}, this.resTourTmp)
-    this.img = this.resTour.thumbnail
-
+    if (this.resTour.thumbnail) {
+      this.img = this.configService.apiUrl + this.resTour.thumbnail
+    }
+    else{
+      this.img = "../../../../assets/img/tours/cross-sign.jpg"
+    }
+    this.resTour.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resTour.modifyDate)
     this.isChange = false
+    this.isChangeStar = false
     this.notificationService.handleAlert("Khôi phục dữ liệu ban đầu thành công !", StatusNotification.Info)
   }
 
@@ -101,9 +105,13 @@ export class ItemTourComponent implements OnInit {
     }
   }
 
-  restore(){
-    this.resTour = Object.assign({}, this.resTour)
-    this.isChange = false
+  startChange(){
+    if (this.resTour.rating != this.resTourTmp.rating) {
+      this.isChangeStar = true
+    }
+    else{
+      this.isChangeStar = false
+    }
   }
 
   changeImg(e: any){
@@ -143,7 +151,6 @@ export class ItemTourComponent implements OnInit {
 
           if (res.notification.type == StatusNotification.Success) {
             this.router.navigate(['','list-tour']);
-            this.close()
           }
           this.notificationService.handleAlertObj(res.notification)
         }, error => {
@@ -162,11 +169,9 @@ export class ItemTourComponent implements OnInit {
         }
         this.tourService.update(file).subscribe(res =>{
           this.response = res
-          console.log(res);
 
           if (res.notification.type == StatusNotification.Success) {
             this.router.navigate(['','list-tour']);
-            this.close()
           }
           else{
             this.notificationService.handleAlertObj(res.notification)
@@ -177,26 +182,21 @@ export class ItemTourComponent implements OnInit {
           this.notificationService.handleAlert(message, StatusNotification.Error)
         })
       }
-      this.close()
+    }
+    else{
+      if (this.validateTourModel.thumbnail) {
+        this.notificationService.handleAlert(this.validateTourModel.thumbnail, StatusNotification.Warning)
+      }
     }
   }
 
 
-
-  close(){
-    if (this.type == 'detail') {
-
-    }
-
-     this.restore()
-  }
-
-  getDataDelete(){
-    this.parentDelete.emit(this.resTour);
-  }
-  getDataRestore(){
-    this.parentRestore.emit(this.resTour);
-  }
+  // getDataDelete(){
+  //   this.parentDelete.emit(this.resTour);
+  // }
+  // getDataRestore(){
+  //   this.parentRestore.emit(this.resTour);
+  // }
 
   delete(){
     if (this.resTour) {
@@ -264,7 +264,6 @@ export class ItemTourComponent implements OnInit {
 
       if (res.notification.type == StatusNotification.Success) {
         this.router.navigate(['','list-tour']);
-        this.close()
       }
       this.notificationService.handleAlertObj(res.notification)
     }, error => {

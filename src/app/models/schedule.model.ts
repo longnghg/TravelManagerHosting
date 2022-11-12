@@ -44,7 +44,7 @@ export class ScheduleModel{
   isTempdata: boolean
   approve: number
   approveName: string
-  
+  modifyDate: number
 }
 
 export class ValidateScheduleModel{

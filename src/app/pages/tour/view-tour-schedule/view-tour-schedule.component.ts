@@ -98,34 +98,37 @@ export class ViewTourScheduleComponent implements OnInit {
 
     setTimeout(() => {
       this.columnDefs= [
-        { field: 'idSchedule', headerName: "Mã số", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'idSchedule'},
-        { field: 'beginDate',headerName: "Ngày bán vé", style: "width: 15%;", filter: 'date', searchable: true, searchType: 'date', typeDate: 'range', searchObj: 'beginDate'},
+        { field: 'idSchedule', headerName: "Mã số", style: "width: 22%;", searchable: true, searchType: 'text', searchObj: 'idSchedule'},
+        { field: 'beginDate',headerName: "Ngày bán vé", style: "width: 12%;", filter: 'date', searchable: true, searchType: 'date', typeDate: 'range', searchObj: 'beginDate'},
+        { field: 'departureDate',headerName: "Ngày khởi hành", style: "width: 15%;", filter: 'date', searchable: true, searchType: 'date', typeDate: 'range', searchObj: 'departureDate'},
         // { field: 'beginDate',headerName: "Ngày bắt đầu", filter: "date", style: "width: 15%;", searchable: true, searchType: 'date', searchObj: 'beginDate'},
         // { field: 'endDate',headerName: "Ngày kết thúc", filter: "date", style: "width: 15%;", searchable: true, searchType: 'date', searchObj: 'endDate'},
         { field: 'totalCostTourNotService',headerName: "Tổng chi phí", style: "width: 10%;", searchable: true, searchType: 'number', searchObj: 'TotalCostTour'},
         { field: 'finalPrice',headerName: "Tổng tiền", style: "width: 10%;", searchable: true, searchType: 'number', searchObj: 'FinalPrice'},
         { field: 'finalPriceHoliday',headerName: "Tổng tiền ngày lễ", style: "width: 10%;", searchable: true, searchType: 'number', searchObj: 'FinalPriceHoliday'},
+        { field: 'status',headerName: "Trạng thái", style: 'width: 11%',  filter: "status"},
 
         // { field: 'status',headerName: "Trạng thái", style: "width: 180px;", filter: "status", searchable: true, searchType: 'section', searchObj: 'status', multiple: false, closeOnSelect: true, bindLabel: "name", bindValue: "id", listSection: this.configService.listStatus()},
       ];
 
 
       this.columnDefsWaiting= [
-        { field: 'idSchedule', headerName: "Mã số", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'idSchedule'},
-        { field: 'beginDate',headerName: "Ngày bắt đầu", filter: "date", style: "width: 15%;", searchable: true, searchType: 'date', searchObj: 'beginDate'},
-        { field: 'endDate',headerName: "Ngày kết thúc", filter: "date", style: "width: 15%;", searchable: true, searchType: 'date', searchObj: 'endDate'},
+        { field: 'idSchedule', headerName: "Mã số", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'idSchedule'},
         { field: 'finalPrice',headerName: "Tổng tiền", style: "width: 10%;", searchable: true, searchType: 'number', searchObj: 'FinalPrice'},
-        { field: 'finalPriceHoliday',headerName: "Tổng tiền ngày lễ", style: "width: 10%;", searchable: true, searchType: 'number', searchObj: 'FinalPriceHoliday'},
+
+        { field: 'modifyBy',headerName: "Người yêu cầu", style: "width: 10%;", searchable: true, searchType: 'text', searchObj: 'modifyBy'},
+        { field: 'modifyDate',headerName: "Ngày yêu cầu", style: "width: 15%;", filter: 'date', searchable: true, searchType: 'date', typeDate: 'range', searchObj: 'modifyDate'},
         { field: 'typeAction',headerName: "Loại phê duyệt", style: "width: 10%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()},
         { field: 'approveName',headerName: "Trạng thái phê duyệt", style: "width: 10%;"}
       ];
     }, 200);
 
     var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
-    this.scheduleService.getsSchedulebyIdTourWaiting(idTour).subscribe(res =>{
+    this.scheduleService.getsSchedulebyIdTourWaiting(idTour, this.auth.id).subscribe(res =>{
       this.response = res
       if(this.response.notification.type == StatusNotification.Success){
         this.resScheduleWaiting = this.response.content
+
         this.resScheduleWaiting.forEach(schedule => {
           schedule.approveName = StatusApprove[schedule.approve]
           schedule.typeAction = TypeAction[schedule.typeAction]

@@ -4,12 +4,13 @@ export class PlaceModel{
   name: string
   address: string
   phone: string
-  priceTicket: number
+  priceTicket: number | string = 0
   idAction: boolean
   typeAction: string
   typeActionName: string
   IdUserModify: string
   modifyDate: number
+  modifyDateDisplay: string
   approve: number
   approveName: string
 }

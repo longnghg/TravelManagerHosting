@@ -77,5 +77,8 @@ restore(idPlace: string, idUser: string)
 search(data){
   return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Service/search-place", data);
 }
+searchWaiting(data){
+  return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Service/search-place-waiting", data);
+}
 }
 

@@ -48,6 +48,7 @@ export class ConfigService{
   }
   list10Star(){
     var listStar = [
+      {id: 0, name: "00"},
       {id: 1, name: "01"},
       {id: 2, name: "02"},
       {id: 3, name: "03"},
@@ -64,6 +65,7 @@ export class ConfigService{
 
   list5Star(){
     var listStar = [
+      {id: 0, name: "00"},
       {id: 1, name: "01"},
       {id: 2, name: "02"},
       {id: 3, name: "03"},
@@ -182,7 +184,11 @@ export class ConfigService{
       model.phone = "[Số điện thoại] không được để trống !"
       model.total += 1
     }else if (data.phone.length > 15) {
-      model.phone = "[Số điện thoại] vượt quá 10 số !"
+      model.phone = "[Số điện thoại] vượt quá 15 số !"
+      model.total += 1
+    }
+    else if (data.phone.length < 10) {
+      model.phone = "[Số điện thoại] không hợp lệ !"
       model.total += 1
     }else if (!data.phone.startsWith("0")) {
       model.phone = "[Số điện thoại] không hợp lệ !"
@@ -261,10 +267,6 @@ export class ConfigService{
       model.total += 1
     }
 
-    if (data.rating == null || data.rating == "") {
-      model.rating = ("[Sao] chưa chọn!")
-      model.total += 1
-    }
     return model
 
    }
@@ -671,13 +673,19 @@ validateHotel(data : any,model: any)
      }
 
    // phone
+   console.log(data.phone.length);
+
    if (data.phone == null || data.phone == "") {
      model.phone= "[Số điện thoại] không được để trống !"
      model.total +=1
-   }else if (data.phone.length > 10) {
-     model.phone= "[Số điện thoại] vượt quá 10 số !"
-     model.total +=1
-   }else if (!data.phone.startsWith("0")) {
+   }else if (data.phone.length > 15) {
+    model.phone = "[Số điện thoại] vượt quá 15 số !"
+    model.total += 1
+  }
+  else if (data.phone.length < 10) {
+    model.phone = "[Số điện thoại] không hợp lệ !"
+    model.total += 1
+  }else if (!data.phone.startsWith("0")) {
      model.phone= "[Số điện thoại] không hợp lệ !"
      model.total +=1
    }
@@ -756,10 +764,14 @@ validateHotel(data : any,model: any)
      if (data.phone == null || data.phone == "") {
        model.phone= "[Số điện thoại] không được để trống !"
        model.total +=1
-     }else if (data.phone.length > 10) {
-       model.phone= "[Số điện thoại] vượt quá 10 số !"
-       model.total +=1
-     }else if (!data.phone.startsWith("0")) {
+     }else if (data.phone.length > 15) {
+      model.phone = "[Số điện thoại] vượt quá 15 số !"
+      model.total += 1
+    }
+    else if (data.phone.length < 10) {
+      model.phone = "[Số điện thoại] không hợp lệ !"
+      model.total += 1
+    }else if (!data.phone.startsWith("0")) {
        model.phone= "[Số điện thoại] không hợp lệ !"
        model.total +=1
      }
@@ -799,9 +811,13 @@ validateHotel(data : any,model: any)
       if (data.phone == null || data.phone == "") {
         model.phone= "[Số điện thoại] không được để trống !"
         model.total +=1
-      }else if (data.phone.length > 10) {
-        model.phone= "[Số điện thoại] vượt quá 10 số !"
-        model.total +=1
+      }else if (data.phone.length > 15) {
+        model.phone = "[Số điện thoại] vượt quá 15 số !"
+        model.total += 1
+      }
+      else if (data.phone.length < 10) {
+        model.phone = "[Số điện thoại] không hợp lệ !"
+        model.total += 1
       }else if (!data.phone.startsWith("0")) {
         model.phone= "[Số điện thoại] không hợp lệ !"
         model.total +=1

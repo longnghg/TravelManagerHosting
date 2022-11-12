@@ -41,6 +41,24 @@
               <input type="text" id="priceTicket" name="priceTicket" (input)="formatInput($any($event).target, 'priceTicket');inputChange() " class="form-control " placeholder="Nhập giá" [(ngModel)]="resPlace.priceTicket" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete">
             </div>
           </div>
+          <fieldset class="mt-4" *ngIf="type == 'approve' || type == 'refuse' || type == 'cancelRequire'">
+            <legend>Thông tin người yêu cầu</legend>
+            <div class="row" style="margin-top: -20px;">
+              <div class="col-4">
+                <label class="form-control-label" for="input-address">Mã số</label>
+                <input type="text" id="idUserModify" name="idUserModify" class="form-control " placeholder="Mã người yêu cầu" [(ngModel)]="resPlace.idUserModify" readonly>
+              </div>
+              <div class="col-6">
+                <label class="form-control-label" for="input-address">Tên</label>
+                <input type="text" id="modifyBy" name="modifyBy" class="form-control " placeholder="Tên người yêu cầu" [(ngModel)]="resPlace.modifyBy" readonly>
+              </div>
+              <div class="col-2">
+                <label class="form-control-label" for="input-address">Ngày yêu cầu</label>
+                <input type="date" id="modifyDate" name="modifyDate" class="form-control " placeholder="Ngày yêu cầu" [(ngModel)]="resPlace.modifyDateDisplay" readonly>
+              </div>
+            </div>
+          </fieldset>
+
           <hr>
         </div>
       </form>
