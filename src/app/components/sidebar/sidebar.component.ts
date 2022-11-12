@@ -21,7 +21,8 @@ export const ROUTES: RouteInfo[] = [
     { path: '/list-car', title: 'Car',  icon:'ni ni-bus-front-12 text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager]  },
 
     { path: '/list-tour', title: 'Tour',  icon:'ni ni-world-2 text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager, RoleTitle.TourManager]  },
-    { path: '/list-schedule', title: 'Schedule',  icon:'ni ni-calendar-grid-58 text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager, RoleTitle.TourManager]  },
+    { path: '/item-tour/:id1/:id2', title: 'Tour',  icon:'', class: 'd-none', roles: [RoleTitle.Admin, RoleTitle.LocalManager, RoleTitle.TourManager]  },
+    // { path: '/list-schedule', title: 'Schedule',  icon:'ni ni-calendar-grid-58 text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager, RoleTitle.TourManager]  },
 
     { path: '/list-tourBooking', title: 'tourBooking',  icon:'ni ni-collection text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager, RoleTitle.TourBookingManager]  },
 
