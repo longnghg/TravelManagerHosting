@@ -66,8 +66,14 @@ export class ItemPlaceComponent implements OnInit {
   save(){
     this.validatePlace = new ValidationPlaceModel
     this.validatePlace =  this.configService.validatePlace(this.resPlace, this.validatePlace)
-
     if (this.validatePlace.total == 0) {
+      //var file = new FormData();
+      //file.append('data', JSON.stringify(this.resHotel))
+
+      //if (this.formData) {
+        //file.append('file', this.formData.path[0].files[0])
+      //}
+
       this.resPlace.IdUserModify = this.auth.id
       if(this.type == "create")
       {
@@ -84,7 +90,6 @@ export class ItemPlaceComponent implements OnInit {
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
-
         })
       }
       else{
