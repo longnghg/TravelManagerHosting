@@ -73,40 +73,40 @@ export class ItemHotelComponent implements OnInit {
         //file.append('file', this.formData.path[0].files[0])
       //}
 
-      // this.resHotel.IdUserModify = this.auth.id
-      // if(this.type == "create")
-      // {
-      //   this.hotelService.create(this.resHotel).subscribe(res =>{
-      //     this.response = res
-      //     this.notificationService.handleAlertObj(res.notification)
-	    // if(this.response.notification.type == StatusNotification.Success)
-      //   {
-		  //     this.resHotel = Object.assign({}, new HotelModel)
-      //     this.resHotelTmp = Object.assign({}, new HotelModel)
-      //     this.validateHotel = new ValidationHotelModel
-      //     this.isChange = false
-      //   }
-      //   }, error => {
-      //     var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      //     this.notificationService.handleAlert(message, StatusNotification.Error)
-      //   })
-      // }
-      // else{
-      //   this.hotelService.update(this.resHotel).subscribe(res =>{
-      //     this.response = res
-      //     this.notificationService.handleAlertObj(res.notification)
+      this.resHotel.IdUserModify = this.auth.id
+      if(this.type == "create")
+      {
+        this.hotelService.create(this.resHotel).subscribe(res =>{
+          this.response = res
+          this.notificationService.handleAlertObj(res.notification)
+	    if(this.response.notification.type == StatusNotification.Success)
+        {
+		      this.resHotel = Object.assign({}, new HotelModel)
+          this.resHotelTmp = Object.assign({}, new HotelModel)
+          this.validateHotel = new ValidationHotelModel
+          this.isChange = false
+        }
+        }, error => {
+          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+          this.notificationService.handleAlert(message, StatusNotification.Error)
+        })
+      }
+      else{
+        this.hotelService.update(this.resHotel).subscribe(res =>{
+          this.response = res
+          this.notificationService.handleAlertObj(res.notification)
 
-      //     if(this.response.notification.type == StatusNotification.Success)
-      //     {
-      //       this.isChange = false
-      //       this.closeModal.nativeElement.click()
-      //     }
-      //   }, error => {
-      //     var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      //     this.notificationService.handleAlert(message, StatusNotification.Error)
+          if(this.response.notification.type == StatusNotification.Success)
+          {
+            this.isChange = false
+            this.closeModal.nativeElement.click()
+          }
+        }, error => {
+          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+          this.notificationService.handleAlert(message, StatusNotification.Error)
 
-      //   })
-      // }
+        })
+      }
 
       }
     }
