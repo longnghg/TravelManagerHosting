@@ -22,6 +22,7 @@ export class ListRoleComponent implements OnInit {
   response: ResponseModel
   type: boolean = false
   resRole: RoleModel[]
+  resRoleTmp: RoleModel[]
   private hubConnectionBuilder!: HubConnection;
 
   public gridConfig: GridConfig = {
@@ -50,14 +51,14 @@ export class ListRoleComponent implements OnInit {
 
   search(e?){
     if (e) {
-      this.roleService.search(e).subscribe(res => {
+      this.roleService.search(Object.assign({}, e)).subscribe(res => {
         this.response = res
         if(this.response.notification.type == StatusNotification.Success)
         {
           this.resRole = this.response.content
         }
         else{
-          this.resRole = null
+          this.resRole = Object.assign([], this.resRoleTmp)
           this.notificationService.handleAlertObj(res.notification)
         }
 
@@ -75,9 +76,11 @@ export class ListRoleComponent implements OnInit {
     if(this.response.notification.type == StatusNotification.Success)
     {
       this.resRole = this.response.content
+      this.resRoleTmp = Object.assign([], this.resRole)
+
     }
     else{
-      this.resRole = null
+      this.resRole = Object.assign([], this.resRoleTmp)
     }
 
   }, error => {

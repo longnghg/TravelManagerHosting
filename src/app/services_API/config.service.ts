@@ -48,6 +48,7 @@ export class ConfigService{
   }
   list10Star(){
     var listStar = [
+      {id: 0, name: "00"},
       {id: 1, name: "01"},
       {id: 2, name: "02"},
       {id: 3, name: "03"},
@@ -64,6 +65,7 @@ export class ConfigService{
 
   list5Star(){
     var listStar = [
+      {id: 0, name: "00"},
       {id: 1, name: "01"},
       {id: 2, name: "02"},
       {id: 3, name: "03"},
@@ -265,10 +267,6 @@ export class ConfigService{
       model.total += 1
     }
 
-    if (data.rating == null || data.rating == "") {
-      model.rating = ("[Sao] chưa chọn!")
-      model.total += 1
-    }
     return model
 
    }

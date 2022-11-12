@@ -53,8 +53,6 @@ export class ListHotelComponent implements OnInit {
   }
 
   search(e?){
-    console.log(e);
-
     if (e) {
       this.hotelService.search(Object.assign({}, e)).subscribe(res => {
         this.response = res
@@ -63,7 +61,7 @@ export class ListHotelComponent implements OnInit {
           this.resHotel = this.response.content
         }
         else{
-          this.resHotel = this.resHotelTmp
+          this.resHotel = Object.assign([], this.resHotelTmp)
           this.notificationService.handleAlertObj(res.notification)
         }
 
