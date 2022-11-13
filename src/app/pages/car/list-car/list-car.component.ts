@@ -29,6 +29,7 @@ export class ListCarComponent implements OnInit {
       idModalDelete: "",
       idModal: "gridSchedule",
       radioBoxName: "Kho lưu trữ",
+      disableApprove: true
     }
   ngOnInit(): void {
     this.init()
@@ -47,7 +48,7 @@ export class ListCarComponent implements OnInit {
   init(){
     this.carService.gets().subscribe(res =>{
       this.response = res
-      if(!this.response.notification.type){
+      if(this.response.notification.type == StatusNotification.Success){
         this.resCar = this.response.content
       }
       else{
