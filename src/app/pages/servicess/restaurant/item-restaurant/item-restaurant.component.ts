@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
 import { RestaurantModel, ValidationRestaurantModel } from 'src/app/models/restaurant.model';
 import { RestaurantService } from "src/app/services_API/restaurant.service"
 import { NotificationService } from "../../../../services_API/notification.service";
@@ -15,6 +15,7 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
   styleUrls: ['./item-restaurant.component.scss']
 })
 export class ItemRestaurantComponent implements OnInit {
+  @ViewChild('closeModal') closeModal: ElementRef
   @Input() resRestaurant: RestaurantModel
   @Input() type: string
   @Output() parentData = new EventEmitter<any>()
@@ -37,6 +38,9 @@ export class ItemRestaurantComponent implements OnInit {
     if(this.type == 'create'){
       this.resRestaurant = new RestaurantModel()
     }
+    if(this.resRestaurant){
+      this.resRestaurant.comboPrice = Number(this.resRestaurant.comboPrice).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+    }
     this.resRestaurantTmp = Object.assign({}, this.resRestaurant)
   }
 
@@ -58,7 +62,6 @@ export class ItemRestaurantComponent implements OnInit {
   save(){
     this.validateRestaurant = new ValidationRestaurantModel
     this.validateRestaurant =  this.configService.validateRestaurant(this.resRestaurant, this.validateRestaurant)
-
     if (this.validateRestaurant.total == 0) {
 
       this.resRestaurant.IdUserModify = this.auth.id
@@ -72,24 +75,21 @@ export class ItemRestaurantComponent implements OnInit {
           this.resRestaurant = Object.assign({}, new RestaurantModel)
           this.resRestaurantTmp = Object.assign({}, new RestaurantModel)
           this.validateRestaurant = new ValidationRestaurantModel
-		      this.close()
+          this.isChange = false
         }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
-
         })
       }
       else{
         this.restaurantService.update(this.resRestaurant).subscribe(res =>{
           this.response = res
-          console.log(this.resRestaurant.idRestaurant);
-
           this.notificationService.handleAlertObj(res.notification)
-
           if(this.response.notification.type == StatusNotification.Success)
           {
 		        this.isChange = false
+            this.closeModal.nativeElement.click()
           }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");

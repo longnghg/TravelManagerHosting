@@ -147,7 +147,7 @@ export class ItemTourScheduleComponent implements OnInit {
     this.carService.views().then(response => {
       this.resCar = response
     })
-    this.promotionService.views(this.isDelete).then(response => {
+    this.promotionService.views().then(response => {
       this.resPromotion = response
     })
     this.provinceService.views().then(response => {
