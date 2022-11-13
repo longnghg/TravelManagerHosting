@@ -68,11 +68,16 @@
               </ng-template>
              </ng-container>
              <ng-template #elseDateTime>
-              <ng-container *ngIf="column.filter == 'number'; else elseNumber">
-                <input *ngIf="column.searchable"   placeholder="Tìm kiếm..." (input)="formatInput($any($event).target, keyword, column.field)" (blur)="search(column.searchObj)" [(ngModel)]="keyword[column.field]" [type]="column.searchType" class="form-control custom-pages-input" style="height: 30px" [name]="column.field" [id]="column.field">
+              <ng-container *ngIf="column.searchType == 'number'; else elseNumber">
+                <input *ngIf="column.searchable"   placeholder="Tìm kiếm..." (input)="formatInput($any($event).target, keyword, column.field, 'number')" (blur)="search(column.searchObj)" [(ngModel)]="keyword[column.field]" type="text" class="form-control custom-pages-input" style="height: 30px" [name]="column.field" [id]="column.field">
                </ng-container>
                <ng-template #elseNumber>
-                <input *ngIf="column.searchable"   placeholder="Tìm kiếm..."  (blur)="search(column.searchObj)" [(ngModel)]="keyword[column.field]" [type]="column.searchType" class="form-control custom-pages-input" style="height: 30px" [name]="column.field" [id]="column.field">
+                <ng-container *ngIf="column.searchType == 'price'; else elsePrice">
+                  <input *ngIf="column.searchable"   placeholder="Tìm kiếm..." (input)="formatInput($any($event).target, keyword, column.field, 'price')" (blur)="search(column.searchObj)" [(ngModel)]="keyword[column.field]" type="text" class="form-control custom-pages-input" style="height: 30px" [name]="column.field" [id]="column.field">
+                </ng-container>
+                <ng-template #elsePrice>
+                  <input *ngIf="column.searchable"   placeholder="Tìm kiếm..."  (blur)="search(column.searchObj)" [(ngModel)]="keyword[column.field]" type="text" class="form-control custom-pages-input" style="height: 30px" [name]="column.field" [id]="column.field">
+                </ng-template>
                </ng-template>
              </ng-template>
 
@@ -137,7 +142,13 @@
 
                     </ng-container>
                     <ng-template #elseCalled>
-                      {{row[column.field]}}
+                      <ng-container *ngIf="column.filter == 'price'; else elsePrice">
+                        {{row[column.field] | formatPriceVi}}
+                      </ng-container>
+                      <ng-template #elsePrice>
+                        {{row[column.field]}}
+                      </ng-template>
+
                     </ng-template>
 
                   </ng-template>

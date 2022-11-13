@@ -2,12 +2,13 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TourModel, ValidateTourModel } from 'src/app/models/tour.model';
 import { TourService } from "src/app/services_API/tour.service"
 import { NotificationService } from "./../../../services_API/notification.service";
-import { ColDef, GridConfig} from './../../../components/grid-data/grid-data.component';
+import { ProvinceService } from "./../../../services_API/province.service";
 import { ConfigService } from "./../../../services_API/config.service";
 import { ResponseModel } from "./../../../models/responsiveModels/response.model";
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { AuthenticationModel } from 'src/app/models/authentication.model';
+import { LocationModel } from 'src/app/models/location.model';
 import { StatusNotification } from "../../../enums/enum";
 @Component({
   selector: 'app-item-tour',
@@ -20,6 +21,7 @@ export class ItemTourComponent implements OnInit {
   validateTourModel: ValidateTourModel = new ValidateTourModel
   response: ResponseModel
   isChange: boolean = false
+  resProvince: LocationModel[]
   isChangeStar: boolean = false
   resTourTmp: TourModel
   isHoliday = this.configService.listStatus()
@@ -27,14 +29,17 @@ export class ItemTourComponent implements OnInit {
   formData: any
   resAuth: AuthenticationModel
   active = 1;
+  activePane = 0;
   listStar: any
-  constructor(private router: Router, private tourService: TourService, private configService: ConfigService, private notificationService: NotificationService,
+  constructor(private provinceService: ProvinceService,private router: Router, private tourService: TourService, private configService: ConfigService, private notificationService: NotificationService,
       private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.resAuth = JSON.parse(localStorage.getItem("currentUser"))
     this.listStar = this.configService.list10Star()
-
+    this.provinceService.views().then(res => {
+      this.resProvince = res
+    })
     var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
     this.type = this.activatedRoute.snapshot.paramMap.get('id1')
     if(this.type == "create"){
@@ -55,9 +60,16 @@ export class ItemTourComponent implements OnInit {
     else{
       this.init(idTour)
     }
-
-
   }
+
+  onTabChange($event: number) {
+    this.activePane = $event;
+    if (this.activePane == 1) {
+
+    }
+    // console.log('onTabChange', $event);
+  }
+
   init(idTour){
     this.tourService.getTour(idTour).subscribe(res => {
       this.response = res
@@ -65,7 +77,6 @@ export class ItemTourComponent implements OnInit {
       if(this.response.notification.type == StatusNotification.Success)
       {
         this.resTour = this.response.content
-        this.resTourTmp = Object.assign({}, this.resTour)
         if(this.resTour){
           if (this.resTour.thumbnail) {
             this.img = this.configService.apiUrl + this.resTour.thumbnail
@@ -74,6 +85,7 @@ export class ItemTourComponent implements OnInit {
             this.img = "../../../../assets/img/tours/cross-sign.jpg"
           }
           this.resTour.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resTour.modifyDate)
+          this.resTourTmp = Object.assign({}, this.resTour)
         }
       }
     }, error => {

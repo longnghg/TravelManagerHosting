@@ -45,7 +45,7 @@ export class ListScheduleComponent implements OnInit {
         { field: 'quantityAdult',headerName: "Số lượng người lớn", style: "width: 130px;", searchable: true, searchType: 'number', searchObj: 'quantityAdult'},
         { field: 'quantityChild',headerName: "Số lượng trẻ em", style: "width: 130px;", searchable: true, searchType: 'number', searchObj: 'quantityChild'},
         { field: 'quantityBaby',headerName: "Số lượng em bé", style: "width: 130px;", searchable: true, searchType: 'number', searchObj: 'quantityBaby'},
-        { field: 'finalPrice',headerName: "Tổng tiền", style: "width: 150px;", searchable: true, searchType: 'number', searchObj: 'finalPrice'},
+        { field: 'finalPrice',headerName: "Tổng tiền", style: "width: 150px;", searchable: true, filter: 'price', searchType: 'price', searchObj: 'finalPrice'},
         { field: 'status',headerName: "Trạng thái", style: "width: 180px;", filter: "status", searchable: true, searchType: 'section', searchObj: 'status', multiple: false, closeOnSelect: true, bindLabel: "name", bindValue: "id", listSection: this.configService.listStatus()},
       ];
     }, 200);

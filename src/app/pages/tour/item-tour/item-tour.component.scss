@@ -11,25 +11,25 @@
 }
 .containerBN .bannerBN .titleBN{
   position: absolute;
-  top:0;
-  background-color: #FDBC0C;
-  background-image: linear-gradient(to top right,#FCB116, #FCC210);
-  width:100%;
-  height: calc(50% - 50px);
+  top: 20%;
+    left: -24%;
+  // background-color: #FDBC0C;
+  // background-image: linear-gradient(to top right,#FCB116, #FCC210);
+  width: 147%;
+    height: calc(30% - 50px);
   border-radius: 40px;
   text-align: center;
-  padding-top:50px;
   font-weight: bold;
   font-size: xxx-large;
 }
 .containerBN .bannerBN .detailBN{
   position: absolute;
-  top:20%;
+  top: 17.6%;
   background-color: #FFEECE55;
   backdrop-filter: blur(20px);
   width: calc(150%);
   height: 90%;
-  left:-25%;
+  left: -23.5%;
   border-radius: 40px;
   // display: grid;
   // grid-template-columns: auto 700px auto;
