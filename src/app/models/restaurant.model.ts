@@ -4,12 +4,13 @@ export class RestaurantModel{
   name: string
   phone: string
   address: string
-  comboPrice: number
+  comboPrice: number | string = 0
   idAction: boolean
   typeAction: string
   typeActionName: string
   IdUserModify: string
   modifyDate: number
+  modifyDateDisplay: string
   approve: number
   approveName: string
 }
