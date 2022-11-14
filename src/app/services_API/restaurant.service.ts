@@ -19,14 +19,8 @@ async views()
   var value = <any>await new Promise<any>(resolve => {
     this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/gets-restaurant?isDelete="+false).subscribe(res => {
       this.response = res
-      if(this.response.notification.type == StatusNotification.Success)
-      {
-        this.resRestaurant =  this.response.content
+      this.resRestaurant =  this.response.content
         resolve(this.resRestaurant);
-      }
-      else{
-        this.notificationService.handleAlertObj(res.notification)
-      }
   }, error => {
     var message = this.configService.error(error.status, error.error != null?error.error.text:"");
     this.notificationService.handleAlert(message, "Error")

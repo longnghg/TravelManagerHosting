@@ -20,14 +20,8 @@ export class DistrictService{
     var value = <any>await new Promise<any>(resolve => {
       this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/gets-district").subscribe(res => {
         this.response = res
-        if(this.response.notification.type == StatusNotification.Success)
-        {
-          this.resDistrict =  this.response.content
+        this.resDistrict =  this.response.content
           resolve(this.resDistrict);
-        }
-        else{
-          this.notificationService.handleAlertObj(res.notification)
-        }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)
