@@ -6,6 +6,10 @@ export class CarModel{
   phone: string
   nameDriver: string
   idEmployee: number
+
+  IdUserModify: string
+  modifyDate: number
+  modifyDateDisplay: string
 }
 
 export class ValidationCarModel {

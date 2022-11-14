@@ -36,5 +36,15 @@ create(data: any)
 {
   return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Car/create-car", data);
 }
+update(data: any)
+{
+  return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Car/update-car", data);
 
+}
+
+delete(idCar: number, idUser: number)
+{
+  return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/delete-car?idCar="+idCar+"idUser="+idUser);
+
+}
 }
