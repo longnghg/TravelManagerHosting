@@ -74,7 +74,7 @@ export class ListRestaurantComponent implements OnInit {
 
         this.columnDefsWaiting= [
           { field: 'name',headerName: "Tên khách sạn", style: "width: 30%;", searchable: true, searchType: "text", searchObj: 'name'},
-          { field: 'phone',headerName: "Số điện thoại", style: "width: 12%;", searchable: true, searchType: 'text', searchObj: 'phone'},
+          { field: 'phone',headerName: "Số điện thoại", style: "width: 12%;", searchable: true, searchType: 'number', searchObj: 'phone'},
           { field: 'modifyBy',headerName: "Người yêu cầu", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'modifyBy'},
           { field: 'modifyDate',headerName: "Ngày yêu cầu", style: "width: 20%;", filter: 'date', searchable: true, searchType: 'date', typeDate: 'range', searchObj: 'modifyDate'},
           { field: 'typeActionName',headerName: "Loại phê duyệt", style: "width: 13%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()},
@@ -148,7 +148,7 @@ export class ListRestaurantComponent implements OnInit {
         this.columnDefs= [
           { field: 'name',headerName: "Tên nhà hàng", style: "width: 25%;", searchable: true, searchType: 'text', searchObj: 'name'},
           { field: 'address',headerName: "Địa chỉ", style: "width: 29%;", searchable: true, searchType: 'text', searchObj: 'address'},
-          { field: 'phone',headerName: "Số điện thoại", style: "width: 15%;", searchable: true, searchType: 'number', searchObj: 'phone'},
+          { field: 'phone',headerName: "Số điện thoại", style: "width: 12%;", searchable: true, searchType: 'number', searchObj: 'phone'},
           { field: 'comboPrice',headerName: "Giá", style: "width: 21%;",searchable: true, filter: 'price', searchType: 'price', searchObj: 'comboPrice'},
         ];
 
