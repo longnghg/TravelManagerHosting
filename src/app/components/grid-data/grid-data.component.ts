@@ -106,9 +106,19 @@ export class GridDataComponent implements OnInit {
     this.calStartEnd()
   }
 
-  formatInput(input: HTMLInputElement, keyword?: any, column?: any) {
+  formatInput(input: HTMLInputElement, keyword?: any, column?: any, type?: string) {
     input.value = input.value.replace(FILTER_PAG_REGEX, '');
-    keyword[column] = input.value
+    if (input.value) {
+      if (type == "price") {
+        keyword[column] = Number(input.value).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+      }
+      else{
+        keyword[column] = input.value
+      }
+    }
+    else{
+      keyword[column] = input.value
+    }
   }
 
   changePageSize(){
@@ -218,6 +228,6 @@ export class GridConfig{
   isRestore?: boolean
 }
 
-export declare type GridFilter = 'star' | 'number' | 'date' | 'status' | 'text' | 'call' ;
-export declare type GridSearchType = 'section' | 'number' | 'date' | 'dateTime' | 'text' | 'email';
+export declare type GridFilter = 'star' | 'number' | 'date' | 'status' | 'text' | 'call' | 'price' ;
+export declare type GridSearchType = 'section' | 'number' | 'date' | 'dateTime' | 'text' | 'email' | 'price' ;
 export declare type  GridTypeDate = 'single' | 'range' ;

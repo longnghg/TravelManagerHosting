@@ -79,7 +79,6 @@ export class ItemTourScheduleComponent implements OnInit {
     this.initCost()
 
 
-
     if (this.type == 'create') {
       this.resSchedule = new ScheduleModel()
       this.resCostTour = new CostTourModel()
@@ -167,15 +166,13 @@ export class ItemTourScheduleComponent implements OnInit {
     })
   }
 
-  dateChange() {
-    this.resSchedule.beginDate = new Date(this.resSchedule.beginDateDisplay).getTime()
-    this.resSchedule.endDate = new Date(this.resSchedule.endDateDisplay).getTime()
-    this.resSchedule.departureDate = new Date(this.resSchedule.departureDateDisplay).getTime()
-    this.resSchedule.returnDate = new Date(this.resSchedule.returnDateDisplay).getTime()
-    this.resSchedule.timePromotion = new Date(this.resSchedule.timePromotionDisplay).getTime()
-
-    this.resTimeline.fromTime = new Date(this.resTimeline.fromTimeDisplay).getTime()
-    this.resTimeline.toTime = new Date(this.resTimeline.toTimeDisplay).getTime()
+  dateChange(property) {
+    this.resSchedule[property] = new Date(this.resSchedule[property+'Display']).getTime()
+    // this.resSchedule.endDate = new Date(this.resSchedule.endDateDisplay).getTime()
+    // this.resSchedule.departureDate = new Date(this.resSchedule.departureDateDisplay).getTime()
+    // this.resSchedule.returnDate = new Date(this.resSchedule.returnDateDisplay).getTime()
+    // this.resTimeline.fromTime = new Date(this.resTimeline.fromTimeDisplay).getTime()
+    // this.resTimeline.toTime = new Date(this.resTimeline.toTimeDisplay).getTime()
   }
 
   inputChange() {
@@ -192,11 +189,16 @@ export class ItemTourScheduleComponent implements OnInit {
     this.costtour = new CostTourModel
     this.costtour = this.resCostTour
     this.timelineList = this.resTimelinelist
-
     this.validateScheduleModel = new ValidateScheduleModel
-    this.validateScheduleModel = this.configService.validateSchedule(this.resSchedule, this.validateScheduleModel)
     this.validateCostTourModel = new ValidateCostTourModel
-    this.validateCostTourModel = this.configService.validateCostTour(this.resCostTour, this.validateCostTourModel)
+
+    if (this.active == 1) {
+      this.validateScheduleModel = this.configService.validateSchedule(this.resSchedule, this.validateScheduleModel)
+    }
+
+    if (this.active == 2) {
+      this.validateCostTourModel = this.configService.validateCostTour(this.resCostTour, this.validateCostTourModel)
+    }
 
     if (this.validateScheduleModel.total == 0) {
       if (this.validateCostTourModel.total == 0) {
@@ -341,19 +343,20 @@ export class ItemTourScheduleComponent implements OnInit {
   }
 
   promotionChange(id: number) {
+    console.log(this.resPromotion);
+
     this.resPromotion.forEach(promotion => {
       if (promotion.idPromotion == id) {
         this.resSchedule.timePromotion = promotion.fromDate
         this.resSchedule.valuePromotion = promotion.value
-
         this.resSchedule.timePromotionDisplay = promotion.fromDateDisplay
+        this.resSchedule.endTimePromotion = promotion.toDate
+        this.resSchedule.endTimePromotionDisplay = promotion.toDateDisplay
       }
     });
   }
 
   close() {
-    if (this.type == 'detail') {
-    }
     this.resSchedule = Object.assign({}, this.resScheduleTmp)
     this.resTimelinelist  = Object.assign({}, this.resTimelinelistTmp)
     this.isChange = false
@@ -399,7 +402,16 @@ export class ItemTourScheduleComponent implements OnInit {
 
   formatInput(input: HTMLInputElement, property: string) {
     input.value = input.value.replace(FILTER_PAG_REGEX, '');
-    this.resCostTour[property] = Number(input.value).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
-
+    if (input.value) {
+      if (property == "distance" || property == "cusExpected" || property == "minCapacity" || property == "maxCapacity" || property == "vat") {
+        this.resCostTour[property] = Number(input.value)
+      }
+      else{
+        this.resCostTour[property] = Number(input.value).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+      }
+    }
+    else{
+      this.resCostTour[property] = 0
+    }
   }
 }

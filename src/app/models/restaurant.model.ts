@@ -10,6 +10,7 @@ export class RestaurantModel{
   typeActionName: string
   IdUserModify: string
   modifyDate: number
+  modifyDateDisplay: string
   approve: number
   approveName: string
 }

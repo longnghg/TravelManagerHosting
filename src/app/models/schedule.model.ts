@@ -12,7 +12,8 @@ export class ScheduleModel{
   endDateDisplay: string
   timePromotion: number = 0
   timePromotionDisplay: string
-
+  endTimePromotion: number = 0
+  endTimePromotionDisplay: string
 
   departurePlace: string
   status: number

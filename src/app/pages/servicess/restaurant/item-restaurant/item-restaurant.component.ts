@@ -40,6 +40,8 @@ export class ItemRestaurantComponent implements OnInit {
     }
     if(this.resRestaurant){
       this.resRestaurant.comboPrice = Number(this.resRestaurant.comboPrice).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+      this.resRestaurant.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resRestaurant.modifyDate)
+
     }
     this.resRestaurantTmp = Object.assign({}, this.resRestaurant)
   }

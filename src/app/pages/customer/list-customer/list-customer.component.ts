@@ -27,6 +27,7 @@ export class ListCustomerComponent implements OnInit {
       idModalDelete: "",
       idModal: "gridCustomer",
       radioBoxName: "Kho lưu trữ",
+      disableApprove: true
     }
     ngOnInit(): void {
 
@@ -35,13 +36,11 @@ export class ListCustomerComponent implements OnInit {
       setTimeout(() => {
         this.columnDefs= [
           // { field: 'idCustomer', headerName: "Mã số", style: "width: 350px;", searchable: true, searchType: 'text', searchObj: 'idCustomer'},
-        { field: 'nameCustomer',headerName: "Tên", style: "width: 400px;", searchable: true, searchType: 'text', searchObj: 'nameCustomer'},
-        { field: 'email',headerName: "Email", style: "width: 200px;", searchable: true, searchType: 'email', searchObj: 'email'},
-        { field: 'phone',headerName: "Số điện thoại", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'phone'},
-        { field: 'address',headerName: "Địa chỉ", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'address'},
-        { field: 'password',headerName: "Mật khẩu", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'password'},
-        { field: 'birthday',headerName: "Ngày sinh", style: "width: 160px;", searchable: true, searchType: 'date', searchObj: 'birthday'},
-        { field: 'point',headerName: "Điểm", style: "width: 160px;", searchable: true, searchType: 'text', searchObj: 'point'},
+        { field: 'nameCustomer',headerName: "Tên", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'nameCustomer'},
+        { field: 'email',headerName: "Email", style: "width: 20%;", searchable: true, searchType: 'email', searchObj: 'email'},
+        { field: 'phone',headerName: "Số điện thoại", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'phone'},
+        { field: 'address',headerName: "Địa chỉ", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'address'},
+        { field: 'point',headerName: "Điểm", style: "width: 10%;", searchable: true, searchType: 'text', searchObj: 'point'},
         ];
       }, 200);
     }
@@ -49,7 +48,7 @@ export class ListCustomerComponent implements OnInit {
     init(){
       this.customerService.gets().subscribe(res =>{
         this.response = res
-        if(!this.response.notification.type){
+        if(this.response.notification.type == StatusNotification.Success){
           this.resCustomer = this.response.content
         }
         else{

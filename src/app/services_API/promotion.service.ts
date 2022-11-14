@@ -18,21 +18,17 @@ export class PromotionService{
   resPromotion: PromotionModel[]
   async views()
   {
-    this.resPromotion.forEach(promotion => {
-      promotion.fromDateDisplay = this.configService.formatFromUnixTimestampToFullDate(promotion.fromDate)
-      promotion.toDateDisplay = this.configService.formatFromUnixTimestampToFullDate(promotion.toDate)
-    });
-
     var value = <any>await new Promise<any>(resolve => {
-      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/gets-promotion?isDelete="+false).subscribe(res => {
+      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/promotion/gets-promotion?isDelete="+false).subscribe(res => {
         this.response = res
         if(this.response.notification.type == StatusNotification.Success)
         {
           this.resPromotion =  this.response.content
+          this.resPromotion.forEach(promotion => {
+            promotion.fromDateDisplay = this.configService.formatFromUnixTimestampToFullDate(promotion.fromDate)
+            promotion.toDateDisplay = this.configService.formatFromUnixTimestampToFullDate(promotion.toDate)
+          });
           resolve(this.resPromotion);
-        }
-        else{
-          this.notificationService.handleAlertObj(res.notification)
         }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
