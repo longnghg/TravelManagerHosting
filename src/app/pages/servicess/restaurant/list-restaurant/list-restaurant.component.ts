@@ -17,7 +17,9 @@ export class ListRestaurantComponent implements OnInit {
   auth: AuthenticationModel
   resRestaurant: RestaurantModel[]
   resRestaurantWaiting: RestaurantModel[]
+  resRestaurantTmp: RestaurantModel[]
   response: ResponseModel
+  resRestaurantWaitingTmp: RestaurantModel[]
   dataChild: RestaurantModel
   typeChild: string
   isDelete: boolean = false
@@ -47,21 +49,58 @@ export class ListRestaurantComponent implements OnInit {
     ngOnInit(): void {
       this.auth = JSON.parse(localStorage.getItem("currentUser"))
       this.init(this.isDelete);
+      this.initWaiting()
     }
-    search(e?){
-      console.log(e);
 
+    initWaiting(){
+      this.restaurantService.getsWaiting(this.auth.id).subscribe(res =>{
+        this.response = res
+        console.log(res);
+
+        if(this.response.notification.type == StatusNotification.Success){
+
+          this.resRestaurantWaiting = this.response.content
+
+          this.resRestaurantWaiting.forEach(hotel => {
+            hotel.approveName = StatusApprove[hotel.approve]
+            hotel.typeActionName = TypeAction[hotel.typeAction]
+          });
+
+          this.resRestaurantWaitingTmp = Object.assign([], this.resRestaurantWaiting)
+
+        }else{
+          this.notificationService.handleAlertObj(res.notification)
+        }
+
+        this.columnDefsWaiting= [
+          { field: 'name',headerName: "Tên khách sạn", style: "width: 30%;", searchable: true, searchType: "text", searchObj: 'name'},
+          { field: 'phone',headerName: "Số điện thoại", style: "width: 12%;", searchable: true, searchType: 'text', searchObj: 'phone'},
+          { field: 'modifyBy',headerName: "Người yêu cầu", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'modifyBy'},
+          { field: 'modifyDate',headerName: "Ngày yêu cầu", style: "width: 20%;", filter: 'date', searchable: true, searchType: 'date', typeDate: 'range', searchObj: 'modifyDate'},
+          { field: 'typeActionName',headerName: "Loại phê duyệt", style: "width: 13%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()},
+
+        ];
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, StatusNotification.Error)
+      })
+    }
+
+    searchWaiting(e?){
       if (e) {
-        this.restaurantService.search(Object.assign({}, e)).subscribe(res => {
+        this.restaurantService.searchWaiting(Object.assign({}, e)).subscribe(res => {
           this.response = res
           if(this.response.notification.type == StatusNotification.Success)
           {
-            this.resRestaurant = this.response.content
+            this.resRestaurantWaiting = this.response.content
+
+            this.resRestaurantWaiting.forEach(hotel => {
+              hotel.approveName = StatusApprove[hotel.approve]
+              hotel.typeActionName = TypeAction[hotel.typeAction]
+            });
           }
           else{
-            console.log(this.resRestaurantWaiting);
-
-            this.resRestaurant = this.resRestaurantWaiting
+            this.resRestaurantWaiting = this.resRestaurantWaitingTmp
             this.notificationService.handleAlertObj(res.notification)
           }
 
@@ -71,6 +110,26 @@ export class ListRestaurantComponent implements OnInit {
         })
       }
     }
+    search(e?){
+      if (e) {
+        this.restaurantService.search(Object.assign({}, e)).subscribe(res => {
+          this.response = res
+          if(this.response.notification.type == StatusNotification.Success)
+          {
+            this.resRestaurant = this.response.content
+          }
+          else{
+            this.resRestaurant = Object.assign([], this.resRestaurantTmp)
+            this.notificationService.handleAlertObj(res.notification)
+          }
+
+        }, error => {
+          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+          this.notificationService.handleAlert(message, StatusNotification.Error)
+        })
+      }
+    }
+
 
     init(isDelete){
       this.restaurantService.gets(isDelete).subscribe(res =>{
@@ -93,13 +152,7 @@ export class ListRestaurantComponent implements OnInit {
           { field: 'comboPrice',headerName: "Giá", style: "width: 21%;",searchable: true, searchType: 'number', searchObj: 'comboPrice'},
         ];
 
-        this.columnDefsWaiting= [
-          { field: 'name',headerName: "Tên khách sạn", style: "width: 20%;", searchable: true, searchType: "text", searchObj: 'name'},
-          { field: 'address',headerName: "Địa chỉ", style: "width: 25%;", searchable: true, searchType: 'text', searchObj: 'address'},
-          { field: 'phone',headerName: "Số điện thoại", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'phone'},
-          { field: 'approveName',headerName: "Trạng thái phê duyệt", style: "width: 15%;", searchable: true, searchType: 'section', searchObj: 'approve' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listApprove()},
-          { field: 'typeActionName',headerName: "Loại phê duyệt", style: "width: 15%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()},
-        ];
+
       }, 200);
 
       this.restaurantService.getsWaiting(this.auth.id).subscribe(res =>{

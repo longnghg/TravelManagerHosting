@@ -18,6 +18,7 @@ export class ListPlaceComponent implements OnInit {
   resPlace: PlaceModel[]
   resPlaceWaiting: PlaceModel[]
   respPlaceWaitingTmp: PlaceModel[]
+  respPlaceTmp: PlaceModel[]
   response: ResponseModel
   dataChild: PlaceModel
   typeChild: string
@@ -63,7 +64,7 @@ export class ListPlaceComponent implements OnInit {
             });
           }
           else{
-            this.resPlaceWaiting = this.resPlaceWaiting
+            this.resPlaceWaiting = this.respPlaceWaitingTmp
             this.notificationService.handleAlertObj(res.notification)
           }
 
@@ -95,7 +96,7 @@ export class ListPlaceComponent implements OnInit {
         ];
 
         this.columnDefsWaiting= [
-          { field: 'name',headerName: "Tên địa điểm sạn", style: "width: 30%;", searchable: true, searchType: "text", searchObj: 'name'},
+          { field: 'name',headerName: "Tên điểm tham quan ", style: "width: 30%;", searchable: true, searchType: "text", searchObj: 'name'},
           { field: 'phone',headerName: "Số điện thoại", style: "width: 12%;", searchable: true, searchType: 'text', searchObj: 'phone'},
           { field: 'modifyBy',headerName: "Người yêu cầu", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'modifyBy'},
           { field: 'modifyDate',headerName: "Ngày yêu cầu", style: "width: 20%;", filter: 'date', searchable: true, searchType: 'date', typeDate: 'range', searchObj: 'modifyDate'},
@@ -126,8 +127,6 @@ export class ListPlaceComponent implements OnInit {
       this.dataChild = Object.assign({}, e)
     }
     search(e?){
-      console.log(e);
-
       if (e) {
         this.placeService.search(Object.assign({}, e)).subscribe(res => {
           this.response = res
@@ -136,9 +135,7 @@ export class ListPlaceComponent implements OnInit {
             this.resPlace = this.response.content
           }
           else{
-            console.log(this.resPlaceWaiting);
-
-            this.resPlace = this.resPlaceWaiting
+            this.resPlace = Object.assign([], this.respPlaceTmp )
             this.notificationService.handleAlertObj(res.notification)
           }
 
