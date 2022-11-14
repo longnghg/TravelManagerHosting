@@ -101,7 +101,7 @@ export class ItemTourScheduleComponent implements OnInit {
         this.resScheduleTmp = Object.assign({}, this.resSchedule)
         this.resCostTourTmp = Object.assign({}, this.resCostTour)
 
-
+   
         this.costtourService.getCostbyidSchedule(this.resSchedule.idSchedule).subscribe(res => {
           this.response = res
           this.resCostTour = this.response.content
@@ -147,15 +147,30 @@ export class ItemTourScheduleComponent implements OnInit {
     this.employeeService.views().then(response => {
       this.resEmployee = response
     })
-    this.carService.views().then(response => {
-      this.resCar = response
-    })
+    if(this.type == 'detail'){
+      this.carService.views().then(response => {
+        this.resCar = response
+      })
+    }
+  
     this.promotionService.views().then(response => {
       this.resPromotion = response
     })
     this.provinceService.views().then(response => {
       this.resProvince = response
     })
+  }
+
+  carChangeDate(){
+    if(this.resSchedule){
+      if(this.resSchedule.departureDate > 0 || this.resSchedule.returnDate > 0){      
+        var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
+        this.carService.getsCarByDate(this.resSchedule.departureDate, this.resSchedule.returnDate, idTour).subscribe(response => {
+          this.response = response
+          this.resCar = this.response.content
+        })
+      }
+    }
   }
 
   initCost() {
@@ -178,7 +193,6 @@ export class ItemTourScheduleComponent implements OnInit {
     // this.resSchedule.returnDate = new Date(this.resSchedule.returnDateDisplay).getTime()
     // this.resTimeline.fromTime = new Date(this.resTimeline.fromTimeDisplay).getTime()
     // this.resTimeline.toTime = new Date(this.resTimeline.toTimeDisplay).getTime()
-
   }
 
   inputChange() {

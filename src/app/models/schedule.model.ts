@@ -46,6 +46,7 @@ export class ScheduleModel{
   approve: number
   approveName: string
   modifyDate: number
+  profit: number
 }
 
 export class ValidateScheduleModel{
@@ -63,4 +64,5 @@ export class ValidateScheduleModel{
   maxCapacity: string = null
   description: string = null
   vat: string = null
+  profit: number = null
 }

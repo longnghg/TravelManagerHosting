@@ -13,7 +13,42 @@
               <div class="row">
                 <fieldset style="border: 1px solid #ced4da; border-radius: 0.375rem;">
                   <legend>Chi tiết lịch trình</legend>
-
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-beginDate">Chọn ngày bắt đầu bán vé
+                          <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.beginDate ? this.validateScheduleModel.beginDate : ''}}</span>
+                        </label>
+                        <input   (change)=" inputChange(); dateChange('beginDate') " [(ngModel)]="resSchedule.beginDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="beginDate" id="beginDate" type="date" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" />
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-endDate">Chọn ngày kết thúc bán vé
+                          <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.endDate ? this.validateScheduleModel.endDate : ''}}</span>
+                        </label>
+                        <input   (change)="inputChange(); dateChange('endDate')" [(ngModel)]="resSchedule.endDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="endDate" id="endDate" type="date" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-departureDate">Chọn ngày khởi hành
+                          <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.departureDate ? this.validateScheduleModel.departureDate : ''}}</span>
+                        </label>
+                        <input   (change)="inputChange();carChangeDate(); dateChange('departureDate')" [(ngModel)]="resSchedule.departureDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="departureDate" id="departureDate" type="date" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" />
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-returnDate">Chọn ngày trở về
+                          <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.returnDate ? this.validateScheduleModel.returnDate : ''}}</span>
+                        </label>
+                        <input   (change)="inputChange();carChangeDate(); dateChange('returnDate')" [(ngModel)]="resSchedule.returnDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="returnDate" id="returnDate" type="date" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" />
+                      </div>
+                    </div>
+                  </div>
                   <div class="row">
                     <div class="col-6">
                       <div class="form-group">
@@ -52,42 +87,6 @@
 
                   </div>
                   <div class="row">
-                    <div class="col-6">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-beginDate">Chọn ngày bắt đầu bán vé
-                          <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.beginDate ? this.validateScheduleModel.beginDate : ''}}</span>
-                        </label>
-                        <input   (change)=" inputChange(); dateChange('beginDate') " [(ngModel)]="resSchedule.beginDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="beginDate" id="beginDate" type="date" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" />
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-endDate">Chọn ngày kết thúc bán vé
-                          <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.endDate ? this.validateScheduleModel.endDate : ''}}</span>
-                        </label>
-                        <input   (change)="inputChange(); dateChange('endDate')" [(ngModel)]="resSchedule.endDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="endDate" id="endDate" type="date" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-6">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-departureDate">Chọn ngày khởi hành
-                          <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.departureDate ? this.validateScheduleModel.departureDate : ''}}</span>
-                        </label>
-                        <input   (change)="inputChange(); dateChange('departureDate')" [(ngModel)]="resSchedule.departureDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="departureDate" id="departureDate" type="date" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" />
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-returnDate">Chọn ngày trở về
-                          <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.returnDate ? this.validateScheduleModel.returnDate : ''}}</span>
-                        </label>
-                        <input   (change)="inputChange(); dateChange('returnDate')" [(ngModel)]="resSchedule.returnDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="returnDate" id="returnDate" type="date" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
                     <div class="col-2">
                       <div class="form-group">
                         <label class="form-control-label" for="input-minCapacity">Tối thiểu số người
@@ -112,7 +111,7 @@
                         <input type="text" name="vat" id="vat" (input)="formatInput($any($event).target, 'vat'); inputChange()" min="0" value="10" class="form-control " placeholder="Nhập VAT" [(ngModel)]="resSchedule.vat" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" >
                       </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-3">
                       <div class="form-group">
                         <label class="form-control-label" for="input-minCapacity">Nơi Khởi Hành
                           <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.departurePlace ? this.validateScheduleModel.departurePlace : ''}}</span>
@@ -129,6 +128,12 @@
                        </ng-select>
                         <!-- <input type="text" name="resSchedule.departurePlace" id="departurePlace" (input)="inputChange()" class="form-control " placeholder="Nhập nơi khởi hành" [(ngModel)]="resSchedule.departurePlace" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" > -->
                       </div>
+                    </div>
+                    <div class="col-3">
+                      <label class="form-control-label" for="input-toPlace">Lợi nhuận (%)
+                        <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.profit ? this.validateScheduleModel.profit : ''}}</span>
+                      </label>
+                      <input type="text" id="profit" name="profit" (input)="formatInput($any($event).target, 'profit'); inputChange()" class="form-control " placeholder="Nhập lợi nhuận " [(ngModel)]="resSchedule.profit" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete "  >
                     </div>
                   </div>
                   <div class="row">
@@ -290,12 +295,7 @@
                       </label>
                       <input type="text" id="otherPrice" name="otherPrice" (input)="formatInput($any($event).target, 'otherPrice');inputChange()" class="form-control " placeholder="Nhập chi phí khác " [(ngModel)]="resCostTour.otherPrice" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" >
                     </div>
-                    <div class="col-3">
-                      <label class="form-control-label" for="input-toPlace">Lợi nhuận (%)
-                        <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateCostTourModel.profit ? this.validateCostTourModel.profit : ''}}</span>
-                      </label>
-                      <input type="text" id="profit" name="profit" (input)="formatInput($any($event).target, 'profit'); inputChange()" class="form-control " placeholder="Nhập lợi nhuận " [(ngModel)]="resCostTour.profit" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete "  >
-                    </div>
+                   
                   </div>
 
                 </fieldset>
@@ -435,7 +435,7 @@
                 <div class="row">
 
                     <div class="col-12 text-right">
-                      <button class="btn btn-lg btn-info" *ngIf="isChangeTimeline" (click)="btnBackup()">Khôi phục dữ liệu ban đầu</button>
+                      <button class="btn btn-lg btn-info" *ngIf="isChangeTimeline && type == 'detail'" (click)="btnBackup()">Khôi phục dữ liệu ban đầu</button>
                       <button class="btn btn-lg btn-success" *ngIf="isChangeTimeline" (click)="btnAddTimeline()">{{isTimeline ? 'Sửa' : 'Thêm'}}</button>
                     </div>
 

@@ -47,4 +47,9 @@ delete(idCar: number, idUser: number)
   return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/delete-car?idCar="+idCar+"idUser="+idUser);
 
 }
+
+getsCarByDate(fromDate: any, toDate: any, idTour: any)
+{
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/gets-selectbox-car?idTour="+idTour+"&fromDate="+fromDate+"&toDate="+toDate);
+}
 }

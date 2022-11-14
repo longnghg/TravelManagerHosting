@@ -18,7 +18,6 @@ export class CostTourModel{
   priceRestaurant: number = 0
   placeId: string
   priceTicketPlace: number = 0
-  profit: number
   maxCapacity: number
   minCapacity: number
 
@@ -36,7 +35,6 @@ export class ValidateCostTourModel{
   depreciation: number = null
   otherPrice: number = null
   tolls: number = null
-  profit: number = null
   insuranceFee: number = null
   isHoliday: string = null
   hotelId: string = null

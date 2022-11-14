@@ -338,16 +338,6 @@ export class ConfigService{
        model.total += 1
      }
 
-     if(data.profit == null || data.profit == ""){
-      model.profit = ("[Lợi nhuận] không được để trống !")
-      model.total += 1
-     }else if (data.profit < 0) {
-       model.profit = "[Lợi nhuận] không được nhỏ hơn 0%!"
-       model.total += 1
-     }else if (data.profit > 500) {
-      model.profit = "[Lợi nhuận] không được quá 500%!"
-      model.total += 1
-    }
 
 
      if(data.insuranceFee == null || data.insuranceFee == ""){
@@ -479,6 +469,17 @@ export class ConfigService{
       model.total += 1
     } else if (data.minCapacity <= 0) {
       model.minCapacity = "[Số người tối thiểu] không được nhỏ hơn 0!"
+      model.total += 1
+    }
+
+    if(data.profit == null || data.profit == ""){
+      model.profit = ("[Lợi nhuận] không được để trống !")
+      model.total += 1
+     }else if (data.profit < 0) {
+       model.profit = "[Lợi nhuận] không được nhỏ hơn 0%!"
+       model.total += 1
+     }else if (data.profit > 500) {
+      model.profit = "[Lợi nhuận] không được quá 500%!"
       model.total += 1
     }
 
