@@ -410,7 +410,7 @@
                       <label class="form-control-label" for="input-fromTime">Chọn thời gian bắt đầu
                         <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateTimeline.fromTime ? this.validateTimeline.fromTime : ''}}</span>
                       </label>
-                      <input   (change)=" inputChange(); dateChange('fromTime') " [(ngModel)]="resTimeline.fromTimeDisplay" class="form-control datepicker" placeholder="Chọn thời gian" name="fromTime" id="fromTime" type="datetime-local" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" />
+                      <input   (input)="inputChangeTimeline(); dateChange('fromTime') " [(ngModel)]="resTimeline.fromTimeDisplay" class="form-control datepicker" placeholder="Chọn thời gian" name="fromTime" id="fromTime" type="datetime-local" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" />
                     </div>
                   </div>
                   <div class="col-6">
@@ -418,7 +418,7 @@
                       <label class="form-control-label" for="input-toTime">Chọn thời gian kết thúc
                         <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateTimeline.toTime ? this.validateTimeline.toTime : ''}}</span>
                       </label>
-                      <input   (change)="inputChange(); dateChange('toTime')" [(ngModel)]="resTimeline.toTimeDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="toTime" id="toTime" type="datetime-local" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" />
+                      <input   (input)="inputChangeTimeline(); dateChange('toTime')" [(ngModel)]="resTimeline.toTimeDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="toTime" id="toTime" type="datetime-local" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" />
                     </div>
                   </div>
                 </div>
@@ -428,13 +428,15 @@
                       <label class="form-control-label" for="">Mô tả nội dung timeline
                         <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateTimeline.description ? this.validateTimeline.description : ''}}</span>
                       </label>
-                      <textarea class="form-control " [(ngModel)]="resTimeline.description" name="description" id="description"  rows="4" placeholder="Nhập thông tin timeline"></textarea>
+                      <textarea class="form-control" (input)="inputChangeTimeline()" [(ngModel)]="resTimeline.description" name="description" id="description"  rows="4" placeholder="Nhập thông tin timeline"></textarea>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-12 text-right">
-                    <button class="btn btn-lg btn-success"  (click)="btnAddTimeline()">Thêm timeline</button>
+                    <button class="btn btn-lg btn-info" *ngIf="isChangeTimeline && type == 'detail'" (click)="btnBackup()">Khôi phục dữ liệu ban đầu</button>
+                    <button class="btn btn-lg btn-success"  (click)="btnAddTimeline()">{{isTimeline ? 'Sửa' : 'Thêm'}}</button>
+
                   </div>
                 </div>
               </fieldset>
@@ -444,8 +446,16 @@
                   <div class="row" *ngFor="let item of resTimelinelist; let i = index">
                     <ngb-accordion [closeOthers]="true" activeIds="static-1" >
                       <ngb-panel class="mt-2" id="static-1" title="Ngày {{i+1}} : Từ {{item.fromTime | formatFromUnixTimestampToFullDateTimeView}} đến {{item.toTime| formatFromUnixTimestampToFullDateTimeView}}">
+
                         <ng-template ngbPanelContent>
                           {{item.description}}
+
+                            <div class="text-right">
+
+                              <button class="btn btn-sm btn-warning" (click)="btnUpdateTimeline(i)">Sửa</button>
+                              <button class="btn btn-sm btn-danger" (click)="btnDeleteTimeline(i)">Xóa</button>
+                            </div>
+
                         </ng-template>
                       </ngb-panel>
                     </ngb-accordion>
