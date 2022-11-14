@@ -24,7 +24,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/item-tour/:id1/:id2', title: '',  icon:'', class: 'd-none', roles: [RoleTitle.Admin, RoleTitle.LocalManager, RoleTitle.TourManager]  },
     // { path: '/list-schedule', title: 'Schedule',  icon:'ni ni-calendar-grid-58 text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager, RoleTitle.TourManager]  },
 
-    { path: '/list-tourBooking', title: 'Vé du lịch',  icon:'ni ni-collection text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager, RoleTitle.TourBookingManager]  },
+    { path: '/list-tourBooking', title: 'Tour Booking',  icon:'ni ni-collection text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager, RoleTitle.TourBookingManager]  },
 
     { path: '/list-hotel', title: 'Khách sạn',  icon:'fa-solid fa-hotel text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager, RoleTitle.ServiceManager]  },
     { path: '/list-restaurant', title: 'Nhà hàng',  icon:'fa-solid fa-utensils text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager, RoleTitle.ServiceManager]  },
