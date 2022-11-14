@@ -338,19 +338,18 @@ export class ConfigService{
        model.total += 1
      }
 
-     if(data.cusExpected == null || data.cusExpected == ""){
-      model.cusExpected = ("[Khách dự kiến] không được để trống !")
+     if(data.profit == null || data.profit == ""){
+      model.profit = ("[Lợi nhuận] không được để trống !")
       model.total += 1
-     }else if (data.cusExpected <= 0) {
-       model.cusExpected = "[Khách dự kiến] không được nhỏ hơn 0!"
+     }else if (data.profit < 0) {
+       model.profit = "[Lợi nhuận] không được nhỏ hơn 0%!"
        model.total += 1
-     }else if (data.cusExpected > data.maxCapacity) {
-      model.cusExpected = "[Khách dự kiến] không lớn hơn khách tối đa  !"
-      model.total += 1
-    }else if (data.cusExpected < data.minCapacity) {
-      model.cusExpected = "[Khách dự kiến] không nhỏ hơn khách tối thiểu  !"
+     }else if (data.profit > 500) {
+      model.profit = "[Lợi nhuận] không được quá 500%!"
       model.total += 1
     }
+
+
      if(data.insuranceFee == null || data.insuranceFee == ""){
       model.insuranceFee = ("[Chi phí bảo hiểm] không được để trống !")
       model.total += 1

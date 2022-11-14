@@ -218,11 +218,11 @@
             <a ngbNavLink style="font-size: 25px;" #target>Chi phí</a>
             <ng-template ngbNavContent>
               <div class="row" style="margin-top: 10px;">
-                <div class="row align-items-center">
+                <!-- <div class="row align-items-center">
                   <div class="col-12 text-right">
                     <button *ngIf="isChange && type=='detail' && auth.roleId == -1" class="btn btn-md btn-success"  (click)="saveCostTour()">{{type == 'detail' ? "Cập nhật thông tin/ giá":"Thêm"}}</button>
                   </div>
-                </div>
+                </div> -->
                 <fieldset style="border: 1px solid #ced4da; border-radius: 0.375rem;"><legend>Chi phí ăn uống</legend>
                         <div class="row">
                           <div class="col-6">
@@ -291,10 +291,10 @@
                       <input type="text" id="otherPrice" name="otherPrice" (input)="formatInput($any($event).target, 'otherPrice');inputChange()" class="form-control " placeholder="Nhập chi phí khác " [(ngModel)]="resCostTour.otherPrice" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" >
                     </div>
                     <div class="col-3">
-                      <label class="form-control-label" for="input-toPlace">Số lượng khách dự kiến (Người)
-                        <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateCostTourModel.cusExpected ? this.validateCostTourModel.cusExpected : ''}}</span>
+                      <label class="form-control-label" for="input-toPlace">Lợi nhuận (%)
+                        <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateCostTourModel.profit ? this.validateCostTourModel.profit : ''}}</span>
                       </label>
-                      <input type="text" id="cusExpected" name="cusExpected" (input)="formatInput($any($event).target, 'cusExpected'); inputChange()" class="form-control " placeholder="Nhập số khách dự kiến " [(ngModel)]="resCostTour.cusExpected" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete "  >
+                      <input type="text" id="profit" name="profit" (input)="formatInput($any($event).target, 'profit'); inputChange()" class="form-control " placeholder="Nhập lợi nhuận " [(ngModel)]="resCostTour.profit" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete "  >
                     </div>
                   </div>
 
@@ -433,11 +433,12 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-12 text-right">
-                    <button class="btn btn-lg btn-info" *ngIf="isChangeTimeline && type == 'detail'" (click)="btnBackup()">Khôi phục dữ liệu ban đầu</button>
-                    <button class="btn btn-lg btn-success"  (click)="btnAddTimeline()">{{isTimeline ? 'Sửa' : 'Thêm'}}</button>
 
-                  </div>
+                    <div class="col-12 text-right">
+                      <button class="btn btn-lg btn-info" *ngIf="isChangeTimeline" (click)="btnBackup()">Khôi phục dữ liệu ban đầu</button>
+                      <button class="btn btn-lg btn-success" *ngIf="isChangeTimeline" (click)="btnAddTimeline()">{{isTimeline ? 'Sửa' : 'Thêm'}}</button>
+                    </div>
+
                 </div>
               </fieldset>
 
@@ -449,19 +450,15 @@
 
                         <ng-template ngbPanelContent>
                           {{item.description}}
-
-                            <div class="text-right">
-
+                            <div class="text-right" *ngIf="type != 'approve' && type != 'refuse' && type != 'cancelRequire'">
                               <button class="btn btn-sm btn-warning" (click)="btnUpdateTimeline(i)">Sửa</button>
                               <button class="btn btn-sm btn-danger" (click)="btnDeleteTimeline(i)">Xóa</button>
                             </div>
-
                         </ng-template>
                       </ngb-panel>
                     </ngb-accordion>
                     <hr>
                   </div>
-
                 </div>
               </fieldset>
             </ng-template>
@@ -477,7 +474,7 @@
                   <button  *ngIf="type == 'detail' && !resSchedule.isDelete" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteScheduleModal" (click)="getParentData('detail')">Xóa</button>
                   <button *ngIf="isChange && type == 'detail'" class="btn btn-lg btn-info" (click)="backup()">Khôi phục</button>
                   <button *ngIf="isChange && type == 'detail'" class="btn btn-lg btn-success"  (click)="save()">Lưu</button>
-                  <button *ngIf="isChange && type == 'create'" class="btn btn-lg btn-success"  (click)="save()">Thêm</button>
+                  <button *ngIf="isChange && type == 'create'" class="btn btn-lg btn-success"  (click)="save()">{{active == 3 ? 'Thêm' : 'Kế tiếp'}}</button>
                   <button *ngIf="resSchedule.isDelete" (click)="getParentData('detail')" data-bs-toggle="modal" data-bs-target="#restoreScheduleModal" class="btn btn-lg btn-warning">Khôi phục lịch trình</button>
                 </div>
               </div>

@@ -20,6 +20,11 @@ export class TimelineService{
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Timeline/create-timeline", data);
   }
 
+  update(data: any)
+  {
+    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Timeline/update-timeline", data);
+  }
+
   getTimelineidSchedule(idSchedule: any)
   {
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Timeline/get-timeline-idSchedule?idSchedule="+idSchedule);

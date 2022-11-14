@@ -178,6 +178,7 @@ export class ItemTourScheduleComponent implements OnInit {
     // this.resSchedule.returnDate = new Date(this.resSchedule.returnDateDisplay).getTime()
     // this.resTimeline.fromTime = new Date(this.resTimeline.fromTimeDisplay).getTime()
     // this.resTimeline.toTime = new Date(this.resTimeline.toTimeDisplay).getTime()
+
   }
 
   inputChange() {
@@ -203,106 +204,133 @@ export class ItemTourScheduleComponent implements OnInit {
     this.costtour = new CostTourModel
     this.costtour = this.resCostTour
     this.timelineList = this.resTimelinelist
+
     this.validateScheduleModel = new ValidateScheduleModel
-    this.validateCostTourModel = new ValidateCostTourModel
-
-    if (this.active == 1) {
-      this.validateScheduleModel = this.configService.validateSchedule(this.resSchedule, this.validateScheduleModel)
-    }
-
-    if (this.active == 2) {
-      this.validateCostTourModel = this.configService.validateCostTour(this.resCostTour, this.validateCostTourModel)
-    }
+    this.validateScheduleModel = this.configService.validateSchedule(this.resSchedule, this.validateScheduleModel)
 
 
     if (this.validateScheduleModel.total == 0) {
-      if (this.validateCostTourModel.total == 0) {
-        if (this.timelineList.length != 0) {
-          var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
-          if (this.type == "create") {
-            this.resSchedule.idUserModify = this.auth.id
-            this.resSchedule.tourId = idTour
 
-            this.scheduleService.create(this.resSchedule).subscribe(res => {
-              this.response = res
+        if (this.active == 2 || this.active == 3) {
+          this.validateCostTourModel = new ValidateCostTourModel
+          this.validateCostTourModel = this.configService.validateCostTour(this.resCostTour, this.validateCostTourModel)
 
-              if (this.response.notification.type == StatusNotification.Success) {
-                this.resSchedule.idSchedule = res.content
+          if (this.validateCostTourModel.total == 0 ) {
+           if (this.active == 3) {
+            if (this.timelineList.length != 0) {
+              var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
+              if (this.type == "create") {
+                this.resSchedule.idUserModify = this.auth.id
+                this.resSchedule.tourId = idTour
+                this.costtour.cusExpected = this.resSchedule.maxCapacity
+                this.costtour.departureDate = this.resSchedule.departureDateDisplay
+                this.costtour.returnDate = this.resSchedule.returnDateDisplay
 
-                if (this.costtour) {
-                  this.costtour.idSchedule = this.resSchedule.idSchedule
-                  this.costtourService.create(this.costtour).subscribe(res => {
-                    this.response = res
-                    if (this.response.notification.type == StatusNotification.Success) {
+                this.scheduleService.create(this.resSchedule).subscribe(res => {
+                  this.response = res
+                  if (this.response.notification.type == StatusNotification.Success) {
+                    this.resSchedule.idSchedule = res.content
+                    if (this.costtour) {
+                      this.costtour.idSchedule = this.resSchedule.idSchedule
+                      console.log(this.costtour);
 
+                      this.costtourService.create(this.costtour).subscribe(res => {
+                        this.response = res
+                        if (this.response.notification.type == StatusNotification.Success) {
+                          if (this.timelineList) {
+                            this.timelineList.forEach(timeline => {
+                              timeline.idSchedule = this.resSchedule.idSchedule
+                            });
+
+                            this.timelineService.create(this.timelineList).subscribe(res => {
+                              this.response = res
+                              if (this.response.notification.type == StatusNotification.Success) {
+
+                              }
+                            }, error => {
+                              var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+                              this.notificationService.handleAlert(message, StatusNotification.Error)
+                            })
+                          }
+                        }
+                      }, error => {
+                        var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+                        this.notificationService.handleAlert(message, StatusNotification.Error)
+                      })
                     }
-                  }, error => {
-                    var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
-                    this.notificationService.handleAlert(message, StatusNotification.Error)
-                  })
-                }
 
-                if (this.timelineList) {
-                  this.timelineList.forEach(timeline => {
-                    timeline.idSchedule = this.resSchedule.idSchedule
-                  });
 
-                  this.timelineService.create(this.timelineList).subscribe(res => {
-                    this.response = res
-                    if (this.response.notification.type == StatusNotification.Success) {
-
-                    }
-                  }, error => {
-                    var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
-                    this.notificationService.handleAlert(message, StatusNotification.Error)
-                  })
-                }
-              }
-              this.notificationService.handleAlertObj(res.notification)
-            }, error => {
-              var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
-              this.notificationService.handleAlert(message, StatusNotification.Error)
-            })
-          }
-          else {
-            // this.resSchedule.tourId = idTour
-            this.resSchedule.idUserModify = this.auth.id
-            this.scheduleService.update(this.resSchedule).subscribe(res => {
-              this.response = res
-
-              if (this.response.notification.type == StatusNotification.Success) {
-                this.resSchedule.idSchedule = res.content
-
-                this.resCostTour.idSchedule = this.resSchedule.idSchedule
-                this.costtourService.update(this.resCostTour).subscribe(res => {
-                 this.response = res
-                 this.notificationService.handleAlertObj(res.notification)
-
-                 if (this.response.notification.type == StatusNotification.Success) {
                   }
-                   console.log(this.response.content);
-                  }, error => {
-                    var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+                  this.notificationService.handleAlertObj(res.notification)
+                }, error => {
+                  var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
                   this.notificationService.handleAlert(message, StatusNotification.Error)
                 })
               }
               else {
-                this.notificationService.handleAlertObj(res.notification)
+                // this.resSchedule.tourId = idTour
+                this.resSchedule.idUserModify = this.auth.id
+                this.scheduleService.update(this.resSchedule).subscribe(res => {
+                  this.response = res
+
+                  if (this.response.notification.type == StatusNotification.Success) {
+
+                    this.costtour.idSchedule = this.resSchedule.idSchedule
+                    if(this.costtour){
+                      this.costtourService.update(this.costtour).subscribe(res => {
+                        this.response = res
+                        this.notificationService.handleAlertObj(res.notification)
+
+                        if (this.response.notification.type == StatusNotification.Success) {
+                        }
+                        console.log(this.response.content);
+                      }, error => {
+                        var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+                        this.notificationService.handleAlert(message, StatusNotification.Error)
+                      })
+                    }
+
+
+
+
+                    if(this.timelineList){
+                      this.timelineService.update(this.timelineList).subscribe(res => {
+                        this.response = res
+                        if (this.response.notification.type == StatusNotification.Success) {
+
+                        }
+                      }, error => {
+                        var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+                        this.notificationService.handleAlert(message, StatusNotification.Error)
+                      })
+                    }
+                  }
+                  else {
+                    this.notificationService.handleAlertObj(res.notification)
+                  }
+                }, error => {
+                  var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+                  this.notificationService.handleAlert(message, StatusNotification.Error)
+                })
               }
-            }, error => {
-              var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
-              this.notificationService.handleAlert(message, StatusNotification.Error)
-            })
+              this.close()
+            } else {
+              this.notificationService.handleAlert("Bạn cần thêm ít nhất 1 timeline !", StatusNotification.Info)
+              this.active = 3
+            }
+           } else {
+            this.active = 3
+           }
+          } else {
+            this.notificationService.handleAlert("Bạn cần nhập đầy đủ chi phí !", StatusNotification.Info)
+            this.active = 2
           }
-          this.close()
-        } else {
-          this.notificationService.handleAlert("Bạn cần thêm ít nhất 1 timeline !", StatusNotification.Info)
-          this.active = 3
         }
-      } else {
-        this.notificationService.handleAlert("Bạn cần nhập đầy đủ chi phí !", StatusNotification.Info)
-        this.active = 2
-      }
+        else{
+          this.active = 2
+        }
+
+
     }
     else {
       this.notificationService.handleAlert("Bạn cần nhập đầy đủ lịch trình !", StatusNotification.Info)
@@ -358,6 +386,7 @@ export class ItemTourScheduleComponent implements OnInit {
         this.resTimelinelist[this.indexTimeline] = this.resTimeline
         this.resTimeline = new TimeLineModel()
        this.isTimeline = false
+       this.isChangeTimeline = false
        this.notificationService.handleAlert("Sửa thành công !", StatusNotification.Info)
       }
     }
@@ -372,7 +401,7 @@ export class ItemTourScheduleComponent implements OnInit {
 
   btnUpdateTimeline(i: number){
     if(this.resTimelinelist){
-      this.resTimeline = this.resTimelinelist[i]
+      this.resTimeline = Object.assign({}, this.resTimelinelist[i])
 
       this.indexTimeline = i
       this.isTimeline = true
@@ -449,7 +478,7 @@ export class ItemTourScheduleComponent implements OnInit {
   formatInput(input: HTMLInputElement, property: string) {
     input.value = input.value.replace(FILTER_PAG_REGEX, '');
     if (input.value) {
-      if (property == "distance" || property == "cusExpected" || property == "minCapacity" || property == "maxCapacity" || property == "vat") {
+      if (property == "distance" || property == "profit" || property == "minCapacity" || property == "maxCapacity" || property == "vat") {
         this.resCostTour[property] = Number(input.value)
       }
       else{
