@@ -48,7 +48,7 @@ export class ItemTourScheduleComponent implements OnInit {
   costtour: CostTourModel
   resTimeline: TimeLineModel
   resTimelinelist: TimeLineModel[] = []
-  resTimelinelistTmp: TimeLineModel[] = []
+  resTimelineTmp: TimeLineModel
   timelineList: TimeLineModel[]
   resCar: CarModel[]
   resEmployee: EmployeeModel[]
@@ -65,6 +65,9 @@ export class ItemTourScheduleComponent implements OnInit {
   isHoliday = this.configService.listStatus()
   isDelete: boolean = false
   active;
+  isTimeline: boolean = false
+  indexTimeline: number
+  isChangeTimeline: boolean = false
   constructor(private scheduleService: ScheduleService, private configService: ConfigService, private notificationService: NotificationService,
     private employeeService: EmployeeService, private carService: CarService, private promotionService: PromotionService, private activatedRoute: ActivatedRoute,
     private costtourService: CostTourService, private hotelService: HotelService, private placeService: PlaceService, private restaurantService: RestaurantService,
@@ -86,7 +89,6 @@ export class ItemTourScheduleComponent implements OnInit {
       this.resTimelinelist = []
       this.resScheduleTmp = Object.assign({}, this.resSchedule)
       this.resCostTourTmp = Object.assign({}, this.resCostTour)
-
     }
     else {
       if (this.resSchedule) {
@@ -113,21 +115,23 @@ export class ItemTourScheduleComponent implements OnInit {
             this.resCostTour.otherPrice = Number(this.resCostTour.otherPrice).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
             this.resCostTour.tolls = Number(this.resCostTour.tolls).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
             this.resCostTour.insuranceFee = Number(this.resCostTour.insuranceFee).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+            this.resCostTour.maxCapacity = this.resSchedule.maxCapacity
+            this.resCostTour.minCapacity = this.resSchedule.minCapacity
           }
         }, error => {
           var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
           this.notificationService.handleAlert(message, StatusNotification.Error)
         })
 
-        if (this.resTimeline) {
-          this.resTimeline.fromTimeDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resTimeline.fromTime)
-          this.resTimeline.toTimeDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resTimeline.toTime)
-        }
         this.resTimeline = new TimeLineModel()
 
         this.timelineService.getTimelineidSchedule(this.resSchedule.idSchedule).subscribe(res => {
           this.response = res
           this.resTimelinelist = this.response.content
+          this.resTimelinelist.forEach(timeline => {
+            timeline.fromTimeDisplay = this.configService.formatFromUnixTimestampToFullDateTime(timeline.fromTime)
+            timeline.toTimeDisplay = this.configService.formatFromUnixTimestampToFullDateTime(timeline.toTime)
+          });
 
 
         }, error => {
@@ -168,6 +172,7 @@ export class ItemTourScheduleComponent implements OnInit {
 
   dateChange(property) {
     this.resSchedule[property] = new Date(this.resSchedule[property+'Display']).getTime()
+    this.resTimeline[property] = new Date(this.resTimeline[property+'Display']).getTime()
     // this.resSchedule.endDate = new Date(this.resSchedule.endDateDisplay).getTime()
     // this.resSchedule.departureDate = new Date(this.resSchedule.departureDateDisplay).getTime()
     // this.resSchedule.returnDate = new Date(this.resSchedule.returnDateDisplay).getTime()
@@ -182,6 +187,15 @@ export class ItemTourScheduleComponent implements OnInit {
     }
     else {
       this.isChange = false
+    }
+  }
+
+  inputChangeTimeline() {
+    if (JSON.stringify(this.resTimeline) != JSON.stringify(this.resTimelineTmp)) {
+      this.isChangeTimeline = true
+    }
+    else {
+      this.isChangeTimeline = false
     }
   }
 
@@ -200,10 +214,10 @@ export class ItemTourScheduleComponent implements OnInit {
       this.validateCostTourModel = this.configService.validateCostTour(this.resCostTour, this.validateCostTourModel)
     }
 
+
     if (this.validateScheduleModel.total == 0) {
       if (this.validateCostTourModel.total == 0) {
         if (this.timelineList.length != 0) {
-
           var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
           if (this.type == "create") {
             this.resSchedule.idUserModify = this.auth.id
@@ -231,9 +245,6 @@ export class ItemTourScheduleComponent implements OnInit {
                 if (this.timelineList) {
                   this.timelineList.forEach(timeline => {
                     timeline.idSchedule = this.resSchedule.idSchedule
-
-                    console.log(timeline);
-
                   });
 
                   this.timelineService.create(this.timelineList).subscribe(res => {
@@ -246,8 +257,6 @@ export class ItemTourScheduleComponent implements OnInit {
                     this.notificationService.handleAlert(message, StatusNotification.Error)
                   })
                 }
-
-
               }
               this.notificationService.handleAlertObj(res.notification)
             }, error => {
@@ -258,13 +267,24 @@ export class ItemTourScheduleComponent implements OnInit {
           else {
             // this.resSchedule.tourId = idTour
             this.resSchedule.idUserModify = this.auth.id
-            console.log(this.resSchedule);
-
             this.scheduleService.update(this.resSchedule).subscribe(res => {
               this.response = res
 
               if (this.response.notification.type == StatusNotification.Success) {
                 this.resSchedule.idSchedule = res.content
+
+                this.resCostTour.idSchedule = this.resSchedule.idSchedule
+                this.costtourService.update(this.resCostTour).subscribe(res => {
+                 this.response = res
+                 this.notificationService.handleAlertObj(res.notification)
+
+                 if (this.response.notification.type == StatusNotification.Success) {
+                  }
+                   console.log(this.response.content);
+                  }, error => {
+                    var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+                  this.notificationService.handleAlert(message, StatusNotification.Error)
+                })
               }
               else {
                 this.notificationService.handleAlertObj(res.notification)
@@ -273,7 +293,6 @@ export class ItemTourScheduleComponent implements OnInit {
               var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
               this.notificationService.handleAlert(message, StatusNotification.Error)
             })
-
           }
           this.close()
         } else {
@@ -328,18 +347,45 @@ export class ItemTourScheduleComponent implements OnInit {
   btnAddTimeline() {
     this.validateTimeline = new ValidateTimelineModel
     this.validateTimeline = this.configService.validateTimeline(this.resTimeline, this.validateTimeline)
-    console.log(this.validateTimeline);
 
     if (this.validateTimeline.total == 0) {
-      this.resTimelinelist.push(Object.assign({}, this.resTimeline))
+      if(!this.isTimeline){
+        this.resTimelinelist.push(Object.assign({}, this.resTimeline))
       this.resTimeline = new TimeLineModel()
+      this.notificationService.handleAlert("Thêm thành công !", StatusNotification.Info)
+      }
+      else{
+        this.resTimelinelist[this.indexTimeline] = this.resTimeline
+        this.resTimeline = new TimeLineModel()
+       this.isTimeline = false
+       this.notificationService.handleAlert("Sửa thành công !", StatusNotification.Info)
+      }
     }
 
   }
 
-  btnDeleteTimeline(){
-    // this.resTimelinelist.(Object.assign({}, this.resTimeline))
-    //   this.resTimeline = new TimeLineModel()
+  btnBackup(){
+    this.resTimeline = Object.assign({}, this.resTimelineTmp)
+    this.isChangeTimeline = false
+    this.notificationService.handleAlert("Khôi phục dữ liệu ban đầu thành công !", StatusNotification.Info)
+  }
+
+  btnUpdateTimeline(i: number){
+    if(this.resTimelinelist){
+      this.resTimeline = this.resTimelinelist[i]
+
+      this.indexTimeline = i
+      this.isTimeline = true
+      this.resTimelineTmp = Object.assign({}, this.resTimeline)
+
+    }
+  }
+
+  btnDeleteTimeline(i: number){
+    if(this.resTimelinelist){
+      this.resTimelinelist.splice(i, 1);
+      this.notificationService.handleAlert("Xóa thành công !", StatusNotification.Info)
+    }
   }
 
   promotionChange(id: number) {
@@ -358,7 +404,7 @@ export class ItemTourScheduleComponent implements OnInit {
 
   close() {
     this.resSchedule = Object.assign({}, this.resScheduleTmp)
-    this.resTimelinelist  = Object.assign({}, this.resTimelinelistTmp)
+
     this.isChange = false
     this.parentType.emit(null);
   }

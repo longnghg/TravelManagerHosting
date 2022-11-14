@@ -344,7 +344,13 @@ export class ConfigService{
      }else if (data.cusExpected <= 0) {
        model.cusExpected = "[Khách dự kiến] không được nhỏ hơn 0!"
        model.total += 1
-     }
+     }else if (data.cusExpected > data.maxCapacity) {
+      model.cusExpected = "[Khách dự kiến] không lớn hơn khách tối đa  !"
+      model.total += 1
+    }else if (data.cusExpected < data.minCapacity) {
+      model.cusExpected = "[Khách dự kiến] không nhỏ hơn khách tối thiểu  !"
+      model.total += 1
+    }
      if(data.insuranceFee == null || data.insuranceFee == ""){
       model.insuranceFee = ("[Chi phí bảo hiểm] không được để trống !")
       model.total += 1
@@ -469,7 +475,7 @@ export class ConfigService{
      if(data.minCapacity == null || data.minCapacity == ""){
       model.minCapacity = ("Nhập tối thiểu số người!")
       model.total += 1
-     }else if (data.minCapacity.length > 2) {
+     }else if (data.minCapacity.length > 3) {
       model.minCapacity = "[Số người tối thiểu] quá dài!"
       model.total += 1
     } else if (data.minCapacity <= 0) {
@@ -480,7 +486,7 @@ export class ConfigService{
     if(data.maxCapacity == null || data.maxCapacity == ""){
       model.maxCapacity = ("Nhập tối đa số người!")
       model.total += 1
-     }else if (data.maxCapacity.length > 2) {
+     }else if (data.maxCapacity.length > 3) {
       model.maxCapacity = "[Số người tối đa] quá dài!"
       model.total += 1
     }else if (data.maxCapacity < data.minCapacity) {
@@ -874,6 +880,28 @@ validateHotel(data : any,model: any)
     }
     var year =  split[2];
     var formattedDate = year + '-' + month + '-' + day;
+    return formattedDate
+   }
+
+   formatFromUnixTimestampToFullDateTime(unix_timestamp: number){
+    var date = new Date(unix_timestamp).toLocaleString()
+    console.log(date);
+    var splitDateTime = []
+    splitDateTime = date.split(", ")
+    var time = splitDateTime[0].split(":")
+    var split = splitDateTime[1].split("/")
+    var day = split[0];
+    if (Number.parseInt(day) < 10) {
+      day = "0"+day
+    }
+    var month = split[1];
+    if (Number.parseInt(month) < 10) {
+      month = "0"+month
+    }
+    var year =  split[2];
+    var formattedDate = year + '-' + month + '-' + day + 'T' + time[0] + ":" + time[1];
+    console.log(formattedDate);
+
     return formattedDate
    }
 

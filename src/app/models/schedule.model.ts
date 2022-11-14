@@ -49,7 +49,7 @@ export class ScheduleModel{
 }
 
 export class ValidateScheduleModel{
-  total: number
+  total: number = 0
   employeeId: string = null
   carId: string = null
   departurePlace: string = null

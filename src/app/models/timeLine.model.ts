@@ -17,7 +17,7 @@ export class TimeLineModel{
 
 export class ValidateTimelineModel{
   total: number
-  departureDate: number = 0
-  returnDate: number = 0
+  fromTime: number = 0
+  toTime: number = 0
   description: string = null
 }

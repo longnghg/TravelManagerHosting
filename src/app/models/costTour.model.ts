@@ -11,17 +11,20 @@ export class CostTourModel{
   cusExpected: number | string = 0
   insuranceFee: number | string = 0
   isHoliday: boolean = null
-  totalCostTour: number 
+  totalCostTour: number
   hotelId: string
   priceHotel: number = 0
   restaurantId: string
   priceRestaurant: number = 0
-  placeId: string 
+  placeId: string
   priceTicketPlace: number = 0
+
+  maxCapacity: number
+  minCapacity: number
 }
 
 export class ValidateCostTourModel{
-  total: number
+  total: number = 0
   breakfast: number = null
   water: number = null
   feeGas: number = null
@@ -36,4 +39,6 @@ export class ValidateCostTourModel{
   hotelId: string = null
   restaurantId: string = null
   placeId: string = null
+  maxCapacity: string
+  minCapacity: string
 }

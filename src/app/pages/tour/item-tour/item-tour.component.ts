@@ -203,12 +203,6 @@ export class ItemTourComponent implements OnInit {
   }
 
 
-  // getDataDelete(){
-  //   this.parentDelete.emit(this.resTour);
-  // }
-  // getDataRestore(){
-  //   this.parentRestore.emit(this.resTour);
-  // }
 
   delete(){
     if (this.resTour) {
