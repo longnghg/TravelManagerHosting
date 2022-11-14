@@ -106,11 +106,10 @@
               <div class="container" style="border-top: 1px solid #2d4271;">
                 <div class="mb-3 mt-3 row">
                   <div class="col-4">
-                    <img  [src]="resTourBooking.schedule.tour.thumbnail" style="border-radius: 0.375rem;"  class="card-img-top">
+                    <img  [src]="url+resTourBooking.schedule.tour.thumbnail" style="border-radius: 0.375rem;"  class="card-img-top">
                   </div>
                   <div class="col-8">
                     <p style="color: #2d4271; font-weight: 600;">{{resTourBooking.schedule.tour.nameTour}}</p>
-                    <P style="color: #2d4271">Mã giao dịch: <span class="text-danger">{{resTourBooking.pincode}}</span></P>
                     <h6 class="card-subtitle mb-2 text-muted">{{resTourBooking.schedule.description}}</h6>
                   </div>
                 </div>
@@ -147,17 +146,23 @@
                       </button>
                     </p>
                     <p class="col-7" style="color: #2d4271;" *ngIf="!resTourBooking.isCalled">
+                    <ng-container *ngIf="!isExpires; else elseExpires">
                       <i class="mr-1 fa-solid fa-xmark text-danger"></i> {{resTourBooking.isCalled | formatStatusCalled}}
                       <button style="height: 30px; margin-top: -5px;" class="ml-3 btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#called" (click)="getParentData('detail')">
                         <i style="position: relative; top: -5px;" class="fa-solid fa-phone"></i>
                       </button>
+                    </ng-container>
+                    <ng-template #elseExpires>
+                      <i class="mr-1 fa-solid fa-xmark text-danger"></i> Quá hạn thanh toán
+                    </ng-template>
+
                     </p>
                   </div>
                   <div class="row">
                     <label class="form-label col-5" style="font-weight: 600;">Hạn chót gọi</label>
                      <p class="col-7" style="color: #2d4271;">{{resTourBooking.lastDate | formatFromUnixTimestampToFullDateView}}</p>
                   </div>
-                  <div class="row">
+                  <div class="row" *ngIf="!isExpires">
                     <label class="form-label col-4" style="font-weight: 600;padding-top: 8px;">Tình trạng</label>
                     <div class="col-8">
                       <ng-select

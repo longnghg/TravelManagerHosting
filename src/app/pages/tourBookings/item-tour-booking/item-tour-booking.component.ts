@@ -21,8 +21,9 @@ export class ItemTourBookingComponent implements OnInit {
   listStatusBooking: any
   isChange: boolean = false
   resTourBookingTmp: TourBookingModel
+  isExpires: boolean = false
   constructor(private tourookingService: TourookingService, private configService: ConfigService, private notificationService: NotificationService) { }
-
+  url = this.configService.apiUrl
   ngOnInit(): void {
     this.listStatusBooking = this.configService.listStatusBooking()
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
@@ -30,7 +31,15 @@ export class ItemTourBookingComponent implements OnInit {
 
   ngOnChanges(): void {
     this.resTourBookingTmp = Object.assign({}, this.resTourBooking)
-
+    if (this.resTourBooking) {
+      if (this.resTourBooking.status == 1 || this.resTourBooking.status == 2) {
+        var date = new Date().getTime()
+        if (this.resTourBooking.lastDate < date) {
+          this.resTourBooking.status = 4
+          this.isExpires = true
+        }
+      }
+    }
   }
 
   inputChange(){

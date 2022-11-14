@@ -46,6 +46,7 @@ export class ScheduleModel{
   approve: number
   approveName: string
   modifyDate: number
+  modifyDateDisplay: string
   profit: number
 }
 

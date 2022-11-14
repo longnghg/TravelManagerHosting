@@ -100,7 +100,7 @@ width: fit-content;">
 	<ng-container ngbNavItem>
 		<a ngbNavLink class="titleBN" style="font-size: 25px;">Thông tin chi tiết</a>
     <ng-template ngbNavContent>
-      <div class="containerBN" *ngIf="resTour" style="margin-top: -176px;">
+      <div class="containerBN" *ngIf="resTour" style="margin-top: -10%; margin-bottom: 10%;">
         <div class="bannerBN">
             <div class="titleBN" style="background-image: url({{img}});">
             </div>
@@ -168,13 +168,13 @@ width: fit-content;">
                       <ng-template ng-label-tmp let-item="item" let-item$="item$" let-index="index">
                         {{item.name}} -
                         <i class="fa-solid fa-star text-yellow" *ngFor='let star of resTour.rating | forNumber'></i>
-                        <i class="fa-solid fa-star" *ngFor='let star of listStar.length - resTour.rating | forNumber'></i>
+                        <i class="fa-solid fa-star" *ngFor='let star of listStar.length-1 - resTour.rating | forNumber'></i>
                       </ng-template>
 
                       <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
                         {{item.name}} -
                         <i class="fa-solid fa-star text-yellow" *ngFor='let star of item.id | forNumber'></i>
-                        <i class="fa-solid fa-star" *ngFor='let star of listStar.length - item.id  | forNumber'></i>
+                        <i class="fa-solid fa-star" *ngFor='let star of listStar.length-1 - item.id  | forNumber'></i>
                       </ng-template>
                     </ng-select>
                     </div>

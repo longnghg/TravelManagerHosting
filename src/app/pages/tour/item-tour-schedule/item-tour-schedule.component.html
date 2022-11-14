@@ -1,6 +1,6 @@
 <div class="modal-header bg-secondary">
   <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin</h1>
-  <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
+  <button #closeModal type="button" class="btn-close btn-danger" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
 </div>
 <div class="modal-body">
   <ng-container *ngIf="resSchedule && resCostTour">
@@ -67,7 +67,7 @@
                         </ng-select>
                       </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-3">
                       <div class="form-group">
                         <label class="form-control-label" for="carId">Chọn xe
                           <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.carId ? this.validateScheduleModel.carId : ''}}</span>
@@ -84,33 +84,6 @@
                         </ng-select>
                       </div>
                     </div>
-
-                  </div>
-                  <div class="row">
-                    <div class="col-2">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-minCapacity">Tối thiểu số người
-                          <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.minCapacity ? this.validateScheduleModel.minCapacity : ''}}</span>
-                        </label>
-                        <input type="text" name="minCapacity" id="minCapacity" (input)="formatInput($any($event).target, 'minCapacity'); inputChange()" class="form-control " placeholder="Nhập số lượng tối thiểu" [(ngModel)]="resSchedule.minCapacity" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" >
-                      </div>
-                    </div>
-                    <div class="col-2">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-maxCapacity">Tối đa số người
-                          <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.maxCapacity ? this.validateScheduleModel.maxCapacity : ''}}</span>
-                        </label>
-                        <input type="text" name="maxCapacity" id="maxCapacity" (input)="formatInput($any($event).target, 'maxCapacity'); inputChange()" class="form-control " placeholder="Nhập số lượng tối đa" [(ngModel)]="resSchedule.maxCapacity" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" >
-                      </div>
-                    </div>
-                    <div class="col-2">
-                      <div class="form-group">
-                        <label class="form-control-label" for="vat">Vat
-                          <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.vat ? this.validateScheduleModel.vat : ''}}</span>
-                        </label>
-                        <input type="text" name="vat" id="vat" (input)="formatInput($any($event).target, 'vat'); inputChange()" min="0" value="10" class="form-control " placeholder="Nhập VAT" [(ngModel)]="resSchedule.vat" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" >
-                      </div>
-                    </div>
                     <div class="col-3">
                       <div class="form-group">
                         <label class="form-control-label" for="input-minCapacity">Nơi Khởi Hành
@@ -118,7 +91,7 @@
                         </label>
                         <ng-select [items]="resProvince"
                         bindLabel="nameProvince"
-                        bindValue="idProvince"
+                        bindValue="nameProvince"
                         [(ngModel)]="resSchedule.departurePlace"
                         [disabled]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete"
                         placeholder="Chọn nơi khởi hành..."
@@ -127,6 +100,32 @@
                         (change)="inputChange()">
                        </ng-select>
                         <!-- <input type="text" name="resSchedule.departurePlace" id="departurePlace" (input)="inputChange()" class="form-control " placeholder="Nhập nơi khởi hành" [(ngModel)]="resSchedule.departurePlace" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" > -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-3">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-minCapacity">Tối thiểu số người
+                          <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.minCapacity ? this.validateScheduleModel.minCapacity : ''}}</span>
+                        </label>
+                        <input type="text" name="minCapacity" id="minCapacity" (input)="formatInput($any($event).target, 'minCapacity'); inputChange()" class="form-control " placeholder="Nhập số lượng tối thiểu" [(ngModel)]="resSchedule.minCapacity" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" >
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-maxCapacity">Tối đa số người
+                          <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.maxCapacity ? this.validateScheduleModel.maxCapacity : ''}}</span>
+                        </label>
+                        <input type="text" name="maxCapacity" id="maxCapacity" (input)="formatInput($any($event).target, 'maxCapacity'); inputChange()" class="form-control " placeholder="Nhập số lượng tối đa" [(ngModel)]="resSchedule.maxCapacity" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" >
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="form-group">
+                        <label class="form-control-label" for="vat">Vat (%)
+                          <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.vat ? this.validateScheduleModel.vat : ''}}</span>
+                        </label>
+                        <input type="text" name="vat" id="vat" (input)="formatInput($any($event).target, 'vat'); inputChange()" min="0" value="10" class="form-control " placeholder="Nhập VAT" [(ngModel)]="resSchedule.vat" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" >
                       </div>
                     </div>
                     <div class="col-3">
@@ -214,6 +213,10 @@
                       <label class="form-control-label" for="input-address">Tên</label>
                       <input type="text" id="modifyBy" name="modifyBy" class="form-control " placeholder="Tên người yêu cầu" [(ngModel)]="resSchedule.modifyBy" readonly>
                     </div>
+                    <div class="col-4">
+                      <label class="form-control-label" for="input-address">Ngày yêu cầu</label>
+                      <input type="date" id="modifyDate" name="modifyDate" class="form-control " placeholder="Ngày yêu cầu" [(ngModel)]="resSchedule.modifyDateDisplay" readonly>
+                    </div>
                   </div>
                 </fieldset>
               </div>
@@ -252,7 +255,7 @@
                 <fieldset style="border: 1px solid #ced4da; border-radius: 0.375rem; margin-top: 10px;"><legend>Chi phí vận hành</legend>
                   <div class="row">
                     <div class="col-3">
-                      <label class="form-control-label" for="input-fromPlace">Chi phí xăng (₫)
+                      <label class="form-control-label" for="input-fromPlace">Chi phí xăng (₫/lít)
                         <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateCostTourModel.feeGas ? this.validateCostTourModel.feeGas : ''}}</span>
                       </label>
                       <input type="text" id="feeGas" name="feeGas" (input)="formatInput($any($event).target, 'feeGas'); inputChange()" class="form-control " placeholder="Nhập chi phí xăng " [(ngModel)]="resCostTour.feeGas" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" >
@@ -295,7 +298,6 @@
                       </label>
                       <input type="text" id="otherPrice" name="otherPrice" (input)="formatInput($any($event).target, 'otherPrice');inputChange()" class="form-control " placeholder="Nhập chi phí khác " [(ngModel)]="resCostTour.otherPrice" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" >
                     </div>
-                   
                   </div>
 
                 </fieldset>

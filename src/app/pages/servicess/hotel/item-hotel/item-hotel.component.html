@@ -49,7 +49,7 @@
                 <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
                   {{item.name}} -
                   <i class="fa-solid fa-star text-yellow" *ngFor='let star of item.id | forNumber'></i>
-                  <i class="fa-solid fa-star" *ngFor='let star of listStar.length - item.id  | forNumber'></i>
+                  <i class="fa-solid fa-star" *ngFor='let star of listStar.length-1 - item.id  | forNumber'></i>
                 </ng-template>
               </ng-select>
             </div>

@@ -885,7 +885,6 @@ validateHotel(data : any,model: any)
 
    formatFromUnixTimestampToFullDateTime(unix_timestamp: number){
     var date = new Date(unix_timestamp).toLocaleString()
-    console.log(date);
     var splitDateTime = []
     splitDateTime = date.split(", ")
     var time = splitDateTime[0].split(":")
@@ -900,8 +899,6 @@ validateHotel(data : any,model: any)
     }
     var year =  split[2];
     var formattedDate = year + '-' + month + '-' + day + 'T' + time[0] + ":" + time[1];
-    console.log(formattedDate);
-
     return formattedDate
    }
 

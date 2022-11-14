@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { ScheduleModel, ValidateScheduleModel } from 'src/app/models/schedule.model';
 import { ScheduleService } from "../../../services_API/schedule.service";
 import { NotificationService } from "../../../services_API/notification.service";
@@ -68,6 +68,7 @@ export class ItemTourScheduleComponent implements OnInit {
   isTimeline: boolean = false
   indexTimeline: number
   isChangeTimeline: boolean = false
+  @ViewChild('closeModal') closeModal: ElementRef;
   constructor(private scheduleService: ScheduleService, private configService: ConfigService, private notificationService: NotificationService,
     private employeeService: EmployeeService, private carService: CarService, private promotionService: PromotionService, private activatedRoute: ActivatedRoute,
     private costtourService: CostTourService, private hotelService: HotelService, private placeService: PlaceService, private restaurantService: RestaurantService,
@@ -101,7 +102,7 @@ export class ItemTourScheduleComponent implements OnInit {
         this.resScheduleTmp = Object.assign({}, this.resSchedule)
         this.resCostTourTmp = Object.assign({}, this.resCostTour)
 
-   
+
         this.costtourService.getCostbyidSchedule(this.resSchedule.idSchedule).subscribe(res => {
           this.response = res
           this.resCostTour = this.response.content
@@ -147,12 +148,14 @@ export class ItemTourScheduleComponent implements OnInit {
     this.employeeService.views().then(response => {
       this.resEmployee = response
     })
-    if(this.type == 'detail'){
-      this.carService.views().then(response => {
+
+    if (this.resSchedule) {
+      this.resSchedule.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.modifyDate)
+
+      this.carService.views(this.resSchedule.departureDate, this.resSchedule.returnDate, this.activatedRoute.snapshot.paramMap.get('id2')).then(response => {
         this.resCar = response
       })
     }
-  
     this.promotionService.views().then(response => {
       this.resPromotion = response
     })
@@ -163,7 +166,7 @@ export class ItemTourScheduleComponent implements OnInit {
 
   carChangeDate(){
     if(this.resSchedule){
-      if(this.resSchedule.departureDate > 0 || this.resSchedule.returnDate > 0){      
+      if(this.resSchedule.departureDate > 0 || this.resSchedule.returnDate > 0){
         var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
         this.carService.getsCarByDate(this.resSchedule.departureDate, this.resSchedule.returnDate, idTour).subscribe(response => {
           this.response = response
@@ -193,6 +196,11 @@ export class ItemTourScheduleComponent implements OnInit {
     // this.resSchedule.returnDate = new Date(this.resSchedule.returnDateDisplay).getTime()
     // this.resTimeline.fromTime = new Date(this.resTimeline.fromTimeDisplay).getTime()
     // this.resTimeline.toTime = new Date(this.resTimeline.toTimeDisplay).getTime()
+    if (property == "departureDate" || property == "returnDate") {
+      this.carService.views(this.resSchedule.departureDate, this.resSchedule.returnDate, this.activatedRoute.snapshot.paramMap.get('id2')).then(response => {
+        this.resCar = response
+      })
+    }
   }
 
   inputChange() {
@@ -259,7 +267,7 @@ export class ItemTourScheduleComponent implements OnInit {
                             this.timelineService.create(this.timelineList).subscribe(res => {
                               this.response = res
                               if (this.response.notification.type == StatusNotification.Success) {
-
+                                this.closeModal.nativeElement.click()
                               }
                             }, error => {
                               var message = this.configService.error(error.status, error.error != null ? error.error.text : "");

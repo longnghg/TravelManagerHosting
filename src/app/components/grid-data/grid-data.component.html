@@ -11,14 +11,14 @@
                   <ng-template ng-label-tmp let-item="item" let-item$="item$" let-index="index">
                     {{item[column.bindLabel]}} -
                     <i class="fa-solid fa-star text-yellow" *ngFor='let star of item[column.bindValue] | forNumber'></i>
-                    <i class="fa-solid fa-star" *ngFor='let star of column.listSection.length - item[column.bindValue] | forNumber'></i>
+                    <i class="fa-solid fa-star" *ngFor='let star of column.listSection.length-1 - item[column.bindValue] | forNumber'></i>
                   </ng-template>
 
                   <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
                     <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/>
                     {{item[column.bindLabel]}} -
                     <i class="fa-solid fa-star text-yellow" *ngFor='let star of item[column.bindValue] | forNumber'></i>
-                    <i class="fa-solid fa-star" *ngFor='let star of column.listSection.length - item[column.bindValue] | forNumber'></i>
+                    <i class="fa-solid fa-star" *ngFor='let star of column.listSection.length-1 - item[column.bindValue] | forNumber'></i>
 
                   </ng-template>
                 </ng-container>
@@ -128,7 +128,7 @@
                   <ng-container *ngIf="column.filter == 'star'; else elseStar">
                     {{row[column.field] < 10 ? '0'+row[column.field] : row[column.field]}} -
                     <i class="fa-solid fa-star text-yellow" *ngFor='let star of row[column.field] | forNumber'></i>
-                    <i class="fa-solid fa-star" *ngFor='let star of column.listSection.length - row[column.field] | forNumber'></i>
+                    <i class="fa-solid fa-star" *ngFor='let star of column.listSection.length-1 - row[column.field] | forNumber'></i>
                   </ng-container>
                   <ng-template #elseStar>
                     <ng-container *ngIf="column.filter == 'call'; else elseCalled">
