@@ -106,3 +106,30 @@ fieldset{
   overflow-y: auto !important;
  }
 
+
+ .bg-gradient-cus{
+  background: linear-gradient(87deg, rgb(105, 152, 171), cadetblue 100%) !important;
+ }
+
+ .bg-gradient-logo{
+  background: linear-gradient(87deg, cadetblue, rgb(105, 152, 171) 100%) !important;
+ }
+
+
+ .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: cadetblue;
+}
+
+.nav-pills .nav-link {
+  color: #525f7f;
+}
+
+.nav-pills .nav-link:hover {
+  color: cadetblue;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link:hover {
+  color: #fff;
+  background-color: cadetblue;
+}

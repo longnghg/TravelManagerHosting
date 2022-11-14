@@ -1,4 +1,4 @@
-<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+<div class="header bg-gradient-cus pb-8 pt-5 pt-md-8">
   <div class="container-fluid">
     <div class="header-body">
       <!-- Card stats -->
@@ -92,16 +92,17 @@
   </div>
 </div>
 
-<nav ngbNav #nav="ngbNav" class="nav-pills" style="     position: relative;
+<nav ngbNav #nav="ngbNav" class="nav-pills" style="position: relative;
 top: -62px;
 z-index: 1;
-left: 35%;">
+left: 35%;
+width: fit-content;">
 	<ng-container ngbNavItem>
 		<a ngbNavLink class="titleBN" style="font-size: 25px;">Thông tin chi tiết</a>
     <ng-template ngbNavContent>
       <div class="containerBN" *ngIf="resTour" style="margin-top: -176px;">
         <div class="bannerBN">
-            <div class="titleBN bg-gradient-primary">
+            <div class="titleBN" style="background-image: url({{img}});">
             </div>
             <div class="detailBN row">
                <div class="infoBN col-3">
