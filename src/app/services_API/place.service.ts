@@ -46,27 +46,27 @@ create(data: any)
 {
   return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Service/create-place", data);
 }
-update(data: any)
+update(data: any, idPlace: any)
 {
-  return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Service/update-place", data);
+  return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Service/update-place?idPlace="+idPlace, data);
 }
 delete(idPlace: any, idUser: any)
 {
-  return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/delete-place?idPlace="+idPlace+"&idUser="+idUser);
+  return this.http.delete<ResponseModel>( this.configService.apiUrl + "/api/Service/delete-place?idPlace="+idPlace+"&idUser="+idUser);
 }
 
-approve(idPlace: string)
+approve(idPlace: string, data: any)
 {
-  return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/approve-place?idPlace="+idPlace);
+  return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Service/approve-place?idPlace="+idPlace, data);
 }
 
-refuse(idPlace: string)
+refuse(idPlace: string, data: any)
 {
-  return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/refuse-place?idPlace="+idPlace);
+  return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Service/refuse-place?idPlace="+idPlace, data);
 }
-restore(idPlace: string, idUser: string)
+restore(idPlace: string, idUser: string, data: any)
 {
-  return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/restore-place?idPlace="+idPlace+"&idUser="+idUser);
+  return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Service/restore-place?idPlace="+idPlace+"&idUser="+idUser, data);
 }
 search(data){
   return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Service/search-place", data);

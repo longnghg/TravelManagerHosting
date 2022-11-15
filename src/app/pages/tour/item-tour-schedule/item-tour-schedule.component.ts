@@ -62,6 +62,7 @@ export class ItemTourScheduleComponent implements OnInit {
   auth: AuthenticationModel
   resScheduleTmp: ScheduleModel
   resCostTourTmp: CostTourModel
+  resTimelinelistTmp: TimeLineModel[] = []
   isHoliday = this.configService.listStatus()
   isDelete: boolean = false
   active;
@@ -98,7 +99,7 @@ export class ItemTourScheduleComponent implements OnInit {
         this.resSchedule.beginDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.beginDate)
         this.resSchedule.endDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.endDate)
         this.resSchedule.timePromotionDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.timePromotion)
-
+        this.resSchedule.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.modifyDate)
         this.resScheduleTmp = Object.assign({}, this.resSchedule)
         this.resCostTourTmp = Object.assign({}, this.resCostTour)
 
@@ -133,7 +134,7 @@ export class ItemTourScheduleComponent implements OnInit {
             timeline.fromTimeDisplay = this.configService.formatFromUnixTimestampToFullDateTime(timeline.fromTime)
             timeline.toTimeDisplay = this.configService.formatFromUnixTimestampToFullDateTime(timeline.toTime)
           });
-
+          this.resTimelinelistTmp = Object.assign({}, this.resTimelinelist)
 
         }, error => {
           var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
@@ -171,7 +172,7 @@ export class ItemTourScheduleComponent implements OnInit {
 
   carChangeDate(){
     if(this.resSchedule){
-      if(this.resSchedule.departureDate > 0 || this.resSchedule.returnDate > 0){
+      if(this.resSchedule.departureDate > 0 && this.resSchedule.returnDate > 0){
         var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
         this.carService.getsCarByDate(this.resSchedule.departureDate, this.resSchedule.returnDate, idTour).subscribe(response => {
           this.response = response
@@ -254,6 +255,7 @@ export class ItemTourScheduleComponent implements OnInit {
                 this.costtour.cusExpected = this.resSchedule.maxCapacity
                 this.costtour.departureDate = this.resSchedule.departureDateDisplay
                 this.costtour.returnDate = this.resSchedule.returnDateDisplay
+                console.log(this.costtour);
 
                 this.scheduleService.create(this.resSchedule).subscribe(res => {
                   this.response = res
@@ -319,15 +321,13 @@ export class ItemTourScheduleComponent implements OnInit {
                       })
                     }
 
-
-
-
                     if(this.timelineList){
+                      this.timelineList.forEach(timeline => {
+                        timeline.idSchedule = this.resSchedule.idSchedule
+                      });
                       this.timelineService.update(this.timelineList).subscribe(res => {
                         this.response = res
-                        if (this.response.notification.type == StatusNotification.Success) {
-
-                        }
+                        if (this.response.notification.type == StatusNotification.Success) {}
                       }, error => {
                         var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
                         this.notificationService.handleAlert(message, StatusNotification.Error)

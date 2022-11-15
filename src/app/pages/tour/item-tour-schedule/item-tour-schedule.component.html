@@ -37,7 +37,7 @@
                         <label class="form-control-label" for="input-departureDate">Chọn ngày khởi hành
                           <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.departureDate ? this.validateScheduleModel.departureDate : ''}}</span>
                         </label>
-                        <input   (change)="inputChange();carChangeDate(); dateChange('departureDate')" [(ngModel)]="resSchedule.departureDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="departureDate" id="departureDate" type="date" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" />
+                        <input   (change)="inputChange(); dateChange('departureDate')" [(ngModel)]="resSchedule.departureDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="departureDate" id="departureDate" type="date" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" />
                       </div>
                     </div>
                     <div class="col-6">
@@ -45,7 +45,7 @@
                         <label class="form-control-label" for="input-returnDate">Chọn ngày trở về
                           <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.returnDate ? this.validateScheduleModel.returnDate : ''}}</span>
                         </label>
-                        <input   (change)="inputChange();carChangeDate(); dateChange('returnDate')" [(ngModel)]="resSchedule.returnDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="returnDate" id="returnDate" type="date" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" />
+                        <input   (change)="inputChange(); dateChange('returnDate')" [(ngModel)]="resSchedule.returnDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="returnDate" id="returnDate" type="date" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" />
                       </div>
                     </div>
                   </div>
@@ -215,7 +215,7 @@
                     </div>
                     <div class="col-4">
                       <label class="form-control-label" for="input-address">Ngày yêu cầu</label>
-                      <input type="date" id="modifyDate" name="modifyDate" class="form-control " placeholder="Ngày yêu cầu" [(ngModel)]="resSchedule.modifyDateDisplay" readonly>
+                      <input type="date" id="modifyDate" name="modifyDate" class="form-control " placeholder="Ngày yêu cầu"  [(ngModel)]="resSchedule.modifyDateDisplay" readonly>
                     </div>
                   </div>
                 </fieldset>

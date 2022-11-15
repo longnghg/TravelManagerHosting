@@ -93,7 +93,7 @@ export class ItemPlaceComponent implements OnInit {
         })
       }
       else{
-        this.placeService.update(this.resPlace).subscribe(res =>{
+        this.placeService.update(this.resPlace, this.resPlace.idPlace).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
 

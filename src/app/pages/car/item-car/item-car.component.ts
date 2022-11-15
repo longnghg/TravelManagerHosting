@@ -90,7 +90,7 @@ export class ItemCarComponent implements OnInit {
         })
       }
       else{
-        this.carService.update(this.resCar).subscribe(res =>{
+        this.carService.update(this.resCar, this.resCar.idCar).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
 
