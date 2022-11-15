@@ -17,7 +17,7 @@ export class WardService{
   async views()
   {
     var value = <any>await new Promise<any>(resolve => {
-      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/gets-ward").subscribe(res => {
+      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/list-ward").subscribe(res => {
         this.response = res
         this.resWard =  this.response.content
           resolve(this.resWard);
@@ -29,7 +29,7 @@ export class WardService{
   }
   gets()
   {
-      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/gets-ward");
+      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/list-ward");
   }
 
   search(data){

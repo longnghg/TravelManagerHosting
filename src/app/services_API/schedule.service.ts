@@ -11,17 +11,17 @@ constructor(private http:HttpClient, private configService:ConfigService){ }
 
 gets()
 {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/gets-schedule");
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/list-schedule");
 }
 
 getsSchedulebyIdTour(idTour: any, isDelete: any)
 {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/gets-schedule-idtour?idTour="+idTour+"&isDelete="+isDelete);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/list-schedule-idtour?idTour="+idTour+"&isDelete="+isDelete);
 }
 
 getsSchedulebyIdTourWaiting(idTour: any, idUser: any)
 {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/gets-schedule-idtour-waiting?idTour="+idTour+"&idUser="+idUser);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/list-schedule-idtour-waiting?idTour="+idTour+"&idUser="+idUser);
 }
 
 create(data: any)

@@ -19,7 +19,7 @@ export class PromotionService{
   async views()
   {
     var value = <any>await new Promise<any>(resolve => {
-      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/promotion/gets-promotion?isDelete="+false).subscribe(res => {
+      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/promotion/list-promotion?isDelete="+false).subscribe(res => {
         this.response = res
         if(this.response.notification.type == StatusNotification.Success)
         {
@@ -40,15 +40,15 @@ export class PromotionService{
 
   gets(isDelete)
   {
-      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Promotion/gets-promotion?isDelete="+isDelete);
+      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Promotion/list-promotion?isDelete="+isDelete);
   }
-  getPromotion(idPromotion: number)
-  {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Promotion/get-promotion?idPromotion="+idPromotion);
-  }
+  // getPromotion(idPromotion: number)
+  // {
+  //   return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Promotion/get-promotion?idPromotion="+idPromotion);
+  // }
   getsWaiting(idUser: any)
   {
-      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Promotion/gets-promotion-waiting?idUser="+idUser);
+      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Promotion/list-promotion-waiting?idUser="+idUser);
   }
   create(data: any)
   {

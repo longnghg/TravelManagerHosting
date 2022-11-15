@@ -16,7 +16,7 @@ export class RoleService{
   async views()
   {
     var value = <any>await new Promise<any>(resolve => {
-      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/gets-role?isDelete="+false).subscribe(res => {
+      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/list-role?isDelete="+false).subscribe(res => {
         this.response = res
         if(this.response.notification.type == StatusNotification.Success)
         {
@@ -32,7 +32,7 @@ export class RoleService{
   }
   gets(isDelete: any)
   {
-      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/gets-role?isDelete="+isDelete);
+      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/list-role?isDelete="+isDelete);
   }
   search(data: any)
   {

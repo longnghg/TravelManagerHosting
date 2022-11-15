@@ -17,7 +17,7 @@ resHotel: HotelModel[]
 async views()
 {
   var value = <any>await new Promise<any>(resolve => {
-    this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/gets-hotel?isDelete="+false).subscribe(res => {
+    this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/list-hotel?isDelete="+false).subscribe(res => {
       this.response = res
       this.resHotel =  this.response.content
       resolve(this.resHotel);
@@ -31,7 +31,7 @@ async views()
 
 gets(isDelete)
 {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/gets-hotel?isDelete="+isDelete);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/list-hotel?isDelete="+isDelete);
 }
 getHotel(idHotel: string)
 {
@@ -39,7 +39,7 @@ getHotel(idHotel: string)
 }
 getsWaiting(idUser: any)
 {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/gets-hotel-waiting?idUser="+idUser);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/list-hotel-waiting?idUser="+idUser);
 }
 create(data: any)
 {

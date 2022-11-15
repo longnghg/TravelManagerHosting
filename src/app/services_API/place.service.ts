@@ -18,7 +18,7 @@ resPlace: PlaceModel[]
 async views()
 {
   var value = <any>await new Promise<any>(resolve => {
-    this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/gets-place?isDelete="+false).subscribe(res => {
+    this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/list-place?isDelete="+false).subscribe(res => {
       this.response = res
       this.resPlace =  this.response.content
       resolve(this.resPlace);
@@ -32,7 +32,7 @@ async views()
 
 gets(isDelete)
 {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/gets-place?isDelete="+isDelete);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/list-place?isDelete="+isDelete);
 }
 getPlace(idPlace: string)
 {
@@ -40,7 +40,7 @@ getPlace(idPlace: string)
 }
 getsWaiting(idUser: any)
 {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/gets-place-waiting?idUser="+idUser);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/list-place-waiting?idUser="+idUser);
 }
 create(data: any)
 {

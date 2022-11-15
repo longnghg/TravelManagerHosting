@@ -18,7 +18,7 @@ export class DistrictService{
   async views()
   {
     var value = <any>await new Promise<any>(resolve => {
-      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/gets-district").subscribe(res => {
+      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/list-district").subscribe(res => {
         this.response = res
         this.resDistrict =  this.response.content
           resolve(this.resDistrict);
@@ -31,7 +31,7 @@ export class DistrictService{
 
   gets()
   {
-      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/gets-district");
+      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/list-district");
   }
 
   search(data){

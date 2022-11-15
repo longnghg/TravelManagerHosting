@@ -12,12 +12,12 @@ export class CostTourService{
 
   gets()
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/CostTour/gets-cost-tour");
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/CostTour/list-cost-tour");
   }
 
   getCostbyidSchedule(idSchedule: any)
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/CostTour/get-cost-tour-idSchedule?idSchedule="+idSchedule);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/CostTour/detail-cost-tour-idSchedule?idSchedule="+idSchedule);
   }
 
   create(data: any)

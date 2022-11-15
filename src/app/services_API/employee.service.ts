@@ -17,7 +17,7 @@ export class EmployeeService{
   async views()
   {
     var value = <any>await new Promise<any>(resolve => {
-      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/gets-employee?isDelete="+false).subscribe(res => {
+      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/list -employee?isDelete="+false).subscribe(res => {
         this.response = res
         this.resEmployee =  this.response.content
         resolve(this.resEmployee);
@@ -30,12 +30,12 @@ export class EmployeeService{
   }
   gets(isDelete: any)
   {
-      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/gets-employee?isDelete="+isDelete);
+      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/list-employee?isDelete="+isDelete);
   }
 
   get(idEmployee: any)
   {
-      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/get-employee?idEmployee="+idEmployee);
+      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/detail-employee?idEmployee="+idEmployee);
   }
 
   search(data){

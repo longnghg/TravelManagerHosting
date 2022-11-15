@@ -17,7 +17,7 @@ resRestaurant: RestaurantModel[]
 async views()
 {
   var value = <any>await new Promise<any>(resolve => {
-    this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/gets-restaurant?isDelete="+false).subscribe(res => {
+    this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/list-restaurant?isDelete="+false).subscribe(res => {
       this.response = res
       this.resRestaurant =  this.response.content
         resolve(this.resRestaurant);
@@ -31,7 +31,7 @@ async views()
 
 gets(isDelete)
 {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/gets-restaurant?isDelete="+isDelete);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/list-restaurant?isDelete="+isDelete);
 }
 getRestaurant(idRestaurant: string)
 {
@@ -39,7 +39,7 @@ getRestaurant(idRestaurant: string)
 }
 getsWaiting(idUser: any)
 {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/gets-restaurant-waiting?idUser="+idUser);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/list-restaurant-waiting?idUser="+idUser);
 }
 create(data: any)
 {
