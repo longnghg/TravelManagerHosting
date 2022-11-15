@@ -17,7 +17,7 @@ export class EmployeeService{
   async views()
   {
     var value = <any>await new Promise<any>(resolve => {
-      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/list -employee?isDelete="+false).subscribe(res => {
+      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/list-employee?isDelete="+false).subscribe(res => {
         this.response = res
         this.resEmployee =  this.response.content
         resolve(this.resEmployee);
