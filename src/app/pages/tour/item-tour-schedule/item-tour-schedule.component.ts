@@ -149,13 +149,18 @@ export class ItemTourScheduleComponent implements OnInit {
       this.resEmployee = response
     })
 
-    if (this.resSchedule) {
-      this.resSchedule.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.modifyDate)
+    // if (this.resSchedule) {
+    //   this.resSchedule.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.modifyDate)
 
-      this.carService.views(this.resSchedule.departureDate, this.resSchedule.returnDate, this.activatedRoute.snapshot.paramMap.get('id2')).then(response => {
-        this.resCar = response
-      })
-    }
+    //   this.carService.views(this.resSchedule.departureDate, this.resSchedule.returnDate, this.activatedRoute.snapshot.paramMap.get('id2')).then(response => {
+    //     this.resCar = response
+    //   })
+    // }
+
+    this.carService.views2().then(response => {
+      this.resCar = response
+    })
+
     this.promotionService.views().then(response => {
       this.resPromotion = response
     })
@@ -196,11 +201,13 @@ export class ItemTourScheduleComponent implements OnInit {
     // this.resSchedule.returnDate = new Date(this.resSchedule.returnDateDisplay).getTime()
     // this.resTimeline.fromTime = new Date(this.resTimeline.fromTimeDisplay).getTime()
     // this.resTimeline.toTime = new Date(this.resTimeline.toTimeDisplay).getTime()
-    if (property == "departureDate" || property == "returnDate") {
-      this.carService.views(this.resSchedule.departureDate, this.resSchedule.returnDate, this.activatedRoute.snapshot.paramMap.get('id2')).then(response => {
-        this.resCar = response
-      })
-    }
+
+
+    // if (property == "departureDate" || property == "returnDate") {
+    //   this.carService.views(this.resSchedule.departureDate, this.resSchedule.returnDate, this.activatedRoute.snapshot.paramMap.get('id2')).then(response => {
+    //     this.resCar = response
+    //   })
+    // }
   }
 
   inputChange() {
@@ -455,7 +462,9 @@ export class ItemTourScheduleComponent implements OnInit {
 
   close() {
     this.resSchedule = Object.assign({}, this.resScheduleTmp)
-
+    this.validateCostTourModel = new ValidateCostTourModel
+    this.validateScheduleModel = new ValidateScheduleModel
+    this.validateTimeline = new ValidateTimelineModel
     this.isChange = false
     this.parentType.emit(null);
   }
@@ -463,6 +472,9 @@ export class ItemTourScheduleComponent implements OnInit {
   backup() {
     this.resSchedule = Object.assign({}, this.resScheduleTmp)
     this.resCostTour = Object.assign({}, this.resCostTourTmp)
+    this.validateCostTourModel = new ValidateCostTourModel
+    this.validateScheduleModel = new ValidateScheduleModel
+    this.validateTimeline = new ValidateTimelineModel
     this.isChange = false
     this.notificationService.handleAlert("Khôi phục dữ liệu ban đầu thành công !", StatusNotification.Info)
   }

@@ -31,4 +31,6 @@ export class TourookingService{
   search(data){
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/search-TourBooking", data);
   }
+
+
 }
