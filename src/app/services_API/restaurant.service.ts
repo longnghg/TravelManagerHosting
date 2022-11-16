@@ -54,18 +54,18 @@ delete(idRestaurant: any, idUser: any)
   return this.http.delete<ResponseModel>( this.configService.apiUrl + "/api/service/delete-restaurant?idRestaurant="+idRestaurant+"&idUser="+idUser);
 }
 
-approve(idRestaurant: string, data: any)
+approve(idRestaurant: string)
 {
-  return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Service/approve-restaurant?idRestaurant="+idRestaurant, data);
+  return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Service/approve-restaurant?idRestaurant="+idRestaurant, {});
 }
 
-refuse(idRestaurant: string, data: any)
+refuse(idRestaurant: string)
 {
-  return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Service/refuse-restaurant?idRestaurant="+idRestaurant, data);
+  return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Service/refuse-restaurant?idRestaurant="+idRestaurant, {});
 }
-restore(idRestaurant: string, idUser: string, data: any)
+restore(idRestaurant: string, idUser: string)
 {
-  return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Service/restore-restaurant?idRestaurant="+idRestaurant+"&idUser="+idUser, data);
+  return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Service/restore-restaurant?idRestaurant="+idRestaurant+"&idUser="+idUser, {});
 }
 search(data){
   return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Service/search-Restaurant", data);

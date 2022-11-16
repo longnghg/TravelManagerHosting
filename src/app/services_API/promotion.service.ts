@@ -63,17 +63,17 @@ export class PromotionService{
     return this.http.delete<ResponseModel>( this.configService.apiUrl + "/api/Promotion/delete-promotion?idPromotion="+idPromotion+"&idUser="+idUser);
   }
 
-  approve(idPromotion:number, data: any)
+  approve(idPromotion:number)
   {
-    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Promotion/approve-promotion?idPromotion="+idPromotion, data);
+    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Promotion/approve-promotion?idPromotion="+idPromotion, {});
   }
 
-  refuse(idPromotion: number, data: any)
+  refuse(idPromotion: number)
   {
-    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Promotion/refuse-promotion?idPromotion="+idPromotion, data);
+    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Promotion/refuse-promotion?idPromotion="+idPromotion, {});
   }
-  restore(idPromotion: number, idUser: string, data: any)
+  restore(idPromotion: number, idUser: string)
   {
-    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Promotion/restore-promotion?idPromotion="+idPromotion+"&idUser="+idUser, data);
+    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Promotion/restore-promotion?idPromotion="+idPromotion+"&idUser="+idUser, {});
   }
 }

@@ -179,7 +179,7 @@ export class ItemTourComponent implements OnInit {
         if (this.formData) {
           file.append('file', this.formData.path[0].files[0])
         }
-        this.tourService.update(file).subscribe(res =>{
+        this.tourService.update(file, this.resTour.idTour).subscribe(res =>{
           this.response = res
 
           if (res.notification.type == StatusNotification.Success) {

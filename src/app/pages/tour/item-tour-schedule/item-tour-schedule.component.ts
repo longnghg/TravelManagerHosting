@@ -301,14 +301,14 @@ export class ItemTourScheduleComponent implements OnInit {
               else {
                 // this.resSchedule.tourId = idTour
                 this.resSchedule.idUserModify = this.auth.id
-                this.scheduleService.update(this.resSchedule).subscribe(res => {
+                this.scheduleService.update(this.resSchedule, this.resSchedule.idSchedule).subscribe(res => {
                   this.response = res
 
                   if (this.response.notification.type == StatusNotification.Success) {
 
                     this.costtour.idSchedule = this.resSchedule.idSchedule
                     if(this.costtour){
-                      this.costtourService.update(this.costtour).subscribe(res => {
+                      this.costtourService.update(this.costtour, this.costtour.idSchedule).subscribe(res => {
                         this.response = res
                         this.notificationService.handleAlertObj(res.notification)
 
@@ -367,43 +367,9 @@ export class ItemTourScheduleComponent implements OnInit {
     }
   }
 
-  saveCostTour() {
-    this.validateCostTourModel = new ValidateCostTourModel
-    this.validateCostTourModel = this.configService.validateCostTour(this.resCostTour, this.validateCostTourModel)
-
-    if (this.validateCostTourModel.total == 0) {
-      if (this.type == "create") {
-        this.resCostTour.idSchedule = this.resSchedule.idSchedule
-        this.costtourService.create(this.resCostTour).subscribe(res => {
-          this.response = res
-          this.notificationService.handleAlertObj(res.notification)
-          console.log(this.response.content);
-        }, error => {
-          var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
-          this.notificationService.handleAlert(message, StatusNotification.Error)
-        })
-      }
-      else {
-        this.resCostTour.idSchedule = this.resSchedule.idSchedule
-        this.costtourService.update(this.resCostTour).subscribe(res => {
-          this.response = res
-          this.notificationService.handleAlertObj(res.notification)
-
-          if (this.response.notification.type == StatusNotification.Success) {
-          }
-          console.log(this.response.content);
-        }, error => {
-          var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
-          this.notificationService.handleAlert(message, StatusNotification.Error)
-        })
-      }
-    }
-  }
-
-
   btnAddTimeline() {
     this.validateTimeline = new ValidateTimelineModel
-    this.validateTimeline = this.configService.validateTimeline(this.resTimeline, this.validateTimeline)
+    this.validateTimeline = this.configService.validateTimeline(this.resTimeline, this.validateTimeline, this.resSchedule, this.timelineList)
 
     if (this.validateTimeline.total == 0) {
       if(!this.isTimeline){

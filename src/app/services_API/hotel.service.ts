@@ -54,18 +54,18 @@ delete(idHotel: any, idUser: any)
   return this.http.delete<ResponseModel>( this.configService.apiUrl + "/api/service/delete-hotel?idHotel="+idHotel+"&idUser="+idUser);
 }
 
-approve(idHotel: string, data: any)
+approve(idHotel: string)
 {
-  return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Service/approve-hotel?idHotel="+idHotel, data);
+  return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Service/approve-hotel?idHotel="+idHotel, {});
 }
 
-refuse(idHotel: string, data: any)
+refuse(idHotel: string)
 {
-  return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Service/refuse-hotel?idHotel="+idHotel, data);
+  return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Service/refuse-hotel?idHotel="+idHotel, {});
 }
-restore(idHotel: string, idUser: string, data: any)
+restore(idHotel: string, idUser: string)
 {
-  return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Service/restore-hotel?idHotel="+idHotel+"&idUser="+idUser, data);
+  return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Service/restore-hotel?idHotel="+idHotel+"&idUser="+idUser, {});
 }
 search(data){
   return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Service/search-hotel", data);

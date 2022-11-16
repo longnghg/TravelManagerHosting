@@ -47,31 +47,31 @@ export class TourService{
   {
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Tour/create-tour", data);
   }
-  update(data: any)
+  update(data: any, idTour: any)
   {
-    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Tour/update-tour", data);
+    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Tour/update-tour?idTour="+idTour, data);
   }
 
   delete(idTour: any, idUser: any)
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/delete-tour?idTour="+idTour+"&idUser="+idUser);
+    return this.http.delete<ResponseModel>( this.configService.apiUrl + "/api/Tour/delete-tour?idTour="+idTour+"&idUser="+idUser);
   }
   restore(idTour: any, idUser: any)
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/restore-tour?idTour="+idTour+"&idUser="+idUser);
+    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Tour/restore-tour?idTour="+idTour+"&idUser="+idUser, {});
   }
 
   approve(idTour: any){
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/approve-tour?idTour="+idTour);
+    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Tour/approve-tour?idTour="+idTour, {});
   }
 
   refused(idTour: any){
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/refused-tour?idTour="+idTour);
+    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Tour/refused-tour?idTour="+idTour, {});
   }
 
   ratingTour(rating: any, idTour: any)
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/update-rating-tour?rating="+rating+"&idTour="+idTour);
+    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Tour/update-rating-tour?rating="+rating+"&idTour="+idTour, {});
   }
 
   search(data){

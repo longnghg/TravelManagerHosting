@@ -542,7 +542,7 @@ export class ConfigService{
     return model
    }
 
-   validateTimeline(data: any, model: any){
+   validateTimeline(data: any, model: any, dataSchedule: any, dataList: any){
     model.total = 0
     var dateNow =  Date.now()
     var checkDate = new Date(dateNow).getTime()
@@ -551,7 +551,13 @@ export class ConfigService{
       model.fromTime = ("Chọn thời gian bắt đầu!")
       model.total += 1
      }else if(data.fromTime <= checkDate){
-      model.fromTime = ("Thời gian bắt đầu không trước ngày hiện tại!")
+      model.fromTime = ("Không trước ngày hiện tại!")
+      model.total += 1
+     }else if(data.fromTime < dataSchedule.departureDate){
+      model.fromTime = ("Không trước ngày khởi hành")
+      model.total += 1
+     }else if(data.fromTime > dataSchedule.returnDate){
+      model.fromTime = ("Không sau ngày trở về")
       model.total += 1
      }
 
@@ -559,7 +565,13 @@ export class ConfigService{
       model.toTime = ("Chọn thời gian kết thúc!")
       model.total += 1
      }else if(data.toTime <= checkDate){
-      model.toTime = ("Thời gian kết thúc không trước ngày hiện tại!")
+      model.toTime = ("Không trước ngày hiện tại!")
+      model.total += 1
+     }else if(data.toTime <= data.fromTime){
+      model.toTime = ("Không trước ngày bắt đầu!")
+      model.total += 1
+     }else if(data.toTime > dataSchedule.returnDate){
+      model.toTime = ("Không sau ngày trở về!")
       model.total += 1
      }
 
@@ -573,6 +585,10 @@ export class ConfigService{
       model.description = "[Mô tả]  quá ngắn !"
       model.total += 1
     }
+
+    dataList.forEach(timeline => {
+      timeline.returnDate
+    });
 
      return model
    }

@@ -54,11 +54,11 @@ export class EmployeeService{
   {
     return this.http.delete<ResponseModel>( this.configService.apiUrl + "/api/Employee/delete-employee?idEmployee="+idEmployee);
   }
-  restore(idEmployee: any, data: any)
+  restore(idEmployee: any)
   {
-    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Employee/restore-employee?idEmployee="+idEmployee, data);
+    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Employee/restore-employee?idEmployee="+idEmployee, {});
   }
   changePassword(idEmp: string, password: string, newPassword: string){
-    return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Authentication/change-pass-employee?idEmp="+idEmp+"&password="+password+"&newPassword="+newPassword);
+    return this.http.put<ResponseModel>(this.configService.apiUrl + "/api/Authentication/change-pass-employee?idEmp="+idEmp+"&password="+password+"&newPassword="+newPassword, {});
 }
 }

@@ -51,9 +51,9 @@ export class RoleService{
     return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Role/update-role?idRole="+idRole, data);
   }
 
-  restore(idRole: any, data: any)
+  restore(idRole: any)
   {
-    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Role/restore-role?idRole="+idRole, data);
+    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Role/restore-role?idRole="+idRole, {});
   }
   delete(idRole: any){
     return this.http.delete<ResponseModel>( this.configService.apiUrl + "/api/Role/delete-role?idRole="+idRole);

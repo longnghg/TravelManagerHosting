@@ -18,7 +18,6 @@ export class ListRoleComponent implements OnInit {
   auth: AuthenticationModel
   dataChild: RoleModel
   data: RoleModel
-  dataNon: RoleModel
   typeChild: string
   response: ResponseModel
   type: boolean = false
@@ -129,7 +128,7 @@ export class ListRoleComponent implements OnInit {
 
    restore(){
     if (this.data) {
-      this.roleService.restore(this.data.idRole, this.dataNon).subscribe(res =>{
+      this.roleService.restore(this.data.idRole).subscribe(res =>{
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
       }, error => {

@@ -55,18 +55,18 @@ delete(idPlace: any, idUser: any)
   return this.http.delete<ResponseModel>( this.configService.apiUrl + "/api/Service/delete-place?idPlace="+idPlace+"&idUser="+idUser);
 }
 
-approve(idPlace: string, data: any)
+approve(idPlace: string)
 {
-  return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Service/approve-place?idPlace="+idPlace, data);
+  return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Service/approve-place?idPlace="+idPlace, {});
 }
 
-refuse(idPlace: string, data: any)
+refuse(idPlace: string)
 {
-  return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Service/refuse-place?idPlace="+idPlace, data);
+  return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Service/refuse-place?idPlace="+idPlace, {});
 }
-restore(idPlace: string, idUser: string, data: any)
+restore(idPlace: string, idUser: string)
 {
-  return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Service/restore-place?idPlace="+idPlace+"&idUser="+idUser, data);
+  return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Service/restore-place?idPlace="+idPlace+"&idUser="+idUser, {});
 }
 search(data){
   return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Service/search-place", data);

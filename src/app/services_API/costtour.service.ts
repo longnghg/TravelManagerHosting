@@ -25,8 +25,8 @@ export class CostTourService{
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/CostTour/create-cost-tour", data);
   }
 
-  update(data: any)
+  update(data: any, idSchedule: any)
   {
-    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/CostTour/update-cost-tour", data);
+    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/CostTour/update-cost-tour?idSchedule="+idSchedule, data);
   }
 }

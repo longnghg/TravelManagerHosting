@@ -40,6 +40,7 @@ export class UserProfileComponent implements OnInit{
          private notificationService: NotificationService) {}
 
   ngOnInit() {
+    this.auth = JSON.parse(localStorage.getItem("currentUser"))
     this.listGender = this.configService.listGender()
     this.init()
   }
@@ -72,7 +73,7 @@ export class UserProfileComponent implements OnInit{
     this.validateEmployee =  this.configService.validateEmployee(this.resEmployee, this.validateEmployee)
 
     if (this.validateEmployee.total == 0) {
-      this.employeeService.update(this.resEmployee).subscribe(res =>{
+      this.employeeService.update(this.resEmployee, this.auth.id).subscribe(res =>{
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
         this.isChange = false

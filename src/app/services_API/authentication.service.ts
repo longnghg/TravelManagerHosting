@@ -21,7 +21,7 @@ export class AuthenticationService{
   }
 
   block(email: string){
-    return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Authentication/block-customer?email="+email);
+    return this.http.put<ResponseModel>(this.configService.apiUrl + "/api/Authentication/block-customer?email="+email, {});
   }
 
 }

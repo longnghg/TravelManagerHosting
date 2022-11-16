@@ -22,7 +22,6 @@ export class ListPromotionComponent implements OnInit {
   typeChild: string
   isDelete: boolean = false
   data: PromotionModel
-  dataNon: PromotionModel
   constructor(private promotionService: PromotionService,
     private configService: ConfigService,
     private notificationService: NotificationService) { }
@@ -119,7 +118,7 @@ export class ListPromotionComponent implements OnInit {
 
   restore(){
     if (this.data) {
-      this.promotionService.restore(this.data.idPromotion, this.auth.id, this.dataNon).subscribe(res =>{
+      this.promotionService.restore(this.data.idPromotion, this.auth.id).subscribe(res =>{
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
      }, error => {
@@ -131,7 +130,7 @@ export class ListPromotionComponent implements OnInit {
 
   approve(){
    if(this.data){
-    this.promotionService.approve(this.data.idPromotion, this.dataNon).subscribe(res =>{
+    this.promotionService.approve(this.data.idPromotion).subscribe(res =>{
       this.response = res
       this.notificationService.handleAlertObj(res.notification)
     }, error => {
@@ -144,7 +143,7 @@ export class ListPromotionComponent implements OnInit {
 
   refuse(){
    if(this.data){
-    this.promotionService.refuse(this.data.idPromotion, this.dataNon).subscribe(res =>{
+    this.promotionService.refuse(this.data.idPromotion).subscribe(res =>{
       this.response = res
       this.notificationService.handleAlertObj(res.notification)
     }, error => {
