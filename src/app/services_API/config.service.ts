@@ -136,8 +136,31 @@ export class ConfigService{
 
     return listStatus
   }
+  validateChangePass(data: any, model: any){
+    model.total = 0
 
+    if(data.password == null  || data.password == ""){
+      model.password = ("[Mật khẩu cũ] không được để trống !")
+      model.total += 1
+    }
 
+    if(data.newPassword == null  || data.newPassword == ""){
+      model.newPassword = ("[Mật khẩu mới] không được để trống !")
+      model.total += 1
+    }else if(data.password === data.newPassword){
+      model.newPassword = ("[Mật khẩu mới] không trùng mật khẩu cũ !")
+      model.total += 1
+    }
+
+    if(data.confirmPassword == null  || data.confirmPassword == ""){
+      model.confirmPassword = ("[Nhập lại mật khẩu] không được để trống !")
+      model.total += 1
+    }else if(data.newPassword != data.confirmPassword){
+      model.confirmPassword = ("[Nhập lại mật khẩu không khớp] nhập lại mật khẩu !")
+      model.total += 1
+    }
+    return model
+   }
   validateEmployee(data: any, model: any){
     model.total = 0
     var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;

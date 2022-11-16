@@ -3,6 +3,7 @@ export class EmployeeModel {
   nameEmployee: string = null
   email: string = null
   password: string = null
+  newPassword: string = null
   phone: string = null
   gender: boolean = null
   address: string = null
@@ -16,16 +17,24 @@ export class EmployeeModel {
   modifyBy: string = null
   isActive: boolean = true
   isDelete: boolean = false
+  confirmPassword: string
 }
 
 export class ValidationEmployeeModel {
   total: number
   nameEmployee: string = null
   email: string = null
+  newPassword: string = null
   phone: string = null
   gender: string = null
   address: string = null
   birthday: string = null
   image: string = null
   roleId: string = null
+}
+export class ValidationChangePass{
+  total: number
+  password: string = null
+  newPassword: string = null
+  confirmPassword: string = null
 }

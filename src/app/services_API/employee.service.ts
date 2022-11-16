@@ -58,4 +58,7 @@ export class EmployeeService{
   {
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/restore-employee?idEmployee="+idEmployee);
   }
+  changePassword(idEmp: string, password: string, newPassword: string){
+    return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Authentication/change-pass-employee?idEmp="+idEmp+"&password="+password+"&newPassword="+newPassword);
+}
 }

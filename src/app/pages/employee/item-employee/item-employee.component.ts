@@ -2,12 +2,13 @@ import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { NotificationService } from "../../../services_API/notification.service";
 import { ConfigService } from "../../../services_API/config.service";
 import { EmployeeService } from 'src/app/services_API/employee.service';
-import { EmployeeModel, ValidationEmployeeModel } from 'src/app/models/employee.model';
+import { EmployeeModel, ValidationEmployeeModel ,ValidationChangePass} from 'src/app/models/employee.model';
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { RoleModel } from 'src/app/models/role.model';
 import { AuthenticationModel } from 'src/app/models/authentication.model';
 import { RoleService } from 'src/app/services_API/role.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthenticationService } from "../../../services_API/authentication.service";
 import { StatusNotification } from "../../../enums/enum";
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
@@ -19,7 +20,9 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
 export class ItemEmployeeComponent implements OnInit{
   response: ResponseModel
   auth: AuthenticationModel
+
   validateEmployee: ValidationEmployeeModel = new ValidationEmployeeModel
+  validationChangePass: ValidationChangePass = new ValidationChangePass
   @Input() resEmployee: EmployeeModel
   @Input() type: string
   @Output() parentDelete = new EventEmitter<any>()
@@ -31,7 +34,7 @@ export class ItemEmployeeComponent implements OnInit{
   formData: any
   img:any
   idEmployee: any
-  constructor(private router: Router, private activatedRoute: ActivatedRoute,private employeeService: EmployeeService, private notificationService: NotificationService,
+  constructor(private authService: AuthenticationService,private router: Router, private activatedRoute: ActivatedRoute,private employeeService: EmployeeService, private notificationService: NotificationService,
     private configService: ConfigService, private roleService: RoleService) { }
 
   ngOnInit(): void {
@@ -46,7 +49,27 @@ export class ItemEmployeeComponent implements OnInit{
 
     })
   }
+  EmpchangePass(){
+    this.validationChangePass = new ValidationChangePass
+    this.validationChangePass =  this.configService.validateChangePass(this.resEmployee, this.validationChangePass)
+    if (this.validationChangePass.total == 0) {
+          this.resEmployee.idEmployee = this.auth.id
 
+
+          this.employeeService.changePassword(this.resEmployee.idEmployee, this.resEmployee.password, this.resEmployee.newPassword).subscribe(res =>{
+            this.response = res
+           this.notificationService.handleAlertObj(res.notification)
+
+           if(this.response.notification.type == StatusNotification.Success)
+           {
+             this.logOut()
+           }
+          }, error => {
+            var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+            this.notificationService.handleAlert(message, StatusNotification.Error)
+          })
+        }
+  }
   init(){
     if(this.type == "detail"){
       this.employeeService.get(this.idEmployee).subscribe(res => {
@@ -256,7 +279,20 @@ export class ItemEmployeeComponent implements OnInit{
       }
     }
    }
-
+   logOut(){
+    this.authService.logOut(this.auth.id).subscribe(res =>{
+      this.response = res
+      this.notificationService.handleAlertObj(res.notification)
+      localStorage.removeItem("currentUser")
+      localStorage.removeItem("token")
+      sessionStorage.clear()
+      this.auth = null
+      location.assign(this.configService.clientUrl + "/login")
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
+  }
    restore(){
     if (this.resEmployee) {
       this.employeeService.restore(this.resEmployee.idEmployee).subscribe(res =>{

@@ -22,6 +22,7 @@ export class NavbarComponent implements OnInit {
   public listTitles: any[];
   public location: Location;
   auth: AuthenticationModel
+  resAthentication: AuthenticationModel = new AuthenticationModel()
   img = "../../../assets/img/employees/unknown.png"
   response: ResponseModel
 
