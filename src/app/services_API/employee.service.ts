@@ -46,16 +46,16 @@ export class EmployeeService{
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/create-employee", data);
   }
 
-  update(data: any)
+  update(data: any, idEmployee: any)
   {
-    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/update-employee", data);
+    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Employee/update-employee?idEmployee="+idEmployee, data);
   }
   delete(idEmployee: any)
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/delete-employee?idEmployee="+idEmployee);
+    return this.http.delete<ResponseModel>( this.configService.apiUrl + "/api/Employee/delete-employee?idEmployee="+idEmployee);
   }
-  restore(idEmployee: any)
+  restore(idEmployee: any, data: any)
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/restore-employee?idEmployee="+idEmployee);
+    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Employee/restore-employee?idEmployee="+idEmployee, data);
   }
 }

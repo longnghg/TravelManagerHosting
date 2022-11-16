@@ -92,7 +92,7 @@ export class ItemPromotionComponent implements OnInit {
         })
       }
       else{
-        this.promotionService.update(this.resPromotion).subscribe(res =>{
+        this.promotionService.update(this.resPromotion, this.resPromotion.idPromotion).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
 

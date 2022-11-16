@@ -46,16 +46,16 @@ export class RoleService{
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Role/create-role", data);
   }
 
-  update(data: any)
+  update(data: any, idRole: any)
   {
-    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Role/update-role", data);
+    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Role/update-role?idRole="+idRole, data);
   }
 
-  restore(idRole: any)
+  restore(idRole: any, data: any)
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/restore-role?idRole="+idRole);
+    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Role/restore-role?idRole="+idRole, data);
   }
   delete(idRole: any){
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/delete-role?idRole="+idRole);
+    return this.http.delete<ResponseModel>( this.configService.apiUrl + "/api/Role/delete-role?idRole="+idRole);
   }
 }

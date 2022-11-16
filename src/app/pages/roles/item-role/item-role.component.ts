@@ -61,7 +61,7 @@ export class ItemRoleComponent implements OnInit {
         })
       }
       else{
-        this.roleService.update(this.resRole).subscribe(res =>{
+        this.roleService.update(this.resRole, this.resRole.idRole).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
           this.isChange = false

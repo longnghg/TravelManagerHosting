@@ -43,13 +43,13 @@ export class DistrictService{
       return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/create-district", data);
   }
 
-  update(data: any)
+  update(data: any, idDistrict: any)
   {
-      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/update-district", data);
+      return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Location/update-district?idDistrict="+idDistrict, data);
   }
 
   delete(idDistrict: any)
   {
-      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/delete-district?idDistrict="+idDistrict);
+      return this.http.delete<ResponseModel>( this.configService.apiUrl + "/api/Location/delete-district?idDistrict="+idDistrict);
   }
 }

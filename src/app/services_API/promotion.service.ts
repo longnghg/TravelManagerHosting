@@ -54,26 +54,26 @@ export class PromotionService{
   {
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Promotion/create-promotion", data);
   }
-  update(data: any)
+  update(data: any, idPromotion: any)
   {
-    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Promotion/update-promotion", data);
+    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Promotion/update-promotion?idPromotion="+idPromotion, data);
   }
   delete(idPromotion: any, idUser: any)
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Promotion/delete-promotion?idPromotion="+idPromotion+"&idUser="+idUser);
+    return this.http.delete<ResponseModel>( this.configService.apiUrl + "/api/Promotion/delete-promotion?idPromotion="+idPromotion+"&idUser="+idUser);
   }
 
-  approve(idPromotion:number)
+  approve(idPromotion:number, data: any)
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Promotion/approve-promotion?idPromotion="+idPromotion);
+    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Promotion/approve-promotion?idPromotion="+idPromotion, data);
   }
 
-  refuse(idPromotion: number)
+  refuse(idPromotion: number, data: any)
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Promotion/refuse-protion?idPromotion="+idPromotion);
+    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Promotion/refuse-promotion?idPromotion="+idPromotion, data);
   }
-  restore(idPromotion: number, idUser: string)
+  restore(idPromotion: number, idUser: string, data: any)
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Promotion/restore-promotion?idPromotion="+idPromotion+"&idUser="+idUser);
+    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Promotion/restore-promotion?idPromotion="+idPromotion+"&idUser="+idUser, data);
   }
 }

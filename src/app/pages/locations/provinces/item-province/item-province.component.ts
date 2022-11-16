@@ -63,7 +63,7 @@ export class ItemProvinceComponent implements OnInit {
         })
       }
       else{
-        this.provinceService.update(this.resProvince).subscribe(res =>{
+        this.provinceService.update(this.resProvince, this.resProvince.idProvince).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
           if(this.response.notification.type == StatusNotification.Success)

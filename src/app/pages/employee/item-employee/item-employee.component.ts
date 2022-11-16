@@ -31,6 +31,7 @@ export class ItemEmployeeComponent implements OnInit{
   formData: any
   img:any
   idEmployee: any
+  dataNon: EmployeeModel
   constructor(private router: Router, private activatedRoute: ActivatedRoute,private employeeService: EmployeeService, private notificationService: NotificationService,
     private configService: ConfigService, private roleService: RoleService) { }
 
@@ -182,7 +183,7 @@ export class ItemEmployeeComponent implements OnInit{
         })
       }
       else{
-        this.employeeService.update(file).subscribe(res =>{
+        this.employeeService.update(file, this.resEmployee.idEmployee).subscribe(res =>{
           this.response = res
           if (res.notification.type == "Validation") {
             if (res.notification.description == "Phone") {
@@ -259,7 +260,7 @@ export class ItemEmployeeComponent implements OnInit{
 
    restore(){
     if (this.resEmployee) {
-      this.employeeService.restore(this.resEmployee.idEmployee).subscribe(res =>{
+      this.employeeService.restore(this.resEmployee.idEmployee, this.dataNon).subscribe(res =>{
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
         if (res.notification.type == StatusNotification.Success) {

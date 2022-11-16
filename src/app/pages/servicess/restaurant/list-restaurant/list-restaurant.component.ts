@@ -24,6 +24,7 @@ export class ListRestaurantComponent implements OnInit {
   typeChild: string
   isDelete: boolean = false
   data: RestaurantModel
+  dataNon: ResponseModel
   constructor(private restaurantService: RestaurantService,
     private configService: ConfigService,
     private notificationService: NotificationService) { }
@@ -195,7 +196,7 @@ export class ListRestaurantComponent implements OnInit {
 
     restore(){
       if (this.data) {
-        this.restaurantService.restore(this.data.idRestaurant, this.auth.id).subscribe(res =>{
+        this.restaurantService.restore(this.data.idRestaurant, this.auth.id, this.dataNon).subscribe(res =>{
          this.response = res
          this.notificationService.handleAlertObj(res.notification)
        }, error => {
@@ -207,7 +208,7 @@ export class ListRestaurantComponent implements OnInit {
 
     approve(){
      if(this.data){
-      this.restaurantService.approve(this.data.idRestaurant).subscribe(res =>{
+      this.restaurantService.approve(this.data.idRestaurant, this.dataNon).subscribe(res =>{
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
       }, error => {
@@ -220,7 +221,7 @@ export class ListRestaurantComponent implements OnInit {
 
     refuse(){
      if(this.data){
-      this.restaurantService.refuse(this.data.idRestaurant).subscribe(res =>{
+      this.restaurantService.refuse(this.data.idRestaurant, this.dataNon).subscribe(res =>{
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
       }, error => {
