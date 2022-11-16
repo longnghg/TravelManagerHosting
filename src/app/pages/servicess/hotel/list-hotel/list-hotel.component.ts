@@ -24,6 +24,7 @@ export class ListHotelComponent implements OnInit {
   typeChild: string
   isDelete: boolean = false
   data: HotelModel
+  dataNon: HotelModel
   constructor(private hotelService: HotelService,
     private configService: ConfigService,
     private notificationService: NotificationService) { }
@@ -182,7 +183,7 @@ export class ListHotelComponent implements OnInit {
 
   restore(){
     if (this.data) {
-      this.hotelService.restore(this.data.idHotel, this.auth.id).subscribe(res =>{
+      this.hotelService.restore(this.data.idHotel, this.auth.id, this.dataNon).subscribe(res =>{
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
      }, error => {
@@ -194,7 +195,7 @@ export class ListHotelComponent implements OnInit {
 
   approve(){
    if(this.data){
-    this.hotelService.approve(this.data.idHotel).subscribe(res =>{
+    this.hotelService.approve(this.data.idHotel, this.dataNon).subscribe(res =>{
       this.response = res
       this.notificationService.handleAlertObj(res.notification)
     }, error => {
@@ -207,7 +208,7 @@ export class ListHotelComponent implements OnInit {
 
   refuse(){
    if(this.data){
-    this.hotelService.refuse(this.data.idHotel).subscribe(res =>{
+    this.hotelService.refuse(this.data.idHotel, this.dataNon).subscribe(res =>{
       this.response = res
       this.notificationService.handleAlertObj(res.notification)
     }, error => {

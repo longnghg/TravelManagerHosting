@@ -24,6 +24,7 @@ export class ListPlaceComponent implements OnInit {
   typeChild: string
   isDelete: boolean = false
   data: PlaceModel
+  dataNon: PlaceModel
   constructor(private placeService: PlaceService,
     private configService: ConfigService,
     private notificationService: NotificationService) { }
@@ -167,7 +168,7 @@ export class ListPlaceComponent implements OnInit {
 
     restore(){
       if (this.data) {
-        this.placeService.restore(this.data.idPlace, this.auth.id).subscribe(res =>{
+        this.placeService.restore(this.data.idPlace, this.auth.id, this.dataNon).subscribe(res =>{
          this.response = res
          this.notificationService.handleAlertObj(res.notification)
        }, error => {
@@ -179,7 +180,7 @@ export class ListPlaceComponent implements OnInit {
 
     approve(){
      if(this.data){
-      this.placeService.approve(this.data.idPlace).subscribe(res =>{
+      this.placeService.approve(this.data.idPlace, this.dataNon).subscribe(res =>{
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
       }, error => {
@@ -192,7 +193,7 @@ export class ListPlaceComponent implements OnInit {
 
     refuse(){
      if(this.data){
-      this.placeService.refuse(this.data.idPlace).subscribe(res =>{
+      this.placeService.refuse(this.data.idPlace, this.dataNon).subscribe(res =>{
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
       }, error => {

@@ -85,7 +85,7 @@ export class ItemRestaurantComponent implements OnInit {
         })
       }
       else{
-        this.restaurantService.update(this.resRestaurant).subscribe(res =>{
+        this.restaurantService.update(this.resRestaurant, this.resRestaurant.idRestaurant).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
           if(this.response.notification.type == StatusNotification.Success)

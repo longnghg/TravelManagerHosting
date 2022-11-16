@@ -27,6 +27,7 @@ export class ListEmployeeComponent implements OnInit {
   response: ResponseModel
   data: EmployeeModel
   type: boolean = false
+  dataNon: EmployeeModel
      //signalr
   private hubConnectionBuilder: HubConnection
 
@@ -157,7 +158,7 @@ export class ListEmployeeComponent implements OnInit {
 
    restore(){
     if (this.data) {
-      this.employeeService.restore(this.data.idEmployee).subscribe(res =>{
+      this.employeeService.restore(this.data.idEmployee, this.dataNon).subscribe(res =>{
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
       }, error => {

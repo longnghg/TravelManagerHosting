@@ -66,7 +66,7 @@ export class ItemWardComponent implements OnInit {
         })
       }
       else{
-        this.wardService.update(this.resWard).subscribe(res =>{
+        this.wardService.update(this.resWard, this.resWard.idWard).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
           if(this.response.notification.type == StatusNotification.Success)

@@ -92,7 +92,7 @@ export class ItemHotelComponent implements OnInit {
         })
       }
       else{
-        this.hotelService.update(this.resHotel).subscribe(res =>{
+        this.hotelService.update(this.resHotel, this.resHotel.idHotel).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
 

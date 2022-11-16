@@ -18,7 +18,7 @@ export class DistrictService{
   async views()
   {
     var value = <any>await new Promise<any>(resolve => {
-      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/gets-district").subscribe(res => {
+      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/list-district").subscribe(res => {
         this.response = res
         this.resDistrict =  this.response.content
           resolve(this.resDistrict);
@@ -31,7 +31,7 @@ export class DistrictService{
 
   gets()
   {
-      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/gets-district");
+      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/list-district");
   }
 
   search(data){
@@ -43,13 +43,13 @@ export class DistrictService{
       return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/create-district", data);
   }
 
-  update(data: any)
+  update(data: any, idDistrict: any)
   {
-      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/update-district", data);
+      return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Location/update-district?idDistrict="+idDistrict, data);
   }
 
   delete(idDistrict: any)
   {
-      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/delete-district?idDistrict="+idDistrict);
+      return this.http.delete<ResponseModel>( this.configService.apiUrl + "/api/Location/delete-district?idDistrict="+idDistrict);
   }
 }

@@ -67,7 +67,7 @@ export class ItemDistrictComponent implements OnInit {
         })
       }
       else{
-        this.districtService.update(this.resDistrict).subscribe(res =>{
+        this.districtService.update(this.resDistrict, this.resDistrict.idDistrict).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
           if(this.response.notification.type == StatusNotification.Success)

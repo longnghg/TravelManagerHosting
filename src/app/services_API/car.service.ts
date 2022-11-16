@@ -16,7 +16,7 @@ resCar: CarModel[]
 async views(fromDate, toDate, idTour)
 {
   var value = <any>await new Promise<any>(resolve => {
-    this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/gets-selectbox-car?fromDate="+fromDate+"&toDate="+toDate+"&idTour="+idTour).subscribe(res => {
+    this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/list-selectbox-car?fromDate="+fromDate+"&toDate="+toDate+"&idTour="+idTour).subscribe(res => {
       this.response = res
       this.resCar =  this.response.content
       resolve(this.resCar);
@@ -31,7 +31,7 @@ async views(fromDate, toDate, idTour)
 async views2()
 {
   var value = <any>await new Promise<any>(resolve => {
-    this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/gets-car").subscribe(res => {
+    this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/list-car").subscribe(res => {
       this.response = res
       this.resCar =  this.response.content
       resolve(this.resCar);
@@ -44,27 +44,27 @@ async views2()
 }
 gets()
 {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/gets-car");
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/list-car");
 }
 
 create(data: any)
 {
   return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Car/create-car", data);
 }
-update(data: any)
+update(data: any, idCar: any)
 {
-  return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Car/update-car", data);
+  return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Car/update-car?idCar="+idCar, data);
 
 }
 
 delete(idCar: number, idUser: number)
 {
-  return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/delete-car?idCar="+idCar+"idUser="+idUser);
+  return this.http.delete<ResponseModel>( this.configService.apiUrl + "/api/Car/delete-car?idCar="+idCar+"idUser="+idUser);
 
 }
 
 getsCarByDate(fromDate: any, toDate: any, idTour: any)
 {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/gets-selectbox-car?idTour="+idTour+"&fromDate="+fromDate+"&toDate="+toDate);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/list-selectbox-car?idTour="+idTour+"&fromDate="+fromDate+"&toDate="+toDate);
 }
 }

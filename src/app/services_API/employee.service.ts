@@ -17,7 +17,7 @@ export class EmployeeService{
   async views()
   {
     var value = <any>await new Promise<any>(resolve => {
-      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/gets-employee?isDelete="+false).subscribe(res => {
+      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/list-employee?isDelete="+false).subscribe(res => {
         this.response = res
         this.resEmployee =  this.response.content
         resolve(this.resEmployee);
@@ -30,12 +30,12 @@ export class EmployeeService{
   }
   gets(isDelete: any)
   {
-      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/gets-employee?isDelete="+isDelete);
+      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/list-employee?isDelete="+isDelete);
   }
 
   get(idEmployee: any)
   {
-      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/get-employee?idEmployee="+idEmployee);
+      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/detail-employee?idEmployee="+idEmployee);
   }
 
   search(data){
@@ -46,17 +46,17 @@ export class EmployeeService{
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/create-employee", data);
   }
 
-  update(data: any)
+  update(data: any, idEmployee: any)
   {
-    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/update-employee", data);
+    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Employee/update-employee?idEmployee="+idEmployee, data);
   }
   delete(idEmployee: any)
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/delete-employee?idEmployee="+idEmployee);
+    return this.http.delete<ResponseModel>( this.configService.apiUrl + "/api/Employee/delete-employee?idEmployee="+idEmployee);
   }
-  restore(idEmployee: any)
+  restore(idEmployee: any, data: any)
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/restore-employee?idEmployee="+idEmployee);
+    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Employee/restore-employee?idEmployee="+idEmployee, data);
   }
   changePassword(idEmp: string, password: string, newPassword: string){
     return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Authentication/change-pass-employee?idEmp="+idEmp+"&password="+password+"&newPassword="+newPassword);

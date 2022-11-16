@@ -12,7 +12,7 @@ export class TimelineService{
 
   gets()
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Timeline/get-timeline");
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Timeline/list-timeline");
   }
 
   create(data: any)
@@ -27,7 +27,7 @@ export class TimelineService{
 
   getTimelineidSchedule(idSchedule: any)
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Timeline/get-timeline-idSchedule?idSchedule="+idSchedule);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Timeline/list-timeline-idSchedule?idSchedule="+idSchedule);
   }
 
 }

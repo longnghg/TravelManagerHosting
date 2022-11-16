@@ -20,7 +20,7 @@ export class ProvinceService{
   async views()
   {
     var value = <any>await new Promise<any>(resolve => {
-      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/gets-province").subscribe(res => {
+      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/list-province").subscribe(res => {
         this.response = res
         this.resProvince =  this.response.content
         resolve(this.resProvince);
@@ -32,7 +32,7 @@ export class ProvinceService{
   }
   gets()
   {
-      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/gets-province");
+      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/list-province");
   }
 
   search(data){
@@ -44,13 +44,13 @@ export class ProvinceService{
       return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/create-province", data);
   }
 
-  update(data: any)
+  update(data: any, idProvince: any)
   {
-      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/update-province", data);
+      return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Location/update-province?idProvince="+idProvince, data);
   }
 
   delete(idProvince: any)
   {
-      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/delete-province?idProvince="+idProvince);
+      return this.http.delete<ResponseModel>( this.configService.apiUrl + "/api/Location/delete-province?idProvince="+idProvince);
   }
 }

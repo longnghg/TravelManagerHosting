@@ -34,14 +34,14 @@ export class TourService{
 
   gets(isDelete)
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/gets-tour?isDelete="+isDelete);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/list-tour?isDelete="+isDelete);
   }
   getwaiting(idUser: any){
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/gets-tour-waiting?idUser="+idUser);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/list-tour-waiting?idUser="+idUser);
   }
   getTour(idTour: string)
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/get-tour?idTour="+idTour);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/detail-tour?idTour="+idTour);
   }
   create(data: any)
   {
