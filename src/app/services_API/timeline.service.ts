@@ -29,5 +29,8 @@ export class TimelineService{
   {
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Timeline/list-timeline-idSchedule?idSchedule="+idSchedule);
   }
-
+  delete(data: any)
+  {
+    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Timeline/delete-timeline", data);
+  }
 }

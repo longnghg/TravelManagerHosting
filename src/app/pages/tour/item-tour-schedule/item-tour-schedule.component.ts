@@ -50,6 +50,7 @@ export class ItemTourScheduleComponent implements OnInit {
   resTimelinelist: TimeLineModel[] = []
   resTimelineTmp: TimeLineModel
   timelineList: TimeLineModel[]
+  resTimelinelistDelete: TimeLineModel[] = []
   resCar: CarModel[]
   resEmployee: EmployeeModel[]
   resPromotion: PromotionModel[]
@@ -289,8 +290,6 @@ export class ItemTourScheduleComponent implements OnInit {
                         this.notificationService.handleAlert(message, StatusNotification.Error)
                       })
                     }
-
-
                   }
                   this.notificationService.handleAlertObj(res.notification)
                 }, error => {
@@ -326,6 +325,16 @@ export class ItemTourScheduleComponent implements OnInit {
                         timeline.idSchedule = this.resSchedule.idSchedule
                       });
                       this.timelineService.update(this.timelineList).subscribe(res => {
+                        this.response = res
+                        if (this.response.notification.type == StatusNotification.Success) {}
+                      }, error => {
+                        var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+                        this.notificationService.handleAlert(message, StatusNotification.Error)
+                      })
+                    }
+
+                    if(this.resTimelinelistDelete){
+                      this.timelineService.delete(this.resTimelinelistDelete).subscribe(res => {
                         this.response = res
                         if (this.response.notification.type == StatusNotification.Success) {}
                       }, error => {
@@ -405,16 +414,17 @@ export class ItemTourScheduleComponent implements OnInit {
     }
   }
 
-  btnDeleteTimeline(i: number){
+  btnDeleteTimeline(i: number, listDelete: any){
     if(this.resTimelinelist){
       this.resTimelinelist.splice(i, 1);
+      if(this.type = 'detail'){
+        this.resTimelinelistDelete.push(Object.assign({}, listDelete))
+      }
       this.notificationService.handleAlert("Xóa thành công !", StatusNotification.Info)
     }
   }
 
   promotionChange(id: number) {
-    console.log(this.resPromotion);
-
     this.resPromotion.forEach(promotion => {
       if (promotion.idPromotion == id) {
         this.resSchedule.timePromotion = promotion.fromDate
