@@ -70,6 +70,7 @@ export class ItemTourScheduleComponent implements OnInit {
   isTimeline: boolean = false
   indexTimeline: number
   isChangeTimeline: boolean = false
+  isChangeTimelineList: boolean = false
   @ViewChild('closeModal') closeModal: ElementRef;
   constructor(private scheduleService: ScheduleService, private configService: ConfigService, private notificationService: NotificationService,
     private employeeService: EmployeeService, private carService: CarService, private promotionService: PromotionService, private activatedRoute: ActivatedRoute,
@@ -203,13 +204,6 @@ export class ItemTourScheduleComponent implements OnInit {
     // this.resSchedule.returnDate = new Date(this.resSchedule.returnDateDisplay).getTime()
     // this.resTimeline.fromTime = new Date(this.resTimeline.fromTimeDisplay).getTime()
     // this.resTimeline.toTime = new Date(this.resTimeline.toTimeDisplay).getTime()
-
-
-    // if (property == "departureDate" || property == "returnDate") {
-    //   this.carService.views(this.resSchedule.departureDate, this.resSchedule.returnDate, this.activatedRoute.snapshot.paramMap.get('id2')).then(response => {
-    //     this.resCar = response
-    //   })
-    // }
   }
 
   inputChange() {
@@ -384,14 +378,17 @@ export class ItemTourScheduleComponent implements OnInit {
       if(!this.isTimeline){
         this.resTimelinelist.push(Object.assign({}, this.resTimeline))
       this.resTimeline = new TimeLineModel()
-      this.notificationService.handleAlert("Thêm thành công !", StatusNotification.Info)
+      this.isChangeTimeline = false
+      this.isChangeTimelineList = true
+      this.notificationService.handleAlert("Thêm thành công !", StatusNotification.Success)
       }
       else{
         this.resTimelinelist[this.indexTimeline] = this.resTimeline
         this.resTimeline = new TimeLineModel()
        this.isTimeline = false
        this.isChangeTimeline = false
-       this.notificationService.handleAlert("Sửa thành công !", StatusNotification.Info)
+       this.isChangeTimelineList = true
+       this.notificationService.handleAlert("Sửa thành công !", StatusNotification.Success)
       }
     }
 
@@ -410,16 +407,16 @@ export class ItemTourScheduleComponent implements OnInit {
       this.indexTimeline = i
       this.isTimeline = true
       this.resTimelineTmp = Object.assign({}, this.resTimeline)
-
     }
   }
 
   btnDeleteTimeline(i: number, listDelete: any){
     if(this.resTimelinelist){
       this.resTimelinelist.splice(i, 1);
-      if(this.type = 'detail'){
+      if(this.type == "detail"){
         this.resTimelinelistDelete.push(Object.assign({}, listDelete))
       }
+      this.isChangeTimelineList = true
       this.notificationService.handleAlert("Xóa thành công !", StatusNotification.Info)
     }
   }
@@ -442,7 +439,11 @@ export class ItemTourScheduleComponent implements OnInit {
     this.validateScheduleModel = new ValidateScheduleModel
     this.validateTimeline = new ValidateTimelineModel
     this.isChange = false
-    this.parentType.emit(null);
+    this.isChangeTimeline = false
+    this.isTimeline = false
+    this.isChangeTimelineList = false
+    this.resTimelinelistDelete = []
+    this.parentType.emit(null); 
   }
 
   backup() {
