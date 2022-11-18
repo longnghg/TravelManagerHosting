@@ -229,7 +229,8 @@ export class ItemTourScheduleComponent implements OnInit {
     this.costtour = new CostTourModel
     this.costtour = this.resCostTour
     this.timelineList = this.resTimelinelist
-
+    var countDelete = this.resTimelinelistDelete.length;
+    var listDelete = this.resTimelinelistDelete
     this.validateScheduleModel = new ValidateScheduleModel
     this.validateScheduleModel = this.configService.validateSchedule(this.resSchedule, this.validateScheduleModel)
 
@@ -327,8 +328,9 @@ export class ItemTourScheduleComponent implements OnInit {
                       })
                     }
 
-                    if(this.resTimelinelistDelete){
-                      this.timelineService.delete(this.resTimelinelistDelete).subscribe(res => {
+
+                    if(countDelete > 0){
+                      this.timelineService.delete(listDelete).subscribe(res => {
                         this.response = res
                         if (this.response.notification.type == StatusNotification.Success) {}
                       }, error => {
@@ -415,6 +417,8 @@ export class ItemTourScheduleComponent implements OnInit {
       this.resTimelinelist.splice(i, 1);
       if(this.type == "detail"){
         this.resTimelinelistDelete.push(Object.assign({}, listDelete))
+        console.log(this.resTimelinelistDelete.length);
+        
       }
       this.isChangeTimelineList = true
       this.notificationService.handleAlert("Xóa thành công !", StatusNotification.Info)
