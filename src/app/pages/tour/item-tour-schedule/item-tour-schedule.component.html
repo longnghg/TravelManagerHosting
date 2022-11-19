@@ -436,6 +436,7 @@
                 </div>
                 <div class="row">
                     <div class="col-12 text-right">
+                      <button class="btn btn-lg btn-primary" *ngIf="!isChangeTimeline" (click)="btnResetTimeline()">Reset</button>
                       <button class="btn btn-lg btn-info" *ngIf="isChangeTimeline && isTimeline" (click)="btnBackup()">Khôi phục dữ liệu ban đầu</button>
                       <button class="btn btn-lg btn-success" *ngIf="isChangeTimeline" (click)="btnAddTimeline()">{{isTimeline ? 'Sửa' : 'Thêm'}}</button>
                     </div>

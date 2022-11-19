@@ -42,9 +42,9 @@ async views2()
   return value
 
 }
-gets()
+gets(isdelete: any)
 {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/list-car");
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/list-car?isDelete="+isdelete);
 }
 
 create(data: any)
@@ -57,10 +57,18 @@ update(data: any, idCar: any)
 
 }
 
-delete(idCar: number, idUser: number)
+delete(idCar: any, idUser: any)
 {
-  return this.http.delete<ResponseModel>( this.configService.apiUrl + "/api/Car/delete-car?idCar="+idCar+"idUser="+idUser);
+  return this.http.delete<ResponseModel>( this.configService.apiUrl + "/api/Car/delete-car?idCar="+idCar+"&idUser="+idUser);
+}
 
+restore(idCar: any)
+{
+  return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Car/restore-car?idCar="+idCar, {});
+}
+
+search(data){
+  return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Car/search-car", data);
 }
 
 getsCarByDate(fromDate: any, toDate: any, idTour: any)

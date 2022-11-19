@@ -251,7 +251,6 @@ export class ItemTourScheduleComponent implements OnInit {
                 this.costtour.cusExpected = this.resSchedule.maxCapacity
                 this.costtour.departureDate = this.resSchedule.departureDateDisplay
                 this.costtour.returnDate = this.resSchedule.returnDateDisplay
-                console.log(this.costtour);
 
                 this.scheduleService.create(this.resSchedule).subscribe(res => {
                   this.response = res
@@ -308,7 +307,6 @@ export class ItemTourScheduleComponent implements OnInit {
 
                         if (this.response.notification.type == StatusNotification.Success) {
                         }
-                        console.log(this.response.content);
                       }, error => {
                         var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
                         this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -338,6 +336,7 @@ export class ItemTourScheduleComponent implements OnInit {
                         this.notificationService.handleAlert(message, StatusNotification.Error)
                       })
                     }
+                    this.closeModal.nativeElement.click()
                   }
                   else {
                     this.notificationService.handleAlertObj(res.notification)
@@ -418,11 +417,18 @@ export class ItemTourScheduleComponent implements OnInit {
       if(this.type == "detail"){
         this.resTimelinelistDelete.push(Object.assign({}, listDelete))
         console.log(this.resTimelinelistDelete.length);
-        
+
       }
       this.isChangeTimelineList = true
       this.notificationService.handleAlert("Xóa thành công !", StatusNotification.Info)
     }
+  }
+
+  btnResetTimeline(){
+    this.resTimeline = new TimeLineModel()
+    this.isChangeTimeline = false
+    this.isTimeline = false
+    this.isChangeTimelineList = false
   }
 
   promotionChange(id: number) {
@@ -447,7 +453,7 @@ export class ItemTourScheduleComponent implements OnInit {
     this.isTimeline = false
     this.isChangeTimelineList = false
     this.resTimelinelistDelete = []
-    this.parentType.emit(null); 
+    this.parentType.emit(null);
   }
 
   backup() {
