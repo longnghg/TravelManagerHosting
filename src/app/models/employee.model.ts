@@ -38,3 +38,9 @@ export class ValidationChangePass{
   newPassword: string = null
   confirmPassword: string = null
 }
+
+export class ValidationForgotPass {
+  total: number
+  password: string = null
+  confirmPassword: string = null
+}

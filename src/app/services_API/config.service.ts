@@ -906,6 +906,59 @@ validateHotel(data : any,model: any)
     return model
    }
 
+   validateForgotPass(data: any, model: any){
+    model.total = 0
+
+    if(data.password == null || data.password == ""){
+      model.password = "[Mật khẩu] không được để trống !"
+      model.total += 1
+    }
+
+    if(data.confirmPassword == null || data.confirmPassword == ""){
+      model.confirmPassword = "[Nhập lại mật khẩu] không được để trống !"
+      model.total += 1
+    }else if(data.password != data.confirmPassword){
+      model.confirmPassword = "[Nhập lại mật khẩu] không trùng khớp  !"
+      model.total += 1
+    }
+    return model
+   }
+
+   validateOtp(data: any, model: any, isOtp: boolean){
+    model.total = 0
+    var timePresent = Date.now()
+    console.log(timePresent);
+    console.log(data);
+
+    var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+    if (isOtp) {
+      if(data.checkOTP == null || data.checkOTP == ""){
+        model.checkOTP = "[OTP] không được để trống !"
+        model.total += 1
+      }else if(data.checkOTP != data.otpCode){
+        model.checkOTP = "[OTP] không hợp lệ !"
+        model.total += 1
+      }
+
+      if(data.endTime < timePresent){
+        model.checkOTP = "[OTP] không còn hợp lệ !"
+        model.total += 1
+      }
+    }
+    else{
+      if (data.email == null || data.email == "") {
+        model.email = "[Email] không được để trống !"
+        model.total += 1
+      }else if (!filter.test(data.email)) {
+        model.email = "[Email] không hợp lệ !"
+        model.total += 1
+      }
+    }
+
+    return model
+   }
+
    formatFromUnixTimestampToFullDate(unix_timestamp: number){
     var date = new Date(unix_timestamp).toLocaleDateString("en-US");
     var split = date.split("/")

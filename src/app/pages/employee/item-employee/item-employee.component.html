@@ -274,19 +274,19 @@
         <div class="signin-form">
           <form method="POST" class="register-form" id="login-form" *ngIf="resEmployee">
               <div class="form-group">
-                  <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
+                  <label for="your_pass">Nhập mật khẩu  cũ</label>
                   <input class="form-control" placeholder="Nhập mật khẩu cũ" type="password" name="password" [(ngModel)]="resEmployee.password">
                 </div>
               <span class="text-danger " style="position: relative; top: -20px; font-weight: bolder;">{{validationChangePass.password ? validationChangePass.password : ''}}</span>
 
               <div class="form-group">
-                <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
+                <label for="your_pass">Nhập mật khẩu mới></label>
                 <input class="form-control" placeholder="Nhập mật khẩu mới" type="password" name="password" [(ngModel)]="resEmployee.newPassword">
               </div>
                <span class="text-danger" style="position: relative; top: -20px; font-weight: bolder;">{{validationChangePass.newPassword ? validationChangePass.newPassword : ''}}</span>
 
               <div class="form-group">
-              <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
+              <label for="your_pass">Nhập lại mật khẩu mới</label>
               <input class="form-control" placeholder="Nhập lại mật khẩu mới" type="password" name="password" [(ngModel)]="resEmployee.confirmPassword">
             </div>
              <span class="text-danger" style="position: relative; top: -20px; font-weight: bolder;">{{validationChangePass.confirmPassword ? validationChangePass.confirmPassword : ''}}</span>

@@ -61,4 +61,7 @@ export class EmployeeService{
   changePassword(idEmp: string, password: string, newPassword: string){
     return this.http.put<ResponseModel>(this.configService.apiUrl + "/api/Authentication/change-pass-employee?idEmp="+idEmp+"&password="+password+"&newPassword="+newPassword, {});
 }
+SendOTP(email: string){
+  return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Employee/send-otp-emp?email="+email);
+}
 }

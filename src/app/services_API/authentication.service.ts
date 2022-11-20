@@ -24,4 +24,7 @@ export class AuthenticationService{
     return this.http.put<ResponseModel>(this.configService.apiUrl + "/api/Authentication/block-customer?email="+email, {});
   }
 
+  forgotPassword(data: any){
+    return this.http.put<ResponseModel>(this.configService.apiUrl + "/api/Authentication/forgot-pass-employee?email="+data.email+"&password="+data.password, {});
+}
 }
