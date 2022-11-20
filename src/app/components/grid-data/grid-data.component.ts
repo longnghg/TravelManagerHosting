@@ -171,8 +171,6 @@ export class GridDataComponent implements OnInit {
   }
   setCache(){
     this.keyword.isDelete = this.gridConfig.isRestore
-    console.log(this.keyword);
-
     this.gdSearch.emit(this.keyword);
   }
 

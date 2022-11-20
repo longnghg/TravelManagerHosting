@@ -163,7 +163,11 @@ export class ViewTourScheduleComponent implements OnInit {
     }
   }
   childData(e){
+    console.warn(e);
+
     this.dataChild = Object.assign({}, e)
+    console.log(this.dataChild);
+
   }
 
   childType(e){

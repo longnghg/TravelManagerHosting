@@ -26,6 +26,8 @@ getsSchedulebyIdTourWaiting(idTour: any, idUser: any)
 
 create(data: any)
 {
+  console.log(data);
+
   return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Schedule/create-schedule", data);
 }
 update(data: any, idSchedule: any)
