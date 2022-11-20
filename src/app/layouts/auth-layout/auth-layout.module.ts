@@ -8,17 +8,21 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from '../../pages/login/login.component';
 import { RegisterComponent } from '../../pages/register/register.component';
 import { PipesModule } from "../../pipes/pipes.module";
+import { ForgotPasswordComponent } from '../../pages/auth/forgot-password/forgot-password.component';
+import { CountdownModule } from 'ngx-countdown';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(AuthLayoutRoutes),
     FormsModule,
-    PipesModule
+    PipesModule,
+    CountdownModule
   ],
   declarations: [
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ForgotPasswordComponent,
   ]
 })
 export class AuthLayoutModule { }
