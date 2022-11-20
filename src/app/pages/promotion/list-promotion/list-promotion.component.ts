@@ -117,6 +117,9 @@ export class ListPromotionComponent implements OnInit {
 
         this.resPromotionStatistic.promotion = split[0].split("promotion: ")[1]
         this.resPromotionStatistic.promotionOfMonth = split[1].split("promotionOfMonth: ")[1]
+        this.resPromotionStatistic.promotionOfTime = split[2].split("promotionOfTime: ")[1]
+        this.resPromotionStatistic.unPromotionOfTime = split[3].split("unPromotionOfTime: ")[1]
+
         console.log(this.resStatistic);
 
       }

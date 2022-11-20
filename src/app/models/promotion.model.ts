@@ -25,4 +25,6 @@ export class ValidationPromotionModel{
 export class PromotionStatisticModel{
   promotion: string
   promotionOfMonth: string
+  promotionOfTime : string
+  unPromotionOfTime : string
 }
