@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PromotionModel } from 'src/app/models/promotion.model';
+import { PromotionModel , PromotionStatisticModel } from 'src/app/models/promotion.model';
 import { PromotionService } from "../../../services_API/promotion.service";
 import { NotificationService } from "../../../services_API/notification.service";
 import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.component';
@@ -16,9 +16,11 @@ import { AuthenticationModel } from "../../../models/authentication.model";
 export class ListPromotionComponent implements OnInit {
   auth: AuthenticationModel
   resPromotion: PromotionModel[]
+  resPromotionStatistic: PromotionStatisticModel = new PromotionStatisticModel
   resPromotionWaiting: PromotionModel[]
   response: ResponseModel
   dataChild: PromotionModel
+  resStatistic:string
   typeChild: string
   isDelete: boolean = false
   data: PromotionModel
@@ -47,6 +49,7 @@ export class ListPromotionComponent implements OnInit {
   ngOnInit(): void {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
     this.init(this.isDelete);
+    this.initStatistic()
   }
 
   init(isDelete){
@@ -103,7 +106,26 @@ export class ListPromotionComponent implements OnInit {
   getData(data: any){
     this.data = data
   }
+  initStatistic(){
+    this.promotionService.statistic().subscribe (res => {
+      this.response = res
+      console.log(res);
+      if(this.response.notification.type == StatusNotification.Success)
+      {
+        this.resStatistic = this.response.content
+        var split = this.resStatistic.split(" && ")
 
+        this.resPromotionStatistic.promotion = split[0].split("promotion: ")[1]
+        this.resPromotionStatistic.promotionOfMonth = split[1].split("promotionOfMonth: ")[1]
+        console.log(this.resStatistic);
+
+      }
+      else{
+        this.notificationService.handleAlertObj(res.notification)
+      }
+      console.log(this.response);
+    })
+  }
   delete(){
     if (this.data) {
       this.promotionService.delete(this.data.idPromotion, this.auth.id).subscribe(res =>{

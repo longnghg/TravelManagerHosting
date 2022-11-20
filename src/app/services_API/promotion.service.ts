@@ -76,4 +76,9 @@ export class PromotionService{
   {
     return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Promotion/restore-promotion?idPromotion="+idPromotion+"&idUser="+idUser, {});
   }
+  statistic()
+  {
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Promotion/statistic");
+
+  }
 }
