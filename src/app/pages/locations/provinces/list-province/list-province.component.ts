@@ -9,7 +9,7 @@ import { ResponseModel } from "../../../../models/responsiveModels/response.mode
 import { ColDef, GridConfig} from '../../../../components/grid-data/grid-data.component';
 import { HubConnection } from '@microsoft/signalr';
 import { StatusNotification } from "../../../../enums/enum";
-
+import { PaginationModel } from "../../../../models/responsiveModels/pagination.model";
 @Component({
   selector: 'app-list-province',
   templateUrl: './list-province.component.html',
@@ -22,6 +22,7 @@ export class ListProvinceComponent implements OnInit {
   dataChild: LocationModel
   typeChild: string
   resProvince: LocationModel[]
+  pagination = new PaginationModel
   response: ResponseModel
   public columnDefs: ColDef[]
   public gridConfig: GridConfig = {
@@ -36,11 +37,18 @@ export class ListProvinceComponent implements OnInit {
     private configService: ConfigService){}
 
   ngOnInit(): void {
-    this.init()
+    this.columnDefs= [
+      // { field: 'idProvince', headerName: "Mã thành phố/tỉnh", searchable: true, searchType: 'text', searchObj: 'idProvince'},
+      { field: 'nameProvince',headerName: "Tên thành phố/tỉnh", searchable: true, searchType: 'text', searchObj: 'nameProvince'},
+      { field: 'total',headerName: "Tổng số quận/huyện", searchable: false},
+    ];
+
+    this.gridConfig.pageSize = this.pagination.pageSize
+    this.search(this.pagination)
     this.hubConnectionBuilder = this.configService.signIR()
     this.hubConnectionBuilder.start();
     this.hubConnectionBuilder.on('Init', (result: any) => {
-      this.init()
+      this.search(this.pagination)
     })
   }
 
@@ -66,6 +74,8 @@ export class ListProvinceComponent implements OnInit {
               }
             });
           }
+
+
         })
 
       }
@@ -78,38 +88,45 @@ export class ListProvinceComponent implements OnInit {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)
     })
-
-
-
-    setTimeout(() => {
-      this.columnDefs= [
-        // { field: 'idProvince', headerName: "Mã thành phố/tỉnh", searchable: true, searchType: 'text', searchObj: 'idProvince'},
-        { field: 'nameProvince',headerName: "Tên thành phố/tỉnh", searchable: true, searchType: 'text', searchObj: 'nameProvince'},
-        { field: 'total',headerName: "Tổng số quận/huyện", searchable: false},
-      ];
-    }, 200);
   }
 
-  search(e?){
+  search(e){
     if (e) {
-      this.provinceService.search(e).subscribe(res => {
+      this.provinceService.search(Object.assign({}, e)).subscribe(res => {
         this.response = res
         if(this.response.notification.type == StatusNotification.Success)
         {
           this.resProvince = this.response.content
+          this.totalDistrict()
         }
         else{
-          this.resProvince = null
+          this.resProvince = []
           this.notificationService.handleAlertObj(res.notification)
         }
-
+        this.gridConfig.totalResult = this.response.totalResult
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
   }
-
+  totalDistrict(){
+    this.districtService.views().then(response => {
+      this.resDistrict = response
+      if (this.resProvince) {
+        this.resProvince.forEach(province => {
+          province.total = 0
+          if (this.resDistrict) {
+            this.resDistrict.forEach(district => {
+              if (province.idProvince == district.provinceId) {
+                province.total += 1
+              }
+            });
+          }
+        });
+      }
+    })
+  }
   childData(e){
     if (e) {
       this.dataChild = Object.assign({}, e)

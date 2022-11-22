@@ -99,7 +99,7 @@
   <div class="row">
     <div class="col">
       <div class="card shadow border-0">
-        <app-grid2-data [rowData]="resTour" [columnDefs]="columnDefs" (gdSearch)="search($event)" [gridConfig]="gridConfig2" (gdChecked)="init($event)" (gdType)="childType($event)"  (gdChild)="childData($event)" (gdRestore)="getData($event)" (gdDelete)="getData($event)"></app-grid2-data>
+        <app-grid2-data [rowData]="resTour" [columnDefs]="columnDefs" (gdSearch)="search($event)" [gridConfig]="gridConfig2" (gdChecked)="search($event)" (gdType)="childType($event)"  (gdChild)="childData($event)" (gdRestore)="getData($event)" (gdDelete)="getData($event)"></app-grid2-data>
       </div>
     </div>
   </div>
@@ -113,7 +113,7 @@
   <div class="row">
     <div class="col">
       <div class="card shadow border-0">
-        <app-grid2-data [rowData]="resTourWaiting" [columnDefs]="columnDefsWaiting" (gdSearch)="searchWaiting($event)" [gridConfig]="gridConfigApprove" (gdChecked)="init($event)" (gdType)="childType($event)"  (gdChild)="childData($event)" (gdRestore)="getData($event)" (gdDelete)="getData($event)" (gdApprove)="getData($event)"></app-grid2-data>
+        <app-grid2-data [rowData]="resTourWaiting" [columnDefs]="columnDefsWaiting" (gdSearch)="initWaiting($event)"  [gridConfig]="gridConfigApprove" (gdType)="childType($event)"  (gdChild)="childData($event)" (gdApprove)="getData($event)"></app-grid2-data>
       </div>
     </div>
   </div>

@@ -9,7 +9,7 @@ import { ResponseModel } from "../../../../models/responsiveModels/response.mode
 import { ColDef, GridConfig} from '../../../../components/grid-data/grid-data.component';
 import { HubConnection } from '@microsoft/signalr';
 import { StatusNotification } from "../../../../enums/enum";
-
+import { PaginationModel } from "../../../../models/responsiveModels/pagination.model";
 @Component({
   selector: 'app-list-district',
   templateUrl: './list-district.component.html',
@@ -23,6 +23,7 @@ export class ListDistrictComponent implements OnInit {
   typeChild: string
   resDistrict: LocationModel[]
   response: ResponseModel
+  pagination = new PaginationModel
   private hubConnectionBuilder: HubConnection
   public columnDefs: ColDef[]
   public gridConfig: GridConfig = {
@@ -34,11 +35,22 @@ export class ListDistrictComponent implements OnInit {
   constructor(private provinceService: ProvinceService, private wardService: WardService, private districtService: DistrictService, private notificationService: NotificationService,
     private configService: ConfigService){}
   ngOnInit(): void {
-    this.init()
+    this.provinceService.views().then(response => {
+      this.resProvince = response
+      this.columnDefs= [
+        // { field: 'idDistrict', headerName: "Mã quận/huyện", searchable: true, searchType: 'text', searchObj: 'idDistrict'},
+        { field: 'nameDistrict',headerName: "Tên quận/huyện", searchable: true, searchType: 'text', searchObj: 'nameDistrict'},
+        { field: 'provinceName',headerName: "Tên thành phố/tỉnh", searchable: true, searchType: 'section', searchObj: 'provinceId', multiple: true, closeOnSelect: false, bindLabel: 'nameProvince', bindValue: "idProvince", listSection: this.resProvince},
+        { field: 'total',headerName: "Tổng số phường/xã", searchable: false},
+      ];
+    })
+
+    this.gridConfig.pageSize = this.pagination.pageSize
+    this.search(this.pagination)
     this.hubConnectionBuilder = this.configService.signIR()
     this.hubConnectionBuilder.start();
     this.hubConnectionBuilder.on('Init', (result: any) => {
-      this.init()
+      this.search(this.pagination)
     })
 
   }
@@ -73,9 +85,9 @@ export class ListDistrictComponent implements OnInit {
     })
   }
 
-  search(e?){
+  search(e){
     if (e) {
-      this.districtService.search(e).subscribe(res => {
+      this.districtService.search(Object.assign({}, e)).subscribe(res => {
         this.response = res
         if(this.response.notification.type == StatusNotification.Success)
         {
@@ -83,10 +95,10 @@ export class ListDistrictComponent implements OnInit {
           this.totalWard()
         }
         else{
-          this.resDistrict = null
+          this.resDistrict = []
           this.notificationService.handleAlertObj(res.notification)
         }
-
+        this.gridConfig.totalResult = this.response.totalResult
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, StatusNotification.Error)

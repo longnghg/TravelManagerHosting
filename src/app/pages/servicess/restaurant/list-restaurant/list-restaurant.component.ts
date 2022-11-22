@@ -7,6 +7,7 @@ import { ConfigService } from "../../../../services_API/config.service";
 import { ResponseModel } from "../../../../models/responsiveModels/response.model";
 import { StatusNotification, StatusApprove, TypeAction } from "../../../../enums/enum";
 import { AuthenticationModel } from "../../../../models/authentication.model"
+import { PaginationModel } from "../../../../models/responsiveModels/pagination.model";
 
 @Component({
   selector: 'app-list-restaurant',
@@ -22,8 +23,9 @@ export class ListRestaurantComponent implements OnInit {
   resRestaurantWaitingTmp: RestaurantModel[]
   dataChild: RestaurantModel
   typeChild: string
-  isDelete: boolean = false
   data: RestaurantModel
+  pagination = new PaginationModel
+
   constructor(private restaurantService: RestaurantService,
     private configService: ConfigService,
     private notificationService: NotificationService) { }
@@ -47,16 +49,32 @@ export class ListRestaurantComponent implements OnInit {
       disableRestore: true
     }
     ngOnInit(): void {
+      this.columnDefsWaiting= [
+        { field: 'name',headerName: "Tên khách sạn", style: "width: 30%;", searchable: true, searchType: "text", searchObj: 'name'},
+        { field: 'phone',headerName: "Số điện thoại", style: "width: 12%;", searchable: true, searchType: 'number', searchObj: 'phone'},
+        { field: 'modifyBy',headerName: "Người yêu cầu", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'modifyBy'},
+        { field: 'modifyDate',headerName: "Ngày yêu cầu", style: "width: 20%;", filter: 'date', searchable: true, searchType: 'date', typeDate: 'range', searchObj: 'modifyDate'},
+        { field: 'typeActionName',headerName: "Loại phê duyệt", style: "width: 13%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()},
+
+      ];
+
+      this.columnDefs= [
+        { field: 'name',headerName: "Tên nhà hàng", style: "width: 25%;", searchable: true, searchType: 'text', searchObj: 'name'},
+        { field: 'address',headerName: "Địa chỉ", style: "width: 29%;", searchable: true, searchType: 'text', searchObj: 'address'},
+        { field: 'phone',headerName: "Số điện thoại", style: "width: 12%;", searchable: true, searchType: 'number', searchObj: 'phone'},
+        { field: 'comboPrice',headerName: "Giá", style: "width: 21%;",searchable: true, filter: 'price', searchType: 'price', searchObj: 'comboPrice'},
+      ];
+
       this.auth = JSON.parse(localStorage.getItem("currentUser"))
-      this.init(this.isDelete);
-      this.initWaiting()
+      this.gridConfig.pageSize = this.pagination.pageSize
+      this.gridConfigWaiting.pageSize = this.pagination.pageSize
+      this.search(this.pagination)
+      this.initWaiting(this.pagination)
     }
 
-    initWaiting(){
-      this.restaurantService.getsWaiting(this.auth.id).subscribe(res =>{
+    initWaiting(e){
+      this.restaurantService.getsWaiting(this.auth.id, e.pageIndex, e.pageSize).subscribe(res =>{
         this.response = res
-        console.log(res);
-
         if(this.response.notification.type == StatusNotification.Success){
 
           this.resRestaurantWaiting = this.response.content
@@ -65,21 +83,11 @@ export class ListRestaurantComponent implements OnInit {
             hotel.approveName = StatusApprove[hotel.approve]
             hotel.typeActionName = TypeAction[hotel.typeAction]
           });
-
-          this.resRestaurantWaitingTmp = Object.assign([], this.resRestaurantWaiting)
-
+          // this.resRestaurantWaitingTmp = Object.assign([], this.resRestaurantWaiting)
         }else{
-          this.notificationService.handleAlertObj(res.notification)
+          this.resRestaurantWaiting = []
         }
-
-        this.columnDefsWaiting= [
-          { field: 'name',headerName: "Tên khách sạn", style: "width: 30%;", searchable: true, searchType: "text", searchObj: 'name'},
-          { field: 'phone',headerName: "Số điện thoại", style: "width: 12%;", searchable: true, searchType: 'number', searchObj: 'phone'},
-          { field: 'modifyBy',headerName: "Người yêu cầu", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'modifyBy'},
-          { field: 'modifyDate',headerName: "Ngày yêu cầu", style: "width: 20%;", filter: 'date', searchable: true, searchType: 'date', typeDate: 'range', searchObj: 'modifyDate'},
-          { field: 'typeActionName',headerName: "Loại phê duyệt", style: "width: 13%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()},
-
-        ];
+        this.gridConfigWaiting.totalResult = this.response.totalResult
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -119,10 +127,11 @@ export class ListRestaurantComponent implements OnInit {
             this.resRestaurant = this.response.content
           }
           else{
-            this.resRestaurant = Object.assign([], this.resRestaurantTmp)
+            // this.resRestaurant = Object.assign([], this.resRestaurantTmp)
+            this.resRestaurant = []
             this.notificationService.handleAlertObj(res.notification)
           }
-
+          this.gridConfig.totalResult = this.response.totalResult
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -131,44 +140,33 @@ export class ListRestaurantComponent implements OnInit {
     }
 
 
-    init(isDelete){
-      this.restaurantService.gets(isDelete).subscribe(res =>{
-        this.response = res
+    // init(isDelete){
+    //   this.restaurantService.gets(isDelete).subscribe(res =>{
+    //     this.response = res
 
-        if(this.response.notification.type == StatusNotification.Success){
-          this.resRestaurant = this.response.content
-        }
-      }, error => {
-        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, StatusNotification.Error)
-      })
+    //     if(this.response.notification.type == StatusNotification.Success){
+    //       this.resRestaurant = this.response.content
+    //     }
+    //   }, error => {
+    //     var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+    //     this.notificationService.handleAlert(message, StatusNotification.Error)
+    //   })
 
-      setTimeout(() => {
+    //   this.restaurantService.getsWaiting(this.auth.id).subscribe(res =>{
+    //     this.response = res
+    //     if(this.response.notification.type == StatusNotification.Success){
+    //       this.resRestaurantWaiting = this.response.content
 
-        this.columnDefs= [
-          { field: 'name',headerName: "Tên nhà hàng", style: "width: 25%;", searchable: true, searchType: 'text', searchObj: 'name'},
-          { field: 'address',headerName: "Địa chỉ", style: "width: 29%;", searchable: true, searchType: 'text', searchObj: 'address'},
-          { field: 'phone',headerName: "Số điện thoại", style: "width: 12%;", searchable: true, searchType: 'number', searchObj: 'phone'},
-          { field: 'comboPrice',headerName: "Giá", style: "width: 21%;",searchable: true, filter: 'price', searchType: 'price', searchObj: 'comboPrice'},
-        ];
-
-      }, 200);
-
-      this.restaurantService.getsWaiting(this.auth.id).subscribe(res =>{
-        this.response = res
-        if(this.response.notification.type == StatusNotification.Success){
-          this.resRestaurantWaiting = this.response.content
-
-          this.resRestaurantWaiting.forEach(restaurant => {
-            restaurant.approveName = StatusApprove[restaurant.approve]
-            restaurant.typeActionName = TypeAction[restaurant.typeAction]
-          });
-        }
-      }, error => {
-        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, StatusNotification.Error)
-      })
-    }
+    //       this.resRestaurantWaiting.forEach(restaurant => {
+    //         restaurant.approveName = StatusApprove[restaurant.approve]
+    //         restaurant.typeActionName = TypeAction[restaurant.typeAction]
+    //       });
+    //     }
+    //   }, error => {
+    //     var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+    //     this.notificationService.handleAlert(message, StatusNotification.Error)
+    //   })
+    // }
 
     childData(e){
       this.dataChild = Object.assign({}, e)

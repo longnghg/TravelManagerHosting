@@ -37,9 +37,9 @@ getHotel(idHotel: string)
 {
   return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/get-hotel?idHotel="+idHotel);
 }
-getsWaiting(idUser: any)
+getsWaiting(idUser: any, pageIndex: number, pageSize: number)
 {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/list-hotel-waiting?idUser="+idUser);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/list-hotel-waiting?idUser="+idUser+"&pageIndex="+pageIndex+"&pageSize="+pageSize);
 }
 create(data: any)
 {

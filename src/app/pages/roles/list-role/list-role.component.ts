@@ -8,7 +8,7 @@ import { AuthenticationModel } from "../../../models/authentication.model";
 import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.component';
 import { HubConnection } from '@microsoft/signalr';
 import { RoleTitle, StatusNotification } from "../../../enums/enum";
-
+import { PaginationModel } from "../../../models/responsiveModels/pagination.model";
 @Component({
   selector: 'app-list-role',
   templateUrl: './list-role.component.html',
@@ -20,9 +20,9 @@ export class ListRoleComponent implements OnInit {
   data: RoleModel
   typeChild: string
   response: ResponseModel
-  type: boolean = false
   resRole: RoleModel[]
   resRoleTmp: RoleModel[]
+  pagination = new PaginationModel
   private hubConnectionBuilder!: HubConnection;
 
   public gridConfig: GridConfig = {
@@ -37,31 +37,40 @@ export class ListRoleComponent implements OnInit {
     private configService: ConfigService ) { }
     public columnDefs: ColDef[]
   ngOnInit(): void {
-    this.auth = JSON.parse(localStorage.getItem("currentUser"));
+    this.columnDefs= [
+      // { field: 'idRole', headerName: "Mã số", searchable: true, searchType: 'text', searchObj: 'idRole'},
+      { field: 'nameRole',headerName: "Chức Vụ", style: 'width: 45%', searchable: true, searchType: 'text', searchObj: 'nameRole'},
+      { field: 'description',headerName: "Mô Tả", style: 'width: 45%', searchable: true, searchType: 'text', searchObj: 'description'},
+    ];
 
-    this.init(this.type)
+    this.auth = JSON.parse(localStorage.getItem("currentUser"));
+    this.gridConfig.pageSize = this.pagination.pageSize
+
+    this.search(this.pagination)
     this.hubConnectionBuilder = this.configService.signIR()
     this.hubConnectionBuilder.start();
     this.hubConnectionBuilder.on('Init', (result: any) => {
-      this.init(this.type)
+      this.search(this.pagination)
     })
 
 
   }
 
-  search(e?){
+  search(e){
     if (e) {
       this.roleService.search(Object.assign({}, e)).subscribe(res => {
         this.response = res
         if(this.response.notification.type == StatusNotification.Success)
         {
           this.resRole = this.response.content
+          // this.resRoleTmp = Object.assign([], this.resRole)
         }
         else{
-          this.resRole = Object.assign([], this.resRoleTmp)
+          // this.resRole = this.resRoleTmp
+          this.resRole = []
           this.notificationService.handleAlertObj(res.notification)
         }
-
+        this.gridConfig.totalResult = this.response.totalResult
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -69,33 +78,25 @@ export class ListRoleComponent implements OnInit {
     }
   }
 
-  init(e?){
-   this.type = e
-   this.roleService.gets(this.type).subscribe(res => {
-    this.response = res
-    if(this.response.notification.type == StatusNotification.Success)
-    {
-      this.resRole = this.response.content
-      this.resRoleTmp = Object.assign([], this.resRole)
+  // init(e?){
+  //   this.type = e
+  //   this.roleService.gets(this.type).subscribe(res => {
+  //     this.response = res
+  //     if(this.response.notification.type == StatusNotification.Success)
+  //     {
+  //       this.resRole = this.response.content
+  //       this.resRoleTmp = Object.assign([], this.resRole)
 
-    }
-    else{
-      this.resRole = Object.assign([], this.resRoleTmp)
-    }
+  //     }
+  //     else{
+  //       this.resRole = Object.assign([], this.resRoleTmp)
+  //     }
 
-  }, error => {
-    var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-    this.notificationService.handleAlert(message, StatusNotification.Error)
-  })
-
-   setTimeout(() => {
-    this.columnDefs= [
-      // { field: 'idRole', headerName: "Mã số", searchable: true, searchType: 'text', searchObj: 'idRole'},
-      { field: 'nameRole',headerName: "Chức Vụ", style: 'width: 45%', searchable: true, searchType: 'text', searchObj: 'nameRole'},
-      { field: 'description',headerName: "Mô Tả", style: 'width: 45%', searchable: true, searchType: 'text', searchObj: 'description'},
-    ];
-  }, 200);
-  }
+  //   }, error => {
+  //     var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+  //     this.notificationService.handleAlert(message, StatusNotification.Error)
+  //   })
+  // }
 
 
   childData(e){

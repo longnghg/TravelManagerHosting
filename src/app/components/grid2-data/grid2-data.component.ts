@@ -16,13 +16,12 @@ export class Grid2DataComponent implements OnInit {
   @Output() gdRestore = new EventEmitter<any>()
   @Output() gdChild = new EventEmitter<any>()
   @Output() gdType = new EventEmitter<any>()
-  totalResult: number
   rowDataRestore: any
   pageCount: number
   listPageSize = [1, 2, 5, 10, 15, 20, 25, 30]
-  pageSize: number = 15
+  // pageSize: number = 5
   index: number = 0
-  pageNumber: number = 1
+  pageIndex: number = 1
   start: number = 0
   end: number = 0
   btnPrev: boolean = false
@@ -37,20 +36,22 @@ export class Grid2DataComponent implements OnInit {
   }
 
   calStartEnd(){
-    this.start = ((this.pageNumber - 1) * this.pageSize) + 1
-    this.end = this.start + this.pageSize - 1
+    this.start = ((this.pageIndex - 1) * this.gridConfig.pageSize) + 1
+    this.end = this.start + this.gridConfig.pageSize - 1
+    if (this.rowData) {
+      for (let index = 0; index < this.rowData.length; index++) {
+        this.rowData[index].rowNum = this.start + index
+      }
+    }
+
   }
   calTotalResult(){
     if (this.rowData) {
-      for (let index = 0; index < this.rowData.length; index++) {
-        this.rowData[index].rowNum = index+1
-      }
-      this.totalResult = this.rowData.length
-      if(this.totalResult % this.pageSize == 0){
-        this.pageCount = this.totalResult / this.pageSize
+      if(this.gridConfig.totalResult % this.gridConfig.pageSize == 0){
+        this.pageCount = this.gridConfig.totalResult / this.gridConfig.pageSize
       }
       else{
-        this.pageCount = Math.floor(this.totalResult / this.pageSize + 1)
+        this.pageCount = Math.floor(this.gridConfig.totalResult / this.gridConfig.pageSize + 1)
       }
 
       if (this.pageCount == 1) {
@@ -59,43 +60,44 @@ export class Grid2DataComponent implements OnInit {
       else{
         this.btnNext = true
       }
-      this.index = (this.pageNumber - 1) * this.pageSize
+      this.index = (this.pageIndex - 1) * this.gridConfig.pageSize
     }
   }
+
   selectPage(page: string, type: string) {
     var index = parseInt(page)
     if (type == 'prev' && index > 1) {
-      this.pageNumber = index - 1
+      this.pageIndex = index - 1
     }
     else if(type == 'next' && index < this.pageCount){
-      this.pageNumber = index + 1
+      this.pageIndex = index + 1
     }
     else if(type == 'nextAll'){
-      this.pageNumber = this.pageCount
+      this.pageIndex = this.pageCount
     }
     else if (type == 'prevAll') {
-      this.pageNumber = 1
+      this.pageIndex = 1
     }
     else{
       if (index > this.pageCount) {
-        this.pageNumber = this.pageCount
+        this.pageIndex = this.pageCount
       }
       else if (index == 0){
-        this.pageNumber = 1
+        this.pageIndex = 1
       }
       else{
-        this.pageNumber = index
+        this.pageIndex = index
       }
     }
 
-    if (this.pageNumber == 1) {
+    if (this.pageIndex == 1) {
       this.btnPrev = false
     }
     else{
       this.btnPrev = true
     }
 
-    if (this.pageNumber == this.pageCount) {
+    if (this.pageIndex == this.pageCount) {
       this.btnNext = false
     }
     else{
@@ -104,6 +106,7 @@ export class Grid2DataComponent implements OnInit {
 
     this.calTotalResult()
     this.calStartEnd()
+    this.setCache()
   }
 
   formatInput(input: HTMLInputElement, keyword?: any, column?: any) {
@@ -112,9 +115,11 @@ export class Grid2DataComponent implements OnInit {
   }
 
   changePageSize(){
-    this.pageNumber = 1
+    this.pageIndex = 1
+
     this.calTotalResult()
     this.calStartEnd()
+    this.setCache()
   }
 
   selectSection(name){
@@ -140,26 +145,34 @@ export class Grid2DataComponent implements OnInit {
       kw = this.keyword[name+'Tmp']
     }
     this.keyword[name] = kw
+
+    this.pageIndex = 1
     this.setCache()
   }
 
   search(name){
+    this.pageIndex = 1
     this.setCache()
   }
   changeChecked(){
     if (this.gridConfig.isRestore) {
       this.gridConfig.isRestore = false
-      this.gdChecked.emit(false);
+      this.keyword.isDelete = false
     }
     else{
       this.gridConfig.isRestore = true
-      this.gdChecked.emit(true);
+      this.keyword.isDelete = true
     }
+    this.setCache()
   }
   setCache(){
-    this.pageNumber = 1
+    this.rowData = null
+    this.keyword.pageSize = this.gridConfig.pageSize
+    this.keyword.pageIndex = this.pageIndex
     this.keyword.isDelete = this.gridConfig.isRestore
-       this.gdSearch.emit(this.keyword);
+    setTimeout(() => {
+      this.gdSearch.emit(this.keyword);
+    }, 500);
     // if (this.keywordTmp)
     // {
     //   this.keywordTmp.isDelete = this.gridConfig.isRestore
@@ -223,7 +236,13 @@ export class GridConfig2{
   radioBoxName?: string
   style?: string
   isRestore?: boolean
+
+  pageSize?: number
+  totalResult? : number
 }
+
+
+
 export declare type GridFilter = 'star' | 'number' | 'date' | 'status' | 'text' | 'call' ;
 export declare type GridSearchType = 'section' | 'number' | 'date' | 'dateTime' | 'text' | 'email';
 export declare type  GridTypeDate = 'single' | 'range' ;

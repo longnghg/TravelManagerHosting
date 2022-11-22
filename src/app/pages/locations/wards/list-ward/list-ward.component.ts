@@ -8,6 +8,7 @@ import { ResponseModel } from "../../../../models/responsiveModels/response.mode
 import { ColDef, GridConfig} from '../../../../components/grid-data/grid-data.component';
 import { HubConnection } from '@microsoft/signalr';
 import { StatusNotification } from "../../../../enums/enum";
+import { PaginationModel } from "../../../../models/responsiveModels/pagination.model";
 @Component({
   selector: 'app-list-ward',
   templateUrl: './list-ward.component.html',
@@ -20,6 +21,7 @@ export class ListWardComponent implements OnInit {
   typeChild: string
   resWard: LocationModel[]
   response: ResponseModel
+  pagination = new PaginationModel
   public columnDefs: ColDef[]
   public gridConfig: GridConfig = {
     idModalDelete: "deleteWardModal",
@@ -32,11 +34,21 @@ export class ListWardComponent implements OnInit {
   constructor( private wardService: WardService, private districtService: DistrictService, private notificationService: NotificationService,
     private configService: ConfigService){}
   ngOnInit(): void {
-    this.init()
+    this.districtService.views().then(response => {
+      this.resDistrict = response
+      this.columnDefs= [
+        // { field: 'idWard', headerName: "Mã phường/xã", searchable: true, searchType: 'text', searchObj: 'idWard'},
+        { field: 'nameWard',headerName: "Tên phường/xã", searchable: true, searchType: 'text', searchObj: 'nameWard'},
+        { field: 'districtName',headerName: "Tên quận/huyện", searchable: true, searchType: 'section', searchObj: 'districtId', multiple: true, closeOnSelect: false, bindLabel: 'nameDistrict', bindValue: "idDistrict", listSection: this.resDistrict},
+      ];
+    })
+
+    this.gridConfig.pageSize = this.pagination.pageSize
+    this.search(this.pagination)
     this.hubConnectionBuilder = this.configService.signIR()
     this.hubConnectionBuilder.start();
     this.hubConnectionBuilder.on('Init', (result: any) => {
-      this.init()
+      this.search(this.pagination)
     })
 
   }
@@ -70,17 +82,17 @@ export class ListWardComponent implements OnInit {
 
   search(e?){
     if (e) {
-      this.wardService.search(e).subscribe(res => {
+      this.wardService.search(Object.assign({}, e)).subscribe(res => {
         this.response = res
         if(this.response.notification.type == StatusNotification.Success)
         {
           this.resWard = this.response.content
         }
         else{
-          this.resWard = null
+          this.resWard = []
           this.notificationService.handleAlertObj(res.notification)
         }
-
+        this.gridConfig.totalResult = this.response.totalResult
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, StatusNotification.Error)

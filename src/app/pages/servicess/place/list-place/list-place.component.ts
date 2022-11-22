@@ -7,6 +7,7 @@ import { ConfigService } from "../../../../services_API/config.service";
 import { ResponseModel } from "../../../../models/responsiveModels/response.model";
 import { StatusNotification, StatusApprove, TypeAction } from "../../../../enums/enum";
 import { AuthenticationModel } from "../../../../models/authentication.model"
+import { PaginationModel } from "../../../../models/responsiveModels/pagination.model";
 
 @Component({
   selector: 'app-list-place',
@@ -24,6 +25,7 @@ export class ListPlaceComponent implements OnInit {
   typeChild: string
   isDelete: boolean = false
   data: PlaceModel
+  pagination = new PaginationModel
 
   constructor(private placeService: PlaceService,
     private configService: ConfigService,
@@ -48,8 +50,28 @@ export class ListPlaceComponent implements OnInit {
       disableRestore: true
     }
     ngOnInit(): void {
-      this.auth = JSON.parse(localStorage.getItem("currentUser"))
-      this.init(this.isDelete);
+      this.columnDefs= [
+        { field: 'name',headerName: "Tên điểm tham quan", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'name'},
+        { field: 'address',headerName: "Địa chỉ", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'address'},
+        { field: 'phone',headerName: "Số điện thoại", style: "width: 12%;", searchable: true, searchType: 'number', searchObj: 'phone'},
+        { field: 'priceTicket',headerName: "Giá vé", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'priceTicket'},
+
+      ];
+
+      this.columnDefsWaiting= [
+        { field: 'name',headerName: "Tên điểm tham quan ", style: "width: 30%;", searchable: true, searchType: "text", searchObj: 'name'},
+        { field: 'phone',headerName: "Số điện thoại", style: "width: 12%;", searchable: true, searchType: 'number', searchObj: 'phone'},
+        { field: 'modifyBy',headerName: "Người yêu cầu", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'modifyBy'},
+        { field: 'modifyDate',headerName: "Ngày yêu cầu", style: "width: 20%;", filter: 'date', searchable: true, searchType: 'date', typeDate: 'range', searchObj: 'modifyDate'},
+        { field: 'typeActionName',headerName: "Loại phê duyệt", style: "width: 13%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()},
+
+      ];
+
+     this.auth = JSON.parse(localStorage.getItem("currentUser"))
+    this.gridConfig.pageSize = this.pagination.pageSize
+    this.gridConfigWaiting.pageSize = this.pagination.pageSize
+    this.search(this.pagination)
+    this.initWaiting(this.pagination)
     }
     searchWaiting(e?){
       if (e) {
@@ -75,49 +97,19 @@ export class ListPlaceComponent implements OnInit {
         })
       }
     }
-    init(isDelete){
-      this.placeService.gets(isDelete).subscribe(res =>{
+    initWaiting(e){
+      this.placeService.getsWaiting(this.auth.id, e.pageIndex, e.pageSize).subscribe(res =>{
         this.response = res
         if(this.response.notification.type == StatusNotification.Success){
-          this.resPlace = this.response.content
-        }
-      }, error => {
-        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, StatusNotification.Error)
-      })
-
-      setTimeout(() => {
-
-        this.columnDefs= [
-          { field: 'name',headerName: "Tên điểm tham quan", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'name'},
-          { field: 'address',headerName: "Địa chỉ", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'address'},
-          { field: 'phone',headerName: "Số điện thoại", style: "width: 12%;", searchable: true, searchType: 'number', searchObj: 'phone'},
-          { field: 'priceTicket',headerName: "Giá vé", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'priceTicket'},
-
-        ];
-
-        this.columnDefsWaiting= [
-          { field: 'name',headerName: "Tên điểm tham quan ", style: "width: 30%;", searchable: true, searchType: "text", searchObj: 'name'},
-          { field: 'phone',headerName: "Số điện thoại", style: "width: 12%;", searchable: true, searchType: 'number', searchObj: 'phone'},
-          { field: 'modifyBy',headerName: "Người yêu cầu", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'modifyBy'},
-          { field: 'modifyDate',headerName: "Ngày yêu cầu", style: "width: 20%;", filter: 'date', searchable: true, searchType: 'date', typeDate: 'range', searchObj: 'modifyDate'},
-          { field: 'typeActionName',headerName: "Loại phê duyệt", style: "width: 13%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()},
-
-        ];
-      }, 200);
-
-      this.placeService.getsWaiting(this.auth.id).subscribe(res =>{
-        this.response = res
-        if(this.response.notification.type == StatusNotification.Success){
-
           this.resPlaceWaiting = this.response.content
-            console.log(this.response.content);
-
           this.resPlaceWaiting.forEach(place => {
             place.approveName = StatusApprove[place.approve]
             place.typeActionName = TypeAction[place.typeAction]
           });
+        }else{
+          this.resPlaceWaiting = []
         }
+        this.gridConfigWaiting.totalResult = this.response.totalResult
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -136,10 +128,11 @@ export class ListPlaceComponent implements OnInit {
             this.resPlace = this.response.content
           }
           else{
-            this.resPlace = Object.assign([], this.respPlaceTmp )
+            // this.resPlace = Object.assign([], this.respPlaceTmp )
+            this.resPlace = []
             this.notificationService.handleAlertObj(res.notification)
           }
-
+          this.gridConfig.totalResult = this.response.totalResult
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)

@@ -36,8 +36,8 @@ export class TourService{
   {
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/list-tour?isDelete="+isDelete);
   }
-  getwaiting(idUser: any){
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/list-tour-waiting?idUser="+idUser);
+  getwaiting(idUser: any, pageIndex: number, pageSize: number){
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/list-tour-waiting?idUser="+idUser+"&pageIndex="+pageIndex+"&pageSize="+pageSize);
   }
   getTour(idTour: string)
   {
