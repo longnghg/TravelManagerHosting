@@ -391,7 +391,6 @@ export class ItemTourScheduleComponent implements OnInit {
   btnUpdateTimeline(i: number){
     if(this.resTimelinelist){
       this.resTimeline = Object.assign({}, this.resTimelinelist[i])
-
       this.indexTimeline = i
       this.isTimeline = true
       this.resTimelineTmp = Object.assign({}, this.resTimeline)
@@ -412,8 +411,8 @@ export class ItemTourScheduleComponent implements OnInit {
 
   btnResetTimeline(){
     this.resTimeline = new TimeLineModel()
-    this.validateTimeline = new ValidateTimelineModel ;
-    this.isChangeTimeline = true
+    this.resTimelineTmp = new TimeLineModel()
+    this.validateTimeline = new ValidateTimelineModel
     this.isTimeline = false
     // this.isChangeTimelineList = false
   }
