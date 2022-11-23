@@ -42,7 +42,6 @@ export class ListTourBookingComponent implements OnInit {
     this.init()
   }
   search(e?){
-    console.log(e);
 
     if (e) {
       this.tourookingService.search(Object.assign({}, e)).subscribe(res => {
@@ -52,7 +51,6 @@ export class ListTourBookingComponent implements OnInit {
           this.resTourBooking = this.response.content
         }
         else{
-          console.log(this.resTourBookingWaiting);
 
           this.resTourBooking = this.resTourBooking
           this.notificationService.handleAlertObj(res.notification)

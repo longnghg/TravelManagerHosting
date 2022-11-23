@@ -718,7 +718,6 @@ validateHotel(data : any,model: any)
      }
 
    // phone
-   console.log(data.phone.length);
 
    if (data.phone == null || data.phone == "") {
      model.phone= "[Số điện thoại] không được để trống !"
@@ -927,8 +926,6 @@ validateHotel(data : any,model: any)
    validateOtp(data: any, model: any, isOtp: boolean){
     model.total = 0
     var timePresent = Date.now()
-    console.log(timePresent);
-    console.log(data);
 
     var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 

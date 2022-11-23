@@ -92,7 +92,6 @@ export class ItemTourScheduleComponent implements OnInit {
       this.resCostTourTmp = Object.assign({}, this.resCostTour)
       this.resTimelinelistTmp = Object.assign({}, this.resTimelinelist)
       this.isFirst = false
-      console.log(99999);
 
     }
     else {
@@ -404,7 +403,6 @@ export class ItemTourScheduleComponent implements OnInit {
       this.resTimelinelist.splice(i, 1);
       if(this.type == "detail"){
         this.resTimelinelistDelete.push(Object.assign({}, listDelete))
-        console.log(this.resTimelinelistDelete.length);
 
       }
       this.isChangeTimelineList = true
@@ -450,7 +448,6 @@ export class ItemTourScheduleComponent implements OnInit {
   }
 
   backup() {
-    console.log(this.resTimelinelistTmp);
 
     this.resSchedule = Object.assign({}, this.resScheduleTmp)
     this.resCostTour = Object.assign({}, this.resCostTourTmp)

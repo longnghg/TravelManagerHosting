@@ -44,7 +44,6 @@ export class BannerComponent implements OnInit {
     var name = this.nameBanner;
     var files = this.files.path[0].files
     files[0].name = "kiet"
-    console.log(files[0]);
 
     var file = new FormData();
                 for (let index = 0; index < files.length; index++) {
