@@ -103,7 +103,7 @@ export class ItemTourScheduleComponent implements OnInit {
         this.resSchedule.timePromotionDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.timePromotion)
         this.resSchedule.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.modifyDate)
         this.resScheduleTmp = Object.assign({}, this.resSchedule)
-        this.resCostTourTmp = Object.assign({}, this.resCostTour)
+
 
         this.costtourService.getCostbyidSchedule(this.resSchedule.idSchedule).subscribe(res => {
           this.response = res
@@ -121,6 +121,8 @@ export class ItemTourScheduleComponent implements OnInit {
             this.resCostTour.maxCapacity = this.resSchedule.maxCapacity
             this.resCostTour.minCapacity = this.resSchedule.minCapacity
           }
+
+          this.resCostTourTmp = Object.assign({}, this.resCostTour)
         }, error => {
           var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
           this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -224,7 +226,7 @@ export class ItemTourScheduleComponent implements OnInit {
 
   save() {
     this.validateScheduleModel = new ValidateScheduleModel
-    this.validateScheduleModel = this.configService.validateSchedule(this.resSchedule, this.validateScheduleModel)
+    this.validateScheduleModel = this.configService.validateSchedule(this.resSchedule, this.validateScheduleModel, Object.assign([], this.resTimelinelist))
     this.resSchedule.idUserModify = this.auth.id
     this.resSchedule.tourId = this.activatedRoute.snapshot.paramMap.get('id2')
     if (this.validateScheduleModel.total == 0) {
@@ -358,8 +360,10 @@ export class ItemTourScheduleComponent implements OnInit {
   }
 
   btnAddTimeline() {
+    console.warn(this.resTimelinelist);
+
     this.validateTimeline = new ValidateTimelineModel
-    this.validateTimeline = this.configService.validateTimeline(this.resTimeline, this.validateTimeline, this.resSchedule, this.timelineList)
+    this.validateTimeline = this.configService.validateTimeline(this.resTimeline, this.validateTimeline, this.resSchedule, Object.assign([], this.timelineList))
 
     if (this.validateTimeline.total == 0) {
       if(!this.isTimeline){
@@ -391,7 +395,6 @@ export class ItemTourScheduleComponent implements OnInit {
   btnUpdateTimeline(i: number){
     if(this.resTimelinelist){
       this.resTimeline = Object.assign({}, this.resTimelinelist[i])
-
       this.indexTimeline = i
       this.isTimeline = true
       this.resTimelineTmp = Object.assign({}, this.resTimeline)
@@ -412,8 +415,8 @@ export class ItemTourScheduleComponent implements OnInit {
 
   btnResetTimeline(){
     this.resTimeline = new TimeLineModel()
-    this.validateTimeline = new ValidateTimelineModel ;
-    this.isChangeTimeline = true
+    this.resTimelineTmp = new TimeLineModel()
+    this.validateTimeline = new ValidateTimelineModel
     this.isTimeline = false
     // this.isChangeTimelineList = false
   }

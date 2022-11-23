@@ -393,7 +393,7 @@ export class ConfigService{
     return model
    }
 
-   validateSchedule(data: any, model: any){
+   validateSchedule(data: any, model: any, timelineList: any){
     model.total = 0
     var min = 0
     var dateNow =  Date.now()
@@ -425,30 +425,32 @@ export class ConfigService{
       model.total += 1
     }
 
-    if(data.departureDate == 0 || data.departureDate == ""){
-      model.departureDate = ("Chọn ngày khởi hành!")
-      model.total += 1
-     }else if(data.departureDate <= data.endDate){
-      model.departureDate = ("Ngày khởi hành không trước ngày kết thúc bán vé!")
-      model.total += 1
-     }else if(data.departureDate < checkDate){
-      model.departureDate = ("Ngày khởi hành không trước ngày hiện tại!")
-      model.total += 1
-     }
+    if(timelineList.length > 0){
+      if(data.departureDate == 0 || data.departureDate == ""){
+        model.departureDate = ("Chọn ngày khởi hành!")
+        model.total += 1
+       }else if(data.departureDate <= data.endDate){
+        model.departureDate = ("Ngày khởi hành không trước ngày kết thúc bán vé!")
+        model.total += 1
+       }else if(data.departureDate < checkDate){
+        model.departureDate = ("Ngày khởi hành không trước ngày hiện tại!")
+        model.total += 1
+       }
 
-     if(data.returnDate == 0 || data.returnDate == ""){
-      model.returnDate = ("Chọn ngày trở về!")
-      model.total += 1
-     }else if(data.returnDate <= data.departureDate){
-      model.returnDate = ("Ngày trở về không được trước ngày khởi hành!")
-      model.total += 1
-     }else if(data.returnDate <= data.endDate){
-      model.returnDate = ("Ngày trở về không trước ngày kết thúc bán vé!")
-      model.total += 1
-     }else if(data.returnDate < checkDate){
-      model.returnDate = ("Ngày trở về không trước ngày hiện tại!")
-      model.total += 1
-     }
+       if(data.returnDate == 0 || data.returnDate == ""){
+        model.returnDate = ("Chọn ngày trở về!")
+        model.total += 1
+       }else if(data.returnDate <= data.departureDate){
+        model.returnDate = ("Ngày trở về không được trước ngày khởi hành!")
+        model.total += 1
+       }else if(data.returnDate <= data.endDate){
+        model.returnDate = ("Ngày trở về không trước ngày kết thúc bán vé!")
+        model.total += 1
+       }else if(data.returnDate < checkDate){
+        model.returnDate = ("Ngày trở về không trước ngày hiện tại!")
+        model.total += 1
+       }
+    }
 
     //  if(data.timePromotion == 0 || data.timePromotion == ""){
     //   model.timePromotion = ("Chọn ngày khuyến mãi")
@@ -546,17 +548,19 @@ export class ConfigService{
     model.total = 0
     var dateNow =  Date.now()
     var checkDate = new Date(dateNow).getTime()
-
+    console.log(dataList);
+    //departureDate = 30
+    //departureDate = 35
     if(data.fromTime == 0 || data.fromTime == ""){
       model.fromTime = ("Chọn thời gian bắt đầu!")
       model.total += 1
      }else if(data.fromTime <= checkDate){
       model.fromTime = ("Không trước ngày hiện tại!")
       model.total += 1
-     }else if(data.fromTime < dataSchedule.departureDate){
+     }else if(data.fromTime <= dataSchedule.departureDate){
       model.fromTime = ("Không trước ngày khởi hành")
       model.total += 1
-     }else if(data.fromTime > dataSchedule.returnDate){
+     }else if(data.fromTime >= dataSchedule.returnDate){
       model.fromTime = ("Không sau ngày trở về")
       model.total += 1
      }
@@ -570,7 +574,7 @@ export class ConfigService{
      }else if(data.toTime <= data.fromTime){
       model.toTime = ("Không trước ngày bắt đầu!")
       model.total += 1
-     }else if(data.toTime > dataSchedule.returnDate){
+     }else if(data.toTime >= dataSchedule.returnDate){
       model.toTime = ("Không sau ngày trở về!")
       model.total += 1
      }
@@ -586,10 +590,15 @@ export class ConfigService{
       model.total += 1
     }
 
-    // dataList.forEach(timeline => {
-    //   timeline.returnDate
-    // });
+    if (dataList.length > 1) {
+      dataList.forEach(timeline => {
+        if (timeline.fromTime > data.fromTime || timeline.toTime > data.toTime) {
+          model.description = "Thời điểm này đã tồn tại !"
+          model.total += 1
+        }
+      });
 
+    }
      return model
    }
 

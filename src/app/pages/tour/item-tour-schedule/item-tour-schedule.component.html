@@ -430,11 +430,11 @@
                       <label class="form-control-label" for="">Mô tả nội dung timeline
                         <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateTimeline.description ? this.validateTimeline.description : ''}}</span>
                       </label>
-                      <textarea class="form-control" (input)="inputChangeTimeline()" [(ngModel)]="resTimeline.description" name="description" id="description"  rows="4" placeholder="Nhập thông tin timeline"></textarea>
+                      <textarea class="form-control" (input)="inputChangeTimeline()" [(ngModel)]="resTimeline.description" name="description" id="description"  rows="4" placeholder="Nhập thông tin timeline" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete"></textarea>
                     </div>
                   </div>
                 </div>
-                <div class="row">
+                <div class="row" *ngIf="type != 'refuse' && type != 'cancelRequire' && type != 'approve' && !resSchedule.isDelete">
                     <div class="col-12 text-right">
                       <button class="btn btn-lg btn-primary" *ngIf="!isChangeTimeline && isTimeline" (click)="btnResetTimeline()">Quay về</button>
                       <button class="btn btn-lg btn-info" *ngIf="isChangeTimeline" (click)="btnBackup()">Khôi phục dữ liệu ban đầu</button>
@@ -451,7 +451,7 @@
 
                         <ng-template ngbPanelContent>
                           {{item.description}}
-                            <div class="text-right" *ngIf="type != 'approve' && type != 'refuse' && type != 'cancelRequire'">
+                            <div class="text-right" *ngIf="type != 'refuse' && type != 'cancelRequire' && type != 'approve' && !resSchedule.isDelete">
                               <button class="btn btn-sm btn-warning" (click)="btnUpdateTimeline(i)">Sửa</button>
                               <button class="btn btn-sm btn-danger" (click)="btnDeleteTimeline(i, item)">Xóa</button>
                             </div>
