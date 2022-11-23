@@ -109,7 +109,6 @@ export class ListPromotionComponent implements OnInit {
   initStatistic(){
     this.promotionService.statistic().subscribe (res => {
       this.response = res
-      console.log(res);
       if(this.response.notification.type == StatusNotification.Success)
       {
         this.resStatistic = this.response.content
@@ -120,13 +119,11 @@ export class ListPromotionComponent implements OnInit {
         this.resPromotionStatistic.promotionOfTime = split[2].split("promotionOfTime: ")[1]
         this.resPromotionStatistic.unPromotionOfTime = split[3].split("unPromotionOfTime: ")[1]
 
-        console.log(this.resStatistic);
 
       }
       else{
         this.notificationService.handleAlertObj(res.notification)
       }
-      console.log(this.response);
     })
   }
   delete(){

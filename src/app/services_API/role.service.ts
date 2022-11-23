@@ -36,8 +36,6 @@ export class RoleService{
   }
   search(data: any)
   {
-    console.log(this.configService.apiUrl + "/api/Role/search-role", data);
-
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Role/search-role", data);
   }
 
