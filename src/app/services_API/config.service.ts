@@ -781,21 +781,44 @@ validateHotel(data : any,model: any)
    validateCar(data: any, model: any){
     model.total = 0
     var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-
+    if(data.nameDriver == null || data.nameDriver == ""){
+      model.nameDriver = "[Họ và tên] không được để trống !"
+      model.total += 1
+    }else if (data.nameDriver.length > 100) {
+      model.nameDriver = "[Họ và tên] quá dài !"
+      model.total += 1
+    }else if (data.nameDriver.length < 1) {
+      model.nameDriver = "[Họ và tên] quá ngắn !"
+      model.total += 1
+    }
     if (data.liscensePlate == null || data.liscensePlate == "") {
       model.liscensePlate = "[Biển số xe] không được để trống !"
       model.total += 1
-    }else if (data.liscensePlate.length > 9) {
-      model.liscensePlate = "[Biển số xe] không được lớn hơn 9"
-      model.total += 1
-    }
+    }else if (data.liscensePlate.length > 10) {
+        model.liscensePlate = "[Biển số xe] không được lớn hơn 10"
+        model.total += 1
+      }
     if(data.amountSeat == null || data.amountSeat == ""){
       model.amountSeat = "[Số chỗ] không được để trống !"
       model.total += 1
     }else if(data.amountSeat < 4){
-      model.amountSeat = "[Số chỗ] không được nhỏ hơn 4"
-      model.total += 1
-    }
+        model.amountSeat = "[Số chỗ] không được nhỏ hơn 4"
+        model.total += 1
+      }
+      if (data.phone == null || data.phone == "") {
+        model.phone= "[Số điện thoại] không được để trống !"
+        model.total +=1
+      }else if (data.phone.length > 15) {
+       model.phone = "[Số điện thoại] vượt quá 15 số !"
+       model.total += 1
+     }
+     else if (data.phone.length < 10) {
+       model.phone = "[Số điện thoại] không hợp lệ !"
+       model.total += 1
+     }else if (!data.phone.startsWith("0")) {
+        model.phone= "[Số điện thoại] không hợp lệ !"
+        model.total +=1
+      }
     return model
   }
 
