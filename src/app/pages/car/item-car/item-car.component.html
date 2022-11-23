@@ -11,31 +11,52 @@
             <div class="col-lg-6">
               <div class="form-group">
                 <label class="form-control-label" for="input-name">Tên người lái
-                </label>
-                  <!-- <span>* {{this.validateEmployee.nameEmployee ? this.validateEmployee.nameEmployee : ''}}</span> -->
+                <span [class]="type != 'detail' && type != 'create' || resCar.isDelete ?'d-none':'text-danger'">* {{validateCar.nameDriver ? validateCar.nameDriver : ''}}</span>
+              </label>
                 <input type="text" id="driver" name="driver" (input)="inputChange()" class="form-control " placeholder="Nhập tên người lái" [(ngModel)]="resCar.nameDriver">
               </div>
             </div>
             <div class="col-lg-6">
               <div class="form-group">
-                <label class="form-control-label" for="input-phone">Số điện thoại</label>
-                <input type="text" id="phone" name="phone" (input)="inputChange()" class="form-control " placeholder="Nhập số điện thoại" [(ngModel)]="resCar.phone">
+                <label class="form-control-label" for="input-phone">Số điện thoại
+                 <span [class]="type != 'detail' && type != 'create' || resCar.isDelete ?'d-none':'text-danger'">* {{validateCar.phone ? validateCar.phone : ''}}</span>
+                </label>
+               <input type="text" id="phone" name="phone" (input)="inputChange()" class="form-control " placeholder="Nhập số điện thoại" [(ngModel)]="resCar.phone">
               </div>
             </div>
           </div>
 
           <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-4">
               <div class="form-group">
-                <label class="form-control-label" for="input-address">Biển số xe</label>
+                <label class="form-control-label" for="input-address">Biển số xe
+                  <span [class]="type != 'detail' && type != 'create' || resCar.isDelete ?'d-none':'text-danger'">* {{validateCar.liscensePlate ? validateCar.liscensePlate : ''}}</span>
+                </label>
               <input type="text" id="liscensePlate" name="liscensePlate" (input)="inputChange()" class="form-control " placeholder="Nhập biển số xe" [(ngModel)]="resCar.liscensePlate" >
               </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-4">
               <div class="form-group">
-                <label class="form-control-label" for="input-address">Số lượng chỗ ngồi</label>
+                <label class="form-control-label" for="input-address">Số lượng chỗ ngồi
+                  <span [class]="type != 'detail'&& type != 'create' || resCar.isDelete ?'d-none':'text-danger' ">* {{validateCar.amountSeat ? validateCar.amountSeat : ''}}</span>
+                </label>
               <input type="text" id="amountSeat" name="amountSeat" (input)="inputChange()" class="form-control " placeholder="Nhập số lượng chỗ ngồi" [(ngModel)]="resCar.amountSeat">
               </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label class="form-control-label" for="input-address">Trạng thái</label>
+                <ng-select
+                [items]="listStatus"
+                bindLabel="name"
+                bindValue="id"
+                [(ngModel)]="resCar.status"
+                placeholder="Chọn trạng thái..."
+                name="status"
+                id="status"
+                (change)="inputChange()">
+              </ng-select>
+            </div>
             </div>
           </div>
           <hr>

@@ -29,11 +29,16 @@ export class ItemCarComponent implements OnInit {
   resCarTmp: CarModel
 
 
-  constructor(private carService: CarService, private notificationService: NotificationService,
-    private configService: ConfigService) { }
 
+  constructor(private carService: CarService, private notificationService: NotificationService,
+    private configService: ConfigService) {
+
+     }
+
+     listStatus = this.configService.listStatus()
   ngOnInit(): void {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
+    console.log(this.auth);
 
   }
 
@@ -68,44 +73,54 @@ export class ItemCarComponent implements OnInit {
     this.notificationService.handleAlert("Khôi phục dữ liệu ban đầu thành công !", StatusNotification.Info)
   }
   save(){
+    console.log(this.resCar);
+
     this.validateCar = new ValidationCarModel
     this.validateCar =  this.configService.validateCar(this.resCar, this.validateCar)
-    if (this.validateCar.total == 0)
-      this.resCar.IdUserModify = this.auth.id
-      if(this.type == "create")
+    console.log(  this.validateCar);
+
+      if (this.validateCar.total == 0)
       {
-        this.carService.create(this.resCar).subscribe(res =>{
-          this.response = res
-          this.notificationService.handleAlertObj(res.notification)
-	    if(this.response.notification.type == StatusNotification.Success)
-        {
-		      this.resCar = Object.assign({}, new CarModel)
-          this.resCarTmp = Object.assign({}, new CarModel)
-          this.validateCar = new ValidationCarModel
-          this.isChange = false
-        }
-        }, error => {
-          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, StatusNotification.Error)
-        })
-      }
-      else{
-        this.carService.update(this.resCar, this.resCar.idCar).subscribe(res =>{
-          this.response = res
-          this.notificationService.handleAlertObj(res.notification)
+        this.resCar.idUserModify = this.auth.id
+        console.log(this.auth.id);
+        console.log(this.resCar.idUserModify);
 
-          if(this.response.notification.type == StatusNotification.Success)
+          if(this.type == "create")
           {
-            this.isChange = false
-            this.closeModal.nativeElement.click()
-          }
-        }, error => {
-          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, StatusNotification.Error)
-        })
-      }
-      }
+            console.log(this.resCar);
 
+            this.carService.create(this.resCar).subscribe(res =>{
+              this.response = res
+              this.notificationService.handleAlertObj(res.notification)
+                if(this.response.notification.type == StatusNotification.Success)
+                  {
+                    this.resCar = Object.assign({}, new CarModel)
+                    this.resCarTmp = Object.assign({}, new CarModel)
+                    this.validateCar = new ValidationCarModel
+                    this.isChange = false
+                  }
+                  }, error => {
+                    var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+                    this.notificationService.handleAlert(message, StatusNotification.Error)
+                  })
+          }
+          else{
+            this.carService.update(this.resCar, this.resCar.idCar).subscribe(res =>{
+              this.response = res
+              this.notificationService.handleAlertObj(res.notification)
+
+              if(this.response.notification.type == StatusNotification.Success)
+              {
+                this.isChange = false
+                this.closeModal.nativeElement.click()
+              }
+            }, error => {
+              var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+              this.notificationService.handleAlert(message, StatusNotification.Error)
+            })
+          }
+      }
+    }
       close(){
         this.resCar = Object.assign({}, this.resCarTmp)
         this.validateCar = new ValidationCarModel
