@@ -33,6 +33,7 @@ import { ListRestaurantComponent } from 'src/app/pages/servicess/restaurant/list
 import { ViewTourScheduleComponent } from '../../pages/tour/view-tour-schedule/view-tour-schedule.component';
 
 import { ItemTourComponent } from 'src/app/pages/tour/item-tour/item-tour.component';
+import { ListVoucherComponent } from 'src/app/pages/voucher/list-voucher/list-voucher.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -58,5 +59,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'list-restaurant',     component: ListRestaurantComponent},
     { path: 'list-place',     component: ListPlaceComponent},
     { path: 'list-car',     component: ListCarComponent},
+    { path: 'list-voucher',     component: ListVoucherComponent},
     { path: 'view-tour-schedule',     component: ViewTourScheduleComponent},
 ];

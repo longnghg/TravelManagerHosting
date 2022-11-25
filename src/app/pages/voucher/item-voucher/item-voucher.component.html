@@ -1,0 +1,78 @@
+<div class="modal-header">
+  <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin chi tiết</h1>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
+</div>
+<div class="modal-body">
+  <ng-container *ngIf="resVoucher">
+    <div class="container-fluid" >
+      <form>
+        <div class="pl-lg-4">
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label class="form-control-label" for="input-name">Mã Code  </label>
+                <input type="text" id="code" name="code" class="form-control " placeholder="Mã code sẽ tự tạo " readonly [(ngModel)]="resVoucher.code">
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label class="form-control-label" for="input-phone">Điểm
+                 <span [class]="type != 'detail' && type != 'create' || resVoucher.isDelete ?'d-none':'text-danger'">* {{validateVoucher.point ? validateVoucher.point : ''}}</span>
+                </label>
+               <input type="text" id="point" name="point" (input)="inputChange()" class="form-control " placeholder="Nhập số điểm " [(ngModel)]="resVoucher.point">
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label class="form-control-label" for="input-phone">Giá trị
+                 <span [class]="type != 'detail' && type != 'create' || resVoucher.isDelete ?'d-none':'text-danger'">* {{validateVoucher.value ? validateVoucher.value : ''}}</span>
+                </label>
+               <input type="text" id="value" name="value" (input)="inputChange()" class="form-control " placeholder="Nhập số giá trị" [(ngModel)]="resVoucher.value">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label class="form-control-label" for="input-address"> Mô tả
+                  <span [class]="type != 'detail' && type != 'create' || resVoucher.isDelete ?'d-none':'text-danger'">* {{validateVoucher.description ? validateVoucher.description : ''}}</span>
+                </label>
+              <input type="text" id="description" name="description" (input)="inputChange(); " class="form-control " placeholder="Nhập mô tả " [(ngModel)]="resVoucher.description" >
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label class="form-control-label" for="input-address"> Ngày bắt đầu
+                  <span [class]="type != 'detail' && type != 'create' || resVoucher.isDelete ?'d-none':'text-danger'">* {{validateVoucher.startDate ? validateVoucher.startDate : ''}}</span>
+                </label>
+              <input type="date" id="fromDate" name="fromDate" (input)="inputChange(); dateChange('startDate')" class="form-control " placeholder="Nhập ngày bắt đầu " [(ngModel)]="resVoucher.startDateDisplay" >
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label class="form-control-label" for="input-address"> Ngày kết thúc
+                  <span [class]="type != 'detail' && type != 'create' || resVoucher.isDelete ?'d-none':'text-danger'">* {{validateVoucher.endDate ? validateVoucher.endDate : ''}}</span>
+                </label>
+              <input type="date" id="toDate" name="toDate" (input)="inputChange(); dateChange('endDate')" class="form-control " placeholder="Nhập ngày kết thúc " [(ngModel)]="resVoucher.endDateDisplay" >
+              </div>
+            </div>
+
+
+          </div>
+          <hr>
+        </div>
+      </form>
+    </div>
+
+    <div class="row align-items-center">
+      <div class="col-12 text-right">
+        <button  *ngIf="type == 'detail'" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteProvinceModal" (click)="getDataDelete()">Xóa</button>
+        <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="restore()">Khôi phục</button>
+        <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="save()">{{type == 'detail' ? "Lưu":"Thêm"}}</button>
+      </div>
+    </div>
+
+  </ng-container>
+</div>
+

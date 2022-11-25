@@ -29,6 +29,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/list-hotel', title: 'Khách sạn',  icon:'fa-solid fa-hotel text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager, RoleTitle.ServiceManager]  },
     { path: '/list-restaurant', title: 'Nhà hàng',  icon:'fa-solid fa-utensils text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager, RoleTitle.ServiceManager]  },
     { path: '/list-place', title: 'Điểm tham quan',  icon:'ni ni-pin-3 text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager, RoleTitle.ServiceManager]  },
+    { path: '/list-voucher', title: 'Voucher',  icon:'ni ni-tag text-purple', class: '', roles: [RoleTitle.Admin]  },
 
 
   ]

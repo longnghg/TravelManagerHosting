@@ -1,5 +1,5 @@
 export class VoucherModel{
-  id: string
+  idVoucher: string
   code: string
   description: string
   discount: number
@@ -13,4 +13,15 @@ export class VoucherModel{
   status: number
   isDelete: boolean
   isFree: boolean
+  value : string
+  startDateDisplay: string
+  endDateDisplay: string
+  IdUserModify: string
+}
+export class ValidationVoucherModel{
+  total: number
+  value: number
+  endDate: string= null
+  startDate: string= null
+  point: number
 }
