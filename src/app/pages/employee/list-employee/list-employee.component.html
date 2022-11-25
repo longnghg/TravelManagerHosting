@@ -107,7 +107,7 @@
   <div class="row">
     <div class="col">
       <div class="card shadow border-0">
-        <app-grid2-data [rowData]="resEmployee" [columnDefs]="columnDefs" [gridConfig]="gridConfig2" (gdType)="childType($event)" (gdSearch)="search($event)" (gdChild)="childData($event)" (gdRestore)="getData($event)" (gdDelete)="getData($event)"></app-grid2-data>
+        <app-grid2-data [rowData]="resEmployee" [columnDefs]="columnDefs" [gridConfig]="gridConfig2" (gdType)="childType($event)" (gdChecked)="search($event, true)" (gdSearch)="search($event)" (gdChild)="childData($event)" (gdRestore)="getData($event)" (gdDelete)="getData($event)"></app-grid2-data>
       </div>
     </div>
   </div>

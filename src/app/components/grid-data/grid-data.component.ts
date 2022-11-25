@@ -168,7 +168,12 @@ export class GridDataComponent implements OnInit {
     this.pageIndex = 1
     this.setCache()
   }
+
   changeChecked(){
+    this.rowData = null
+    this.keyword.pageSize = this.gridConfig.pageSize
+    this.keyword.pageIndex = this.pageIndex
+
     if (this.gridConfig.isRestore) {
       this.gridConfig.isRestore = false
       this.keyword.isDelete = false
@@ -177,8 +182,12 @@ export class GridDataComponent implements OnInit {
       this.gridConfig.isRestore = true
       this.keyword.isDelete = true
     }
-    this.setCache()
+
+    setTimeout(() => {
+      this.gdChecked.emit(this.keyword);
+    }, 500);
   }
+
   setCache(){
     this.rowData = null
     this.keyword.pageSize = this.gridConfig.pageSize
@@ -190,7 +199,6 @@ export class GridDataComponent implements OnInit {
   }
 
   getDataDelete(data: any){
-
     this.gdDelete.emit(data);
   }
 

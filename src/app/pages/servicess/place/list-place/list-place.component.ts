@@ -119,6 +119,7 @@ export class ListPlaceComponent implements OnInit {
     childData(e){
       this.dataChild = Object.assign({}, e)
     }
+
     search(e?, isNotShow?){
       if (e) {
         this.placeService.search(Object.assign({}, e)).subscribe(res => {

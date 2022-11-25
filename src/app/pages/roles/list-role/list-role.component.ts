@@ -46,17 +46,17 @@ export class ListRoleComponent implements OnInit {
     this.auth = JSON.parse(localStorage.getItem("currentUser"));
     this.gridConfig.pageSize = this.pagination.pageSize
 
-    this.search(this.pagination)
+    this.search(this.pagination, true)
     this.hubConnectionBuilder = this.configService.signIR()
     this.hubConnectionBuilder.start();
     this.hubConnectionBuilder.on('Init', (result: any) => {
-      this.search(this.pagination)
+      this.search(this.pagination, true)
     })
 
 
   }
 
-  search(e){
+  search(e, isNotShow?){
     if (e) {
       this.roleService.search(Object.assign({}, e)).subscribe(res => {
         this.response = res
@@ -68,7 +68,9 @@ export class ListRoleComponent implements OnInit {
         else{
           // this.resRole = this.resRoleTmp
           this.resRole = []
-          this.notificationService.handleAlertObj(res.notification)
+          if (!isNotShow) {
+            this.notificationService.handleAlertObj(res.notification)
+          }
         }
         this.gridConfig.totalResult = this.response.totalResult
       }, error => {
