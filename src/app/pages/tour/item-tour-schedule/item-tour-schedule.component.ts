@@ -95,7 +95,10 @@ export class ItemTourScheduleComponent implements OnInit {
 
     }
     else {
+
       if (this.resSchedule) {
+        this.resSchedule.isUpdate = true
+
         this.resSchedule.departureDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.departureDate)
         this.resSchedule.returnDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.returnDate)
         this.resSchedule.beginDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.beginDate)
@@ -202,6 +205,9 @@ export class ItemTourScheduleComponent implements OnInit {
 
   dateChange(property) {
     this.resSchedule[property] = new Date(this.resSchedule[property+'Display']).getTime()
+  }
+
+  dateChangeTimeLine(property){
     this.resTimeline[property] = new Date(this.resTimeline[property+'Display']).getTime()
   }
 
@@ -209,12 +215,12 @@ export class ItemTourScheduleComponent implements OnInit {
     if (JSON.stringify(this.resSchedule) != JSON.stringify(this.resScheduleTmp) ||
       JSON.stringify(this.resCostTour) != JSON.stringify(this.resCostTourTmp)) {
         if (this.resSchedule.departureDate != this.resScheduleTmp.departureDate || this.resSchedule.returnDate != this.resScheduleTmp.returnDate) {
-          this.validateScheduleModel.isUpdateDR = true
-          this.validateScheduleModel.isUpdate = false
+          this.resSchedule.isUpdateDR = true
+          this.resSchedule.isUpdate = false
         }
 
         if (this.resSchedule.beginDate != this.resScheduleTmp.beginDate || this.resSchedule.endDate != this.resScheduleTmp.endDate) {
-          this.validateScheduleModel.isUpdate = false
+          this.resSchedule.isUpdate = false
         }
       this.isChange = true
     }
@@ -234,10 +240,6 @@ export class ItemTourScheduleComponent implements OnInit {
 
   save() {
     this.validateScheduleModel = new ValidateScheduleModel
-    if (this.type == "detail") {
-      this.validateScheduleModel.isUpdate = true
-    }
-    this.inputChange()
 
     this.validateScheduleModel = this.configService.validateSchedule(this.resSchedule, this.validateScheduleModel, Object.assign([], this.resTimelinelist))
     this.resSchedule.idUserModify = this.auth.id
@@ -269,23 +271,21 @@ export class ItemTourScheduleComponent implements OnInit {
                   if (this.response.notification.type == StatusNotification.Success) {
                     this.saveCostTour(this.resSchedule)
                   }
-                  else {
-                    this.notificationService.handleAlertObj(res.notification)
-                  }
+                  this.notificationService.handleAlertObj(res.notification)
                 }, error => {
                   var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
                   this.notificationService.handleAlert(message, StatusNotification.Error)
                 })
               }
             } else {
-              this.notificationService.handleAlert("Bạn cần thêm ít nhất 1 timeline !", StatusNotification.Info)
+              this.notificationService.handleAlert("Bạn cần thêm ít nhất 1 timeline !", StatusNotification.Warning)
               this.active = 3
             }
            } else {
             this.active = 3
            }
           } else {
-            this.notificationService.handleAlert("Bạn cần nhập đầy đủ chi phí !", StatusNotification.Info)
+            this.notificationService.handleAlert("Bạn cần nhập đầy đủ chi phí !", StatusNotification.Warning)
             this.active = 2
           }
         }
@@ -294,7 +294,7 @@ export class ItemTourScheduleComponent implements OnInit {
         }
     }
     else {
-      this.notificationService.handleAlert("Bạn cần nhập đầy đủ lịch trình !", StatusNotification.Info)
+      this.notificationService.handleAlert("Bạn cần nhập đầy đủ lịch trình !", StatusNotification.Warning)
       this.active = 1
     }
   }
@@ -306,12 +306,18 @@ export class ItemTourScheduleComponent implements OnInit {
     this.resCostTour.departureDate = schedule.departureDateDisplay
     this.resCostTour.returnDate = schedule.returnDateDisplay
     this.resCostTour.idSchedule = schedule.idSchedule
+    console.log(this.resCostTour);
 
     if (this.type == "create") {
       this.costtourService.create(this.resCostTour).subscribe(res => {
         this.response = res
+        console.log(res);
+
         if (this.response.notification.type == StatusNotification.Success) {
           this.saveTimeline(schedule)
+        }
+        else{
+          this.notificationService.handleAlertObj(res.notification)
         }
       }, error => {
         var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
@@ -323,6 +329,8 @@ export class ItemTourScheduleComponent implements OnInit {
         this.response = res
         if (this.response.notification.type == StatusNotification.Success) {
           this.saveTimeline(schedule)
+        }else{
+          this.notificationService.handleAlertObj(res.notification)
         }
       }, error => {
         var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
@@ -344,6 +352,9 @@ export class ItemTourScheduleComponent implements OnInit {
         if (this.response.notification.type == StatusNotification.Success) {
           this.closeModal.nativeElement.click()
         }
+        else{
+          this.notificationService.handleAlertObj(res.notification)
+        }
       }, error => {
         var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
         this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -354,6 +365,8 @@ export class ItemTourScheduleComponent implements OnInit {
         this.response = res
         if (this.response.notification.type == StatusNotification.Success) {
           this.closeModal.nativeElement.click()
+        }else{
+          this.notificationService.handleAlertObj(res.notification)
         }
       }, error => {
         var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
@@ -417,10 +430,13 @@ export class ItemTourScheduleComponent implements OnInit {
       this.resTimelinelist.splice(i, 1);
       if(this.type == "detail"){
         this.resTimelinelistDelete.push(Object.assign({}, listDelete))
+      }
 
+      if (this.resTimelinelist.length == 0) {
+        this.resSchedule.isRemoveTimeLine = true
       }
       this.isChangeTimelineList = true
-      this.notificationService.handleAlert("Xóa thành công !", StatusNotification.Info)
+      this.notificationService.handleAlert("Xóa thành công !", StatusNotification.Warning)
     }
   }
 
@@ -476,8 +492,9 @@ export class ItemTourScheduleComponent implements OnInit {
     this.isChangeTimelineList = false
 
     if (this.type == "detail") {
-      this.validateScheduleModel.isUpdate = true
+      this.resSchedule.isUpdate = true
     }
+
     this.notificationService.handleAlert("Khôi phục dữ liệu ban đầu thành công !", StatusNotification.Info)
   }
 

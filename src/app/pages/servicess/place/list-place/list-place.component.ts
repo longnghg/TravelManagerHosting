@@ -70,7 +70,7 @@ export class ListPlaceComponent implements OnInit {
      this.auth = JSON.parse(localStorage.getItem("currentUser"))
     this.gridConfig.pageSize = this.pagination.pageSize
     this.gridConfigWaiting.pageSize = this.pagination.pageSize
-    this.search(this.pagination)
+    this.search(this.pagination, true)
     this.initWaiting(this.pagination)
     }
     searchWaiting(e?){
@@ -119,7 +119,7 @@ export class ListPlaceComponent implements OnInit {
     childData(e){
       this.dataChild = Object.assign({}, e)
     }
-    search(e?){
+    search(e?, isNotShow?){
       if (e) {
         this.placeService.search(Object.assign({}, e)).subscribe(res => {
           this.response = res
@@ -130,7 +130,9 @@ export class ListPlaceComponent implements OnInit {
           else{
             // this.resPlace = Object.assign([], this.respPlaceTmp )
             this.resPlace = []
-            this.notificationService.handleAlertObj(res.notification)
+            if (!isNotShow) {
+              this.notificationService.handleAlertObj(res.notification)
+            }
           }
           this.gridConfig.totalResult = this.response.totalResult
         }, error => {

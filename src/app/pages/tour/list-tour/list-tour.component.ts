@@ -83,10 +83,10 @@ export class ListTourComponent implements OnInit {
       if (history.state.isDelete) {
         this.gridConfig2.isRestore = history.state.isDelete
         this.pagination.isDelete = history.state.isDelete
-        this.search(this.pagination)
+        this.search(this.pagination, true)
       }
       else{
-        this.search(this.pagination)
+        this.search(this.pagination, true)
       }
 
       this.initWaiting(this.pagination)
@@ -150,7 +150,7 @@ export class ListTourComponent implements OnInit {
       })
     }
 
-    search(e?){
+    search(e?, isNotShow?){
       if (e) {
         this.tourService.search(Object.assign({}, e)).subscribe(res => {
           this.response = res
@@ -162,7 +162,9 @@ export class ListTourComponent implements OnInit {
           else{
             // this.resTour =  Object.assign([], this.restourTmp)
             this.resTour =  []
-            this.notificationService.handleAlertObj(res.notification)
+            if (!isNotShow) {
+              this.notificationService.handleAlertObj(res.notification)
+            }
           }
           this.gridConfig2.totalResult = this.response.totalResult
 

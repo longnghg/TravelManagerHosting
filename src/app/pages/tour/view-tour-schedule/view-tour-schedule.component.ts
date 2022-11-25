@@ -76,7 +76,7 @@ export class ViewTourScheduleComponent implements OnInit {
     this.gridConfigWaiting.pageSize = this.pagination.pageSize
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
 
-    this.search(this.pagination)
+    this.search(this.pagination, true)
 
     this.initWaiting(this.pagination)
   }
@@ -121,7 +121,7 @@ export class ViewTourScheduleComponent implements OnInit {
     })
   }
 
-  search(e?){
+  search(e?, isNotShow?){
     if (e) {
       var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
       this.scheduleService.search(Object.assign({}, e,),idTour).subscribe(res => {
@@ -132,7 +132,9 @@ export class ViewTourScheduleComponent implements OnInit {
         }
         else{
           this.resSchedule = []
-          this.notificationService.handleAlertObj(res.notification)
+          if (!isNotShow) {
+            this.notificationService.handleAlertObj(res.notification)
+          }
         }
         this.gridConfig.totalResult = this.response.totalResult
       }, error => {

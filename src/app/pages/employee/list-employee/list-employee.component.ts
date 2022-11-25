@@ -77,14 +77,14 @@ export class ListEmployeeComponent implements OnInit {
     if (history.state.isDelete) {
       this.gridConfig2.isRestore = history.state.isDelete
       this.pagination.isDelete = history.state.isDelete
-      this.search(this.pagination)
+      this.search(this.pagination, true)
     }
     else{
-      this.search(this.pagination)
+      this.search(this.pagination, true)
     }
   }
 
-  search(e?){
+  search(e?, isNotShow?){
     if (e) {
       this.employeeService.search(Object.assign({}, e)).subscribe(res => {
         this.response = res
@@ -96,7 +96,9 @@ export class ListEmployeeComponent implements OnInit {
         else{
           // this.resEmployee = this.resEmployeeTmp
           this.resEmployee = []
-          this.notificationService.handleAlertObj(res.notification)
+          if (!isNotShow) {
+            this.notificationService.handleAlertObj(res.notification)
+          }
         }
         this.gridConfig2.totalResult = this.response.totalResult
 

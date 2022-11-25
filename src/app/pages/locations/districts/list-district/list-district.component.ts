@@ -46,11 +46,11 @@ export class ListDistrictComponent implements OnInit {
     })
 
     this.gridConfig.pageSize = this.pagination.pageSize
-    this.search(this.pagination)
+    this.search(this.pagination, true)
     this.hubConnectionBuilder = this.configService.signIR()
     this.hubConnectionBuilder.start();
     this.hubConnectionBuilder.on('Init', (result: any) => {
-      this.search(this.pagination)
+      this.search(this.pagination, true)
     })
 
   }
@@ -85,7 +85,7 @@ export class ListDistrictComponent implements OnInit {
     })
   }
 
-  search(e){
+  search(e, isNotShow?){
     if (e) {
       this.districtService.search(Object.assign({}, e)).subscribe(res => {
         this.response = res
@@ -96,7 +96,9 @@ export class ListDistrictComponent implements OnInit {
         }
         else{
           this.resDistrict = []
-          this.notificationService.handleAlertObj(res.notification)
+          if (!isNotShow) {
+            this.notificationService.handleAlertObj(res.notification)
+          }
         }
         this.gridConfig.totalResult = this.response.totalResult
       }, error => {

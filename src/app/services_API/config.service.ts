@@ -429,7 +429,7 @@ export class ConfigService{
     //   model.timePromotion = ("Ngày khuyến mãi không trước ngày bắt đầu bán vé!")
     //   model.total += 1
     //  }
-     if (!model.isUpdate) {
+     if (!data.isUpdate) {
       if(data.beginDate == 0 || data.beginDate == ""){
         model.beginDate = ("[Ngày bắt đầu] không bỏ trống !")
         model.total += 1
@@ -455,7 +455,7 @@ export class ConfigService{
 
 
 
-       if (model.isUpdateDR) {
+       if (data.isUpdateDR && !data.isRemoveTimeLine) {
         if(timelineList.length > 0){
           model.returnDate = ("[Danh sách Timeline] đã tồn tại !")
           model.departureDate = ("[Danh sách Timeline] đã tồn tại !")

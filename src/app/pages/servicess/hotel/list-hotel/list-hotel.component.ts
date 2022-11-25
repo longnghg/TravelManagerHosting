@@ -65,11 +65,11 @@ export class ListHotelComponent implements OnInit {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
     this.gridConfig.pageSize = this.pagination.pageSize
     this.gridConfigWaiting.pageSize = this.pagination.pageSize
-    this.search(this.pagination)
+    this.search(this.pagination, true)
     this.initWaiting(this.pagination)
   }
 
-  search(e){
+  search(e, isNotShow?){
     if (e) {
       this.hotelService.search(Object.assign({}, e)).subscribe(res => {
         this.response = res
@@ -80,7 +80,9 @@ export class ListHotelComponent implements OnInit {
         else{
           // this.resHotel = Object.assign([], this.resHotelTmp)
           this.resHotel = []
-          this.notificationService.handleAlertObj(res.notification)
+          if (!isNotShow) {
+            this.notificationService.handleAlertObj(res.notification)
+          }
         }
         this.gridConfig.totalResult = this.response.totalResult
       }, error => {

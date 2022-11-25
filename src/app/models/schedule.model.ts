@@ -48,6 +48,10 @@ export class ScheduleModel{
   modifyDate: number = 0
   modifyDateDisplay: string = ""
   profit: number = 0
+
+  isUpdateDR: boolean = false
+  isUpdate: boolean = false
+  isRemoveTimeLine: boolean = false
 }
 
 export class ValidateScheduleModel{
@@ -58,8 +62,7 @@ export class ValidateScheduleModel{
   departureDate: number = 0
   returnDate: number = 0
   // promotionId: number = 0
-  isUpdateDR: boolean = false
-  isUpdate: boolean = false
+
   beginDate: number = 0
   endDate: number = 0
   minCapacity: string = null

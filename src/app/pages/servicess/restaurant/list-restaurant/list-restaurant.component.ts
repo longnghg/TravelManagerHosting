@@ -68,7 +68,7 @@ export class ListRestaurantComponent implements OnInit {
       this.auth = JSON.parse(localStorage.getItem("currentUser"))
       this.gridConfig.pageSize = this.pagination.pageSize
       this.gridConfigWaiting.pageSize = this.pagination.pageSize
-      this.search(this.pagination)
+      this.search(this.pagination, true)
       this.initWaiting(this.pagination)
     }
 
@@ -118,7 +118,7 @@ export class ListRestaurantComponent implements OnInit {
         })
       }
     }
-    search(e?){
+    search(e, isNotShow?){
       if (e) {
         this.restaurantService.search(Object.assign({}, e)).subscribe(res => {
           this.response = res
@@ -129,7 +129,9 @@ export class ListRestaurantComponent implements OnInit {
           else{
             // this.resRestaurant = Object.assign([], this.resRestaurantTmp)
             this.resRestaurant = []
-            this.notificationService.handleAlertObj(res.notification)
+            if (!isNotShow) {
+              this.notificationService.handleAlertObj(res.notification)
+            }
           }
           this.gridConfig.totalResult = this.response.totalResult
         }, error => {
