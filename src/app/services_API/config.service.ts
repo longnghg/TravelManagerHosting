@@ -621,7 +621,57 @@ export class ConfigService{
 
     return model
   }
+  validateVoucher(data: any , model: any)
+  {
+    model.total = 0
 
+    if (data.description == null || data.description == "") {
+      model.description = "[Mô tả] không được để trống !"
+      model.total += 1
+    }else if (data.description.length > 200 ) {
+      model.description = "[Mô tả] nhỏ hơn 200  !"
+      model.total += 1
+    }
+
+      if (data.value == null || data.value == "") {
+        model.value = "[Giá trị] không được để trống !"
+        model.total += 1
+      }else if (data.value < 100) {
+        model.value = "[Giá trị] phải lớn hơn 100 !"
+        model.total += 1
+      }
+
+      if (data.point == null || data.point == "") {
+        model.point = "[Điểm] không được để trống !"
+        model.total += 1
+      }else if (data.point < 10) {
+        model.point = "[Điểm] phải lớn hơn 10!"
+        model.total += 1
+      }
+
+      if (data.endDate == null || data.endDate == "") {
+        model.endDate = "[Ngày kết thúc ] không được để trống !"
+        model.total += 1
+      }else if(data.endDate < data.startDate ){
+        model.endDate = "[Ngày kết thúc] không được trước ngày giảm giá !"
+        model.total += 1
+      }
+
+      if (data.startDate == null || data.startDate == "") {
+        model.startDate = "[Ngày bắt đầu] không được để trống !"
+        model.total += 1
+      }else if(data.startDate < Date.now ){
+        model.startDate = "[Ngày bắt đầu] không hợp lệ !"
+        model.total += 1
+      }else if(data.startDate > data.endDate){
+        model.startDate = "[Ngày bắt đầu] không được trước ngày kết thúc !"
+        model.total += 1
+      }
+
+
+
+    return model
+  }
 
   validateProvince(data: any, model: any){
     model.total = 0
