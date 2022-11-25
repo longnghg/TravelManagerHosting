@@ -138,9 +138,7 @@
                   <div class="row">
                     <div class="col-12">
                       <div class="form-group">
-                        <label class="form-control-label" for="description">Mô tả
-                          <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.description ? this.validateScheduleModel.description : ''}}</span>
-                        </label>
+                        <label class="form-control-label" for="description">Mô tả</label>
                         <input type="text" name="description" id="description" (input)="inputChange()" class="form-control " placeholder="Nhập mô tả" [(ngModel)]="resSchedule.description" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" >
                       </div>
                     </div>

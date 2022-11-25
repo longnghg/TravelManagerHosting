@@ -208,6 +208,14 @@ export class ItemTourScheduleComponent implements OnInit {
   inputChange() {
     if (JSON.stringify(this.resSchedule) != JSON.stringify(this.resScheduleTmp) ||
       JSON.stringify(this.resCostTour) != JSON.stringify(this.resCostTourTmp)) {
+        if (this.resSchedule.departureDate != this.resScheduleTmp.departureDate || this.resSchedule.returnDate != this.resScheduleTmp.returnDate) {
+          this.validateScheduleModel.isUpdateDR = true
+          this.validateScheduleModel.isUpdate = false
+        }
+
+        if (this.resSchedule.beginDate != this.resScheduleTmp.beginDate || this.resSchedule.endDate != this.resScheduleTmp.endDate) {
+          this.validateScheduleModel.isUpdate = false
+        }
       this.isChange = true
     }
     else {
@@ -226,6 +234,11 @@ export class ItemTourScheduleComponent implements OnInit {
 
   save() {
     this.validateScheduleModel = new ValidateScheduleModel
+    if (this.type == "detail") {
+      this.validateScheduleModel.isUpdate = true
+    }
+    this.inputChange()
+
     this.validateScheduleModel = this.configService.validateSchedule(this.resSchedule, this.validateScheduleModel, Object.assign([], this.resTimelinelist))
     this.resSchedule.idUserModify = this.auth.id
     this.resSchedule.tourId = this.activatedRoute.snapshot.paramMap.get('id2')
@@ -360,8 +373,6 @@ export class ItemTourScheduleComponent implements OnInit {
   }
 
   btnAddTimeline() {
-    console.warn(this.resTimelinelist);
-
     this.validateTimeline = new ValidateTimelineModel
     this.validateTimeline = this.configService.validateTimeline(this.resTimeline, this.validateTimeline, this.resSchedule, Object.assign([], this.timelineList))
 
@@ -447,11 +458,14 @@ export class ItemTourScheduleComponent implements OnInit {
     this.isChangeTimelineList = false
     this.resTimelinelistDelete = []
     this.isFirst = true
+
+    // if (this.type == "detail") {
+    //   this.validateScheduleModel.isUpdate = true
+    // }
     // this.parentType.emit(null);
   }
 
   backup() {
-
     this.resSchedule = Object.assign({}, this.resScheduleTmp)
     this.resCostTour = Object.assign({}, this.resCostTourTmp)
     this.resTimelinelist = Object.assign([], this.resTimelinelistTmp)
@@ -461,6 +475,9 @@ export class ItemTourScheduleComponent implements OnInit {
     this.isChange = false
     this.isChangeTimelineList = false
 
+    if (this.type == "detail") {
+      this.validateScheduleModel.isUpdate = true
+    }
     this.notificationService.handleAlert("Khôi phục dữ liệu ban đầu thành công !", StatusNotification.Info)
   }
 

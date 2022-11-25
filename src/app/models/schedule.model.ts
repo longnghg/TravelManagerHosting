@@ -57,13 +57,14 @@ export class ValidateScheduleModel{
   departurePlace: string = null
   departureDate: number = 0
   returnDate: number = 0
-  promotionId: number = 0
-  timePromotion: number = 0
+  // promotionId: number = 0
+  isUpdateDR: boolean = false
+  isUpdate: boolean = false
   beginDate: number = 0
   endDate: number = 0
   minCapacity: string = null
   maxCapacity: string = null
-  description: string = null
+  // description: string = null
   vat: string = null
   profit: number = null
 }
