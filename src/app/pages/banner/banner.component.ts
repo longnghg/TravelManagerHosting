@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { BannerModel } from 'src/app/models/banner.model';
 import { ResponseModel } from 'src/app/models/responsiveModels/response.model';
 import { BannerService } from "../../services_API/banner.service";
@@ -12,46 +12,77 @@ import { StatusNotification } from "../../enums/enum";
 })
 export class BannerComponent implements OnInit {
   constructor(private _bannerService: BannerService, private notificationService: NotificationService,
-    private configService: ConfigService) {  }
+    private configService: ConfigService) { }
+  @ViewChild('filesImg') filesImg: ElementRef;
   files: any
   nameBanner: string
-
-  resBanner: BannerModel[]
+  resListBanner: BannerModel[]
+  resBanner: BannerModel
   response: ResponseModel
   type: string
+  formData: any
+  img: any
+  idbanner: string
+  nameNotify: string
+  fileNotify: string
 
   ngOnInit(): void {
     this._bannerService.gets().subscribe(res => {
-    this.response = res
-    if(!this.response.notification.type)
-    {
-      this.resBanner = this.response.content
+      this.response = res
+      if (!this.response.notification.type) {
+        this.resListBanner = this.response.content
+      }
+      else {
+        this.notificationService.handleAlertObj(res.notification)
+      }
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
+
+  }
+  changeImg(e) {
+    if (e.target.files[0].type == "image/jpg" || e.target.files[0].type == "image/jpeg" || e.target.files[0].type == "image/png") {
+      this.files = e
     }
-    else{
+    else {
+      this.notificationService.handleAlert("Không đúng định dạng hình ảnh !", StatusNotification.Error)
+    }
+  }
+
+  save() {
+
+    var files = this.files.path[0].files
+    var file = new FormData();
+    for (let index = 0; index < files.length; index++) {
+      file.append('files', files[index]);
+    }
+
+
+    this._bannerService.UploadBanner(file, this.nameBanner).subscribe(res => {
+      this.response = res
       this.notificationService.handleAlertObj(res.notification)
-    }
+      if (this.response.notification.type == StatusNotification.Success) {
+            this.files = null
+            this.filesImg.nativeElement.value = null
+            this.nameBanner = null
+      }
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
+}
+
+getData(idBanner: string){
+  this.idbanner = idBanner
+}
+delete (){
+  this._bannerService.delete(this.idbanner).subscribe(res => {
+    this.response = res
+
   }, error => {
-    var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+    var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
     this.notificationService.handleAlert(message, StatusNotification.Error)
   })
-
 }
-  changeImg(e){
-    this.files = e
-  }
-
-  save(){
-    var name = this.nameBanner;
-    var files = this.files.path[0].files
-    files[0].name = "kiet"
-    console.log(files[0]);
-
-    var file = new FormData();
-                for (let index = 0; index < files.length; index++) {
-                  file.append('files', files[index]);
-                }
-                file.append("nameBanner",name);
-                // this._bannerService.UploadBanner(file).subscribe(res =>{
-                // })
-  }
 }
