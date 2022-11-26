@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col">
         <div class="card shadow border-0">
-          <app-grid-data [rowData]="resSchedule" (gdSearch)="search($event)" [columnDefs]="columnDefs" [gridConfig]="gridConfig" (gdChecked)="init($event)" (gdType)="childType($event)" (gdChild)="childData($event)" (gdChild)="childData($event)" (gdRestore)="getData($event)" (gdDelete)="getData($event)"></app-grid-data>
+          <app-grid-data [rowData]="resSchedule" (gdSearch)="search($event)" [columnDefs]="columnDefs" [gridConfig]="gridConfig" (gdChecked)="search($event, true)" (gdType)="childType($event)" (gdChild)="childData($event)" (gdChild)="childData($event)" (gdRestore)="getData($event)" (gdDelete)="getData($event)"></app-grid-data>
         </div>
       </div>
     </div>
@@ -24,7 +24,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body" *ngIf="data">
-          Bạn có chắc muốn xóa [<span class="text-red">{{data.nameTour}}</span>] !
+          Bạn có chắc muốn xóa [<span class="text-red">{{data.idSchedule}}</span>] !
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="delete()" >Xóa</button>
@@ -42,7 +42,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body" *ngIf="data">
-          Bạn có chắc muốn khôi phục [<span class="text-red">{{data.nameTour}}</span>] !
+          Bạn có chắc muốn khôi phục [<span class="text-red">{{data.idSchedule}}</span>] !
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="restore()" >Khôi phục</button>

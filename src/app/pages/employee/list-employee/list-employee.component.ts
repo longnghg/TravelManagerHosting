@@ -8,6 +8,7 @@ import { ColDef2, GridConfig2} from '../../../components/grid2-data/grid2-data.c
 import { ConfigService } from "../../../services_API/config.service";
 import { RoleService } from "../../../services_API/role.service";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
+import { PaginationModel } from "../../../models/responsiveModels/pagination.model";
 import { AuthenticationModel } from 'src/app/models/authentication.model';
 import { RoleTitle, StatusNotification } from "../../../enums/enum";
 // signalr
@@ -26,7 +27,8 @@ export class ListEmployeeComponent implements OnInit {
   resRole: RoleModel[]
   response: ResponseModel
   data: EmployeeModel
-  type: boolean = false
+  // type: boolean = false
+  pagination = new PaginationModel
      //signalr
   private hubConnectionBuilder: HubConnection
 
@@ -57,28 +59,48 @@ export class ListEmployeeComponent implements OnInit {
          private notificationService: NotificationService) {}
 
   ngOnInit() {
+    this.roleService.views().then(response =>
+      {
+        this.resRole = response
+        this.columnDefs = [
+          { field: 'nameEmployee',headerName: "Tên", style: 'width: 20%',   searchable: true, searchType: 'text', searchObj: 'nameEmployee'},
+          { field: 'email',headerName: "Email", style: 'width: 15%', searchable: true, searchType: 'email', searchObj: 'email'},
+          { field: 'phone',headerName: "Số điện thoại", style: 'width: 15%', filter: "number",searchable: true, searchType: 'text', searchObj: 'phone'},
+          { field: 'roleName',headerName: "Chức vụ", style: 'width: 25%', searchable: true, searchType: 'section', searchObj: 'roleId', multiple: true, closeOnSelect: false, bindLabel: 'nameRole', bindValue: "idRole", listSection: this.resRole},
+          { field: 'isActive',headerName: "Kích hoạt", style: 'width: 15%',  filter: "status", searchable: true, searchType: 'section', multiple: false, closeOnSelect: true, searchObj: 'isActive', bindLabel: "name", bindValue: "id", listSection: this.configService.listStatus()},
+        ];
+      }
+    )
+
+    this.gridConfig2.pageSize = this.pagination.pageSize
     this.auth = JSON.parse(localStorage.getItem("currentUser"));
     if (history.state.isDelete) {
       this.gridConfig2.isRestore = history.state.isDelete
-      this.init(history.state.isDelete)
+      this.pagination.isDelete = history.state.isDelete
+      this.search(this.pagination, true)
     }
     else{
-      this.init(this.type)
+      this.search(this.pagination, true)
     }
   }
 
-  search(e?){
+  search(e?, isNotShow?){
     if (e) {
       this.employeeService.search(Object.assign({}, e)).subscribe(res => {
         this.response = res
         if(this.response.notification.type == StatusNotification.Success)
         {
           this.resEmployee = this.response.content
+          // this.resEmployeeTmp = Object.assign([], this.resEmployee)
         }
         else{
-          this.resEmployee = this.resEmployeeTmp
-          this.notificationService.handleAlertObj(res.notification)
+          // this.resEmployee = this.resEmployeeTmp
+          this.resEmployee = []
+          if (!isNotShow) {
+            this.notificationService.handleAlertObj(res.notification)
+          }
         }
+        this.gridConfig2.totalResult = this.response.totalResult
 
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -88,8 +110,8 @@ export class ListEmployeeComponent implements OnInit {
   }
 
   init(e?){
-    this.type = e
-    this.employeeService.gets(this.type).subscribe(res => {
+    this.pagination.isDelete = e
+    this.employeeService.gets(this.pagination.isDelete).subscribe(res => {
       this.response = res
       if(this.response.notification.type == StatusNotification.Success)
       {

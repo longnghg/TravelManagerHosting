@@ -36,6 +36,9 @@ import { ListWardComponent } from '../../pages/locations/wards/list-ward/list-wa
 import { ListScheduleComponent } from '../../pages/schedule/list-schedule/list-schedule.component';
 import { ItemScheduleComponent } from '../../pages/schedule/item-schedule/item-schedule.component';
 
+import { ItemVoucherComponent } from 'src/app/pages/voucher/item-voucher/item-voucher.component';
+import { ListVoucherComponent } from 'src/app/pages/voucher/list-voucher/list-voucher.component';
+
 import { ListHotelComponent } from '../../pages/servicess/hotel/list-hotel/list-hotel.component';
 import { ItemHotelComponent } from '../../pages/servicess/hotel/item-hotel/item-hotel.component';
 
@@ -118,6 +121,8 @@ import { PipesModule } from "../../pipes/pipes.module";
     ItemRestaurantComponent,
     ViewTourScheduleComponent,
     ItemTourScheduleComponent,
+    ItemVoucherComponent,
+    ListVoucherComponent
   ],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

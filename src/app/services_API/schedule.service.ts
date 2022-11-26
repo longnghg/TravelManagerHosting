@@ -19,9 +19,9 @@ getsSchedulebyIdTour(idTour: any, isDelete: any)
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/list-schedule-idtour?idTour="+idTour+"&isDelete="+isDelete);
 }
 
-getsSchedulebyIdTourWaiting(idTour: any, idUser: any)
+getsSchedulebyIdTourWaiting(idTour: any, idUser: any, pageIndex: number, pageSize: number)
 {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/list-schedule-idtour-waiting?idTour="+idTour+"&idUser="+idUser);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/list-schedule-idtour-waiting?idTour="+idTour+"&idUser="+idUser+"&pageIndex="+pageIndex+"&pageSize="+pageSize);
 }
 
 create(data: any)

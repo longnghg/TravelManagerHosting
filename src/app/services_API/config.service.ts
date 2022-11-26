@@ -140,12 +140,12 @@ export class ConfigService{
     model.total = 0
 
     if(data.password == null  || data.password == ""){
-      model.password = ("[Mật khẩu cũ] không được để trống !")
+      model.password = ("[Mật khẩu cũ] không để trống !")
       model.total += 1
     }
 
     if(data.newPassword == null  || data.newPassword == ""){
-      model.newPassword = ("[Mật khẩu mới] không được để trống !")
+      model.newPassword = ("[Mật khẩu mới] không để trống !")
       model.total += 1
     }else if(data.password === data.newPassword){
       model.newPassword = ("[Mật khẩu mới] không trùng mật khẩu cũ !")
@@ -153,7 +153,7 @@ export class ConfigService{
     }
 
     if(data.confirmPassword == null  || data.confirmPassword == ""){
-      model.confirmPassword = ("[Nhập lại mật khẩu] không được để trống !")
+      model.confirmPassword = ("[Nhập lại mật khẩu] không để trống !")
       model.total += 1
     }else if(data.newPassword != data.confirmPassword){
       model.confirmPassword = ("[Nhập lại mật khẩu không khớp] nhập lại mật khẩu !")
@@ -166,7 +166,7 @@ export class ConfigService{
     var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     //name
     if(data.nameEmployee == null || data.nameEmployee == ""){
-      model.nameEmployee = "[Họ và tên] không được để trống !"
+      model.nameEmployee = "[Họ và tên] không để trống !"
       model.total += 1
     }else if (data.nameEmployee.length > 100) {
       model.nameEmployee = "[Họ và tên] quá dài !"
@@ -179,7 +179,7 @@ export class ConfigService{
 
     //gender
     if (data.gender === null) {
-      model.gender = "[Giới tính] không được để trống !"
+      model.gender = "[Giới tính] không để trống !"
       model.total += 1
     }
 
@@ -189,13 +189,13 @@ export class ConfigService{
 
     //role
     if (data.roleId == null || data.roleId == "") {
-      model.roleId = "[Quyền] không được để trống !"
+      model.roleId = "[Quyền] không để trống !"
       model.total += 1
     }
 
      //email
     if (data.email == null || data.email == "") {
-      model.email = "[Email] không được để trống !"
+      model.email = "[Email] không để trống !"
       model.total += 1
     }else if (!filter.test(data.email)) {
       model.email = "[Email] không hợp lệ !"
@@ -204,7 +204,7 @@ export class ConfigService{
 
     //Phone
     if (data.phone == null || data.phone == "") {
-      model.phone = "[Số điện thoại] không được để trống !"
+      model.phone = "[Số điện thoại] không để trống !"
       model.total += 1
     }else if (data.phone.length > 15) {
       model.phone = "[Số điện thoại] vượt quá 15 số !"
@@ -225,7 +225,7 @@ export class ConfigService{
     let age = Math.floor((timeDiff / (1000 * 3600 * 24))/365);
     //BirthDay
     if (data.birthday == null || data.birthday == "") {
-      model.birthday = "[Ngày sinh] không được để trống !"
+      model.birthday = "[Ngày sinh] không để trống !"
       model.total += 1
     }else if(age < 18){
       model.birthday = "[Ngày sinh] phải trên 18 tuổi !"
@@ -238,7 +238,7 @@ export class ConfigService{
 
     //Address
     if (data.address == null || data.address == "") {
-      model.address = "[Địa chỉ] không được để trống !"
+      model.address = "[Địa chỉ] không để trống !"
       model.total += 1
     }else if (data.address.length > 255) {
       model.address = "[Địa chỉ] quá dài !"
@@ -247,7 +247,7 @@ export class ConfigService{
 
     //Img
     // if (data.image == null || data.image == "") {
-    //    err.push("[Hình ảnh] không được để trống !")
+    //    err.push("[Hình ảnh] không để trống !")
     // }
 
     return model
@@ -262,7 +262,7 @@ export class ConfigService{
     var checkWhiteSpace = /\S\s/;
     //
     if (data.nameTour == null || data.nameTour == "") {
-      model.nameTour = "[Tên tour]  không được để trống !"
+      model.nameTour = "[Tên tour]  không để trống !"
       model.total += 1
     }else if (data.nameTour.length > 100) {
       model.nameTour = "[Tên tour]  quá dài !"
@@ -271,12 +271,12 @@ export class ConfigService{
       model.nameTour = "[Tên tour]  quá ngắn !"
       model.total += 1
     }else if (check.test(data.nameTour)) {
-      model.nameTour = "[Tên tour] không được để ký tự đặt biệt !"
+      model.nameTour = "[Tên tour] không để ký tự đặt biệt !"
       model.total += 1
     }
 
     if(data.toPlace == null || data.toPlace == ""){
-     model.toPlace = ("[Điểm đến] không được để trống !")
+     model.toPlace = ("[Điểm đến] không để trống !")
      model.total += 1
     }else if (data.toPlace.length > 50) {
       model.toPlace = "[Điểm đến]  quá dài !"
@@ -298,76 +298,76 @@ export class ConfigService{
     model.total = 0
     var min = 0
     if (data.breakfast == null || data.breakfast == "") {
-      model.breakfast = "[Chi phí ăn]  không được để trống !"
+      model.breakfast = "[Chi phí ăn]  không để trống !"
       model.total += 1
     }else if (data.breakfast <= 0) {
-      model.breakfast = "[Chi phí ăn] không được nhỏ hơn 0!"
+      model.breakfast = "[Chi phí ăn] không nhỏ hơn 0!"
       model.total += 1
     }
 
     if(data.water == null || data.water == ""){
-     model.water = ("[Chi phí nước] không được để trống !")
+     model.water = ("[Chi phí nước] không để trống !")
      model.total += 1
     }else if (data.water <= 0) {
-      model.water = "[Chi phí nước] không được nhỏ hơn 0!"
+      model.water = "[Chi phí nước] không nhỏ hơn 0!"
       model.total += 1
     }
 
     if(data.feeGas == null || data.feeGas == ""){
-      model.feeGas = ("[Chi phí xăng] không được để trống !")
+      model.feeGas = ("[Chi phí xăng] không để trống !")
       model.total += 1
      }else if (data.feeGas <= 0) {
-       model.feeGas = "[Chi phí xăng] không được nhỏ hơn 0!"
+       model.feeGas = "[Chi phí xăng] không nhỏ hơn 0!"
        model.total += 1
      }
 
      if(data.distance == null || data.distance == ""){
-      model.distance = ("[Khoảng cách] không được để trống !")
+      model.distance = ("[Khoảng cách] không để trống !")
       model.total += 1
      }else if (data.distance <= 0) {
-       model.distance = "[Khoảng cách] không được nhỏ hơn 0!"
+       model.distance = "[Khoảng cách] không nhỏ hơn 0!"
        model.total += 1
      }
 
      if(data.sellCost == null || data.sellCost == ""){
-      model.sellCost = ("[Chi phí bán tour] không được để trống !")
+      model.sellCost = ("[Chi phí bán tour] không để trống !")
       model.total += 1
      }else if (data.sellCost <= 0) {
-       model.sellCost = "[Chi phí bán tour] không được nhỏ hơn 0!"
+       model.sellCost = "[Chi phí bán tour] không nhỏ hơn 0!"
        model.total += 1
      }
 
      if(data.depreciation == null || data.depreciation == ""){
-      model.depreciation = ("[Khấu hao] không được để trống !")
+      model.depreciation = ("[Khấu hao] không để trống !")
       model.total += 1
      }else if (data.depreciation <= 0) {
-       model.depreciation = "[Khấu hao] không được nhỏ hơn 0!"
+       model.depreciation = "[Khấu hao] không nhỏ hơn 0!"
        model.total += 1
      }
 
      if(data.otherPrice == null || data.otherPrice == ""){
-      model.otherPrice = ("[Chi phí khác] không được để trống !")
+      model.otherPrice = ("[Chi phí khác] không để trống !")
       model.total += 1
      }else if (data.otherPrice <= 0) {
-       model.otherPrice = "[Chi phí khác] không được nhỏ hơn 0!"
+       model.otherPrice = "[Chi phí khác] không nhỏ hơn 0!"
        model.total += 1
      }
 
      if(data.tolls == null || data.tolls == ""){
-      model.tolls = ("[Chi phí cầu đường] không được để trống !")
+      model.tolls = ("[Chi phí cầu đường] không để trống !")
       model.total += 1
      }else if (data.tolls <= 0) {
-       model.tolls = "[Chi phí cầu đường] không được nhỏ hơn 0!"
+       model.tolls = "[Chi phí cầu đường] không nhỏ hơn 0!"
        model.total += 1
      }
 
 
 
      if(data.insuranceFee == null || data.insuranceFee == ""){
-      model.insuranceFee = ("[Chi phí bảo hiểm] không được để trống !")
+      model.insuranceFee = ("[Chi phí bảo hiểm] không để trống !")
       model.total += 1
      }else if (data.insuranceFee <= 0) {
-       model.insuranceFee = "[Chi phí bảo hiểm] không được nhỏ hơn 0!"
+       model.insuranceFee = "[Chi phí bảo hiểm] không nhỏ hơn 0!"
        model.total += 1
      }
 
@@ -393,62 +393,27 @@ export class ConfigService{
     return model
    }
 
-   validateSchedule(data: any, model: any){
+   validateSchedule(data: any, model: any, timelineList: any){
     model.total = 0
-    var min = 0
     var dateNow =  Date.now()
     var checkDate = new Date(dateNow).getTime()
     //
     if (data.employeeId == null || data.employeeId == "") {
-      model.employeeId = "Chọn nhân viên !"
+      model.employeeId = "[Hướng dẫn viên] không bỏ trống!"
       model.total += 1
     }
 
     if(data.carId == null || data.carId == ""){
-     model.carId = ("Chọn xe!")
+     model.carId = ("[Xe] không bỏ trống !")
      model.total += 1
     }
 
-    if(data.promotionId == null || data.promotionId == ""){
-      model.promotionId = ("Chọn khuyến mãi!")
-      model.total += 1
-     }
 
-     if (data.departurePlace == null || data.departurePlace == "") {
-      model.departurePlace = ("[Mô tả] không bỏ trống!")
-      model.total += 1
-    }else if (data.departurePlace.length > 100) {
-      model.departurePlace = "[Mô tả]  quá dài !"
-      model.total += 1
-    }else if (data.departurePlace.length < 3) {
-      model.departurePlace = "[Mô tả]  quá ngắn !"
+    if (data.departurePlace == null || data.departurePlace == "") {
+      model.departurePlace = ("[Nơi khởi hành] không bỏ trống!")
       model.total += 1
     }
 
-    if(data.departureDate == 0 || data.departureDate == ""){
-      model.departureDate = ("Chọn ngày khởi hành!")
-      model.total += 1
-     }else if(data.departureDate <= data.endDate){
-      model.departureDate = ("Ngày khởi hành không trước ngày kết thúc bán vé!")
-      model.total += 1
-     }else if(data.departureDate < checkDate){
-      model.departureDate = ("Ngày khởi hành không trước ngày hiện tại!")
-      model.total += 1
-     }
-
-     if(data.returnDate == 0 || data.returnDate == ""){
-      model.returnDate = ("Chọn ngày trở về!")
-      model.total += 1
-     }else if(data.returnDate <= data.departureDate){
-      model.returnDate = ("Ngày trở về không được trước ngày khởi hành!")
-      model.total += 1
-     }else if(data.returnDate <= data.endDate){
-      model.returnDate = ("Ngày trở về không trước ngày kết thúc bán vé!")
-      model.total += 1
-     }else if(data.returnDate < checkDate){
-      model.returnDate = ("Ngày trở về không trước ngày hiện tại!")
-      model.total += 1
-     }
 
     //  if(data.timePromotion == 0 || data.timePromotion == ""){
     //   model.timePromotion = ("Chọn ngày khuyến mãi")
@@ -464,78 +429,115 @@ export class ConfigService{
     //   model.timePromotion = ("Ngày khuyến mãi không trước ngày bắt đầu bán vé!")
     //   model.total += 1
     //  }
+     if (!data.isUpdate) {
+      if(data.beginDate == 0 || data.beginDate == ""){
+        model.beginDate = ("[Ngày bắt đầu] không bỏ trống !")
+        model.total += 1
+       }else if(data.beginDate < checkDate){
+        model.beginDate = ("[Ngày bắt đầu] không trước ngày hiện tại !")
+        model.total += 1
+       }else if(data.beginDate >= data.endDate){
+        model.beginDate = ("[Ngày bắt đầu ]không sau ngày kết thúc !")
+        model.total += 1
+       }
 
-     if(data.beginDate == 0 || data.beginDate == ""){
-      model.beginDate = ("Chọn ngày bắt đầu!")
-      model.total += 1
-     }else if(data.beginDate < checkDate){
-      model.beginDate = ("Ngày bắt đầu không trước ngày hiện tại!")
-      model.total += 1
+
+       if(data.endDate == 0 || data.endDate == ""){
+        model.endDate = ("[Ngày kết thúc] không bỏ trống !")
+        model.total += 1
+       }else if(data.endDate <= data.beginDate){
+        model.endDate = ("[Ngày kết thúc] không trước ngày bắt đầu!")
+        model.total += 1
+       }else if(data.endDate < checkDate){
+        model.endDate = ("[Ngày kết thúc] không trước ngày hiện tại!")
+        model.total += 1
+       }
+
+
+
+       if (data.isUpdateDR && !data.isRemoveTimeLine) {
+        if(timelineList.length > 0){
+          model.returnDate = ("[Danh sách Timeline] đã tồn tại !")
+          model.departureDate = ("[Danh sách Timeline] đã tồn tại !")
+          model.total += 1
+        }
+       }else{
+        if(data.departureDate == 0 || data.departureDate == ""){
+          model.departureDate = ("[Ngày khởi hành] không bỏ trống !")
+          model.total += 1
+         }else if(data.departureDate < checkDate){
+          model.departureDate = ("[Ngày khởi hành] không trước ngày hiện tại !")
+          model.total += 1
+         }else if(data.departureDate < data.endDate){
+          model.departureDate = ("[Ngày khởi hành] không trước ngày kết thúc bán tour !")
+          model.total += 1
+         }else if(data.departureDate >= data.returnDate){
+          model.departureDate = ("[Ngày khởi hành] không sau ngày quay về !")
+          model.total += 1
+         }
+
+         if(data.returnDate == 0 || data.returnDate == ""){
+          model.returnDate = ("[Ngày quay về] không bỏ trống !")
+          model.total += 1
+         }else if(data.returnDate < checkDate){
+          model.returnDate = ("[Ngày quay về] không trước ngày hiện tại !")
+          model.total += 1
+         }else if(data.returnDate < data.endDate){
+          model.returnDate = ("[Ngày quay về] không trước ngày kết thúc bán tour !")
+          model.total += 1
+         }else if(data.returnDate <= data.departureDate){
+          model.returnDate = ("[Ngày quay về] không trước ngày khởi hành !")
+          model.total += 1
+         }
+       }
      }
 
-     if(data.endDate == 0 || data.endDate == ""){
-      model.endDate = ("Chọn ngày kết thúc!")
+     if(data.profit == null || data.profit == ""){
+      model.profit = ("[Lợi nhuận] không để trống !")
       model.total += 1
-     }else if(data.endDate <= data.beginDate){
-      model.endDate = ("Ngày kết thúc không trước ngày bắt đầu!")
-      model.total += 1
-     }else if(data.endDate < checkDate){
-      model.endDate = ("Ngày kết thúc không trước ngày hiện tại!")
-      model.total += 1
-     }
-
-     if(data.minCapacity == null || data.minCapacity == ""){
-      model.minCapacity = ("Nhập tối thiểu số người!")
-      model.total += 1
-     }else if (data.minCapacity.length > 3) {
-      model.minCapacity = "[Số người tối thiểu] quá dài!"
-      model.total += 1
-    } else if (data.minCapacity <= 0) {
-      model.minCapacity = "[Số người tối thiểu] không được nhỏ hơn 0!"
+     }else if (data.profit < 0) {
+       model.profit = "[Lợi nhuận] không nhỏ hơn 0%!"
+       model.total += 1
+     }else if (data.profit > 500) {
+      model.profit = "[Lợi nhuận] không quá 500%!"
       model.total += 1
     }
 
-    if(data.profit == null || data.profit == ""){
-      model.profit = ("[Lợi nhuận] không được để trống !")
+     if(data.minCapacity == null || data.minCapacity == ""){
+      model.minCapacity = ("[Số người tối thiểu] không bỏ trống !")
       model.total += 1
-     }else if (data.profit < 0) {
-       model.profit = "[Lợi nhuận] không được nhỏ hơn 0%!"
-       model.total += 1
-     }else if (data.profit > 500) {
-      model.profit = "[Lợi nhuận] không được quá 500%!"
+     }else if (data.minCapacity <= 0) {
+      model.minCapacity = "[Số người tối thiểu] không nhỏ hơn 0!"
       model.total += 1
     }
 
     if(data.maxCapacity == null || data.maxCapacity == ""){
-      model.maxCapacity = ("Nhập tối đa số người!")
+      model.maxCapacity = ("[Số người tối đa] không bỏ trống !")
       model.total += 1
-     }else if (data.maxCapacity.length > 3) {
-      model.maxCapacity = "[Số người tối đa] quá dài!"
-      model.total += 1
-    }else if (data.maxCapacity < data.minCapacity) {
+     }else if (data.maxCapacity < data.minCapacity) {
       model.maxCapacity = "[Số người tối đa] không nhỏ hơn tối thiểu!"
       model.total += 1
     }else if (data.maxCapacity <= 0) {
-      model.maxCapacity = "[Số người tối đa] không được nhỏ hơn 0!"
+      model.maxCapacity = "[Số người tối đa] không nhỏ hơn 0!"
       model.total += 1
     }
 
-    if (data.description == null || data.description == "") {
-      model.description = ("[Mô tả] không bỏ trống!")
-      model.total += 1
-    }else if (data.description.length > 200) {
-      model.description = "[Mô tả]  quá dài !"
-      model.total += 1
-    }else if (data.description.length < 3) {
-      model.description = "[Mô tả]  quá ngắn !"
-      model.total += 1
-    }
+    // if (data.description == null || data.description == "") {
+    //   model.description = ("[Mô tả] không bỏ trống!")
+    //   model.total += 1
+    // }else if (data.description.length > 200) {
+    //   model.description = "[Mô tả] quá dài !"
+    //   model.total += 1
+    // }else if (data.description.length < 3) {
+    //   model.description = "[Mô tả] quá ngắn !"
+    //   model.total += 1
+    // }
 
     if(data.vat == null || data.vat == ""){
-      model.vat = ("Nhập VAT!")
+      model.vat = ("[VAT] không bỏ trống !")
       model.total += 1
-     }else if (data.minCapacity <= 0) {
-      model.minCapacity = "[Số người tối thiểu] không được nhỏ hơn 0!"
+     }else if (data.vat <= 0) {
+      model.vat = "[VAT] không nhỏ hơn 0!"
       model.total += 1
     }
 
@@ -546,50 +548,59 @@ export class ConfigService{
     model.total = 0
     var dateNow =  Date.now()
     var checkDate = new Date(dateNow).getTime()
-
+    //departureDate = 30
+    //departureDate = 35
     if(data.fromTime == 0 || data.fromTime == ""){
-      model.fromTime = ("Chọn thời gian bắt đầu!")
+      model.fromTime = ("[Thời gian bắt đầu] không bỏ trống !")
       model.total += 1
      }else if(data.fromTime <= checkDate){
-      model.fromTime = ("Không trước ngày hiện tại!")
+      model.fromTime = ("[Thời gian bắt đầu] không trước ngày hiện tại !")
       model.total += 1
-     }else if(data.fromTime < dataSchedule.departureDate){
-      model.fromTime = ("Không trước ngày khởi hành")
+     }else if(data.fromTime <= dataSchedule.departureDate){
+      model.fromTime = ("[Thời gian bắt đầu] không trước ngày khởi hành !")
       model.total += 1
-     }else if(data.fromTime > dataSchedule.returnDate){
-      model.fromTime = ("Không sau ngày trở về")
+     }else if(data.fromTime >= dataSchedule.returnDate){
+      model.fromTime = ("[Thời gian bắt đầu] không sau ngày trở về !")
+      model.total += 1
+     }else if(data.fromTime >= data.toTime){
+      model.fromTime = ("[Thời gian bắt đầu] không sau thời gian kết thúc !")
       model.total += 1
      }
 
      if(data.toTime == 0 || data.toTime == ""){
-      model.toTime = ("Chọn thời gian kết thúc!")
+      model.toTime = ("[Thời gian kết thúc] không bỏ trống !")
       model.total += 1
      }else if(data.toTime <= checkDate){
-      model.toTime = ("Không trước ngày hiện tại!")
+      model.toTime = ("[Thời gian kết thúc] không trước ngày hiện tại !")
+      model.total += 1
+     }else if(data.toTime >= dataSchedule.returnDate){
+      model.toTime = ("[Thời gian kết thúc] không sau ngày trở về !")
       model.total += 1
      }else if(data.toTime <= data.fromTime){
-      model.toTime = ("Không trước ngày bắt đầu!")
-      model.total += 1
-     }else if(data.toTime > dataSchedule.returnDate){
-      model.toTime = ("Không sau ngày trở về!")
+      model.toTime = ("[Thời gian kết thúc] không trước thời gian bắt đầu !")
       model.total += 1
      }
 
      if (data.description == null || data.description == "") {
-      model.description = ("[Mô tả] không bỏ trống!")
+      model.description = ("[Mô tả] không bỏ trống !")
       model.total += 1
     }else if (data.description.length > 200) {
-      model.description = "[Mô tả]  quá dài !"
+      model.description = "[Mô tả] quá dài !"
       model.total += 1
     }else if (data.description.length < 3) {
-      model.description = "[Mô tả]  quá ngắn !"
+      model.description = "[Mô tả] quá ngắn !"
       model.total += 1
     }
 
-    // dataList.forEach(timeline => {
-    //   timeline.returnDate
-    // });
+    if (dataList.length > 1) {
+      dataList.forEach(timeline => {
+        if (timeline.fromTime > data.fromTime || timeline.toTime > data.toTime) {
+          model.description = "[Timeline] này đã tồn tại !"
+          model.total += 1
+        }
+      });
 
+    }
      return model
    }
 
@@ -597,7 +608,7 @@ export class ConfigService{
     model.total = 0
     //name
     if(data.nameRole == null || data.nameRole == ""){
-      model.nameRole = "[Tên chức vụ] không được để trống !"
+      model.nameRole = "[Tên chức vụ] không để trống !"
       model.total += 1
     }
     else if (data.nameRole.length > 30) {
@@ -610,12 +621,62 @@ export class ConfigService{
 
     return model
   }
+  validateVoucher(data: any , model: any)
+  {
+    model.total = 0
 
+    if (data.description == null || data.description == "") {
+      model.description = "[Mô tả] không được để trống !"
+      model.total += 1
+    }else if (data.description.length > 200 ) {
+      model.description = "[Mô tả] nhỏ hơn 200  !"
+      model.total += 1
+    }
+
+      if (data.value == null || data.value == "") {
+        model.value = "[Giá trị] không được để trống !"
+        model.total += 1
+      }else if (data.value < 100) {
+        model.value = "[Giá trị] phải lớn hơn 100 !"
+        model.total += 1
+      }
+
+      if (data.point == null || data.point == "") {
+        model.point = "[Điểm] không được để trống !"
+        model.total += 1
+      }else if (data.point < 10) {
+        model.point = "[Điểm] phải lớn hơn 10!"
+        model.total += 1
+      }
+
+      if (data.endDate == null || data.endDate == "") {
+        model.endDate = "[Ngày kết thúc ] không được để trống !"
+        model.total += 1
+      }else if(data.endDate < data.startDate ){
+        model.endDate = "[Ngày kết thúc] không được trước ngày giảm giá !"
+        model.total += 1
+      }
+
+      if (data.startDate == null || data.startDate == "") {
+        model.startDate = "[Ngày bắt đầu] không được để trống !"
+        model.total += 1
+      }else if(data.startDate < Date.now ){
+        model.startDate = "[Ngày bắt đầu] không hợp lệ !"
+        model.total += 1
+      }else if(data.startDate > data.endDate){
+        model.startDate = "[Ngày bắt đầu] không được trước ngày kết thúc !"
+        model.total += 1
+      }
+
+
+
+    return model
+  }
 
   validateProvince(data: any, model: any){
     model.total = 0
     if (data.nameProvince == null || data.nameProvince == "") {
-      model.nameProvince = "[Tên thành phố/tỉnh] không được để trống !"
+      model.nameProvince = "[Tên thành phố/tỉnh] không để trống !"
       model.total += 1
     }else if (data.nameProvince.length > 30) {
       model.nameProvince = "[Tên thành phố/tỉnh] quá dài !"
@@ -630,7 +691,7 @@ export class ConfigService{
   validatePromotion(data: any, model: any){
     model.total = 0
     if (data.value == null || data.value == "") {
-      model.value = "[Mã giảm giá] không được để trống !"
+      model.value = "[Mã giảm giá] không để trống !"
       model.total += 1
     }else if (data.value.length > 30) {
       model.value = "[Mã giảm giá] quá dài !"
@@ -641,21 +702,21 @@ export class ConfigService{
     }
 
     if (data.fromDate == null || data.fromDate == "") {
-      model.fromDate = "[Ngày giảm giá] không được để trống !"
+      model.fromDate = "[Ngày giảm giá] không để trống !"
       model.total += 1
     }else if(data.fromDate < Date.now ){
       model.fromDate = "[Ngày giảm giá] không hợp lệ !"
       model.total += 1
     }else if(data.fromDate > data.toDate){
-      model.toDate = "[Ngày giảm giá] không được trước ngày kết thúc !"
+      model.toDate = "[Ngày giảm giá] không trước ngày kết thúc !"
       model.total += 1
     }
 
     if (data.toDate == null || data.toDate == "") {
-      model.toDate = "[Ngày kết thúc giảm giá] không được để trống !"
+      model.toDate = "[Ngày kết thúc giảm giá] không để trống !"
       model.total += 1
     }else if(data.toDate < data.fromDate ){
-      model.toDate = "[Ngày kết thúc giảm giá] không được trước ngày giảm giá !"
+      model.toDate = "[Ngày kết thúc giảm giá] không trước ngày giảm giá !"
       model.total += 1
     }
 
@@ -665,7 +726,7 @@ export class ConfigService{
   validateDistrict(data: any, model: any){
     model.total = 0
     if (data.nameDistrict == null || data.nameDistrict == "") {
-      model.nameDistrict = "[Tên quận/huyện] không được để trống !"
+      model.nameDistrict = "[Tên quận/huyện] không để trống !"
       model.total += 1
     }else if (data.nameDistrict.length > 30) {
       model.nameDistrict = "[Tên quận/huyện] quá dài !"
@@ -676,7 +737,7 @@ export class ConfigService{
     }
 
     if(data.provinceId == null || data.provinceId == ""){
-      model.provinceId = "[Thành phố/tỉnh] không được để trống !"
+      model.provinceId = "[Thành phố/tỉnh] không để trống !"
       model.total += 1
     }
     return model
@@ -685,7 +746,7 @@ export class ConfigService{
   validateWard(data: any, model: any){
     model.total = 0
     if (data.nameWard == null || data.nameWard == "") {
-      model.nameWard = "[Tên phường/xã] không được để trống !"
+      model.nameWard = "[Tên phường/xã] không để trống !"
       model.total += 1
     }else if (data.nameWard.length > 30) {
       model.nameWard = "[Tên phường/xã] quá dài !"
@@ -696,7 +757,7 @@ export class ConfigService{
     }
 
     if(data.districtId == null || data.districtId == ""){
-      model.districtId = "[Quận/huyện] không được để trống !"
+      model.districtId = "[Quận/huyện] không để trống !"
       model.total += 1
     }
     return model
@@ -707,7 +768,7 @@ validateHotel(data : any,model: any)
 {
  model.total= 0
      if(data.name == null || data.name == ""){
-       model.name= "[Tên khách sạn] không được để trống !"
+       model.name= "[Tên khách sạn] không để trống !"
        model.total +=1
      }else if (data.name.length > 100) {
        model.name= "[Tên khách sạn] quá dài !"
@@ -718,10 +779,9 @@ validateHotel(data : any,model: any)
      }
 
    // phone
-   console.log(data.phone.length);
 
    if (data.phone == null || data.phone == "") {
-     model.phone= "[Số điện thoại] không được để trống !"
+     model.phone= "[Số điện thoại] không để trống !"
      model.total +=1
    }else if (data.phone.length > 15) {
     model.phone = "[Số điện thoại] vượt quá 15 số !"
@@ -736,34 +796,34 @@ validateHotel(data : any,model: any)
    }
     //Address
   if (data.address == null || data.address == "") {
-   model.address= "[Địa chỉ] không được để trống !"
+   model.address= "[Địa chỉ] không để trống !"
    model.total +=1
   }else if (data.address.length > 255) {
    model.address= "[Địa chỉ] quá dài !"
    model.total +=1
   }
   if (data.star == null || data.star == "") {
-    model.star= "[Số sao] không được để trống !"
+    model.star= "[Số sao] không để trống !"
     model.total +=1
   }
  // quantity
  if(data.quantitySR == null || data.quantitySR == ""){
-   model.quantitySR= "[Số lượng] phòng đơn không được để trống !"
+   model.quantitySR= "[Số lượng] phòng đơn không để trống !"
    model.total +=1
    }
 
  if(data.singleRoomPrice == null || data.singleRoomPrice == ""){
-   model.singleRoomPrice= "[Giá vé] phòng đơn không được để trống !"
+   model.singleRoomPrice= "[Giá vé] phòng đơn không để trống !"
    model.total +=1
   }
 // double room
    if(data.quantityDBR == null || data.quantityDBR == ""){
-     model.quantityDBR= "[Số lượng] phòng đôi không được để trống !"
+     model.quantityDBR= "[Số lượng] phòng đôi không để trống !"
      model.total +=1
      }
 
        if(data.doubleRoomPrice == null || data.doubleRoomPrice == ""){
-     model.doubleRoomPrice= "[Giá vé] phòng đôi không được để trống !"
+     model.doubleRoomPrice= "[Giá vé] phòng đôi không để trống !"
      model.total +=1
      }
      return model
@@ -773,21 +833,44 @@ validateHotel(data : any,model: any)
    validateCar(data: any, model: any){
     model.total = 0
     var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-
-    if (data.liscensePlate == null || data.liscensePlate == "") {
-      model.liscensePlate = "[Biển số xe] không được để trống !"
+    if(data.nameDriver == null || data.nameDriver == ""){
+      model.nameDriver = "[Họ và tên] không để trống !"
       model.total += 1
-    }else if (data.liscensePlate.length > 9) {
-      model.liscensePlate = "[Biển số xe] không được lớn hơn 9"
+    }else if (data.nameDriver.length > 100) {
+      model.nameDriver = "[Họ và tên] quá dài !"
+      model.total += 1
+    }else if (data.nameDriver.length < 1) {
+      model.nameDriver = "[Họ và tên] quá ngắn !"
       model.total += 1
     }
+    if (data.liscensePlate == null || data.liscensePlate == "") {
+      model.liscensePlate = "[Biển số xe] không để trống !"
+      model.total += 1
+    }else if (data.liscensePlate.length > 10) {
+        model.liscensePlate = "[Biển số xe] không lớn hơn 10"
+        model.total += 1
+      }
     if(data.amountSeat == null || data.amountSeat == ""){
-      model.amountSeat = "[Số chỗ] không được để trống !"
+      model.amountSeat = "[Số chỗ] không để trống !"
       model.total += 1
     }else if(data.amountSeat < 4){
-      model.amountSeat = "[Số chỗ] không được nhỏ hơn 4"
-      model.total += 1
-    }
+        model.amountSeat = "[Số chỗ] không nhỏ hơn 4"
+        model.total += 1
+      }
+      if (data.phone == null || data.phone == "") {
+        model.phone= "[Số điện thoại] không để trống !"
+        model.total +=1
+      }else if (data.phone.length > 15) {
+       model.phone = "[Số điện thoại] vượt quá 15 số !"
+       model.total += 1
+     }
+     else if (data.phone.length < 10) {
+       model.phone = "[Số điện thoại] không hợp lệ !"
+       model.total += 1
+     }else if (!data.phone.startsWith("0")) {
+        model.phone= "[Số điện thoại] không hợp lệ !"
+        model.total +=1
+      }
     return model
   }
 
@@ -795,7 +878,7 @@ validateHotel(data : any,model: any)
   {
    model.total= 0
        if(data.name == null || data.name == ""){
-         model.name= "[Tên nhà hàng] không được để trống !"
+         model.name= "[Tên nhà hàng] không để trống !"
          model.total +=1
        }else if (data.name.length > 100) {
          model.name= "[Tên nhà hàng] quá dài !"
@@ -807,7 +890,7 @@ validateHotel(data : any,model: any)
 
      // phone
      if (data.phone == null || data.phone == "") {
-       model.phone= "[Số điện thoại] không được để trống !"
+       model.phone= "[Số điện thoại] không để trống !"
        model.total +=1
      }else if (data.phone.length > 15) {
       model.phone = "[Số điện thoại] vượt quá 15 số !"
@@ -822,7 +905,7 @@ validateHotel(data : any,model: any)
      }
       //Address
     if (data.address == null || data.address == "") {
-     model.address= "[Địa chỉ] không được để trống !"
+     model.address= "[Địa chỉ] không để trống !"
      model.total +=1
     }else if (data.address.length > 255) {
      model.address= "[Địa chỉ] quá dài !"
@@ -830,7 +913,7 @@ validateHotel(data : any,model: any)
    }
    // price
    if(data.comboPrice == null || data.comboPrice == ""){
-     model.comboPrice= "[Giá] không được để trống !"
+     model.comboPrice= "[Giá] không để trống !"
      model.total +=1
      }else if(data.comboPrice < 0 || data.comboPrice > 99999999){
       model.comboPrice= "[Giá] phải lớn hơn 0 và nhỏ hơn 10000000 !"
@@ -844,7 +927,7 @@ validateHotel(data : any,model: any)
    {
     model.total = 0
         if(data.name == null || data.name == ""){
-         model.name =("[Tên địa điểm] không được để trống !")
+         model.name =("[Tên địa điểm] không để trống !")
          model.total += 1
       }else if (data.name.length > 100) {
         model.name =("[Tên địa điểm] quá dài !")
@@ -854,7 +937,7 @@ validateHotel(data : any,model: any)
         model.total += 1
       } // phone
       if (data.phone == null || data.phone == "") {
-        model.phone= "[Số điện thoại] không được để trống !"
+        model.phone= "[Số điện thoại] không để trống !"
         model.total +=1
       }else if (data.phone.length > 15) {
         model.phone = "[Số điện thoại] vượt quá 15 số !"
@@ -869,7 +952,7 @@ validateHotel(data : any,model: any)
       }
       //Address
     if (data.address == null || data.address == "") {
-      model.address= "[Địa chỉ] không được để trống !"
+      model.address= "[Địa chỉ] không để trống !"
       model.total +=1
     }else if (data.address.length > 255) {
       model.address= "[Địa chỉ] quá dài !"
@@ -877,7 +960,7 @@ validateHotel(data : any,model: any)
     }
     // price
     if(data.priceTicket == null || data.priceTicket == ""){
-      model.priceTicket= "[Giá] không được để trống !"
+      model.priceTicket= "[Giá] không để trống !"
       model.total +=1
       }else if(data.priceTicket < 0 || data.priceTicket > 99999999){
       model.priceTicket= "[Giá] phải lớn hơn 0 và nhỏ hơn 10000000 !"
@@ -891,7 +974,7 @@ validateHotel(data : any,model: any)
     var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
     if (data.email == null || data.email == "") {
-      model.email = "[Email] không được để trống !"
+      model.email = "[Email] không để trống !"
       model.total += 1
     }else if (!filter.test(data.email)) {
       model.email = "[Email] không hợp lệ !"
@@ -899,7 +982,7 @@ validateHotel(data : any,model: any)
     }
 
     if(data.password == null || data.password == ""){
-      model.password = "[Mật khẩu] không được để trống !"
+      model.password = "[Mật khẩu] không để trống !"
       model.total += 1
     }
 
@@ -910,12 +993,12 @@ validateHotel(data : any,model: any)
     model.total = 0
 
     if(data.password == null || data.password == ""){
-      model.password = "[Mật khẩu] không được để trống !"
+      model.password = "[Mật khẩu] không để trống !"
       model.total += 1
     }
 
     if(data.confirmPassword == null || data.confirmPassword == ""){
-      model.confirmPassword = "[Nhập lại mật khẩu] không được để trống !"
+      model.confirmPassword = "[Nhập lại mật khẩu] không để trống !"
       model.total += 1
     }else if(data.password != data.confirmPassword){
       model.confirmPassword = "[Nhập lại mật khẩu] không trùng khớp  !"
@@ -927,14 +1010,12 @@ validateHotel(data : any,model: any)
    validateOtp(data: any, model: any, isOtp: boolean){
     model.total = 0
     var timePresent = Date.now()
-    console.log(timePresent);
-    console.log(data);
 
     var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
     if (isOtp) {
       if(data.checkOTP == null || data.checkOTP == ""){
-        model.checkOTP = "[OTP] không được để trống !"
+        model.checkOTP = "[OTP] không để trống !"
         model.total += 1
       }else if(data.checkOTP != data.otpCode){
         model.checkOTP = "[OTP] không hợp lệ !"
@@ -948,7 +1029,7 @@ validateHotel(data : any,model: any)
     }
     else{
       if (data.email == null || data.email == "") {
-        model.email = "[Email] không được để trống !"
+        model.email = "[Email] không để trống !"
         model.total += 1
       }else if (!filter.test(data.email)) {
         model.email = "[Email] không hợp lệ !"

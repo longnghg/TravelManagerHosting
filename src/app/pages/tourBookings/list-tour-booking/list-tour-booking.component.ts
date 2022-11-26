@@ -6,7 +6,7 @@ import { ConfigService } from "../../../services_API/config.service";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { StatusNotification } from "../../../enums/enum";
 import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.component';
-
+import { PaginationModel } from "../../../models/responsiveModels/pagination.model";
 @Component({
   selector: 'app-list-tour-booking',
   templateUrl: './list-tour-booking.component.html',
@@ -20,10 +20,10 @@ export class ListTourBookingComponent implements OnInit {
   resStatistic:string
   response: ResponseModel
   child: TourBookingModel
-  type: string
   dataChild: TourBookingModel
   typeChild: string
   data: TourBookingModel
+  pagination = new PaginationModel
   constructor(private tourookingService: TourookingService, private notificationService: NotificationService,
     private configService: ConfigService) { }
     public columnDefs: ColDef[]
@@ -37,26 +37,35 @@ export class ListTourBookingComponent implements OnInit {
     }
 
   ngOnInit(): void {
-
+    this.columnDefs= [
+      { field: 'idTourBooking',headerName: "Mã", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'idTourBooking'},
+      { field: 'pincode',headerName: "Pin code", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'pincode'},
+      { field: 'phone',headerName: "Số điện thoại", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'phone'},
+      { field: 'email',headerName: "Email", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'email'},
+      { field: 'dateBooking',headerName: "Ngày đặt tour", style: "width: 15%;", filter: "date", searchable: true, searchType: 'date', searchObj: 'dateBooking'},
+      { field: 'isCalled',headerName: "Gọi xác nhận", style: "width: 15%;", filter: "call",searchable: true, searchType: 'section', searchObj: 'isCalled' , multiple: false, closeOnSelect: true, bindLabel: 'name', bindValue: "id", listSection: this.configService.listCalled()},
+    ];
     this.initStatistic()
-    this.init()
+    this.gridConfig.pageSize = this.pagination.pageSize
+    this.search(this.pagination, true)
   }
-  search(e?){
-    console.log(e);
-
+  search(e, isNotShow?){
     if (e) {
       this.tourookingService.search(Object.assign({}, e)).subscribe(res => {
         this.response = res
+        console.log(res);
+
         if(this.response.notification.type == StatusNotification.Success)
         {
           this.resTourBooking = this.response.content
         }
         else{
-          console.log(this.resTourBookingWaiting);
-
-          this.resTourBooking = this.resTourBooking
-          this.notificationService.handleAlertObj(res.notification)
+          this.resTourBooking = []
+          if (!isNotShow) {
+            this.notificationService.handleAlertObj(res.notification)
+          }
         }
+        this.gridConfig.totalResult = this.response.totalResult
 
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -74,15 +83,6 @@ export class ListTourBookingComponent implements OnInit {
       else{
         this.notificationService.handleAlertObj(res.notification)
       }
-
-      this.columnDefs= [
-        { field: 'idTourBooking',headerName: "Mã", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'idTourBooking'},
-        { field: 'pincode',headerName: "Pin code", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'pincode'},
-        { field: 'phone',headerName: "Số điện thoại", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'phone'},
-        { field: 'email',headerName: "Email", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'email'},
-        { field: 'dateBooking',headerName: "Ngày đặt tour", style: "width: 15%;", filter: "date", searchable: true, searchType: 'date', searchObj: 'dateBooking'},
-        { field: 'isCalled',headerName: "Gọi xác nhận", style: "width: 15%;", filter: "call",searchable: true, searchType: 'section', searchObj: 'isCalled' , multiple: false, closeOnSelect: true, bindLabel: 'name', bindValue: "id", listSection: this.configService.listCalled()},
-      ];
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)

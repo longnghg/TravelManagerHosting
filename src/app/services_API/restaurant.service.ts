@@ -37,9 +37,9 @@ getRestaurant(idRestaurant: string)
 {
   return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/get-restaurant?idRestaurant="+idRestaurant);
 }
-getsWaiting(idUser: any)
+getsWaiting(idUser: any, pageIndex: number, pageSize: number)
 {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/list-restaurant-waiting?idUser="+idUser);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/list-restaurant-waiting?idUser="+idUser+"&pageIndex="+pageIndex+"&pageSize="+pageSize);
 }
 create(data: any)
 {

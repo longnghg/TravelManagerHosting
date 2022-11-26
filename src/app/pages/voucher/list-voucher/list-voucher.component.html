@@ -91,13 +91,13 @@
     </div>
   </div>
 </div>
-
-
 <div class="container-fluid mt--7">
   <div class="row">
     <div class="col">
       <div class="card shadow border-0">
-        <app-grid-data [rowData]="resRole" [columnDefs]="columnDefs" [gridConfig]="gridConfig" (gdChecked)="search($event, true)"  (gdType)="childType($event)" (gdSearch)="search($event)" (gdChild)="childData($event)" (gdRestore)="getData($event)" (gdDelete)="getData($event)"></app-grid-data>
+        <app-grid-data [rowData]="resVoucher" [columnDefs]="columnDefs" [gridConfig]="gridConfig"  (gdChecked)="init($event)" (gdType)="childType($event)" (gdChild)="childData($event)" (gdRestore)="getData($event)" (gdDelete)="getData($event)"></app-grid-data>
+
+        <!-- <app-grid-data [rowData]="resVoucher" [columnDefs]="columnDefs" [gridConfig]="gridConfig" (gdSearch)="search($event)" (gdChecked)="init($event)" (gdType)="childType($event)" (gdChild)="childData($event)" (gdRestore)="getData($event)" (gdDelete)="getData($event)"></app-grid-data> -->
       </div>
     </div>
   </div>
@@ -106,46 +106,56 @@
 <div class="modal fade" [id]="gridConfig.idModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="gridDataLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
-      <app-item-role [resRole]="dataChild" [type]="typeChild" (parentDelete)="getData($event)" (parentRestore)="getData($event)"></app-item-role>
+      <app-item-voucher [resVoucher]="dataChild" [type]="typeChild"></app-item-voucher>
     </div>
   </div>
 </div>
 
-<div class="modal fade" [id]="gridConfig.idModalDelete" tabindex="-1" aria-labelledby="deleteRoleModalLabel" aria-hidden="true">
+
+<div class="modal fade" [id]="gridConfig.idModalDelete" tabindex="-1" aria-labelledby="deleteVoucherModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="deleteRoleModalLabel">Xác nhận</h1>
+        <h1 class="modal-title fs-5" id="deleteVoucherModalLabel">Xác nhận</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" *ngIf="data">
-        Bạn có chắc muốn xóa [<span class="text-red">{{data.nameRole}}</span>] !
+        Bạn có chắc muốn xóa [<span class="text-red">{{data.code}}</span>] !
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="delete()" >Xóa</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+        <ng-container *ngIf="typeChild; else elseType">
+          <button type="button" class="btn btn-primary" [attr.data-bs-target]="'#'+gridConfig.idModal" data-bs-toggle="modal">Không</button>
+        </ng-container>
+        <ng-template #elseType>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+        </ng-template>
+
       </div>
     </div>
   </div>
 </div>
 
-
-<div class="modal fade" [id]="gridConfig.idModalRestore" tabindex="-1" aria-labelledby="restoreRoleModalLabel" aria-hidden="true">
+<div class="modal fade" [id]="gridConfig.idModalRestore" tabindex="-1" aria-labelledby="restoreVoucherModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="restoreRoleModalLabel">Xác nhận</h1>
+        <h1 class="modal-title fs-5" id="restoreVoucherModalLabel">Xác nhận</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" *ngIf="data">
-        Bạn có chắc muốn khôi phục [<span class="text-red">{{data.nameRole}}</span>] !
+        Bạn có chắc muốn khôi phục [<span class="text-red">{{data.liscensePlate}}</span>] !
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="restore()" >Khôi phục</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+        <ng-container *ngIf="typeChild; else elseType">
+          <button type="button" class="btn btn-primary" [attr.data-bs-target]="'#'+gridConfig.idModal" data-bs-toggle="modal">Không</button>
+        </ng-container>
+        <ng-template #elseType>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+        </ng-template>
+
       </div>
     </div>
   </div>
 </div>
-
 

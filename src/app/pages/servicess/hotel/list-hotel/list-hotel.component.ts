@@ -7,7 +7,7 @@ import { ConfigService } from "../../../../services_API/config.service";
 import { ResponseModel } from "../../../../models/responsiveModels/response.model";
 import { StatusNotification, StatusApprove, TypeAction } from "../../../../enums/enum";
 import { AuthenticationModel } from "../../../../models/authentication.model"
-
+import { PaginationModel } from "../../../../models/responsiveModels/pagination.model";
 @Component({
   selector: 'app-list-hotel',
   templateUrl: './list-hotel.component.html',
@@ -22,8 +22,8 @@ export class ListHotelComponent implements OnInit {
   response: ResponseModel
   dataChild: HotelModel
   typeChild: string
-  isDelete: boolean = false
   data: HotelModel
+  pagination = new PaginationModel
   constructor(private hotelService: HotelService,
     private configService: ConfigService,
     private notificationService: NotificationService) { }
@@ -47,12 +47,29 @@ export class ListHotelComponent implements OnInit {
     disableRestore: true
   }
   ngOnInit(): void {
+    this.columnDefs= [
+        { field: 'name',headerName: "Tên khách sạn", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'name'},
+        { field: 'address',headerName: "Địa chỉ", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'address'},
+        { field: 'phone',headerName: "Số điện thoại", style: "width: 15%;", searchable: true, searchType: 'number', searchObj: 'phone'},
+        { field: 'star',headerName: "Số sao", style: "width: 15%;", filter: "star",searchable: true, searchType: 'section', searchObj: 'star' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.list5Star()},
+    ];
+
+    this.columnDefsWaiting= [
+      { field: 'name',headerName: "Tên khách sạn", style: "width: 30%;", searchable: false, searchType: "text", searchObj: 'name'},
+      { field: 'phone',headerName: "Số điện thoại", style: "width: 12%;", searchable: false, searchType: 'number', searchObj: 'phone'},
+      { field: 'modifyBy',headerName: "Người yêu cầu", style: "width: 15%;", searchable: false, searchType: 'text', searchObj: 'modifyBy'},
+      { field: 'modifyDate',headerName: "Ngày yêu cầu", style: "width: 20%;", filter: 'date', searchable: false, searchType: 'date', typeDate: 'range', searchObj: 'modifyDate'},
+      { field: 'typeActionName',headerName: "Loại phê duyệt", style: "width: 13%;", searchable: false, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()},
+
+    ];
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
-    this.init(this.isDelete);
-    this.initWaiting()
+    this.gridConfig.pageSize = this.pagination.pageSize
+    this.gridConfigWaiting.pageSize = this.pagination.pageSize
+    this.search(this.pagination, true)
+    this.initWaiting(this.pagination)
   }
 
-  search(e?){
+  search(e, isNotShow?){
     if (e) {
       this.hotelService.search(Object.assign({}, e)).subscribe(res => {
         this.response = res
@@ -61,10 +78,13 @@ export class ListHotelComponent implements OnInit {
           this.resHotel = this.response.content
         }
         else{
-          this.resHotel = Object.assign([], this.resHotelTmp)
-          this.notificationService.handleAlertObj(res.notification)
+          // this.resHotel = Object.assign([], this.resHotelTmp)
+          this.resHotel = []
+          if (!isNotShow) {
+            this.notificationService.handleAlertObj(res.notification)
+          }
         }
-
+        this.gridConfig.totalResult = this.response.totalResult
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -72,7 +92,7 @@ export class ListHotelComponent implements OnInit {
     }
   }
 
-  searchWaiting(e?){
+  searchWaiting(e){
     if (e) {
       this.hotelService.searchWaiting(Object.assign({}, e)).subscribe(res => {
         this.response = res
@@ -97,37 +117,35 @@ export class ListHotelComponent implements OnInit {
     }
   }
 
-  init(isDelete){
-    this.hotelService.gets(isDelete).subscribe(res =>{
+  // init(isDelete){
+  //   this.hotelService.gets(isDelete).subscribe(res =>{
+  //     this.response = res
+  //     if(this.response.notification.type == StatusNotification.Success){
+  //       this.resHotel = this.response.content
+  //       this.resHotelTmp = Object.assign([], this.resHotel)
+
+  //     }else{
+  //       this.notificationService.handleAlertObj(res.notification)
+  //     }
+
+  //     this.columnDefs= [
+  //       { field: 'name',headerName: "Tên khách sạn", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'name'},
+  //       { field: 'address',headerName: "Địa chỉ", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'address'},
+  //       { field: 'phone',headerName: "Số điện thoại", style: "width: 15%;", searchable: true, searchType: 'number', searchObj: 'phone'},
+  //       { field: 'star',headerName: "Số sao", style: "width: 15%;", filter: "star",searchable: true, searchType: 'section', searchObj: 'star' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.list5Star()},
+  //     ];
+  //   }, error => {
+  //     var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+  //     this.notificationService.handleAlert(message, StatusNotification.Error)
+  //   })
+
+
+
+  // }
+
+  initWaiting(e){
+    this.hotelService.getsWaiting(this.auth.id, e.pageIndex, e.pageSize).subscribe(res =>{
       this.response = res
-      if(this.response.notification.type == StatusNotification.Success){
-        this.resHotel = this.response.content
-        this.resHotelTmp = Object.assign([], this.resHotel)
-
-      }else{
-        this.notificationService.handleAlertObj(res.notification)
-      }
-
-      this.columnDefs= [
-        { field: 'name',headerName: "Tên khách sạn", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'name'},
-        { field: 'address',headerName: "Địa chỉ", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'address'},
-        { field: 'phone',headerName: "Số điện thoại", style: "width: 15%;", searchable: true, searchType: 'number', searchObj: 'phone'},
-        { field: 'star',headerName: "Số sao", style: "width: 15%;", filter: "star",searchable: true, searchType: 'section', searchObj: 'star' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.list5Star()},
-      ];
-    }, error => {
-      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, StatusNotification.Error)
-    })
-
-
-
-  }
-
-  initWaiting(){
-    this.hotelService.getsWaiting(this.auth.id).subscribe(res =>{
-      this.response = res
-      console.log(res);
-
       if(this.response.notification.type == StatusNotification.Success){
 
         this.resHotelWaiting = this.response.content
@@ -136,21 +154,11 @@ export class ListHotelComponent implements OnInit {
           hotel.approveName = StatusApprove[hotel.approve]
           hotel.typeActionName = TypeAction[hotel.typeAction]
         });
-
-        this.resHotelWaitingTmp = Object.assign([], this.resHotelWaiting)
-
+        // this.resHotelWaitingTmp = Object.assign([], this.resHotelWaiting)
       }else{
-        this.notificationService.handleAlertObj(res.notification)
+        this.resHotelWaiting = []
       }
-
-      this.columnDefsWaiting= [
-        { field: 'name',headerName: "Tên khách sạn", style: "width: 30%;", searchable: true, searchType: "text", searchObj: 'name'},
-        { field: 'phone',headerName: "Số điện thoại", style: "width: 12%;", searchable: true, searchType: 'number', searchObj: 'phone'},
-        { field: 'modifyBy',headerName: "Người yêu cầu", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'modifyBy'},
-        { field: 'modifyDate',headerName: "Ngày yêu cầu", style: "width: 20%;", filter: 'date', searchable: true, searchType: 'date', typeDate: 'range', searchObj: 'modifyDate'},
-        { field: 'typeActionName',headerName: "Loại phê duyệt", style: "width: 13%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()},
-
-      ];
+      this.gridConfigWaiting.totalResult = this.response.totalResult
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)

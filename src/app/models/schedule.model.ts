@@ -1,53 +1,57 @@
 
 export class ScheduleModel{
-  idSchedule: string
+  idSchedule: string = ""
 
   departureDate: number = 0
-  departureDateDisplay: string
+  departureDateDisplay: string = ""
   returnDate :number = 0
-  returnDateDisplay: string
+  returnDateDisplay: string = ""
   beginDate: number = 0
-  beginDateDisplay: string
+  beginDateDisplay: string = ""
   endDate: number = 0
-  endDateDisplay: string
+  endDateDisplay: string = ""
   timePromotion: number = 0
-  timePromotionDisplay: string
+  timePromotionDisplay: string = ""
   endTimePromotion: number = 0
-  endTimePromotionDisplay: string
+  endTimePromotionDisplay: string = ""
 
-  departurePlace: string
-  status: number
-  finalPrice: number
-  quantityAdult: number
-  quantityBaby: number
-  minCapacity: number
-  maxCapacity: number
-  quantityChild: number
-  tourId: string
-  nameTour: string
-  carId: string
-  liscensePlate: string
-  nameDriver:string
-  employeeId: string
-  idTourGuide: string
+  departurePlace: string = null
+  status: number = 0
+  finalPrice: number = 0
+  quantityAdult: number = 0
+  quantityBaby: number = 0
+  minCapacity: number = 0
+  maxCapacity: number = 0
+  quantityChild: number = 0
+  tourId: string = null
+  nameTour: string = ""
+  carId: string = null
+  liscensePlate: string = ""
+  nameDriver:string = ""
+  employeeId: string = null
+  idTourGuide: string = ""
   promotionId: number = 1
-  nameEmployee:string
-  valuePromotion: number
-  quantityCustomer: number
-  totalCostTourNotService: number
-  finalHoliday: number
-  vat: number
-  description: string
+  nameEmployee:string = ""
+  valuePromotion: number = 0
+  quantityCustomer: number = 0
+  totalCostTourNotService: number = 0
+  finalHoliday: number = 0
+  vat: number = 10
+  description: string = ""
   isDelete: boolean
-  idUserModify:string
-  modifyBy: string
-  typeAction: string
+  idUserModify:string = ""
+  modifyBy: string = ""
+  typeAction: string = ""
   isTempdata: boolean
-  approve: number
-  approveName: string
-  modifyDate: number
-  modifyDateDisplay: string
-  profit: number
+  approve: number = 0
+  approveName: string = ""
+  modifyDate: number = 0
+  modifyDateDisplay: string = ""
+  profit: number = 0
+
+  isUpdateDR: boolean = false
+  isUpdate: boolean = false
+  isRemoveTimeLine: boolean = false
 }
 
 export class ValidateScheduleModel{
@@ -57,13 +61,13 @@ export class ValidateScheduleModel{
   departurePlace: string = null
   departureDate: number = 0
   returnDate: number = 0
-  promotionId: number = 0
-  timePromotion: number = 0
+  // promotionId: number = 0
+
   beginDate: number = 0
   endDate: number = 0
   minCapacity: string = null
   maxCapacity: string = null
-  description: string = null
+  // description: string = null
   vat: string = null
   profit: number = null
 }

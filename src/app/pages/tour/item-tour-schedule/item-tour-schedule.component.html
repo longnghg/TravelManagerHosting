@@ -3,7 +3,7 @@
   <button #closeModal type="button" class="btn-close btn-danger" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
 </div>
 <div class="modal-body">
-  <ng-container *ngIf="resSchedule && resCostTour">
+  <ng-container *ngIf="resSchedule">
     <div class="container-fluid" >
       <form>
         <ul ngbNav #nav="ngbNav" [(activeId)]="active"  class="nav-tabs">
@@ -138,9 +138,7 @@
                   <div class="row">
                     <div class="col-12">
                       <div class="form-group">
-                        <label class="form-control-label" for="description">Mô tả
-                          <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateScheduleModel.description ? this.validateScheduleModel.description : ''}}</span>
-                        </label>
+                        <label class="form-control-label" for="description">Mô tả</label>
                         <input type="text" name="description" id="description" (input)="inputChange()" class="form-control " placeholder="Nhập mô tả" [(ngModel)]="resSchedule.description" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" >
                       </div>
                     </div>
@@ -412,7 +410,7 @@
                       <label class="form-control-label" for="input-fromTime">Chọn thời gian bắt đầu
                         <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateTimeline.fromTime ? this.validateTimeline.fromTime : ''}}</span>
                       </label>
-                      <input   (input)="inputChangeTimeline(); dateChange('fromTime') " [(ngModel)]="resTimeline.fromTimeDisplay" class="form-control datepicker" placeholder="Chọn thời gian" name="fromTime" id="fromTime" type="datetime-local" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" />
+                      <input   (input)="inputChangeTimeline(); dateChangeTimeLine('fromTime') " [(ngModel)]="resTimeline.fromTimeDisplay" class="form-control datepicker" placeholder="Chọn thời gian" name="fromTime" id="fromTime" type="datetime-local" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" />
                     </div>
                   </div>
                   <div class="col-6">
@@ -420,7 +418,7 @@
                       <label class="form-control-label" for="input-toTime">Chọn thời gian kết thúc
                         <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateTimeline.toTime ? this.validateTimeline.toTime : ''}}</span>
                       </label>
-                      <input   (input)="inputChangeTimeline(); dateChange('toTime')" [(ngModel)]="resTimeline.toTimeDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="toTime" id="toTime" type="datetime-local" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" />
+                      <input   (input)="inputChangeTimeline(); dateChangeTimeLine('toTime')" [(ngModel)]="resTimeline.toTimeDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="toTime" id="toTime" type="datetime-local" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete" />
                     </div>
                   </div>
                 </div>
@@ -430,15 +428,15 @@
                       <label class="form-control-label" for="">Mô tả nội dung timeline
                         <span [class]="type != 'create' &&  resSchedule.isDelete ?'d-none':'text-red'">* {{this.validateTimeline.description ? this.validateTimeline.description : ''}}</span>
                       </label>
-                      <textarea class="form-control" (input)="inputChangeTimeline()" [(ngModel)]="resTimeline.description" name="description" id="description"  rows="4" placeholder="Nhập thông tin timeline"></textarea>
+                      <textarea class="form-control" (input)="inputChangeTimeline()" [(ngModel)]="resTimeline.description" name="description" id="description"  rows="4" placeholder="Nhập thông tin timeline" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete"></textarea>
                     </div>
                   </div>
                 </div>
-                <div class="row">
+                <div class="row" *ngIf="type != 'refuse' && type != 'cancelRequire' && type != 'approve' && !resSchedule.isDelete">
                     <div class="col-12 text-right">
-                      <button class="btn btn-lg btn-primary" *ngIf="!isChangeTimeline" (click)="btnResetTimeline()">Reset</button>
-                      <button class="btn btn-lg btn-info" *ngIf="isChangeTimeline && isTimeline" (click)="btnBackup()">Khôi phục dữ liệu ban đầu</button>
-                      <button class="btn btn-lg btn-success" *ngIf="isChangeTimeline" (click)="btnAddTimeline()">{{isTimeline ? 'Sửa' : 'Thêm'}}</button>
+                      <button class="btn btn-lg btn-primary" *ngIf="!isChangeTimeline && isTimeline" (click)="btnResetTimeline()">Quay về</button>
+                      <button class="btn btn-lg btn-info" *ngIf="isChangeTimeline" (click)="btnBackup()">Khôi phục dữ liệu ban đầu</button>
+                      <button class="btn btn-lg btn-success"  (click)="btnAddTimeline()">{{isTimeline ? 'Sửa' : 'Thêm'}}</button>
                     </div>
                 </div>
               </fieldset>
@@ -451,7 +449,7 @@
 
                         <ng-template ngbPanelContent>
                           {{item.description}}
-                            <div class="text-right" *ngIf="type != 'approve' && type != 'refuse' && type != 'cancelRequire'">
+                            <div class="text-right" *ngIf="type != 'refuse' && type != 'cancelRequire' && type != 'approve' && !resSchedule.isDelete">
                               <button class="btn btn-sm btn-warning" (click)="btnUpdateTimeline(i)">Sửa</button>
                               <button class="btn btn-sm btn-danger" (click)="btnDeleteTimeline(i, item)">Xóa</button>
                             </div>
@@ -473,8 +471,8 @@
               <div class="mt-3 row align-items-center">
                 <div class="col-12 text-right">
                   <button  *ngIf="type == 'detail' && !resSchedule.isDelete" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteScheduleModal" (click)="getParentData('detail')">Xóa</button>
-                  <button *ngIf="(isChange || isChangeTimelineList) && type == 'detail'" class="btn btn-lg btn-info" (click)="backup()">Khôi phục</button>
-                  <button *ngIf="(isChange || isChangeTimelineList) && type == 'detail'" class="btn btn-lg btn-success"  (click)="save()">Lưu</button>
+                  <button *ngIf="isChange || isChangeTimelineList && type == 'detail'" class="btn btn-lg btn-info" (click)="backup()">Khôi phục</button>
+                  <button *ngIf="isChange || isChangeTimelineList && type == 'detail'" class="btn btn-lg btn-success"  (click)="save()">Lưu</button>
                   <button *ngIf="isChange && type == 'create'" class="btn btn-lg btn-success"  (click)="save()">{{active == 3 ? 'Thêm' : 'Kế tiếp'}}</button>
                   <button *ngIf="resSchedule.isDelete" (click)="getParentData('detail')" data-bs-toggle="modal" data-bs-target="#restoreScheduleModal" class="btn btn-lg btn-warning">Khôi phục lịch trình</button>
                 </div>

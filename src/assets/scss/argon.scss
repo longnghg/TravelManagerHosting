@@ -100,6 +100,10 @@ fieldset{
   color: black !important;
 }
 
+.ng-select.ng-select-disabled>.ng-select-container {
+  background-color: #e9ecef !important;
+}
+
 .modal{
   overflow: unset !important;
   overflow-x: hidden !important;
