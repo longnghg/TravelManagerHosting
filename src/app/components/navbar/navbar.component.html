@@ -3,7 +3,7 @@
 
     <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" routerLinkActive="active">{{getTitle()}}</a>
 
-    <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+    <!-- <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
       <div class="form-group mb-0" [ngClass]="{ 'focused': focus === true }">
         <div class="input-group input-group-alternative">
           <div class="input-group-prepend">
@@ -13,9 +13,52 @@
           (blur)="focus = false">
         </div>
       </div>
-    </form>
+    </form> -->
 
-    <ul class="navbar-nav align-items-center d-none d-md-flex">
+    <ul class="navbar-nav align-items-center d-none d-md-flex" >
+      <li class="nav-item" ngbDropdown placement="bottom-left" style="margin-right: 1.5rem;">
+        <a class="nav-link pr-0" role="button" ngbDropdownToggle>
+          <div class="media align-items-center">
+            <i class="fa-solid fa-bell" style="font-size: 1.5rem;"></i>
+            <span *ngIf="totalResult > 0" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" >
+              {{totalResult< 99 ? totalResult: "99+"}}
+            </span>
+          </div>
+        </a>
+        <div class="dropdown-menu-arrow dropdown-menu-right" style="margin-left: auto; width: 350px;" ngbDropdownMenu>
+          <div class="dropdown-header noti-title"  *ngIf="resNotification">
+            <h3 class="text-overflow m-0"> <i class="fa-solid fa-bell"></i> &nbsp; Thông báo</h3>
+            <hr style="margin-top: 2px; margin-bottom: 0.8rem; border: 0; border-top: 2px solid rgba(0, 0, 0, 0.5);">
+             <div style="overflow-x: hidden; height: 20rem;  text-transform: none !important;">
+              <ng-container  *ngFor="let item of resNotification; let i=index">
+                <a [class]="item.isSeen?'dropdown-item':'dropdown-item seen'" style="margin-bottom: -10%; height: 25%;" href="javascript:void(0)" (click)="updateIsSeen(item)">
+                  <div [class]="item.isSeen?'text-muted':'itemSeen'">
+                   <div class="row">
+                     <div class="col-6 text-dark textDot"><span style="font-size: 17px;">{{item.name}}</span></div>
+                     <div [class]="!item.isSeen?'col-6 text-right ml--2':'col-6 text-right'"><small [class]="item.isSeen?'':'text-primary'">{{item.time | dateAgo}}</small>
+                      <span *ngIf="!item.isSeen" style="top: 45%; right: -10%" class="position-absolute translate-middle badge rounded-pill bg-danger" >
+                        N
+                      </span>
+                    </div>
+                   </div>
+                   <div class="row">
+                     <div class="col-6 text-left textDot">
+                       <p class="textDot"  style="font-size: 15px; opacity: 0.7;">{{item.content}}</p>
+                     </div>
+                     <div class="col-6 text-right">
+                       <small>{{item.type | formatTitleNotification}}</small>
+                     </div>
+                   </div>
+                  </div>
+                </a>
+                <hr style="margin-top: 2.1rem ; margin-bottom: 0.5rem; border-top: 2px solid rgba(0, 0, 0, 0.5);">
+              </ng-container>
+             </div>
+          </div>
+        </div>
+      </li>
+
+
       <li class="nav-item" ngbDropdown placement="bottom-right">
         <a class="nav-link pr-0" role="button" ngbDropdownToggle>
           <div class="media align-items-center">

@@ -8,10 +8,13 @@ import { ConfigService } from "../../services_API/config.service";
 import { AuthenticationService } from "../../services_API/authentication.service";
 import { NotificationService } from "../../services_API/notification.service";
 import { StatusNotification } from "../../enums/enum";
+import { NotificationUserModel } from 'src/app/models/notificationUser.model';
+import { RouteNotification, TypeNotification } from "../../enums/enum";
 
 
 // signalr
 import { HubConnection } from '@microsoft/signalr';
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -25,7 +28,8 @@ export class NavbarComponent implements OnInit {
   resAthentication: AuthenticationModel = new AuthenticationModel()
   img = "../../../assets/img/employees/unknown.png"
   response: ResponseModel
-
+  resNotification: NotificationUserModel[]
+  totalResult = 0
    // mo dau
      //signalr
      private hubConnectionBuilder: HubConnection
@@ -51,7 +55,54 @@ export class NavbarComponent implements OnInit {
       }
     }
     this.listTitles = ROUTES.filter(listTitle => listTitle);
+    this.initNotification(this.auth.id)
+    setInterval(() => {
+     this.initNotification(this.auth.id)}, 60000);
+
   }
+
+  initNotification(idEmployee: string){
+    this.notificationService.gets(idEmployee).then(res =>{
+      this.response = res
+      if(this.response.notification.type == StatusNotification.Success){
+        this.resNotification = this.response.content
+        this.totalResult = this.response.totalResult
+      }
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
+  }
+
+  updateIsSeen(notification: NotificationUserModel){
+    if (!notification.isSeen) {
+      this.notificationService.updateIsSeen(notification.idNotification).then(res =>{
+        this.response = res
+        if(this.response.notification.type == StatusNotification.Success){
+          notification.isSeen = true
+          this.totalResult = this.totalResult-1
+          this.router.navigate(['',RouteNotification[TypeNotification[notification.type]]]);
+          setTimeout(() => {
+            document.body.scrollTop = 3000;
+            document.documentElement.scrollTop = 3000;
+          }, 300);
+          // location.assign(this.configService.clientUrl+ RouteNotification[TypeNotification[notification.type]])
+        }
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, StatusNotification.Error)
+      })
+    }
+    else{
+      // location.assign(this.configService.clientUrl+ RouteNotification[TypeNotification[notification.type]])
+      this.router.navigate(['',RouteNotification[TypeNotification[notification.type]]]);
+      setTimeout(() => {
+        document.body.scrollTop = 3000;
+        document.documentElement.scrollTop = 3000;
+      }, 300);
+    }
+  }
+
   getTitle(){
     var titlee = this.location.prepareExternalUrl(this.location.path());
     if(titlee.charAt(0) === '#'){
@@ -80,5 +131,6 @@ export class NavbarComponent implements OnInit {
       this.notificationService.handleAlert(message, StatusNotification.Error)
     })
   }
+
 
 }

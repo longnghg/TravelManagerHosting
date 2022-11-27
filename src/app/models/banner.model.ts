@@ -4,4 +4,10 @@ export class BannerModel{
   total: number = 0
   isActive: true
   isDelete: false
+
+}
+
+export class ValidationBannerModel {
+  nameBanner: string
+  total: number = 0
 }

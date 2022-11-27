@@ -1,3 +1,4 @@
+
 export enum RoleTitle {
   'Admin' = -1,
   'Quản lý cục bộ', LocalManager = 1,
@@ -53,4 +54,28 @@ export enum StatusNotification
   Info = "Info",
   Block = "Block",
   Validation = "Validation"
+}
+
+export enum RouteNotification{
+  Tour = 'list-tour',
+  Restaurent = 'list-restaurant',
+  Place = 'list-place',
+  Promotion = 'list-promotion',
+  Hotel = 'list-hotel'
+}
+
+export enum TitleNotification{
+  'Phê duyệt Tour' = 0,
+  'Phê duyệt Khách sạn' = 1,
+  'Phê duyệt Địa điểm' = 2,
+  'Phê duyệt Nhà hàng' = 3,
+  'Phê duyệt Khuyến mãi' = 4
+}
+
+export enum TypeNotification{
+  Tour = 0,
+  Restaurent = 1,
+  Place = 2,
+  Promotion = 3,
+  Hotel = 4
 }

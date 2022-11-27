@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationModel } from "../../models/authentication.model";
 import { RoleTitle } from "../../enums/enum";
+import { ConfigService } from "../../services_API/config.service";
 declare interface RouteInfo {
     path: string;
     title: string;
@@ -46,7 +47,7 @@ export class SidebarComponent implements OnInit {
   public menuItems: any[];
   public isCollapsed = true;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private configService: ConfigService) { }
 
   ngOnInit() {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
@@ -54,5 +55,10 @@ export class SidebarComponent implements OnInit {
     this.router.events.subscribe((event) => {
       this.isCollapsed = true;
    });
+  }
+
+  returnHome(){
+    var path = this.configService.getPath(this.auth.roleId)
+    this.router.navigate(['',path.replace("/","")]);
   }
 }

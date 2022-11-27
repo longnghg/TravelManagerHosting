@@ -46,6 +46,20 @@ export class ConfigService{
 
     return message
   }
+
+  getPath(roleId){
+    var path = ""
+    var menuItem = ROUTES.filter(menuItem => menuItem);
+    menuItem.forEach(item => {
+      item.roles.forEach(role => {
+        if (role == roleId && !path) {
+          path = item.path
+        }
+      });
+    });
+    return path
+  }
+
   list10Star(){
     var listStar = [
       {id: 0, name: "00"},
