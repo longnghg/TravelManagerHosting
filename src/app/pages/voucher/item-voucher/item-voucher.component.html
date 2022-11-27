@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin chi tiết</h1>
+  <h1 class="modal-title fs-5" id="gridDataLael">Thông tin chi tiết</h1>
   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
 </div>
 <div class="modal-body">
@@ -8,21 +8,14 @@
       <form>
         <div class="pl-lg-4">
           <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-6">
               <div class="form-group">
                 <label class="form-control-label" for="input-name">Mã Code  </label>
                 <input type="text" id="code" name="code" class="form-control " placeholder="Mã code sẽ tự tạo " readonly [(ngModel)]="resVoucher.code">
               </div>
             </div>
-            <div class="col-lg-4">
-              <div class="form-group">
-                <label class="form-control-label" for="input-phone">Điểm
-                 <span [class]="type != 'detail' && type != 'create' || resVoucher.isDelete ?'d-none':'text-danger'">* {{validateVoucher.point ? validateVoucher.point : ''}}</span>
-                </label>
-               <input type="text" id="point" name="point" (input)="inputChange()" class="form-control " placeholder="Nhập số điểm " [(ngModel)]="resVoucher.point">
-              </div>
-            </div>
-            <div class="col-lg-4">
+
+            <div class="col-lg-6">
               <div class="form-group">
                 <label class="form-control-label" for="input-phone">Giá trị
                  <span [class]="type != 'detail' && type != 'create' || resVoucher.isDelete ?'d-none':'text-danger'">* {{validateVoucher.value ? validateVoucher.value : ''}}</span>
@@ -33,15 +26,8 @@
           </div>
 
           <div class="row">
-            <div class="col-lg-4">
-              <div class="form-group">
-                <label class="form-control-label" for="input-address"> Mô tả
-                  <span [class]="type != 'detail' && type != 'create' || resVoucher.isDelete ?'d-none':'text-danger'">* {{validateVoucher.description ? validateVoucher.description : ''}}</span>
-                </label>
-              <input type="text" id="description" name="description" (input)="inputChange(); " class="form-control " placeholder="Nhập mô tả " [(ngModel)]="resVoucher.description" >
-              </div>
-            </div>
-            <div class="col-lg-4">
+
+            <div class="col-lg-6">
               <div class="form-group">
                 <label class="form-control-label" for="input-address"> Ngày bắt đầu
                   <span [class]="type != 'detail' && type != 'create' || resVoucher.isDelete ?'d-none':'text-danger'">* {{validateVoucher.startDate ? validateVoucher.startDate : ''}}</span>
@@ -49,7 +35,7 @@
               <input type="date" id="fromDate" name="fromDate" (input)="inputChange(); dateChange('startDate')" class="form-control " placeholder="Nhập ngày bắt đầu " [(ngModel)]="resVoucher.startDateDisplay" >
               </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-6">
               <div class="form-group">
                 <label class="form-control-label" for="input-address"> Ngày kết thúc
                   <span [class]="type != 'detail' && type != 'create' || resVoucher.isDelete ?'d-none':'text-danger'">* {{validateVoucher.endDate ? validateVoucher.endDate : ''}}</span>

@@ -625,29 +625,19 @@ export class ConfigService{
   {
     model.total = 0
 
-    if (data.description == null || data.description == "") {
-      model.description = "[Mô tả] không được để trống !"
-      model.total += 1
-    }else if (data.description.length > 200 ) {
-      model.description = "[Mô tả] nhỏ hơn 200  !"
-      model.total += 1
-    }
 
       if (data.value == null || data.value == "") {
         model.value = "[Giá trị] không được để trống !"
         model.total += 1
-      }else if (data.value < 100) {
-        model.value = "[Giá trị] phải lớn hơn 100 !"
+      }else if (data.value < 0) {
+        model.value = "[Giá trị] phải lớn hơn 0 !"
+        model.total += 1
+      }
+      else if (data.value >99) {
+        model.value = "[Giá trị] phải nhỏ  hơn 100 !"
         model.total += 1
       }
 
-      if (data.point == null || data.point == "") {
-        model.point = "[Điểm] không được để trống !"
-        model.total += 1
-      }else if (data.point < 10) {
-        model.point = "[Điểm] phải lớn hơn 10!"
-        model.total += 1
-      }
 
       if (data.endDate == null || data.endDate == "") {
         model.endDate = "[Ngày kết thúc ] không được để trống !"

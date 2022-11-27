@@ -13,9 +13,9 @@ export class VoucherService{
   response: ResponseModel
   resCar: VoucherModel[]
 
-  gets(isdelete: any)
+  gets()
 {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Voucher/list-voucher?isDelete="+isdelete);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Voucher/list-voucher");
 }
 
 create(data: any)

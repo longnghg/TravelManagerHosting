@@ -36,11 +36,11 @@ export class ListVoucherComponent implements OnInit {
     }
       ngOnInit(): void {
         this.auth = JSON.parse(localStorage.getItem("currentUser"))
-        this.init(this.isDelete)
+        this.init()
       }
 
-      init(isDelete){
-        this.voucherService.gets(isDelete).subscribe(res =>{
+      init(){
+        this.voucherService.gets().subscribe(res =>{
           this.response = res
           if(this.response.notification.type == StatusNotification.Success){
             this.resVoucher = this.response.content
@@ -52,12 +52,10 @@ export class ListVoucherComponent implements OnInit {
             this.notificationService.handleAlertObj(res.notification)
           }
           this.columnDefs= [
-            { field: 'code', headerName: "Mã Code", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'code'},
-            { field: 'description', headerName: "Mô Tả", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'description'},
-            { field: 'point', headerName: "Điểm", style: "width: 10%;", searchable: true, searchType: 'text', searchObj: 'point'},
-            { field: 'startDate',headerName: "Từ ngày", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'startDate',filter: 'date'},
-            { field: 'endDate',headerName: "Đến ngày", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'endDate', filter: 'date'},
-            { field: 'value',headerName: "Giá trị", style: "width: 10%;", searchable: true, searchType: 'number', searchObj: 'endDvalueate', },
+            { field: 'code', headerName: "Mã Code", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'code'},
+            { field: 'value',headerName: "Giá trị", style: "width: 20%;", searchable: true, searchType: 'number', searchObj: 'endDvalueate', },
+            { field: 'startDate',headerName: "Từ ngày", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'startDate',filter: 'date'},
+            { field: 'endDate',headerName: "Đến ngày", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'endDate', filter: 'date'},
              ];
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -77,6 +75,7 @@ export class ListVoucherComponent implements OnInit {
 
       delete(){
         if (this.data) {
+
           this.voucherService.delete(this.data.idVoucher).subscribe(res =>{
            this.response = res
            this.notificationService.handleAlertObj(res.notification)
