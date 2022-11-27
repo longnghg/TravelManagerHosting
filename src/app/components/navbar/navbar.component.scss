@@ -1,3 +1,15 @@
-.seen{
-  background-color: #9797981c;;
+// .seen{
+//   background-color: #9797981c;
+// }
+
+.itemSeen{
+  color: black;
 }
+
+
+.textDot{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+

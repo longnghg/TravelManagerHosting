@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { ForNumber } from "./forNumber.pipe";
-import { FormatStatusBooking, FormatStatusCalled } from "./formatStatus.pipe";
+import { FormatStatusBooking, FormatStatusCalled, FormatTitleNotification } from "./formatStatus.pipe";
 import { FormatFromUnixTimestampToFullDateView, FormatFromUnixTimestampToFullStartEndDateView,
   FormatDateToDateView, FormatFromUnixTimestampToFullDate, FormatFromUnixTimestampToFullDateTimeView,
-  FormatFromUnixTimestampToFullTimeDateView } from "./formatDateTime.pipe";
+  FormatFromUnixTimestampToFullTimeDateView, DateAgoPipe } from "./formatDateTime.pipe";
 import { FormatPriceVi } from "./fomatPrice.pipe";
 @NgModule({
   declarations: [
@@ -16,7 +16,9 @@ import { FormatPriceVi } from "./fomatPrice.pipe";
     FormatFromUnixTimestampToFullTimeDateView,
     FormatFromUnixTimestampToFullDateTimeView,
     FormatStatusBooking,
-    FormatStatusCalled
+    FormatStatusCalled,
+    FormatTitleNotification,
+    DateAgoPipe
   ],
   exports: [
     ForNumber,
@@ -28,7 +30,9 @@ import { FormatPriceVi } from "./fomatPrice.pipe";
     FormatFromUnixTimestampToFullTimeDateView,
     FormatFromUnixTimestampToFullDateTimeView,
     FormatStatusBooking,
-    FormatStatusCalled
+    FormatStatusCalled,
+    FormatTitleNotification,
+    DateAgoPipe
   ]
 })
 export class PipesModule { }

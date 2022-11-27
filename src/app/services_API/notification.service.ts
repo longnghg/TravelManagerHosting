@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ConfigService } from "./config.service";
 import { ToastrService } from 'ngx-toastr';
+import { ResponseModel } from "../models/responsiveModels/response.model";
 @Injectable({
     providedIn: 'root'
 })
@@ -59,5 +60,15 @@ export class NotificationService{
             this.toastr.error(messenge, 'Lỗi');
         }
 
+    }
+
+    async gets(idEmployee: string)
+    {
+    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Notification/list-notification?idEmployee="+idEmployee).toPromise();
+    }
+
+    async updateIsSeen(idNotification: string)
+    {
+    return await this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Notification/update-isSeen-notification?idNotification="+idNotification, {}).toPromise();
     }
 }

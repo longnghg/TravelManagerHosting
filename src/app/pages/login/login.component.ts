@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
         if(this.response.notification.type == StatusNotification.Success)
         {
           this.resAthentication = this.response.content
-          var path = this.checkRole(this.resAthentication.roleId)
+          var path = this.configService.getPath(this.resAthentication.roleId)
           localStorage.setItem("token", this.resAthentication.token)
           localStorage.setItem("currentUser", JSON.stringify(this.resAthentication))
           document.location.assign(this.configService.clientUrl + path)
@@ -89,16 +89,4 @@ export class LoginComponent implements OnInit {
     }
     }}
 
-    checkRole(roleId){
-      var path = ""
-      var menuItem = ROUTES.filter(menuItem => menuItem);
-      menuItem.forEach(item => {
-        item.roles.forEach(role => {
-          if (role == roleId && !path) {
-            path = item.path
-          }
-        });
-      });
-      return path
-    }
   }
