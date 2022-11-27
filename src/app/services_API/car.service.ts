@@ -13,10 +13,10 @@ export class CarService{
 constructor(private http:HttpClient, private configService:ConfigService,private notificationService: NotificationService){ }
 response: ResponseModel
 resCar: CarModel[]
-async views(fromDate, toDate, idTour)
+async views(fromDate, toDate)
 {
   var value = <any>await new Promise<any>(resolve => {
-    this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/list-selectbox-car?fromDate="+fromDate+"&toDate="+toDate+"&idTour="+idTour).subscribe(res => {
+    this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/list-selectbox-car?fromDate="+fromDate+"&toDate="+toDate).subscribe(res => {
       this.response = res
       this.resCar =  this.response.content
       resolve(this.resCar);
@@ -27,6 +27,22 @@ async views(fromDate, toDate, idTour)
   return value
 
 }
+
+async viewsUpdate(fromDate, toDate, idSchedule)
+{
+  var value = <any>await new Promise<any>(resolve => {
+    this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/list-selectbox-car-update?fromDate="+fromDate+"&toDate="+toDate+"&idSchedule="+idSchedule).subscribe(res => {
+      this.response = res
+      this.resCar =  this.response.content
+      resolve(this.resCar);
+  }, error => {
+    var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+    this.notificationService.handleAlert(message, "Error")
+  })})
+  return value
+
+}
+
 
 async views2()
 {

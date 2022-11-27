@@ -55,14 +55,14 @@ export class NavbarComponent implements OnInit {
       }
     }
     this.listTitles = ROUTES.filter(listTitle => listTitle);
-    this.initNotification(this.auth.id)
+    this.initNotification()
     setInterval(() => {
-     this.initNotification(this.auth.id)}, 60000);
+     this.initNotification()}, 60000);
 
   }
 
-  initNotification(idEmployee: string){
-    this.notificationService.gets(idEmployee).then(res =>{
+  initNotification(){
+    this.notificationService.gets(this.auth.roleId, this.auth.id).then(res =>{
       this.response = res
       if(this.response.notification.type == StatusNotification.Success){
         this.resNotification = this.response.content
