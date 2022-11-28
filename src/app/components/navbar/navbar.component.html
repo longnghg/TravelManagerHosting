@@ -29,13 +29,17 @@
           <div class="dropdown-header noti-title">
             <div class="row">
               <div class="col-6 text-left">
-                <h3 class="text-overflow m-0"> <i class="fa-solid fa-bell"></i> &nbsp; Thông báo</h3>  
+                <h3 class="text-overflow m-0"> <i class="fa-solid fa-bell"></i> &nbsp; Thông báo</h3>
               </div>
               <div class="col-6 text-right">
-                <div class="form-check form-switch" *ngIf="resNotification">
+                <label class="switch">
+                  <input type="checkbox" (click)="changeIsSeen(); initNotification()">
+                  <span class="slider"></span>
+                </label>
+                <!-- <div class="form-check form-switch" *ngIf="resNotification">
                   <input class="form-check-input" role="switch" type="checkbox" id="mySwitch" (click)="changeIsSeen(); initNotification()"  name="isSeen"  style="width: 2.6rem;height: 1.1rem; margin-left: -2.9rem;" >
                   <label class="form-check-label text-dark" for="mySwitch" style="margin-top: 6%;">Chưa đọc</label>
-                </div>
+                </div> -->
               </div>
             </div>
             <hr style="margin-top: 2px; margin-bottom: 0.8rem; border: 0; border-top: 2px solid rgba(0, 0, 0, 0.5);">
