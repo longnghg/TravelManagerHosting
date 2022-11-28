@@ -25,9 +25,19 @@
             </span>
           </div>
         </a>
-        <div   class="dropdown-menu-arrow dropdown-menu-right" style="margin-left: auto; width: 350px;" ngbDropdownMenu>
-          <div id="test" class="dropdown-header noti-title">
-            <h3 class="text-overflow m-0"> <i class="fa-solid fa-bell"></i> &nbsp; Thông báo</h3>
+        <div class="dropdown-menu-arrow dropdown-menu-right" style="margin-left: auto; width: 350px;" ngbDropdownMenu>
+          <div class="dropdown-header noti-title">
+            <div class="row">
+              <div class="col-6 text-left">
+                <h3 class="text-overflow m-0"> <i class="fa-solid fa-bell"></i> &nbsp; Thông báo</h3>  
+              </div>
+              <div class="col-6 text-right">
+                <div class="form-check form-switch" *ngIf="resNotification">
+                  <input class="form-check-input" role="switch" type="checkbox" id="mySwitch" (click)="changeIsSeen(); initNotification()"  name="isSeen"  style="width: 2.6rem;height: 1.1rem; margin-left: -2.9rem;" >
+                  <label class="form-check-label text-dark" for="mySwitch" style="margin-top: 6%;">Chưa đọc</label>
+                </div>
+              </div>
+            </div>
             <hr style="margin-top: 2px; margin-bottom: 0.8rem; border: 0; border-top: 2px solid rgba(0, 0, 0, 0.5);">
              <div style="overflow-x: hidden; height: 20rem;  text-transform: none !important;" *ngIf="resNotification">
               <ng-container  *ngFor="let item of resNotification; let i=index">

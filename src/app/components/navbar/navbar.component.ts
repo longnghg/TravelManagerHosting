@@ -31,6 +31,7 @@ export class NavbarComponent implements OnInit {
   response: ResponseModel
   resNotification: NotificationUserModel[]
   totalResult = 0
+  isSeen: boolean = false
    // mo dau
      //signalr
      private hubConnectionBuilder: HubConnection
@@ -63,7 +64,7 @@ export class NavbarComponent implements OnInit {
   }
 
   initNotification(){
-    this.notificationService.gets(this.auth.roleId, this.auth.id).then(res =>{
+    this.notificationService.gets(this.auth.roleId, this.auth.id, this.isSeen).then(res =>{
       this.response = res
       if(this.response.notification.type == StatusNotification.Success){
         this.resNotification = this.response.content
@@ -145,5 +146,16 @@ export class NavbarComponent implements OnInit {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)
     })
+  }
+
+  changeIsSeen(){
+    if(this.isSeen)
+    {
+      this.isSeen = false
+    }
+    else{
+      this.isSeen = true
+      
+    }
   }
 }
