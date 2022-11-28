@@ -13,3 +13,31 @@
   text-overflow: ellipsis;
 }
 
+.dropdown-item:hover, .dropdown-item:focus {
+  transition: 0.5s;
+  color: #16181b;
+  text-decoration: none;
+  background-color: #e9ecef;
+  .cart-close{
+    opacity: 1
+  }
+}
+
+
+.cart-close{
+  position: absolute;
+  margin-top: -20px;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 22px;
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.cart-close-icon{
+  background-color: rgb(92, 90, 89);
+  border-radius: 50%;
+  color: white;
+}

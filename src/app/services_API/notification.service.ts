@@ -64,11 +64,16 @@ export class NotificationService{
 
     async gets(idRole: number, idEmp: string)
     {
-    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Notification/list-notification?idRole="+idRole+"&idEmp="+idEmp).toPromise();
+      return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Notification/list-notification?idRole="+idRole+"&idEmp="+idEmp).toPromise();
     }
 
     async updateIsSeen(idNotification: string)
     {
-    return await this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Notification/update-isSeen-notification?idNotification="+idNotification, {}).toPromise();
+      return await this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Notification/update-isSeen-notification?idNotification="+idNotification, {}).toPromise();
+    }
+
+    async deleteNotification(idNotification: string)
+    {
+      return await this.http.delete<ResponseModel>( this.configService.apiUrl + "/api/Notification/delete-notification?idNotification="+idNotification, {}).toPromise();
     }
 }

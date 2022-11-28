@@ -17,7 +17,7 @@
 
     <ul class="navbar-nav align-items-center d-none d-md-flex" >
       <li class="nav-item" ngbDropdown placement="bottom-left" style="margin-right: 1.5rem;">
-        <a class="nav-link pr-0" role="button" ngbDropdownToggle>
+        <a #dropdownMenu  class="nav-link pr-0" role="button" ngbDropdownToggle>
           <div class="media align-items-center">
             <i class="fa-solid fa-bell" style="font-size: 1.5rem;"></i>
             <span *ngIf="totalResult > 0" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" >
@@ -25,33 +25,36 @@
             </span>
           </div>
         </a>
-        <div class="dropdown-menu-arrow dropdown-menu-right" style="margin-left: auto; width: 350px;" ngbDropdownMenu>
-          <div class="dropdown-header noti-title">
+        <div   class="dropdown-menu-arrow dropdown-menu-right" style="margin-left: auto; width: 350px;" ngbDropdownMenu>
+          <div id="test" class="dropdown-header noti-title">
             <h3 class="text-overflow m-0"> <i class="fa-solid fa-bell"></i> &nbsp; Thông báo</h3>
             <hr style="margin-top: 2px; margin-bottom: 0.8rem; border: 0; border-top: 2px solid rgba(0, 0, 0, 0.5);">
              <div style="overflow-x: hidden; height: 20rem;  text-transform: none !important;" *ngIf="resNotification">
               <ng-container  *ngFor="let item of resNotification; let i=index">
-                <a [class]="item.isSeen?'dropdown-item':'dropdown-item seen'" style="margin-bottom: -10%; height: 25%;" href="javascript:void(0)" (click)="updateIsSeen(item)">
-                  <div [class]="item.isSeen?'text-muted':'itemSeen'">
-                   <div class="row">
-                     <div class="col-8 text-dark textDot"><span style="font-size: 17px;">{{item.type | formatTitleNotification}}</span></div>
-                     <div class="col-4 text-right"><small [class]="item.isSeen?'':'text-primary'">{{item.time | dateAgo}}</small>
+                <div [id]="item.idNotification" [class]="item.isSeen?'dropdown-item notif':'dropdown-item seen notif'" style="margin-bottom: -10%; height: 25%;" href="javascript:void(0)">
+                  <a  class="cart-close" (click)="deleteNotif(item.idNotification, i)"><i  class="fa-regular fa-circle-xmark cart-close-icon"></i></a>
+                  <a  (click)="updateIsSeen(item)">
+                    <div [class]="item.isSeen?'text-muted':'itemSeen'">
+                      <div class="row">
+                        <div class="col-8 text-dark textDot"><span style="font-size: 17px;">{{item.type | formatTitleNotification}}</span></div>
+                        <div class="col-4 text-right"><small [class]="item.isSeen?'':'text-primary'">{{item.time | dateAgo}}</small>
 
-                    </div>
-                   </div>
-                   <div class="row">
-                     <div class="col-10 text-left textDot">
-                       <p class="textDot"  style="font-size: 15px; opacity: 0.7;">{{item.title + " [" + item.content + "]"}}</p>
+                       </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-10 text-left textDot">
+                          <p class="textDot"  style="font-size: 15px; opacity: 0.7;">{{item.title + " [" + item.content + "]"}}</p>
+                        </div>
+                        <div class="col-2 text-right">
+                         <span *ngIf="!item.isSeen" style="top: 45%; right: 10%" class="position-absolute translate-middle badge rounded-pill bg-danger" >
+                           N
+                         </span>
+                          <!-- <small>{{item.type | formatTitleNotification}}</small> -->
+                        </div>
+                      </div>
                      </div>
-                     <div class="col-2 text-right">
-                      <span *ngIf="!item.isSeen" style="top: 45%; right: 10%" class="position-absolute translate-middle badge rounded-pill bg-danger" >
-                        N
-                      </span>
-                       <!-- <small>{{item.type | formatTitleNotification}}</small> -->
-                     </div>
-                   </div>
-                  </div>
-                </a>
+                  </a>
+                </div>
                 <hr style="margin-top: 2.1rem ; margin-bottom: 0.5rem; border-top: 2px solid rgba(0, 0, 0, 0.5);">
               </ng-container>
              </div>

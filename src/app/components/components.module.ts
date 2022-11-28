@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { NgSelectModule }           from '@ng-select/ng-select';
 import { NgOptionHighlightModule }  from '@ng-select/ng-option-highlight';
 import { PipesModule } from "../pipes/pipes.module";
+import { MenuRightClickComponent } from './menu-right-click/menu-right-click.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -27,6 +28,7 @@ import { PipesModule } from "../pipes/pipes.module";
     SidebarComponent,
     GridDataComponent,
     Grid2DataComponent,
+    MenuRightClickComponent,
   ],
   exports: [
     FooterComponent,
@@ -34,6 +36,7 @@ import { PipesModule } from "../pipes/pipes.module";
     SidebarComponent,
     GridDataComponent,
     Grid2DataComponent,
+    MenuRightClickComponent
   ]
 })
 export class ComponentsModule { }

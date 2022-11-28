@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { Router } from '@angular/router';
@@ -21,6 +21,7 @@ import { HubConnection } from '@microsoft/signalr';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
+  @ViewChild('dropdownMenu') dropdownMenu: ElementRef;
   public focus;
   public listTitles: any[];
   public location: Location;
@@ -132,5 +133,17 @@ export class NavbarComponent implements OnInit {
     })
   }
 
-
+  deleteNotif(id, index){
+    this.notificationService.deleteNotification(id).then(res =>{
+      this.response = res
+      if(this.response.notification.type == StatusNotification.Success){
+        this.resNotification.splice(index, 1)
+        this.totalResult =  this.resNotification.length
+        this.dropdownMenu.nativeElement.click()
+      }
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
+  }
 }

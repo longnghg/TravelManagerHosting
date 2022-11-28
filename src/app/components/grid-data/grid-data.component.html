@@ -1,6 +1,6 @@
 <div class="table-responsive" style="overflow-x: hidden;">
   <table class="table align-items-center table-flush" >
-    <thead class="thead-light" *ngIf="columnDefs">
+    <thead class="thead-light" style="z-index: 0;" *ngIf="columnDefs">
       <tr>
         <th scope="col" style="width: 50px;"></th>
         <th scope="col" *ngFor="let column of columnDefs" [style]="column.style">{{column.headerName}}
