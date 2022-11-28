@@ -58,7 +58,7 @@ export enum StatusNotification
 
 export enum RouteNotification{
   Tour = 'list-tour',
-  Restaurent = 'list-restaurant',
+  Restaurant = 'list-restaurant',
   Place = 'list-place',
   Promotion = 'list-promotion',
   Hotel = 'list-hotel'
@@ -74,8 +74,8 @@ export enum TitleNotification{
 
 export enum TypeNotification{
   Tour = 0,
-  Restaurent = 1,
+  Hotel = 1,
   Place = 2,
-  Promotion = 3,
-  Hotel = 4
+  Restaurant = 3,
+  Promotion = 4
 }
