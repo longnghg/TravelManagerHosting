@@ -472,8 +472,8 @@
                 <div class="col-12 text-right">
                   <button  *ngIf="type == 'detail' && !resSchedule.isDelete" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteScheduleModal" (click)="getParentData('detail')">Xóa</button>
                   <button *ngIf="isChange || isChangeTimelineList && type == 'detail'" class="btn btn-lg btn-info" (click)="backup()">Khôi phục</button>
-                  <button *ngIf="isChange || isChangeTimelineList && type == 'detail'" class="btn btn-lg btn-success"  (click)="save()">Lưu</button>
-                  <button *ngIf="isChange && type == 'create'" class="btn btn-lg btn-success"  (click)="save()">{{active == 3 ? 'Thêm' : 'Kế tiếp'}}</button>
+                  <!-- <button *ngIf="isChange || isChangeTimelineList && type == 'detail'" class="btn btn-lg btn-success"  (click)="save()">Lưu</button> -->
+                  <button *ngIf="isChange || isChangeTimelineList" class="btn btn-lg btn-success"  (click)="save()">{{active == 3 ? type == 'create' ? 'Thêm' : 'Lưu' : 'Kế tiếp'}}</button>
                   <button *ngIf="resSchedule.isDelete" (click)="getParentData('detail')" data-bs-toggle="modal" data-bs-target="#restoreScheduleModal" class="btn btn-lg btn-warning">Khôi phục lịch trình</button>
                 </div>
               </div>

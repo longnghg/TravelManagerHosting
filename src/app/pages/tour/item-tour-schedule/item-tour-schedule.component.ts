@@ -99,12 +99,12 @@ export class ItemTourScheduleComponent implements OnInit {
       if (this.resSchedule) {
         this.resSchedule.isUpdate = true
 
-        this.resSchedule.departureDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.departureDate)
-        this.resSchedule.returnDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.returnDate)
-        this.resSchedule.beginDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.beginDate)
-        this.resSchedule.endDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.endDate)
-        this.resSchedule.timePromotionDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.timePromotion)
-        this.resSchedule.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.modifyDate)
+        this.resSchedule.departureDateDisplay = this.configService.formatFromUnixTimestampToFullDateTime(this.resSchedule.departureDate)
+        this.resSchedule.returnDateDisplay = this.configService.formatFromUnixTimestampToFullDateTime(this.resSchedule.returnDate)
+        this.resSchedule.beginDateDisplay = this.configService.formatFromUnixTimestampToFullDateTime(this.resSchedule.beginDate)
+        this.resSchedule.endDateDisplay = this.configService.formatFromUnixTimestampToFullDateTime(this.resSchedule.endDate)
+        this.resSchedule.timePromotionDisplay = this.configService.formatFromUnixTimestampToFullDateTime(this.resSchedule.timePromotion)
+        this.resSchedule.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDateTime(this.resSchedule.modifyDate)
         this.resScheduleTmp = Object.assign({}, this.resSchedule)
 
 
@@ -159,17 +159,23 @@ export class ItemTourScheduleComponent implements OnInit {
       this.resEmployee = response
     })
 
-    // if (this.resSchedule) {
-    //   this.resSchedule.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.modifyDate)
+    if (this.resSchedule) {
+      // this.resSchedule.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.modifyDate)
 
-    //   this.carService.views(this.resSchedule.departureDate, this.resSchedule.returnDate, this.activatedRoute.snapshot.paramMap.get('id2')).then(response => {
-    //     this.resCar = response
-    //   })
-    // }
+      if (this.type != "create") {
+        this.carService.viewsUpdate(this.resSchedule.departureDate, this.resSchedule.returnDate, this.resSchedule.idSchedule).then(response => {
+          this.resCar = response
+        })
+      } else {
+        this.carService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
+          this.resCar = response
+        })
+      }
+    }
 
-    this.carService.views2().then(response => {
-      this.resCar = response
-    })
+    // this.carService.views2().then(response => {
+    //   this.resCar = response
+    // })
 
     this.promotionService.views().then(response => {
       this.resPromotion = response
@@ -205,6 +211,19 @@ export class ItemTourScheduleComponent implements OnInit {
 
   dateChange(property) {
     this.resSchedule[property] = new Date(this.resSchedule[property+'Display']).getTime()
+
+    if (property == "departureDate" || property == "returnDate"){
+      if (this.type == "detail") {
+        this.carService.viewsUpdate(this.resSchedule.departureDate, this.resSchedule.returnDate, this.resSchedule.idSchedule).then(response => {
+          this.resCar = response
+        })
+      } else {
+        this.carService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
+          this.resCar = response
+        })
+      }
+    }
+
   }
 
   dateChangeTimeLine(property){
@@ -240,10 +259,10 @@ export class ItemTourScheduleComponent implements OnInit {
 
   save() {
     this.validateScheduleModel = new ValidateScheduleModel
-
     this.validateScheduleModel = this.configService.validateSchedule(this.resSchedule, this.validateScheduleModel, Object.assign([], this.resTimelinelist))
     this.resSchedule.idUserModify = this.auth.id
     this.resSchedule.tourId = this.activatedRoute.snapshot.paramMap.get('id2')
+
     if (this.validateScheduleModel.total == 0) {
         if (this.active == 2 || this.active == 3) {
           this.validateCostTourModel = new ValidateCostTourModel
@@ -306,8 +325,6 @@ export class ItemTourScheduleComponent implements OnInit {
     this.resCostTour.departureDate = schedule.departureDateDisplay
     this.resCostTour.returnDate = schedule.returnDateDisplay
     this.resCostTour.idSchedule = schedule.idSchedule
-    console.log(this.resCostTour);
-
     if (this.type == "create") {
       this.costtourService.create(this.resCostTour).subscribe(res => {
         this.response = res
@@ -395,6 +412,11 @@ export class ItemTourScheduleComponent implements OnInit {
       this.resTimeline = new TimeLineModel()
       this.isChangeTimeline = false
       this.isChangeTimelineList = true
+
+      if (this.resTimelinelist.length > 0) {
+        this.resSchedule.isRemoveTimeLine = true
+      }
+
       this.notificationService.handleAlert("Thêm thành công !", StatusNotification.Success)
       }
       else{
