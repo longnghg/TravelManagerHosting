@@ -1044,6 +1044,19 @@ validateHotel(data : any,model: any)
     return model
    }
 
+
+   validateBanner(data: any, model: any){
+    model.total = 0
+    if (data.nameBanner == null || data.nameBanner == "") {
+      model.email = "[Tên Banner] không để trống !"
+      model.total += 1
+    }else if (data.nameBanner.length > 255) {
+      model.email = "[Tên Banner] quá dài !"
+      model.total += 1
+    }
+    return model
+   }
+
    formatFromUnixTimestampToFullDate(unix_timestamp: number){
     var date = new Date(unix_timestamp).toLocaleDateString("en-US");
     var split = date.split("/")

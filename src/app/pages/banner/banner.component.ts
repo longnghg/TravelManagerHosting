@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { BannerModel } from 'src/app/models/banner.model';
+import { BannerModel, ValidationBannerModel } from 'src/app/models/banner.model';
 import { ResponseModel } from 'src/app/models/responsiveModels/response.model';
 import { BannerService } from "../../services_API/banner.service";
 import { NotificationService } from "../../services_API/notification.service";
@@ -25,7 +25,7 @@ export class BannerComponent implements OnInit {
   idbanner: string
   nameNotify: string
   fileNotify: string
-
+  validateBanner: ValidationBannerModel = new ValidationBannerModel
   ngOnInit(): void {
     this._bannerService.gets().subscribe(res => {
       this.response = res
@@ -51,7 +51,7 @@ export class BannerComponent implements OnInit {
   }
 
   save() {
-
+    this.validateBanner = new ValidationBannerModel
     var files = this.files.path[0].files
     var file = new FormData();
     for (let index = 0; index < files.length; index++) {
