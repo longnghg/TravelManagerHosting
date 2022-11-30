@@ -62,9 +62,9 @@ export class NotificationService{
 
     }
 
-    async gets(idRole: number, idEmp: string, IsSeen: boolean)
+    async gets(idRole: number, idEmp: string, IsSeen: boolean, pageSize: number)
     {
-    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Notification/list-notification?idRole="+idRole+"&idEmp="+idEmp+"&IsSeen="+IsSeen).toPromise();
+    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Notification/list-notification?idRole="+idRole+"&idEmp="+idEmp+"&IsSeen="+IsSeen+"&pageSize="+pageSize).toPromise();
     }
 
     async updateIsSeen(idNotification: string)

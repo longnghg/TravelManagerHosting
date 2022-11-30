@@ -32,6 +32,7 @@ export class NavbarComponent implements OnInit {
   resNotification: NotificationUserModel[]
   totalResult = 0
   isSeen: boolean = false
+  pageSize = 4
    // mo dau
      //signalr
      private hubConnectionBuilder: HubConnection
@@ -58,13 +59,13 @@ export class NavbarComponent implements OnInit {
     }
     this.listTitles = ROUTES.filter(listTitle => listTitle);
     this.initNotification()
-    setInterval(() => {
-     this.initNotification()}, 60000);
+    // setInterval(() => {
+    //  this.initNotification()}, 30000);
 
   }
 
   initNotification(){
-    this.notificationService.gets(this.auth.roleId, this.auth.id, this.isSeen).then(res =>{
+    this.notificationService.gets(this.auth.roleId, this.auth.id, this.isSeen, this.pageSize).then(res =>{
       this.response = res
       if(this.response.notification.type == StatusNotification.Success){
         this.resNotification = this.response.content
@@ -138,8 +139,9 @@ export class NavbarComponent implements OnInit {
     this.notificationService.deleteNotification(id).then(res =>{
       this.response = res
       if(this.response.notification.type == StatusNotification.Success){
-        this.resNotification.splice(index, 1)
-        this.totalResult =  this.resNotification.length
+        // this.resNotification.splice(index, 1)
+        // this.totalResult =  this.resNotification.length
+        this.initNotification()
         this.dropdownMenu.nativeElement.click()
       }
     }, error => {
@@ -155,7 +157,13 @@ export class NavbarComponent implements OnInit {
     }
     else{
       this.isSeen = true
-      
+
     }
+    this.pageSize = 4
+  }
+
+  moreNotif(){
+    this.pageSize = this.pageSize + 4
+    this.initNotification()
   }
 }

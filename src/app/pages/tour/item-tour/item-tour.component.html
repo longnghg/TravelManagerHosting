@@ -217,6 +217,114 @@ width: fit-content;">
         </div>
       </div>
 
+    <div class="containerBN" *ngIf="resTour" style="margin-top: -10%; margin-bottom: 10%;">
+      <div class="bannerBN">
+          <div class="titleBN" style="background-image: url({{img}});">
+          </div>
+          <div class="detailBN row">
+            <div class="optionBN col-4">
+              <fieldset style="margin-top: -12.5%; height: 111%;">
+                <legend>Chi tiết Tour</legend>
+
+                <input #tourImg id="files" type="file" multiple class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeTourImg($event); inputChange()">
+                <button for="files"  class="icon-btn add-btn" (click)="btnTourImg()" style="position: relative;top: -5%;" >
+                  <div class="add-icon"></div>
+                  <div class="btn-txt">Thêm hình</div>
+                </button>
+                <!-- <button class="icon-btn add-btn" (change)="changeImg($event)" style="position: relative;top: -5%;">
+                  <div class="add-icon"></div>
+                  <div class="btn-txt">Thêm hình</div>
+               </button> -->
+                <div class="row">
+
+
+                  <div class="form-group" style="margin-top: -15px;">
+                    <div class="row">
+                      <div class="col-9">
+                        <label class="form-control-label" for="input-tourName">Tấm 1
+                          <span [class]="this.type != 'create' && resTour.isDelete ?'d-none':'text-red'">* {{this.validateTourModel.nameTour ? this.validateTourModel.nameTour : ''}}</span>
+                        </label>
+                        <input type="text" id="nameTour" name="nameTour"  class="form-control form-control-alternative" placeholder="Nhập số tên chuyến du lịch" [(ngModel)]="resTour.imgDetail1" readonly >
+
+                      </div>
+                      <div class="col-3">
+                        <div class="btn btn-outline-danger" style="margin-top: 40%;">
+                          Xóa
+                        </div>
+                      </div>
+                    </div>
+                 </div>
+
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-tourName">Tấm 2
+                      <span [class]="this.type != 'create' && resTour.isDelete ?'d-none':'text-red'">* {{this.validateTourModel.nameTour ? this.validateTourModel.nameTour : ''}}</span>
+                    </label>
+                    <input type="text" id="nameTour" name="nameTour"  class="form-control form-control-alternative" placeholder="Nhập số tên chuyến du lịch" [(ngModel)]="resTour.imgDetail2" readonly>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-tourName">Tấm 3
+                      <span [class]="this.type != 'create' && resTour.isDelete ?'d-none':'text-red'">* {{this.validateTourModel.nameTour ? this.validateTourModel.nameTour : ''}}</span>
+                    </label>
+                    <input type="text" id="nameTour" name="nameTour"  class="form-control form-control-alternative" placeholder="Nhập số tên chuyến du lịch" [(ngModel)]="resTour.imgDetail3" readonly >
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-tourName">Tấm 4
+                      <span [class]="this.type != 'create' && resTour.isDelete ?'d-none':'text-red'">* {{this.validateTourModel.nameTour ? this.validateTourModel.nameTour : ''}}</span>
+                    </label>
+                    <input type="text" id="nameTour" name="nameTour"  class="form-control form-control-alternative" placeholder="Nhập số tên chuyến du lịch" [(ngModel)]="resTour.imgDetail4" readonly >
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+
+             <div class="optionBN col-8">
+              <fieldset style="margin-top: -6%;height: 112%;">
+                <legend>Hình chi tiết tour</legend>
+                <div class="row">
+
+                  <div class="col-12">
+
+                    <div class="row">
+                      <div class="col">
+                        <div class="row mb-2">
+                          <div class="col-6">
+                            <img [src]="imgDetail[0]" class="img-fluid"
+                              style="float: right; border-radius:10px; object-fit:fill; width: 70%; height: 100%;" alt="">
+                          </div>
+                          <div class="col-6">
+                            <img [src]="imgDetail[1]" class="img-fluid"
+                              style="float: left; border-radius:10px; object-fit:fill; width: 70%; height: 100%;" alt="">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <div class="row mb-2">
+                          <div class="col-6">
+                            <img [src]="imgDetail[2]" class="img-fluid"
+                              style="float: right; border-radius:10px; object-fit:fill; width: 70%; height: 100%;" alt="">
+                          </div>
+                          <div class="col-6">
+                            <img [src]="imgDetail[3]" class="img-fluid"
+                              style="float: left; border-radius:10px; object-fit:fill; width: 70%; height: 100%;" alt="">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+
+             </div>
+
+          </div>
+      </div>
+    </div>
+
+
     </ng-template>
 	</ng-container>
 	<ng-container *ngIf="type == 'detail'" ngbNavItem>

@@ -15,6 +15,11 @@ export class TourModel{
   idUserModify:string
   typeAction: string
   rating: number
+
+  imgDetail1: string
+  imgDetail2: string
+  imgDetail3: string
+  imgDetail4: string
 }
 
 export class ValidateTourModel{

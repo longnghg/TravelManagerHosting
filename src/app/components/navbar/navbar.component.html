@@ -41,12 +41,15 @@
                   <label class="form-check-label text-dark" for="mySwitch" style="margin-top: 6%;">Chưa đọc</label>
                 </div> -->
               </div>
+
             </div>
-            <hr style="margin-top: 2px; margin-bottom: 0.8rem; border: 0; border-top: 2px solid rgba(0, 0, 0, 0.5);">
-             <div style="overflow-x: hidden; height: 20rem;  text-transform: none !important;" *ngIf="resNotification && resNotification.length > 0">
+            <!-- <hr style="margin-top: 0.1rem ; margin-bottom: 0.5rem; border-top: 2px solid rgba(0, 0, 0, 0.5);"> -->
+             <div [style]="resNotification.length> 4 ?'overflow-x: hidden; height: 30rem; text-transform: none !important; margin-right: -3%; padding-right: 3%;' :'overflow-x: hidden; height: 28rem;  text-transform: none !important;'" *ngIf="resNotification && resNotification.length > 0">
               <ng-container  *ngFor="let item of resNotification; let i=index">
-                <div [id]="item.idNotification" [class]="item.isSeen?'dropdown-item notif':'dropdown-item seen notif'" style="margin-bottom: -10%; height: 25%;" href="javascript:void(0)">
-                  <a  class="cart-close" (click)="deleteNotif(item.idNotification, i)"><i  class="fa-regular fa-circle-xmark cart-close-icon"></i></a>
+                <hr style="margin-top: 2px; margin-bottom: 0.8rem; border: 0; border-top: 2px solid rgba(0, 0, 0, 0.5);">
+
+                <div [id]="item.idNotification" [class]="item.isSeen?'dropdown-item notif mb-2':'dropdown-item seen notif mb-2'" [style]="resNotification.length > 4 ?'margin-bottom: -10%; height: 15%; position: relative;': 'margin-bottom: -10%; height: 17%;'" href="javascript:void(0)">
+                  <a  class="cart-close"  [style]="resNotification.length > 4 ?'right:-6px':''" (click)="deleteNotif(item.idNotification, i)"><i  class="fa-regular fa-circle-xmark cart-close-icon"></i></a>
                   <a  (click)="updateIsSeen(item)">
                     <div [class]="item.isSeen?'text-muted':'itemSeen'">
                       <div class="row">
@@ -69,11 +72,20 @@
                      </div>
                   </a>
                 </div>
-                <hr style="margin-top: 2.1rem ; margin-bottom: 0.5rem; border-top: 2px solid rgba(0, 0, 0, 0.5);">
+                <hr *ngIf="i+1 == pageSize" style="margin-top: 0.1rem ; margin-bottom: 0.5rem; border-top: 2px solid rgba(0, 0, 0, 0.5);">
               </ng-container>
+              <button *ngIf="resNotification.length == pageSize" (click)="moreNotif()"  class="learn-more" style="margin-left: 20%; margin-top: 2%;">
+                <span class="circle" aria-hidden="true">
+                <span class="icon arrow"></span>
+                </span>
+                <span class="button-text">Xem thêm</span>
+              </button>
+
              </div>
 
              <div style="overflow-x: hidden; height: 20rem;  text-transform: none !important;" *ngIf="!resNotification || resNotification.length < 1">
+            <hr style="margin-top: 2px; margin-bottom: 0.8rem; border: 0; border-top: 2px solid rgba(0, 0, 0, 0.5);">
+
               <div class="loader" style="margin-left: 20%; margin-top: 20%;">
                 <div>
                   <ul>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { TourModel, ValidateTourModel } from 'src/app/models/tour.model';
 import { TourService } from "src/app/services_API/tour.service"
 import { NotificationService } from "./../../../services_API/notification.service";
@@ -16,6 +16,7 @@ import { StatusNotification } from "../../../enums/enum";
   styleUrls: ['./item-tour.component.scss']
 })
 export class ItemTourComponent implements OnInit {
+  @ViewChild('tourImg') tourImg: ElementRef;
   resTour: TourModel
   type: string
   validateTourModel: ValidateTourModel = new ValidateTourModel
@@ -26,6 +27,7 @@ export class ItemTourComponent implements OnInit {
   resTourTmp: TourModel
   isHoliday = this.configService.listStatus()
   img: any
+  imgDetail = []
   formData: any
   resAuth: AuthenticationModel
   active = 1;
@@ -53,6 +55,11 @@ export class ItemTourComponent implements OnInit {
         }
         else{
           this.img = "../../../../assets/img/tours/cross-sign.jpg"
+
+          this.imgDetail[0] = "../../../../assets/img/tours/cross-sign.jpg"
+          this.imgDetail[1] = "../../../../assets/img/tours/cross-sign.jpg"
+          this.imgDetail[2] = "../../../../assets/img/tours/cross-sign.jpg"
+          this.imgDetail[3] = "../../../../assets/img/tours/cross-sign.jpg"
         }
       }
 
@@ -128,6 +135,8 @@ export class ItemTourComponent implements OnInit {
 
   changeImg(e: any){
     this.formData = e
+    console.log(e);
+
     if (e.target.files[0].type == "image/jpg" || e.target.files[0].type == "image/jpeg" || e.target.files[0].type == "image/png") {
       if (e.target.files && e.target.files[0]){
         const file = e.target.files[0];
@@ -143,6 +152,37 @@ export class ItemTourComponent implements OnInit {
     }
   }
 
+  btnTourImg(){
+    console.log(123);
+
+      this.tourImg.nativeElement.click()
+  }
+
+  changeTourImg(e: any){
+    this.formData = e
+    console.log(e);
+
+    // if (e.target.files[0].type == "image/jpg" || e.target.files[0].type == "image/jpeg" || e.target.files[0].type == "image/png") {
+
+    // }
+    // else{
+    //   this.notificationService.handleAlert("Không đúng định dạng hình ảnh !", StatusNotification.Error)
+    // }
+    var files = Object.assign([], e.target.files);
+    console.log(files);
+    this.imgDetail = []
+    var i = 0
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = e => this.imgDetail.push(reader.result);
+      reader.readAsDataURL(file)
+      this.resTour["imgDetail"+i+1] = this.imgDetail[i]
+      i++
+   });
+
+   console.log(this.imgDetail);
+
+  }
   save(){
     this.validateTourModel = new ValidateTourModel
     this.validateTourModel =  this.configService.validateTour(this.resTour, this.validateTourModel)
