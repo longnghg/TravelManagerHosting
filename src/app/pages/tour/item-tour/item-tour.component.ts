@@ -29,6 +29,7 @@ export class ItemTourComponent implements OnInit {
   img: any
   imgDetail = []
   formData: any
+  formDatas: any
   resAuth: AuthenticationModel
   active = 1;
   activePane = 0;
@@ -153,49 +154,67 @@ export class ItemTourComponent implements OnInit {
   }
 
   btnTourImg(){
-    console.log(123);
-
       this.tourImg.nativeElement.click()
   }
 
   changeTourImg(e: any){
-    this.formData = e
-    console.log(e);
-
-    // if (e.target.files[0].type == "image/jpg" || e.target.files[0].type == "image/jpeg" || e.target.files[0].type == "image/png") {
-
-    // }
-    // else{
-    //   this.notificationService.handleAlert("Không đúng định dạng hình ảnh !", StatusNotification.Error)
-    // }
+    this.formDatas = e
     var files = Object.assign([], e.target.files);
-    console.log(files);
+    var filesTmp = Object.assign([], e.target.files);
     this.imgDetail = []
-    var i = 0
+    var check = 0
     files.forEach(file => {
-      const reader = new FileReader();
-      reader.onload = e => this.imgDetail.push(reader.result);
-      reader.readAsDataURL(file)
-      this.resTour["imgDetail"+i+1] = this.imgDetail[i]
-      i++
+      if (file.type == "image/jpg" || file.type == "image/jpeg" || file.type == "image/png") {
+        const reader = new FileReader();
+        reader.onload = e => this.imgDetail.push(reader.result);
+        reader.readAsDataURL(file)
+      }
+      else{
+        filesTmp.splice(filesTmp.indexOf(file), 1)
+        check++
+      }
    });
 
-   console.log(this.imgDetail);
+   if (check > 0) {
+    files = filesTmp
+    var dt = new DataTransfer();
+    files.forEach(file => {
+      dt.items.add(file );
+    });
 
+    this.formDatas.target.files = dt.files
+    this.notificationService.handleAlert("Không đúng định dạng hình ảnh !", StatusNotification.Error)
+   }
+    setTimeout(() => {
+      if (files.length < 4) {
+        for (let index = 0; index < 4 - files.length; index++) {
+          this.imgDetail.push("../../../../assets/img/tours/cross-sign.jpg")
+        }
+      }
+    }, 100);
   }
+
   save(){
     this.validateTourModel = new ValidateTourModel
     this.validateTourModel =  this.configService.validateTour(this.resTour, this.validateTourModel)
 
     if (this.validateTourModel.total == 0) {
       this.resTour.idUserModify = this.resAuth.id
-      // this.resTour.typeAction = "insert"
+
+
       var file = new FormData();
       file.append('data', JSON.stringify(this.resTour))
 
       if (this.formData) {
         file.append('file', this.formData.path[0].files[0])
       }
+
+      if (this.formDatas) {
+        for (let index = 0; index < this.formDatas.path[0].files.length; index++) {
+          file.append('files', this.formDatas.path[0].files[index]);
+        }
+      }
+
       if(this.type == "create")
       {
         this.tourService.create(file).subscribe(res =>{

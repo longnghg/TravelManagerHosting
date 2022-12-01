@@ -16,10 +16,11 @@ export class TourModel{
   typeAction: string
   rating: number
 
-  imgDetail1: string
-  imgDetail2: string
-  imgDetail3: string
-  imgDetail4: string
+  // imgDetail: any
+  // imgDetail1: string
+  // imgDetail2: string
+  // imgDetail3: string
+  // imgDetail4: string
 }
 
 export class ValidateTourModel{

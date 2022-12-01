@@ -239,42 +239,22 @@ width: fit-content;">
 
 
                   <div class="form-group" style="margin-top: -15px;">
-                    <div class="row">
-                      <div class="col-9">
-                        <label class="form-control-label" for="input-tourName">Tấm 1
-                          <span [class]="this.type != 'create' && resTour.isDelete ?'d-none':'text-red'">* {{this.validateTourModel.nameTour ? this.validateTourModel.nameTour : ''}}</span>
-                        </label>
-                        <input type="text" id="nameTour" name="nameTour"  class="form-control form-control-alternative" placeholder="Nhập số tên chuyến du lịch" [(ngModel)]="resTour.imgDetail1" readonly >
+                    <ng-container *ngIf="formDatas">
+                      <div class="row"  *ngFor="let file of formDatas.path[0].files; let i=index">
+                        <div class="col-9">
+                          <label class="form-control-label" for="input-tourName">Tấm {{i+1}}</label>
+                          <input type="text" [(ngModel)]="file.name" [name]="i" class="form-control form-control-alternative" readonly >
 
-                      </div>
-                      <div class="col-3">
-                        <div class="btn btn-outline-danger" style="margin-top: 40%;">
-                          Xóa
+                        </div>
+                        <div class="col-3">
+                          <div class="btn btn-outline-danger" style="margin-top: 40%;">
+                            Xóa
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </ng-container>
+
                  </div>
-
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-tourName">Tấm 2
-                      <span [class]="this.type != 'create' && resTour.isDelete ?'d-none':'text-red'">* {{this.validateTourModel.nameTour ? this.validateTourModel.nameTour : ''}}</span>
-                    </label>
-                    <input type="text" id="nameTour" name="nameTour"  class="form-control form-control-alternative" placeholder="Nhập số tên chuyến du lịch" [(ngModel)]="resTour.imgDetail2" readonly>
-                  </div>
-
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-tourName">Tấm 3
-                      <span [class]="this.type != 'create' && resTour.isDelete ?'d-none':'text-red'">* {{this.validateTourModel.nameTour ? this.validateTourModel.nameTour : ''}}</span>
-                    </label>
-                    <input type="text" id="nameTour" name="nameTour"  class="form-control form-control-alternative" placeholder="Nhập số tên chuyến du lịch" [(ngModel)]="resTour.imgDetail3" readonly >
-                  </div>
-
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-tourName">Tấm 4
-                      <span [class]="this.type != 'create' && resTour.isDelete ?'d-none':'text-red'">* {{this.validateTourModel.nameTour ? this.validateTourModel.nameTour : ''}}</span>
-                    </label>
-                    <input type="text" id="nameTour" name="nameTour"  class="form-control form-control-alternative" placeholder="Nhập số tên chuyến du lịch" [(ngModel)]="resTour.imgDetail4" readonly >
-                  </div>
                 </div>
               </fieldset>
             </div>
@@ -283,19 +263,18 @@ width: fit-content;">
               <fieldset style="margin-top: -6%;height: 112%;">
                 <legend>Hình chi tiết tour</legend>
                 <div class="row">
-
                   <div class="col-12">
 
                     <div class="row">
                       <div class="col">
                         <div class="row mb-2">
                           <div class="col-6">
-                            <img [src]="imgDetail[0]" class="img-fluid"
-                              style="float: right; border-radius:10px; object-fit:fill; width: 70%; height: 100%;" alt="">
+                            <img [src]="imgDetail[0]" id="imgDetail[0]" class="img-fluid"
+                              style="float: right; border-radius:10px; object-fit:fill; width: 19rem;height: 12rem;" alt="">
                           </div>
                           <div class="col-6">
                             <img [src]="imgDetail[1]" class="img-fluid"
-                              style="float: left; border-radius:10px; object-fit:fill; width: 70%; height: 100%;" alt="">
+                              style="float: left; border-radius:10px; object-fit:fill; width: 19rem;height: 12rem;" alt="">
                           </div>
                         </div>
                       </div>
@@ -305,11 +284,11 @@ width: fit-content;">
                         <div class="row mb-2">
                           <div class="col-6">
                             <img [src]="imgDetail[2]" class="img-fluid"
-                              style="float: right; border-radius:10px; object-fit:fill; width: 70%; height: 100%;" alt="">
+                              style="float: right; border-radius:10px; object-fit:fill; width: 19rem;height: 12rem;" alt="">
                           </div>
                           <div class="col-6">
                             <img [src]="imgDetail[3]" class="img-fluid"
-                              style="float: left; border-radius:10px; object-fit:fill; width: 70%; height: 100%;" alt="">
+                              style="float: left; border-radius:10px; object-fit:fill; width: 19rem;height: 12rem;" alt="">
                           </div>
                         </div>
                       </div>
