@@ -239,7 +239,7 @@ width: fit-content;">
 
 
                   <div class="form-group" style="margin-top: -15px;">
-                    <ng-container *ngIf="formDatas">
+                    <ng-container *ngIf="formDatas && type=='create'; else imageDetail">
                       <div class="row"  *ngFor="let file of formDatas.path[0].files; let i=index">
                         <div class="col-9">
                           <label class="form-control-label" for="input-tourName">Tấm {{i+1}}</label>
@@ -253,6 +253,21 @@ width: fit-content;">
                         </div>
                       </div>
                     </ng-container>
+                    <ng-template #imageDetail>
+                      <div class="row"  *ngFor="let file of resImage; let i=index">
+                        <div class="col-9">
+                          <label class="form-control-label" for="input-tourName">Tấm {{i+1}}</label>
+                          <input type="text" [(ngModel)]="file.nameImage"  class="form-control form-control-alternative" readonly >
+
+                        </div>
+                        <div class="col-3">
+                          <div class="btn btn-outline-danger" style="margin-top: 40%;">
+                            Xóa
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+
 
                  </div>
                 </div>

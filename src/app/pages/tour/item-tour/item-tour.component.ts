@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 import { AuthenticationModel } from 'src/app/models/authentication.model';
 import { LocationModel } from 'src/app/models/location.model';
 import { StatusNotification } from "../../../enums/enum";
+import { ImageModel } from 'src/app/models/image.model';
+import { ImageService } from 'src/app/services_API/image.service';
 @Component({
   selector: 'app-item-tour',
   templateUrl: './item-tour.component.html',
@@ -23,6 +25,7 @@ export class ItemTourComponent implements OnInit {
   response: ResponseModel
   isChange: boolean = false
   resProvince: LocationModel[]
+  resImage: ImageModel[]
   isChangeStar: boolean = false
   resTourTmp: TourModel
   isHoliday = this.configService.listStatus()
@@ -35,7 +38,7 @@ export class ItemTourComponent implements OnInit {
   activePane = 0;
   listStar: any
   constructor(private provinceService: ProvinceService,private router: Router, private tourService: TourService, private configService: ConfigService, private notificationService: NotificationService,
-      private activatedRoute: ActivatedRoute) { }
+      private activatedRoute: ActivatedRoute, private imageService: ImageService) { }
 
   ngOnInit(): void {
     this.resAuth = JSON.parse(localStorage.getItem("currentUser"))
@@ -53,6 +56,7 @@ export class ItemTourComponent implements OnInit {
       if(this.resTour){
         if (this.resTour.thumbnail) {
           this.img = this.configService.apiUrl + this.resTour.thumbnail
+          // http://res.cloudinary.com/ddv2idi9d/image/upload/v1669909900/Uploads/Tour/GR-1669909897520/2022121/2022121225137_pvc11b.png
         }
         else{
           this.img = "../../../../assets/img/tours/cross-sign.jpg"
@@ -67,6 +71,7 @@ export class ItemTourComponent implements OnInit {
     }
     else{
       this.init(idTour)
+      this.initImage(idTour)
     }
   }
 
@@ -95,6 +100,31 @@ export class ItemTourComponent implements OnInit {
           this.resTour.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resTour.modifyDate)
           this.resTourTmp = Object.assign({}, this.resTour)
         }
+      }
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
+  }
+
+  initImage(idTour){
+    this.imageService.getsbyidTour(idTour).subscribe(res => {
+      this.response = res
+
+      if(this.response.notification.type == StatusNotification.Success)
+      {
+        this.resImage = this.response.content
+        console.log(this.resImage);
+
+        this.resImage.forEach(image => {
+          if (image.filePath) {
+            this.imgDetail.push(image.filePath)
+          }
+          else{
+            this.imgDetail.push("../../../../assets/img/tours/cross-sign.jpg")
+          }
+        });
+
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");

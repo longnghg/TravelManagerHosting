@@ -20,7 +20,7 @@ export class ProvinceService{
   async views()
   {
     var value = <any>await new Promise<any>(resolve => {
-      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/list-province").subscribe(res => {
+      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/list-province?pageIndex="+1+"&pageSize="+10).subscribe(res => {
         this.response = res
         this.resProvince =  this.response.content
         resolve(this.resProvince);
