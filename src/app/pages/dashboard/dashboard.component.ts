@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js';
 import { ConfigService } from "../../services_API/config.service";
+import { StatusNotification } from "../../enums/enum";
+import { AuthenticationModel } from "../../models/authentication.model";
+import { ResponseModel } from "../../models/responsiveModels/response.model";
+import { NotificationService } from "../../services_API/notification.service";
+import { StatisticService } from "../../services_API/statistic.service";
 // core components
 import {
   chartOptions,
@@ -21,11 +26,11 @@ export class DashboardComponent implements OnInit {
   public salesChart;
   public clicked: boolean = true;
   public clicked1: boolean = false;
-  constructor(private configService: ConfigService){
+  constructor(private statisticService: StatisticService, private notificationService: NotificationService, private configService: ConfigService){
 
   }
   ngOnInit() {
-
+    this.statisticService.listWeekByYear(new Date().getFullYear()).then(res => console.log(res));
     this.datasets = [
       [0, 20, 10, 30, 15, 40, 20, 60, 60],
       [0, 20, 5, 25, 10, 30, 15, 40, 40]
