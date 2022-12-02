@@ -19,4 +19,13 @@ getsbyidTour(idTour: any)
       return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/image/list-image-idTour?idTour="+idTour);
   }
 
+  createImageIdTour(data: any, idTour: any)
+  {
+      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/image/create-image-idTour?idTour="+idTour, data);
+  }
+
+  deleteImageIdTour(data: any)
+  {
+      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/image/delete-image-idTour", data);
+  }
 }

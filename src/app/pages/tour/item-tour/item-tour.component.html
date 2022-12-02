@@ -226,15 +226,15 @@ width: fit-content;">
               <fieldset style="margin-top: -12.5%; height: 111%;">
                 <legend>Chi tiết Tour</legend>
 
-                <input #tourImg id="files" type="file" multiple class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeTourImg($event); inputChange()">
-                <button for="files"  class="icon-btn add-btn" (click)="btnTourImg()" style="position: relative;top: -5%;" >
-                  <div class="add-icon"></div>
+                <ng-container >
+                  <input #tourImg id="files" type="file" multiple class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeTourImg($event); inputChange()">
+                 <button for="files"  class="icon-btn add-btn" (click)="btnTourImg()" style="position: relative;top: -5%;" >
+                   <div class="add-icon"></div>
                   <div class="btn-txt">Thêm hình</div>
-                </button>
-                <!-- <button class="icon-btn add-btn" (change)="changeImg($event)" style="position: relative;top: -5%;">
-                  <div class="add-icon"></div>
-                  <div class="btn-txt">Thêm hình</div>
-               </button> -->
+                  </button>
+                </ng-container>
+
+
                 <div class="row">
 
 
@@ -247,7 +247,7 @@ width: fit-content;">
 
                         </div>
                         <div class="col-3">
-                          <div class="btn btn-outline-danger" style="margin-top: 40%;">
+                          <div class="btn btn-outline-danger" (click)="btnDeleteImg(i, file)" style="margin-top: 40%;">
                             Xóa
                           </div>
                         </div>
@@ -261,7 +261,7 @@ width: fit-content;">
 
                         </div>
                         <div class="col-3">
-                          <div class="btn btn-outline-danger" style="margin-top: 40%;">
+                          <div class="btn btn-outline-danger" (click)="btnDeleteImg(i, file)" style="margin-top: 40%;">
                             Xóa
                           </div>
                         </div>
