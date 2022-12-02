@@ -4,7 +4,8 @@ export enum RoleTitle {
   'Quản lý cục bộ', LocalManager = 1,
   'Quản lý dịch vụ', ServiceManager = 2,
   'Quản lý tour', TourManager = 3,
-  'Quản lý tour booking', TourBookingManager = 4
+  'Quản lý tour booking', TourBookingManager = 4,
+  'Hướng dẫn viên', TourGuide = 5
 }
 
 

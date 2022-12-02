@@ -14,7 +14,37 @@ export class EmployeeService{
 
   response: ResponseModel
   resEmployee: EmployeeModel[]
-  async views()
+  async views(fromDate, toDate)
+{
+  var value = <any>await new Promise<any>(resolve => {
+    this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/list-selectbox-employee?fromDate="+fromDate+"&toDate="+toDate).subscribe(res => {
+      this.response = res
+      this.resEmployee =  this.response.content
+      resolve(this.resEmployee);
+  }, error => {
+    var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+    this.notificationService.handleAlert(message, "Error")
+  })})
+  return value
+
+}
+
+async viewsUpdate(fromDate, toDate, idSchedule)
+{
+  var value = <any>await new Promise<any>(resolve => {
+    this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/list-selectbox-employee-update?fromDate="+fromDate+"&toDate="+toDate+"&idSchedule="+idSchedule).subscribe(res => {
+      this.response = res
+      this.resEmployee =  this.response.content
+      resolve(this.resEmployee);
+  }, error => {
+    var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+    this.notificationService.handleAlert(message, "Error")
+  })})
+  return value
+
+}
+
+  async views2()
   {
     var value = <any>await new Promise<any>(resolve => {
       this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/list-employee?isDelete="+false).subscribe(res => {

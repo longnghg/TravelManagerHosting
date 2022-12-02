@@ -155,9 +155,7 @@ export class ItemTourScheduleComponent implements OnInit {
 
 
   init(e?) {
-    this.employeeService.views().then(response => {
-      this.resEmployee = response
-    })
+
 
     if (this.resSchedule) {
       // this.resSchedule.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.modifyDate)
@@ -166,12 +164,24 @@ export class ItemTourScheduleComponent implements OnInit {
         this.carService.viewsUpdate(this.resSchedule.departureDate, this.resSchedule.returnDate, this.resSchedule.idSchedule).then(response => {
           this.resCar = response
         })
+
+        this.employeeService.viewsUpdate(this.resSchedule.departureDate, this.resSchedule.returnDate, this.resSchedule.idSchedule).then(response => {
+          this.resCar = response
+        })
       } else {
         this.carService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
           this.resCar = response
         })
+
+        this.employeeService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
+          this.resCar = response
+        })
       }
     }
+
+    // this.employeeService.views2().then(response => {
+    //   this.resEmployee = response
+    // })
 
     // this.carService.views2().then(response => {
     //   this.resCar = response
@@ -185,17 +195,17 @@ export class ItemTourScheduleComponent implements OnInit {
     })
   }
 
-  carChangeDate(){
-    if(this.resSchedule){
-      if(this.resSchedule.departureDate > 0 && this.resSchedule.returnDate > 0){
-        var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
-        this.carService.getsCarByDate(this.resSchedule.departureDate, this.resSchedule.returnDate, idTour).subscribe(response => {
-          this.response = response
-          this.resCar = this.response.content
-        })
-      }
-    }
-  }
+  // carChangeDate(){
+  //   if(this.resSchedule){
+  //     if(this.resSchedule.departureDate > 0 && this.resSchedule.returnDate > 0){
+  //       var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
+  //       this.carService.getsCarByDate(this.resSchedule.departureDate, this.resSchedule.returnDate, idTour).subscribe(response => {
+  //         this.response = response
+  //         this.resCar = this.response.content
+  //       })
+  //     }
+  //   }
+  // }
 
   initCost() {
     this.hotelService.views().then(response => {
@@ -217,8 +227,16 @@ export class ItemTourScheduleComponent implements OnInit {
         this.carService.viewsUpdate(this.resSchedule.departureDate, this.resSchedule.returnDate, this.resSchedule.idSchedule).then(response => {
           this.resCar = response
         })
+
+        this.employeeService.viewsUpdate(this.resSchedule.departureDate, this.resSchedule.returnDate, this.resSchedule.idSchedule).then(response => {
+          this.resCar = response
+        })
       } else {
         this.carService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
+          this.resCar = response
+        })
+
+        this.employeeService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
           this.resCar = response
         })
       }

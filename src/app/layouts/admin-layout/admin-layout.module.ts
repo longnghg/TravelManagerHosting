@@ -33,9 +33,6 @@ import { ItemDistrictComponent } from '../../pages/locations/districts/item-dist
 import { ItemWardComponent } from '../../pages/locations/wards/item-ward/item-ward.component';
 import { ListWardComponent } from '../../pages/locations/wards/list-ward/list-ward.component';
 
-import { ListScheduleComponent } from '../../pages/schedule/list-schedule/list-schedule.component';
-import { ItemScheduleComponent } from '../../pages/schedule/item-schedule/item-schedule.component';
-
 import { ItemVoucherComponent } from 'src/app/pages/voucher/item-voucher/item-voucher.component';
 import { ListVoucherComponent } from 'src/app/pages/voucher/list-voucher/list-voucher.component';
 
@@ -104,8 +101,6 @@ import { PipesModule } from "../../pipes/pipes.module";
     ItemDistrictComponent,
     ItemWardComponent,
     ListWardComponent,
-    ListScheduleComponent,
-    ItemScheduleComponent,
     ListTourBookingComponent,
     ListHotelComponent,
     ItemHotelComponent,
