@@ -19,7 +19,7 @@ export class PromotionService{
   async views()
   {
     var value = <any>await new Promise<any>(resolve => {
-      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/promotion/list-promotion?isDelete="+false).subscribe(res => {
+      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/promotion/list-promotion?isDelete="+false+"&pageIndex="+1+"&pageSize="+10).subscribe(res => {
         this.response = res
         if(this.response.notification.type == StatusNotification.Success)
         {

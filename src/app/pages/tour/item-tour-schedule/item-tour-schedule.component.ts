@@ -166,15 +166,20 @@ export class ItemTourScheduleComponent implements OnInit {
         })
 
         this.employeeService.viewsUpdate(this.resSchedule.departureDate, this.resSchedule.returnDate, this.resSchedule.idSchedule).then(response => {
-          this.resCar = response
+          this.resEmployee = response
         })
       } else {
         this.carService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
+          console.log(response);
+
           this.resCar = response
+
         })
 
         this.employeeService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
-          this.resCar = response
+          console.log(response);
+
+          this.resEmployee = response
         })
       }
     }
@@ -220,16 +225,18 @@ export class ItemTourScheduleComponent implements OnInit {
   }
 
   dateChange(property) {
+
     this.resSchedule[property] = new Date(this.resSchedule[property+'Display']).getTime()
+console.log(this.type);
 
     if (property == "departureDate" || property == "returnDate"){
-      if (this.type == "detail") {
+      if (this.type != "create") {
         this.carService.viewsUpdate(this.resSchedule.departureDate, this.resSchedule.returnDate, this.resSchedule.idSchedule).then(response => {
           this.resCar = response
         })
 
         this.employeeService.viewsUpdate(this.resSchedule.departureDate, this.resSchedule.returnDate, this.resSchedule.idSchedule).then(response => {
-          this.resCar = response
+          this.resEmployee = response
         })
       } else {
         this.carService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
@@ -237,7 +244,7 @@ export class ItemTourScheduleComponent implements OnInit {
         })
 
         this.employeeService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
-          this.resCar = response
+          this.resEmployee = response
         })
       }
     }
@@ -489,6 +496,7 @@ export class ItemTourScheduleComponent implements OnInit {
   }
 
   promotionChange(id: number) {
+    console.log("ádsads")
     this.resPromotion.forEach(promotion => {
       if (promotion.idPromotion == id) {
         this.resSchedule.timePromotion = promotion.fromDate

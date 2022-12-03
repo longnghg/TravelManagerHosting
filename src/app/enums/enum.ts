@@ -19,6 +19,12 @@ export enum StatusCalled {
   false = 'Chưa gọi',
 }
 
+export enum StatusCar {
+  'Xe đang trống' = 0,
+  'Xe đã có tour' = 1,
+  'Xe đang đầy' = 2
+}
+
 export enum StatusApprove {
   'Đợi phê duyệt' = 0,
   'Phê duyệt' = 1,

@@ -60,7 +60,7 @@ async views2()
 }
 gets(isdelete: any)
 {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/list-car?isDelete="+isdelete);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/list-car?isDelete="+isdelete+"&pageIndex="+1+"&pageSize="+1);
 }
 
 create(data: any)

@@ -142,6 +142,16 @@ export class ConfigService{
     return listCalled
   }
 
+  listStatusCar(){
+    var listStatusCar = [
+      {id: 0, name: "Xe đang trống"},
+      {id: 1, name: "Xe đã có tour"},
+      {id: 2, name: "Xe đang đầy"}
+    ]
+
+    return listStatusCar
+  }
+
   listStatus(){
     var listStatus = [
       {id: false, name: "Chưa kích hoạt"},
@@ -598,7 +608,7 @@ export class ConfigService{
      if (data.description == null || data.description == "") {
       model.description = ("[Mô tả] không bỏ trống !")
       model.total += 1
-    }else if (data.description.length > 200) {
+    }else if (data.description.length > 2000) {
       model.description = "[Mô tả] quá dài !"
       model.total += 1
     }else if (data.description.length < 3) {
