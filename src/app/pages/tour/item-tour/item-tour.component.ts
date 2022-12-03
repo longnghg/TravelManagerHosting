@@ -26,14 +26,17 @@ export class ItemTourComponent implements OnInit {
   isChange: boolean = false
   resProvince: LocationModel[]
   resImage: ImageModel[] = []
+  resImageTmp: ImageModel[] = []
   resImageDelete: ImageModel[] = []
   isChangeStar: boolean = false
   resTourTmp: TourModel
   isHoliday = this.configService.listStatus()
   img: any
   imgDetail = []
+  imgDetailRoot = []
   formData: any
   formDatas: any
+  formDatasTmp: any
   resAuth: AuthenticationModel
   active = 1;
   activePane = 0;
@@ -111,14 +114,14 @@ export class ItemTourComponent implements OnInit {
   initImage(idTour){
     this.imageService.getsbyidTour(idTour).subscribe(res => {
       this.response = res
-
       if(this.response.notification.type == StatusNotification.Success)
       {
         this.resImage = this.response.content
-
+        this.resImageTmp = Object.assign([], this.resImage)
         this.resImage.forEach(image => {
           if (image.filePath) {
             this.imgDetail.push(image.filePath)
+            this.imgDetailRoot.push(image.filePath)
           }
         });
         if (this.resImage.length < 4) {
@@ -167,8 +170,6 @@ export class ItemTourComponent implements OnInit {
 
   changeImg(e: any){
     this.formData = e
-    console.log(e);
-
     if (e.target.files[0].type == "image/jpg" || e.target.files[0].type == "image/jpeg" || e.target.files[0].type == "image/png") {
       if (e.target.files && e.target.files[0]){
         const file = e.target.files[0];
@@ -189,13 +190,65 @@ export class ItemTourComponent implements OnInit {
   }
 
   changeTourImg(e: any){
-    this.formDatas = e
-    var files = Object.assign([], e.target.files);
-    var filesTmp = Object.assign([], e.target.files);
-    this.imgDetail = []
+    var files =  Object.assign([], e.target.files)
+    var filesTmp = Object.assign([],  e.target.files);
     var check = 0
     files.forEach(file => {
       if (file.type == "image/jpg" || file.type == "image/jpeg" || file.type == "image/png") {
+        if (this.imgDetail) {
+          this.imgDetail = Object.assign([], this.imgDetailRoot)
+        }
+        else{
+          this.imgDetail = []
+        }
+
+        if (this.type == "create") {
+          if (this.formDatas) {
+            filesTmp = Object.assign([], this.formDatasTmp)
+            files = filesTmp.concat(files)
+            files.forEach(_fileTmp => {
+              if (this.resImage.length < 4) {
+                dt.items.add(_fileTmp);
+                image.nameImage = _fileTmp.name
+                this.resImage.push(Object.assign({}, image))
+              }
+            });
+            this.formDatas.target.files = dt.files
+            this.formDatasTmp = dt.files
+          }
+          else{
+            var dt = new DataTransfer();
+            dt.items.add(file);
+            this.formDatas = e
+            this.formDatasTmp = dt.files
+          }
+        }else{
+          filesTmp = Object.assign([], this.formDatasTmp)
+          files = filesTmp.concat(files)
+          this.resImage = Object.assign([], this.resImageTmp)
+          var dt = new DataTransfer();
+          var image = new ImageModel
+          files.forEach(_fileTmp => {
+            console.error(_fileTmp);
+
+            if (this.resImage.length < 4) {
+              dt.items.add(_fileTmp);
+              console.log(_fileTmp.name);
+              image.nameImage = _fileTmp.name
+              this.resImage.push(Object.assign({}, image))
+            }
+          });
+
+          if (this.formDatas) {
+            this.formDatas.target.files = dt.files
+          }
+          else{
+            this.formDatas = e
+          }
+
+          this.formDatasTmp = dt.files
+        }
+
         const reader = new FileReader();
         reader.onload = e => this.imgDetail.push(reader.result);
         reader.readAsDataURL(file)
@@ -205,58 +258,79 @@ export class ItemTourComponent implements OnInit {
         check++
       }
    });
+   console.log(this.imgDetail);
 
+   if (this.formDatas) {
+    filesTmp = Object.assign([], this.formDatas.target.files);
+    files = Object.assign([], this.formDatas.target.files);
+   }
 
    if (check > 0) {
     files = filesTmp
     var dt = new DataTransfer();
     files.forEach(file => {
-      dt.items.add(file );
+      dt.items.add(file);
     });
 
-    this.formDatas.target.files = dt.files
+    if (this.formDatas) {
+      this.formDatas.target.files = dt.files
+    }
     this.notificationService.handleAlert("Không đúng định dạng hình ảnh !", StatusNotification.Error)
    }
+
     setTimeout(() => {
-      if (files.length < 4) {
-        for (let index = 0; index < 4 - files.length; index++) {
+      if (this.imgDetail.length < 4) {
+        for (let index = 0; index < 4 - this.imgDetail.length; index++) {
           this.imgDetail.push("../../../../assets/img/tours/cross-sign.jpg")
         }
       }
     }, 100);
+
   }
 
   btnDeleteImg(i: number, listDelete: any){
-
     if(this.imgDetail){
-      this.imgDetail.splice(i, 1);
-
-      if(this.type == "create"){
-        var files = this.formDatas.target.files;
-        var a = Array.from(files)
-        a.splice(i, 1)
-
+      if (this.formDatas && this.type == "create") {
+        var files = Object.assign([], this.formDatas.target.files)
+        files.splice(i, 1)
         var dt = new DataTransfer();
         files.forEach(file => {
-         dt.items.add(file );
-         });
-
-       console.log(this.formDatas.target.files);
-       console.log(listDelete);
-
+          dt.items.add(file);
+        });
+        this.formDatas.target.files = dt.files
+        this.formDatasTmp = dt.files
       }
+      else
+      {
+        if (this.formDatas) {
+          var files = Object.assign([], this.formDatas.target.files)
+          files.forEach(file => {
+            files.splice(file.name.indexOf(this.resImage[i].nameImage), 1)
+          });
 
-      if(this.resImage){
+          var dt = new DataTransfer();
+          files.forEach(file => {
+            dt.items.add(file);
+          });
+          this.formDatas.target.files = dt.files
+          this.formDatasTmp = dt.files
+        }
+        this.imgDetailRoot.splice(i, 1)
+        this.resImage.splice(i, 1)
+        this.resImageTmp = Object.assign([], this.resImage)
         this.resImageDelete.push(Object.assign({}, listDelete))
       }
 
+      this.imgDetail.splice(i, 1);
       if (this.imgDetail.length < 4) {
         for (let index = 0; index < 4 - this.imgDetail.length; index++) {
           this.imgDetail.push("../../../../assets/img/tours/cross-sign.jpg")
         }
       }
 
-      this.notificationService.handleAlert("Xóa thành công !", StatusNotification.Warning)
+      console.log(this.resImage);
+
+      this.notificationService.handleAlert("Xóa thành công !", StatusNotification.Success)
     }
   }
 
@@ -277,6 +351,7 @@ export class ItemTourComponent implements OnInit {
       }
 
       if (this.formDatas) {
+
         for (let index = 0; index < this.formDatas.path[0].files.length; index++) {
           files.append('files', this.formDatas.path[0].files[index]);
         }

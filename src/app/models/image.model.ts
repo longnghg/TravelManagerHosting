@@ -1,6 +1,6 @@
 export class ImageModel{
   id: string
-  nameImage: number
+  nameImage: string
   size: number
   filePath: string
   idService: number
