@@ -54,23 +54,21 @@ export class BannerComponent implements OnInit {
     this.validateBanner = new ValidationBannerModel
     var files = this.files.path[0].files
     var file = new FormData();
-    for (let index = 0; index < files.length; index++) {
-      file.append('files', files[index]);
-    }
-
-
-    this._bannerService.UploadBanner(file, this.nameBanner).subscribe(res => {
-      this.response = res
-      this.notificationService.handleAlertObj(res.notification)
-      if (this.response.notification.type == StatusNotification.Success) {
-            this.files = null
-            this.filesImg.nativeElement.value = null
-            this.nameBanner = null
+      for (let index = 0; index < files.length; index++) {
+        file.append('files', files[index]);
       }
-    }, error => {
-      var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
-      this.notificationService.handleAlert(message, StatusNotification.Error)
-    })
+      this._bannerService.UploadBanner(file, this.nameBanner).subscribe(res => {
+        this.response = res
+        this.notificationService.handleAlertObj(res.notification)
+        if (this.response.notification.type == StatusNotification.Success) {
+              this.files = null
+              this.filesImg.nativeElement.value = null
+              this.nameBanner = null
+        }
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+        this.notificationService.handleAlert(message, StatusNotification.Error)
+      })
 }
 
 getData(idBanner: string){
