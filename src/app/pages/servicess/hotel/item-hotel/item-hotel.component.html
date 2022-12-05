@@ -43,7 +43,7 @@
                 <ng-template ng-label-tmp let-item="item" let-item$="item$" let-index="index">
                   {{item.name}} -
                   <i class="fa-solid fa-star text-yellow" *ngFor='let star of resHotel.star | forNumber'></i>
-                  <i class="fa-solid fa-star" *ngFor='let star of listStar.length - resHotel.star | forNumber'></i>
+                  <i class="fa-solid fa-star" *ngFor='let star of listStar.length-1 - resHotel.star | forNumber'></i>
                 </ng-template>
 
                 <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">

@@ -190,102 +190,122 @@ export class ItemTourComponent implements OnInit {
   }
 
   changeTourImg(e: any){
-    var files =  Object.assign([], e.target.files)
-    var filesTmp = Object.assign([],  e.target.files);
-    var check = 0
-    files.forEach(file => {
-      if (file.type == "image/jpg" || file.type == "image/jpeg" || file.type == "image/png") {
-        if (this.imgDetail) {
-          this.imgDetail = Object.assign([], this.imgDetailRoot)
-        }
-        else{
-          this.imgDetail = []
-        }
-
-        if (this.type == "create") {
-          if (this.formDatas) {
-            filesTmp = Object.assign([], this.formDatasTmp)
-            files = filesTmp.concat(files)
-            files.forEach(_fileTmp => {
-              if (this.resImage.length < 4) {
-                dt.items.add(_fileTmp);
-                image.nameImage = _fileTmp.name
-                this.resImage.push(Object.assign({}, image))
-              }
-            });
-            this.formDatas.target.files = dt.files
-            this.formDatasTmp = dt.files
+    if (e.target.files.length > 0) {
+      var files =  Object.assign([], e.target.files)
+      var filesTmp = Object.assign([],  e.target.files);
+      var check = 0
+      var dt = new DataTransfer();
+      files.forEach(file => {
+        if (file.type == "image/jpg" || file.type == "image/jpeg" || file.type == "image/png") {
+          if (this.imgDetail) {
+            this.imgDetail = Object.assign([], this.imgDetailRoot)
           }
           else{
-            var dt = new DataTransfer();
+            this.imgDetail = []
+          }
+
+          if (this.type == "create") {
+            if (this.formDatas) {
+              this.resImage=[]
+              dt = new DataTransfer();
+              var image = new ImageModel
+              filesTmp = Object.assign([], this.formDatasTmp)
+              filesTmp.forEach(_fileTmp => {
+                image.nameImage = _fileTmp.name
+                this.resImage.push(Object.assign({}, image))
+                dt.items.add(_fileTmp);
+              });
+
+              if (filesTmp.length < 4) {
+                image.nameImage = file.name
+                this.resImage.push(Object.assign({}, image))
+                dt.items.add(file);
+              }
+              this.formDatas.target.files = dt.files
+              this.formDatasTmp = dt.files
+            }
+            else{
+              var image = new ImageModel
+              image.nameImage = file.name
+              this.resImage.push(Object.assign({}, image))
+              dt.items.add(file);
+              this.formDatas = e
+              this.formDatasTmp = dt.files
+            }
+
+          }else{
+           if (this.formDatas) {
+            filesTmp = Object.assign([], this.formDatasTmp)
+            this.resImage = Object.assign([], this.resImageTmp)
+            dt = new DataTransfer();
+            filesTmp.forEach(_fileTmp => {
+                dt.items.add(_fileTmp);
+            });
+            if (this.resImage.length < 4) {
+               var image = new ImageModel
+              image.nameImage = file.name
+              this.resImage.push(Object.assign({}, image))
+              dt.items.add(file);
+            }
+            this.formDatas.target.files = dt.files
+            this.formDatasTmp = dt.files
+           }
+           else{
+            var image = new ImageModel
+            image.nameImage = file.name
+            this.resImage.push(Object.assign({}, image))
+            this.resImageTmp.push(Object.assign({}, image))
             dt.items.add(file);
             this.formDatas = e
             this.formDatasTmp = dt.files
+           }
           }
-        }else{
-          filesTmp = Object.assign([], this.formDatasTmp)
-          files = filesTmp.concat(files)
-          this.resImage = Object.assign([], this.resImageTmp)
-          var dt = new DataTransfer();
-          var image = new ImageModel
-          files.forEach(_fileTmp => {
-            console.error(_fileTmp);
 
-            if (this.resImage.length < 4) {
-              dt.items.add(_fileTmp);
-              console.log(_fileTmp.name);
-              image.nameImage = _fileTmp.name
-              this.resImage.push(Object.assign({}, image))
+          const reader = new FileReader();
+          reader.onload = e =>{
+            var length = this.imgDetail.length
+            if (length < 4) {
+              this.imgDetail.push(reader.result)
+              this.imgDetailRoot.push(reader.result)
             }
-          });
-
-          if (this.formDatas) {
-            this.formDatas.target.files = dt.files
-          }
-          else{
-            this.formDatas = e
-          }
-
-          this.formDatasTmp = dt.files
+          };
+          reader.readAsDataURL(file)
         }
+        else{
+          filesTmp.splice(filesTmp.indexOf(file), 1)
+          check++
+        }
+      });
 
-        const reader = new FileReader();
-        reader.onload = e => this.imgDetail.push(reader.result);
-        reader.readAsDataURL(file)
+      //  if (this.formDatas) {
+      //   filesTmp = Object.assign([], this.formDatas.target.files);
+      //   files = Object.assign([], this.formDatas.target.files);
+      //  }
+
+      if (check > 0) {
+        // files = filesTmp
+        // dt = new DataTransfer();
+        // files.forEach(file => {
+        //   dt.items.add(file);
+        // });
+
+        // if (this.formDatas) {
+        //   this.formDatas.target.files = dt.files
+        // }
+        this.notificationService.handleAlert("Đã xóa [" + check + "] file không đúng định dạng hình ảnh !", StatusNotification.Error)
       }
-      else{
-        filesTmp.splice(filesTmp.indexOf(file), 1)
-        check++
-      }
-   });
-   console.log(this.imgDetail);
+      setTimeout(() => {
+        console.error(this.formDatas.target.files);
 
-   if (this.formDatas) {
-    filesTmp = Object.assign([], this.formDatas.target.files);
-    files = Object.assign([], this.formDatas.target.files);
-   }
+        if (this.imgDetail.length < 4) {
+          var length = this.imgDetail.length
+          for (let index = 0; index < 4 - length; index++) {
+            this.imgDetail.push("../../../../assets/img/tours/cross-sign.jpg")
+          }
+        }
+      }, 100);
 
-   if (check > 0) {
-    files = filesTmp
-    var dt = new DataTransfer();
-    files.forEach(file => {
-      dt.items.add(file);
-    });
-
-    if (this.formDatas) {
-      this.formDatas.target.files = dt.files
     }
-    this.notificationService.handleAlert("Không đúng định dạng hình ảnh !", StatusNotification.Error)
-   }
-
-    setTimeout(() => {
-      if (this.imgDetail.length < 4) {
-        for (let index = 0; index < 4 - this.imgDetail.length; index++) {
-          this.imgDetail.push("../../../../assets/img/tours/cross-sign.jpg")
-        }
-      }
-    }, 100);
-
   }
 
   btnDeleteImg(i: number, listDelete: any){
@@ -322,14 +342,15 @@ export class ItemTourComponent implements OnInit {
       }
 
       this.imgDetail.splice(i, 1);
+      this.imgDetailRoot.splice(i, 1);
+      this.resImageTmp.splice(i, 1);
+      console.warn(this.imgDetail);
+
       if (this.imgDetail.length < 4) {
         for (let index = 0; index < 4 - this.imgDetail.length; index++) {
           this.imgDetail.push("../../../../assets/img/tours/cross-sign.jpg")
         }
       }
-
-      console.log(this.resImage);
-
       this.notificationService.handleAlert("Xóa thành công !", StatusNotification.Success)
     }
   }
