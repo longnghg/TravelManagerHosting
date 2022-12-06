@@ -1,7 +1,6 @@
 
 export class ScheduleModel{
   idSchedule: string = ""
-
   departureDate: number = 0
   departureDateDisplay: string = ""
   returnDate :number = 0

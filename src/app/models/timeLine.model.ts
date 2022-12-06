@@ -12,6 +12,7 @@ export class TimeLineModel{
   modifyDate: number
   isDelete: boolean
   idSchedule: string
+  idScheduleTmp: string
 }
 
 

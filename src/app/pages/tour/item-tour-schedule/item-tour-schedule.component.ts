@@ -155,8 +155,6 @@ export class ItemTourScheduleComponent implements OnInit {
 
 
   init(e?) {
-
-
     if (this.resSchedule) {
       // this.resSchedule.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.modifyDate)
 
@@ -227,7 +225,6 @@ export class ItemTourScheduleComponent implements OnInit {
   dateChange(property) {
 
     this.resSchedule[property] = new Date(this.resSchedule[property+'Display']).getTime()
-console.log(this.type);
 
     if (property == "departureDate" || property == "returnDate"){
       if (this.type != "create") {
@@ -311,8 +308,8 @@ console.log(this.type);
               else {
                 this.scheduleService.update(this.resSchedule, this.resSchedule.idSchedule).subscribe(res => {
                   this.response = res
-
                   if (this.response.notification.type == StatusNotification.Success) {
+                    this.resCostTour.idScheduleTmp = this.response.content
                     this.saveCostTour(this.resSchedule)
                   }
                   this.notificationService.handleAlertObj(res.notification)
@@ -353,8 +350,6 @@ console.log(this.type);
     if (this.type == "create") {
       this.costtourService.create(this.resCostTour).subscribe(res => {
         this.response = res
-        console.log(res);
-
         if (this.response.notification.type == StatusNotification.Success) {
           this.saveTimeline(schedule)
         }
@@ -385,6 +380,7 @@ console.log(this.type);
     var countDelete = this.resTimelinelistDelete.length;
     var listDelete = this.resTimelinelistDelete
     this.resTimelinelist.forEach(timeline => {
+      timeline.idScheduleTmp = this.resCostTour.idScheduleTmp
       timeline.idSchedule = schedule.idSchedule
     });
 
