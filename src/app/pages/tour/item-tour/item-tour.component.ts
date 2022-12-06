@@ -138,6 +138,7 @@ export class ItemTourComponent implements OnInit {
 
   backup(){
     this.resTour = Object.assign({}, this.resTourTmp)
+   
     if (this.resTour.thumbnail) {
       this.img =  this.resTour.thumbnail
     }
@@ -151,7 +152,8 @@ export class ItemTourComponent implements OnInit {
   }
 
   inputChange(){
-    if (JSON.stringify(this.resTour) != JSON.stringify(this.resTourTmp)) {
+    if (JSON.stringify(this.resTour) != JSON.stringify(this.resTourTmp) ||
+        JSON.stringify(this.resImage) != JSON.stringify(this.resImageTmp) ){
       this.isChange = true
     }
     else{
@@ -360,8 +362,8 @@ export class ItemTourComponent implements OnInit {
     this.validateTourModel =  this.configService.validateTour(this.resTour, this.validateTourModel)
 
     if (this.validateTourModel.total == 0) {
-      this.resTour.idUserModify = this.resAuth.id
-
+      if(this.resImage.length > 0){
+        this.resTour.idUserModify = this.resAuth.id
 
       var file = new FormData();
       var files = new FormData();
@@ -380,20 +382,21 @@ export class ItemTourComponent implements OnInit {
 
       if(this.type == "create")
       {
-        this.tourService.create(file).subscribe(res =>{
-          this.response = res
-
-          if (res.notification.type == StatusNotification.Success) {
-            var idTour = this.response.content
-            this.createImageTourdetail(files, idTour)
-
-            this.router.navigate(['','list-tour']);
-          }
-          this.notificationService.handleAlertObj(res.notification)
-        }, error => {
-          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, StatusNotification.Error)
-        })
+          this.tourService.create(file).subscribe(res =>{
+            this.response = res
+  
+            if (res.notification.type == StatusNotification.Success) {
+              var idTour = this.response.content
+              this.createImageTourdetail(files, idTour)
+  
+              this.router.navigate(['','list-tour']);
+            }
+            this.notificationService.handleAlertObj(res.notification)
+          }, error => {
+            var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+            this.notificationService.handleAlert(message, StatusNotification.Error)
+          })
+        
       }
       else{
         this.resTour.idUserModify = this.resAuth.id
@@ -434,6 +437,11 @@ export class ItemTourComponent implements OnInit {
           this.notificationService.handleAlert(message, StatusNotification.Error)
         })
       }
+      }
+      else{
+        this.notificationService.handleAlert("Hình ảnh chi tiết tour thêm ít nhất 1 ảnh !", StatusNotification.Warning)
+      }
+      
     }
     else{
       if (this.validateTourModel.thumbnail) {

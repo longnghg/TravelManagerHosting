@@ -234,7 +234,7 @@ width: fit-content;">
                       <fieldset style="margin-top: -12.5%; height: 111%;">
                         <legend>Chi tiết Tour</legend>
         
-                        <ng-container >
+                        <ng-container *ngIf="resImage.length < 4">
                           <input #tourImg id="files" type="file" multiple class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeTourImg($event); inputChange()">
                          <button for="files"  class="icon-btn add-btn" (click)="btnTourImg()" style="position: relative;top: -5%;" >
                            <div class="add-icon"></div>
@@ -279,7 +279,7 @@ width: fit-content;">
                             <div class="row"  *ngFor="let file of resImage; let i=index">
                               <div class="col-9">
                                 <label class="form-control-label" for="input-tourName">Tấm {{i+1}}</label>
-                                <input type="text" [(ngModel)]="file.nameImage"  class="form-control form-control-alternative" readonly >
+                                <input type="text" [(ngModel)]="file.nameImage" (input)="inputChange()"  class="form-control form-control-alternative" readonly >
         
                               </div>
                               <div class="col-3">
@@ -287,6 +287,7 @@ width: fit-content;">
                                   Xóa
                                 </div>
                               </div>
+                              <hr style="margin-bottom: 0rem;">
                             </div>
                          </div>
                         </div>
