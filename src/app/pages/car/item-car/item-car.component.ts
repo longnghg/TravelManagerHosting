@@ -35,7 +35,7 @@ export class ItemCarComponent implements OnInit {
 
      }
 
-     listStatus = this.configService.listStatus()
+     listStatus = this.configService.listStatusCar()
   ngOnInit(): void {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
     console.log(this.auth);
