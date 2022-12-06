@@ -96,7 +96,7 @@ export class ItemTourComponent implements OnInit {
         this.resTour = this.response.content
         if(this.resTour){
           if (this.resTour.thumbnail) {
-            this.img = this.configService.apiUrl + this.resTour.thumbnail
+            this.img = this.resTour.thumbnail
           }
           else{
             this.img = "../../../../assets/img/tours/cross-sign.jpg"
@@ -139,7 +139,7 @@ export class ItemTourComponent implements OnInit {
   backup(){
     this.resTour = Object.assign({}, this.resTourTmp)
     if (this.resTour.thumbnail) {
-      this.img = this.configService.apiUrl + this.resTour.thumbnail
+      this.img =  this.resTour.thumbnail
     }
     else{
       this.img = "../../../../assets/img/tours/cross-sign.jpg"

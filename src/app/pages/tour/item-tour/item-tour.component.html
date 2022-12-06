@@ -100,236 +100,248 @@ width: fit-content;">
 	<ng-container ngbNavItem>
 		<a ngbNavLink class="titleBN" style="font-size: 25px;">Thông tin chi tiết</a>
     <ng-template ngbNavContent>
-      <div class="containerBN" *ngIf="resTour" style="margin-top: -10%; margin-bottom: 10%;">
-        <div class="bannerBN">
-            <div class="titleBN" style="background-image: url({{img}});">
-            </div>
-            <div class="detailBN row">
-               <div class="infoBN col-3">
-                 <h2>{{resTour.nameTour}}</h2>
-                 <div class="desBN">
-                  <i class="fa-solid fa-star text-yellow" *ngFor='let star of resTour.rating | forNumber'></i>
-                  <i class="fa-solid fa-star" *ngFor='let star of listStar.length - resTour.rating | forNumber'></i>
-                 </div>
-               </div>
-               <div class="col-5">
-                <img style="width: 100% ;height: 380px; border-radius: 20px;" [src]="img">
-               </div>
-              <div class="optionBN col-4">
-                <fieldset style="margin-top: -10%; height: 103%;">
-                  <legend>Chi tiết Tour</legend>
-                  <div class="row">
-                    <div class="form-group">
-                      <label class="form-control-label" for="input-tourName">Tên Chuyến Du Lịch
-                        <span [class]="this.type != 'create' && resTour.isDelete ?'d-none':'text-red'">* {{this.validateTourModel.nameTour ? this.validateTourModel.nameTour : ''}}</span>
-                      </label>
-                      <input type="text" id="nameTour" name="nameTour" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số tên chuyến du lịch" [(ngModel)]="resTour.nameTour" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resTour.isDelete" >
-                    </div>
+      <nav ngbNav #nav="ngbNav" class="nav-pills" style="margin-top: 7rem; margin-left: 11rem; position: absolute; z-index: 1;">
+        <ng-container ngbNavItem>
+          <a ngbNavLink class="titleBN" style="font-size: 17px;" >Thông tin</a>
+          <ng-template ngbNavContent>
+            <div class="containerBN" *ngIf="resTour" style="margin-top: -10%; margin-bottom: 10%;">
+              <div class="bannerBN">
+                  <div class="titleBN" style="background-image: url({{img}});">
                   </div>
-                  <div class="row">
-                    <div class="col">
-                      <div class="form-group">
-                      <label class="form-control-label" for="input-toPlace">Điểm đến
-                        <span [class]="this.type != 'create' && resTour.isDelete ?'d-none':'text-red'">* {{this.validateTourModel.toPlace ? this.validateTourModel.toPlace : ''}}</span>
-                       </label>
-                       <ng-select
-                      [items]="resProvince"
-                      [(ngModel)]="resTour.toPlace"
-                      [disabled]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resTour.isDelete"
-                      placeholder="Chọn điểm đến"
-                      name="toPlace"
-                      id="toPlace"
-                      bindLabel="nameProvince"
-                      bindValue="nameProvince"
-                      [searchable]="false"
-                      [clearable]="false"
-                      (change)="inputChange()">
-                    </ng-select>
-                     </div>
-                    </div>
-                  </div>
-
-                  <div class="row" *ngIf="this.type == 'detail' && !resTour.isDelete ">
-                    <div [class]="isChange && type == 'detail' && resAuth.roleId == -1 ? 'col-8': 'col'">
-                      <label class="form-control-label" for="input-tourName">Đánh giá</label>
-                      <ng-select
-                      [items]="listStar"
-                      [(ngModel)]="resTour.rating"
-                      [disabled]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resTour.isDelete || resAuth.roleId != -1"
-                      placeholder="Chọn số sao..."
-                      name="star"
-                      id="rating"
-                      bindLabel="name"
-                      bindValue="id"
-                      [searchable]="false"
-                      [clearable]="false"
-                      (change)="startChange()">
-
-                      <ng-template ng-label-tmp let-item="item" let-item$="item$" let-index="index">
-                        {{item.name}} -
+                  <div class="detailBN row">
+                     <div class="infoBN col-3">
+                       <h2>{{resTour.nameTour}}</h2>
+                       <div class="desBN">
                         <i class="fa-solid fa-star text-yellow" *ngFor='let star of resTour.rating | forNumber'></i>
-                        <i class="fa-solid fa-star" *ngFor='let star of listStar.length-1 - resTour.rating | forNumber'></i>
-                      </ng-template>
-
-                      <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                        {{item.name}} -
-                        <i class="fa-solid fa-star text-yellow" *ngFor='let star of item.id | forNumber'></i>
-                        <i class="fa-solid fa-star" *ngFor='let star of listStar.length-1 - item.id  | forNumber'></i>
-                      </ng-template>
-                    </ng-select>
-                    </div>
-                    <div class="col-4" style="position: relative;top: 37px;"  *ngIf="isChangeStar && resAuth.roleId == -1">
-                      <button  class="btn  btn-sm btn-success"(click)="ratingTour()">Cập nhật sao</button>
+                        <i class="fa-solid fa-star" *ngFor='let star of listStar.length - resTour.rating | forNumber'></i>
+                       </div>
+                     </div>
+                     <div class="col-5">
+                      <img style="width: 100% ;height: 380px; border-radius: 20px;" [src]="img">
+                     </div>
+                    <div class="optionBN col-4">
+                      <fieldset style="margin-top: -10%; height: 103%;">
+                        <legend>Chi tiết Tour</legend>
+                        <div class="row">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-tourName">Tên Chuyến Du Lịch
+                              <span [class]="this.type != 'create' && resTour.isDelete ?'d-none':'text-red'">* {{this.validateTourModel.nameTour ? this.validateTourModel.nameTour : ''}}</span>
+                            </label>
+                            <input type="text" id="nameTour" name="nameTour" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số tên chuyến du lịch" [(ngModel)]="resTour.nameTour" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resTour.isDelete" >
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col">
+                            <div class="form-group">
+                            <label class="form-control-label" for="input-toPlace">Điểm đến
+                              <span [class]="this.type != 'create' && resTour.isDelete ?'d-none':'text-red'">* {{this.validateTourModel.toPlace ? this.validateTourModel.toPlace : ''}}</span>
+                             </label>
+                             <ng-select
+                            [items]="resProvince"
+                            [(ngModel)]="resTour.toPlace"
+                            [disabled]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resTour.isDelete"
+                            placeholder="Chọn điểm đến"
+                            name="toPlace"
+                            id="toPlace"
+                            bindLabel="nameProvince"
+                            bindValue="nameProvince"
+                            [searchable]="false"
+                            [clearable]="false"
+                            (change)="inputChange()">
+                          </ng-select>
+                           </div>
+                          </div>
+                        </div>
+      
+                        <div class="row" *ngIf="this.type == 'detail' && !resTour.isDelete ">
+                          <div [class]="isChange && type == 'detail' && resAuth.roleId == -1 ? 'col-8': 'col'">
+                            <label class="form-control-label" for="input-tourName">Đánh giá</label>
+                            <ng-select
+                            [items]="listStar"
+                            [(ngModel)]="resTour.rating"
+                            [disabled]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resTour.isDelete || resAuth.roleId != -1"
+                            placeholder="Chọn số sao..."
+                            name="star"
+                            id="rating"
+                            bindLabel="name"
+                            bindValue="id"
+                            [searchable]="false"
+                            [clearable]="false"
+                            (change)="startChange()">
+      
+                            <ng-template ng-label-tmp let-item="item" let-item$="item$" let-index="index">
+                              {{item.name}} -
+                              <i class="fa-solid fa-star text-yellow" *ngFor='let star of resTour.rating | forNumber'></i>
+                              <i class="fa-solid fa-star" *ngFor='let star of listStar.length-1 - resTour.rating | forNumber'></i>
+                            </ng-template>
+      
+                            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                              {{item.name}} -
+                              <i class="fa-solid fa-star text-yellow" *ngFor='let star of item.id | forNumber'></i>
+                              <i class="fa-solid fa-star" *ngFor='let star of listStar.length-1 - item.id  | forNumber'></i>
+                            </ng-template>
+                          </ng-select>
+                          </div>
+                          <div class="col-4" style="position: relative;top: 37px;"  *ngIf="isChangeStar && resAuth.roleId == -1">
+                            <button  class="btn  btn-sm btn-success"(click)="ratingTour()">Cập nhật sao</button>
+                          </div>
+                        </div>
+      
+      
+                        <!-- <span [class]="this.type != 'create' && resTour.isDelete ?'d-none':'text-red'">{{this.validateTourModel.thumbnail ? this.validateTourModel.thumbnail : ''}}</span> -->
+                        <div class="align-items-center text-right mt-2" style="margin-right: 1rem;">
+                          <ng-container *ngIf="type != 'approve' && type != 'refuse' && type != 'cancelRequire'; else elseApprove">
+                            <input id="file" type="file" class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeImg($event); inputChange()">
+                            <label *ngIf="type == 'create'|| type == 'detail'  && !resTour.isDelete" for="file" style="margin-top: 10px;"  class="btn btn-sm btn-primary">Chọn Hình</label>
+                            <button  *ngIf="type == 'detail' && !resTour.isDelete" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemTourModal" >Xóa</button>
+                            <button *ngIf="isChangeStar || isChange" class="btn btn-sm btn-info" (click)="backup()">Khôi phục</button>
+                            <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="save()">{{type == 'detail' ? "Cập nhật":"Thêm"}}</button>
+                            <button *ngIf="resTour.isDelete"  data-bs-toggle="modal" data-bs-target="#restoreItemTourModal" class="btn btn-sm btn-warning">Khôi phục tour</button>
+      
+                     </ng-container>
+                     <ng-template #elseApprove>
+                       <button *ngIf="type == 'approve' && resTour.typeAction && resAuth.roleId == -1" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#approveItemTourModal" >Phê Duyệt</button>
+                       <button *ngIf="type == 'approve' && resTour.typeAction && resAuth.roleId == -1" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#refusedItemTourModal">Từ chối duyệt</button>
+                       <button *ngIf="resAuth.id == resTour.idUserModify" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemTourModal">Hủy yêu cầu</button>
+                     </ng-template>
+                       </div>
+      
+                      </fieldset>
+                     <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                         Magni vitae labore aliquid sequi sunt harum!
+                         <br>
+                         <b>Màu sắc</b> <br>
+                         <div class="ellipseBN" style="background-color:#555"></div>
+                         <div class="ellipseBN" style="background-color:aqua"></div>
+                         <div class="ellipseBN" style="background-color:brown"></div>
+                         <br>
+                         <button class="cardBN">Add to card</button> -->
                     </div>
                   </div>
-
-
-                  <!-- <span [class]="this.type != 'create' && resTour.isDelete ?'d-none':'text-red'">{{this.validateTourModel.thumbnail ? this.validateTourModel.thumbnail : ''}}</span> -->
-                  <div class="align-items-center text-right mt-2" style="margin-right: 1rem;">
-                    <ng-container *ngIf="type != 'approve' && type != 'refuse' && type != 'cancelRequire'; else elseApprove">
-                      <input id="file" type="file" class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeImg($event); inputChange()">
-                      <label *ngIf="type == 'create'|| type == 'detail'  && !resTour.isDelete" for="file" style="margin-top: 10px;"  class="btn btn-sm btn-primary">Chọn Hình</label>
-                      <button  *ngIf="type == 'detail' && !resTour.isDelete" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemTourModal" >Xóa</button>
-                      <button *ngIf="isChangeStar || isChange" class="btn btn-sm btn-info" (click)="backup()">Khôi phục</button>
-                      <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="save()">{{type == 'detail' ? "Cập nhật":"Thêm"}}</button>
-                      <button *ngIf="resTour.isDelete"  data-bs-toggle="modal" data-bs-target="#restoreItemTourModal" class="btn btn-sm btn-warning">Khôi phục tour</button>
-
-               </ng-container>
-               <ng-template #elseApprove>
-                 <button *ngIf="type == 'approve' && resTour.typeAction && resAuth.roleId == -1" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#approveItemTourModal" >Phê Duyệt</button>
-                 <button *ngIf="type == 'approve' && resTour.typeAction && resAuth.roleId == -1" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#refusedItemTourModal">Từ chối duyệt</button>
-                 <button *ngIf="resAuth.id == resTour.idUserModify" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemTourModal">Hủy yêu cầu</button>
-               </ng-template>
-                 </div>
-
-                </fieldset>
-               <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                   Magni vitae labore aliquid sequi sunt harum!
-                   <br>
-                   <b>Màu sắc</b> <br>
-                   <div class="ellipseBN" style="background-color:#555"></div>
-                   <div class="ellipseBN" style="background-color:aqua"></div>
-                   <div class="ellipseBN" style="background-color:brown"></div>
-                   <br>
-                   <button class="cardBN">Add to card</button> -->
               </div>
             </div>
-        </div>
-      </div>
-
-    <div class="containerBN" *ngIf="resTour" style="margin-top: -10%; margin-bottom: 10%;">
-      <div class="bannerBN">
-          <div class="titleBN" style="background-image: url({{img}});">
-          </div>
-          <div class="detailBN row">
-            <div class="optionBN col-4">
-              <fieldset style="margin-top: -12.5%; height: 111%;">
-                <legend>Chi tiết Tour</legend>
-
-                <ng-container >
-                  <input #tourImg id="files" type="file" multiple class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeTourImg($event); inputChange()">
-                 <button for="files"  class="icon-btn add-btn" (click)="btnTourImg()" style="position: relative;top: -5%;" >
-                   <div class="add-icon"></div>
-                  <div class="btn-txt">Thêm hình</div>
-                  </button>
-                </ng-container>
-
-
-                <div class="row">
-
-
-                  <div class="form-group" style="margin-top: -15px;">
-                    <!-- <ng-container *ngIf="formDatas && type=='create'; else imageDetail">
-                      <div class="row"  *ngFor="let file of formDatas.path[0].files; let i=index">
-                        <div class="col-9">
-                          <label class="form-control-label" for="input-tourName">Tấm {{i+1}}</label>
-                          <input type="text" [(ngModel)]="file.name" [name]="i" class="form-control form-control-alternative" readonly >
-
-                        </div>
-                        <div class="col-3">
-                          <div class="btn btn-outline-danger" (click)="btnDeleteImg(i, file)" style="margin-top: 40%;">
-                            Xóa
-                          </div>
-                        </div>
-                      </div>
-                    </ng-container>
-                    <ng-template #imageDetail>
-                      <div class="row"  *ngFor="let file of resImage; let i=index">
-                        <div class="col-9">
-                          <label class="form-control-label" for="input-tourName">Tấm {{i+1}}</label>
-                          <input type="text" [(ngModel)]="file.nameImage"  class="form-control form-control-alternative" readonly >
-
-                        </div>
-                        <div class="col-3">
-                          <div class="btn btn-outline-danger" (click)="btnDeleteImg(i, file)" style="margin-top: 40%;">
-                            Xóa
-                          </div>
-                        </div>
-                      </div>
-                    </ng-template> -->
-
-                    <div class="row"  *ngFor="let file of resImage; let i=index">
-                      <div class="col-9">
-                        <label class="form-control-label" for="input-tourName">Tấm {{i+1}}</label>
-                        <input type="text" [(ngModel)]="file.nameImage"  class="form-control form-control-alternative" readonly >
-
-                      </div>
-                      <div class="col-3">
-                        <div class="btn btn-outline-danger" (click)="btnDeleteImg(i, file)" style="margin-top: 40%;">
-                          Xóa
-                        </div>
-                      </div>
-                    </div>
-                 </div>
-                </div>
-              </fieldset>
-            </div>
-
-             <div class="optionBN col-8">
-              <fieldset style="margin-top: -6%;height: 112%;">
-                <legend>Hình chi tiết tour</legend>
-                <div class="row">
-                  <div class="col-12">
-
-                    <div class="row">
-                      <div class="col">
-                        <div class="row mb-2">
-                          <div class="col-6">
-                            <img [src]="imgDetail[0]" id="imgDetail[0]" class="img-fluid"
-                              style="float: right; border-radius:10px; object-fit:fill; width: 19rem;height: 12rem;" alt="">
-                          </div>
-                          <div class="col-6">
-                            <img [src]="imgDetail[1]" class="img-fluid"
-                              style="float: left; border-radius:10px; object-fit:fill; width: 19rem;height: 12rem;" alt="">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col">
-                        <div class="row mb-2">
-                          <div class="col-6">
-                            <img [src]="imgDetail[2]" class="img-fluid"
-                              style="float: right; border-radius:10px; object-fit:fill; width: 19rem;height: 12rem;" alt="">
-                          </div>
-                          <div class="col-6">
-                            <img [src]="imgDetail[3]" class="img-fluid"
-                              style="float: left; border-radius:10px; object-fit:fill; width: 19rem;height: 12rem;" alt="">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+          </ng-template>
+        </ng-container>
+        <ng-container ngbNavItem>
+          <a ngbNavLink class="titleBN" style="font-size: 17px;">Hình ảnh chi tiết</a>
+          <ng-template ngbNavContent>
+            <div class="containerBN" *ngIf="resTour" style="margin-top: -10%; margin-bottom: 10%;">
+              <div class="bannerBN">
+                  <div class="titleBN" style="background-image: url({{img}});">
                   </div>
-                </div>
-              </fieldset>
-
-             </div>
-
-          </div>
-      </div>
-    </div>
-
-
+                  <div class="detailBN row">
+                    <div class="optionBN col-4">
+                      <fieldset style="margin-top: -12.5%; height: 111%;">
+                        <legend>Chi tiết Tour</legend>
+        
+                        <ng-container >
+                          <input #tourImg id="files" type="file" multiple class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeTourImg($event); inputChange()">
+                         <button for="files"  class="icon-btn add-btn" (click)="btnTourImg()" style="position: relative;top: -5%;" >
+                           <div class="add-icon"></div>
+                          <div class="btn-txt">Thêm hình</div>
+                          </button>
+                        </ng-container>
+        
+        
+                        <div class="row">
+        
+        
+                          <div class="form-group" style="margin-top: -15px;">
+                            <!-- <ng-container *ngIf="formDatas && type=='create'; else imageDetail">
+                              <div class="row"  *ngFor="let file of formDatas.path[0].files; let i=index">
+                                <div class="col-9">
+                                  <label class="form-control-label" for="input-tourName">Tấm {{i+1}}</label>
+                                  <input type="text" [(ngModel)]="file.name" [name]="i" class="form-control form-control-alternative" readonly >
+        
+                                </div>
+                                <div class="col-3">
+                                  <div class="btn btn-outline-danger" (click)="btnDeleteImg(i, file)" style="margin-top: 40%;">
+                                    Xóa
+                                  </div>
+                                </div>
+                              </div>
+                            </ng-container>
+                            <ng-template #imageDetail>
+                              <div class="row"  *ngFor="let file of resImage; let i=index">
+                                <div class="col-9">
+                                  <label class="form-control-label" for="input-tourName">Tấm {{i+1}}</label>
+                                  <input type="text" [(ngModel)]="file.nameImage"  class="form-control form-control-alternative" readonly >
+        
+                                </div>
+                                <div class="col-3">
+                                  <div class="btn btn-outline-danger" (click)="btnDeleteImg(i, file)" style="margin-top: 40%;">
+                                    Xóa
+                                  </div>
+                                </div>
+                              </div>
+                            </ng-template> -->
+        
+                            <div class="row"  *ngFor="let file of resImage; let i=index">
+                              <div class="col-9">
+                                <label class="form-control-label" for="input-tourName">Tấm {{i+1}}</label>
+                                <input type="text" [(ngModel)]="file.nameImage"  class="form-control form-control-alternative" readonly >
+        
+                              </div>
+                              <div class="col-3">
+                                <div class="btn btn-outline-danger" (click)="btnDeleteImg(i, file)" style="margin-top: 40%;">
+                                  Xóa
+                                </div>
+                              </div>
+                            </div>
+                         </div>
+                        </div>
+                      </fieldset>
+                    </div>
+        
+                     <div class="optionBN col-8">
+                      <fieldset style="margin-top: -6%;height: 112%;">
+                        <legend>Hình chi tiết tour</legend>
+                        <div class="row">
+                          <div class="col-12">
+        
+                            <div class="row">
+                              <div class="col">
+                                <div class="row mb-2">
+                                  <div class="col-6">
+                                    <img [src]="imgDetail[0]" id="imgDetail[0]" class="img-fluid"
+                                      style="float: right; border-radius:10px; object-fit:fill; width: 19rem;height: 12rem;" alt="">
+                                  </div>
+                                  <div class="col-6">
+                                    <img [src]="imgDetail[1]" class="img-fluid"
+                                      style="float: left; border-radius:10px; object-fit:fill; width: 19rem;height: 12rem;" alt="">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col">
+                                <div class="row mb-2">
+                                  <div class="col-6">
+                                    <img [src]="imgDetail[2]" class="img-fluid"
+                                      style="float: right; border-radius:10px; object-fit:fill; width: 19rem;height: 12rem;" alt="">
+                                  </div>
+                                  <div class="col-6">
+                                    <img [src]="imgDetail[3]" class="img-fluid"
+                                      style="float: left; border-radius:10px; object-fit:fill; width: 19rem;height: 12rem;" alt="">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </fieldset>
+        
+                     </div>
+        
+                  </div>
+              </div>
+            </div>
+          </ng-template>
+        </ng-container>
+      </nav>
+      
+      <div [ngbNavOutlet]="nav" class="mt-2"></div>
+      
     </ng-template>
 	</ng-container>
 	<ng-container *ngIf="type == 'detail'" ngbNavItem>
