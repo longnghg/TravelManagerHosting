@@ -363,7 +363,7 @@ export class ItemTourComponent implements OnInit {
     this.validateTourModel =  this.configService.validateTour(this.resTour, this.validateTourModel)
 
     if (this.validateTourModel.total == 0) {
-      if(this.resImage.length > 0){
+      if(this.resImage.length == 4){
         this.resTour.idUserModify = this.resAuth.id
 
         var file = new FormData();
@@ -443,7 +443,7 @@ export class ItemTourComponent implements OnInit {
         }
       }
       else{
-        this.notificationService.handleAlert("Hình ảnh chi tiết tour thêm ít nhất 1 ảnh !", StatusNotification.Warning)
+        this.notificationService.handleAlert("Hình ảnh chi tiết tour phải thêm 4 ảnh!", StatusNotification.Warning)
         this.isLoading = false
       }
 

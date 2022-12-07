@@ -300,6 +300,9 @@ export class ItemTourScheduleComponent implements OnInit {
                     this.resSchedule.idSchedule = res.content
                     this.saveCostTour(this.resSchedule)
                   }
+                  else{
+                    this.isLoading = false
+                  }
                   this.notificationService.handleAlertObj(res.notification)
                 }, error => {
                   var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
@@ -313,6 +316,9 @@ export class ItemTourScheduleComponent implements OnInit {
                   if (this.response.notification.type == StatusNotification.Success) {
                     this.resCostTour.idScheduleTmp = this.response.content
                     this.saveCostTour(this.resSchedule)
+                  }
+                  else{
+                    this.isLoading = false
                   }
                   this.notificationService.handleAlertObj(res.notification)
                 }, error => {
