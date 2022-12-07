@@ -7,6 +7,7 @@ import { ConfigService } from "../../../services_API/config.service";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { StatusNotification, StatusApprove, TypeAction } from "../../../enums/enum";
 import { AuthenticationModel } from "../../../models/authentication.model";
+import { PaginationModel } from 'src/app/models/responsiveModels/pagination.model';
 
 @Component({
   selector: 'app-list-promotion',
@@ -24,6 +25,7 @@ export class ListPromotionComponent implements OnInit {
   typeChild: string
   isDelete: boolean = false
   data: PromotionModel
+  pagination = new PaginationModel
   constructor(private promotionService: PromotionService,
     private configService: ConfigService,
     private notificationService: NotificationService) { }
@@ -47,36 +49,39 @@ export class ListPromotionComponent implements OnInit {
       disableRestore: true
     }
   ngOnInit(): void {
+    this.columnDefs= [
+      { field: 'value',headerName: "Giá trị giảm giá", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'value'},
+      { field: 'fromDate',headerName: "Từ ngày", style: "width: 30%;", searchable: true, searchType: 'date', searchObj: 'fromDate',filter: 'date'},
+      { field: 'toDate',headerName: "Đến ngày", style: "width: 30%;", searchable: true, searchType: 'date', searchObj: 'toDate', filter: 'date'},
+    ];
+
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
-    this.init(this.isDelete);
+    this.gridConfig.pageSize = this.pagination.pageSize
+    this.gridConfigWaiting.pageSize = this.pagination.pageSize
+    this.search(this.pagination, true)
+    this.init();
     this.initStatistic()
   }
 
-  init(isDelete){
-    this.promotionService.gets(isDelete).subscribe(res =>{
-      this.response = res
-      if(this.response.notification.type == StatusNotification.Success){
-        this.resPromotion = this.response.content
-      }
-    }, error => {
-      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, StatusNotification.Error)
-    })
+  init(){
+    // this.promotionService.gets(isDelete).subscribe(res =>{
+    //   this.response = res
+    //   if(this.response.notification.type == StatusNotification.Success){
+    //     this.resPromotion = this.response.content
+    //   }
+    // }, error => {
+    //   var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+    //   this.notificationService.handleAlert(message, StatusNotification.Error)
+    // })
 
     setTimeout(() => {
 
-      this.columnDefs= [
-        { field: 'value',headerName: "Mã giảm giá", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'value'},
-        { field: 'toDate',headerName: "Từ ngày", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'toDate',filter: 'date'},
-        { field: 'fromDate',headerName: "Đến ngày", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'fromDate', filter: 'date'},
-      ];
-
       this.columnDefsWaiting= [
-        { field: 'value',headerName: "Mã giảm giá", style: "width: 20%;", searchable: true, searchType: "text", searchObj: 'name'},
-        { field: 'toDate',headerName: "Từ ngày", style: "width: 25%;", searchable: true, searchType: 'text', searchObj: 'toDate', filter: 'date'},
-        { field: 'fromDate',headerName: "Đến ngày", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'fromDate',filter: 'date'},
-        { field: 'approveName',headerName: "Trạng thái phê duyệt", style: "width: 15%;", searchable: true, searchType: 'section', searchObj: 'approve' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listApprove()},
-        { field: 'typeActionName',headerName: "Loại phê duyệt", style: "width: 15%;", searchable: true, searchType: 'section', searchObj: 'typeAction' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listTypeAction()},
+        { field: 'value',headerName: "Mã giảm giá", style: "width: 20%;"},
+        { field: 'fromDate',headerName: "Từ ngày", style: "width: 25%;", filter: 'date'},
+        { field: 'toDate',headerName: "Đến ngày", style: "width: 15%;",filter: 'date'},
+        { field: 'approveName',headerName: "Trạng thái phê duyệt", style: "width: 15%;"},
+        { field: 'typeActionName',headerName: "Loại phê duyệt", style: "width: 15%;"},
       ];
     }, 200);
 
@@ -94,6 +99,30 @@ export class ListPromotionComponent implements OnInit {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)
     })
+  }
+
+  search(e?, isNotShow?){
+    if (e) {
+      this.promotionService.search(Object.assign({}, e)).subscribe(res => {
+        this.response = res
+        if(this.response.notification.type == StatusNotification.Success)
+        {
+          this.resPromotion = this.response.content
+        }
+        else{
+
+          this.resPromotion = []
+          if (!isNotShow) {
+            this.notificationService.handleAlertObj(res.notification)
+          }
+          //this.resPromotion = Object.assign([], this.resCarTmp)
+        }
+        this.gridConfig.totalResult = this.response.totalResult
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, StatusNotification.Error)
+      })
+    }
   }
 
   childData(e){

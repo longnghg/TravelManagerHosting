@@ -81,4 +81,7 @@ export class PromotionService{
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Promotion/statistic");
 
   }
+  search(data){
+    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Promotion/search-promotion", data);
+  }
 }
