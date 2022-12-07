@@ -6,7 +6,7 @@ import { CustomerModel } from 'src/app/models/customer.model';
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.component';
 import { StatusNotification } from "../../../enums/enum";
-
+import { PaginationModel } from 'src/app/models/responsiveModels/pagination.model';
 @Component({
   selector: 'app-list-customer',
   templateUrl: './list-customer.component.html',
@@ -17,6 +17,7 @@ export class ListCustomerComponent implements OnInit {
   response: ResponseModel
   dataChild: CustomerModel
   typeChild: string
+  pagination = new PaginationModel
   constructor(private customerService: CustomerService, private notificationService: NotificationService,
     private configService: ConfigService) { }
 
@@ -27,11 +28,12 @@ export class ListCustomerComponent implements OnInit {
       idModalDelete: "",
       idModal: "gridCustomer",
       radioBoxName: "Kho lưu trữ",
-      disableApprove: true
+      disableApprove: true,
+      disableCreate: true,
+      disableDelete: true,
+      disableRestore: true
     }
     ngOnInit(): void {
-
-      this.init()
 
       setTimeout(() => {
         this.columnDefs= [
@@ -43,6 +45,9 @@ export class ListCustomerComponent implements OnInit {
         { field: 'point',headerName: "Điểm", style: "width: 10%;", searchable: true, searchType: 'text', searchObj: 'point'},
         ];
       }, 200);
+
+      this.gridConfig.pageSize = this.pagination.pageSize
+      this.search(this.pagination, true)
     }
 
     init(){
@@ -59,6 +64,30 @@ export class ListCustomerComponent implements OnInit {
         this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
+
+    search(e, isNotShow?){
+      if (e) {
+        this.customerService.search(Object.assign({}, e)).subscribe(res => {
+          this.response = res
+          if(this.response.notification.type == StatusNotification.Success)
+          {
+            this.resCustomer = this.response.content
+          }
+          else{
+            // this.resHotel = Object.assign([], this.resHotelTmp)
+            this.resCustomer = []
+            if (!isNotShow) {
+              this.notificationService.handleAlertObj(res.notification)
+            }
+          }
+          this.gridConfig.totalResult = this.response.totalResult
+        }, error => {
+          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+          this.notificationService.handleAlert(message, StatusNotification.Error)
+        })
+      }
+    }
+
     childData(e){
       if (e) {
         this.dataChild = e

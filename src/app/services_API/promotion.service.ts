@@ -46,9 +46,9 @@ export class PromotionService{
   // {
   //   return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Promotion/get-promotion?idPromotion="+idPromotion);
   // }
-  getsWaiting(idUser: any)
+  getsWaiting(idUser: any, pageIndex: number, pageSize: number)
   {
-      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Promotion/list-promotion-waiting?idUser="+idUser);
+      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Promotion/list-promotion-waiting?idUser="+idUser+"&pageIndex="+pageIndex+"&pageSize="+pageSize);
   }
   create(data: any)
   {

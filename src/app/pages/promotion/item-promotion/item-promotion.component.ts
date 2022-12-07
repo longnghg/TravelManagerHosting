@@ -44,6 +44,7 @@ export class ItemPromotionComponent implements OnInit {
       if(this.resPromotion){
         this.resPromotion.fromDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resPromotion.fromDate)
         this.resPromotion.toDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resPromotion.toDate)
+        this.resPromotion.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resPromotion.modifyDate)
       }
       }
   }

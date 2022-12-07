@@ -18,4 +18,9 @@ export class CustomerService{
   {
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/customer/create-customer", data);
   }
+  search(data)
+  {
+    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/customer/search-customer",data);
+  }
+
 }

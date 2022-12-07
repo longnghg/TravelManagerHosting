@@ -55,15 +55,24 @@ export class ListPromotionComponent implements OnInit {
       { field: 'toDate',headerName: "Đến ngày", style: "width: 30%;", searchable: true, searchType: 'date', searchObj: 'toDate', filter: 'date'},
     ];
 
+    this.columnDefsWaiting= [
+      { field: 'value',headerName: "Mã giảm giá", style: "width: 20%;"},
+      { field: 'fromDate',headerName: "Từ ngày", style: "width: 15%;", filter: 'date'},
+      { field: 'toDate',headerName: "Đến ngày", style: "width: 15%;",filter: 'date'},
+      { field: 'modifyBy',headerName: "Người yêu cầu", style: "width: 15%;", searchable: false, searchType: 'text', searchObj: 'modifyBy'},
+      { field: 'modifyDate',headerName: "Ngày yêu cầu", style: "width: 15%;", filter: 'date', searchable: false, searchType: 'date', typeDate: 'range', searchObj: 'modifyDate'},
+      { field: 'typeActionName',headerName: "Loại phê duyệt", style: "width: 10%;"},
+    ];
+
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
     this.gridConfig.pageSize = this.pagination.pageSize
     this.gridConfigWaiting.pageSize = this.pagination.pageSize
     this.search(this.pagination, true)
-    this.init();
+    this.initWaiting(this.pagination);
     this.initStatistic()
   }
 
-  init(){
+  initWaiting(e){
     // this.promotionService.gets(isDelete).subscribe(res =>{
     //   this.response = res
     //   if(this.response.notification.type == StatusNotification.Success){
@@ -73,28 +82,20 @@ export class ListPromotionComponent implements OnInit {
     //   var message = this.configService.error(error.status, error.error != null?error.error.text:"");
     //   this.notificationService.handleAlert(message, StatusNotification.Error)
     // })
-
-    setTimeout(() => {
-
-      this.columnDefsWaiting= [
-        { field: 'value',headerName: "Mã giảm giá", style: "width: 20%;"},
-        { field: 'fromDate',headerName: "Từ ngày", style: "width: 25%;", filter: 'date'},
-        { field: 'toDate',headerName: "Đến ngày", style: "width: 15%;",filter: 'date'},
-        { field: 'approveName',headerName: "Trạng thái phê duyệt", style: "width: 15%;"},
-        { field: 'typeActionName',headerName: "Loại phê duyệt", style: "width: 15%;"},
-      ];
-    }, 200);
-
-    this.promotionService.getsWaiting(this.auth.id).subscribe(res =>{
+    this.promotionService.getsWaiting(this.auth.id, e.pageIndex, e.pageSize).subscribe(res =>{
       this.response = res
       if(this.response.notification.type == StatusNotification.Success){
         this.resPromotionWaiting = this.response.content
-
+        console.log(this.resPromotionWaiting);
+        
         this.resPromotionWaiting.forEach(promotion => {
           promotion.approveName = StatusApprove[promotion.approve]
           promotion.typeActionName = TypeAction[promotion.typeAction]
         });
+      }else{
+        this.resPromotionWaiting = []
       }
+      this.gridConfigWaiting.totalResult = this.response.totalResult
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)
