@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { ScheduleModel } from 'src/app/models/schedule.model';
 import { ScheduleService } from "../../../services_API/schedule.service";
 import { NotificationService } from "../../../services_API/notification.service";
@@ -15,6 +15,8 @@ import { PaginationModel } from "../../../models/responsiveModels/pagination.mod
   styleUrls: ['./view-tour-schedule.component.scss']
 })
 export class ViewTourScheduleComponent implements OnInit {
+  @ViewChild('closeModalLoad') closeModalLoad: ElementRef;
+  isLoading: boolean
   auth: AuthenticationModel
   resSchedule: ScheduleModel[]
   resScheduleTmp: ScheduleModel[]
@@ -184,9 +186,12 @@ export class ViewTourScheduleComponent implements OnInit {
      this.scheduleService.delete(this.data.idSchedule, this.auth.id).subscribe(res =>{
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
+       this.isLoading = false
+       this.closeModalLoad.nativeElement.click()
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
        this.notificationService.handleAlert(message, StatusNotification.Error)
+       this.isLoading = false
      })
     }
    }
@@ -196,9 +201,12 @@ export class ViewTourScheduleComponent implements OnInit {
       this.scheduleService.restore(this.data.idSchedule, this.auth.id).subscribe(res =>{
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
+        this.isLoading = false
+        this.closeModalLoad.nativeElement.click()
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, StatusNotification.Error)
+        this.isLoading = false
       })
     }
   }
@@ -207,10 +215,12 @@ export class ViewTourScheduleComponent implements OnInit {
      this.scheduleService.approve(this.data.idSchedule).subscribe(res =>{
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
+       this.isLoading = false
+       this.closeModalLoad.nativeElement.click()
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
        this.notificationService.handleAlert(message, StatusNotification.Error)
-
+       this.isLoading = false
      })
     }
    }
@@ -220,9 +230,12 @@ export class ViewTourScheduleComponent implements OnInit {
      this.scheduleService.refused(this.data.idSchedule).subscribe(res =>{
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
+       this.isLoading = false
+       this.closeModalLoad.nativeElement.click()
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
        this.notificationService.handleAlert(message, StatusNotification.Error)
+       this.isLoading = false
      })
     }
    }

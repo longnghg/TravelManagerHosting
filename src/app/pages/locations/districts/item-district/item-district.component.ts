@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter,ElementRef, ViewChild } from '@angular/core';
 import { NotificationService } from "../../../../services_API/notification.service";
 import { ProvinceService } from "../../../../services_API/province.service";
 import { DistrictService } from "../../../../services_API/district.service";
@@ -14,6 +14,7 @@ import { StatusNotification } from "../../../../enums/enum";
 
 })
 export class ItemDistrictComponent implements OnInit {
+  isLoading: boolean
   @Input() resDistrict: LocationModel
   @Input() type: string
   @Output() parentDel = new EventEmitter<any>()
@@ -60,10 +61,12 @@ export class ItemDistrictComponent implements OnInit {
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
           this.close()
+          this.isLoading = false
 
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
+          this.isLoading = false
         })
       }
       else{
@@ -78,12 +81,17 @@ export class ItemDistrictComponent implements OnInit {
             this.resDistrict = Object.assign({},this.resDistrictTmp)
           }
           this.isChange = false
+          this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Success)
+          this.isLoading = false
         })
 
       }
+    }
+    else{
+      this.isLoading = false
     }
 
   }

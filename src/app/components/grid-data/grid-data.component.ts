@@ -214,6 +214,10 @@ export class GridDataComponent implements OnInit {
     this.gdChild.emit(data);
     this.gdType.emit(type);
   }
+
+  changeZIndex(){
+    document.getElementById("thead").style.zIndex = "1"
+  }
 }
 
 export interface ColDef{

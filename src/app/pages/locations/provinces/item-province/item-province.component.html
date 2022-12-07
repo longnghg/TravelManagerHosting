@@ -1,6 +1,6 @@
 <div class="modal-header">
   <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin chi tiết</h1>
-  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()" [disabled]="isLoading"></button>
 </div>
 <div class="modal-body">
   <ng-container *ngIf="resProvince">
@@ -13,7 +13,7 @@
                 <label class="form-control-label" for="input-username">Tên thành phố/tỉnh
                   <span class="text-red">* {{this.validateLocation.nameProvince ? this.validateLocation.nameProvince : ''}}</span>
                 </label>
-                <input type="text" id="name" (input)="inputChange()" class="form-control " placeholder="Nhập tên thành phố/tỉnh" [(ngModel)]="resProvince.nameProvince">
+                <input type="text" id="name" (input)="inputChange()" class="form-control " placeholder="Nhập tên thành phố/tỉnh" [(ngModel)]="resProvince.nameProvince" [disabled]="isLoading">
               </div>
             </div>
           </div>
@@ -23,9 +23,9 @@
 
     <div class="row align-items-center">
       <div class="col-12 text-right">
-        <button  *ngIf="type == 'detail'" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteProvinceModal" (click)="getDataDelete()">Xóa</button>
-        <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="backup()">Khôi phục</button>
-        <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="save()">{{type == 'detail' ? "Lưu":"Thêm"}}</button>
+        <button  *ngIf="type == 'detail'" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteDistrictModal" (click)="getDataDelete()" [disabled]="isLoading">Xóa</button>
+        <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="backup()" [disabled]="isLoading">Khôi phục</button>
+        <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="isLoading=true;save()" [disabled]="isLoading">{{isLoading?'Đang xử lý...':type == 'detail' ? "Lưu":"Thêm"}}</button>
       </div>
     </div>
 

@@ -35,6 +35,8 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
   styleUrls: ['./item-tour-schedule.component.scss']
 })
 export class ItemTourScheduleComponent implements OnInit {
+  @ViewChild('closeModal') closeModal: ElementRef
+  isLoading: boolean
   @Input() resSchedule: ScheduleModel
   @Input() type: string
   // @Output() parentDelete = new EventEmitter<any>()
@@ -71,7 +73,6 @@ export class ItemTourScheduleComponent implements OnInit {
   isChangeTimeline: boolean = false
   isChangeTimelineList: boolean = false
   isFirst: boolean = true
-  @ViewChild('closeModal') closeModal: ElementRef;
   constructor(private scheduleService: ScheduleService, private configService: ConfigService, private notificationService: NotificationService,
     private employeeService: EmployeeService, private carService: CarService, private promotionService: PromotionService, private activatedRoute: ActivatedRoute,
     private costtourService: CostTourService, private hotelService: HotelService, private placeService: PlaceService, private restaurantService: RestaurantService,
@@ -303,6 +304,7 @@ export class ItemTourScheduleComponent implements OnInit {
                 }, error => {
                   var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
                   this.notificationService.handleAlert(message, StatusNotification.Error)
+                  this.isLoading = false
                 })
               }
               else {
@@ -316,27 +318,33 @@ export class ItemTourScheduleComponent implements OnInit {
                 }, error => {
                   var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
                   this.notificationService.handleAlert(message, StatusNotification.Error)
+                  this.isLoading = false
                 })
               }
             } else {
               this.notificationService.handleAlert("Bạn cần thêm ít nhất 1 timeline !", StatusNotification.Warning)
               this.active = 3
+              this.isLoading = false
             }
            } else {
             this.active = 3
+            this.isLoading = false
            }
           } else {
             this.notificationService.handleAlert("Bạn cần nhập đầy đủ chi phí !", StatusNotification.Warning)
             this.active = 2
+            this.isLoading = false
           }
         }
         else{
           this.active = 2
+          this.isLoading = false
         }
     }
     else {
       this.notificationService.handleAlert("Bạn cần nhập đầy đủ lịch trình !", StatusNotification.Warning)
       this.active = 1
+      this.isLoading = false
     }
   }
 
@@ -359,6 +367,7 @@ export class ItemTourScheduleComponent implements OnInit {
       }, error => {
         var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
         this.notificationService.handleAlert(message, StatusNotification.Error)
+        this.isLoading = false
       })
     }
     else {
@@ -372,6 +381,7 @@ export class ItemTourScheduleComponent implements OnInit {
       }, error => {
         var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
         this.notificationService.handleAlert(message, StatusNotification.Error)
+        this.isLoading = false
       })
     }
   }
@@ -393,9 +403,11 @@ export class ItemTourScheduleComponent implements OnInit {
         else{
           this.notificationService.handleAlertObj(res.notification)
         }
+        this.isLoading = false
       }, error => {
         var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
         this.notificationService.handleAlert(message, StatusNotification.Error)
+        this.isLoading = false
       })
     }
     else {
@@ -406,18 +418,22 @@ export class ItemTourScheduleComponent implements OnInit {
         }else{
           this.notificationService.handleAlertObj(res.notification)
         }
+        this.isLoading = false
       }, error => {
         var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
         this.notificationService.handleAlert(message, StatusNotification.Error)
+        this.isLoading = false
       })
 
       if(countDelete > 0){
         this.timelineService.delete(listDelete).subscribe(res => {
           this.response = res
           if (this.response.notification.type == StatusNotification.Success) {}
+          this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
           this.notificationService.handleAlert(message, StatusNotification.Error)
+          this.isLoading = false
         })
       }
     }
@@ -543,29 +559,29 @@ export class ItemTourScheduleComponent implements OnInit {
   }
 
 
-  delete() {
-    if (this.resSchedule) {
-      this.scheduleService.delete(this.resSchedule.idSchedule, this.auth.id).subscribe(res => {
-        this.response = res
-        this.notificationService.handleAlertObj(res.notification)
-      }, error => {
-        var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
-        this.notificationService.handleAlert(message, StatusNotification.Error)
-      })
-    }
-  }
+  // delete() {
+  //   if (this.resSchedule) {
+  //     this.scheduleService.delete(this.resSchedule.idSchedule, this.auth.id).subscribe(res => {
+  //       this.response = res
+  //       this.notificationService.handleAlertObj(res.notification)
+  //     }, error => {
+  //       var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+  //       this.notificationService.handleAlert(message, StatusNotification.Error)
+  //     })
+  //   }
+  // }
 
-  restoreSchedule() {
-    if (this.resSchedule) {
-      this.scheduleService.restore(this.resSchedule.idSchedule, this.auth.id).subscribe(res => {
-        this.response = res
-        this.notificationService.handleAlertObj(res.notification)
-      }, error => {
-        var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
-        this.notificationService.handleAlert(message, StatusNotification.Error)
-      })
-    }
-  }
+  // restoreSchedule() {
+  //   if (this.resSchedule) {
+  //     this.scheduleService.restore(this.resSchedule.idSchedule, this.auth.id).subscribe(res => {
+  //       this.response = res
+  //       this.notificationService.handleAlertObj(res.notification)
+  //     }, error => {
+  //       var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+  //       this.notificationService.handleAlert(message, StatusNotification.Error)
+  //     })
+  //   }
+  // }
 
   getParentData(type?: string) {
     this.parentType.emit(type);

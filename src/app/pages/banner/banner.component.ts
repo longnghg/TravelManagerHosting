@@ -26,6 +26,7 @@ export class BannerComponent implements OnInit {
   nameNotify: string
   fileNotify: string
   validateBanner: ValidationBannerModel = new ValidationBannerModel
+  isLoading: boolean
   ngOnInit(): void {
 
 
@@ -69,9 +70,11 @@ export class BannerComponent implements OnInit {
               this.filesImg.nativeElement.value = null
               this.nameBanner = null
         }
+        this.isLoading = false
       }, error => {
         var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
         this.notificationService.handleAlert(message, StatusNotification.Error)
+        this.isLoading = false
       })
 }
 

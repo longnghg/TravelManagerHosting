@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild} from '@angular/core';
 import { NotificationService } from "../../../services_API/notification.service";
 import { ConfigService } from "../../../services_API/config.service";
 import { EmployeeService } from 'src/app/services_API/employee.service';
@@ -20,7 +20,8 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
 export class ItemEmployeeComponent implements OnInit{
   response: ResponseModel
   auth: AuthenticationModel
-
+  @ViewChild('closeModalLoad') closeModalLoad: ElementRef;
+  isLoading: boolean
   validateEmployee: ValidationEmployeeModel = new ValidationEmployeeModel
   validationChangePass: ValidationChangePass = new ValidationChangePass
   @Input() resEmployee: EmployeeModel
@@ -83,7 +84,8 @@ export class ItemEmployeeComponent implements OnInit{
           if(this.resEmployee){
 
             if (this.resEmployee.image) {
-              this.img = this.configService.apiUrl + this.resEmployee.image
+              // this.img = this.configService.apiUrl + this.resEmployee.image
+              this.img = this.resEmployee.image
             }
             else{
               this.img = "../../../../assets/img/employees/unknown.png"
@@ -106,7 +108,8 @@ export class ItemEmployeeComponent implements OnInit{
       if(this.resEmployee){
 
         if (this.resEmployee.image) {
-          this.img = this.configService.apiUrl + this.resEmployee.image
+         // this.img = this.configService.apiUrl + this.resEmployee.image
+         this.img = this.resEmployee.image
         }
         else{
           this.img = "../../../../assets/img/employees/unknown.png"
@@ -199,9 +202,11 @@ export class ItemEmployeeComponent implements OnInit{
               this.isChange = false
             }
           }
+          this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
+          this.isLoading = false
         })
       }
       else{
@@ -219,15 +224,21 @@ export class ItemEmployeeComponent implements OnInit{
             this.notificationService.handleAlertObj(res.notification)
             if (res.notification.type == StatusNotification.Success) {
               this.close()
-              this.isChange = true
+
             }
           }
+          this.isChange = true
+          this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
+          this.isLoading = false
         })
       }
 
+    }
+    else{
+      this.isLoading = false
     }
 
   }
@@ -264,17 +275,19 @@ export class ItemEmployeeComponent implements OnInit{
       if (this.resEmployee.idEmployee != this.auth.id) {
         this.employeeService.delete(this.resEmployee.idEmployee).subscribe(res =>{
           this.response = res
-
           this.notificationService.handleAlertObj(res.notification)
+          this.isLoading = false
           if (res.notification.type == StatusNotification.Success) {
            this.router.navigate(['','list-employee']);
           }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
+          this.isLoading = false
         })
        }
        else{
+        this.isLoading = false
         this.notificationService.handleAlert("Bạn không thể xóa tài khoản đang đăng nhập !", StatusNotification.Error)
       }
     }
@@ -298,12 +311,14 @@ export class ItemEmployeeComponent implements OnInit{
       this.employeeService.restore(this.resEmployee.idEmployee).subscribe(res =>{
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
+        this.isLoading = false
         if (res.notification.type == StatusNotification.Success) {
           this.router.navigate(['','list-employee'], { state: { isDelete: true } });
          }
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, StatusNotification.Error)
+        this.isLoading = false
       })
     }
   }

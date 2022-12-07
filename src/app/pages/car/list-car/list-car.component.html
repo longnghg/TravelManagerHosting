@@ -115,18 +115,21 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="deleteCarModalLabel">Xác nhận</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button #closeModalLoad type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
       </div>
       <div class="modal-body" *ngIf="data">
         Bạn có chắc muốn xóa [<span class="text-red">{{data.liscensePlate}}</span>] !
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="delete()" >Xóa</button>
+        <button type="button" class="btn btn-danger" (click)="isLoading=true; delete()" [disabled]="isLoading">
+          <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          {{isLoading?'Đang xử lý...':'Xóa'}}
+        </button>
         <ng-container *ngIf="typeChild; else elseType">
-          <button type="button" class="btn btn-primary" [attr.data-bs-target]="'#'+gridConfig.idModal" data-bs-toggle="modal">Không</button>
+          <button type="button" class="btn btn-primary" [attr.data-bs-target]="'#'+gridConfig.idModal" data-bs-toggle="modal" [disabled]="isLoading">Không</button>
         </ng-container>
         <ng-template #elseType>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="isLoading">Không</button>
         </ng-template>
 
       </div>
@@ -139,18 +142,21 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="restoreCarModalLabel">Xác nhận</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button #closeModalLoad type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
       </div>
       <div class="modal-body" *ngIf="data">
         Bạn có chắc muốn khôi phục [<span class="text-red">{{data.liscensePlate}}</span>] !
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="restore()" >Khôi phục</button>
+        <button type="button" class="btn btn-danger" (click)="isLoading=true; restore()" >
+          <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          {{isLoading?'Đang xử lý...':'Khôi phục'}}
+        </button>
         <ng-container *ngIf="typeChild; else elseType">
-          <button type="button" class="btn btn-primary" [attr.data-bs-target]="'#'+gridConfig.idModal" data-bs-toggle="modal">Không</button>
+          <button type="button" class="btn btn-primary" [attr.data-bs-target]="'#'+gridConfig.idModal" data-bs-toggle="modal" [disabled]="isLoading">Không</button>
         </ng-container>
         <ng-template #elseType>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="isLoading">Không</button>
         </ng-template>
 
       </div>

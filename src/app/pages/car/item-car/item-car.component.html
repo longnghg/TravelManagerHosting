@@ -1,6 +1,6 @@
 <div class="modal-header">
   <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin chi tiết</h1>
-  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()" [disabled]="isLoading"></button>
 </div>
 <div class="modal-body">
   <ng-container *ngIf="resCar">
@@ -13,7 +13,7 @@
                 <label class="form-control-label" for="input-name">Tên người lái
                 <span [class]="type != 'detail' && type != 'create' || resCar.isDelete ?'d-none':'text-danger'">* {{validateCar.nameDriver ? validateCar.nameDriver : ''}}</span>
               </label>
-                <input type="text" id="driver" name="driver" (input)="inputChange()" class="form-control " placeholder="Nhập tên người lái" [(ngModel)]="resCar.nameDriver">
+                <input type="text" id="driver" name="driver" (input)="inputChange()" class="form-control " placeholder="Nhập tên người lái" [(ngModel)]="resCar.nameDriver" [readonly]="isLoading">
               </div>
             </div>
             <div class="col-lg-6">
@@ -21,7 +21,7 @@
                 <label class="form-control-label" for="input-phone">Số điện thoại
                  <span [class]="type != 'detail' && type != 'create' || resCar.isDelete ?'d-none':'text-danger'">* {{validateCar.phone ? validateCar.phone : ''}}</span>
                 </label>
-               <input type="text" id="phone" name="phone" (input)="inputChange()" class="form-control " placeholder="Nhập số điện thoại" [(ngModel)]="resCar.phone">
+               <input type="text" id="phone" name="phone" (input)="inputChange()" class="form-control " placeholder="Nhập số điện thoại" [(ngModel)]="resCar.phone" [readonly]="isLoading">
               </div>
             </div>
           </div>
@@ -32,7 +32,7 @@
                 <label class="form-control-label" for="input-address">Biển số xe
                   <span [class]="type != 'detail' && type != 'create' || resCar.isDelete ?'d-none':'text-danger'">* {{validateCar.liscensePlate ? validateCar.liscensePlate : ''}}</span>
                 </label>
-              <input type="text" id="liscensePlate" name="liscensePlate" (input)="inputChange()" class="form-control " placeholder="Nhập biển số xe" [(ngModel)]="resCar.liscensePlate" >
+              <input type="text" id="liscensePlate" name="liscensePlate" (input)="inputChange()" class="form-control " placeholder="Nhập biển số xe" [(ngModel)]="resCar.liscensePlate" [readonly]="isLoading">
               </div>
             </div>
             <div class="col-lg-4">
@@ -40,7 +40,7 @@
                 <label class="form-control-label" for="input-address">Số lượng chỗ ngồi
                   <span [class]="type != 'detail'&& type != 'create' || resCar.isDelete ?'d-none':'text-danger' ">* {{validateCar.amountSeat ? validateCar.amountSeat : ''}}</span>
                 </label>
-              <input type="text" id="amountSeat" name="amountSeat" (input)="inputChange()" class="form-control " placeholder="Nhập số lượng chỗ ngồi" [(ngModel)]="resCar.amountSeat">
+              <input type="text" id="amountSeat" name="amountSeat" (input)="inputChange()" class="form-control " placeholder="Nhập số lượng chỗ ngồi" [(ngModel)]="resCar.amountSeat" [readonly]="isLoading">
               </div>
             </div>
             <div class="col-lg-4">
@@ -54,7 +54,8 @@
                 placeholder="Chọn trạng thái..."
                 name="status"
                 id="status"
-                (change)="inputChange()">
+                (change)="inputChange()"
+                [disabled]="isLoading">
               </ng-select>
             </div>
             </div>
@@ -66,9 +67,11 @@
 
     <div class="row align-items-center">
       <div class="col-12 text-right">
-        <button  *ngIf="type == 'detail'" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteProvinceModal" (click)="getDataDelete()">Xóa</button>
-        <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="restore()">Khôi phục</button>
-        <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="save()">{{type == 'detail' ? "Lưu":"Thêm"}}</button>
+        <button  *ngIf="type == 'detail'" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCarModal" (click)="getDataDelete()" [disabled]="isLoading">Xóa</button>
+        <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="backup()" [disabled]="isLoading">Khôi phục</button>
+        <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="isLoading=true;save()" [disabled]="isLoading">
+           <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          {{isLoading?'Đang xử lý...':type == 'detail' ? "Lưu":"Thêm"}}</button>
       </div>
     </div>
 

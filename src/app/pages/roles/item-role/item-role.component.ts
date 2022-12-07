@@ -12,6 +12,7 @@ import { StatusNotification } from "../../../enums/enum";
   styleUrls: ['./item-role.component.scss']
 })
 export class ItemRoleComponent implements OnInit {
+  isLoading: boolean
   response: ResponseModel
   auth: AuthenticationModel
   validateRole: ValidationRoleModel = new ValidationRoleModel
@@ -55,9 +56,11 @@ export class ItemRoleComponent implements OnInit {
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
           this.close()
+          this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
+          this.isLoading = false
         })
       }
       else{
@@ -65,11 +68,16 @@ export class ItemRoleComponent implements OnInit {
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
           this.isChange = false
+          this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
+          this.isLoading = false
         })
       }
+    }
+    else{
+      this.isLoading = false
     }
 
   }

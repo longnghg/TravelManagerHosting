@@ -1,7 +1,7 @@
 
 <div class="modal-header">
   <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin chi tiết</h1>
-  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
+  <button type="button" #closeModalLoad class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()" [disabled]="isLoading"></button>
 </div>
 <div class="modal-body">
   <ng-container *ngIf="resPlace">
@@ -14,7 +14,7 @@
                 <label class="form-control-label" for="name">Tên điểm tham quan
                   <span [class]="type != 'create' ?'d-none':'text-red'">* {{this.validatePlace.name ? this.validatePlace.name : ''}}</span>
                 </label>
-                <input type="text" id="name" name="name" (input)="inputChange()" class="form-control " placeholder="Nhập tên điểm tham quan" [(ngModel)]="resPlace.name" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete">
+                <input type="text" id="name" name="name" (input)="inputChange()" class="form-control " placeholder="Nhập tên điểm tham quan" [(ngModel)]="resPlace.name" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete || isLoading">
               </div>
             </div>
             <div class="col-lg-6">
@@ -22,7 +22,7 @@
                 <label class="form-control-label" for="phone">Số điện thoại
                   <span [class]="type != 'create' ?'d-none':'text-danger'">* {{this.validatePlace.phone ? this.validatePlace.phone : ''}}</span>
                 </label>
-                <input type="text" id="phone" name="phone" (input)="formatInput($any($event).target, 'phone'); inputChange()" class="form-control " placeholder="Nhập số điện thoại" [(ngModel)]="resPlace.phone" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete">
+                <input type="text" id="phone" name="phone" (input)="formatInput($any($event).target, 'phone'); inputChange()" class="form-control " placeholder="Nhập số điện thoại" [(ngModel)]="resPlace.phone" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete || isLoading">
               </div>
             </div>
           </div>
@@ -31,14 +31,14 @@
               <label class="form-control-label" for="input-address">Địa chỉ
                 <span [class]="type != 'create'?'d-none':'text-danger'">* {{this.validatePlace.address ? this.validatePlace.address : ''}}</span>
               </label>
-              <input type="text" id="address" name="address" (input)="inputChange()" class="form-control " placeholder="Nhập địa chỉ" [(ngModel)]="resPlace.address" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete">
+              <input type="text" id="address" name="address" (input)="inputChange()" class="form-control " placeholder="Nhập địa chỉ" [(ngModel)]="resPlace.address" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete || isLoading">
             </div>
 
             <div class="col-lg-6">
               <label class="form-control-label" for="input-address">Giá vé
                 <span [class]="type != 'create'?'d-none':'text-danger'">* {{this.validatePlace.priceTicket ? this.validatePlace.priceTicket : ''}}</span>
               </label>
-              <input type="text" id="priceTicket" name="priceTicket" (input)="formatInput($any($event).target, 'priceTicket');inputChange() " class="form-control " placeholder="Nhập giá" [(ngModel)]="resPlace.priceTicket" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete">
+              <input type="text" id="priceTicket" name="priceTicket" (input)="formatInput($any($event).target, 'priceTicket');inputChange() " class="form-control " placeholder="Nhập giá" [(ngModel)]="resPlace.priceTicket" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete || isLoading">
             </div>
           </div>
           <fieldset class="mt-4" *ngIf="type == 'approve' || type == 'refuse' || type == 'cancelRequire'">
@@ -67,11 +67,10 @@
     <ng-container *ngIf="type != 'approve' && type != 'refuse' && type != 'cancelRequire'; else elseApprove">
       <div class="row align-items-center">
         <div class="col-12 text-right">
-          <button  *ngIf="type == 'detail' && !resPlace.isDelete" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deletePlaceModal" (click)="getParentData('detail')">Xóa</button>
-          <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="backup()">Khôi phục</button>
-          <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-success"  (click)="save()">Lưu</button>
-          <button *ngIf="isChange && type == 'create'" class="btn btn-sm btn-success"  (click)="save()">Thêm</button>
-          <button *ngIf="resPlace.isDelete" (click)="getParentData('detail')" data-bs-toggle="modal" data-bs-target="#restorePlaceModal" class="btn btn-sm btn-warning">Khôi phục điểm tham quan</button>
+          <button  *ngIf="type == 'detail' && !resPlace.isDelete" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deletePlaceModal" (click)="getParentData('detail')" [disabled]="isLoading">Xóa</button>
+          <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="backup()" [disabled]="isLoading">Khôi phục</button>
+          <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="isLoading=true;save()" [disabled]="isLoading">{{isLoading?'Đang xử lý...':type == 'detail' ? "Lưu":"Thêm"}}</button>
+          <button *ngIf="resPlace.isDelete" (click)="getParentData('detail')" data-bs-toggle="modal" data-bs-target="#restorePlaceModal" class="btn btn-sm btn-warning" [disabled]="isLoading">Khôi phục điểm tham quan</button>
         </div>
       </div>
     </ng-container>
@@ -80,16 +79,16 @@
         <div [class]="auth.roleId == -1 && auth.id == resPlace.idUserModify ? 'col-4' : 'col-6'"
         [style]="auth.roleId == -1 && auth.id == resPlace.idUserModify ? 'text-align: end' : 'padding-left: 8%; text-align: center'"
         *ngIf="auth.roleId == -1">
-          <button class="btn btn-success"  data-bs-toggle="modal" data-bs-target="#approvePlaceModal" (click)="getParentData('approve')">Phê duyệt</button>
+          <button class="btn btn-success"  data-bs-toggle="modal" data-bs-target="#approvePlaceModal" (click)="getParentData('approve')" [disabled]="isLoading">Phê duyệt</button>
         </div>
         <div [class]="auth.roleId == -1 && auth.id == resPlace.idUserModify ? 'col-4' : 'col-6'"
          style="text-align: center" *ngIf="auth.roleId == -1">
-          <button class="btn btn-warning"  data-bs-toggle="modal" data-bs-target="#approvePlaceModal" (click)="getParentData('refuse')">Từ chối phê duyệt</button>
+          <button class="btn btn-warning"  data-bs-toggle="modal" data-bs-target="#approvePlaceModal" (click)="getParentData('refuse')" [disabled]="isLoading">Từ chối phê duyệt</button>
         </div>
         <div [class]="auth.roleId != -1 && auth.id == resPlace.idUserModify ? 'col' : 'col-4'"
         [style]="auth.roleId != -1 && auth.id == resPlace.idUserModify ? 'padding-right: 4.9%; text-align: end' : ''"
         *ngIf="auth.id == resPlace.idUserModify">
-          <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#approvePlaceModal" (click)="getParentData('cancelRequire')">Hủy yêu cầu phê duyệt</button>
+          <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#approvePlaceModal" (click)="getParentData('cancelRequire')" [disabled]="isLoading">Hủy yêu cầu phê duyệt</button>
         </div>
       </div>
     </ng-template>

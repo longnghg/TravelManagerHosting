@@ -16,6 +16,7 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
 })
 export class ItemPlaceComponent implements OnInit {
   @ViewChild('closeModal') closeModal: ElementRef
+  isLoading: boolean
   @Input() resPlace: PlaceModel
   @Input() type: string
   @Output() parentData = new EventEmitter<any>()
@@ -80,16 +81,18 @@ export class ItemPlaceComponent implements OnInit {
         this.placeService.create(this.resPlace).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-	    if(this.response.notification.type == StatusNotification.Success)
-        {
-		      this.resPlace = Object.assign({}, new PlaceModel)
-          this.resPlaceTmp = Object.assign({}, new PlaceModel)
-          this.validatePlace = new ValidationPlaceModel
-          this.isChange = false
-        }
+          if(this.response.notification.type == StatusNotification.Success)
+          {
+            this.resPlace = Object.assign({}, new PlaceModel)
+            this.resPlaceTmp = Object.assign({}, new PlaceModel)
+            this.validatePlace = new ValidationPlaceModel
+            this.isChange = false
+          }
+          this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
+          this.isLoading = false
         })
       }
       else{
@@ -102,15 +105,19 @@ export class ItemPlaceComponent implements OnInit {
             this.isChange = false
             this.closeModal.nativeElement.click()
           }
+          this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
-
+          this.isLoading = false
         })
       }
 
-      }
     }
+    else{
+      this.isLoading = false
+    }
+  }
 
   close(){
     this.resPlace = Object.assign({}, this.resPlaceTmp)

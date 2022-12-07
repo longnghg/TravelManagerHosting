@@ -15,6 +15,7 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
 })
 export class ItemHotelComponent implements OnInit {
   @ViewChild('closeModal') closeModal: ElementRef
+  isLoading: boolean
   @Input() resHotel: HotelModel
   @Input() type: string
   @Output() parentData = new EventEmitter<any>()
@@ -79,16 +80,18 @@ export class ItemHotelComponent implements OnInit {
         this.hotelService.create(this.resHotel).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-	    if(this.response.notification.type == StatusNotification.Success)
-        {
-		      this.resHotel = Object.assign({}, new HotelModel)
-          this.resHotelTmp = Object.assign({}, new HotelModel)
-          this.validateHotel = new ValidationHotelModel
-          this.isChange = false
-        }
+          if(this.response.notification.type == StatusNotification.Success)
+          {
+            this.resHotel = Object.assign({}, new HotelModel)
+            this.resHotelTmp = Object.assign({}, new HotelModel)
+            this.validateHotel = new ValidationHotelModel
+            this.isChange = false
+          }
+          this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
+          this.isLoading = false
         })
       }
       else{
@@ -101,15 +104,18 @@ export class ItemHotelComponent implements OnInit {
             this.isChange = false
             this.closeModal.nativeElement.click()
           }
+          this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
-
+          this.isLoading = false
         })
       }
-
-      }
     }
+    else{
+      this.isLoading = false
+    }
+  }
 
   close(){
     this.resHotel = Object.assign({}, this.resHotelTmp)

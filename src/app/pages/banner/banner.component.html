@@ -172,17 +172,20 @@
         <div class="form-group row">
           <label class="form-control-label col-3" for="name">Upload
           </label>
-          <input accept="image/*,.jpg, .png, .jpeg" #filesImg class="col-6" type="file" multiple (change)="changeImg($event)">
+          <input [disabled]="isLoading" accept="image/*,.jpg, .png, .jpeg" #filesImg class="col-6" type="file" multiple (change)="changeImg($event)">
         </div>
         <div class="form-group row">
           <label class="form-control-label col-3" for="name">Tên
           </label>
-          <input class="col-6" type="text" [(ngModel)]="nameBanner" id="namebanner">
+          <input class="col-6 form-control" type="text" [(ngModel)]="nameBanner" id="namebanner"  [readonly]="isLoading">
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-info" (click)="save()">Thêm</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+        <button class="btn btn-info" (click)="isLoading=true; save()" [disabled]="isLoading">
+          <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          {{isLoading?'Đang xử lý...':'Thêm'}}
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" [disabled]="isLoading">Đóng</button>
       </div>
     </div>
   </div>

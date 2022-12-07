@@ -125,56 +125,65 @@
   </div>
 </div> -->
 
-<div class="modal fade" [id]="gridConfig2.idModalDelete" tabindex="-1" aria-labelledby="deleteTourModal" aria-hidden="true">
+<div class="modal fade" [id]="gridConfig2.idModalDelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteTourModal" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="deleteTourModal">Xác nhận</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" #closeModalLoad class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
       </div>
       <div class="modal-body" *ngIf="data">
         Bạn có chắc muốn xóa [<span class="text-red">{{data.nameTour}}</span>] !
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="delete()" >Xóa</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+        <button type="button" class="btn btn-danger" (click)="isLoading=true;delete()" [disabled]="isLoading">
+          <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          {{isLoading?'Đang xử lý...':'Xóa'}}
+        </button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="isLoading">Không</button>
       </div>
     </div>
   </div>
 </div>
 
-<div class="modal fade" [id]="gridConfig2.idModalRestore" tabindex="-1" aria-labelledby="restoreTourModal" aria-hidden="true">
+<div class="modal fade" [id]="gridConfig2.idModalRestore" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="restoreTourModal" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="restoreTourModal">Xác nhận</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" #closeModalLoad class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
       </div>
       <div class="modal-body" *ngIf="data">
         Bạn có chắc muốn khôi phục [<span class="text-red">{{data.nameTour}}</span>] !
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="restore()" >Khôi phục</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+        <button type="button" class="btn btn-danger" (click)="isLoading=true;restore()" [disabled]="isLoading">
+          <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          {{isLoading?'Đang xử lý...':'Khôi phục'}}
+        </button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="isLoading">Không</button>
       </div>
     </div>
   </div>
 </div>
 
 
-<div class="modal fade" [id]="gridConfigApprove.idModalApprove" tabindex="-1" aria-labelledby="approveTourModel" aria-hidden="true">
+<div class="modal fade" [id]="gridConfigApprove.idModalApprove" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="approveTourModel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="approveTourModel">Xác nhận</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" #closeModalLoad class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
       </div>
       <div class="modal-body" *ngIf="data">
         Bạn có chắc muốn hủy yêu cầu [<span class="text-red">{{data.nameTour}}</span>] !
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="delete()" >Hủy yêu cầu</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+        <button type="button" class="btn btn-danger" (click)="isLoading=true;delete()" [disabled]="isLoading">
+          <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          {{isLoading?'Đang xử lý...':'Hủy yêu cầu'}}
+        </button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="isLoading">Không</button>
       </div>
     </div>
   </div>

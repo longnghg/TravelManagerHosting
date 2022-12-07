@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HotelModel } from 'src/app/models/hotel.model';
 import { HotelService } from "src/app/services_API/hotel.service"
 import { NotificationService } from "../../../../services_API/notification.service";
@@ -14,6 +14,8 @@ import { PaginationModel } from "../../../../models/responsiveModels/pagination.
   styleUrls: ['./list-hotel.component.scss']
 })
 export class ListHotelComponent implements OnInit {
+  @ViewChild('closeModalLoad') closeModalLoad: ElementRef;
+  isLoading: boolean
   auth: AuthenticationModel
   resHotel: HotelModel[]
   resHotelWaiting: HotelModel[]
@@ -181,9 +183,12 @@ export class ListHotelComponent implements OnInit {
       this.hotelService.delete(this.data.idHotel, this.auth.id).subscribe(res =>{
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
+       this.isLoading = false
+       this.closeModalLoad.nativeElement.click()
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
        this.notificationService.handleAlert(message, StatusNotification.Error)
+       this.isLoading = false
      })
     }
   }
@@ -193,9 +198,12 @@ export class ListHotelComponent implements OnInit {
       this.hotelService.restore(this.data.idHotel, this.auth.id).subscribe(res =>{
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
+       this.isLoading = false
+       this.closeModalLoad.nativeElement.click()
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
        this.notificationService.handleAlert(message, StatusNotification.Error)
+       this.isLoading = false
      })
     }
   }
@@ -205,9 +213,12 @@ export class ListHotelComponent implements OnInit {
     this.hotelService.approve(this.data.idHotel).subscribe(res =>{
       this.response = res
       this.notificationService.handleAlertObj(res.notification)
+      this.isLoading = false
+      this.closeModalLoad.nativeElement.click()
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)
+      this.isLoading = false
 
     })
    }
@@ -218,9 +229,12 @@ export class ListHotelComponent implements OnInit {
     this.hotelService.refuse(this.data.idHotel).subscribe(res =>{
       this.response = res
       this.notificationService.handleAlertObj(res.notification)
+      this.isLoading = false
+      this.closeModalLoad.nativeElement.click()
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)
+      this.isLoading = false
     })
    }
   }

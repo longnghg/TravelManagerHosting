@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { RoleService } from "../../../services_API/role.service";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { NotificationService } from "../../../services_API/notification.service";
@@ -15,6 +15,8 @@ import { PaginationModel } from "../../../models/responsiveModels/pagination.mod
   styleUrls: ['./list-role.component.scss']
 })
 export class ListRoleComponent implements OnInit {
+  @ViewChild('closeModalLoad') closeModalLoad: ElementRef;
+  isLoading: boolean
   auth: AuthenticationModel
   dataChild: RoleModel
   data: RoleModel
@@ -122,9 +124,12 @@ export class ListRoleComponent implements OnInit {
      this.roleService.delete(this.data.idRole).subscribe(res =>{
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
+       this.isLoading = false
+       this.closeModalLoad.nativeElement.click()
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
        this.notificationService.handleAlert(message, StatusNotification.Error)
+       this.isLoading = false
      })
     }
    }
@@ -134,9 +139,12 @@ export class ListRoleComponent implements OnInit {
       this.roleService.restore(this.data.idRole).subscribe(res =>{
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
+        this.isLoading = false
+        this.closeModalLoad.nativeElement.click()
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, StatusNotification.Error)
+        this.isLoading = false
       })
     }
   }

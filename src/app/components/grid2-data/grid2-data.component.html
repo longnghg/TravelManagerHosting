@@ -1,6 +1,6 @@
 <div class="table-responsive" style="overflow-x: hidden">
     <table class="table align-items-center table-flush" >
-      <thead class="thead-light"  style="z-index: 0;" *ngIf="columnDefs">
+      <thead id="thead" class="thead-light" *ngIf="columnDefs">
         <tr>
           <th scope="col" style="width: 50px;"></th>
           <th scope="col" *ngFor="let column of columnDefs" [style]="column.style">{{column.headerName}}
@@ -88,7 +88,7 @@
           </th>
           <th scope="col" >
             <div *ngIf="!gridConfig.disableRadioBox || !gridConfig.disableCreate" ngbDropdown placement="bottom-right">
-              <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
+              <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle (click)="changeZIndex()">
                 <i class="fas fa-ellipsis-v" style="color: #4d4aef!important;"></i>
               </a>
               <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NotificationService } from "../../../services_API/notification.service";
 import { ConfigService } from "../../../services_API/config.service";
 import { TourService } from "src/app/services_API/tour.service";
@@ -17,6 +17,8 @@ import { PaginationModel } from "../../../models/responsiveModels/pagination.mod
   styleUrls: ['./list-tour.component.scss']
 })
 export class ListTourComponent implements OnInit {
+  @ViewChild('closeModalLoad') closeModalLoad: ElementRef;
+  isLoading: boolean
   resTour: TourModel[]
   resTourWaiting: TourModel[]
   restourTmp: TourModel[]
@@ -220,9 +222,12 @@ export class ListTourComponent implements OnInit {
        this.tourService.delete(this.data.idTour, this.auth.id).subscribe(res =>{
          this.response = res
          this.notificationService.handleAlertObj(res.notification)
+         this.isLoading = false
+         this.closeModalLoad.nativeElement.click()
        }, error => {
          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-         this.notificationService.handleAlert(message, "Error")
+         this.notificationService.handleAlert(message, StatusNotification.Error)
+         this.isLoading = false
        })
       }
      }
@@ -232,9 +237,12 @@ export class ListTourComponent implements OnInit {
         this.tourService.restore(this.data.idTour, this.auth.id).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
+          this.isLoading = false
+          this.closeModalLoad.nativeElement.click()
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
+          this.notificationService.handleAlert(message, StatusNotification.Error)
+          this.isLoading = false
         })
       }
     }

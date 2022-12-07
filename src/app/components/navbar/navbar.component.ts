@@ -166,4 +166,8 @@ export class NavbarComponent implements OnInit {
     this.pageSize = this.pageSize + 4
     this.initNotification()
   }
+
+  changeZIndex(){
+    document.getElementById("thead").style.zIndex = "0"
+  }
 }

@@ -13,6 +13,7 @@ import { StatusNotification } from "../../../../enums/enum";
 
 })
 export class ItemWardComponent implements OnInit {
+  isLoading: boolean
   @Input() resWard: LocationModel
   @Input() type: string
   @Output() parentDel = new EventEmitter<any>()
@@ -60,9 +61,11 @@ export class ItemWardComponent implements OnInit {
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
           this.close()
+          this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
+          this.isLoading = false
         })
       }
       else{
@@ -76,11 +79,12 @@ export class ItemWardComponent implements OnInit {
           else{
             this.resWard = Object.assign({},this.resWardTmp)
           }
-
           this.isChange = false
+          this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
+          this.isLoading = false
         })
 
       }

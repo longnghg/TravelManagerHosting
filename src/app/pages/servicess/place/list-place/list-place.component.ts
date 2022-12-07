@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { PlaceModel } from 'src/app/models/place.model';
 import { PlaceService } from "src/app/services_API/place.service"
 import { NotificationService } from "../../../../services_API/notification.service";
@@ -15,6 +15,8 @@ import { PaginationModel } from "../../../../models/responsiveModels/pagination.
   styleUrls: ['./list-place.component.scss']
 })
 export class ListPlaceComponent implements OnInit {
+  @ViewChild('closeModalLoad') closeModalLoad: ElementRef;
+  isLoading: boolean
   auth: AuthenticationModel
   resPlace: PlaceModel[]
   resPlaceWaiting: PlaceModel[]
@@ -155,9 +157,12 @@ export class ListPlaceComponent implements OnInit {
         this.placeService.delete(this.data.idPlace, this.auth.id).subscribe(res =>{
          this.response = res
          this.notificationService.handleAlertObj(res.notification)
+         this.isLoading = false
+         this.closeModalLoad.nativeElement.click()
        }, error => {
          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
          this.notificationService.handleAlert(message, StatusNotification.Error)
+         this.isLoading = false
        })
       }
     }
@@ -167,9 +172,12 @@ export class ListPlaceComponent implements OnInit {
         this.placeService.restore(this.data.idPlace, this.auth.id).subscribe(res =>{
          this.response = res
          this.notificationService.handleAlertObj(res.notification)
+         this.isLoading = false
+         this.closeModalLoad.nativeElement.click()
        }, error => {
          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
          this.notificationService.handleAlert(message, StatusNotification.Error)
+         this.isLoading = false
        })
       }
     }
@@ -179,10 +187,12 @@ export class ListPlaceComponent implements OnInit {
       this.placeService.approve(this.data.idPlace).subscribe(res =>{
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
+        this.isLoading = false
+        this.closeModalLoad.nativeElement.click()
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, StatusNotification.Error)
-
+        this.isLoading = false
       })
      }
     }
@@ -192,9 +202,12 @@ export class ListPlaceComponent implements OnInit {
       this.placeService.refuse(this.data.idPlace).subscribe(res =>{
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
+        this.isLoading = false
+        this.closeModalLoad.nativeElement.click()
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, StatusNotification.Error)
+        this.isLoading = false
       })
      }
     }

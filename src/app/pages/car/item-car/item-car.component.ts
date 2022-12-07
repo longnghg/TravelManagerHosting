@@ -27,7 +27,7 @@ export class ItemCarComponent implements OnInit {
   dateView: string
   isChange: boolean = false
   resCarTmp: CarModel
-
+  isLoading: boolean
 
 
   constructor(private carService: CarService, private notificationService: NotificationService,
@@ -63,32 +63,19 @@ export class ItemCarComponent implements OnInit {
   }
 
 //check lat xoa
-  restore(){
-    this.resCar = Object.assign({}, this.resCarTmp)
-    this.isChange = false
-  }
   backup(){
     this.resCar = Object.assign({}, this.resCarTmp)
     this.isChange = false
     this.notificationService.handleAlert("Khôi phục dữ liệu ban đầu thành công !", StatusNotification.Info)
   }
   save(){
-    console.log(this.resCar);
-
     this.validateCar = new ValidationCarModel
     this.validateCar =  this.configService.validateCar(this.resCar, this.validateCar)
-    console.log(  this.validateCar);
-
       if (this.validateCar.total == 0)
       {
         this.resCar.idUserModify = this.auth.id
-        console.log(this.auth.id);
-        console.log(this.resCar.idUserModify);
-
           if(this.type == "create")
           {
-            console.log(this.resCar);
-
             this.carService.create(this.resCar).subscribe(res =>{
               this.response = res
               this.notificationService.handleAlertObj(res.notification)
@@ -98,10 +85,12 @@ export class ItemCarComponent implements OnInit {
                     this.resCarTmp = Object.assign({}, new CarModel)
                     this.validateCar = new ValidationCarModel
                     this.isChange = false
+                    this.isLoading = false
                   }
                   }, error => {
                     var message = this.configService.error(error.status, error.error != null?error.error.text:"");
                     this.notificationService.handleAlert(message, StatusNotification.Error)
+                    this.isLoading = false
                   })
           }
           else{
@@ -112,13 +101,18 @@ export class ItemCarComponent implements OnInit {
               if(this.response.notification.type == StatusNotification.Success)
               {
                 this.isChange = false
+                this.isLoading = false
                 this.closeModal.nativeElement.click()
               }
             }, error => {
+              this.isLoading = false
               var message = this.configService.error(error.status, error.error != null?error.error.text:"");
               this.notificationService.handleAlert(message, StatusNotification.Error)
             })
           }
+      }
+      else{
+        this.isLoading = false
       }
     }
       close(){

@@ -19,6 +19,7 @@ import { ImageService } from 'src/app/services_API/image.service';
 })
 export class ItemTourComponent implements OnInit {
   @ViewChild('tourImg') tourImg: ElementRef;
+  isLoading: boolean
   resTour: TourModel
   type: string
   validateTourModel: ValidateTourModel = new ValidateTourModel
@@ -138,7 +139,7 @@ export class ItemTourComponent implements OnInit {
 
   backup(){
     this.resTour = Object.assign({}, this.resTourTmp)
-   
+
     if (this.resTour.thumbnail) {
       this.img =  this.resTour.thumbnail
     }
@@ -365,42 +366,6 @@ export class ItemTourComponent implements OnInit {
       if(this.resImage.length > 0){
         this.resTour.idUserModify = this.resAuth.id
 
-      var file = new FormData();
-      var files = new FormData();
-      file.append('data', JSON.stringify(this.resTour))
-
-      if (this.formData) {
-        file.append('file', this.formData.path[0].files[0])
-      }
-
-      if (this.formDatas) {
-
-        for (let index = 0; index < this.formDatas.path[0].files.length; index++) {
-          files.append('files', this.formDatas.path[0].files[index]);
-        }
-      }
-
-      if(this.type == "create")
-      {
-          this.tourService.create(file).subscribe(res =>{
-            this.response = res
-  
-            if (res.notification.type == StatusNotification.Success) {
-              var idTour = this.response.content
-              this.createImageTourdetail(files, idTour)
-  
-              this.router.navigate(['','list-tour']);
-            }
-            this.notificationService.handleAlertObj(res.notification)
-          }, error => {
-            var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-            this.notificationService.handleAlert(message, StatusNotification.Error)
-          })
-        
-      }
-      else{
-        this.resTour.idUserModify = this.resAuth.id
-
         var file = new FormData();
         var files = new FormData();
         file.append('data', JSON.stringify(this.resTour))
@@ -410,43 +375,84 @@ export class ItemTourComponent implements OnInit {
         }
 
         if (this.formDatas) {
+
           for (let index = 0; index < this.formDatas.path[0].files.length; index++) {
             files.append('files', this.formDatas.path[0].files[index]);
           }
         }
 
-        this.tourService.update(file, this.resTour.idTour).subscribe(res =>{
-          this.response = res
+        if(this.type == "create")
+        {
+            this.tourService.create(file).subscribe(res =>{
+              this.response = res
 
-          if (res.notification.type == StatusNotification.Success) {
+              if (res.notification.type == StatusNotification.Success) {
+                var idTour = this.response.content
+                this.createImageTourdetail(files, idTour)
 
-            this.createImageTourdetail(files, this.resTour.idTour)
+                this.router.navigate(['','list-tour']);
+              }
+              this.notificationService.handleAlertObj(res.notification)
+              this.isLoading = false
+            }, error => {
+              var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+              this.notificationService.handleAlert(message, StatusNotification.Error)
+              this.isLoading = false
+            })
 
+        }
+        else{
+          this.resTour.idUserModify = this.resAuth.id
 
-            if(this.resImageDelete.length > 0){
-              this.deleteImageTourdetail(this.resImageDelete)
+          var file = new FormData();
+          var files = new FormData();
+          file.append('data', JSON.stringify(this.resTour))
+
+          if (this.formData) {
+            file.append('file', this.formData.path[0].files[0])
+          }
+
+          if (this.formDatas) {
+            for (let index = 0; index < this.formDatas.path[0].files.length; index++) {
+              files.append('files', this.formDatas.path[0].files[index]);
             }
-            this.router.navigate(['','list-tour']);
-          }
-          else{
-            this.notificationService.handleAlertObj(res.notification)
           }
 
-        }, error => {
-          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, StatusNotification.Error)
-        })
-      }
+          this.tourService.update(file, this.resTour.idTour).subscribe(res =>{
+            this.response = res
+
+            if (res.notification.type == StatusNotification.Success) {
+
+              this.createImageTourdetail(files, this.resTour.idTour)
+
+
+              if(this.resImageDelete.length > 0){
+                this.deleteImageTourdetail(this.resImageDelete)
+              }
+              this.router.navigate(['','list-tour']);
+            }
+            else{
+              this.notificationService.handleAlertObj(res.notification)
+            }
+            this.isLoading = false
+          }, error => {
+            var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+            this.notificationService.handleAlert(message, StatusNotification.Error)
+            this.isLoading = false
+          })
+        }
       }
       else{
         this.notificationService.handleAlert("Hình ảnh chi tiết tour thêm ít nhất 1 ảnh !", StatusNotification.Warning)
+        this.isLoading = false
       }
-      
+
     }
     else{
       if (this.validateTourModel.thumbnail) {
         this.notificationService.handleAlert(this.validateTourModel.thumbnail, StatusNotification.Warning)
       }
+      this.isLoading = false
     }
   }
 
@@ -460,9 +466,11 @@ export class ItemTourComponent implements OnInit {
        if (res.notification.type == StatusNotification.Success) {
         this.router.navigate(['','list-tour']);
        }
+       this.isLoading = false
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
        this.notificationService.handleAlert(message, StatusNotification.Error)
+       this.isLoading = false
      })
     }
    }
@@ -474,10 +482,12 @@ export class ItemTourComponent implements OnInit {
         this.notificationService.handleAlertObj(res.notification)
         if (res.notification.type == StatusNotification.Success) {
           this.router.navigate(['','list-tour'], { state: { isDelete: true } });
-         }
+        }
+        this.isLoading = false
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, StatusNotification.Error)
+        this.isLoading = false
       })
     }
   }
@@ -489,10 +499,12 @@ export class ItemTourComponent implements OnInit {
         this.notificationService.handleAlertObj(res.notification)
         if (res.notification.type == StatusNotification.Success) {
           this.router.navigate(['','list-tour'], { state: { isDelete: false } });
-         }
+        }
+        this.isLoading = false
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, StatusNotification.Error)
+        this.isLoading = false
       })
     }
   }
@@ -504,10 +516,12 @@ export class ItemTourComponent implements OnInit {
         this.notificationService.handleAlertObj(res.notification)
         if (res.notification.type == StatusNotification.Success) {
           this.router.navigate(['','list-tour'], { state: { isDelete: false } });
-         }
+        }
+        this.isLoading = false
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, StatusNotification.Error)
+        this.isLoading = false
       })
     }
   }
@@ -520,9 +534,11 @@ export class ItemTourComponent implements OnInit {
         this.router.navigate(['','list-tour']);
       }
       this.notificationService.handleAlertObj(res.notification)
+      this.isLoading = false
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)
+      this.isLoading = false
     })
   }
 

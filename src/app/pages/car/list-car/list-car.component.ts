@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NotificationService } from "../../../services_API/notification.service";
 import { ConfigService } from "../../../services_API/config.service";
 import { CarService } from '../../../services_API/car.service'
@@ -15,7 +15,8 @@ import { PaginationModel } from 'src/app/models/responsiveModels/pagination.mode
   styleUrls: ['./list-car.component.scss']
 })
 export class ListCarComponent implements OnInit {
-
+  @ViewChild('closeModalLoad') closeModalLoad: ElementRef;
+  isLoading: boolean
   resCar: CarModel[]
   resCarTmp: CarModel[]
   response: ResponseModel
@@ -115,9 +116,12 @@ export class ListCarComponent implements OnInit {
       this.carService.delete(this.data.idCar, this.auth.id).subscribe(res =>{
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
+       this.isLoading = false
+       this.closeModalLoad.nativeElement.click()
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
        this.notificationService.handleAlert(message, StatusNotification.Error)
+       this.isLoading = false
      })
     }
   }
@@ -127,9 +131,12 @@ export class ListCarComponent implements OnInit {
       this.carService.restore(this.data.idCar).subscribe(res =>{
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
+       this.isLoading = false
+       this.closeModalLoad.nativeElement.click()
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
        this.notificationService.handleAlert(message, StatusNotification.Error)
+       this.isLoading = false
      })
     }
   }

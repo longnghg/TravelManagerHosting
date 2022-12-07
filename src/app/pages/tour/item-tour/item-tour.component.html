@@ -125,21 +125,21 @@ width: fit-content;">
                         <div class="row">
                           <div class="form-group">
                             <label class="form-control-label" for="input-tourName">Tên Chuyến Du Lịch
-                              <span [class]="this.type != 'create' && resTour.isDelete ?'d-none':'text-red'">* {{this.validateTourModel.nameTour ? this.validateTourModel.nameTour : ''}}</span>
+                              <span [class]="this.type != 'create' &&resTour.isDelete || isLoading ?'d-none':'text-red'">* {{this.validateTourModel.nameTour ? this.validateTourModel.nameTour : ''}}</span>
                             </label>
-                            <input type="text" id="nameTour" name="nameTour" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số tên chuyến du lịch" [(ngModel)]="resTour.nameTour" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resTour.isDelete" >
+                            <input type="text" id="nameTour" name="nameTour" (input)="inputChange()" class="form-control form-control-alternative" placeholder="Nhập số tên chuyến du lịch" [(ngModel)]="resTour.nameTour" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' ||resTour.isDelete || isLoading" >
                           </div>
                         </div>
                         <div class="row">
                           <div class="col">
                             <div class="form-group">
                             <label class="form-control-label" for="input-toPlace">Điểm đến
-                              <span [class]="this.type != 'create' && resTour.isDelete ?'d-none':'text-red'">* {{this.validateTourModel.toPlace ? this.validateTourModel.toPlace : ''}}</span>
+                              <span [class]="this.type != 'create' &&resTour.isDelete || isLoading ?'d-none':'text-red'">* {{this.validateTourModel.toPlace ? this.validateTourModel.toPlace : ''}}</span>
                              </label>
                              <ng-select
                             [items]="resProvince"
                             [(ngModel)]="resTour.toPlace"
-                            [disabled]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resTour.isDelete"
+                            [disabled]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' ||resTour.isDelete || isLoading"
                             placeholder="Chọn điểm đến"
                             name="toPlace"
                             id="toPlace"
@@ -152,14 +152,14 @@ width: fit-content;">
                            </div>
                           </div>
                         </div>
-      
+
                         <div class="row" *ngIf="this.type == 'detail' && !resTour.isDelete ">
                           <div [class]="isChange && type == 'detail' && resAuth.roleId == -1 ? 'col-8': 'col'">
                             <label class="form-control-label" for="input-tourName">Đánh giá</label>
                             <ng-select
                             [items]="listStar"
                             [(ngModel)]="resTour.rating"
-                            [disabled]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resTour.isDelete || resAuth.roleId != -1"
+                            [disabled]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' ||resTour.isDelete || isLoading || resAuth.roleId != -1"
                             placeholder="Chọn số sao..."
                             name="star"
                             id="rating"
@@ -168,13 +168,13 @@ width: fit-content;">
                             [searchable]="false"
                             [clearable]="false"
                             (change)="startChange()">
-      
+
                             <ng-template ng-label-tmp let-item="item" let-item$="item$" let-index="index">
                               {{item.name}} -
                               <i class="fa-solid fa-star text-yellow" *ngFor='let star of resTour.rating | forNumber'></i>
                               <i class="fa-solid fa-star" *ngFor='let star of listStar.length-1 - resTour.rating | forNumber'></i>
                             </ng-template>
-      
+
                             <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
                               {{item.name}} -
                               <i class="fa-solid fa-star text-yellow" *ngFor='let star of item.id | forNumber'></i>
@@ -183,29 +183,42 @@ width: fit-content;">
                           </ng-select>
                           </div>
                           <div class="col-4" style="position: relative;top: 37px;"  *ngIf="isChangeStar && resAuth.roleId == -1">
-                            <button  class="btn  btn-sm btn-success"(click)="ratingTour()">Cập nhật sao</button>
+                            <button  class="btn  btn-sm btn-success"(click)="ratingTour()" [disabled]="isLoading">Cập nhật sao</button>
                           </div>
                         </div>
-      
-      
+
+
                         <!-- <span [class]="this.type != 'create' && resTour.isDelete ?'d-none':'text-red'">{{this.validateTourModel.thumbnail ? this.validateTourModel.thumbnail : ''}}</span> -->
                         <div class="align-items-center text-right mt-2" style="margin-right: 1rem;">
                           <ng-container *ngIf="type != 'approve' && type != 'refuse' && type != 'cancelRequire'; else elseApprove">
-                            <input id="file" type="file" class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeImg($event); inputChange()">
-                            <label *ngIf="type == 'create'|| type == 'detail'  && !resTour.isDelete" for="file" style="margin-top: 10px;"  class="btn btn-sm btn-primary">Chọn Hình</label>
-                            <button  *ngIf="type == 'detail' && !resTour.isDelete" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemTourModal" >Xóa</button>
-                            <button *ngIf="isChangeStar || isChange" class="btn btn-sm btn-info" (click)="backup()">Khôi phục</button>
-                            <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="save()">{{type == 'detail' ? "Cập nhật":"Thêm"}}</button>
-                            <button *ngIf="resTour.isDelete"  data-bs-toggle="modal" data-bs-target="#restoreItemTourModal" class="btn btn-sm btn-warning">Khôi phục tour</button>
-      
+                            <input id="file" type="file" class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeImg($event); inputChange()" [disabled]="isLoading">
+                            <label *ngIf="type == 'create'|| type == 'detail'  && !resTour.isDelete" for="file" style="margin-top: 10px;"  class="btn btn-sm btn-primary" [disabled]="isLoading">Chọn Hình</label>
+                            <button  *ngIf="type == 'detail' && !resTour.isDelete" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemTourModal" [disabled]="isLoading">Xóa</button>
+                            <button *ngIf="isChangeStar || isChange" class="btn btn-sm btn-info" (click)="backup()" [disabled]="isLoading">Khôi phục</button>
+                            <button *ngIf="isChange" class="btn btn-sm btn-success"   (click)="isLoading=true;save()" [disabled]="isLoading">{{isLoading?'Đang xử lý...':type == 'detail' ? "Cập nhật":"Thêm"}}</button>
+                            <button *ngIf="resTour.isDelete"  data-bs-toggle="modal" data-bs-target="#restoreItemTourModal" class="btn btn-sm btn-warning" [disabled]="isLoading">Khôi phục tour</button>
+
                      </ng-container>
                      <ng-template #elseApprove>
-                       <button *ngIf="type == 'approve' && resTour.typeAction && resAuth.roleId == -1" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#approveItemTourModal" >Phê Duyệt</button>
-                       <button *ngIf="type == 'approve' && resTour.typeAction && resAuth.roleId == -1" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#refusedItemTourModal">Từ chối duyệt</button>
-                       <button *ngIf="resAuth.id == resTour.idUserModify" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemTourModal">Hủy yêu cầu</button>
+                      <div class="row mt-4" style="border-top: 1.5px solid; padding-top: 20px;">
+                        <div [class]="resAuth.roleId == -1 && resAuth.id == resTour.idUserModify ? 'col-4' : 'col-6'"
+                        [style]="resAuth.roleId == -1 && resAuth.id == resTour.idUserModify ? 'text-align: end' : 'padding-left: 8%; text-align: center'"
+                        *ngIf="resAuth.roleId == -1">
+                          <button class="btn btn-success"  data-bs-toggle="modal" data-bs-target="#approveItemTourModal" [disabled]="isLoading">Phê duyệt</button>
+                        </div>
+                        <div [class]="resAuth.roleId == -1 && resAuth.id == resTour.idUserModify ? 'col-4' : 'col-6'"
+                         style="text-align: center" *ngIf="resAuth.roleId == -1">
+                          <button class="btn btn-warning"  data-bs-toggle="modal" data-bs-target="#approveItemTourModal" [disabled]="isLoading">Từ chối phê duyệt</button>
+                        </div>
+                        <div [class]="resAuth.roleId != -1 && resAuth.id == resTour.idUserModify ? 'col' : 'col-4'"
+                        [style]="resAuth.roleId != -1 && resAuth.id == resTour.idUserModify ? 'padding-right: 4.9%; text-align: end' : ''"
+                        *ngIf="resAuth.id == resTour.idUserModify">
+                          <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#approveItemTourModal" [disabled]="isLoading">Hủy yêu cầu phê duyệt</button>
+                        </div>
+                      </div>
                      </ng-template>
                        </div>
-      
+
                       </fieldset>
                      <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit.
                          Magni vitae labore aliquid sequi sunt harum!
@@ -233,26 +246,26 @@ width: fit-content;">
                     <div class="optionBN col-4">
                       <fieldset style="margin-top: -12.5%; height: 111%;">
                         <legend>Chi tiết Tour</legend>
-        
+
                         <ng-container *ngIf="resImage.length < 4">
                           <input #tourImg id="files" type="file" multiple class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeTourImg($event); inputChange()">
-                         <button for="files"  class="icon-btn add-btn" (click)="btnTourImg()" style="position: relative;top: -5%;" >
+                         <button for="files"  class="icon-btn add-btn" (click)="btnTourImg()" style="position: relative;top: -5%;" [disabled]="isLoading">
                            <div class="add-icon"></div>
                           <div class="btn-txt">Thêm hình</div>
                           </button>
                         </ng-container>
-        
-        
+
+
                         <div class="row">
-        
-        
+
+
                           <div class="form-group" style="margin-top: -15px;">
                             <!-- <ng-container *ngIf="formDatas && type=='create'; else imageDetail">
                               <div class="row"  *ngFor="let file of formDatas.path[0].files; let i=index">
                                 <div class="col-9">
                                   <label class="form-control-label" for="input-tourName">Tấm {{i+1}}</label>
                                   <input type="text" [(ngModel)]="file.name" [name]="i" class="form-control form-control-alternative" readonly >
-        
+
                                 </div>
                                 <div class="col-3">
                                   <div class="btn btn-outline-danger" (click)="btnDeleteImg(i, file)" style="margin-top: 40%;">
@@ -266,7 +279,7 @@ width: fit-content;">
                                 <div class="col-9">
                                   <label class="form-control-label" for="input-tourName">Tấm {{i+1}}</label>
                                   <input type="text" [(ngModel)]="file.nameImage"  class="form-control form-control-alternative" readonly >
-        
+
                                 </div>
                                 <div class="col-3">
                                   <div class="btn btn-outline-danger" (click)="btnDeleteImg(i, file)" style="margin-top: 40%;">
@@ -275,12 +288,12 @@ width: fit-content;">
                                 </div>
                               </div>
                             </ng-template> -->
-        
+
                             <div class="row"  *ngFor="let file of resImage; let i=index">
                               <div class="col-9">
                                 <label class="form-control-label" for="input-tourName">Tấm {{i+1}}</label>
                                 <input type="text" [(ngModel)]="file.nameImage" (input)="inputChange()"  class="form-control form-control-alternative" readonly >
-        
+
                               </div>
                               <div class="col-3">
                                 <div class="btn btn-outline-danger" (click)="btnDeleteImg(i, file)" style="margin-top: 40%;">
@@ -293,13 +306,13 @@ width: fit-content;">
                         </div>
                       </fieldset>
                     </div>
-        
+
                      <div class="optionBN col-8">
                       <fieldset style="margin-top: -6%;height: 112%;">
                         <legend>Hình chi tiết tour</legend>
                         <div class="row">
                           <div class="col-12">
-        
+
                             <div class="row">
                               <div class="col">
                                 <div class="row mb-2">
@@ -331,18 +344,18 @@ width: fit-content;">
                           </div>
                         </div>
                       </fieldset>
-        
+
                      </div>
-        
+
                   </div>
               </div>
             </div>
           </ng-template>
         </ng-container>
       </nav>
-      
+
       <div [ngbNavOutlet]="nav" class="mt-2"></div>
-      
+
     </ng-template>
 	</ng-container>
 	<ng-container *ngIf="type == 'detail'" ngbNavItem>
@@ -358,7 +371,7 @@ width: fit-content;">
 
 
 
-<div class="modal fade" id="deleteItemTourModal" tabindex="-1" aria-labelledby="deleteItemTourModal" aria-hidden="true">
+<div class="modal fade" id="deleteItemTourModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteItemTourModal" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -369,65 +382,71 @@ width: fit-content;">
         Bạn có chắc muốn {{!resTour.typeAction ? "Xóa":"Hủy yêu cầu"}} [<span class="text-red">{{resTour.nameTour}}</span>] !
       </div>
       <div class="modal-footer" *ngIf="resTour">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="delete()">{{!resTour.typeAction ? "Xóa":"Hủy yêu cầu"}}</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+        <button type="button" class="btn btn-danger" (click)="isLoading=true;delete()" [disabled]="isLoading">
+          <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          {{isLoading?'Đang xử lý...':!resTour.typeAction ? "Xóa":"Hủy yêu cầu"}}
+        </button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="isLoading">Không</button>
       </div>
     </div>
   </div>
 </div>
 
 
-<div class="modal fade" id="restoreItemTourModal" tabindex="-1" aria-labelledby="restoreItemTourModal" aria-hidden="true">
+<div class="modal fade" id="restoreItemTourModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="restoreItemTourModal" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="restoreItemTourModal">Xác nhận</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" #closeModalLoad class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
       </div>
       <div class="modal-body" *ngIf="resTour">
         Bạn có chắc muốn khôi phục [<span class="text-red">{{resTour.nameTour}}</span>] !
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="restoreTour()">Khôi phục</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+        <button type="button" class="btn btn-danger" (click)="isLoading=true;restoreTour()" [disabled]="isLoading">
+          <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          {{isLoading?'Đang xử lý...':'Khôi phục'}}
+        </button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="isLoading">Không</button>
       </div>
     </div>
   </div>
 </div>
 
 
-<div class="modal fade" id="approveItemTourModal" tabindex="-1" aria-labelledby="approveItemTourModal" aria-hidden="true">
+<div class="modal fade" id="approveItemTourModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="approveItemTourModal" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="approveItemTourModal">Xác nhận</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" #closeModalLoad class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
       </div>
       <div class="modal-body" *ngIf="resTour">
         Bạn có chắc muốn phê duyệt [<span class="text-red">{{resTour.nameTour}}</span>] !
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="approve()">Phê Duyệt</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="isLoading=true;approve()" [disabled]="isLoading">{{isLoading?'Đang xử lý...':'Phê duyệt'}}</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="isLoading">Không</button>
       </div>
     </div>
   </div>
 </div>
 
 
-<div class="modal fade" id="refusedItemTourModal" tabindex="-1" aria-labelledby="refusedItemTourModal" aria-hidden="true">
+<div class="modal fade" id="refusedItemTourModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="refusedItemTourModal" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="refusedItemTourModal">Xác nhận</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" #closeModalLoad class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
       </div>
       <div class="modal-body" *ngIf="resTour">
         Bạn có chắc muốn từ chối phê duyệt [<span class="text-red">{{resTour.nameTour}}</span>] !
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-warning" data-bs-dismiss="modal" (click)="refused()">Từ chối phê duyệt</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+        <button type="button" class="btn btn-warning" data-bs-dismiss="modal" (click)="refused()">{{isLoading?'Đang xử lý...':'Từ chối'}}</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="isLoading">Không</button>
       </div>
     </div>
   </div>

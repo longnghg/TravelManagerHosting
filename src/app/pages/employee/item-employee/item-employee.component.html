@@ -25,8 +25,8 @@
           </div>
           <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
             <div class="d-flex justify-content-between">
-              <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#staticBackdrop"  class="btn btn-sm btn-info mr-4">Đổi mật khẩu</a>
-              <a href="javascript:void(0)" class="btn btn-sm btn-default float-right">Message</a>
+              <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#staticBackdrop"  class="btn btn-sm btn-info mr-4" [disabled]="isLoading">Đổi mật khẩu</a>
+              <a href="javascript:void(0)" class="btn btn-sm btn-default float-right" [disabled]="isLoading">Message</a>
             </div>
           </div>
           <div class="card-body pt-0 pt-md-4">
@@ -36,7 +36,7 @@
                   <div class="row">
                     <div class="update ml-auto mr-auto">
                       <input id="file" type="file" class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeImg($event); inputChange()">
-                      <label for="file" style="margin-left: 20px;" [class]="resEmployee.isDelete?'d-none':'btn text-white btn-primary btn-round'">Đổi hình đại diện</label>
+                      <label for="file" style="margin-left: 20px;" [class]="resEmployee.isDelete || isLoading?'d-none':'btn text-white btn-primary btn-round'">Đổi hình đại diện</label>
                     </div>
                   </div>
                 </div>
@@ -61,14 +61,14 @@
         </div>
         <!-- <div class="row align-items-center">
           <div class="col-12 text-right" style="position: absolute; bottom: 0px;">
-            <button  *ngIf="type == 'detail'&& resEmployee.isDelete == false " class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemEmployeeModal" (click)="getDataDelete()">Xóa</button>
+            <button  *ngIf="type == 'detail'&& resEmployee.isDelete || isLoading == false " class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemEmployeeModal" (click)="getDataDelete()">Xóa</button>
             <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#backupItemEmployeeModal">Khôi phục</button>
             <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="save()">{{type == 'detail' ? "Lưu":"Thêm"}}</button>
             <ng-container *ngIf="idEmployee; else elseGrid1">
-              <button *ngIf="resEmployee.isDelete" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreItemEmployeeModal" class="btn btn-warning">Khôi phục người dùng</button>
+              <button *ngIf="resEmployee.isDelete || isLoading" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreItemEmployeeModal" class="btn btn-warning">Khôi phục người dùng</button>
             </ng-container>
             <ng-template #elseGrid1>
-              <button *ngIf="resEmployee.isDelete" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreEmployeeModal" class="btn btn-warning">Khôi phục người dùng</button>
+              <button *ngIf="resEmployee.isDelete || isLoading" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreEmployeeModal" class="btn btn-warning">Khôi phục người dùng</button>
             </ng-template>
           </div>
         </div> -->
@@ -80,12 +80,12 @@
               <div class="col-8">
                 <h3 class="mb-0">Thông tin</h3>
                 <div class="row custom-control custom-switch mt-3" style="margin-left: 5px;">
-                  <input type="checkbox" class="custom-control-input" id="customSwitch1" [(ngModel)]="resEmployee.isActive" (click)="resEmployee.isActive ? resEmployee.isActive = false : resEmployee.isActive = true; inputChange()" [disabled]="resEmployee.isDelete">
+                  <input type="checkbox" class="custom-control-input" id="customSwitch1" [(ngModel)]="resEmployee.isActive" (click)="resEmployee.isActive ? resEmployee.isActive = false : resEmployee.isActive = true; inputChange()" [disabled]="resEmployee.isDelete || isLoading">
                   <label class="custom-control-label" for="customSwitch1">Kích hoạt tài khoản</label>
                 </div>
               </div>
               <!-- <div class="col-4 text-right">
-                <a href="javascript:void(0)" *ngIf="type == 'detail' && resEmployee.isDelete == false" class="btn btn-sm btn-primary" (click)="isEditChange()">{{!isEdit ? "Chỉnh sửa":"Quay lại"}}</a>
+                <a href="javascript:void(0)" *ngIf="type == 'detail' && resEmployee.isDelete || isLoading == false" class="btn btn-sm btn-primary" (click)="isEditChange()">{{!isEdit ? "Chỉnh sửa":"Quay lại"}}</a>
               </div> -->
             </div>
           </div>
@@ -97,19 +97,19 @@
                   <div class="col-lg-6">
                     <div class="form-group">
                       <label class="form-control-label" for="nameEmployee">Họ & tên
-                        <span [class]="resEmployee.isDelete ?'d-none':'text-red'">* {{this.validateEmployee.nameEmployee ? this.validateEmployee.nameEmployee : ''}}</span>
+                        <span [class]="resEmployee.isDelete || isLoading ?'d-none':'text-red'">* {{this.validateEmployee.nameEmployee ? this.validateEmployee.nameEmployee : ''}}</span>
                       </label>
-                      <input [(ngModel)]="resEmployee.nameEmployee" (input)="inputChange()" name="nameEmployee" type="text" id="nameEmployee" class="form-control " placeholder="Nhập họ tên"  [readonly]="resEmployee.isDelete">
+                      <input [(ngModel)]="resEmployee.nameEmployee" (input)="inputChange()" name="nameEmployee" type="text" id="nameEmployee" class="form-control " placeholder="Nhập họ tên"  [readonly]="resEmployee.isDelete || isLoading">
                     </div>
                   </div>
                   <div class="col-lg-6">
                     <div class="form-group">
                       <label class="form-control-label" for="idRole">Chức vụ
-                        <span [class]="resEmployee.isDelete ?'d-none':'text-red'">* {{this.validateEmployee.roleId ? this.validateEmployee.roleId : ''}}</span>
+                        <span [class]="resEmployee.isDelete || isLoading ?'d-none':'text-red'">* {{this.validateEmployee.roleId ? this.validateEmployee.roleId : ''}}</span>
                       </label>
                       <ng-select
                                   [(ngModel)]="resEmployee.roleId"
-                                  [disabled]="resEmployee.isDelete"
+                                  [disabled]="resEmployee.isDelete || isLoading"
                                   placeholder="Chọn chức vụ..."
                                   name="idRole"
                                   id="idRole"
@@ -135,9 +135,9 @@
                   <div class="col-lg-6">
                     <div class="form-group">
                       <label class="form-control-label" for="gender">Giới tính
-                        <span [class]="resEmployee.isDelete ?'d-none':'text-red'">* {{this.validateEmployee.gender ? this.validateEmployee.gender : ''}}</span>
+                        <span [class]="resEmployee.isDelete || isLoading ?'d-none':'text-red'">* {{this.validateEmployee.gender ? this.validateEmployee.gender : ''}}</span>
                       </label>
-                      <ng-select [items]="listGender" [(ngModel)]="resEmployee.gender" bindValue="id" bindLabel="name" name="gender" id="gender" [disabled]="resEmployee.isDelete"
+                      <ng-select [items]="listGender" [(ngModel)]="resEmployee.gender" bindValue="id" bindLabel="name" name="gender" id="gender" [disabled]="resEmployee.isDelete || isLoading"
                       placeholder="Chọn giới tính..." (change)="inputChange()">
                      </ng-select>
                     </div>
@@ -145,9 +145,9 @@
                   <div class="col-lg-6">
                     <div class="form-group">
                       <label class="form-control-label" for="dp">Ngày sinh
-                        <span [class]="resEmployee.isDelete ?'d-none':'text-red'">* {{this.validateEmployee.birthday ? this.validateEmployee.birthday : ''}}</span>
+                        <span [class]="resEmployee.isDelete || isLoading ?'d-none':'text-red'">* {{this.validateEmployee.birthday ? this.validateEmployee.birthday : ''}}</span>
                       </label>
-                      <input  name="birthday" onkeydown="return false" (change)="inputDateChange();inputChange()" [(ngModel)]="resEmployee.birthday" class="form-control datepicker" placeholder="Chọn ngày" name="dp" id="dp" type="date" [disabled]="resEmployee.isDelete"/>
+                      <input  name="birthday" onkeydown="return false" (change)="inputDateChange();inputChange()" [(ngModel)]="resEmployee.birthday" class="form-control datepicker" placeholder="Chọn ngày" name="dp" id="dp" type="date" [disabled]="resEmployee.isDelete || isLoading"/>
                     </div>
                   </div>
                 </div>
@@ -160,9 +160,9 @@
                   <div class="col-lg-6">
                     <div class="form-group">
                       <label class="form-control-label" for="phone">Điện thoại
-                        <span [class]="resEmployee.isDelete ?'d-none':'text-red'">* {{this.validateEmployee.phone ? this.validateEmployee.phone : ''}}</span>
+                        <span [class]="resEmployee.isDelete || isLoading ?'d-none':'text-red'">* {{this.validateEmployee.phone ? this.validateEmployee.phone : ''}}</span>
                       </label>
-                      <input [(ngModel)]="resEmployee.phone" (input)="formatInput($any($event).target); inputChange()" name="phone" type="text" id="phone" class="form-control " placeholder="Nhập điện thoại" [readonly]="resEmployee.isDelete">
+                      <input [(ngModel)]="resEmployee.phone" (input)="formatInput($any($event).target); inputChange()" name="phone" type="text" id="phone" class="form-control " placeholder="Nhập điện thoại" [readonly]="resEmployee.isDelete || isLoading">
                     </div>
                   </div>
                   <div class="col-lg-6">
@@ -178,23 +178,23 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <label class="form-control-label" for="address">Địa chỉ
-                        <span [class]="resEmployee.isDelete ?'d-none':'text-red'">* {{this.validateEmployee.address ? this.validateEmployee.address : ''}}</span>
+                        <span [class]="resEmployee.isDelete || isLoading ?'d-none':'text-red'">* {{this.validateEmployee.address ? this.validateEmployee.address : ''}}</span>
                       </label>
-                      <textarea [(ngModel)]="resEmployee.address" (input)="inputChange()" id="address"  name="address" rows="4" class="form-control " placeholder="Nhập địa chỉ" [readonly]="resEmployee.isDelete"></textarea>
+                      <textarea [(ngModel)]="resEmployee.address" (input)="inputChange()" id="address"  name="address" rows="4" class="form-control " placeholder="Nhập địa chỉ" [readonly]="resEmployee.isDelete || isLoading"></textarea>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="row align-items-center">
                 <div class="col-12 text-right" style="position: absolute; bottom: 10px; right: 10px;">
-                  <button  *ngIf="auth.roleId == -1 && type == 'detail' && resEmployee.isDelete == false " class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemEmployeeModal" (click)="getDataDelete()">Xóa</button>
-                  <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#backupItemEmployeeModal">Khôi phục</button>
-                  <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="save()">{{type == 'detail' ? "Lưu":"Thêm"}}</button>
+                  <button  *ngIf="auth.roleId == -1 && type == 'detail' && !resEmployee.isDelete" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemEmployeeModal" (click)="getDataDelete()" [disabled]="isLoading">Xóa</button>
+                  <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#backupItemEmployeeModal" [disabled]="isLoading">Khôi phục</button>
+                  <button *ngIf="isChange" class="btn btn-sm btn-success" (click)="isLoading = true;save()" [disabled]="isLoading">{{isLoading?'Đang xử lý...':type == 'detail' ? "Lưu":"Thêm"}}</button>
                   <ng-container *ngIf="idEmployee; else elseGrid1">
-                    <button *ngIf="resEmployee.isDelete" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreItemEmployeeModal" class="btn btn-sm btn-warning">Khôi phục người dùng</button>
+                    <button *ngIf="resEmployee.isDelete" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreItemEmployeeModal" class="btn btn-sm btn-warning" [disabled]="isLoading">{{isLoading?'Đang xử lý...':'Khôi phục người dùng'}}</button>
                   </ng-container>
                   <ng-template #elseGrid1>
-                    <button *ngIf="resEmployee.isDelete" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreEmployeeModal" class="btn btn-sm btn-warning">Khôi phục người dùng</button>
+                    <button *ngIf="resEmployee.isDelete" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreEmployeeModal" class="btn btn-sm btn-warning" [disabled]="isLoading">{{isLoading?'Đang xử lý...':'Khôi phục người dùng'}}</button>
                   </ng-template>
                 </div>
               </div>
@@ -217,8 +217,11 @@
         Bạn có chắc muốn xóa [<span class="text-red">{{resEmployee.nameEmployee}}</span>] !
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="delete()" >Xóa</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+        <button type="button" class="btn btn-danger" (click)="isLoading=true;delete()" [disabled]="isLoading">
+          <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          {{isLoading?'Đang xử lý...':'Xóa'}}
+        </button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="isLoading">Không</button>
       </div>
     </div>
   </div>
@@ -253,8 +256,11 @@
         Bạn có chắc muốn khôi phục [<span class="text-red">{{resEmployee.nameEmployee}}</span>] !
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="restore()" >Khôi phục</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
+        <button type="button" class="btn btn-danger" (click)="isLoading=true;restore()" [disabled]="isLoading">
+          <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          {{isLoading?'Đang xử lý...':'Khôi phục'}}
+        </button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="isLoading">Không</button>
       </div>
     </div>
   </div>
@@ -298,7 +304,6 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
       </div>
     </div>
   </div>

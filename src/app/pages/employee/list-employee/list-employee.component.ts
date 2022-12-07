@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { EmployeeService } from "../../../services_API/employee.service";
 import { NotificationService } from "../../../services_API/notification.service";
 import { EmployeeModel } from "../../../models/employee.model";
@@ -19,6 +19,8 @@ import { HubConnection } from '@microsoft/signalr';
   styleUrls: ['./list-employee.component.scss']
 })
 export class ListEmployeeComponent implements OnInit {
+  @ViewChild('closeModalLoad') closeModalLoad: ElementRef;
+  isLoading: boolean
   auth: AuthenticationModel
   dataChild: EmployeeModel
   typeChild: string
@@ -166,12 +168,16 @@ export class ListEmployeeComponent implements OnInit {
         this.employeeService.delete(this.data.idEmployee).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
+          this.isLoading = false
+          this.closeModalLoad.nativeElement.click()
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
+          this.isLoading = false
         })
       }
       else{
+        this.isLoading = false
         this.notificationService.handleAlert("Bạn không thể xóa tài khoản đang đăng nhập !", StatusNotification.Error)
       }
     }
@@ -182,7 +188,10 @@ export class ListEmployeeComponent implements OnInit {
       this.employeeService.restore(this.data.idEmployee).subscribe(res =>{
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
+        this.isLoading = false
+        this.closeModalLoad.nativeElement.click()
       }, error => {
+        this.isLoading = false
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, StatusNotification.Error)
       })

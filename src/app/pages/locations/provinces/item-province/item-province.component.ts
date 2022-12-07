@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild} from '@angular/core';
 import { NotificationService } from "../../../../services_API/notification.service";
 import { ProvinceService } from "../../../../services_API/province.service";
 import { ConfigService } from "../../../../services_API/config.service";
@@ -12,6 +12,7 @@ import { StatusNotification } from "../../../../enums/enum";
 
 })
 export class ItemProvinceComponent implements OnInit {
+  isLoading: boolean
   @Input() resProvince: LocationModel
   @Input() type: string
   @Output() parentDel = new EventEmitter<any>()
@@ -57,9 +58,11 @@ export class ItemProvinceComponent implements OnInit {
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
           this.close()
+          this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
+          this.isLoading = false
         })
       }
       else{
@@ -75,9 +78,11 @@ export class ItemProvinceComponent implements OnInit {
           }
 
           this.isChange = false
+          this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
+          this.isLoading = false
         })
 
       }

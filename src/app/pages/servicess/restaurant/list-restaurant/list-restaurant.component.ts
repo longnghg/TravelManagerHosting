@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { RestaurantModel } from 'src/app/models/restaurant.model';
 import { RestaurantService } from "src/app/services_API/restaurant.service"
 import { NotificationService } from "../../../../services_API/notification.service";
@@ -15,6 +15,8 @@ import { PaginationModel } from "../../../../models/responsiveModels/pagination.
   styleUrls: ['./list-restaurant.component.scss']
 })
 export class ListRestaurantComponent implements OnInit {
+  @ViewChild('closeModalLoad') closeModalLoad: ElementRef;
+  isLoading: boolean
   auth: AuthenticationModel
   resRestaurant: RestaurantModel[]
   resRestaurantWaiting: RestaurantModel[]
@@ -186,9 +188,12 @@ export class ListRestaurantComponent implements OnInit {
         this.restaurantService.delete(this.data.idRestaurant, this.auth.id).subscribe(res =>{
          this.response = res
          this.notificationService.handleAlertObj(res.notification)
+         this.isLoading = false
+         this.closeModalLoad.nativeElement.click()
        }, error => {
          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
          this.notificationService.handleAlert(message, StatusNotification.Error)
+         this.isLoading = false
        })
       }
     }
@@ -198,9 +203,12 @@ export class ListRestaurantComponent implements OnInit {
         this.restaurantService.restore(this.data.idRestaurant, this.auth.id).subscribe(res =>{
          this.response = res
          this.notificationService.handleAlertObj(res.notification)
+         this.isLoading = false
+         this.closeModalLoad.nativeElement.click()
        }, error => {
          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
          this.notificationService.handleAlert(message, StatusNotification.Error)
+         this.isLoading = false
        })
       }
     }
@@ -210,10 +218,12 @@ export class ListRestaurantComponent implements OnInit {
       this.restaurantService.approve(this.data.idRestaurant).subscribe(res =>{
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
+        this.isLoading = false
+        this.closeModalLoad.nativeElement.click()
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, StatusNotification.Error)
-
+        this.isLoading = false
       })
      }
     }
@@ -223,9 +233,12 @@ export class ListRestaurantComponent implements OnInit {
       this.restaurantService.refuse(this.data.idRestaurant).subscribe(res =>{
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
+        this.isLoading = false
+        this.closeModalLoad.nativeElement.click()
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, StatusNotification.Error)
+        this.isLoading = false
       })
      }
     }

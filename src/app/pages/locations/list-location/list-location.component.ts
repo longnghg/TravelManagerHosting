@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { NotificationService } from "../../../services_API/notification.service";
 import { ConfigService } from "../../../services_API/config.service";
 import { ProvinceService } from 'src/app/services_API/province.service';
@@ -16,6 +16,8 @@ import { StatusNotification } from "../../../enums/enum";
   styleUrls: ['./list-location.component.scss'],
 })
 export class ListLocationComponent implements OnInit {
+  @ViewChild('closeModalLoad') closeModalLoad: ElementRef;
+  isLoading: boolean
   dataChild: LocationModel
   typeChild: string
   resProvince: LocationModel[]
@@ -44,9 +46,12 @@ export class ListLocationComponent implements OnInit {
     this.provinceService.delete(this.dataDelete.idProvince).subscribe(res =>{
       this.response = res
       this.notificationService.handleAlertObj(res.notification)
+      this.isLoading = false
+      this.closeModalLoad.nativeElement.click()
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)
+      this.isLoading = false
     })
    }
   }
@@ -56,9 +61,12 @@ export class ListLocationComponent implements OnInit {
      this.districtService.delete(this.dataDelete.idDistrict).subscribe(res =>{
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
+       this.isLoading = false
+       this.closeModalLoad.nativeElement.click()
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
        this.notificationService.handleAlert(message, StatusNotification.Error)
+       this.isLoading = false
      })
     }
    }
@@ -68,9 +76,12 @@ export class ListLocationComponent implements OnInit {
      this.wardService.delete(this.dataDelete.idWard).subscribe(res =>{
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
+       this.isLoading = false
+       this.closeModalLoad.nativeElement.click()
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
        this.notificationService.handleAlert(message, StatusNotification.Error)
+       this.isLoading = false
      })
     }
    }
