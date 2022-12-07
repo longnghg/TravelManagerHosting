@@ -574,6 +574,18 @@ export class ConfigService{
     var checkDate = new Date(dateNow).getTime()
     //departureDate = 30
     //departureDate = 35
+
+    if (data.title == null || data.title == "") {
+      model.title = ("[Mô tả] không bỏ trống !")
+      model.total += 1
+    }else if (data.title.length > 200) {
+      model.title = "[Mô tả] quá dài !"
+      model.total += 1
+    }else if (data.title.length < 10) {
+      model.title = "[Mô tả] quá ngắn !"
+      model.total += 1
+    }
+
     if(data.fromTime == 0 || data.fromTime == ""){
       model.fromTime = ("[Thời gian bắt đầu] không bỏ trống !")
       model.total += 1
@@ -611,7 +623,7 @@ export class ConfigService{
     }else if (data.description.length > 2000) {
       model.description = "[Mô tả] quá dài !"
       model.total += 1
-    }else if (data.description.length < 3) {
+    }else if (data.description.length < 10) {
       model.description = "[Mô tả] quá ngắn !"
       model.total += 1
     }

@@ -2,6 +2,7 @@ export class TimeLineModel{
   idTimeline: string
   description: string
 
+  title: string
   fromTimeDisplay: string
   fromTime: number = 0
   toTimeDisplay: string
@@ -18,6 +19,7 @@ export class TimeLineModel{
 
 export class ValidateTimelineModel{
   total: number
+  title: string = null
   fromTime: number = 0
   toTime: number = 0
   description: string = null

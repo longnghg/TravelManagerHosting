@@ -405,6 +405,16 @@
             <ng-template ngbNavContent>
               <fieldset style="border: 1px solid #ced4da; border-radius: 0.375rem; margin-top: 10px;" *ngIf="type == 'create' || type == 'detail'"><legend>TimeLine</legend>
                 <div class="row">
+                  <div class="row-12">
+                    <div class="form-group">
+                      <label class="form-control-label" for="">Tiêu đề
+                        <span [class]="type != 'create' &&  resSchedule.isDelete || isLoading ?'d-none':'text-red'">* {{this.validateTimeline.title ? this.validateTimeline.title : ''}}</span>
+                      </label>
+                      <input class="form-control" (input)="inputChangeTimeline()" [(ngModel)]="resTimeline.title" name="title" id="description"  rows="4" placeholder="Nhập tiêu đề timeline" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete || isLoading"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
                   <div class="col-6">
                     <div class="form-group">
                       <label class="form-control-label" for="input-fromTime">Chọn thời gian bắt đầu
@@ -445,10 +455,18 @@
                 <div class="row" *ngIf="resTimelinelist">
                   <div class="row" *ngFor="let item of resTimelinelist; let i = index">
                     <ngb-accordion [closeOthers]="true" activeIds="static-1" >
-                      <ngb-panel class="mt-2" id="static-1" title="Ngày {{i+1}} : Từ {{item.fromTime | formatFromUnixTimestampToFullDateTimeView}} đến {{item.toTime| formatFromUnixTimestampToFullDateTimeView}}">
+                      <ngb-panel class="mt-2" id="static-1" title="Ngày {{i+1}} - {{item.title}}">
 
                         <ng-template ngbPanelContent>
-                          {{item.description}}
+                          <div class="row">
+                            <div class="col-12 text-right">
+                             Từ <b>{{item.fromTime | formatFromUnixTimestampToFullDateTimeView}}</b> đến <b>{{item.toTime| formatFromUnixTimestampToFullDateTimeView}}</b>
+                            </div>
+                          </div>
+                          <fieldset>
+                            <legend>Mô Tả</legend>
+                            {{item.description}}
+                          </fieldset>
                             <div class="text-right" *ngIf="type != 'refuse' && type != 'cancelRequire' && type != 'approve' && !resSchedule.isDelete || isLoading">
                               <button class="btn btn-sm btn-warning" (click)="btnUpdateTimeline(i)">Sửa</button>
                               <button class="btn btn-sm btn-danger" (click)="btnDeleteTimeline(i, item)">Xóa</button>

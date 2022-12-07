@@ -204,16 +204,16 @@ width: fit-content;">
                         <div [class]="resAuth.roleId == -1 && resAuth.id == resTour.idUserModify ? 'col-4' : 'col-6'"
                         [style]="resAuth.roleId == -1 && resAuth.id == resTour.idUserModify ? 'text-align: end' : 'padding-left: 8%; text-align: center'"
                         *ngIf="resAuth.roleId == -1">
-                          <button class="btn btn-success"  data-bs-toggle="modal" data-bs-target="#approveItemTourModal" [disabled]="isLoading">Phê duyệt</button>
+                          <button class="btn btn-sm btn-success"  data-bs-toggle="modal" data-bs-target="#approveItemTourModal" [disabled]="isLoading">Phê duyệt</button>
                         </div>
                         <div [class]="resAuth.roleId == -1 && resAuth.id == resTour.idUserModify ? 'col-4' : 'col-6'"
                          style="text-align: center" *ngIf="resAuth.roleId == -1">
-                          <button class="btn btn-warning"  data-bs-toggle="modal" data-bs-target="#approveItemTourModal" [disabled]="isLoading">Từ chối phê duyệt</button>
+                          <button class="btn btn-sm  btn-warning"  data-bs-toggle="modal" data-bs-target="#approveItemTourModal" [disabled]="isLoading">Từ chối phê duyệt</button>
                         </div>
                         <div [class]="resAuth.roleId != -1 && resAuth.id == resTour.idUserModify ? 'col' : 'col-4'"
                         [style]="resAuth.roleId != -1 && resAuth.id == resTour.idUserModify ? 'padding-right: 4.9%; text-align: end' : ''"
                         *ngIf="resAuth.id == resTour.idUserModify">
-                          <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#approveItemTourModal" [disabled]="isLoading">Hủy yêu cầu phê duyệt</button>
+                          <button class="btn btn-sm  btn-danger" data-bs-toggle="modal" data-bs-target="#approveItemTourModal" [disabled]="isLoading">Hủy yêu cầu phê duyệt</button>
                         </div>
                       </div>
                      </ng-template>
