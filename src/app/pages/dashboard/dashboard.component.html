@@ -114,6 +114,26 @@
                     <span class="d-none d-md-block">Week</span>
                     <span class="d-md-none">W</span>
                   </a>
+                  <ng-select *ngIf="resWeek"
+                        [(ngModel)]="value"
+                        placeholder="Chọn tuần..."
+                        bindLabel="week"
+                        bindValue="week"
+                        [clearable]="false"
+                        [searchable]="false"
+                        name="week"
+                        id="week"
+                        (change)="weekChange()">
+
+                        <ng-container *ngFor="let report of resWeek; let i = index">
+                          <ng-template ng-label-tmp let-item="item">
+                            Tuần {{report.week}}
+                          </ng-template>
+                          <ng-option [value]="report.week" >
+                            Tuần {{report.week}}
+                          </ng-option>
+                        </ng-container>
+                  </ng-select>
                 </li>
               </ul>
             </div>
@@ -133,8 +153,8 @@
         <div class="card-header bg-transparent">
           <div class="row align-items-center">
             <div class="col">
-              <h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
-              <h2 class="mb-0">Total orders</h2>
+              <h6 class="text-uppercase text-muted ls-1 mb-1">Các Tour du lịch</h6>
+              <h2 class="mb-0">Tổng số người</h2>
             </div>
           </div>
         </div>
@@ -165,14 +185,28 @@
           <table class="table align-items-center table-flush">
             <thead class="thead-light">
               <tr>
-                <th scope="col">Page name</th>
-                <th scope="col">Visitors</th>
-                <th scope="col">Unique users</th>
-                <th scope="col">Bounce rate</th>
+                <th scope="col">Tên tour</th>
+                <th scope="col">Tổng số người</th>
+                <th scope="col">Doanh thu</th>
+                <th scope="col">Chi phí</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr *ngFor="let item of resReportTourBooking">
+                <th scope="row">
+                  {{item.nameTour}}
+                </th>
+                <td>
+                  {{item.quantityBooked}}
+                </td>
+                <td>
+                  {{item.totalRevenue | formatPriceVi}}₫
+                </td>
+                <td>
+                  {{item.totalCost | formatPriceVi}}₫
+                </td>
+              </tr>
+              <!-- <tr>
                 <th scope="row">
                   /argon/
                 </th>
@@ -185,63 +219,7 @@
                 <td>
                   <i class="fas fa-arrow-up text-success mr-3"></i> 46,53%
                 </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  /argon/index.html
-                </th>
-                <td>
-                  3,985
-                </td>
-                <td>
-                  319
-                </td>
-                <td>
-                  <i class="fas fa-arrow-down text-warning mr-3"></i> 46,53%
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  /argon/charts.html
-                </th>
-                <td>
-                  3,513
-                </td>
-                <td>
-                  294
-                </td>
-                <td>
-                  <i class="fas fa-arrow-down text-warning mr-3"></i> 36,49%
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  /argon/tables.html
-                </th>
-                <td>
-                  2,050
-                </td>
-                <td>
-                  147
-                </td>
-                <td>
-                  <i class="fas fa-arrow-up text-success mr-3"></i> 50,87%
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  /argon/profile.html
-                </th>
-                <td>
-                  1,795
-                </td>
-                <td>
-                  190
-                </td>
-                <td>
-                  <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
-                </td>
-              </tr>
+              </tr> -->
             </tbody>
           </table>
         </div>
