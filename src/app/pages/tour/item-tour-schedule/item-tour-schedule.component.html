@@ -438,7 +438,10 @@
                       <label class="form-control-label" for="">Mô tả nội dung timeline
                         <span [class]="type != 'create' &&  resSchedule.isDelete || isLoading ?'d-none':'text-red'">* {{this.validateTimeline.description ? this.validateTimeline.description : ''}}</span>
                       </label>
-                      <textarea class="form-control" (input)="inputChangeTimeline()" [(ngModel)]="resTimeline.description" name="description" id="description"  rows="4" placeholder="Nhập thông tin timeline" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete || isLoading"></textarea>
+                      <!-- <textarea class="form-control" (input)="inputChangeTimeline()" [(ngModel)]="resTimeline.description" name="description" id="description"  rows="4" placeholder="Nhập thông tin timeline" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete || isLoading"></textarea> -->
+                      <div class="ckeditorContainer">
+                        <ckeditor #editor [editor]="Editor" [(ngModel)]="resTimeline.description" [config]="config" id="description" (change)="inputChangeTimeline()"  [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete || isLoading"></ckeditor>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -465,12 +468,14 @@
                           </div>
                           <fieldset>
                             <legend>Mô Tả</legend>
-                            {{item.description}}
+
+                            <ckeditor [editor]="Editor" [config]="{toolbar: []}" data="{{item.description}}" [disabled]="true"></ckeditor>
                           </fieldset>
-                            <div class="text-right" *ngIf="type != 'refuse' && type != 'cancelRequire' && type != 'approve' && !resSchedule.isDelete || isLoading">
+                            <div class="text-right" style="margin-top: 1rem;" *ngIf="type != 'refuse' && type != 'cancelRequire' && type != 'approve' && !resSchedule.isDelete || isLoading">
                               <button class="btn btn-sm btn-warning" (click)="btnUpdateTimeline(i)">Sửa</button>
                               <button class="btn btn-sm btn-danger" (click)="btnDeleteTimeline(i, item)">Xóa</button>
                             </div>
+
                         </ng-template>
                       </ngb-panel>
                     </ngb-accordion>

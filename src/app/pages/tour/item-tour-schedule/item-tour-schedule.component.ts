@@ -27,6 +27,10 @@ import { TimelineService } from 'src/app/services_API/timeline.service';
 import { LocationModel } from 'src/app/models/location.model';
 import { ProvinceService } from 'src/app/services_API/province.service';
 
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { CKEditorComponent } from '@ckeditor/ckeditor5-angular';
+
+
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
 @Component({
@@ -34,8 +38,10 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
   templateUrl: './item-tour-schedule.component.html',
   styleUrls: ['./item-tour-schedule.component.scss']
 })
+
 export class ItemTourScheduleComponent implements OnInit {
   @ViewChild('closeModal') closeModal: ElementRef
+  @ViewChild( 'editor' ) editorComponent: CKEditorComponent;
   isLoading: boolean
   @Input() resSchedule: ScheduleModel
   @Input() type: string
@@ -73,6 +79,13 @@ export class ItemTourScheduleComponent implements OnInit {
   isChangeTimeline: boolean = false
   isChangeTimelineList: boolean = false
   isFirst: boolean = true
+
+  public Editor = ClassicEditor;
+  config = {
+    placeholder: 'Nhập thông tin timeline',toolbar: ['heading', 'bold', 'italic', '|', 'undo', 'redo', '|', 'numberedList', 'bulletedList', 'fontFamily'],
+    isReadOnly: true,
+  }
+
   constructor(private scheduleService: ScheduleService, private configService: ConfigService, private notificationService: NotificationService,
     private employeeService: EmployeeService, private carService: CarService, private promotionService: PromotionService, private activatedRoute: ActivatedRoute,
     private costtourService: CostTourService, private hotelService: HotelService, private placeService: PlaceService, private restaurantService: RestaurantService,
@@ -169,14 +182,12 @@ export class ItemTourScheduleComponent implements OnInit {
         })
       } else {
         this.carService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
-          console.log(response);
 
           this.resCar = response
 
         })
 
         this.employeeService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
-          console.log(response);
 
           this.resEmployee = response
         })
@@ -451,23 +462,27 @@ export class ItemTourScheduleComponent implements OnInit {
 
     if (this.validateTimeline.total == 0) {
       if(!this.isTimeline){
-        this.resTimelinelist.push(Object.assign({}, this.resTimeline))
+
+      this.resTimelinelist.push(Object.assign({}, this.resTimeline))
       this.resTimeline = new TimeLineModel()
+
       this.isChangeTimeline = false
       this.isChangeTimelineList = true
 
       if (this.resTimelinelist.length > 0) {
         this.resSchedule.isRemoveTimeLine = true
       }
-
+      this.editorComponent.editorInstance.setData("")
       this.notificationService.handleAlert("Thêm thành công !", StatusNotification.Success)
       }
       else{
         this.resTimelinelist[this.indexTimeline] = this.resTimeline
+
         this.resTimeline = new TimeLineModel()
        this.isTimeline = false
        this.isChangeTimeline = false
        this.isChangeTimelineList = true
+       this.editorComponent.editorInstance.setData("")
        this.notificationService.handleAlert("Sửa thành công !", StatusNotification.Success)
       }
     }
@@ -608,4 +623,5 @@ export class ItemTourScheduleComponent implements OnInit {
       this.resCostTour[property] = 0
     }
   }
+
 }
