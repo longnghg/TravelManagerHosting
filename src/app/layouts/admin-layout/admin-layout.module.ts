@@ -66,6 +66,7 @@ import { ItemTourScheduleComponent } from '../../pages/tour/item-tour-schedule/i
 
 import { NgChartsModule } from 'ng2-charts';
 import { PipesModule } from "../../pipes/pipes.module";
+
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 @NgModule({
   imports: [

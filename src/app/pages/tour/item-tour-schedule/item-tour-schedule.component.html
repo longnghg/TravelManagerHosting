@@ -442,6 +442,8 @@
                         <span [class]="type != 'create' &&  resSchedule.isDelete || isLoading ?'d-none':'text-red'">* {{this.validateTimeline.description ? this.validateTimeline.description : ''}}</span>
                       </label>
                       <!-- <textarea class="form-control" (input)="inputChangeTimeline()" [(ngModel)]="resTimeline.description" name="description" id="description"  rows="4" placeholder="Nhập thông tin timeline" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete || isLoading"></textarea> -->
+
+
                       <div class="ckeditorContainer">
                         <ckeditor #editor [editor]="Editor" [(ngModel)]="resTimeline.description" [config]="config" id="description" (change)="inputChangeTimeline()"  [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete || isLoading"></ckeditor>
                       </div>
