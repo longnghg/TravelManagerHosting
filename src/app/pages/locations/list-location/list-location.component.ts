@@ -16,7 +16,9 @@ import { StatusNotification } from "../../../enums/enum";
   styleUrls: ['./list-location.component.scss'],
 })
 export class ListLocationComponent implements OnInit {
-  @ViewChild('closeModalLoad') closeModalLoad: ElementRef;
+  @ViewChild('closeModalLoadDeleteProvince') closeModalLoadDeleteProvince: ElementRef;
+  @ViewChild('closeModalLoadDeleteDisctrict') closeModalLoadDeleteDisctrict: ElementRef;
+  @ViewChild('closeModalLoadDeleteWard') closeModalLoadDeleteWard: ElementRef;
   isLoading: boolean
   dataChild: LocationModel
   typeChild: string
@@ -47,7 +49,9 @@ export class ListLocationComponent implements OnInit {
       this.response = res
       this.notificationService.handleAlertObj(res.notification)
       this.isLoading = false
-      this.closeModalLoad.nativeElement.click()
+      setTimeout(() => {
+        this.closeModalLoadDeleteProvince.nativeElement.click()
+       }, 100);
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -62,7 +66,9 @@ export class ListLocationComponent implements OnInit {
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
        this.isLoading = false
-       this.closeModalLoad.nativeElement.click()
+       setTimeout(() => {
+        this.closeModalLoadDeleteDisctrict.nativeElement.click()
+       }, 100);
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
        this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -77,7 +83,9 @@ export class ListLocationComponent implements OnInit {
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
        this.isLoading = false
-       this.closeModalLoad.nativeElement.click()
+       setTimeout(() => {
+        this.closeModalLoadDeleteWard.nativeElement.click()
+       }, 100);
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
        this.notificationService.handleAlert(message, StatusNotification.Error)

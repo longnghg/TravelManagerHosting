@@ -91,8 +91,162 @@
     </div>
   </div>
 </div>
-<div class="container-fluid mt--7">
+<div class="container-fluid mt-4">
+  <div class="row mb-2">
+    <div class="col">
+      <ul class="nav nav-pills justify-content-start">
+        <li class="nav-item mr-2 mr-md-0" (click)="dateChange()">
+          <a href="javascript:void(0)" class="nav-link py-2 px-3" [ngClass]="{'active':clicked==='date'}" data-toggle="tab" (click)="clicked='date'">
+            <span class="d-none d-md-block">Ngày</span>
+          </a>
+        </li>
+        <li class="nav-item" (click)="weekChange()">
+          <a href="javascript:void(0)" class="nav-link py-2 px-3" [ngClass]="{'active':clicked==='week'}" data-toggle="tab" (click)="clicked='week'">
+            <span class="d-none d-md-block">Tuần</span>
+          </a>
+        </li>
+        <li class="nav-item mr-2 mr-md-0" (click)="monthChange()">
+          <a href="javascript:void(0)" class="nav-link py-2 px-3" [ngClass]="{'active':clicked==='month'}" data-toggle="tab" (click)="clicked='month'">
+            <span class="d-none d-md-block">Tháng</span>
+          </a>
+        </li>
+        <li class="nav-item" (click)="yearChange()">
+          <a href="javascript:void(0)" class="nav-link py-2 px-3" [ngClass]="{'active':clicked==='year'}" data-toggle="tab" (click)="clicked='year'">
+            <span class="d-none d-md-block">Năm</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
   <div class="row">
+    <div class="col">
+      <ul class="nav nav-pills justify-content-start">
+        <li class="nav-item mr-2 mr-md-0" style="width: 20%;" *ngIf="clicked == 'date'">
+          <div class="menu-arrow"></div>
+          <div class="nav-link py-2 px-3 active">
+            <span class="d-none d-md-block" *ngIf="resWeek">
+              <div class="row mb-2">
+                <div class="col-4" style="padding-top: 12px;">Từ ngày</div>
+                <input  class="col-8 form-control custom-pages-input" style="margin-left: -10px;" name="fromDate" onkeydown="return false" [(ngModel)]="resWeek.fromDate" (change)="dateChange()"  placeholder="DD/MM/YYYY"  type="date"/>
+               </div>
+               <div class="row">
+                <div class="col-4" style="padding-top: 12px;">Đến ngày </div>
+                <input  class="col-8 form-control custom-pages-input" style="margin-left: -10px;" name="toDate"  onkeydown="return false" [(ngModel)]="resWeek.toDate" (change)="dateChange()" placeholder="DD/MM/YYYY"  type="date"/>
+               </div>
+            </span>
+          </div>
+        </li>
+        <li class="nav-item mr-2 mr-md-0" style="margin-left: 5%; position: relative;" *ngIf="clicked == 'week'">
+          <div class="menu-arrow"></div>
+          <div class="nav-link py-2 px-3 active">
+            <span class="d-none d-md-block">
+              <div class="row mb-2">
+                <div class="col-3" style="padding-top: 12px;">Tuần</div>
+                <div class="col-9">
+                  <ng-select
+                  [items]="resWeeks"
+                  [(ngModel)]="resWeek.week"
+                  placeholder="Chọn tuần..."
+                  bindLabel="week"
+                  bindValue="week"
+                  [clearable]="false"
+                  [searchable]="false"
+                  name="week"
+                  id="week"
+                  (change)="weekChange()">
+                </ng-select>
+                </div>
+               </div>
+               <div class="row">
+                <div class="col-3" style="padding-top: 12px;">Năm</div>
+                <div class="col-9">
+                  <ng-select
+                    [items]="resYears"
+                    [(ngModel)]="resWeek.year"
+                    placeholder="Chọn năm..."
+                    bindLabel="name"
+                    bindValue="id"
+                    [clearable]="false"
+                    [searchable]="false"
+                    name="year"
+                    id="year"
+                    (change)="weekChange()">
+                  </ng-select>
+                </div>
+               </div>
+            </span>
+          </div>
+        </li>
+        <li class="nav-item mr-2 mr-md-0" style="margin-left: 10%; position: relative;" *ngIf="clicked == 'month'">
+          <div class="menu-arrow"></div>
+          <div class="nav-link py-2 px-3 active">
+            <span class="d-none d-md-block">
+              <div class="row mb-2">
+                <div class="col-4" style="padding-top: 12px;">Tháng</div>
+                <div class="col-8">
+                  <ng-select
+                  [items]="resMonths"
+                  [(ngModel)]="resWeek.month"
+                  placeholder="Chọn tuần..."
+                  bindLabel="name"
+                  bindValue="id"
+                  [clearable]="false"
+                  [searchable]="false"
+                  name="month"
+                  id="month"
+                  (change)="monthChange()">
+
+                </ng-select>
+                </div>
+               </div>
+               <div class="row">
+                <div class="col-4" style="padding-top: 12px;">Năm</div>
+                <div class="col-8">
+                  <ng-select
+                    [items]="resYears"
+                    [(ngModel)]="resWeek.year"
+                    placeholder="Chọn năm..."
+                    bindLabel="name"
+                    bindValue="id"
+                    [clearable]="false"
+                    [searchable]="false"
+                    name="year"
+                    id="year"
+                    (change)="monthChange()">
+                  </ng-select>
+                </div>
+               </div>
+            </span>
+          </div>
+        </li>
+        <li class="nav-item mr-2 mr-md-0" style="margin-left: 15%; position: relative;" *ngIf="clicked == 'year'">
+          <div class="menu-arrow"></div>
+          <div class="nav-link py-2 px-3 active">
+            <span class="d-none d-md-block">
+               <div class="row">
+                <div class="col-3" style="padding-top: 12px;">Năm</div>
+                <div class="col-9">
+                  <ng-select
+                    [items]="resYears"
+                    [(ngModel)]="resWeek.year"
+                    placeholder="Chọn năm..."
+                    bindLabel="name"
+                    bindValue="id"
+                    [clearable]="false"
+                    [searchable]="false"
+                    name="year"
+                    id="year"
+                    (change)="yearChange()">
+                  </ng-select>
+                </div>
+               </div>
+            </span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row mt-4">
     <div class="col-xl-8 mb-5 mb-xl-0">
       <div class="card bg-gradient-default shadow">
         <div class="card-header bg-transparent">
@@ -101,50 +255,16 @@
               <h6 class="text-uppercase text-light ls-1 mb-1">Overview</h6>
               <h2 class="text-white mb-0">Sales value</h2>
             </div>
-            <div class="col">
-              <ul class="nav nav-pills justify-content-end">
-                <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales"  (click)="data=datasets[0];updateOptions()">
-                  <a href="javascript:void(0)" class="nav-link py-2 px-3" [ngClass]="{'active':clicked===true}" data-toggle="tab" (click)="clicked=true;clicked1=false">
-                    <span class="d-none d-md-block">Month</span>
-                    <span class="d-md-none">M</span>
-                  </a>
-                </li>
-                <li class="nav-item" data-toggle="chart" data-target="#chart-sales"  (click)="data=datasets[1];updateOptions()">
-                  <a href="javascript:void(0)" class="nav-link py-2 px-3" [ngClass]="{'active':clicked1===true}" data-toggle="tab" (click)="clicked=false;clicked1=true">
-                    <span class="d-none d-md-block">Week</span>
-                    <span class="d-md-none">W</span>
-                  </a>
-                  <ng-select *ngIf="resWeek"
-                        [(ngModel)]="value"
-                        placeholder="Chọn tuần..."
-                        bindLabel="week"
-                        bindValue="week"
-                        [clearable]="false"
-                        [searchable]="false"
-                        name="week"
-                        id="week"
-                        (change)="weekChange()">
 
-                        <ng-container *ngFor="let report of resWeek; let i = index">
-                          <ng-template ng-label-tmp let-item="item">
-                            Tuần {{report.week}}
-                          </ng-template>
-                          <ng-option [value]="report.week" >
-                            Tuần {{report.week}}
-                          </ng-option>
-                        </ng-container>
-                  </ng-select>
-                </li>
-              </ul>
-            </div>
           </div>
         </div>
         <div class="card-body">
-          <!-- Chart -->
-          <div class="chart">
-            <!-- Chart wrapper -->
-            <canvas id="chart-sales" class="chart-canvas"></canvas>
-          </div>
+          <canvas baseChart
+              [type]="'line'"
+              [data]="lineChartData"
+              [options]="lineChartOptions"
+             >
+            </canvas>
         </div>
       </div>
     </div>
@@ -159,11 +279,12 @@
           </div>
         </div>
         <div class="card-body">
-          <!-- Chart -->
-          <div class="chart">
-            <canvas id="chart-orders" class="chart-canvas"></canvas>
-          </div>
-        </div>
+          <canvas baseChart
+              [type]="'bar'"
+              [data]="barChartData"
+              [options]="barChartOptions"
+             >
+            </canvas>
       </div>
     </div>
   </div>

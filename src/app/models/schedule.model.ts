@@ -1,4 +1,5 @@
-
+import { CarModel } from "../models/car.model";
+import { TourModel } from "../models/tour.model";
 export class ScheduleModel{
   idSchedule: string = ""
   departureDate: number = 0
@@ -13,7 +14,8 @@ export class ScheduleModel{
   timePromotionDisplay: string = ""
   endTimePromotion: number = 0
   endTimePromotionDisplay: string = ""
-
+  car: CarModel
+  tour: TourModel
   departurePlace: string = null
   status: number = 0
   finalPrice: number = 0
@@ -51,6 +53,8 @@ export class ScheduleModel{
   isUpdateDR: boolean = false
   isUpdate: boolean = false
   isRemoveTimeLine: boolean = false
+
+  rowNum?: number
 }
 
 export class ValidateScheduleModel{

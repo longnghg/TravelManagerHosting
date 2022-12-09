@@ -1,6 +1,6 @@
 <div class="modal-header bg-secondary">
   <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin</h1>
-  <button #closeModal type="button" class="btn-close btn-danger" data-bs-dismiss="modal" aria-label="Close" (click)="close()" [disabled]="isLoading"></button>
+  <button #closeModal type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()" [disabled]="isLoading"></button>
 </div>
 <div class="modal-body">
   <ng-container *ngIf="resSchedule">
@@ -16,7 +16,7 @@
                   <div class="row">
                     <div class="col-6">
                       <div class="form-group">
-                        <label class="form-control-label" for="input-beginDate">Chọn ngày bắt đầu bán vé
+                        <label class="form-control-label" for="input-beginDate">Ngày bắt đầu bán vé
                           <span [class]="type != 'create' &&  resSchedule.isDelete || isLoading ?'d-none':'text-red'">* {{this.validateScheduleModel.beginDate ? this.validateScheduleModel.beginDate : ''}}</span>
                         </label>
                         <input   (change)=" inputChange(); dateChange('beginDate') " [(ngModel)]="resSchedule.beginDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="beginDate" id="beginDate" type="datetime-local" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete || isLoading" />
@@ -24,7 +24,7 @@
                     </div>
                     <div class="col-6">
                       <div class="form-group">
-                        <label class="form-control-label" for="input-endDate">Chọn ngày kết thúc bán vé
+                        <label class="form-control-label" for="input-endDate">Ngày kết thúc bán vé
                           <span [class]="type != 'create' &&  resSchedule.isDelete || isLoading?'d-none':'text-red'">* {{this.validateScheduleModel.endDate ? this.validateScheduleModel.endDate : ''}}</span>
                         </label>
                         <input   (change)="inputChange(); dateChange('endDate')" [(ngModel)]="resSchedule.endDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="endDate" id="endDate" type="datetime-local" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete || isLoading" />
@@ -34,7 +34,7 @@
                   <div class="row">
                     <div class="col-6">
                       <div class="form-group">
-                        <label class="form-control-label" for="input-departureDate">Chọn ngày khởi hành
+                        <label class="form-control-label" for="input-departureDate">Ngày khởi hành
                           <span [class]="type != 'create' &&  resSchedule.isDelete || isLoading ?'d-none':'text-red'">* {{this.validateScheduleModel.departureDate ? this.validateScheduleModel.departureDate : ''}}</span>
                         </label>
                         <input   (change)="inputChange(); dateChange('departureDate')" [(ngModel)]="resSchedule.departureDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="departureDate" id="departureDate" type="datetime-local" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete || isLoading" />
@@ -42,7 +42,7 @@
                     </div>
                     <div class="col-6">
                       <div class="form-group">
-                        <label class="form-control-label" for="input-returnDate">Chọn ngày trở về
+                        <label class="form-control-label" for="input-returnDate">Ngày trở về
                           <span [class]="type != 'create' &&  resSchedule.isDelete || isLoading ?'d-none':'text-red'">* {{this.validateScheduleModel.returnDate ? this.validateScheduleModel.returnDate : ''}}</span>
                         </label>
                         <input   (change)="inputChange(); dateChange('returnDate')" [(ngModel)]="resSchedule.returnDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="returnDate" id="returnDate" type="datetime-local" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete || isLoading" />
@@ -69,8 +69,11 @@
                     </div>
                     <div class="col-3">
                       <div class="form-group">
-                        <label class="form-control-label" for="carId">Chọn xe
+                        <label class="form-control-label" for="carId">Xe
                           <span [class]="type != 'create' &&  resSchedule.isDelete || isLoading ?'d-none':'text-red'">* {{this.validateScheduleModel.carId ? this.validateScheduleModel.carId : ''}}</span>
+                          <a *ngIf="resSchedule.carId" class="info-icon-cus" (click)="openInfo()" placement="top" ngbTooltip="Lịch trình của xe">
+                            <i class="fa-solid fa-circle-info"></i>
+                          </a>
                         </label>
                         <ng-select [items]="resCar"
                                     bindLabel="liscensePlate"
@@ -151,7 +154,7 @@
                   <div class="row">
                     <div [class]="resSchedule.promotionId == 1 ? 'col' : 'col-6'">
                       <div class="form-group">
-                        <label class="form-control-label" for="input-promotionId">Chọn khuyến mãi</label>
+                        <label class="form-control-label" for="input-promotionId">Khuyến mãi</label>
                         <ng-select [items]="resPromotion"
                         bindLabel="value"
                         bindValue="idPromotion"
@@ -186,13 +189,13 @@
                     <div class="col-3" *ngIf="resSchedule.promotionId != 1">
                       <div class="form-group">
                         <label class="form-control-label" for="input-timePromotion">Thời gian bắt đầu khuyến mãi</label>
-                        <input [(ngModel)]="resSchedule.timePromotionDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="timePromotion" id="timePromotion" type="date" readonly/>
+                        <input [(ngModel)]="resSchedule.timePromotionDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="timePromotion" id="timePromotion" type="datetime-local" readonly/>
                       </div>
                     </div>
                     <div class="col-3" *ngIf="resSchedule.promotionId != 1">
                       <div class="form-group">
                         <label class="form-control-label" for="input-timePromotion">Thời gian kết thúc khuyến mãi</label>
-                        <input [(ngModel)]="resSchedule.endTimePromotionDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="endTimePromotion" id="endTimePromotion" type="date" readonly/>
+                        <input [(ngModel)]="resSchedule.endTimePromotionDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="endTimePromotion" id="endTimePromotion" type="datetime-local" readonly/>
                       </div>
                     </div>
                   </div>
@@ -558,3 +561,91 @@
     </div>
   </div>
 </div> -->
+<div #fade class="fade_cus"></div>
+<div #card class="card-cus">
+  <div class="tools">
+    <div class="circle">
+      <span class="red box"></span>
+    </div>
+    <div class="circle">
+      <span class="yellow box"></span>
+    </div>
+    <div class="circle">
+      <span class="green box"></span>
+    </div>
+    <button type="button" style="margin-left: 88%;" class="btn-close" (click)="closeInfo()"></button>
+  </div>
+  <div class="card__content">
+    <div class="table-responsive">
+      <!-- Projects table -->
+      <table class="table align-items-center table-flush">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col" style="width: 6%;"></th>
+            <th scope="col" style="width: 35%;">Tên tour</th>
+            <th scope="col" style="width: 15%;">Xe</th>
+            <th scope="col">Ngày khởi hành</th>
+            <th scope="col">Ngày về</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let schedule of scheduleOfCar">
+            <td style="width: 6%;">
+              {{schedule.rowNum}}
+            </td>
+            <td style="width: 35%; text-align: unset;">
+              {{schedule.tour.nameTour}}
+            </td>
+            <td style="width: 15%;">
+              {{schedule.car.liscensePlate}}
+            </td>
+            <td>
+              {{schedule.departureDate | formatFromUnixTimestampToFullDateTimeView}}
+            </td>
+            <td>
+              {{schedule.returnDate | formatFromUnixTimestampToFullDateTimeView}}
+            </td>
+          </tr>
+        </tbody>
+        <nav aria-label="Page navigation example" style="width: 100%; margin-left: 0;" class="row">
+          <ul class="pagination justify-content-end" style="border-top: 1px solid; border-radius: unset;">
+            <li class="page-item">
+              <a href="javascript:void(0)" tabindex="-1" (click)="btnPrev == true?selectPage(i.value, 'prevAll'):''">
+                <span style="font-size: 25px;" >&laquo;</span>
+              </a>
+            </li>
+            <li class="page-item">
+              <a href="javascript:void(0)" tabindex="-1" (click)="btnPrev == true?selectPage(i.value, 'prev'):''">
+                <span style="font-size: 25px;" >&lsaquo;</span>
+              </a>
+            </li>
+            <li class="page-item" style="margin-right: 10px; margin-top: 10px;"><h5>Trang</h5></li>
+            <input type="text" #i  inputmode="numeric"
+            pattern="[0-9]*"
+            class="form-control custom-pages-input"
+            id="paginationInput"
+            [(ngModel)]="pageIndex"
+            (keyup.enter)="selectPage(i.value, '')"
+            (blur)="selectPage(i.value, '')"
+            (input)="formatInput($any($event).target)"
+            style="width: 2.5rem;
+            margin-top: 0.8rem;
+            height: 2rem;
+            text-align: center;">
+            <li class="page-item" style="margin-left: 10px; margin-top: 10px;"><h5>trên {{pageCount}}</h5></li>
+            <li class="page-item" >
+              <a href="javascript:void(0)" (click)="btnNext == true?selectPage(i.value, 'next'):''">
+                <span style="font-size: 25px;"  >&rsaquo;</span>
+              </a>
+            </li>
+            <li class="page-item">
+              <a href="javascript:void(0)" (click)="btnNext == true?selectPage(i.value, 'nextAll'):''">
+                <span style="font-size: 25px;" >&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </table>
+    </div>
+  </div>
+</div>

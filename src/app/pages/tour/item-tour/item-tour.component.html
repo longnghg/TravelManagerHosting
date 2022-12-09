@@ -296,7 +296,7 @@ width: fit-content;">
 
                               </div>
                               <div class="col-3">
-                                <div class="btn btn-outline-danger" (click)="btnDeleteImg(i, file)" style="margin-top: 40%;">
+                                <div class="btn btn-outline-danger" (click)="btnDeleteImg(i, file)" style="margin-top: 40%;" [disabled]="isLoading">
                                   Xóa
                                 </div>
                               </div>
@@ -376,7 +376,7 @@ width: fit-content;">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="deleteItemTourModal">Xác nhận</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" closeModalLoadDelete class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
       </div>
       <div class="modal-body" *ngIf="resTour">
         Bạn có chắc muốn {{!resTour.typeAction ? "Xóa":"Hủy yêu cầu"}} [<span class="text-red">{{resTour.nameTour}}</span>] !
@@ -398,7 +398,7 @@ width: fit-content;">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="restoreItemTourModal">Xác nhận</h1>
-        <button type="button" #closeModalLoad class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
+        <button type="button" #closeModalLoadRestore class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
       </div>
       <div class="modal-body" *ngIf="resTour">
         Bạn có chắc muốn khôi phục [<span class="text-red">{{resTour.nameTour}}</span>] !
@@ -420,7 +420,7 @@ width: fit-content;">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="approveItemTourModal">Xác nhận</h1>
-        <button type="button" #closeModalLoad class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
+        <button type="button" #closeModalLoadApprove class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
       </div>
       <div class="modal-body" *ngIf="resTour">
         Bạn có chắc muốn phê duyệt [<span class="text-red">{{resTour.nameTour}}</span>] !
@@ -439,7 +439,7 @@ width: fit-content;">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="refusedItemTourModal">Xác nhận</h1>
-        <button type="button" #closeModalLoad class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
+        <button type="button" #closeModalLoadRefused class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
       </div>
       <div class="modal-body" *ngIf="resTour">
         Bạn có chắc muốn từ chối phê duyệt [<span class="text-red">{{resTour.nameTour}}</span>] !

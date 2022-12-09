@@ -132,7 +132,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="deleteProvinceModalLabel">Xác nhận</h1>
-        <button type="button" #closeModalLoad class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
+        <button type="button" #closeModalLoadDeleteProvince class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
       </div>
       <div class="modal-body" *ngIf="dataDelete">
         Bạn có chắc muốn xóa [<span class="text-red">{{dataDelete.nameProvince}}</span>] !
@@ -153,7 +153,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="deleteDistrictModalLabel">Xác nhận</h1>
-        <button type="button" #closeModalLoad class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
+        <button type="button" #closeModalLoadDeleteDistrict class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
       </div>
       <div class="modal-body" *ngIf="dataDelete">
         Bạn có chắc muốn xóa [<span class="text-red">{{dataDelete.nameDistrict}}</span>] !
@@ -174,7 +174,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="deleteWardModalLabel">Xác nhận</h1>
-        <button type="button" #closeModalLoad class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
+        <button type="button" #closeModalLoadDeleteWard class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
       </div>
       <div class="modal-body" *ngIf="dataDelete">
         Bạn có chắc muốn xóa [<span class="text-red">{{dataDelete.nameWard}}</span>] !

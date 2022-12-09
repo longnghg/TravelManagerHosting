@@ -1,0 +1,14 @@
+.menu-arrow{
+    background: cadetblue;
+    box-shadow: none;
+    content: "";
+    display: block;
+    height: 12px;
+    width: 12px;
+    left: 20px;
+    position: absolute;
+    bottom: 100%;
+    transform: rotate(-45deg) translateY(12px);
+    z-index: -5;
+    border-radius: 2px;
+}

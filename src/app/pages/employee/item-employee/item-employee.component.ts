@@ -20,7 +20,9 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
 export class ItemEmployeeComponent implements OnInit{
   response: ResponseModel
   auth: AuthenticationModel
-  @ViewChild('closeModalLoad') closeModalLoad: ElementRef;
+  @ViewChild('closeModalLoadDelete') closeModalLoadDelete: ElementRef;
+  @ViewChild('closeModalLoadRestore') closeModalLoadRestore: ElementRef;
+  @ViewChild('closeModalLoadApprove') closeModalLoadApprove: ElementRef;
   isLoading: boolean
   validateEmployee: ValidationEmployeeModel = new ValidationEmployeeModel
   validationChangePass: ValidationChangePass = new ValidationChangePass
@@ -278,7 +280,10 @@ export class ItemEmployeeComponent implements OnInit{
           this.notificationService.handleAlertObj(res.notification)
           this.isLoading = false
           if (res.notification.type == StatusNotification.Success) {
-           this.router.navigate(['','list-employee']);
+            setTimeout(() => {
+              this.closeModalLoadDelete.nativeElement.click()
+              this.router.navigate(['','list-employee']);
+             }, 100);
           }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -313,7 +318,10 @@ export class ItemEmployeeComponent implements OnInit{
         this.notificationService.handleAlertObj(res.notification)
         this.isLoading = false
         if (res.notification.type == StatusNotification.Success) {
-          this.router.navigate(['','list-employee'], { state: { isDelete: true } });
+          setTimeout(() => {
+            this.closeModalLoadRestore.nativeElement.click()
+            this.router.navigate(['','list-employee'], { state: { isDelete: true } });
+           }, 100);
          }
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");

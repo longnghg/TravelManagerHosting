@@ -15,7 +15,8 @@ import { PaginationModel } from "../../../models/responsiveModels/pagination.mod
   styleUrls: ['./list-role.component.scss']
 })
 export class ListRoleComponent implements OnInit {
-  @ViewChild('closeModalLoad') closeModalLoad: ElementRef;
+  @ViewChild('closeModalLoadDelete') closeModalLoadDelete: ElementRef;
+  @ViewChild('closeModalLoadRestore') closeModalLoadRestore: ElementRef;
   isLoading: boolean
   auth: AuthenticationModel
   dataChild: RoleModel
@@ -125,7 +126,9 @@ export class ListRoleComponent implements OnInit {
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
        this.isLoading = false
-       this.closeModalLoad.nativeElement.click()
+       setTimeout(() => {
+        this.closeModalLoadDelete.nativeElement.click()
+       }, 100);
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
        this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -140,7 +143,9 @@ export class ListRoleComponent implements OnInit {
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
         this.isLoading = false
-        this.closeModalLoad.nativeElement.click()
+        setTimeout(() => {
+          this.closeModalLoadRestore.nativeElement.click()
+         }, 100);
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, StatusNotification.Error)

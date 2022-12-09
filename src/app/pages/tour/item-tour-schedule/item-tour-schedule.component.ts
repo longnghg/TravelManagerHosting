@@ -36,6 +36,8 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
 })
 export class ItemTourScheduleComponent implements OnInit {
   @ViewChild('closeModal') closeModal: ElementRef
+  @ViewChild('fade') fade: ElementRef
+  @ViewChild('card') card: ElementRef
   isLoading: boolean
   @Input() resSchedule: ScheduleModel
   @Input() type: string
@@ -53,6 +55,7 @@ export class ItemTourScheduleComponent implements OnInit {
   timelineList: TimeLineModel[]
   resTimelinelistDelete: TimeLineModel[] = []
   resCar: CarModel[]
+  scheduleOfCar: ScheduleModel[]
   resEmployee: EmployeeModel[]
   resPromotion: PromotionModel[]
   resHotel: HotelModel[]
@@ -73,6 +76,15 @@ export class ItemTourScheduleComponent implements OnInit {
   isChangeTimeline: boolean = false
   isChangeTimelineList: boolean = false
   isFirst: boolean = true
+
+  pageCount: number
+  pageSize: number = 7
+  index: number = 0
+  pageIndex: number = 1
+  start: number = 0
+  end: number = 0
+  btnPrev: boolean = false
+  btnNext: boolean = true
   constructor(private scheduleService: ScheduleService, private configService: ConfigService, private notificationService: NotificationService,
     private employeeService: EmployeeService, private carService: CarService, private promotionService: PromotionService, private activatedRoute: ActivatedRoute,
     private costtourService: CostTourService, private hotelService: HotelService, private placeService: PlaceService, private restaurantService: RestaurantService,
@@ -96,7 +108,6 @@ export class ItemTourScheduleComponent implements OnInit {
 
     }
     else {
-
       if (this.resSchedule) {
         this.resSchedule.isUpdate = true
 
@@ -105,7 +116,7 @@ export class ItemTourScheduleComponent implements OnInit {
         this.resSchedule.beginDateDisplay = this.configService.formatFromUnixTimestampToFullDateTime(this.resSchedule.beginDate)
         this.resSchedule.endDateDisplay = this.configService.formatFromUnixTimestampToFullDateTime(this.resSchedule.endDate)
         this.resSchedule.timePromotionDisplay = this.configService.formatFromUnixTimestampToFullDateTime(this.resSchedule.timePromotion)
-        this.resSchedule.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDateTime(this.resSchedule.modifyDate)
+        this.resSchedule.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.modifyDate)
         this.resScheduleTmp = Object.assign({}, this.resSchedule)
 
 
@@ -137,10 +148,16 @@ export class ItemTourScheduleComponent implements OnInit {
         this.timelineService.getTimelineidSchedule(this.resSchedule.idSchedule).subscribe(res => {
           this.response = res
           this.resTimelinelist = this.response.content
-          this.resTimelinelist.forEach(timeline => {
-            timeline.fromTimeDisplay = this.configService.formatFromUnixTimestampToFullDateTime(timeline.fromTime)
-            timeline.toTimeDisplay = this.configService.formatFromUnixTimestampToFullDateTime(timeline.toTime)
-          });
+          if (this.resTimelinelist) {
+            this.resTimelinelist.forEach(timeline => {
+              timeline.fromTimeDisplay = this.configService.formatFromUnixTimestampToFullDateTime(timeline.fromTime)
+              timeline.toTimeDisplay = this.configService.formatFromUnixTimestampToFullDateTime(timeline.toTime)
+            });
+            this.resSchedule.isRemoveTimeLine = false
+          }
+          else{
+            this.resSchedule.isRemoveTimeLine = true
+          }
           this.resTimelinelistTmp = Object.assign([], this.resTimelinelist)
 
         }, error => {
@@ -169,15 +186,12 @@ export class ItemTourScheduleComponent implements OnInit {
         })
       } else {
         this.carService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
-          console.log(response);
 
           this.resCar = response
 
         })
 
         this.employeeService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
-          console.log(response);
-
           this.resEmployee = response
         })
       }
@@ -224,27 +238,41 @@ export class ItemTourScheduleComponent implements OnInit {
   }
 
   dateChange(property) {
-
     this.resSchedule[property] = new Date(this.resSchedule[property+'Display']).getTime()
+    if (this.resSchedule.departureDate != this.resScheduleTmp.departureDate || this.resSchedule.returnDate != this.resScheduleTmp.returnDate) {
+      this.resSchedule.isUpdateDR = true
+      this.resSchedule.isUpdate = false
+    }
+
+    if (this.resSchedule.beginDate != this.resScheduleTmp.beginDate || this.resSchedule.endDate != this.resScheduleTmp.endDate) {
+      this.resSchedule.isUpdate = false
+    }
 
     if (property == "departureDate" || property == "returnDate"){
-      if (this.type != "create") {
-        this.carService.viewsUpdate(this.resSchedule.departureDate, this.resSchedule.returnDate, this.resSchedule.idSchedule).then(response => {
-          this.resCar = response
-        })
+      // if (this.type != "create") {
+      //   this.carService.viewsUpdate(this.resSchedule.departureDate, this.resSchedule.returnDate, this.resSchedule.idSchedule).then(response => {
+      //     this.resCar = response
+      //   })
 
-        this.employeeService.viewsUpdate(this.resSchedule.departureDate, this.resSchedule.returnDate, this.resSchedule.idSchedule).then(response => {
-          this.resEmployee = response
-        })
-      } else {
-        this.carService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
-          this.resCar = response
-        })
+      //   this.employeeService.viewsUpdate(this.resSchedule.departureDate, this.resSchedule.returnDate, this.resSchedule.idSchedule).then(response => {
+      //     this.resEmployee = response
+      //   })
+      // } else {
+      //   this.carService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
+      //     this.resCar = response
+      //   })
 
-        this.employeeService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
-          this.resEmployee = response
-        })
-      }
+      //   this.employeeService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
+      //     this.resEmployee = response
+      //   })
+      // }
+      this.carService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
+        this.resCar = response
+      })
+
+      this.employeeService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
+        this.resEmployee = response
+      })
     }
 
   }
@@ -256,14 +284,6 @@ export class ItemTourScheduleComponent implements OnInit {
   inputChange() {
     if (JSON.stringify(this.resSchedule) != JSON.stringify(this.resScheduleTmp) ||
       JSON.stringify(this.resCostTour) != JSON.stringify(this.resCostTourTmp)) {
-        if (this.resSchedule.departureDate != this.resScheduleTmp.departureDate || this.resSchedule.returnDate != this.resScheduleTmp.returnDate) {
-          this.resSchedule.isUpdateDR = true
-          this.resSchedule.isUpdate = false
-        }
-
-        if (this.resSchedule.beginDate != this.resScheduleTmp.beginDate || this.resSchedule.endDate != this.resScheduleTmp.endDate) {
-          this.resSchedule.isUpdate = false
-        }
       this.isChange = true
     }
     else {
@@ -285,7 +305,6 @@ export class ItemTourScheduleComponent implements OnInit {
     this.validateScheduleModel = this.configService.validateSchedule(this.resSchedule, this.validateScheduleModel, Object.assign([], this.resTimelinelist))
     this.resSchedule.idUserModify = this.auth.id
     this.resSchedule.tourId = this.activatedRoute.snapshot.paramMap.get('id2')
-
     if (this.validateScheduleModel.total == 0) {
         if (this.active == 2 || this.active == 3) {
           this.validateCostTourModel = new ValidateCostTourModel
@@ -403,13 +422,15 @@ export class ItemTourScheduleComponent implements OnInit {
     if (this.type == "create") {
       this.timelineService.create(this.resTimelinelist).subscribe(res => {
         this.response = res
+        this.isLoading = false
         if (this.response.notification.type == StatusNotification.Success) {
-          this.closeModal.nativeElement.click()
+          setTimeout(() => {
+            this.closeModal.nativeElement.click()
+          }, 100);
         }
         else{
           this.notificationService.handleAlertObj(res.notification)
         }
-        this.isLoading = false
       }, error => {
         var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
         this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -419,12 +440,15 @@ export class ItemTourScheduleComponent implements OnInit {
     else {
       this.timelineService.update(this.resTimelinelist).subscribe(res => {
         this.response = res
+        this.isLoading = false
+
         if (this.response.notification.type == StatusNotification.Success) {
-          this.closeModal.nativeElement.click()
+          setTimeout(() => {
+            this.closeModal.nativeElement.click()
+          }, 100);
         }else{
           this.notificationService.handleAlertObj(res.notification)
         }
-        this.isLoading = false
       }, error => {
         var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
         this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -594,18 +618,115 @@ export class ItemTourScheduleComponent implements OnInit {
     this.parentData.emit(this.resSchedule);
   }
 
-  formatInput(input: HTMLInputElement, property: string) {
+  formatInput(input: HTMLInputElement, property?: string) {
     input.value = input.value.replace(FILTER_PAG_REGEX, '');
     if (input.value) {
-      if (property == "distance" || property == "profit" || property == "minCapacity" || property == "maxCapacity" || property == "vat") {
-        this.resCostTour[property] = Number(input.value)
+      if (property) {
+        if (property == "distance" || property == "profit" || property == "minCapacity" || property == "maxCapacity" || property == "vat") {
+          this.resCostTour[property] = Number(input.value)
+        }
+        else{
+          this.resCostTour[property] = Number(input.value).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+        }
       }
       else{
-        this.resCostTour[property] = Number(input.value).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+        this.pageIndex = Number(input.value)
       }
     }
     else{
       this.resCostTour[property] = 0
     }
+  }
+  initScheduleOfCar(){
+    this.carService.scheduleOfCard(this.resSchedule.carId, this.pageIndex, this.pageSize).subscribe(res => {
+      this.response = res
+      this.scheduleOfCar = this.response.content
+      this.calStartEnd()
+      this.calTotalResult(this.response.totalResult)
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
+  }
+  openInfo(){
+    this.initScheduleOfCar()
+    this.fade.nativeElement.style.display = "block"
+    this.card.nativeElement.style.display = "block"
+    this.card.nativeElement.setAttribute("class","card_open card-cus")
+  }
+
+  closeInfo(){
+    this.fade.nativeElement.removeAttribute("style")
+    this.card.nativeElement.setAttribute("class","card_close card-cus")
+    setTimeout(() => {
+      this.card.nativeElement.removeAttribute("style")
+    }, 300);
+  }
+  calStartEnd(){
+    this.start = ((this.pageIndex - 1) * this.pageSize) + 1
+    this.end = this.start + this.pageSize - 1
+    for (let index = 0; index < this.scheduleOfCar.length; index++) {
+      this.scheduleOfCar[index].rowNum = this.start + index
+    }
+
+  }
+  calTotalResult(totalResult){
+    if(totalResult % this.pageSize == 0){
+      this.pageCount = totalResult / this.pageSize
+    }
+    else{
+      this.pageCount = Math.floor(totalResult / this.pageSize + 1)
+    }
+
+    if (this.pageCount == 1) {
+       this.btnNext = false
+    }
+    else{
+      this.btnNext = true
+    }
+    this.index = (this.pageIndex - 1) * this.pageSize
+
+  }
+  selectPage(page: string, type: string) {
+    var index = parseInt(page)
+    if (type == 'prev' && index > 1) {
+      this.pageIndex = index - 1
+    }
+    else if(type == 'next' && index < this.pageCount){
+      this.pageIndex = index + 1
+    }
+    else if(type == 'nextAll'){
+      this.pageIndex = this.pageCount
+    }
+    else if (type == 'prevAll') {
+      this.pageIndex = 1
+    }
+    else{
+      if (index > this.pageCount) {
+        this.pageIndex = this.pageCount
+      }
+      else if (index == 0){
+        this.pageIndex = 1
+      }
+      else{
+        this.pageIndex = index
+      }
+    }
+
+    if (this.pageIndex == 1) {
+      this.btnPrev = false
+    }
+    else{
+      this.btnPrev = true
+    }
+
+    if (this.pageIndex == this.pageCount) {
+      this.btnNext = false
+    }
+    else{
+      this.btnNext = true
+    }
+
+    this.initScheduleOfCar()
   }
 }

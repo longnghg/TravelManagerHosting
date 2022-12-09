@@ -19,7 +19,9 @@ import { HubConnection } from '@microsoft/signalr';
   styleUrls: ['./list-employee.component.scss']
 })
 export class ListEmployeeComponent implements OnInit {
-  @ViewChild('closeModalLoad') closeModalLoad: ElementRef;
+  @ViewChild('closeModalLoadDelete') closeModalLoadDelete: ElementRef;
+  @ViewChild('closeModalLoadRestore') closeModalLoadRestore: ElementRef;
+  @ViewChild('closeModalLoadApprove') closeModalLoadApprove: ElementRef;
   isLoading: boolean
   auth: AuthenticationModel
   dataChild: EmployeeModel
@@ -169,7 +171,9 @@ export class ListEmployeeComponent implements OnInit {
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
           this.isLoading = false
-          this.closeModalLoad.nativeElement.click()
+          setTimeout(() => {
+            this.closeModalLoadDelete.nativeElement.click()
+           }, 100);
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -189,7 +193,9 @@ export class ListEmployeeComponent implements OnInit {
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
         this.isLoading = false
-        this.closeModalLoad.nativeElement.click()
+        setTimeout(() => {
+          this.closeModalLoadRestore.nativeElement.click()
+         }, 100);
       }, error => {
         this.isLoading = false
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");

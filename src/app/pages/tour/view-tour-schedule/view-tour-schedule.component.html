@@ -21,7 +21,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="deleteScheduleModal">Xác nhận</h1>
-          <button type="button" #closeModalLoad class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
+          <button type="button" #closeModalLoadDelete class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
         </div>
         <div class="modal-body" *ngIf="data">
           Bạn có chắc muốn xóa [<span class="text-red">{{data.idSchedule}}</span>] !
@@ -47,7 +47,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="restoreScheduleModal">Xác nhận</h1>
-          <button type="button" #closeModalLoad class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
+          <button type="button" #closeModalLoadRestore class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
         </div>
         <div class="modal-body" *ngIf="data">
           Bạn có chắc muốn khôi phục [<span class="text-red">{{data.idSchedule}}</span>] !
@@ -84,7 +84,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="approveScheduleModalLabel">Xác nhận</h1>
-        <button type="button" #closeModalLoad class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
+        <button type="button" #closeModalLoadApprove class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
       </div>
       <div class="modal-body" *ngIf="data">
         <ng-container *ngIf="typeChild == 'approve'; else elseApprove">

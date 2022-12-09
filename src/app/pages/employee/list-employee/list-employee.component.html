@@ -122,12 +122,12 @@
   </div>
 </div> -->
 
-<div class="modal fade" [id]="gridConfig.idModalDelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteEmployeeModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" [id]="gridConfig.idModalDelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteEmployeeModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="deleteEmployeeModalLabel">Xác nhận</h1>
-        <button type="button"  #closeModalLoad class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
+        <button type="button"  #closeModalLoadDelete class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
       </div>
       <div class="modal-body" *ngIf="data">
         Bạn có chắc muốn xóa [<span class="text-red">{{data.nameEmployee}}</span>] !
@@ -149,7 +149,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="restoreEmployeeModalLabel">Xác nhận</h1>
-        <button type="button"  #closeModalLoad class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
+        <button type="button"  #closeModalLoadRestore class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
       </div>
       <div class="modal-body" *ngIf="data">
         Bạn có chắc muốn khôi phục [<span class="text-red">{{data.nameEmployee}}</span>] !
@@ -163,7 +163,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 
 <div class="modal fade" [id]="gridConfig2.idModalDelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteEmployeeModalLabel" aria-hidden="true">
@@ -171,7 +171,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="deleteEmployeeModalLabel">Xác nhận</h1>
-        <button type="button"  #closeModalLoad class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
+        <button type="button"  #closeModalLoadDelete class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
       </div>
       <div class="modal-body" *ngIf="data">
         Bạn có chắc muốn xóa [<span class="text-red">{{data.nameEmployee}}</span>] !
@@ -193,7 +193,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="restoreEmployeeModalLabel">Xác nhận</h1>
-        <button type="button"  #closeModalLoad class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
+        <button type="button"  #closeModalLoadRestore class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
       </div>
       <div class="modal-body" *ngIf="data">
         Bạn có chắc muốn khôi phục [<span class="text-red">{{data.nameEmployee}}</span>] !

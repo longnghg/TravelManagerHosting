@@ -116,7 +116,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="deleteRoleModalLabel">Xác nhận</h1>
-        <button type="button" #closeModalLoad class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
+        <button type="button" #closeModalLoadDelete class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
       </div>
       <div class="modal-body" *ngIf="data">
         Bạn có chắc muốn xóa [<span class="text-red">{{data.nameRole}}</span>] !
@@ -143,7 +143,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="restoreRoleModalLabel">Xác nhận</h1>
-        <button type="button" #closeModalLoad class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
+        <button type="button" #closeModalLoadRestore class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
       </div>
       <div class="modal-body" *ngIf="data">
         Bạn có chắc muốn khôi phục [<span class="text-red">{{data.nameRole}}</span>] !

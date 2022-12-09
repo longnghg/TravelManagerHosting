@@ -61,31 +61,54 @@ export class ConfigService{
   }
 
   list10Star(){
-    var listStar = [
-      {id: 0, name: "00"},
-      {id: 1, name: "01"},
-      {id: 2, name: "02"},
-      {id: 3, name: "03"},
-      {id: 4, name: "04"},
-      {id: 5, name: "05"},
-      {id: 6, name: "06"},
-      {id: 7, name: "07"},
-      {id: 8, name: "08"},
-      {id: 9, name: "09"},
-      {id: 10, name: "10"}
-    ]
+    var listStar = []
+    for (let index = 0; index <= 10; index++) {
+      var name = index.toString()
+      if (index < 10) {
+        name = "0"+name
+      }
+      listStar.push(
+        {id: index, name: name},
+      )
+    }
     return listStar
   }
 
+  listMonth(){
+    var listMonth = []
+    for (let index = 1; index <= 12; index++) {
+      var name = index.toString()
+      if (index < 10) {
+        name = "0"+name
+      }
+      listMonth.push(
+        {id: index, name: name},
+      )
+    }
+    return listMonth
+  }
+
+  listYear(){
+    var listYear = []
+    for (let index = 2019; index <= new Date().getFullYear(); index++) {
+      listYear.push(
+        {id: index, name: index.toString()},
+      )
+    }
+    return listYear
+  }
+
   list5Star(){
-    var listStar = [
-      {id: 0, name: "00"},
-      {id: 1, name: "01"},
-      {id: 2, name: "02"},
-      {id: 3, name: "03"},
-      {id: 4, name: "04"},
-      {id: 5, name: "05"},
-    ]
+    var listStar = []
+    for (let index = 0; index <= 5; index++) {
+      var name = index.toString()
+      if (index < 10) {
+        name = "0"+name
+      }
+      listStar.push(
+        {id: index, name: name},
+      )
+    }
     return listStar
   }
 
@@ -453,7 +476,11 @@ export class ConfigService{
     //   model.timePromotion = ("Ngày khuyến mãi không trước ngày bắt đầu bán vé!")
     //   model.total += 1
     //  }
+    console.log(data);
+
      if (!data.isUpdate) {
+      console.log(123);
+
       if(data.beginDate == 0 || data.beginDate == ""){
         model.beginDate = ("[Ngày bắt đầu] không bỏ trống !")
         model.total += 1

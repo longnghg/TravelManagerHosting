@@ -19,6 +19,10 @@ import { ImageService } from 'src/app/services_API/image.service';
 })
 export class ItemTourComponent implements OnInit {
   @ViewChild('tourImg') tourImg: ElementRef;
+  @ViewChild('closeModalLoadDelete') closeModalLoadDelete: ElementRef;
+  @ViewChild('closeModalLoadRestore') closeModalLoadRestore: ElementRef;
+  @ViewChild('closeModalLoadApprove') closeModalLoadApprove: ElementRef;
+  @ViewChild('closeModalLoadRefused') closeModalLoadRefused: ElementRef;
   isLoading: boolean
   resTour: TourModel
   type: string
@@ -28,6 +32,7 @@ export class ItemTourComponent implements OnInit {
   resProvince: LocationModel[]
   resImage: ImageModel[] = []
   resImageTmp: ImageModel[] = []
+  resImageBackup: ImageModel[] = []
   resImageDelete: ImageModel[] = []
   isChangeStar: boolean = false
   resTourTmp: TourModel
@@ -35,6 +40,7 @@ export class ItemTourComponent implements OnInit {
   img: any
   imgDetail = []
   imgDetailRoot = []
+  imgDetailBackup = []
   formData: any
   formDatas: any
   formDatasTmp: any
@@ -119,14 +125,17 @@ export class ItemTourComponent implements OnInit {
       {
         this.resImage = this.response.content
         this.resImageTmp = Object.assign([], this.resImage)
+        this.resImageBackup = Object.assign([], this.resImage)
         this.resImage.forEach(image => {
           if (image.filePath) {
             this.imgDetail.push(image.filePath)
             this.imgDetailRoot.push(image.filePath)
+            this.imgDetailBackup.push(image.filePath)
           }
         });
-        if (this.resImage.length < 4) {
-          for (let index = 0; index < 4 - this.resImage.length; index++) {
+        if (this.imgDetail.length < 4) {
+          var length = this.imgDetail.length
+          for (let index = 0; index < 4 - length; index++) {
             this.imgDetail.push("../../../../assets/img/tours/cross-sign.jpg")
           }
         }
@@ -146,6 +155,17 @@ export class ItemTourComponent implements OnInit {
     else{
       this.img = "../../../../assets/img/tours/cross-sign.jpg"
     }
+
+    this.imgDetail = Object.assign([], this.imgDetailBackup)
+    if (this.imgDetail.length < 4) {
+      var length = this.imgDetail.length
+      for (let index = 0; index < 4 - length; index++) {
+        this.imgDetail.push("../../../../assets/img/tours/cross-sign.jpg")
+      }
+    }
+
+    this.resImage = Object.assign([], this.resImageBackup)
+
     this.resTour.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resTour.modifyDate)
     this.isChange = false
     this.isChangeStar = false
@@ -240,6 +260,8 @@ export class ItemTourComponent implements OnInit {
            if (this.formDatas) {
             filesTmp = Object.assign([], this.formDatasTmp)
             this.resImage = Object.assign([], this.resImageTmp)
+            console.log(this.resImage);
+
             dt = new DataTransfer();
             filesTmp.forEach(_fileTmp => {
                 dt.items.add(_fileTmp);
@@ -298,8 +320,6 @@ export class ItemTourComponent implements OnInit {
         this.notificationService.handleAlert("Đã xóa [" + check + "] file không đúng định dạng hình ảnh !", StatusNotification.Error)
       }
       setTimeout(() => {
-        console.error(this.formDatas.target.files);
-
         if (this.imgDetail.length < 4) {
           var length = this.imgDetail.length
           for (let index = 0; index < 4 - length; index++) {
@@ -338,19 +358,15 @@ export class ItemTourComponent implements OnInit {
           this.formDatas.target.files = dt.files
           this.formDatasTmp = dt.files
         }
-        this.imgDetailRoot.splice(i, 1)
         this.resImage.splice(i, 1)
         this.resImageTmp = Object.assign([], this.resImage)
         this.resImageDelete.push(Object.assign({}, listDelete))
       }
-
+      this.imgDetailRoot.splice(i, 1)
       this.imgDetail.splice(i, 1);
-      this.imgDetailRoot.splice(i, 1);
-      this.resImageTmp.splice(i, 1);
-      console.warn(this.imgDetail);
-
       if (this.imgDetail.length < 4) {
-        for (let index = 0; index < 4 - this.imgDetail.length; index++) {
+        var length = this.imgDetail.length
+        for (let index = 0; index < 4 - length; index++) {
           this.imgDetail.push("../../../../assets/img/tours/cross-sign.jpg")
         }
       }
@@ -385,6 +401,7 @@ export class ItemTourComponent implements OnInit {
         {
             this.tourService.create(file).subscribe(res =>{
               this.response = res
+              this.isLoading = false
 
               if (res.notification.type == StatusNotification.Success) {
                 var idTour = this.response.content
@@ -393,7 +410,6 @@ export class ItemTourComponent implements OnInit {
                 this.router.navigate(['','list-tour']);
               }
               this.notificationService.handleAlertObj(res.notification)
-              this.isLoading = false
             }, error => {
               var message = this.configService.error(error.status, error.error != null?error.error.text:"");
               this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -421,6 +437,7 @@ export class ItemTourComponent implements OnInit {
           this.tourService.update(file, this.resTour.idTour).subscribe(res =>{
             this.response = res
 
+            this.isLoading = false
             if (res.notification.type == StatusNotification.Success) {
 
               this.createImageTourdetail(files, this.resTour.idTour)
@@ -434,7 +451,6 @@ export class ItemTourComponent implements OnInit {
             else{
               this.notificationService.handleAlertObj(res.notification)
             }
-            this.isLoading = false
           }, error => {
             var message = this.configService.error(error.status, error.error != null?error.error.text:"");
             this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -463,10 +479,13 @@ export class ItemTourComponent implements OnInit {
      this.tourService.delete(this.resTour.idTour, this.resAuth.id).subscribe(res =>{
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
-       if (res.notification.type == StatusNotification.Success) {
-        this.router.navigate(['','list-tour']);
-       }
        this.isLoading = false
+       if (res.notification.type == StatusNotification.Success) {
+        setTimeout(() => {
+          this.closeModalLoadDelete.nativeElement.click()
+          this.router.navigate(['','list-tour']);
+         }, 100);
+       }
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
        this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -479,11 +498,14 @@ export class ItemTourComponent implements OnInit {
     if (this.resTour) {
       this.tourService.restore(this.resTour.idTour, this.resAuth.id).subscribe(res =>{
         this.response = res
+        this.isLoading = false
         this.notificationService.handleAlertObj(res.notification)
         if (res.notification.type == StatusNotification.Success) {
-          this.router.navigate(['','list-tour'], { state: { isDelete: true } });
+          setTimeout(() => {
+            this.closeModalLoadRestore.nativeElement.click()
+            this.router.navigate(['','list-tour'], { state: { isDelete: true } });
+           }, 100);
         }
-        this.isLoading = false
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -496,11 +518,14 @@ export class ItemTourComponent implements OnInit {
     if (this.resTour) {
       this.tourService.approve(this.resTour.idTour).subscribe(res =>{
         this.response = res
+        this.isLoading = false
         this.notificationService.handleAlertObj(res.notification)
         if (res.notification.type == StatusNotification.Success) {
-          this.router.navigate(['','list-tour'], { state: { isDelete: false } });
+          setTimeout(() => {
+            this.closeModalLoadApprove.nativeElement.click()
+            this.router.navigate(['','list-tour'], { state: { isDelete: false } });
+           }, 100);
         }
-        this.isLoading = false
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -513,11 +538,14 @@ export class ItemTourComponent implements OnInit {
     if (this.resTour) {
       this.tourService.refused(this.resTour.idTour).subscribe(res =>{
         this.response = res
+        this.isLoading = false
         this.notificationService.handleAlertObj(res.notification)
         if (res.notification.type == StatusNotification.Success) {
-          this.router.navigate(['','list-tour'], { state: { isDelete: false } });
+          setTimeout(() => {
+            this.closeModalLoadRefused.nativeElement.click()
+            this.router.navigate(['','list-tour'], { state: { isDelete: false } });
+           }, 100);
         }
-        this.isLoading = false
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, StatusNotification.Error)

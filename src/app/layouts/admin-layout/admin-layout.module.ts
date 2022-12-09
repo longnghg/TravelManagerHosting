@@ -64,7 +64,7 @@ import { ItemTourBookingComponent } from '../../pages/tourBookings/item-tour-boo
 import { ViewTourScheduleComponent } from '../../pages/tour/view-tour-schedule/view-tour-schedule.component';
 import { ItemTourScheduleComponent } from '../../pages/tour/item-tour-schedule/item-tour-schedule.component';
 
-
+import { NgChartsModule } from 'ng2-charts';
 import { PipesModule } from "../../pipes/pipes.module";
 @NgModule({
   imports: [
@@ -77,7 +77,8 @@ import { PipesModule } from "../../pipes/pipes.module";
     ComponentsModule,
     NgSelectModule,
     NgOptionHighlightModule,
-    PipesModule
+    PipesModule,
+    NgChartsModule
   ],
   declarations: [
 

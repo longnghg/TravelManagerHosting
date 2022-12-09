@@ -60,7 +60,7 @@ async views2()
 }
 gets(isdelete: any)
 {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/list-car?isDelete="+isdelete+"&pageIndex="+1+"&pageSize="+1);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/list-car?isDelete="+isdelete);
 }
 
 create(data: any)
@@ -90,5 +90,10 @@ search(data){
 getsCarByDate(fromDate: any, toDate: any, idTour: any)
 {
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/list-selectbox-car?idTour="+idTour+"&fromDate="+fromDate+"&toDate="+toDate);
+}
+
+scheduleOfCard(idCar: any, pageIndex: number, pageSize: number)
+{
+  return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/list-schedule-of-car?idCar="+idCar+"&pageIndex="+pageIndex+"&pageSize="+pageSize);
 }
 }

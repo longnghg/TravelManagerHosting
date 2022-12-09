@@ -17,7 +17,8 @@ import { PaginationModel } from "../../../models/responsiveModels/pagination.mod
   styleUrls: ['./list-tour.component.scss']
 })
 export class ListTourComponent implements OnInit {
-  @ViewChild('closeModalLoad') closeModalLoad: ElementRef;
+  @ViewChild('closeModalLoadDelete') closeModalLoadDelete: ElementRef;
+  @ViewChild('closeModalLoadRestore') closeModalLoadRestore: ElementRef;
   isLoading: boolean
   resTour: TourModel[]
   resTourWaiting: TourModel[]
@@ -223,7 +224,9 @@ export class ListTourComponent implements OnInit {
          this.response = res
          this.notificationService.handleAlertObj(res.notification)
          this.isLoading = false
-         this.closeModalLoad.nativeElement.click()
+         setTimeout(() => {
+          this.closeModalLoadDelete.nativeElement.click()
+         }, 100);
        }, error => {
          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
          this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -238,7 +241,9 @@ export class ListTourComponent implements OnInit {
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
           this.isLoading = false
-          this.closeModalLoad.nativeElement.click()
+          setTimeout(() => {
+            this.closeModalLoadRestore.nativeElement.click()
+           }, 100);
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)

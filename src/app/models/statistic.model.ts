@@ -1,6 +1,7 @@
 export class StatisticModel{
   idWeek: string
   week: number
+  month: number
   year: number
   fromDate: string
   toDate: string

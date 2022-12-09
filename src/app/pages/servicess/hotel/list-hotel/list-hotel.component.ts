@@ -14,7 +14,9 @@ import { PaginationModel } from "../../../../models/responsiveModels/pagination.
   styleUrls: ['./list-hotel.component.scss']
 })
 export class ListHotelComponent implements OnInit {
-  @ViewChild('closeModalLoad') closeModalLoad: ElementRef;
+  @ViewChild('closeModalLoadDelete') closeModalLoadDelete: ElementRef;
+  @ViewChild('closeModalLoadRestore') closeModalLoadRestore: ElementRef;
+  @ViewChild('closeModalLoadApprove') closeModalLoadApprove: ElementRef;
   isLoading: boolean
   auth: AuthenticationModel
   resHotel: HotelModel[]
@@ -184,7 +186,9 @@ export class ListHotelComponent implements OnInit {
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
        this.isLoading = false
-       this.closeModalLoad.nativeElement.click()
+       setTimeout(() => {
+        this.closeModalLoadDelete.nativeElement.click()
+       }, 100);
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
        this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -199,7 +203,9 @@ export class ListHotelComponent implements OnInit {
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
        this.isLoading = false
-       this.closeModalLoad.nativeElement.click()
+       setTimeout(() => {
+        this.closeModalLoadRestore.nativeElement.click()
+       }, 100);
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
        this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -214,7 +220,9 @@ export class ListHotelComponent implements OnInit {
       this.response = res
       this.notificationService.handleAlertObj(res.notification)
       this.isLoading = false
-      this.closeModalLoad.nativeElement.click()
+      setTimeout(() => {
+        this.closeModalLoadApprove.nativeElement.click()
+       }, 100);
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -230,7 +238,9 @@ export class ListHotelComponent implements OnInit {
       this.response = res
       this.notificationService.handleAlertObj(res.notification)
       this.isLoading = false
-      this.closeModalLoad.nativeElement.click()
+      setTimeout(() => {
+        this.closeModalLoadApprove.nativeElement.click()
+       }, 100);
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)
