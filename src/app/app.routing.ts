@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
-
+import { SupportLayoutComponent } from './layouts/support-layout/support-layout.component';
 const routes: Routes =[
   {
     path: '',
@@ -18,6 +18,15 @@ const routes: Routes =[
       {
         path: '',
         loadChildren: () => import('src/app/layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule)
+      }
+    ]
+  }, {
+    path: '',
+    component: SupportLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('src/app/layouts/support-layout/support-layout.module').then(m => m.SupportLayoutModule)
       }
     ]
   }, {

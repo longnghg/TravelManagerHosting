@@ -1,0 +1,221 @@
+/* this card is inspired form this - https://georgefrancis.dev/ */
+
+.card {
+    --border-radius: 0.75rem;
+    --primary-color: #7257fa;
+    --secondary-color: #3c3852;
+    width: 210px;
+    font-family: "Arial";
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    background: #f1f1f3;
+    box-shadow: 0px 8px 16px 0px rgb(0 0 0 / 3%);
+    position: relative;
+  }
+
+  // .card > * + * {
+  //   margin-top: 1rem;
+  // }
+
+  .card .card__content {
+    color: var(--secondary-color);
+    font-size: 0.86rem;
+  }
+
+  .card .card__title {
+    padding: 0;
+    font-size: 1.3rem;
+    font-weight: bold;
+  }
+
+  .card .card__date {
+    color: #6e6b80;
+    font-size: 0.8rem;
+  }
+
+  .card .card__arrow {
+    position: absolute;
+    background: var(--primary-color);
+    padding: 0.4rem;
+    border-top-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+    bottom: 0;
+    right: 0;
+    transition: 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card svg {
+    transition: 0.2s;
+  }
+
+  /* hover */
+  // .card:hover .card__title {
+  //   color: var(--primary-color);
+  //   text-decoration: underline;
+  // }
+
+  .card__header{
+    --border-radius: 0.75rem;
+    background: white;
+    margin-left: -1rem;
+    margin-right: -1rem;
+    margin-top: -1rem;
+    padding: 1rem;
+    // border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+
+    border-bottom: 1px solid silver;
+  }
+
+  .card:hover .card__arrow {
+    background: #111;
+  }
+
+  .card:hover .card__arrow svg {
+    transform: translateX(3px);
+  }
+
+.card__body{
+    padding-top: 1rem;
+    padding-bottom: 4rem;
+    height: 50rem;
+    max-height: 50rem;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.card__footer{
+    border-top: 1px solid silver;
+    height: 5rem;
+    margin-left: -1rem;
+    margin-right: -1rem;
+    padding: 1rem;
+}
+.card-send {
+    color: white;
+    max-width: 40rem;
+    word-wrap: break-word;
+    height: 50px;
+    background: rgb(73, 146, 241);
+    border-radius: 40px;
+    position: absolute;
+    right: 0;
+    padding: 1rem;
+    padding-bottom: 2.5rem;
+}
+
+.card-receive {
+    color: white;
+    padding: 1rem;
+    padding-bottom: 2.5rem;
+    max-width: 40rem;
+    word-wrap: break-word;
+    height: 50px;
+    background: cadetblue;
+    border-radius: 40px;
+    position: absolute;
+    left: 0;
+}
+
+
+
+
+.searchbar {
+    font-size: 14px;
+    font-family: arial, sans-serif;
+    color: #202124;
+    display: flex;
+    z-index: 3;
+    height: 44px;
+    background: white;
+    border: 1px solid #dfe1e5;
+    box-shadow: none;
+    border-radius: 24px;
+    margin: 0 auto;
+    width: 106%;
+    // max-width: 224px;
+  }
+
+  .searchbar:hover {
+    box-shadow: 0 1px 6px rgb(32 33 36 / 28%);
+    border-color: rgba(223,225,229,0);
+  }
+
+  .searchbar-wrapper {
+    flex: 1;
+    display: flex;
+    padding: 5px 8px 0 14px;
+  }
+
+  .search-icon-wrapper {
+    margin: auto;
+  }
+
+  .search-icon {
+    margin-top: 3px;
+    color: #9aa0a6;
+    height: 20px;
+    line-height: 20px;
+    width: 20px;
+  }
+
+  .searchbar-icon {
+    display: inline-block;
+    fill: currentColor;
+    height: 24px;
+    line-height: 24px;
+    position: relative;
+    width: 24px;
+  }
+
+  .searchbar-center {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+  }
+
+  .searchbar-input-spacer {
+    color: transparent;
+    flex: 100%;
+    white-space: pre;
+    height: 34px;
+    font-size: 16px;
+  }
+
+  .searchbar-input {
+    background-color: transparent;
+    border: none;
+    margin: 0;
+    padding: 0;
+    color: rgba(0, 0, 0, .87);
+    word-wrap: break-word;
+    outline: none;
+    display: flex;
+    flex: 100%;
+    margin-top: -37px;
+    height: 34px;
+    font-size: 16px;
+    max-width: 100%;
+    width: 100%;
+  }
+
+
+.icon-send{
+    transform: rotate(44deg);
+    font-size: 30px;
+    margin-top: 0.4rem;
+    margin-left: 3rem;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.icon-send:hover{
+    transition: 0.5s;
+    color: #209077;
+    // font-size: 32px;
+    // margin-top: 0.3rem;
+}

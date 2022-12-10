@@ -68,6 +68,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { PipesModule } from "../../pipes/pipes.module";
 
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -121,7 +122,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     ViewTourScheduleComponent,
     ItemTourScheduleComponent,
     ItemVoucherComponent,
-    ListVoucherComponent
+    ListVoucherComponent,
   ],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
