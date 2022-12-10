@@ -117,7 +117,7 @@ export class ItemTourScheduleComponent implements OnInit {
       this.resCostTourTmp = Object.assign({}, this.resCostTour)
       this.resTimelinelistTmp = Object.assign({}, this.resTimelinelist)
       this.isFirst = false
-
+      this.editorComponent.editorInstance.setData("")
     }
     else {
       if (this.resSchedule) {
@@ -156,7 +156,7 @@ export class ItemTourScheduleComponent implements OnInit {
         })
 
         this.resTimeline = new TimeLineModel()
-
+        this.editorComponent.editorInstance.setData("")
         this.timelineService.getTimelineidSchedule(this.resSchedule.idSchedule).subscribe(res => {
           this.response = res
           this.resTimelinelist = this.response.content

@@ -113,3 +113,10 @@ table {
 td, th{
   text-align: center;
 }
+
+
+:host ::ng-deep .ck-editor__editable_inline {
+  max-height: 10rem !important;
+  height: 10rem !important;
+  overflow-y: auto !important;
+}
