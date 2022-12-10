@@ -32,6 +32,7 @@ export class ItemTourBookingComponent implements OnInit {
   ngOnChanges(): void {
     this.resTourBookingTmp = Object.assign({}, this.resTourBooking)
     if (this.resTourBooking) {
+
       if (this.resTourBooking.status == 1 || this.resTourBooking.status == 2) {
         var date = new Date().getTime()
         if (this.resTourBooking.lastDate < date) {

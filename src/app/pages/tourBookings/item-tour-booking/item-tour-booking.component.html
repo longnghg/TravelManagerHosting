@@ -106,7 +106,7 @@
               <div class="container" style="border-top: 1px solid #2d4271;">
                 <div class="mb-3 mt-3 row">
                   <div class="col-4">
-                    <img  [src]="url+resTourBooking.schedule.tour.thumbnail" style="border-radius: 0.375rem;"  class="card-img-top">
+                    <img  [src]="resTourBooking.schedule.tour.thumbnail" style="border-radius: 0.375rem;"  class="card-img-top">
                   </div>
                   <div class="col-8">
                     <p style="color: #2d4271; font-weight: 600;">{{resTourBooking.schedule.tour.nameTour}}</p>
@@ -128,7 +128,7 @@
                   </div>
                   <div class="row">
                     <label class="form-label col-4" style="font-weight: 600;">Ngày về</label>
-                     <p class="col-8" style="color: #2d4271;">{{resTourBooking.schedule.endDate | formatFromUnixTimestampToFullDateView}}</p>
+                     <p class="col-8" style="color: #2d4271;">{{resTourBooking.schedule.returnDate | formatFromUnixTimestampToFullDateView}}</p>
                   </div>
                   <div class="row ">
                     <label class="form-label col-4" style="font-weight: 600;">Nơi khởi hành</label>
