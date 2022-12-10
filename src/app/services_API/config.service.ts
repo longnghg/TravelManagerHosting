@@ -4,6 +4,7 @@ import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signal
 import { Router } from '@angular/router';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { ROUTES } from '../components/sidebar/sidebar.component';
+import { RoleTitle } from "../enums/enum";
 @Injectable({
   providedIn: 'root'
 })
@@ -49,6 +50,7 @@ export class ConfigService{
 
   getPath(roleId){
     var path = ""
+   if (roleId != RoleTitle.Supporter) {
     var menuItem = ROUTES.filter(menuItem => menuItem);
     menuItem.forEach(item => {
       item.roles.forEach(role => {
@@ -57,6 +59,10 @@ export class ConfigService{
         }
       });
     });
+   }
+   else{
+    path = "/chat/new"
+   }
     return path
   }
 
@@ -1176,6 +1182,8 @@ validateHotel(data : any,model: any)
 
 
    checkRole(){
+    console.log(12);
+
     var check = 0
     var auth = JSON.parse(localStorage.getItem("currentUser"))
     var titlee = this.location.prepareExternalUrl(this.location.path());

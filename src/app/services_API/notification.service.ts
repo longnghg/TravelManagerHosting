@@ -76,4 +76,15 @@ export class NotificationService{
     {
       return await this.http.delete<ResponseModel>( this.configService.apiUrl + "/api/Notification/delete-notification?idNotification="+idNotification, {}).toPromise();
     }
+
+
+    async reply(data: any)
+    {
+      return await this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Chat/reply-messenger", data).toPromise();
+    }
+
+    async view(IdSuporter: string)
+    {
+      return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Chat/support-messenger?IdSuporter="+IdSuporter).toPromise();
+    }
 }

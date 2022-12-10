@@ -2,86 +2,30 @@
 
 <div class="card" style="width: auto; margin-top: -3rem; height: 40rem; margin-right: -1rem;">
     <div class="card__header">
-        <h3 class="card__title">Kiệt Trác</h3>
+        <h3 class="card__title">{{resMess.nameCustomer}}</h3>
         <div class="card-text" style="margin-top: -0.5rem;">5 phút trước</div>
     </div>
 
     <div id="mess" class="card__body">
-        <div class="row mr-2">
-            <div class="col">
-                <div class="card-send">Tôi cần hỗ trợ</div>
-            </div>
-        </div>
-
-        <div class="row" style="margin: 2rem;"> <div class="col"></div></div>
-
-        <div class="row ml-2">
-            <div class="col">
-                <div class="card-receive">Xin chào Kiệt Trác, bạn cần hỗ trợ gì</div>
-            </div>
-        </div>
-
-        <div class="row" style="margin: 2rem;"> <div class="col"></div></div>
-
-        <div class="row mr-2">
-            <div class="col">
-                <div class="card-send">Yés sơ chắc chắc là như vậy rồi</div>
-            </div>
-        </div>
-        <div class="row" style="margin: 2rem;"> <div class="col"></div></div>
-        <div class="row mr-2">
-            <div class="col">
-                <div class="card-send"> ẩu rồi đó ba</div>
-            </div>
-        </div>
-        <div class="row" style="margin: 2rem;"> <div class="col"></div></div>
-        <div class="row mr-2">
-            <div class="col">
-                <div class="card-send"> ẩu rồi đó ba</div>
-            </div>
-        </div>
-        <div class="row" style="margin: 2rem;"> <div class="col"></div></div>
-        <div class="row mr-2">
-            <div class="col">
-                <div class="card-send"> ẩu rồi đó ba</div>
-            </div>
-        </div>
-        <div class="row" style="margin: 2rem;"> <div class="col"></div></div>
-        <div class="row mr-2">
-            <div class="col">
-                <div class="card-send"> ẩu rồi đó ba</div>
-            </div>
-        </div>
-
-        <div class="row" style="margin: 2rem;"> <div class="col"></div></div>
-        <div class="row ml-2">
-            <div class="col">
-                <div class="card-receive">Xin chào Kiệt Trác, bạn cần hỗ trợ gì</div>
-            </div>
-        </div>
-
-        <div class="row" style="margin: 2rem;"> <div class="col"></div></div>
-
-            <div class="row ml-2">
-                <div class="col">
-                    <div class="card-receive">Xin chào Kiệt Trác, bạn cần hỗ trợ gì</div>
+        <ng-container *ngFor="let item of resMess.messengers; let i=index">
+            <ng-container *ngIf="item.senderId == auth.id; else elseSend">
+                <div class="row mr-2">
+                    <div class="col">
+                        <div class="card-send">{{item.content}}</div>
+                    </div>
                 </div>
-            </div>
-
-            <div class="row" style="margin: 2rem;"> <div class="col"></div></div>
-
-            <div class="row ml-2">
-                <div class="col">
-                    <div class="card-receive">Xin chào Kiệt Trác, bạn cần hỗ trợ gì</div>
+            </ng-container>
+            <ng-template #elseSend>
+                <div class="row ml-2">
+                    <div class="col">
+                        <div class="card-receive">{{item.content}}</div>
+                    </div>
                 </div>
-            </div>
+            </ng-template>
 
-            <div class="row" style="margin: 2rem;"> <div class="col"></div></div>
-            <div class="row mr-2">
-                <div class="col">
-                    <div class="card-send"> ẩu rồi đó ba</div>
-                </div>
-            </div>
+
+            <div *ngIf="i < resMess.messengers.length-1" class="row" style="margin: 2rem;"> <div class="col"></div></div>
+        </ng-container>
     </div>
 
     <div  class="card__footer row">
@@ -91,14 +35,14 @@
                     <div class="searchbar-center">
                         <div class="searchbar-input-spacer"></div>
 
-                        <input type="text" class="searchbar-input" maxlength="2048" name="q" autocapitalize="off" autocomplete="off" title="Search" role="combobox" placeholder="Nhập tin nhắn tới @Kiệt Trác">
+                        <input type="text" [(ngModel)]="dataSend.content" class="searchbar-input" maxlength="2048" name="q" autocapitalize="off" autocomplete="off" title="Search" role="combobox" placeholder="Nhập tin nhắn tới @{{resMess.nameCustomer}}">
                     </div>
                 </div>
 
             </div>
         </div>
         <div class="col-1">
-            <i class="icon-send fa-solid fa-location-arrow"></i>
+            <i (click)="reply()" class="icon-send fa-solid fa-location-arrow"></i>
         </div>
     </div>
     <!-- <div class="card__arrow">
