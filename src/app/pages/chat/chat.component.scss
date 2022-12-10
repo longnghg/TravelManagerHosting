@@ -219,3 +219,19 @@
     // font-size: 32px;
     // margin-top: 0.3rem;
 }
+
+::-webkit-scrollbar{
+    margin-left: 50px;
+    width: 3px;
+
+   }
+
+   ::-webkit-scrollbar-track{
+    height: 10px;
+   }
+
+   ::-webkit-scrollbar-thumb{
+    height: 20px !important;
+    border-radius: 50px;
+    background: linear-gradient(-45deg, #209077, #1ae28a 100%) !important;
+   }
