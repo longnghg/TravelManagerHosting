@@ -120,11 +120,6 @@ export class DashboardComponent implements OnInit {
 
   };
   ngOnInit() {
-    this.statisticService.listWeekByYear(new Date().getFullYear()).then(res => {
-    this.resWeeks = res
-    this.resWeek.week = this.resWeeks[this.resWeeks.length-1].week
-  })
-
   var split = new Date().toLocaleDateString().split("/")
   this.resWeek.fromDate = this.configService.formatFromUnixTimestampToFullDate(new Date().getTime())
   this.resWeek.toDate = this.configService.formatFromUnixTimestampToFullDate(new Date().getTime())
@@ -141,31 +136,42 @@ export class DashboardComponent implements OnInit {
     this.reportDataLine = []
     this.reportLabelLine = []
 
-    this.resWeeks.forEach(report => {
-      if (report.week == this.resWeek.week) {
-        this.statisticService.getStatisticTourbookingFromDateToDate(new Date(report.fromDate).getTime(), new Date(report.toDate).getTime()).subscribe(res => {
-          this.response = res
-          if (this.response.notification.type == StatusNotification.Success) {
-            this.resReportTourBooking = this.response.content
+    this.statisticService.listWeekByYear(this.resWeek.year).then(res => {
+      this.resWeeks = res
+      console.log(this.resWeeks);
 
-            this.resReportTourBooking.forEach(report => {
-              this.reportDataBar.push(report.quantityBooked)
-              this.reportLabelBar.push(report.nameTour)
+      if (this.resWeeks.length > 0) {
+        this.resWeek.week = this.resWeeks[this.resWeeks.length-1].week
+        this.resWeeks.forEach(report => {
+          if (report.week == this.resWeek.week) {
+            this.statisticService.getStatisticTourbookingFromDateToDate(new Date(report.fromDate).getTime(), new Date(report.toDate).getTime()).subscribe(res => {
+              this.response = res
+              if (this.response.notification.type == StatusNotification.Success) {
+                this.resReportTourBooking = this.response.content
 
-              this.reportDataLine.push(report.totalRevenue)
-              this.reportLabelLine.push(report.nameTour)
-            });
+                this.resReportTourBooking.forEach(report => {
+                  this.reportDataBar.push(report.quantityBooked)
+                  this.reportLabelBar.push(report.nameTour)
 
-            this.updateOptions("Tổng số người", "Doanh thu")
+                  this.reportDataLine.push(report.totalRevenue)
+                  this.reportLabelLine.push(report.nameTour)
+                });
 
+                this.updateOptions("Tổng số người", "Doanh thu")
+
+              }
+            }, error => {
+              var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+              this.notificationService.handleAlert(message, StatusNotification.Error)
+
+            })
           }
-        }, error => {
-          var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
-          this.notificationService.handleAlert(message, StatusNotification.Error)
-
-        })
+        });
       }
-    });
+      else{
+        this.resWeek.week = null
+      }
+    })
 
   }
 

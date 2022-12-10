@@ -141,23 +141,6 @@
           <div class="nav-link py-2 px-3 active">
             <span class="d-none d-md-block">
               <div class="row mb-2">
-                <div class="col-3" style="padding-top: 12px;">Tuần</div>
-                <div class="col-9">
-                  <ng-select
-                  [items]="resWeeks"
-                  [(ngModel)]="resWeek.week"
-                  placeholder="Chọn tuần..."
-                  bindLabel="week"
-                  bindValue="week"
-                  [clearable]="false"
-                  [searchable]="false"
-                  name="week"
-                  id="week"
-                  (change)="weekChange()">
-                </ng-select>
-                </div>
-               </div>
-               <div class="row">
                 <div class="col-3" style="padding-top: 12px;">Năm</div>
                 <div class="col-9">
                   <ng-select
@@ -174,6 +157,23 @@
                   </ng-select>
                 </div>
                </div>
+              <div class="row">
+                <div class="col-3" style="padding-top: 12px;">Tuần</div>
+                <div class="col-9">
+                  <ng-select
+                  [items]="resWeeks"
+                  [(ngModel)]="resWeek.week"
+                  placeholder="Chọn tuần..."
+                  bindLabel="week"
+                  bindValue="week"
+                  [clearable]="false"
+                  [searchable]="false"
+                  name="week"
+                  id="week"
+                  (change)="weekChange()">
+                </ng-select>
+                </div>
+               </div>
             </span>
           </div>
         </li>
@@ -182,6 +182,23 @@
           <div class="nav-link py-2 px-3 active">
             <span class="d-none d-md-block">
               <div class="row mb-2">
+                <div class="col-4" style="padding-top: 12px;">Năm</div>
+                <div class="col-8">
+                  <ng-select
+                    [items]="resYears"
+                    [(ngModel)]="resWeek.year"
+                    placeholder="Chọn năm..."
+                    bindLabel="name"
+                    bindValue="id"
+                    [clearable]="false"
+                    [searchable]="false"
+                    name="year"
+                    id="year"
+                    (change)="monthChange()">
+                  </ng-select>
+                </div>
+               </div>
+              <div class="row ">
                 <div class="col-4" style="padding-top: 12px;">Tháng</div>
                 <div class="col-8">
                   <ng-select
@@ -199,23 +216,7 @@
                 </ng-select>
                 </div>
                </div>
-               <div class="row">
-                <div class="col-4" style="padding-top: 12px;">Năm</div>
-                <div class="col-8">
-                  <ng-select
-                    [items]="resYears"
-                    [(ngModel)]="resWeek.year"
-                    placeholder="Chọn năm..."
-                    bindLabel="name"
-                    bindValue="id"
-                    [clearable]="false"
-                    [searchable]="false"
-                    name="year"
-                    id="year"
-                    (change)="monthChange()">
-                  </ng-select>
-                </div>
-               </div>
+
             </span>
           </div>
         </li>
