@@ -16,7 +16,7 @@ export class ConfigService{
   private hubConnectionBuilder: HubConnection
   public apiUrl = "https://localhost:44394";
   public clientUrl = this.document.location.origin
-  signIR(){
+  signalR(){
      return this.hubConnectionBuilder = new HubConnectionBuilder()
     .configureLogging(LogLevel.Information).withUrl(`${this.apiUrl}/travelhub`,
     {
@@ -25,11 +25,11 @@ export class ConfigService{
     .withAutomaticReconnect()
     .build();
    }
-   goivui(): void{
-    console.log("da keu");
 
-    this.hubConnectionBuilder.invoke('GetInfo')
+  callChatSignalR(id:string): void{
+    this.hubConnectionBuilder.invoke('Chat',id)
   }
+
   error(status: any, message: any){
     console.log('Status:  '  + status);
     console.log('Message: '  + message);
@@ -61,7 +61,7 @@ export class ConfigService{
     });
    }
    else{
-    path = "/chat/new"
+    path = "/chat"
    }
     return path
   }

@@ -1,9 +1,62 @@
+<nav class="navbar navbar-vertical navbar-expand-md navbar-light bg-white" id="sidenav-main" style="left: 0;z-index: 1;">
+    <div class="container-fluid" style="padding-left: unset !important; padding-right: unset !important;">
+        <a class="navbar-brand pt-0 bg-gradient-logo" routerLinkActive="active" href="javascript:void(0)" (click)="returnHome()"style="
+        margin: -12%;">
+        <img src="../../../assets/img/brand/lgoRover.png" style="margin-top: 10%;
+        width: 80%; max-height: unset;"
+        class="navbar-brand-img" alt="...">
+        </a>
+
+        <div class="collapse navbar-collapse"  id="sidenav-collapse-main">
+            <form class="mt-4 mb-3 d-md-none">
+                <div class="input-group input-group-rounded input-group-merge">
+                  <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Search" aria-label="Search">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <span class="fa fa-search"></span>
+                    </div>
+                  </div>
+                </div>
+                </form>
+            <ul class="navbar-nav" style="margin-top: -0.5rem">
+                <div style="overflow-x: hidden; overflow-y: auto; max-height: 30.4rem;">
+                  <ng-container  *ngFor="let group of resGroup; let i=index">
+                    <div [id]="group.idCustomer" class="card-sidebar" (click)="getData(group)">
+                      <ng-container *ngIf="group.isSeen; else elseIsSeen">
+                        <!-- <div class="card_load"></div> -->
+                        <div class="card_load_extreme_title">{{group.nameCustomer}}</div>
+                        <div class="card_load_extreme_descripion">{{group.messengers[group.messengers.length-1].content}}</div>
+                        <span class="position-absolute" style="color: silver; top: 2.5rem; right: 1rem;">
+                            {{group.date | dateAgo}}
+                        </span>
+                      </ng-container>
+                      <ng-template #elseIsSeen>
+                           <!-- <div class="card_load"></div> -->
+                           <div class="card_load_extreme_title">{{group.nameCustomer}}</div>
+                              <span class="position-absolute translate-middle badge rounded-pill bg-danger" style="top: 1.4rem; right: 1rem;">
+                                {{group.totalNew < 99 ? group.totalNew: "99+"}}
+                              </span>
+                            <div class="card_load_extreme_descripion_isSeen">{{group.messengers[group.messengers.length-1].content}}</div>
+                            <span class="position-absolute" style="top: 2.5rem; right: 1rem;">
+                                {{group.date | dateAgo}}
+                            </span>
+                      </ng-template>
+                    </div>
+                  </ng-container>
+                </div>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+
 <div class="header bg-gradient-cus pt-5" style="padding-bottom: 4.6rem;"></div>
 
-<div class="card" style="width: auto; margin-top: -3rem; height: 40rem; margin-right: -1rem;">
+<div class="card" style="width: auto; margin-top: -3rem; height: 40rem; margin-right: -1rem;" *ngIf="resMess">
     <div class="card__header">
         <h3 class="card__title">{{resMess.nameCustomer}}</h3>
-        <div class="card-text" style="margin-top: -0.5rem;">5 phút trước</div>
+        <div class="card-text" style="margin-top: -0.5rem;">{{resMess.date | dateAgo}}</div>
     </div>
 
     <div id="mess" class="card__body">
@@ -50,4 +103,74 @@
             <path fill="#fff" d="M13.4697 17.9697C13.1768 18.2626 13.1768 18.7374 13.4697 19.0303C13.7626 19.3232 14.2374 19.3232 14.5303 19.0303L20.3232 13.2374C21.0066 12.554 21.0066 11.446 20.3232 10.7626L14.5303 4.96967C14.2374 4.67678 13.7626 4.67678 13.4697 4.96967C13.1768 5.26256 13.1768 5.73744 13.4697 6.03033L18.6893 11.25H4C3.58579 11.25 3.25 11.5858 3.25 12C3.25 12.4142 3.58579 12.75 4 12.75H18.6893L13.4697 17.9697Z"></path>
         </svg>
     </div> -->
+</div>
+
+<div style="margin-left: 45%; margin-top: 15%;" *ngIf="!resMess">
+    <svg class="pl" viewBox="0 0 160 160" width="160px" height="160px" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#000"></stop>
+            <stop offset="100%" stop-color="#fff"></stop>
+          </linearGradient>
+          <mask id="mask1">
+            <rect x="0" y="0" width="160" height="160" fill="url(#grad)"></rect>
+          </mask>
+          <mask id="mask2">
+            <rect x="28" y="28" width="104" height="104" fill="url(#grad)"></rect>
+          </mask>
+        </defs>
+
+        <g>
+          <g class="pl__ring-rotate">
+            <circle class="pl__ring-stroke" cx="80" cy="80" r="72" fill="none" stroke="hsl(223,90%,55%)" stroke-width="16" stroke-dasharray="452.39 452.39" stroke-dashoffset="452" stroke-linecap="round" transform="rotate(-45,80,80)"></circle>
+          </g>
+        </g>
+        <g mask="url(#mask1)">
+          <g class="pl__ring-rotate">
+            <circle class="pl__ring-stroke" cx="80" cy="80" r="72" fill="none" stroke="hsl(193,90%,55%)" stroke-width="16" stroke-dasharray="452.39 452.39" stroke-dashoffset="452" stroke-linecap="round" transform="rotate(-45,80,80)"></circle>
+          </g>
+        </g>
+
+        <g>
+          <g stroke-width="4" stroke-dasharray="12 12" stroke-dashoffset="12" stroke-linecap="round" transform="translate(80,80)">
+            <polyline class="pl__tick" stroke="hsl(223,10%,90%)" points="0,2 0,14" transform="rotate(-135,0,0) translate(0,40)"></polyline>
+            <polyline class="pl__tick" stroke="hsl(223,10%,90%)" points="0,2 0,14" transform="rotate(-90,0,0) translate(0,40)"></polyline>
+            <polyline class="pl__tick" stroke="hsl(223,10%,90%)" points="0,2 0,14" transform="rotate(-45,0,0) translate(0,40)"></polyline>
+            <polyline class="pl__tick" stroke="hsl(223,10%,90%)" points="0,2 0,14" transform="rotate(0,0,0) translate(0,40)"></polyline>
+            <polyline class="pl__tick" stroke="hsl(223,10%,90%)" points="0,2 0,14" transform="rotate(45,0,0) translate(0,40)"></polyline>
+            <polyline class="pl__tick" stroke="hsl(223,10%,90%)" points="0,2 0,14" transform="rotate(90,0,0) translate(0,40)"></polyline>
+            <polyline class="pl__tick" stroke="hsl(223,10%,90%)" points="0,2 0,14" transform="rotate(135,0,0) translate(0,40)"></polyline>
+            <polyline class="pl__tick" stroke="hsl(223,10%,90%)" points="0,2 0,14" transform="rotate(180,0,0) translate(0,40)"></polyline>
+          </g>
+        </g>
+        <g mask="url(#mask1)">
+          <g stroke-width="4" stroke-dasharray="12 12" stroke-dashoffset="12" stroke-linecap="round" transform="translate(80,80)">
+            <polyline class="pl__tick" stroke="hsl(223,90%,80%)" points="0,2 0,14" transform="rotate(-135,0,0) translate(0,40)"></polyline>
+            <polyline class="pl__tick" stroke="hsl(223,90%,80%)" points="0,2 0,14" transform="rotate(-90,0,0) translate(0,40)"></polyline>
+            <polyline class="pl__tick" stroke="hsl(223,90%,80%)" points="0,2 0,14" transform="rotate(-45,0,0) translate(0,40)"></polyline>
+            <polyline class="pl__tick" stroke="hsl(223,90%,80%)" points="0,2 0,14" transform="rotate(0,0,0) translate(0,40)"></polyline>
+            <polyline class="pl__tick" stroke="hsl(223,90%,80%)" points="0,2 0,14" transform="rotate(45,0,0) translate(0,40)"></polyline>
+            <polyline class="pl__tick" stroke="hsl(223,90%,80%)" points="0,2 0,14" transform="rotate(90,0,0) translate(0,40)"></polyline>
+            <polyline class="pl__tick" stroke="hsl(223,90%,80%)" points="0,2 0,14" transform="rotate(135,0,0) translate(0,40)"></polyline>
+            <polyline class="pl__tick" stroke="hsl(223,90%,80%)" points="0,2 0,14" transform="rotate(180,0,0) translate(0,40)"></polyline>
+          </g>
+        </g>
+
+        <g>
+          <g transform="translate(64,28)">
+            <g class="pl__arrows" transform="rotate(45,16,52)">
+              <path fill="hsl(3,90%,55%)" d="M17.998,1.506l13.892,43.594c.455,1.426-.56,2.899-1.998,2.899H2.108c-1.437,0-2.452-1.473-1.998-2.899L14.002,1.506c.64-2.008,3.356-2.008,3.996,0Z"></path>
+              <path fill="hsl(223,10%,90%)" d="M14.009,102.499L.109,58.889c-.453-1.421,.559-2.889,1.991-2.889H29.899c1.433,0,2.444,1.468,1.991,2.889l-13.899,43.61c-.638,2.001-3.345,2.001-3.983,0Z"></path>
+            </g>
+          </g>
+        </g>
+        <g mask="url(#mask2)">
+          <g transform="translate(64,28)">
+            <g class="pl__arrows" transform="rotate(45,16,52)">
+              <path fill="hsl(333,90%,55%)" d="M17.998,1.506l13.892,43.594c.455,1.426-.56,2.899-1.998,2.899H2.108c-1.437,0-2.452-1.473-1.998-2.899L14.002,1.506c.64-2.008,3.356-2.008,3.996,0Z"></path>
+              <path fill="hsl(223,90%,80%)" d="M14.009,102.499L.109,58.889c-.453-1.421,.559-2.889,1.991-2.889H29.899c1.433,0,2.444,1.468,1.991,2.889l-13.899,43.61c-.638,2.001-3.345,2.001-3.983,0Z"></path>
+            </g>
+          </g>
+        </g>
+      </svg>
 </div>

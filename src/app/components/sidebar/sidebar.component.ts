@@ -35,7 +35,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/list-place', title: 'Điểm tham quan',  icon:'ni ni-pin-3 text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager, RoleTitle.ServiceManager]  },
     { path: '/list-voucher', title: 'Voucher',  icon:'ni ni-tag text-purple', class: '', roles: [RoleTitle.Admin]  },
 
-    { path: '/chat/:id', title: 'Hỗ trợ',  icon:'ni fa-solid fa-headset', class: '', roles: [RoleTitle.Supporter]  },
+    // { path: '/chat', title: 'Hỗ trợ',  icon:'ni fa-solid fa-headset', class: '', roles: [RoleTitle.Supporter]  },
 
 
   ]
@@ -48,10 +48,7 @@ export const ROUTES: RouteInfo[] = [
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-  idTmp: string
   auth: AuthenticationModel
-  resMess: GroupMessage[]
-  response: ResponseModel
   public menuItems: any[];
   public isCollapsed = true;
 
@@ -59,61 +56,15 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
-    if (this.auth.roleId == RoleTitle.Supporter) {
-      this.initChat()
-    }
-    else{
-      this.menuItems = ROUTES.filter(menuItem => menuItem);
+    this.menuItems = ROUTES.filter(menuItem => menuItem);
       this.router.events.subscribe((event) => {
         this.isCollapsed = true;
      });
-    }
   }
-  // ngDoCheck(): void {
-  //   var signIR = null
-  //   if (this.resMess) {
-  //     this.resMess.forEach(group => {
-  //       signIR = JSON.parse(sessionStorage.getItem(group.idCustomer))
-  //       console.warn(signIR);
 
-  //       if (signIR) {
-  //         group = signIR
-  //       }
-  //     });
-  //   }
-
-  //   console.log(this.resMess);
-
-  // }
-
-  initChat(){
-    this.notificationService.view(this.auth.id).then(res => {
-      this.response = res
-      if (this.response.notification.type == StatusNotification.Success) {
-        this.resMess = this.response.content
-      }
-    }, error => {
-      var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
-      this.notificationService.handleAlert(message, StatusNotification.Error)
-    })
-  }
   returnHome(){
     var path = this.configService.getPath(this.auth.roleId)
     this.router.navigate(['',path.replace("/","")]);
   }
 
-
-  getData(data: GroupMessage){
-    if (!this.idTmp) {
-      document.getElementById(data.idCustomer).setAttribute("class","card-sidebar card-active")
-      this.idTmp = data.idCustomer
-    }
-    else{
-      document.getElementById(data.idCustomer).setAttribute("class","card-sidebar card-active")
-      document.getElementById(this.idTmp).setAttribute("class","card-sidebar")
-      this.idTmp = data.idCustomer
-    }
-
-    sessionStorage.setItem(data.idCustomer, JSON.stringify(data))
-  }
 }

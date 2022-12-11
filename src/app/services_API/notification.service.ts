@@ -83,8 +83,13 @@ export class NotificationService{
       return await this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Chat/reply-messenger", data).toPromise();
     }
 
-    async view(IdSuporter: string)
+    async view(IdSupporter: string)
     {
-      return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Chat/support-messenger?IdSuporter="+IdSuporter).toPromise();
+      return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Chat/support-messenger?IdSuporter="+IdSupporter).toPromise();
+    }
+
+    async updateIsSeenMess(key: string)
+    {
+      return await this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Chat/check-seen-messenger?key="+key, {}).toPromise();
     }
 }

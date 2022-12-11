@@ -41,13 +41,6 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-     this.hubConnectionBuilder = this.configService.signIR()
-    this.hubConnectionBuilder.start().then(function(){
-
-    });
-    this.hubConnectionBuilder.on('Init', (result: any) => {
-      console.log("da nah ndc tin hieu");
-    })
 
 
     // ket thuc
@@ -61,7 +54,16 @@ export class NavbarComponent implements OnInit {
     this.initNotification()
     // setInterval(() => {
     //  this.initNotification()}, 30000);
+    this.loadListenSignalR();
+  }
 
+  loadListenSignalR(){
+    if(this.auth){
+      this.hubConnectionBuilder = this.configService.signalR()
+      this.hubConnectionBuilder.start().then(function(){
+        console.info("SignalR listening!");
+      });
+      }
   }
 
   initNotification(){

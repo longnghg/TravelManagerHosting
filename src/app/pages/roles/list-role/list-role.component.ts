@@ -50,7 +50,7 @@ export class ListRoleComponent implements OnInit {
     this.gridConfig.pageSize = this.pagination.pageSize
 
     this.search(this.pagination, true)
-    this.hubConnectionBuilder = this.configService.signIR()
+    this.hubConnectionBuilder = this.configService.signalR()
     this.hubConnectionBuilder.start();
     this.hubConnectionBuilder.on('Init', (result: any) => {
       this.search(this.pagination, true)

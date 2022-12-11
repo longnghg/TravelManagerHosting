@@ -66,7 +66,7 @@
     padding: 1rem;
     // border-top-left-radius: var(--border-radius);
     border-top-right-radius: var(--border-radius);
-
+    border-top-left-radius: var(--border-radius);
     border-bottom: 1px solid silver;
   }
 
@@ -235,3 +235,184 @@
     border-radius: 50px;
     background: linear-gradient(-45deg, #209077, #1ae28a 100%) !important;
    }
+
+   .card-sidebar {
+    width: 16rem;
+    height: 5rem;
+    position: relative;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    padding: 12px 10px;
+    top: 2.5rem;
+  }
+.card-sidebar:hover{
+    background: linear-gradient(120deg, #e5e5e5 30%, #f0f0f0 38%, #f0f0f0 40%, #e5e5e5 48%);
+}
+
+.card-active{
+    background: #e5efff;
+}
+
+  .card_load_extreme_title {
+    width: 14.7rem;
+    height: 47px;
+    padding-top: 0.9rem;
+    padding-left: 1rem;
+    font-weight: bold;
+    position: relative;
+    float: right;
+    border-radius: 5px;
+    margin-top: -1rem;
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+  }
+
+  .card_load_extreme_descripion {
+    width: 14.7rem;
+    max-width: 14.7rem;
+    height: 47px;
+    position: relative;
+    float: right;
+    border-radius: 5px;
+    margin-top: -0.8rem;
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    padding-top: 0.7rem;
+    padding-left: 1rem;
+    color: silver;
+    overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+  }
+
+
+  .card_load_extreme_descripion_isSeen {
+    width: 14.7rem;
+    max-width: 14.7rem;
+    height: 47px;
+    position: relative;
+    float: right;
+    border-radius: 5px;
+    margin-top: -0.8rem;
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    padding-top: 0.7rem;
+    padding-left: 1rem;
+    color: black;
+    overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+  }
+
+
+  .pl {
+    display: block;
+    width: 9.375em;
+    height: 9.375em;
+  }
+
+  .pl__arrows,
+  .pl__ring-rotate,
+  .pl__ring-stroke,
+  .pl__tick {
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+
+  .pl__arrows {
+    animation-name: arrows42;
+    transform: rotate(45deg);
+    transform-origin: 16px 52px;
+  }
+
+  .pl__ring-rotate,
+  .pl__ring-stroke {
+    transform-origin: 80px 80px;
+  }
+
+  .pl__ring-rotate {
+    animation-name: ringRotate42;
+  }
+
+  .pl__ring-stroke {
+    animation-name: ringStroke42;
+    transform: rotate(-45deg);
+  }
+
+  .pl__tick {
+    animation-name: tick42;
+  }
+
+  .pl__tick:nth-child(2) {
+    animation-delay: -1.75s;
+  }
+
+  .pl__tick:nth-child(3) {
+    animation-delay: -1.5s;
+  }
+
+  .pl__tick:nth-child(4) {
+    animation-delay: -1.25s;
+  }
+
+  .pl__tick:nth-child(5) {
+    animation-delay: -1s;
+  }
+
+  .pl__tick:nth-child(6) {
+    animation-delay: -0.75s;
+  }
+
+  .pl__tick:nth-child(7) {
+    animation-delay: -0.5s;
+  }
+
+  .pl__tick:nth-child(8) {
+    animation-delay: -0.25s;
+  }
+
+  /* Animations */
+  @keyframes arrows42 {
+    from {
+      transform: rotate(45deg);
+    }
+
+    to {
+      transform: rotate(405deg);
+    }
+  }
+
+  @keyframes ringRotate42 {
+    from {
+      transform: rotate(0);
+    }
+
+    to {
+      transform: rotate(720deg);
+    }
+  }
+
+  @keyframes ringStroke42 {
+    from,
+    to {
+      stroke-dashoffset: 452;
+      transform: rotate(-45deg);
+    }
+
+    50% {
+      stroke-dashoffset: 169.5;
+      transform: rotate(-180deg);
+    }
+  }
+
+  @keyframes tick42 {
+    from,
+    3%,
+    47%,
+    to {
+      stroke-dashoffset: -12;
+    }
+
+    14%,
+    36% {
+      stroke-dashoffset: 0;
+    }
+  }

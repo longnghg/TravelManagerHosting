@@ -1,6 +1,9 @@
 export class GroupMessage{
   idCustomer: string
   nameCustomer: string
+  isSeen: boolean
+  totalNew: number
+  date: number
   messengers: Message[]
 }
 export class Message{
