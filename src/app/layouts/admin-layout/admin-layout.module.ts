@@ -68,7 +68,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { PipesModule } from "../../pipes/pipes.module";
 
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-
+import { NavbarComponent } from '../../components/navbar/navbar.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -124,7 +124,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     ItemVoucherComponent,
     ListVoucherComponent,
   ],
-  providers: [],
+  providers: [NavbarComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 

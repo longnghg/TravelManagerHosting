@@ -6,6 +6,8 @@ import { SupportLayoutRoutes } from './support-layout.routing';
 
 import { PipesModule } from "../../pipes/pipes.module";
 import { ChatComponent } from '../../pages/chat/chat.component';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -15,6 +17,8 @@ import { ChatComponent } from '../../pages/chat/chat.component';
   ],
   declarations: [
     ChatComponent
-  ]
+  ],
+  providers: [NavbarComponent]
+
 })
 export class SupportLayoutModule { }

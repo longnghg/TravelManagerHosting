@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { AuthenticationModel } from 'src/app/models/authentication.model';
 import { LocationModel } from 'src/app/models/location.model';
-import { StatusNotification } from "../../../enums/enum";
+import { RoleTitle, StatusNotification } from "../../../enums/enum";
 import { ImageModel } from 'src/app/models/image.model';
 import { ImageService } from 'src/app/services_API/image.service';
 @Component({
@@ -406,7 +406,7 @@ export class ItemTourComponent implements OnInit {
               if (res.notification.type == StatusNotification.Success) {
                 var idTour = this.response.content
                 this.createImageTourdetail(files, idTour)
-
+                this.configService.callNotyfSignalR(this.configService.listRole())
                 this.router.navigate(['','list-tour']);
               }
               this.notificationService.handleAlertObj(res.notification)
@@ -446,6 +446,9 @@ export class ItemTourComponent implements OnInit {
               if(this.resImageDelete.length > 0){
                 this.deleteImageTourdetail(this.resImageDelete)
               }
+
+
+              this.configService.callNotyfSignalR(this.configService.listRole())
               this.router.navigate(['','list-tour']);
             }
             else{
@@ -481,6 +484,7 @@ export class ItemTourComponent implements OnInit {
        this.notificationService.handleAlertObj(res.notification)
        this.isLoading = false
        if (res.notification.type == StatusNotification.Success) {
+        this.configService.callNotyfSignalR(this.configService.listRole())
         setTimeout(() => {
           this.closeModalLoadDelete.nativeElement.click()
           this.router.navigate(['','list-tour']);
@@ -501,6 +505,7 @@ export class ItemTourComponent implements OnInit {
         this.isLoading = false
         this.notificationService.handleAlertObj(res.notification)
         if (res.notification.type == StatusNotification.Success) {
+          this.configService.callNotyfSignalR(this.configService.listRole())
           setTimeout(() => {
             this.closeModalLoadRestore.nativeElement.click()
             this.router.navigate(['','list-tour'], { state: { isDelete: true } });
@@ -520,7 +525,10 @@ export class ItemTourComponent implements OnInit {
         this.response = res
         this.isLoading = false
         this.notificationService.handleAlertObj(res.notification)
+        console.log(res);
+
         if (res.notification.type == StatusNotification.Success) {
+          this.configService.callNotyfSignalR(RoleTitle.TourManager.toString())
           setTimeout(() => {
             this.closeModalLoadApprove.nativeElement.click()
             this.router.navigate(['','list-tour'], { state: { isDelete: false } });
@@ -539,8 +547,10 @@ export class ItemTourComponent implements OnInit {
       this.tourService.refused(this.resTour.idTour).subscribe(res =>{
         this.response = res
         this.isLoading = false
+
         this.notificationService.handleAlertObj(res.notification)
         if (res.notification.type == StatusNotification.Success) {
+          this.configService.callNotyfSignalR(this.configService.listRole())
           setTimeout(() => {
             this.closeModalLoadRefused.nativeElement.click()
             this.router.navigate(['','list-tour'], { state: { isDelete: false } });

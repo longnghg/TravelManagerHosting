@@ -10,16 +10,6 @@ import { ResponseModel } from "../models/responsiveModels/response.model";
 
 export class NotificationService{
     constructor(private http:HttpClient, private configService:ConfigService, private toastr: ToastrService){ }
-    // alertByToken()
-    // {
-    //     var token = localStorage.getItem("token")
-    //     return this.http.post(this.configService.apiUrl + "/api/Notification/Alert", {token});
-    // }
-
-    // alert()
-    // {
-    //     return this.http.get(this.configService.apiUrl + "/api/Notification/Alert");
-    // }
 
     handleAlertObj(data: any){
 

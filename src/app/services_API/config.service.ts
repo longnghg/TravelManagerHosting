@@ -30,6 +30,10 @@ export class ConfigService{
     this.hubConnectionBuilder.invoke('Chat',id)
   }
 
+  callNotyfSignalR(roleId:string): void{
+    this.hubConnectionBuilder.invoke('SendNotyf',roleId)
+  }
+
   error(status: any, message: any){
     console.log('Status:  '  + status);
     console.log('Message: '  + message);
@@ -1182,8 +1186,6 @@ validateHotel(data : any,model: any)
 
 
    checkRole(){
-    console.log(12);
-
     var check = 0
     var auth = JSON.parse(localStorage.getItem("currentUser"))
     var titlee = this.location.prepareExternalUrl(this.location.path());
@@ -1201,4 +1203,10 @@ validateHotel(data : any,model: any)
       location.assign(this.clientUrl + "/login")
     }
    }
+
+    listRole()
+    {
+      return RoleTitle.Admin+","+RoleTitle.LocalManager
+    }
+
 }

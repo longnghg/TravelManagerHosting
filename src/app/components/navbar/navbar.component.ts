@@ -11,10 +11,6 @@ import { StatusNotification } from "../../enums/enum";
 import { NotificationUserModel } from 'src/app/models/notificationUser.model';
 import { RouteNotification, TypeNotification } from "../../enums/enum";
 
-
-// signalr
-import { HubConnection } from '@microsoft/signalr';
-
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -35,16 +31,23 @@ export class NavbarComponent implements OnInit {
   pageSize = 4
    // mo dau
      //signalr
-     private hubConnectionBuilder: HubConnection
+  hubConnectionBuilder: any
   constructor(private notificationService: NotificationService, private authenticationService: AuthenticationService, location: Location,  private element: ElementRef, private router: Router, public configService:ConfigService) {
     this.location = location;
+    this.auth = JSON.parse(localStorage.getItem("currentUser"))
+    if(this.auth){
+      this.hubConnectionBuilder = this.configService.signalR()
+      this.hubConnectionBuilder.start().then(function(){
+        console.info("SignalR listening!");
+      });
+
+      this.hubConnectionBuilder.on('Notification', (result: any) => {
+        this.initNotification()
+      })
+    }
   }
 
   ngOnInit() {
-
-
-    // ket thuc
-    this.auth = JSON.parse(localStorage.getItem("currentUser"))
     if(this.auth){
       if(this.auth.image){
         this.img = this.configService.apiUrl + this.auth.image
@@ -54,16 +57,6 @@ export class NavbarComponent implements OnInit {
     this.initNotification()
     // setInterval(() => {
     //  this.initNotification()}, 30000);
-    this.loadListenSignalR();
-  }
-
-  loadListenSignalR(){
-    if(this.auth){
-      this.hubConnectionBuilder = this.configService.signalR()
-      this.hubConnectionBuilder.start().then(function(){
-        console.info("SignalR listening!");
-      });
-      }
   }
 
   initNotification(){
@@ -111,7 +104,7 @@ export class NavbarComponent implements OnInit {
   getTitle(){
     var titlee = this.location.prepareExternalUrl(this.location.path());
     if(titlee.charAt(0) === '#'){
-        titlee = titlee.slice( 1 );
+        titlee = titlee.slice(1);
     }
 
     for(var item = 0; item < this.listTitles.length; item++){
@@ -170,6 +163,8 @@ export class NavbarComponent implements OnInit {
   }
 
   changeZIndex(){
+    console.log(1);
+
     document.getElementById("thead").style.zIndex = "0"
   }
 }

@@ -16,10 +16,10 @@
     </form> -->
 
     <ul class="navbar-nav align-items-center d-none d-md-flex" >
-      <li class="nav-item" ngbDropdown placement="bottom-left" style="margin-right: 1.5rem;">
+      <li class="nav-item" ngbDropdown placement="bottom-left" style="margin-right: 1.5rem;" (click)="changeZIndex()">
         <a #dropdownMenu  class="nav-link pr-0" role="button" ngbDropdownToggle>
           <div class="media align-items-center">
-            <i class="fa-solid fa-bell" style="font-size: 1.5rem;" (click)="changeZIndex()"></i>
+            <i class="fa-solid fa-bell" style="font-size: 1.5rem;"></i>
             <span *ngIf="totalResult > 0" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" >
               {{totalResult< 99 ? totalResult: "99+"}}
             </span>
