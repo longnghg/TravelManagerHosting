@@ -20,7 +20,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/banner', title: 'Banner',  icon:'ni ni-image text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager]  },
     { path: '/list-employee', title: 'Nhân viên',  icon:'ni ni-circle-08 text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager]  },
     { path: '/item-employee/:id1/:id2', title: '',  icon:'', class: 'd-none',  roles: [RoleTitle.Admin, RoleTitle.LocalManager]},
-    { path: '/list-customer', title: 'Khách hàng',  icon:'ni ni-single-02 text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager]  },
+    { path: '/list-customer', title: 'Khách hàng',  icon:'ni ni-single-02 text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager, RoleTitle.TourBookingManager]  },
     { path: '/list-promotion', title: 'Mã khuyến mãi',  icon:'ni ni-tag text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager]  },
     { path: '/list-car', title: 'Phương tiện',  icon:'ni ni-bus-front-12 text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager]  },
 

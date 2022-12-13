@@ -69,7 +69,9 @@ export enum RouteNotification{
   Restaurant = 'list-restaurant',
   Place = 'list-place',
   Promotion = 'list-promotion',
-  Hotel = 'list-hotel'
+  Hotel = 'list-hotel',
+  TourBooking = 'list-tourBooking'
+  // Schedule = 'list-tourBooking'
 }
 
 export enum TitleNotification{
@@ -77,7 +79,8 @@ export enum TitleNotification{
   'Phê duyệt Khách sạn' = 1,
   'Phê duyệt Địa điểm' = 2,
   'Phê duyệt Nhà hàng' = 3,
-  'Phê duyệt Khuyến mãi' = 4
+  'Phê duyệt Khuyến mãi' = 4,
+  'Đã đặt Tour' = 6,
 }
 
 export enum TypeNotification{
@@ -85,5 +88,7 @@ export enum TypeNotification{
   Hotel = 1,
   Place = 2,
   Restaurant = 3,
-  Promotion = 4
+  Promotion = 4,
+  // Schedule = 5,
+  TourBooking = 6
 }
