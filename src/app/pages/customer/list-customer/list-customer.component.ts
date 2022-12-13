@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NotificationService } from "../../../services_API/notification.service";
 import { ConfigService } from "../../../services_API/config.service";
 import { CustomerService } from 'src/app/services_API/customer.service';
@@ -13,25 +13,26 @@ import { PaginationModel } from 'src/app/models/responsiveModels/pagination.mode
   styleUrls: ['./list-customer.component.scss']
 })
 export class ListCustomerComponent implements OnInit {
+  @ViewChild('closeModalBlockLoad') closeModalBlockLoad: ElementRef;
   resCustomer: CustomerModel[]
   response: ResponseModel
   dataChild: CustomerModel
+  data: CustomerModel
   typeChild: string
   pagination = new PaginationModel
+  isLoading: boolean
   constructor(private customerService: CustomerService, private notificationService: NotificationService,
     private configService: ConfigService) { }
 
 
     public columnDefs: ColDef[]
     public gridConfig: GridConfig = {
-      idModalRestore: "",
-      idModalDelete: "",
       idModal: "gridCustomer",
-      radioBoxName: "Kho lưu trữ",
       disableApprove: true,
       disableCreate: true,
       disableDelete: true,
-      disableRestore: true
+      disableRestore: true,
+      disableRadioBox: true
     }
     ngOnInit(): void {
 
@@ -69,6 +70,8 @@ export class ListCustomerComponent implements OnInit {
       if (e) {
         this.customerService.search(Object.assign({}, e)).subscribe(res => {
           this.response = res
+          console.log(res);
+
           if(this.response.notification.type == StatusNotification.Success)
           {
             this.resCustomer = this.response.content
@@ -96,6 +99,27 @@ export class ListCustomerComponent implements OnInit {
     childType(e){
       if (e) {
         this.typeChild = e
+      }
+    }
+
+    getData(data: any){
+      this.data = data
+    }
+
+    block(){
+      if (this.data) {
+        this.customerService.block(this.data.idCustomer, this.data.isBlock).subscribe(res =>{
+         this.response = res
+         this.notificationService.handleAlertObj(res.notification)
+         this.isLoading = false
+         setTimeout(() => {
+          this.closeModalBlockLoad.nativeElement.click()
+         }, 100);
+       }, error => {
+         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+         this.notificationService.handleAlert(message, StatusNotification.Error)
+         this.isLoading = false
+       })
       }
     }
   }

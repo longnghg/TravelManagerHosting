@@ -21,8 +21,9 @@ export class ItemCarComponent implements OnInit {
   response: ResponseModel
   @Input() resCar: CarModel
   @Input() type: string
-  @Output() parentData = new EventEmitter<any>()
-  @Output() parentType = new EventEmitter<any>()
+
+  @Output() parentDelete = new EventEmitter<any>()
+  @Output() parentRestore = new EventEmitter<any>()
   date: string
   dateView: string
   isChange: boolean = false
@@ -34,11 +35,9 @@ export class ItemCarComponent implements OnInit {
     private configService: ConfigService) {
 
      }
-
      listStatus = this.configService.listStatusCar()
   ngOnInit(): void {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
-    console.log(this.auth);
 
   }
 
@@ -120,8 +119,16 @@ export class ItemCarComponent implements OnInit {
         this.validateCar = new ValidationCarModel
 
         this.isChange = false
-        this.parentType.emit(null);
+        // this.parentType.emit(null);
      }
+
+
+     getDataDelete(){
+      this.parentDelete.emit(this.resCar);
+    }
+    getDataRestore(){
+      this.parentRestore.emit(this.resCar);
+    }
     }
 
 

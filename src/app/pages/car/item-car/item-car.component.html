@@ -13,7 +13,7 @@
                 <label class="form-control-label" for="input-name">Tên người lái
                 <span [class]="type != 'detail' && type != 'create' || resCar.isDelete ?'d-none':'text-danger'">* {{validateCar.nameDriver ? validateCar.nameDriver : ''}}</span>
               </label>
-                <input type="text" id="driver" name="driver" (input)="inputChange()" class="form-control " placeholder="Nhập tên người lái" [(ngModel)]="resCar.nameDriver" [readonly]="isLoading">
+                <input type="text" id="driver" name="driver" (input)="inputChange()" class="form-control " placeholder="Nhập tên người lái" [(ngModel)]="resCar.nameDriver" [readonly]="resCar.isDelete || isLoading">
               </div>
             </div>
             <div class="col-lg-6">
@@ -21,7 +21,7 @@
                 <label class="form-control-label" for="input-phone">Số điện thoại
                  <span [class]="type != 'detail' && type != 'create' || resCar.isDelete ?'d-none':'text-danger'">* {{validateCar.phone ? validateCar.phone : ''}}</span>
                 </label>
-               <input type="text" id="phone" name="phone" (input)="inputChange()" class="form-control " placeholder="Nhập số điện thoại" [(ngModel)]="resCar.phone" [readonly]="isLoading">
+               <input type="text" id="phone" name="phone" (input)="inputChange()" class="form-control " placeholder="Nhập số điện thoại" [(ngModel)]="resCar.phone" [readonly]="resCar.isDelete || isLoading">
               </div>
             </div>
           </div>
@@ -32,7 +32,7 @@
                 <label class="form-control-label" for="input-address">Biển số xe
                   <span [class]="type != 'detail' && type != 'create' || resCar.isDelete ?'d-none':'text-danger'">* {{validateCar.liscensePlate ? validateCar.liscensePlate : ''}}</span>
                 </label>
-              <input type="text" id="liscensePlate" name="liscensePlate" (input)="inputChange()" class="form-control " placeholder="Nhập biển số xe" [(ngModel)]="resCar.liscensePlate" [readonly]="isLoading">
+              <input type="text" id="liscensePlate" name="liscensePlate" (input)="inputChange()" class="form-control " placeholder="Nhập biển số xe" [(ngModel)]="resCar.liscensePlate" [readonly]="resCar.isDelete || isLoading">
               </div>
             </div>
             <div class="col-lg-4">
@@ -40,22 +40,29 @@
                 <label class="form-control-label" for="input-address">Số lượng chỗ ngồi
                   <span [class]="type != 'detail'&& type != 'create' || resCar.isDelete ?'d-none':'text-danger' ">* {{validateCar.amountSeat ? validateCar.amountSeat : ''}}</span>
                 </label>
-              <input type="text" id="amountSeat" name="amountSeat" (input)="inputChange()" class="form-control " placeholder="Nhập số lượng chỗ ngồi" [(ngModel)]="resCar.amountSeat" [readonly]="isLoading">
+              <input type="text" id="amountSeat" name="amountSeat" (input)="inputChange()" class="form-control " placeholder="Nhập số lượng chỗ ngồi" [(ngModel)]="resCar.amountSeat" [readonly]="resCar.isDelete || isLoading">
               </div>
             </div>
             <div class="col-lg-4">
               <div class="form-group">
                 <label class="form-control-label" for="input-address">Trạng thái</label>
                 <ng-select
-                [items]="listStatus"
-                bindLabel="name"
-                bindValue="id"
-                [(ngModel)]="resCar.status"
-                placeholder="Chọn trạng thái..."
-                name="status"
-                id="status"
-                (change)="inputChange()"
-                [disabled]="isLoading">
+                  [(ngModel)]="resCar.status"
+                  [disabled]="type == 'create' || isLoading || resCar.isDelete"
+                  placeholder="Chọn chức vụ..."
+                  name="name"
+                  id="id"
+                  (change)="inputChange()">
+                  <ng-container *ngIf="type == 'create'; else elseCreate">
+                    <ng-container >
+                      <ng-option [value]="listStatus[0].id" >{{listStatus[0].name}}</ng-option>
+                    </ng-container>
+                  </ng-container>
+                  <ng-template #elseCreate>
+                    <ng-container *ngFor="let status of listStatus">
+                      <ng-option  [value]="status.id" >{{status.name}}</ng-option>
+                    </ng-container>
+                  </ng-template>
               </ng-select>
             </div>
             </div>
@@ -67,11 +74,12 @@
 
     <div class="row align-items-center">
       <div class="col-12 text-right">
-        <button  *ngIf="type == 'detail'" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCarModal" (click)="getDataDelete()" [disabled]="isLoading">Xóa</button>
+        <button  *ngIf="type == 'detail' && !resCar.isDelete" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCarModal" (click)="getDataDelete()" [disabled]="isLoading">Xóa</button>
         <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="backup()" [disabled]="isLoading">Khôi phục</button>
         <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="isLoading=true;save()" [disabled]="isLoading">
            <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
           {{isLoading?'Đang xử lý...':type == 'detail' ? "Lưu":"Thêm"}}</button>
+          <button *ngIf="resCar.isDelete" (click)="getDataRestore()" data-bs-toggle="modal" data-bs-target="#restoreCarModal" class="btn btn-warning" [disabled]="isLoading">Khôi phục người dùng</button>
       </div>
     </div>
 

@@ -295,7 +295,7 @@
                     </div>
                     <div class="col-3">
                       <label class="form-control-label" for="input-toPlace">Chi phí khác (₫)
-                        <span [class]="type != 'create' &&  resSchedule.isDelete || isLoading ?'d-none':'text-red'">* {{this.validateCostTourModel.otherPrice ? this.validateCostTourModel.otherPrice : ''}}</span>
+                        <!-- <span [class]="type != 'create' &&  resSchedule.isDelete || isLoading ?'d-none':'text-red'">* {{this.validateCostTourModel.otherPrice ? this.validateCostTourModel.otherPrice : ''}}</span> -->
                       </label>
                       <input type="text" id="otherPrice" name="otherPrice" (input)="formatInput($any($event).target, 'otherPrice');inputChange()" class="form-control " placeholder="Nhập chi phí khác " [(ngModel)]="resCostTour.otherPrice" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete || isLoading" >
                     </div>

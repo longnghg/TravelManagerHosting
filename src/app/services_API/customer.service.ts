@@ -23,4 +23,8 @@ export class CustomerService{
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/customer/search-customer",data);
   }
 
+  block(idCustomer: string, isBlock: boolean)
+  {
+    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/customer/block-customer?idCustomer="+idCustomer+"&isBlock="+isBlock,{});
+  }
 }

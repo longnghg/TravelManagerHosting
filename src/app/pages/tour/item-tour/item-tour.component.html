@@ -183,7 +183,7 @@ width: fit-content;">
                           </ng-select>
                           </div>
                           <div class="col-4" style="position: relative;top: 37px;"  *ngIf="isChangeStar && resAuth.roleId == -1">
-                            <button  class="btn  btn-sm btn-success"(click)="ratingTour()" [disabled]="isLoading">Cập nhật sao</button>
+                            <button  *ngIf="!isLoading"  class="btn  btn-sm btn-success"(click)="ratingTour()" >Cập nhật sao</button>
                           </div>
                         </div>
 
@@ -191,10 +191,13 @@ width: fit-content;">
                         <!-- <span [class]="this.type != 'create' && resTour.isDelete ?'d-none':'text-red'">{{this.validateTourModel.thumbnail ? this.validateTourModel.thumbnail : ''}}</span> -->
                         <div class="align-items-center text-right mt-2" style="margin-right: 1rem;">
                           <ng-container *ngIf="type != 'approve' && type != 'refuse' && type != 'cancelRequire'; else elseApprove">
-                            <input id="file" type="file" class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeImg($event); inputChange()" [disabled]="isLoading">
-                            <label *ngIf="type == 'create'|| type == 'detail'  && !resTour.isDelete" for="file" style="margin-top: 10px;"  class="btn btn-sm btn-primary" [disabled]="isLoading">Chọn Hình</label>
+                            <ng-container *ngIf="!isLoading">
+                              <input id="file" type="file" class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeImg($event); inputChange()" [disabled]="isLoading">
+                              <label *ngIf="type == 'create'|| type == 'detail'  && !resTour.isDelete" for="file" style="margin-top: 10px;"  class="btn btn-sm btn-primary">Chọn Hình</label>
+                            </ng-container>
+
                             <button  *ngIf="type == 'detail' && !resTour.isDelete" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemTourModal" [disabled]="isLoading">Xóa</button>
-                            <button *ngIf="isChangeStar || isChange" class="btn btn-sm btn-info" (click)="backup()" [disabled]="isLoading">Khôi phục</button>
+                            <button *ngIf="isChangeStar || isChange && !isLoading" class="btn btn-sm btn-info" (click)="backup()" [disabled]="isLoading">Khôi phục</button>
                             <button *ngIf="isChange" class="btn btn-sm btn-success"   (click)="isLoading=true;save()" [disabled]="isLoading">{{isLoading?'Đang xử lý...':type == 'detail' ? "Cập nhật":"Thêm"}}</button>
                             <button *ngIf="resTour.isDelete"  data-bs-toggle="modal" data-bs-target="#restoreItemTourModal" class="btn btn-sm btn-warning" [disabled]="isLoading">Khôi phục tour</button>
 
@@ -208,12 +211,12 @@ width: fit-content;">
                         </div>
                         <div [class]="resAuth.roleId == -1 && resAuth.id == resTour.idUserModify ? 'col-4' : 'col-6'"
                          style="text-align: center" *ngIf="resAuth.roleId == -1">
-                          <button class="btn btn-sm  btn-warning"  data-bs-toggle="modal" data-bs-target="#approveItemTourModal" [disabled]="isLoading">Từ chối phê duyệt</button>
+                          <button class="btn btn-sm  btn-warning"  data-bs-toggle="modal" data-bs-target="#refusedItemTourModal" [disabled]="isLoading">Từ chối phê duyệt</button>
                         </div>
                         <div [class]="resAuth.roleId != -1 && resAuth.id == resTour.idUserModify ? 'col' : 'col-4'"
                         [style]="resAuth.roleId != -1 && resAuth.id == resTour.idUserModify ? 'padding-right: 4.9%; text-align: end' : ''"
                         *ngIf="resAuth.id == resTour.idUserModify">
-                          <button class="btn btn-sm  btn-danger" data-bs-toggle="modal" data-bs-target="#approveItemTourModal" [disabled]="isLoading">Hủy yêu cầu phê duyệt</button>
+                          <button class="btn btn-sm  btn-danger" data-bs-toggle="modal" data-bs-target="#deleteItemTourModal" [disabled]="isLoading">Hủy yêu cầu phê duyệt</button>
                         </div>
                       </div>
                      </ng-template>
@@ -292,13 +295,15 @@ width: fit-content;">
                             <div class="row"  *ngFor="let file of resImage; let i=index">
                               <div class="col-9">
                                 <label class="form-control-label" for="input-tourName">Tấm {{i+1}}</label>
-                                <input type="text" [(ngModel)]="file.nameImage" (input)="inputChange()"  class="form-control form-control-alternative" readonly >
+                                <input type="text" [(ngModel)]="file.nameImage"  class="form-control form-control-alternative" readonly >
 
                               </div>
                               <div class="col-3">
-                                <div class="btn btn-outline-danger" (click)="btnDeleteImg(i, file)" style="margin-top: 40%;" [disabled]="isLoading">
-                                  Xóa
-                                </div>
+                                <ng-container *ngIf="!isLoading">
+                                  <button class="btn btn-outline-danger" (click)="btnDeleteImg(i, file)" style="margin-top: 40%;" *ngIf="type == 'create'|| type == 'detail'  && !resTour.isDelete">
+                                    Xóa
+                                  </button>
+                                </ng-container>
                               </div>
                               <hr style="margin-bottom: 0rem;">
                             </div>
@@ -376,7 +381,7 @@ width: fit-content;">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="deleteItemTourModal">Xác nhận</h1>
-        <button type="button" closeModalLoadDelete class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
+        <button type="button" #closeModalLoadDelete class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
       </div>
       <div class="modal-body" *ngIf="resTour">
         Bạn có chắc muốn {{!resTour.typeAction ? "Xóa":"Hủy yêu cầu"}} [<span class="text-red">{{resTour.nameTour}}</span>] !

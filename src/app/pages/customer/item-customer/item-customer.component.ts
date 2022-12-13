@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { NotificationService } from "../../../services_API/notification.service";
 import { ConfigService } from "../../../services_API/config.service";
 import { CustomerService } from 'src/app/services_API/customer.service';
@@ -19,32 +19,17 @@ export class ItemCustomerComponent implements OnInit {
   isEdit: boolean = false
   isChange: boolean = false
   resCustomerTmp: CustomerModel
-
+  @Output() parentBlock = new EventEmitter<any>()
   constructor(private customerService: CustomerService, private notificationService: NotificationService,
     private configService: ConfigService) { }
 
   ngOnInit(): void {
   }
   ngOnChanges(): void {
-
-    if(this.type = 'create'){
-
-    }else{
-      this.isEdit = false
-    }
     this.resCustomerTmp = Object.assign({}, this.resCustomer)
   }
 
-  isEditChange(){
-    if (this.isEdit) {
-      this.isEdit = false
-      this.restore()
 
-    }
-    else{
-      this.isEdit = true
-    }
-  }
   inputChange(){
     if (JSON.stringify(this.resCustomer) != JSON.stringify(this.resCustomerTmp)) {
       this.isChange = true
@@ -78,5 +63,9 @@ export class ItemCustomerComponent implements OnInit {
         this.isEdit = false
       }
        this.restore()
+    }
+
+    getDataBlock(){
+      this.parentBlock.emit(this.resCustomer);
     }
 }

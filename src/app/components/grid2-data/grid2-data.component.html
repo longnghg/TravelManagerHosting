@@ -65,7 +65,7 @@
                       </div>
                   </ng-container>
                   <ng-template #elseTypeDateTime>
-                    <input class="form-control custom-pages-input" style="height: 30px" name="dp" (change)="search(column.searchObj)" [(ngModel)]="keyword[column.searchObj]" onkeydown="return false"  type="date"/>
+                    <input class="form-control custom-pages-input" style="height: 30px" name="dp" (change)="search(column.searchObj)" [(ngModel)]="keyword[column.searchObj]" onkeydown="return false"  type="datetime-local"/>
                   </ng-template>
                  </ng-container>
                  <ng-template #elseDateTime>
@@ -153,23 +153,60 @@
                   {{row[column.field] | formatFromUnixTimestampToFullDateView}}
                 </ng-container>
                 <ng-template #elseDate>
-                  <ng-container *ngIf="column.filter == 'star'; else elseStar">
-                    {{row[column.field] < 10 ? '0'+row[column.field] : row[column.field]}} -
-                    <i class="fa-solid fa-star text-yellow" *ngFor='let star of row[column.field] | forNumber'></i>
-                    <i class="fa-solid fa-star" *ngFor='let star of column.listSection.length-1 - row[column.field] | forNumber'></i>
+                  <ng-container *ngIf="column.filter == 'dateTime'; else elseDateTime">
+                    {{row[column.field] | formatFromUnixTimestampToFullDateTimeView}}
                   </ng-container>
-                  <ng-template #elseStar>
-                    <ng-container *ngIf="column.filter == 'call'; else elseCalled">
-                      <ng-container *ngIf="row[column.field]">
-                        <i class="fa-solid fa-check text-success"></i> {{row[column.field] | formatStatusCalled}}
-                      </ng-container>
-
-                      <ng-container *ngIf="!row[column.field]">
-                        <i class="fa-solid fa-xmark text-danger"></i> {{row[column.field] | formatStatusCalled}}
-                      </ng-container>
+                  <ng-template #elseDateTime>
+                    <ng-container *ngIf="column.filter == 'star'; else elseStar">
+                      {{row[column.field] < 10 ? '0'+row[column.field] : row[column.field]}} -
+                      <i class="fa-solid fa-star text-yellow" *ngFor='let star of row[column.field] | forNumber'></i>
+                      <i class="fa-solid fa-star" *ngFor='let star of column.listSection.length-1 - row[column.field] | forNumber'></i>
                     </ng-container>
-                    <ng-template #elseCalled>
-                      {{row[column.field]}}
+                    <ng-template #elseStar>
+                      <ng-container *ngIf="column.filter == 'call'; else elseCalled">
+                        <ng-container *ngIf="row[column.field]">
+                          <i class="fa-solid fa-check text-success"></i> {{row[column.field] | formatStatusCalled}}
+                        </ng-container>
+
+                        <ng-container *ngIf="!row[column.field]">
+                          <i class="fa-solid fa-xmark text-danger"></i> {{row[column.field] | formatStatusCalled}}
+                        </ng-container>
+
+                      </ng-container>
+                      <ng-template #elseCalled>
+                        <ng-container *ngIf="column.filter == 'statusTourBooking'; else elseStatusTourBooking">
+                          <p class="col-8" style="color: #2d4271;" *ngIf="row[column.field]  == -1 || row[column.field]  == 5">
+                            <span class="badge badge-success" >{{row[column.field] | formatStatusBooking}}</span>
+                          </p>
+
+                          <p class="col-8" style="color: #2d4271;" *ngIf="row[column.field]  == 3">
+                            <span class="badge badge-info" >{{row[column.field] | formatStatusBooking}}</span>
+
+                          </p>
+
+                          <p class="col-8" style="color: #2d4271;" *ngIf="row[column.field]  == -2 || row[column.field]  == 1 || row[column.field]  == 2">
+                            <span class="badge badge-warning" >{{row[column.field] | formatStatusBooking}}</span>
+                          </p>
+
+                          <p class="col-8" style="color: #2d4271;" *ngIf="row[column.field]  == 4 ">
+                            <span class="badge badge-danger" >{{row[column.field] | formatStatusBooking}}</span>
+                          </p>
+                        </ng-container>
+                        <ng-template #elseStatusTourBooking>
+                         <ng-container *ngIf="column.filter == 'statusCar'; else elseStatusCar">
+                          {{row[column.field] | formatStatusCar}}
+                         </ng-container>
+                         <ng-template #elseStatusCar>
+                          <ng-container *ngIf="column.filter == 'price'; else elsePrice">
+                            {{row[column.field] | formatPriceVi}}
+                          </ng-container>
+                          <ng-template #elsePrice>
+                            {{row[column.field]}}
+                          </ng-template>
+                         </ng-template>
+                        </ng-template>
+                      </ng-template>
+
                     </ng-template>
                   </ng-template>
                 </ng-template>

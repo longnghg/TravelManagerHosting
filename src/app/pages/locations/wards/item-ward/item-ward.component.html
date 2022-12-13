@@ -43,7 +43,7 @@
 
     <div class="row align-items-center">
       <div class="col-12 text-right">
-        <button  *ngIf="type == 'detail'" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteDistrictModal" (click)="getDataDelete()" [disabled]="isLoading">Xóa</button>
+        <button  *ngIf="type == 'detail'" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteWardModal" (click)="getDataDelete()" [disabled]="isLoading">Xóa</button>
         <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="backup()" [disabled]="isLoading">Khôi phục</button>
         <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="isLoading=true;save()" [disabled]="isLoading">{{isLoading?'Đang xử lý...':type == 'detail' ? "Lưu":"Thêm"}}</button>
       </div>

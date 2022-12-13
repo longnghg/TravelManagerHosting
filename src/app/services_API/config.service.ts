@@ -402,13 +402,13 @@ export class ConfigService{
        model.total += 1
      }
 
-     if(data.otherPrice == null || data.otherPrice == ""){
-      model.otherPrice = ("[Chi phí khác] không để trống !")
-      model.total += 1
-     }else if (data.otherPrice <= 0) {
-       model.otherPrice = "[Chi phí khác] không nhỏ hơn 0!"
-       model.total += 1
-     }
+    //  if(data.otherPrice == null || data.otherPrice == ""){
+    //   model.otherPrice = ("[Chi phí khác] không để trống !")
+    //   model.total += 1
+    //  }else if (data.otherPrice <= 0) {
+    //    model.otherPrice = "[Chi phí khác] không nhỏ hơn 0!"
+    //    model.total += 1
+    //  }
 
      if(data.tolls == null || data.tolls == ""){
       model.tolls = ("[Chi phí cầu đường] không để trống !")
@@ -486,11 +486,7 @@ export class ConfigService{
     //   model.timePromotion = ("Ngày khuyến mãi không trước ngày bắt đầu bán vé!")
     //   model.total += 1
     //  }
-    console.log(data);
-
      if (!data.isUpdate) {
-      console.log(123);
-
       if(data.beginDate == 0 || data.beginDate == ""){
         model.beginDate = ("[Ngày bắt đầu] không bỏ trống !")
         model.total += 1
@@ -613,13 +609,13 @@ export class ConfigService{
     //departureDate = 35
 
     if (data.title == null || data.title == "") {
-      model.title = ("[Mô tả] không bỏ trống !")
+      model.title = ("[Tiêu đề] không bỏ trống !")
       model.total += 1
     }else if (data.title.length > 200) {
-      model.title = "[Mô tả] quá dài !"
+      model.title = "[Tiêu đề] quá dài !"
       model.total += 1
     }else if (data.title.length < 10) {
-      model.title = "[Mô tả] quá ngắn !"
+      model.title = "[Tiêu đề] quá ngắn !"
       model.total += 1
     }
 
@@ -1188,17 +1184,19 @@ validateHotel(data : any,model: any)
    checkRole(){
     var check = 0
     var auth = JSON.parse(localStorage.getItem("currentUser"))
-    var titlee = this.location.prepareExternalUrl(this.location.path());
-    var titleeSplit = []
-    titleeSplit = titlee.split("/")
-    var menuItem = ROUTES.filter(menuItem => menuItem);
-    menuItem.forEach(item => {
-      item.roles.forEach(role => {
-        if (role == auth.roleId && item.path.includes(titleeSplit[1])) {
-          check++
-        }
+    if (auth) {
+      var titlee = this.location.prepareExternalUrl(this.location.path());
+      var titleeSplit = []
+      titleeSplit = titlee.split("/")
+      var menuItem = ROUTES.filter(menuItem => menuItem);
+      menuItem.forEach(item => {
+        item.roles.forEach(role => {
+          if (role == auth.roleId && item.path.includes(titleeSplit[1])) {
+            check++
+          }
+        });
       });
-    });
+    }
     if (check == 0) {
       location.assign(this.clientUrl + "/login")
     }

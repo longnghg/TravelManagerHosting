@@ -158,6 +158,7 @@ export class Grid2DataComponent implements OnInit {
   changeChecked(){
     this.rowData = null
     this.keyword.pageSize = this.gridConfig.pageSize
+    this.pageIndex = 1
     this.keyword.pageIndex = this.pageIndex
 
     if (this.gridConfig.isRestore) {
@@ -256,6 +257,6 @@ export class GridConfig2{
 
 
 
-export declare type GridFilter = 'star' | 'number' | 'date' | 'status' | 'text' | 'call' ;
+export declare type GridFilter = 'star' | 'number' | 'date' | 'dateTime' | 'status' | 'text' | 'call' | 'price' | 'statusTourBooking' | 'statusCar' ;
 export declare type GridSearchType = 'section' | 'number' | 'date' | 'dateTime' | 'text' | 'email';
 export declare type  GridTypeDate = 'single' | 'range' ;

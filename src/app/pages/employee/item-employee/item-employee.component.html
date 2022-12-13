@@ -24,7 +24,7 @@
             </div>
           </div>
           <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between" *ngIf="!resEmployee.isDelete">
               <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#staticBackdrop"  class="btn btn-sm btn-info mr-4" [disabled]="isLoading">Đổi mật khẩu</a>
               <a href="javascript:void(0)" class="btn btn-sm btn-default float-right" [disabled]="isLoading">Message</a>
             </div>
@@ -50,7 +50,7 @@
                 <i class="ni education_hat mr-2"></i>{{resEmployee.roleName}}
               </div>
               <hr class="my-4" />
-              <p>Ngày sinh: {{resEmployee.birthday | formatDateToDateView}}</p>
+              <p>Ngày sinh: {{resEmployee.birthday | formatFromUnixTimestampToFullDateView}}</p>
               <p>Email: {{resEmployee.email}}</p>
               <p>Điện thoại: {{resEmployee.phone}}</p>
               <p>Địa chỉ: {{resEmployee.address}}</p>
@@ -147,7 +147,7 @@
                       <label class="form-control-label" for="dp">Ngày sinh
                         <span [class]="resEmployee.isDelete || isLoading ?'d-none':'text-red'">* {{this.validateEmployee.birthday ? this.validateEmployee.birthday : ''}}</span>
                       </label>
-                      <input  name="birthday" onkeydown="return false" (change)="inputDateChange();inputChange()" [(ngModel)]="resEmployee.birthday" class="form-control datepicker" placeholder="Chọn ngày" name="dp" id="dp" type="date" [disabled]="resEmployee.isDelete || isLoading"/>
+                      <input  name="birthday" onkeydown="return false" (change)="inputDateChange();inputChange()" [(ngModel)]="resEmployee.birthdayDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="dp" id="dp" type="date" [disabled]="resEmployee.isDelete || isLoading"/>
                     </div>
                   </div>
                 </div>

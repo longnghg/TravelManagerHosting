@@ -58,7 +58,7 @@ export class ListPlaceComponent implements OnInit {
         { field: 'name',headerName: "Tên điểm tham quan", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'name'},
         { field: 'address',headerName: "Địa chỉ", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'address'},
         { field: 'phone',headerName: "Số điện thoại", style: "width: 12%;", searchable: true, searchType: 'number', searchObj: 'phone'},
-        { field: 'priceTicket',headerName: "Giá vé", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'priceTicket'},
+        { field: 'priceTicket',headerName: "Giá vé", style: "width: 15%;", filter:"price", searchable: true, searchType: 'price', searchObj: 'priceTicket'},
 
       ];
 

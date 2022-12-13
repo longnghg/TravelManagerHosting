@@ -165,6 +165,7 @@ export class ItemTourComponent implements OnInit {
     }
 
     this.resImage = Object.assign([], this.resImageBackup)
+    this.resImageTmp = Object.assign([], this.resImageBackup)
 
     this.resTour.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resTour.modifyDate)
     this.isChange = false
@@ -173,8 +174,10 @@ export class ItemTourComponent implements OnInit {
   }
 
   inputChange(){
+    console.log(JSON.stringify(this.resImage));
+    console.log(JSON.stringify(this.resImageBackup));
     if (JSON.stringify(this.resTour) != JSON.stringify(this.resTourTmp) ||
-        JSON.stringify(this.resImage) != JSON.stringify(this.resImageTmp) ){
+        JSON.stringify(this.resImage) != JSON.stringify(this.resImageBackup) ){
       this.isChange = true
     }
     else{
@@ -260,16 +263,17 @@ export class ItemTourComponent implements OnInit {
            if (this.formDatas) {
             filesTmp = Object.assign([], this.formDatasTmp)
             this.resImage = Object.assign([], this.resImageTmp)
-            console.log(this.resImage);
-
             dt = new DataTransfer();
             filesTmp.forEach(_fileTmp => {
                 dt.items.add(_fileTmp);
             });
+            console.log(this.resImage);
+
             if (this.resImage.length < 4) {
                var image = new ImageModel
               image.nameImage = file.name
               this.resImage.push(Object.assign({}, image))
+              this.resImageTmp.push(Object.assign({}, image))
               dt.items.add(file);
             }
             this.formDatas.target.files = dt.files
@@ -302,21 +306,7 @@ export class ItemTourComponent implements OnInit {
         }
       });
 
-      //  if (this.formDatas) {
-      //   filesTmp = Object.assign([], this.formDatas.target.files);
-      //   files = Object.assign([], this.formDatas.target.files);
-      //  }
-
       if (check > 0) {
-        // files = filesTmp
-        // dt = new DataTransfer();
-        // files.forEach(file => {
-        //   dt.items.add(file);
-        // });
-
-        // if (this.formDatas) {
-        //   this.formDatas.target.files = dt.files
-        // }
         this.notificationService.handleAlert("Đã xóa [" + check + "] file không đúng định dạng hình ảnh !", StatusNotification.Error)
       }
       setTimeout(() => {
@@ -327,7 +317,6 @@ export class ItemTourComponent implements OnInit {
           }
         }
       }, 100);
-
     }
   }
 
@@ -401,15 +390,10 @@ export class ItemTourComponent implements OnInit {
         {
             this.tourService.create(file).subscribe(res =>{
               this.response = res
-              this.isLoading = false
-
               if (res.notification.type == StatusNotification.Success) {
                 var idTour = this.response.content
                 this.createImageTourdetail(files, idTour)
-                this.configService.callNotyfSignalR(this.configService.listRole())
-                this.router.navigate(['','list-tour']);
               }
-              this.notificationService.handleAlertObj(res.notification)
             }, error => {
               var message = this.configService.error(error.status, error.error != null?error.error.text:"");
               this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -436,20 +420,13 @@ export class ItemTourComponent implements OnInit {
 
           this.tourService.update(file, this.resTour.idTour).subscribe(res =>{
             this.response = res
-
-            this.isLoading = false
             if (res.notification.type == StatusNotification.Success) {
-
               this.createImageTourdetail(files, this.resTour.idTour)
-
-
               if(this.resImageDelete.length > 0){
                 this.deleteImageTourdetail(this.resImageDelete)
               }
-
-
-              this.configService.callNotyfSignalR(this.configService.listRole())
-              this.router.navigate(['','list-tour']);
+              // this.configService.callNotyfSignalR(this.configService.listRole())
+              // this.router.navigate(['','list-tour']);
             }
             else{
               this.notificationService.handleAlertObj(res.notification)
@@ -583,9 +560,17 @@ export class ItemTourComponent implements OnInit {
   createImageTourdetail(data, idTour){
     this.imageService.createImageIdTour(data, idTour).subscribe(res =>{
       this.response = res
+      this.isLoading = false
+
+      if (res.notification.type == StatusNotification.Success) {
+        this.configService.callNotyfSignalR(this.configService.listRole())
+        this.router.navigate(['','list-tour']);
+      }
+      this.notificationService.handleAlertObj(res.notification)
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)
+      this.isLoading = false
     })
   }
 

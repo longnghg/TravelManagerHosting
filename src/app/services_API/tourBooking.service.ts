@@ -28,9 +28,12 @@ export class TourookingService{
   checkCalled(idTourBooking: string){
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/check-called?idTourBooking="+idTourBooking);
   }
+
   search(data){
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/search-TourBooking", data);
   }
 
-
+  updateStatus(idTourBooking: string, status: number){
+    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/adm-update-tourBooking-status?idTourBooking="+idTourBooking+"&status="+status, {});
+  }
 }

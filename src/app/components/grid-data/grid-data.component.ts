@@ -172,6 +172,7 @@ export class GridDataComponent implements OnInit {
   changeChecked(){
     this.rowData = null
     this.keyword.pageSize = this.gridConfig.pageSize
+    this.pageIndex = 1
     this.keyword.pageIndex = this.pageIndex
 
     if (this.gridConfig.isRestore) {
@@ -191,7 +192,7 @@ export class GridDataComponent implements OnInit {
   setCache(){
     this.rowData = null
     this.keyword.pageSize = this.gridConfig.pageSize
-    this.keyword.pageIndex = this.pageIndex
+    this.keyword.pageIndex = 1
     this.keyword.isDelete = this.gridConfig.isRestore
     setTimeout(() => {
       this.gdSearch.emit(this.keyword);
@@ -256,6 +257,6 @@ export class GridConfig{
   totalResult? : number
 }
 
-export declare type GridFilter = 'star' | 'number' | 'date' | 'status' | 'text' | 'call' | 'price' ;
+export declare type GridFilter = 'star' | 'number' | 'date' | 'dateTime' | 'status' | 'text' | 'call' | 'price' | 'statusTourBooking' | 'statusCar' ;
 export declare type GridSearchType = 'section' | 'number' | 'date' | 'dateTime' | 'text' | 'email' | 'price' ;
 export declare type  GridTypeDate = 'single' | 'range' ;

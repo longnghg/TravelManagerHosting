@@ -104,7 +104,7 @@
 <div class="modal fade" [id]="gridConfig.idModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="gridDataLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
-      <app-item-car [resCar]="dataChild" [type]="typeChild"></app-item-car>
+      <app-item-car [resCar]="dataChild" [type]="typeChild" (parentDelete)="getData($event)" (parentRestore)="getData($event)"></app-item-car>
     </div>
   </div>
 </div>
@@ -115,7 +115,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="deleteCarModalLabel">Xác nhận</h1>
-        <button #closeModalLoad type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
+        <button #closeModalDeleteLoad type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
       </div>
       <div class="modal-body" *ngIf="data">
         Bạn có chắc muốn xóa [<span class="text-red">{{data.liscensePlate}}</span>] !
@@ -142,7 +142,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="restoreCarModalLabel">Xác nhận</h1>
-        <button #closeModalLoad type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
+        <button #closeModalRestoreLoad type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
       </div>
       <div class="modal-body" *ngIf="data">
         Bạn có chắc muốn khôi phục [<span class="text-red">{{data.liscensePlate}}</span>] !

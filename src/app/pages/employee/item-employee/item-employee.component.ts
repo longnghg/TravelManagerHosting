@@ -94,7 +94,7 @@ export class ItemEmployeeComponent implements OnInit{
             }
 
             if(this.resEmployee.birthday){
-              this.resEmployee.birthday = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resEmployee.birthday))
+              this.resEmployee.birthdayDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resEmployee.birthday)
             }
           }
         }
@@ -153,7 +153,9 @@ export class ItemEmployeeComponent implements OnInit{
     }
   }
 
-
+  inputDateChange(){
+    this.resEmployee.birthday = new Date(this.resEmployee.birthdayDisplay).getTime()
+  }
 
   changeImg(e: any){
     this.formData = e
@@ -204,6 +206,9 @@ export class ItemEmployeeComponent implements OnInit{
             }
           }
           this.isLoading = false
+
+          this.router.navigate(['','list-employee']);
+
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -225,11 +230,13 @@ export class ItemEmployeeComponent implements OnInit{
             this.notificationService.handleAlertObj(res.notification)
             if (res.notification.type == StatusNotification.Success) {
               this.close()
-
             }
           }
           this.isChange = true
           this.isLoading = false
+
+          this.router.navigate(['','list-employee']);
+
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -246,7 +253,7 @@ export class ItemEmployeeComponent implements OnInit{
 
   backup(){
     this.resEmployee = Object.assign({}, this.resEmployeeTmp)
-    this.resEmployee.birthday = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resEmployee.birthday))
+    this.resEmployee.birthdayDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resEmployee.birthday)
     this.isChange = false
     this.notificationService.handleAlert("Khôi phục dữ liệu ban đầu thành công !", StatusNotification.Info)
   }

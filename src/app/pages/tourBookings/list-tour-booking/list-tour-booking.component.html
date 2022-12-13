@@ -163,7 +163,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="calledLabel">Gọi xác nhận</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
       </div>
       <div class="modal-body" *ngIf="data">
         <div class="row mb-3 mt-3">
@@ -178,6 +178,51 @@
       <div class="modal-footer">
         <button #closeCalled type="button" class="btn btn-primary" [attr.data-bs-target]="'#'+gridConfig.idModal" data-bs-toggle="modal">Không</button>
         <button type="button" class="btn btn-success" (click)="called()">Gọi thành công</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="status" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="statusLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="statusLabel">Thay đổi trạng thái</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="data">
+        <div class="row mb-3 mt-3">
+          <label class="form-label col-5" style="font-weight: 600;">Tên người liên lạc</label>
+          <p class="col-7" style="color: #2d4271;">{{data.nameContact}}</p>
+        </div>
+        <div class="row">
+          <label class="form-label col-5" style="font-weight: 600;">Số điện thoại</label>
+           <p class="col-7" style="color: #2d4271;">{{data.phone}}</p>
+        </div>
+        <div class="row">
+          <label class="form-label col-5" style="font-weight: 600;">Trạng thái</label>
+          <p class="col-7" style="color: #2d4271;" *ngIf="data.status == -1 || data.status  == 5">
+            <span class="badge badge-success" >{{data.status | formatStatusBooking}}</span>
+          </p>
+
+          <p class="col-7" style="color: #2d4271;" *ngIf="data.status  == 3">
+            <span class="badge badge-info" >{{data.status | formatStatusBooking}}</span>
+
+          </p>
+
+          <p class="col-7" style="color: #2d4271;" *ngIf="data.status  == -2 || data.status  == 1 || data.status  == 2">
+            <span class="badge badge-warning" >{{data.status| formatStatusBooking}}</span>
+          </p>
+
+          <p class="col-7" style="color: #2d4271;" *ngIf="data.status  == 4 ">
+            <span class="badge badge-danger" >{{data.status | formatStatusBooking}}</span>
+          </p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button #closeStatus type="button" class="btn btn-primary" [attr.data-bs-target]="'#'+gridConfig.idModal" data-bs-toggle="modal">Không</button>
+        <button type="button" class="btn btn-success" (click)="updateStatus()">Xác nhận</button>
       </div>
     </div>
   </div>

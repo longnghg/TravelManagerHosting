@@ -15,7 +15,8 @@ import { PaginationModel } from 'src/app/models/responsiveModels/pagination.mode
   styleUrls: ['./list-car.component.scss']
 })
 export class ListCarComponent implements OnInit {
-  @ViewChild('closeModalLoad') closeModalLoad: ElementRef;
+  @ViewChild('closeModalDeleteLoad') closeModalDeleteLoad: ElementRef;
+  @ViewChild('closeModalRestoreLoad') closeModalRestoreLoad: ElementRef;
   isLoading: boolean
   resCar: CarModel[]
   resCarTmp: CarModel[]
@@ -31,8 +32,8 @@ export class ListCarComponent implements OnInit {
 
     public columnDefs: ColDef[]
     public gridConfig: GridConfig = {
-      idModalRestore: "restoreCarModalLabel",
-      idModalDelete: "deleteCarModalLabel",
+      idModalRestore: "restoreCarModal",
+      idModalDelete: "deleteCarModal",
       idModal: "gridCar",
       radioBoxName: "Kho lưu trữ",
       disableApprove: true
@@ -43,7 +44,7 @@ export class ListCarComponent implements OnInit {
       { field: 'liscensePlate', headerName: "Biển số xe", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'liscensePlate'},
       { field: 'amountSeat',headerName: "Số lượng chỗ ngồi", style: "width: 10%;", searchable: true, searchType: 'number', searchObj: 'amountSeat'},
       { field: 'phone',headerName: "Số điện thoại", style: "width: 20%;", searchable: true, searchType: 'number', searchObj: 'phone'},
-      { field: 'status',headerName: "Trạng thái", style: "width: 20%;", searchable: true, searchType: 'section', searchObj: 'status', multiple: true, closeOnSelect: false, bindLabel: "name", bindValue: "id", listSection: this.configService.listStatusCar()},
+      { field: 'status',headerName: "Trạng thái", style: "width: 20%;", filter:"statusCar", searchable: true, searchType: 'section', searchObj: 'status', multiple: true, closeOnSelect: false, bindLabel: "name", bindValue: "id", listSection: this.configService.listStatusCar()},
     ];
 
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
@@ -117,7 +118,9 @@ export class ListCarComponent implements OnInit {
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
        this.isLoading = false
-       this.closeModalLoad.nativeElement.click()
+       setTimeout(() => {
+        this.closeModalDeleteLoad.nativeElement.click()
+       }, 100);
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
        this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -132,7 +135,9 @@ export class ListCarComponent implements OnInit {
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
        this.isLoading = false
-       this.closeModalLoad.nativeElement.click()
+       setTimeout(() => {
+        this.closeModalRestoreLoad.nativeElement.click()
+       }, 100);
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
        this.notificationService.handleAlert(message, StatusNotification.Error)

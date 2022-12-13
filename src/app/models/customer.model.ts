@@ -11,4 +11,5 @@ export class CustomerModel{
   point: number
   facebookToken: string
   googleToken: string
+  isBlock: boolean
 }

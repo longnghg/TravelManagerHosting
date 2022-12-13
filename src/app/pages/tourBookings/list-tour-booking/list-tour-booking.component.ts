@@ -14,6 +14,7 @@ import { PaginationModel } from "../../../models/responsiveModels/pagination.mod
 })
 export class ListTourBookingComponent implements OnInit {
   @ViewChild('closeCalled') closeCalled: ElementRef
+  @ViewChild('closeStatus') closeStatus: ElementRef
   resTourBookingStatistic: TourBookingStatisticModel = new TourBookingStatisticModel
   resTourBooking: TourBookingModel[]
   resTourBookingWaiting: TourBookingModel[]
@@ -38,12 +39,13 @@ export class ListTourBookingComponent implements OnInit {
 
   ngOnInit(): void {
     this.columnDefs= [
-      { field: 'idTourBooking',headerName: "Mã", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'idTourBooking'},
-      { field: 'pincode',headerName: "Pin code", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'pincode'},
-      { field: 'phone',headerName: "Số điện thoại", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'phone'},
-      { field: 'email',headerName: "Email", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'email'},
-      { field: 'dateBooking',headerName: "Ngày đặt tour", style: "width: 15%;", filter: "date", searchable: true, searchType: 'date', searchObj: 'dateBooking'},
-      { field: 'isCalled',headerName: "Gọi xác nhận", style: "width: 15%;", filter: "call",searchable: true, searchType: 'section', searchObj: 'isCalled' , multiple: false, closeOnSelect: true, bindLabel: 'name', bindValue: "id", listSection: this.configService.listCalled()},
+      // { field: 'idTourBooking',headerName: "Mã", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'idTourBooking'},
+      { field: 'pincode',headerName: "Pin code", style: "width: 13%;", searchable: true, searchType: 'text', searchObj: 'pincode'},
+      { field: 'bookingNo',headerName: "booking No", style: "width: 14%;", searchable: true, searchType: 'text', searchObj: 'pincode'},
+      { field: 'phone',headerName: "Số điện thoại", style: "width: 10%;", searchable: true, searchType: 'text', searchObj: 'phone'},
+      { field: 'dateBooking',headerName: "Ngày đặt tour", style: "width: 18.5%;", filter: "dateTime" , searchable: true, searchType: 'dateTime', typeDate:"range", searchObj: 'dateBooking'},
+      { field: 'isCalled',headerName: "Gọi xác nhận", style: "width: 11.5%;", filter: "call",searchable: true, searchType: 'section', searchObj: 'isCalled' , multiple: false, closeOnSelect: true, bindLabel: 'name', bindValue: "id", listSection: this.configService.listCalled()},
+      { field: 'status',headerName: "Trạng thái", style: "width: 23%;", filter: "statusTourBooking",searchable: true, searchType: 'section', searchObj: 'status' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listStatusBooking()},
     ];
     this.initStatistic()
     this.gridConfig.pageSize = this.pagination.pageSize
@@ -53,8 +55,6 @@ export class ListTourBookingComponent implements OnInit {
     if (e) {
       this.tourookingService.search(Object.assign({}, e)).subscribe(res => {
         this.response = res
-        console.log(res);
-
         if(this.response.notification.type == StatusNotification.Success)
         {
           this.resTourBooking = this.response.content
@@ -128,9 +128,19 @@ export class ListTourBookingComponent implements OnInit {
         this.data.isCalled = true
         this.closeCalled.nativeElement.click()
       }
-      else{
-        this.notificationService.handleAlertObj(res.notification)
+      this.notificationService.handleAlertObj(res.notification)
+    })
+  }
+
+
+  updateStatus(){
+    this.tourookingService.updateStatus(this.data.idTourBooking, this.data.status).subscribe (res => {
+      this.response = res
+      if(this.response.notification.type == StatusNotification.Success)
+      {
+        this.closeStatus.nativeElement.click()
       }
+      this.notificationService.handleAlertObj(res.notification)
     })
   }
 }
