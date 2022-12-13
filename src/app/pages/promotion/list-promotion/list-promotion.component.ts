@@ -51,14 +51,14 @@ export class ListPromotionComponent implements OnInit {
   ngOnInit(): void {
     this.columnDefs= [
       { field: 'value',headerName: "Giá trị giảm giá", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'value'},
-      { field: 'fromDate',headerName: "Từ ngày", style: "width: 30%;", searchable: true, searchType: 'date', searchObj: 'fromDate',filter: 'date'},
-      { field: 'toDate',headerName: "Đến ngày", style: "width: 30%;", searchable: true, searchType: 'date', searchObj: 'toDate', filter: 'date'},
+      { field: 'fromDate',headerName: "Từ ngày", style: "width: 30%;", searchable: true, searchType: 'dateTime', searchObj: 'fromDate',filter: 'dateTime'},
+      { field: 'toDate',headerName: "Đến ngày", style: "width: 30%;", searchable: true, searchType: 'dateTime', searchObj: 'toDate', filter: 'dateTime'},
     ];
 
     this.columnDefsWaiting= [
-      { field: 'value',headerName: "Mã giảm giá", style: "width: 20%;"},
-      { field: 'fromDate',headerName: "Từ ngày", style: "width: 15%;", filter: 'date'},
-      { field: 'toDate',headerName: "Đến ngày", style: "width: 15%;",filter: 'date'},
+      { field: 'value',headerName: "Giá trị giảm giá", style: "width: 20%;"},
+      { field: 'fromDate',headerName: "Từ ngày", style: "width: 15%;", filter: 'dateTime'},
+      { field: 'toDate',headerName: "Đến ngày", style: "width: 15%;",filter: 'dateTime'},
       { field: 'modifyBy',headerName: "Người yêu cầu", style: "width: 15%;", searchable: false, searchType: 'text', searchObj: 'modifyBy'},
       { field: 'modifyDate',headerName: "Ngày yêu cầu", style: "width: 15%;", filter: 'date', searchable: false, searchType: 'date', typeDate: 'range', searchObj: 'modifyDate'},
       { field: 'typeActionName',headerName: "Loại phê duyệt", style: "width: 10%;"},
@@ -87,7 +87,7 @@ export class ListPromotionComponent implements OnInit {
       if(this.response.notification.type == StatusNotification.Success){
         this.resPromotionWaiting = this.response.content
         console.log(this.resPromotionWaiting);
-        
+
         this.resPromotionWaiting.forEach(promotion => {
           promotion.approveName = StatusApprove[promotion.approve]
           promotion.typeActionName = TypeAction[promotion.typeAction]

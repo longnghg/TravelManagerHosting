@@ -16,7 +16,7 @@
     </div>
   </div>
 
-  <div class="modal fade" [id]="gridConfig.idModalDelete" tabindex="-1" aria-labelledby="deleteScheduleModal" aria-hidden="true">
+  <div class="modal fade" [id]="gridConfig.idModalDelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteScheduleModal" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -42,7 +42,7 @@
     </div>
   </div>
 
-  <div class="modal fade" [id]="gridConfig.idModalRestore" tabindex="-1" aria-labelledby="restoreScheduleModal" aria-hidden="true">
+  <div class="modal fade" [id]="gridConfig.idModalRestore" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="restoreScheduleModal" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -79,7 +79,7 @@
     </div>
   </div>
 
-  <div class="modal fade" [id]="gridConfigWaiting.idModalApprove" tabindex="-1" aria-labelledby="approveScheduleModalLabel" aria-hidden="true">
+  <div class="modal fade" [id]="gridConfigWaiting.idModalApprove" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="approveScheduleModalLabel" aria-hidden="true">
   <div class="modal-dialog  modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -107,7 +107,7 @@
       </ng-container>
       <ng-template #elseApprove>
         <ng-container *ngIf="typeChild == 'refuse'; else elseRefuse">
-          <button type="button" class="btn btn-danger" (click)="isLoading=true;refuse()" [disabled]="isLoading">{{isLoading?'Đang xử lý...':'Từ chối'}}</button>
+          <button type="button" class="btn btn-danger" (click)="isLoading=true;refused()" [disabled]="isLoading">{{isLoading?'Đang xử lý...':'Từ chối'}}</button>
         </ng-container>
         <ng-template #elseRefuse>
           <button type="button" class="btn btn-danger" (click)="isLoading=true;delete()" [disabled]="isLoading">{{isLoading?'Đang xử lý...':'Hủy yêu cầu'}}</button>

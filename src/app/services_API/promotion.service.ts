@@ -25,9 +25,11 @@ export class PromotionService{
         {
           this.resPromotion =  this.response.content
           this.resPromotion.forEach(promotion => {
-            promotion.fromDateDisplay = this.configService.formatFromUnixTimestampToFullDate(promotion.fromDate)
-            promotion.toDateDisplay = this.configService.formatFromUnixTimestampToFullDate(promotion.toDate)
+            promotion.fromDateDisplay = this.configService.formatFromUnixTimestampToFullDateTime(promotion.fromDate)
+            promotion.toDateDisplay = this.configService.formatFromUnixTimestampToFullDateTime(promotion.toDate)
           });
+          console.log( this.resPromotion);
+
           resolve(this.resPromotion);
         }
     }, error => {

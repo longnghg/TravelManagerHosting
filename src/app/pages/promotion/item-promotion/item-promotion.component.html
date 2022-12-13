@@ -25,18 +25,18 @@
                 <label class="form-control-label" for="input-address">Từ ngày
                   <span [class]="type != 'create'?'d-none':'text-danger'">* {{this.validatePromotion.fromDate ? this.validatePromotion.fromDate : ''}}</span>
                 </label>
-                <input (change)="inputChange(); dateChange()" [(ngModel)]="resPromotion.fromDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="fromDate" id="fromDate" type="date" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPromotion.isDelete" />
+                <input (change)="inputChange(); dateChange()" [(ngModel)]="resPromotion.fromDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="fromDate" id="fromDate" type="datetime-local" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPromotion.isDelete" />
               </div>
-  
+
               <div class="col-lg-6">
                 <label class="form-control-label" for="input-address">Đến ngày
                   <span [class]="type != 'create'?'d-none':'text-danger'">* {{this.validatePromotion.toDate ? this.validatePromotion.toDate : ''}}</span>
                 </label>
-                <input (change)="inputChange(); dateChange()" [(ngModel)]="resPromotion.toDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="toDate" id="toDate" type="date" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPromotion.isDelete" />
+                <input (change)="inputChange(); dateChange()" [(ngModel)]="resPromotion.toDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="toDate" id="toDate" type="datetime-local" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPromotion.isDelete" />
               </div>
             </div>
           </fieldset>
-         
+
           <div class="row">
             <fieldset class="mt-4" *ngIf="type == 'approve' || type == 'refuse' || type == 'cancelRequire'">
               <legend>Thông tin người yêu cầu</legend>
@@ -55,7 +55,7 @@
                 </div>
               </div>
             </fieldset>
-  
+
           </div>
           <hr>
         </div>

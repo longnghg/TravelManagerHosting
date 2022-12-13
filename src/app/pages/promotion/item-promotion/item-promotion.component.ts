@@ -42,11 +42,11 @@ export class ItemPromotionComponent implements OnInit {
     }
     else{
       if(this.resPromotion){
-        this.resPromotion.fromDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resPromotion.fromDate)
-        this.resPromotion.toDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resPromotion.toDate)
+        this.resPromotion.fromDateDisplay = this.configService.formatFromUnixTimestampToFullDateTime(this.resPromotion.fromDate)
+        this.resPromotion.toDateDisplay = this.configService.formatFromUnixTimestampToFullDateTime(this.resPromotion.toDate)
         this.resPromotion.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resPromotion.modifyDate)
       }
-      }
+    }
   }
 
   dateChange() {
@@ -74,6 +74,8 @@ export class ItemPromotionComponent implements OnInit {
 
     if (this.validatePromotion.total == 0) {
       this.resPromotion.IdUserModify = this.auth.id
+      console.log( this.resPromotion.IdUserModify);
+
       if(this.type == "create")
       {
         this.promotionService.create(this.resPromotion).subscribe(res =>{

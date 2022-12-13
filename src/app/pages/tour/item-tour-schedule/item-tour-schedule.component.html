@@ -155,7 +155,7 @@
                     <div [class]="resSchedule.promotionId == 1 ? 'col' : 'col-6'">
                       <div class="form-group">
                         <label class="form-control-label" for="input-promotionId">Khuyến mãi</label>
-                        <ng-select [items]="resPromotion"
+                        <ng-select
                         bindLabel="value"
                         bindValue="idPromotion"
                         [(ngModel)]="resSchedule.promotionId"
@@ -167,35 +167,36 @@
                         [searchable]="false"
                         (change)="inputChange(); promotionChange(resSchedule.promotionId)">
 
-                        <ng-template ng-label-tmp let-item="item">
+                        <!-- <ng-template ng-label-tmp let-item="item">
                           <ng-container *ngIf="resSchedule.promotionId == 1; else elsePromotion">
                             Không có giảm giá
                           </ng-container>
                           <ng-template #elsePromotion>
                             Giảm {{item.value}}%
                           </ng-template>
-                        </ng-template>
-                        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                          <ng-container *ngIf="index == 0; else elsePromotion">
-                            Không có giảm giá
+                        </ng-template> -->
+                        <ng-container *ngFor="let promotion of resPromotion">
+                          <ng-option *ngIf="promotion.idPromotion > 0"  [value]="promotion.idPromotion">{{promotion.idPromotion == 1?'Không có giảm giá':'Giảm '+ promotion.value +'%'}}</ng-option>
+                        </ng-container>
+                        <!-- <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                          {{index}}
+                          <ng-container *ngIf="index > 0">
+
                           </ng-container>
-                          <ng-template #elsePromotion>
-                            Giảm {{item.value}}%
-                          </ng-template>
-                      </ng-template>
+                        </ng-template> -->
                        </ng-select>
                       </div>
                     </div>
                     <div class="col-3" *ngIf="resSchedule.promotionId != 1">
                       <div class="form-group">
                         <label class="form-control-label" for="input-timePromotion">Thời gian bắt đầu khuyến mãi</label>
-                        <input [(ngModel)]="resSchedule.timePromotionDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="timePromotion" id="timePromotion" type="datetime-local" readonly/>
+                        <input [(ngModel)]="resSchedule.promotions.fromDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="timePromotion" id="timePromotion" type="datetime-local" readonly/>
                       </div>
                     </div>
                     <div class="col-3" *ngIf="resSchedule.promotionId != 1">
                       <div class="form-group">
                         <label class="form-control-label" for="input-timePromotion">Thời gian kết thúc khuyến mãi</label>
-                        <input [(ngModel)]="resSchedule.endTimePromotionDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="endTimePromotion" id="endTimePromotion" type="datetime-local" readonly/>
+                        <input [(ngModel)]="resSchedule.promotions.toDateDisplay" class="form-control datepicker" placeholder="Chọn ngày" name="endTimePromotion" id="endTimePromotion" type="datetime-local" readonly/>
                       </div>
                     </div>
                   </div>

@@ -121,12 +121,14 @@ export class ItemTourScheduleComponent implements OnInit {
     else {
       if (this.resSchedule) {
         this.resSchedule.isUpdate = true
+        console.log(this.resSchedule);
 
         this.resSchedule.departureDateDisplay = this.configService.formatFromUnixTimestampToFullDateTime(this.resSchedule.departureDate)
         this.resSchedule.returnDateDisplay = this.configService.formatFromUnixTimestampToFullDateTime(this.resSchedule.returnDate)
         this.resSchedule.beginDateDisplay = this.configService.formatFromUnixTimestampToFullDateTime(this.resSchedule.beginDate)
         this.resSchedule.endDateDisplay = this.configService.formatFromUnixTimestampToFullDateTime(this.resSchedule.endDate)
-        this.resSchedule.timePromotionDisplay = this.configService.formatFromUnixTimestampToFullDateTime(this.resSchedule.timePromotion)
+        this.resSchedule.promotions.fromDateDisplay = this.configService.formatFromUnixTimestampToFullDateTime(this.resSchedule.promotions.fromDate)
+        this.resSchedule.promotions.toDateDisplay = this.configService.formatFromUnixTimestampToFullDateTime(this.resSchedule.promotions.toDate)
         this.resSchedule.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.modifyDate)
         this.resScheduleTmp = Object.assign({}, this.resSchedule)
 
@@ -158,7 +160,6 @@ export class ItemTourScheduleComponent implements OnInit {
         this.timelineService.getTimelineidSchedule(this.resSchedule.idSchedule).subscribe(res => {
           this.response = res
           this.resTimelinelist = this.response.content
-          console.log(this.resTimelinelist);
 
           if (this.resTimelinelist) {
             this.resTimelinelist.forEach(timeline => {
@@ -554,14 +555,14 @@ export class ItemTourScheduleComponent implements OnInit {
   }
 
   promotionChange(id: number) {
-    console.log("ádsads")
     this.resPromotion.forEach(promotion => {
       if (promotion.idPromotion == id) {
-        this.resSchedule.timePromotion = promotion.fromDate
+        this.resSchedule.timePromotion = promotion.toDate
         this.resSchedule.valuePromotion = promotion.value
-        this.resSchedule.timePromotionDisplay = promotion.fromDateDisplay
-        this.resSchedule.endTimePromotion = promotion.toDate
-        this.resSchedule.endTimePromotionDisplay = promotion.toDateDisplay
+        this.resSchedule.promotionId = promotion.idPromotion
+        this.resSchedule.timePromotionDisplay = promotion.toDateDisplay
+        this.resSchedule.promotions.fromDateDisplay = promotion.fromDateDisplay
+        this.resSchedule.promotions.toDateDisplay = promotion.toDateDisplay
       }
     });
   }

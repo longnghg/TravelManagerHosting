@@ -56,9 +56,9 @@ export class ViewTourScheduleComponent implements OnInit {
   }
   ngOnInit(): void {
     this.columnDefs= [
-      { field: 'idSchedule', headerName: "Mã số", style: "width: 26%;", searchable: true, searchType: 'text', searchObj: 'idSchedule'},
-      { field: 'beginDate',headerName: "Ngày bán vé", style: "width: 17%;", filter: 'date', searchable: true, searchType: 'date', typeDate: 'range', searchObj: 'beginDate'},
-      { field: 'departureDate',headerName: "Ngày khởi hành", style: "width: 17%;", filter: 'date', searchable: true, searchType: 'date', typeDate: 'range', searchObj: 'departureDate'},
+      { field: 'idSchedule', headerName: "Mã số", style: "width: 22%;", searchable: true, searchType: 'text', searchObj: 'idSchedule'},
+      { field: 'beginDate',headerName: "Ngày bán vé", style: "width: 19%;", filter: 'dateTime', searchable: true, searchType: 'dateTime', typeDate: 'range', searchObj: 'beginDate'},
+      { field: 'departureDate',headerName: "Ngày khởi hành", style: "width: 19%;", filter: 'dateTime', searchable: true, searchType: 'dateTime', typeDate: 'range', searchObj: 'departureDate'},
       // { field: 'beginDate',headerName: "Ngày bắt đầu", filter: "date", style: "width: 15%;", searchable: true, searchType: 'date', searchObj: 'beginDate'},
       // { field: 'endDate',headerName: "Ngày kết thúc", filter: "date", style: "width: 15%;", searchable: true, searchType: 'date', searchObj: 'endDate'},
       { field: 'totalCostTourNotService',headerName: "Tổng chi phí", style: "width: 10%;", filter: 'price', searchable: true, searchType: 'price', searchObj: 'TotalCostTour'},
@@ -92,6 +92,7 @@ export class ViewTourScheduleComponent implements OnInit {
   init(isDelete){
     this.scheduleService.getsSchedulebyIdTour(this.idTour, isDelete).subscribe(res =>{
       this.response = res;
+
 
      if(this.response.notification.type == StatusNotification.Success){
       this.resSchedule = this.response.content
@@ -131,6 +132,7 @@ export class ViewTourScheduleComponent implements OnInit {
       var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
       this.scheduleService.search(Object.assign({}, e,),idTour).subscribe(res => {
         this.response = res
+        console.warn(res);
         if(this.response.notification.type == StatusNotification.Success)
         {
           this.resSchedule = this.response.content

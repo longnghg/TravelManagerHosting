@@ -84,8 +84,8 @@ export class ItemCarComponent implements OnInit {
                     this.resCarTmp = Object.assign({}, new CarModel)
                     this.validateCar = new ValidationCarModel
                     this.isChange = false
-                    this.isLoading = false
                   }
+                  this.isLoading = false
                   }, error => {
                     var message = this.configService.error(error.status, error.error != null?error.error.text:"");
                     this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -96,13 +96,12 @@ export class ItemCarComponent implements OnInit {
             this.carService.update(this.resCar, this.resCar.idCar).subscribe(res =>{
               this.response = res
               this.notificationService.handleAlertObj(res.notification)
-
               if(this.response.notification.type == StatusNotification.Success)
               {
                 this.isChange = false
-                this.isLoading = false
                 this.closeModal.nativeElement.click()
               }
+              this.isLoading = false
             }, error => {
               this.isLoading = false
               var message = this.configService.error(error.status, error.error != null?error.error.text:"");

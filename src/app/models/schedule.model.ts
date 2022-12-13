@@ -1,5 +1,6 @@
 import { CarModel } from "../models/car.model";
 import { TourModel } from "../models/tour.model";
+import { PromotionModel } from "../models/promotion.model";
 export class ScheduleModel{
   idSchedule: string = ""
   departureDate: number = 0
@@ -53,7 +54,7 @@ export class ScheduleModel{
   isUpdateDR: boolean = false
   isUpdate: boolean = false
   isRemoveTimeLine: boolean = false
-
+  promotions: PromotionModel = new PromotionModel
   rowNum?: number
 }
 
