@@ -94,7 +94,7 @@ export class ItemTourScheduleComponent implements OnInit {
 
   public Editor = ClassicEditor;
   config = {
-    placeholder: 'Nhập thông tin timeline',toolbar: ['heading', 'bold', 'italic', '|', 'undo', 'redo', '|', 'numberedList', 'bulletedList', 'fontFamily'],
+    placeholder: 'Nhập thông tin timeline',toolbar: ['heading', 'bold', 'italic', '|', 'undo', 'redo', '|', 'numberedList', 'bulletedList'],
     isReadOnly: true,
   }
   constructor(private scheduleService: ScheduleService, private configService: ConfigService, private notificationService: NotificationService,

@@ -1,6 +1,6 @@
 export class TimeLineModel{
   idTimeline: string
-  description: string
+  description: string = ""
 
   title: string
   fromTimeDisplay: string
