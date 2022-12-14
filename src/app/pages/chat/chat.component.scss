@@ -93,7 +93,7 @@
     height: 5rem;
     margin-left: -1rem;
     margin-right: -1rem;
-    padding: 1rem;
+    padding: 1.5rem;
 }
 .card-send {
     color: white;
@@ -254,7 +254,8 @@
 }
 
   .card_load_extreme_title {
-    width: 14.7rem;
+    width: 12rem;
+    max-width: 12rem;
     height: 47px;
     padding-top: 0.9rem;
     padding-left: 1rem;
@@ -265,12 +266,15 @@
     margin-top: -1rem;
     background-size: 200% 100%;
     background-position: 100% 0;
-    overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+    left: -3rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .card_load_extreme_descripion {
-    width: 14.7rem;
-    max-width: 14.7rem;
+    width: 7.7rem;
+    max-width: 7.7rem;
     height: 47px;
     position: relative;
     float: right;
@@ -281,7 +285,10 @@
     padding-top: 0.7rem;
     padding-left: 1rem;
     color: silver;
-    overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+    left: -7.2rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
 
