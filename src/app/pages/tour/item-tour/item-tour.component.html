@@ -252,7 +252,7 @@ width: fit-content;">
 
                         <ng-container *ngIf="resImage.length < 4">
                           <input #tourImg id="files" type="file" multiple class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeTourImg($event); inputChange()">
-                         <button for="files"  class="icon-btn add-btn" (click)="btnTourImg()" style="position: relative;top: -5%;" [disabled]="isLoading">
+                         <button for="files"  class="icon-btn add-btn" (click)="btnTourImg()" style="position: relative;top: -5%;" [disabled]="isLoading" *ngIf="type == 'create'|| type == 'detail'  && !resTour.isDelete">
                            <div class="add-icon"></div>
                           <div class="btn-txt">Thêm hình</div>
                           </button>

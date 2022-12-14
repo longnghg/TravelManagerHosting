@@ -347,10 +347,14 @@ export class ItemTourComponent implements OnInit {
           this.formDatas.target.files = dt.files
           this.formDatasTmp = dt.files
         }
-        this.resImage.splice(i, 1)
-        this.resImageTmp = Object.assign([], this.resImage)
+
+
+        console.log(this.resImage);
+
         this.resImageDelete.push(Object.assign({}, listDelete))
       }
+      this.resImage.splice(i, 1)
+        this.resImageTmp = Object.assign([], this.resImage)
       this.imgDetailRoot.splice(i, 1)
       this.imgDetail.splice(i, 1);
       if (this.imgDetail.length < 4) {
