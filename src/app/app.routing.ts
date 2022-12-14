@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { SupportLayoutComponent } from './layouts/support-layout/support-layout.component';
+import { TourBookingLayoutComponent } from './layouts/tourBooking-layout/TourBooking-layout.component';
 const routes: Routes =[
   {
     path: '',
@@ -27,6 +28,15 @@ const routes: Routes =[
       {
         path: '',
         loadChildren: () => import('src/app/layouts/support-layout/support-layout.module').then(m => m.SupportLayoutModule)
+      }
+    ]
+  }, {
+    path: '',
+    component: TourBookingLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('src/app/layouts/tourBooking-layout/tourBooking-layout-layout.module').then(m => m.TourBookingLayoutModule)
       }
     ]
   }, {

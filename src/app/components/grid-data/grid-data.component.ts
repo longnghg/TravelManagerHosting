@@ -136,26 +136,27 @@ export class GridDataComponent implements OnInit {
   selectSection(name){
     var kw = ""
      var i = 0
-     if (this.keyword[name+'Tmp']) {
-       if (this.keyword[name+'Tmp'].length > 0) {
-         this.keyword[name+'Tmp'].forEach(item => {
-
-           if ( i < this.keyword[name+'Tmp'].length-1) {
-             kw += item + ","
-           }
-           else{
-             kw += item
-           }
-           i++
-         });
-       }
-       else{
-         kw = this.keyword[name+'Tmp']
-       }
-     }
-     else{
-       kw = this.keyword[name+'Tmp']
-     }
+      if (this.keyword[name+'Tmp']) {
+        if (typeof this.keyword[name+'Tmp'] == 'object') {
+          if (this.keyword[name+'Tmp'].length > 0) {
+            this.keyword[name+'Tmp'].forEach(item => {
+              if ( i < this.keyword[name+'Tmp'].length-1) {
+                kw += item + ","
+              }
+              else{
+                kw += item
+              }
+              i++
+            });
+          }
+          else{
+            kw = this.keyword[name+'Tmp']
+          }
+        }
+        else{
+          kw = this.keyword[name+'Tmp']
+        }
+      }
      this.keyword[name] = kw
 
 
@@ -192,7 +193,7 @@ export class GridDataComponent implements OnInit {
   setCache(){
     this.rowData = null
     this.keyword.pageSize = this.gridConfig.pageSize
-    this.keyword.pageIndex = 1
+    this.keyword.pageIndex = this.pageIndex
     this.keyword.isDelete = this.gridConfig.isRestore
     setTimeout(() => {
       this.gdSearch.emit(this.keyword);
@@ -257,6 +258,6 @@ export class GridConfig{
   totalResult? : number
 }
 
-export declare type GridFilter = 'star' | 'number' | 'date' | 'dateTime' | 'status' | 'text' | 'call' | 'price' | 'statusTourBooking' | 'statusCar' ;
+export declare type GridFilter = 'star' | 'number' | 'date' | 'dateTime' | 'status' | 'text' | 'call' | 'price' | 'statusTourBooking' | 'statusCar' | 'statusPayment' ;
 export declare type GridSearchType = 'section' | 'number' | 'date' | 'dateTime' | 'text' | 'email' | 'price' ;
 export declare type  GridTypeDate = 'single' | 'range' ;

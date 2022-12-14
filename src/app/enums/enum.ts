@@ -33,6 +33,13 @@ export enum StatusApprove {
   'Hủy phê duyệt' = 3
 };
 
+export enum StatusPayment {
+  'Tiền mặt' = 1,
+  'Chuyển khoản' = 2,
+  'Paypal' = 3,
+  'Vnpay' = 4
+};
+
 export enum TypeAction{
   insert = "Thêm mới",
   delete = "Xóa",

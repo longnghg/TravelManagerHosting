@@ -199,11 +199,16 @@
                           {{row[column.field] | formatStatusCar}}
                          </ng-container>
                          <ng-template #elseStatusCar>
-                          <ng-container *ngIf="column.filter == 'price'; else elsePrice">
-                            {{row[column.field] | formatPriceVi}}
+                          <ng-container *ngIf="column.filter == 'statusPayment'; else elseStatusPayment">
+                            {{row[column.field] | formatStatusPayment}}
                           </ng-container>
-                          <ng-template #elsePrice>
-                            {{row[column.field]}}
+                          <ng-template #elseStatusPayment>
+                            <ng-container *ngIf="column.filter == 'price'; else elsePrice">
+                              {{row[column.field] | formatPriceVi}}
+                            </ng-container>
+                            <ng-template #elsePrice>
+                              {{row[column.field]}}
+                            </ng-template>
                           </ng-template>
                          </ng-template>
                         </ng-template>

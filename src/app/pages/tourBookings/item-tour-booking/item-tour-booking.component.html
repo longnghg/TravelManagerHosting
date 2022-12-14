@@ -92,7 +92,7 @@
                   <span class="badge badge-danger" >{{resTourBooking.status | formatStatusBooking}}</span>
                 </p>
               </div>
-              <div class="row">
+              <div class="row" *ngIf="resTourBooking.status != 3 && resTourBooking.status != 5">
                 <label class="form-label col-4" style="font-weight: 600;">Thời hạn thanh toán</label>
                  <p class="col-8" style="color: #2d4271;"><span class="text-danger" style="font-weight: 600;">{{resTourBooking.lastDate | formatFromUnixTimestampToFullDateTimeView}}</span> (Theo giờ Việt Nam, Booking sẽ tự động hủy nếu quá thời hạn thanh toán trên)</p>
               </div>
@@ -162,7 +162,7 @@
                     <label class="form-label col-5" style="font-weight: 600;">Hạn chót gọi</label>
                      <p class="col-7" style="color: #2d4271;">{{resTourBooking.lastDate | formatFromUnixTimestampToFullDateView}}</p>
                   </div>
-                  <div class="row" *ngIf="!isExpires">
+                  <div class="row" *ngIf="!isExpires && resTourBooking.status != 3 && resTourBooking.status != 5">
                     <label class="form-label col-4" style="font-weight: 600;padding-top: 8px;">Tình trạng</label>
                     <div class="col-8">
                       <ng-select
@@ -180,7 +180,7 @@
                     </div>
                   </div>
 
-                  <div class="row mt-3" *ngIf="isChange">
+                  <div class="row mt-3" *ngIf="isChange && resTourBooking.status != 3 && resTourBooking.status != 5">
                     <!-- <button class="btn btn-info mb-3" (click)="getParentData('detail')">
                       Khôi phục
                     </button> -->
@@ -196,3 +196,4 @@
       </div>
     </div>
   </div>
+</div>

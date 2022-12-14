@@ -20,7 +20,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 import { SupportLayoutComponent } from './layouts/support-layout/support-layout.component';
-
+import { TourBookingLayoutComponent } from './layouts/tourBooking-layout/TourBooking-layout.component';
 
 @NgModule({
   imports: [
@@ -47,6 +47,7 @@ import { SupportLayoutComponent } from './layouts/support-layout/support-layout.
     AdminLayoutComponent,
     AuthLayoutComponent,
     SupportLayoutComponent,
+    TourBookingLayoutComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

@@ -54,7 +54,7 @@ export class ConfigService{
 
   getPath(roleId){
     var path = ""
-   if (roleId != RoleTitle.Supporter) {
+   if (roleId != RoleTitle.Supporter && roleId != RoleTitle.TourBookingManager) {
     var menuItem = ROUTES.filter(menuItem => menuItem);
     menuItem.forEach(item => {
       item.roles.forEach(role => {
@@ -65,7 +65,12 @@ export class ConfigService{
     });
    }
    else{
-    path = "/chat"
+    if (roleId == RoleTitle.Supporter) {
+      path = "/chat"
+    }
+    else{
+      path = "/list-tourBooking"
+    }
    }
     return path
   }
@@ -164,6 +169,17 @@ export class ConfigService{
     ]
 
     return listGender
+  }
+
+  listPayment(){
+    var listPayment = [
+      {id: 1, name: "Tiền mặt"},
+      {id: 2, name: "Chuyển khoản"},
+      {id: 3, name: "Paypal"} ,
+      {id: 4, name: "Vnpay"}
+    ]
+
+    return listPayment
   }
 
   listCalled(){

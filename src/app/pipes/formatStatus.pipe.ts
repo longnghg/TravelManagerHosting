@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform  } from '@angular/core';
-import { StatusBooking, StatusCalled, TitleNotification, StatusCar } from "../enums/enum";
+import { StatusBooking, StatusCalled, TitleNotification, StatusCar, StatusPayment } from "../enums/enum";
 
 @Pipe({name: 'formatStatusBooking'})
 export class FormatStatusBooking implements PipeTransform {
@@ -29,3 +29,9 @@ export class FormatTitleNotification implements PipeTransform {
   }
 }
 
+@Pipe({name: 'formatStatusPayment'})
+export class FormatStatusPayment implements PipeTransform {
+  transform(status: any) : any {
+    return StatusPayment[status]
+  }
+}
