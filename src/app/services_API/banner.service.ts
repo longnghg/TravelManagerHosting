@@ -23,4 +23,9 @@ export class BannerService{
   delete(id: string){
     return this.http.delete<ResponseModel>( this.configService.apiUrl + "/api/news/delete-banner?idBanner="+id)
   }
+
+  search(data)
+  {
+    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/news/search-banner", data)
+  }
 }

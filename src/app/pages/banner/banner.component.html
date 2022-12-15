@@ -92,101 +92,50 @@
   </div>
 </div>
 
-
-<div class="col-xl-12 mb-5 mb-xl-0">
-  <div class="card shadow">
-    <div class="">
-      <button style="float:right; margin-right: 130px;" class="btn btn-outline-info" data-bs-toggle="modal"
-        data-bs-target="#detail">Thêm</button>
-    </div>
-    <div class="table-responsive">
-
-      <!-- Projects table -->
-      <table class="table align-items-center table-flush">
-        <thead class="thead-light">
-          <tr>
-            <th scope="col">STT</th>
-            <th scope="col">ID Banner</th>
-            <th scope="col">Name Banner</th>
-            <th scope="col">Total Banner</th>
-            <th scope="col">Function</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of resListBanner let i=index">
-            <td scope="row">
-              {{i+1}}
-            </td>
-            <td>
-              {{item.idBanner}}
-            </td>
-            <td>
-              {{item.nameBanner}}
-            </td>
-            <td>
-              {{item.total}}
-            <td>
-              <button (click)="getData(item.idBanner)" type="button" class="btn btn-outline-danger"
-                data-bs-toggle="modal" data-bs-target="#deleteModal">
-                Xóa
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow border-0">
+        <app-grid-data [rowData]="resListBanner" [columnDefs]="columnDefs" [gridConfig]="gridConfig" (gdSearch)="init($event)" (gdChecked)="init($event, true)"  (gdType)="childType($event)" (gdChild)="childData($event)" (gdDelete)="getData($event)"></app-grid-data>
+      </div>
     </div>
   </div>
 </div>
 
-<div class="modal fade" style="z-index: 9999;" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
-  aria-hidden="true">
+<div class="modal fade" [id]="gridConfig.idModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="gridDataLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <app-item-banner [resBanner]="dataChild" [type]="typeChild" (parentDelete)="getData($event)"></app-item-banner>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" [id]="gridConfig.idModalDelete" tabindex="-1" aria-labelledby="deleteCarModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="deleteModalLabel">Xác nhận</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h1 class="modal-title fs-5" id="deleteCarModalLabel">Xác nhận</h1>
+        <button #closeModalDeleteLoad type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
       </div>
-      <div class="modal-body">
-        <div class="modal-body">
-          [<span class="text-red">Bạn có chắc muốn xóa</span>] !
-        </div>
+      <div class="modal-body" *ngIf="data">
+        Bạn có chắc muốn xóa [<span class="text-red">{{data.nameBanner}}</span>] !
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="delete()">Xóa</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal" id="detail" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-
-        <h5 class="modal-title">Thông tin Banner</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-
-        <div class="form-group row">
-          <label class="form-control-label col-3" for="name">Upload
-          </label>
-          <input [disabled]="isLoading" accept="image/*,.jpg, .png, .jpeg" #filesImg class="col-6" type="file" multiple (change)="changeImg($event)">
-        </div>
-        <div class="form-group row">
-          <label class="form-control-label col-3" for="name">Tên
-          </label>
-          <input class="col-6 form-control" type="text" [(ngModel)]="nameBanner" id="namebanner"  [readonly]="isLoading">
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-info" (click)="isLoading=true; save()" [disabled]="isLoading">
+        <button type="button" class="btn btn-danger" (click)="isLoading=true; delete()" [disabled]="isLoading">
           <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-          {{isLoading?'Đang xử lý...':'Thêm'}}
+          {{isLoading?'Đang xử lý...':'Xóa'}}
         </button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal" [disabled]="isLoading">Đóng</button>
+        <ng-container *ngIf="typeChild; else elseType">
+          <button type="button" class="btn btn-primary" [attr.data-bs-target]="'#'+gridConfig.idModal" data-bs-toggle="modal" [disabled]="isLoading">Không</button>
+        </ng-container>
+        <ng-template #elseType>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="isLoading">Không</button>
+        </ng-template>
+
       </div>
     </div>
   </div>
 </div>
+
+

@@ -65,6 +65,7 @@ import { PipesModule } from "../../pipes/pipes.module";
 
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { ItemBannerComponent } from '../../pages/banner/item-banner/item-banner.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -117,6 +118,7 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
     ItemTourScheduleComponent,
     ItemVoucherComponent,
     ListVoucherComponent,
+    ItemBannerComponent
   ],
   providers: [NavbarComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

@@ -1119,10 +1119,10 @@ validateHotel(data : any,model: any)
    validateBanner(data: any, model: any){
     model.total = 0
     if (data.nameBanner == null || data.nameBanner == "") {
-      model.email = "[Tên Banner] không để trống !"
+      model.nameBanner = "[Tên Banner] không để trống !"
       model.total += 1
     }else if (data.nameBanner.length > 255) {
-      model.email = "[Tên Banner] quá dài !"
+      model.nameBanner = "[Tên Banner] quá dài !"
       model.total += 1
     }
     return model
