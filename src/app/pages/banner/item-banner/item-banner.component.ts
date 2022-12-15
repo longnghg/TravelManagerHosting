@@ -61,6 +61,7 @@ export class ItemBannerComponent implements OnInit {
 
      }
      else{
+      this.img = []
       if(this.resBanner){
         this.initImage(this.resBanner.idBanner)
       }
