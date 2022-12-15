@@ -7,6 +7,11 @@ import { ConfigService } from "../../../../services_API/config.service";
 import { ResponseModel } from "../../../../models/responsiveModels/response.model";
 import { StatusNotification } from "../../../../enums/enum";
 import { AuthenticationModel } from 'src/app/models/authentication.model';
+import { LocationModel} from 'src/app/models/location.model';
+import { ProvinceService } from "../../../../services_API/province.service";
+import { DistrictService } from "../../../../services_API/district.service";
+import { WardService } from "../../../../services_API/ward.service";
+
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
 @Component({
@@ -27,12 +32,24 @@ export class ItemRestaurantComponent implements OnInit {
   isChange: boolean = false
   resRestaurantTmp: RestaurantModel
   formData: any
+  resProvince: LocationModel
+  resDistrict: LocationModel
+  resWard : LocationModel
+  resProvinceTmp: LocationModel
+  resDistrictTmp: LocationModel
+  resWardTmp : LocationModel
   constructor(private restaurantService: RestaurantService,
     private configService: ConfigService,
+    private provinceService: ProvinceService,
+    private districtService: DistrictService,
+    private wardService: WardService,
     private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
+    this.provinceService.views().then(response => this.resProvince = response)
+    this.districtService.views().then(response => this.resDistrict = response)
+    this.wardService.views().then(response => this.resWard = response)
   }
 
   ngOnChanges(): void {
@@ -117,6 +134,28 @@ export class ItemRestaurantComponent implements OnInit {
     getParentData(type?: string){
       this.parentType.emit(type);
       this.parentData.emit(this.resRestaurant);
+    }
+
+    locationChange(property: string, location?: string){
+      var list = []
+
+      if (property == 'province') {
+          this.resRestaurant.districtId = null
+          this.resRestaurant.wardId = null
+          this.resDistrictTmp = null
+          this.resWardTmp = null
+      }
+      else{
+        this.resRestaurant.wardId = null
+        this.resWardTmp = null
+      }
+
+      this["res"+location].forEach(item => {
+        if (item[property+'Id'] == this.resRestaurant[property+'Id']) {
+          list.push(item)
+        }
+      })
+      this["res"+location+"Tmp"] = list
     }
 
     formatInput(input: HTMLInputElement, property: string) {

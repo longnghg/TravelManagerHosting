@@ -75,8 +75,11 @@ export class ListHotelComponent implements OnInit {
 
   search(e, isNotShow?){
     if (e) {
+
       this.hotelService.search(Object.assign({}, e)).subscribe(res => {
         this.response = res
+        console.log(res);
+
         if(this.response.notification.type == StatusNotification.Success)
         {
           this.resHotel = this.response.content

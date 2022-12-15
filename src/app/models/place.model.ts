@@ -13,6 +13,9 @@ export class PlaceModel{
   modifyDateDisplay: string
   approve: number
   approveName: string
+  provinceId: string
+  districtId: string
+  wardId: string
 }
 export class ValidationPlaceModel{
   total: number
@@ -20,5 +23,7 @@ export class ValidationPlaceModel{
   phone: string= null
   address: string= null
   priceTicket: number= null
-
+  provinceId: string
+  districtId: string
+  wardId: string
 }

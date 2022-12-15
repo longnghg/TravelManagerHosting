@@ -853,6 +853,21 @@ validateHotel(data : any,model: any)
        model.total +=1
      }
 
+     if (data.provinceId == null || data.provinceId == "") {
+      model.provinceId = "[Tỉnh/thành phố] không để trống !"
+      model.total += 1
+    }
+
+    if (data.districtId == null || data.districtId == "") {
+      model.districtId = "[Quận/huyện] không để trống !"
+      model.total += 1
+    }
+
+    if (data.wardId == null || data.wardId == "") {
+      model.wardId = "[Phường/xã] không để trống !"
+      model.total += 1
+    }
+
    // phone
 
    if (data.phone == null || data.phone == "") {
@@ -963,6 +978,21 @@ validateHotel(data : any,model: any)
          model.total +=1
        }
 
+       if (data.provinceId == null || data.provinceId == "") {
+        model.provinceId = "[Tỉnh/thành phố] không để trống !"
+        model.total += 1
+      }
+
+      if (data.districtId == null || data.districtId == "") {
+        model.districtId = "[Quận/huyện] không để trống !"
+        model.total += 1
+      }
+
+      if (data.wardId == null || data.wardId == "") {
+        model.wardId = "[Phường/xã] không để trống !"
+        model.total += 1
+      }
+
      // phone
      if (data.phone == null || data.phone == "") {
        model.phone= "[Số điện thoại] không để trống !"
@@ -990,8 +1020,8 @@ validateHotel(data : any,model: any)
    if(data.comboPrice == null || data.comboPrice == ""){
      model.comboPrice= "[Giá] không để trống !"
      model.total +=1
-     }else if(data.comboPrice < 0 || data.comboPrice > 99999999){
-      model.comboPrice= "[Giá] phải lớn hơn 0 và nhỏ hơn 10000000 !"
+     }else if(data.comboPrice < 50000 || data.comboPrice > 99999999){
+      model.comboPrice= "[Giá] phải lớn hơn 50.000 và nhỏ hơn 100.000.00 !"
       model.total +=1
      }
      return model
@@ -1025,6 +1055,22 @@ validateHotel(data : any,model: any)
         model.phone= "[Số điện thoại] không hợp lệ !"
         model.total +=1
       }
+
+      if (data.provinceId == null || data.provinceId == "") {
+        model.provinceId = "[Tỉnh/thành phố] không để trống !"
+        model.total += 1
+      }
+
+      if (data.districtId == null || data.districtId == "") {
+        model.districtId = "[Quận/huyện] không để trống !"
+        model.total += 1
+      }
+
+      if (data.wardId == null || data.wardId == "") {
+        model.wardId = "[Phường/xã] không để trống !"
+        model.total += 1
+      }
+
       //Address
     if (data.address == null || data.address == "") {
       model.address= "[Địa chỉ] không để trống !"
@@ -1037,8 +1083,8 @@ validateHotel(data : any,model: any)
     if(data.priceTicket == null || data.priceTicket == ""){
       model.priceTicket= "[Giá] không để trống !"
       model.total +=1
-      }else if(data.priceTicket < 0 || data.priceTicket > 99999999){
-      model.priceTicket= "[Giá] phải lớn hơn 0 và nhỏ hơn 10000000 !"
+      }else if(data.priceTicket < 50000 || data.priceTicket > 99999999){
+      model.priceTicket= "[Giá] phải lớn hơn 50000 và nhỏ hơn 100.000.00 !"
       model.total +=1
       }
         return model

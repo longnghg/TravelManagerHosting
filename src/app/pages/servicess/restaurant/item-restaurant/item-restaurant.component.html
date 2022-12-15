@@ -27,15 +27,71 @@
             </div>
           </div>
           <div class="row">
+            <div class="col-md-4">
+              <label class="form-control-label" for="input-address">Tỉnh/Thành phố
+                <span [class]="type != 'detail' && type != 'create' || resRestaurant.isDelete || isLoading ?'d-none':'text-danger'">* {{validateRestaurant.provinceId ? validateRestaurant.provinceId : ''}}</span>
+              </label>
+              <ng-select [items]="resProvince"
+              bindLabel="nameProvince"
+              bindValue="idProvince"
+              [(ngModel)]="resRestaurant.provinceId"
+              placeholder="Chọn thành phố/tỉnh..."
+              name="idProvince"
+              id="idProvince"
+              [clearable]="false"
+              [searchable]="false"
+              (change)="inputChange(); locationChange('province', 'District')"
+              [disabled]="isLoading">
+            </ng-select>
+              </div>
+
+            <div class="col-md-4">
+              <label class="form-control-label" for="input-address">Quận/Huyện
+                <span [class]="type != 'detail' && type != 'create' || resRestaurant.isDelete || isLoading ?'d-none':'text-danger'">* {{validateRestaurant.districtId ? validateRestaurant.districtId : ''}}</span>
+              </label>
+              <ng-select [items]="resDistrictTmp?resDistrictTmp:resDistrict"
+              bindLabel="nameDistrict"
+              bindValue="idDistrict"
+              [(ngModel)]="resRestaurant.districtId"
+              placeholder="Chọn thành quận/huyện..."
+              name="idDistrict"
+              id="idDistrict"
+              [clearable]="false"
+              [searchable]="false"
+              (change)="inputChange(); locationChange('district', 'Ward')"
+              [disabled]="isLoading">
+            </ng-select>
+          </div>
+
+
+            <div class="col-md-4">
+              <label class="form-control-label" for="input-address">Phường/Xã
+              <span [class]="type != 'detail' && type != 'create' || resRestaurant.isDelete || isLoading ?'d-none':'text-danger'">* {{validateRestaurant.wardId ? validateRestaurant.wardId : ''}}</span>
+              </label>
+              <ng-select [items]="resWardTmp?resWardTmp:resWard"
+              bindLabel="nameWard"
+              bindValue="idWard"
+              [(ngModel)]="resRestaurant.wardId"
+              placeholder="Chọn thành quận/huyện..."
+              name="idWard"
+              id="idWard"
+              [clearable]="false"
+              [searchable]="false"
+              (change)="inputChange()"
+              [disabled]="isLoading">
+            </ng-select>
+          </div>
+          </div>
+          <div class="row">
             <div class="col-lg-6">
-              <label class="form-control-label" for="input-address">Địa chỉ
+              <label class="form-control-label mt-3" for="input-address">Địa chỉ chi tiết
                 <span [class]="type != 'create'?'d-none':'text-danger'">* {{this.validateRestaurant.address ? this.validateRestaurant.address : ''}}</span>
               </label>
               <input type="text" id="address" name="address" (input)="inputChange()" class="form-control " placeholder="Nhập số điạ chỉ" [(ngModel)]="resRestaurant.address" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resRestaurant.isDelete || isLoading">
             </div>
 
             <div class="col-lg-6">
-              <label class="form-control-label" for="input-address">Giá nhà hàng
+              <label class="form-control-label mt-3" for="input-address">Giá nhà hàng
                 <span [class]="type != 'create'?'d-none':'text-danger'">* {{this.validateRestaurant.comboPrice ? this.validateRestaurant.comboPrice : ''}}</span>
               </label>
               <input type="text" id="comboPrice" name="comboPrice" (input)="formatInput($any($event).target, 'comboPrice');inputChange()" class="form-control " placeholder="Nhập giá" [(ngModel)]="resRestaurant.comboPrice" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resRestaurant.isDelete || isLoading">
