@@ -66,6 +66,7 @@ export class BannerComponent implements OnInit {
             this.notificationService.handleAlertObj(res.notification)
           }
         }
+        this.gridConfig.totalResult = this.response.totalResult
       }, error => {
         var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
         this.notificationService.handleAlert(message, StatusNotification.Error)
