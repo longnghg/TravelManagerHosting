@@ -12,6 +12,7 @@ export class Grid2DataComponent implements OnInit {
   @Output() gdSearch = new EventEmitter<any>()
   @Output() gdChecked = new EventEmitter<any>()
   @Output() gdDelete = new EventEmitter<any>()
+  @Output() gdLog = new EventEmitter<any>()
   @Output() gdApprove = new EventEmitter<any>()
   @Output() gdRestore = new EventEmitter<any>()
   @Output() gdChild = new EventEmitter<any>()
@@ -207,6 +208,10 @@ export class Grid2DataComponent implements OnInit {
     this.gdRestore.emit(data);
   }
 
+  getDataLog(data: any){
+    this.gdLog.emit(data);
+  }
+
   childData(data: any, type: string){
     this.gdChild.emit(data);
     this.gdType.emit(type);
@@ -237,6 +242,7 @@ export class GridConfig2{
   idModalRestore?: string
   idModalDelete?: string
   idModalApprove?: string
+  idModalLog?: string
 
   route?: string
   alias?: string
@@ -247,6 +253,7 @@ export class GridConfig2{
   disableDelete?: boolean
   disableRestore?: boolean
   disableRadioBox?: boolean
+  disableLog?: boolean
   radioBoxName?: string
   style?: string
   isRestore?: boolean
@@ -256,7 +263,6 @@ export class GridConfig2{
 }
 
 
-
-export declare type GridFilter = 'star' | 'number' | 'date' | 'dateTime' | 'status' | 'text' | 'call' | 'price' | 'statusTourBooking' | 'statusCar' ;
-export declare type GridSearchType = 'section' | 'number' | 'date' | 'dateTime' | 'text' | 'email';
+export declare type GridFilter = 'star' | 'number' | 'date' | 'dateTime' | 'status' | 'text' | 'call' | 'price' | 'statusTourBooking' | 'statusCar' | 'statusPayment' ;
+export declare type GridSearchType = 'section' | 'number' | 'date' | 'dateTime' | 'text' | 'email' | 'price' ;
 export declare type  GridTypeDate = 'single' | 'range' ;

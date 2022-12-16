@@ -77,29 +77,39 @@ export class ItemCarComponent implements OnInit {
           {
             this.carService.create(this.resCar).subscribe(res =>{
               this.response = res
-              this.notificationService.handleAlertObj(res.notification)
-                if(this.response.notification.type == StatusNotification.Success)
-                  {
-                    this.resCar = Object.assign({}, new CarModel)
-                    this.resCarTmp = Object.assign({}, new CarModel)
-                    this.validateCar = new ValidationCarModel
-                    this.isChange = false
-                  }
-                  this.isLoading = false
-                  }, error => {
-                    var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-                    this.notificationService.handleAlert(message, StatusNotification.Error)
-                    this.isLoading = false
-                  })
+              if (res.notification.type == StatusNotification.Validation) {
+                this.validateCar[res.notification.description] == res.notification.messenge
+              }
+              else
+              {
+                this.notificationService.handleAlertObj(res.notification)
+                if (this.response.notification.type == StatusNotification.Success) {
+                  this.resCar = Object.assign({}, new CarModel)
+                  this.resCarTmp = Object.assign({}, new CarModel)
+                  this.validateCar = new ValidationCarModel
+                  this.isChange = false
+                }
+              }
+                this.isLoading = false
+            }, error => {
+              var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+              this.notificationService.handleAlert(message, StatusNotification.Error)
+              this.isLoading = false
+            })
           }
           else{
             this.carService.update(this.resCar, this.resCar.idCar).subscribe(res =>{
               this.response = res
-              this.notificationService.handleAlertObj(res.notification)
-              if(this.response.notification.type == StatusNotification.Success)
+              if (res.notification.type == StatusNotification.Validation) {
+                this.validateCar[res.notification.description] == res.notification.messenge
+              }
+              else
               {
-                this.isChange = false
-                this.closeModal.nativeElement.click()
+                this.notificationService.handleAlertObj(res.notification)
+                if (this.response.notification.type == StatusNotification.Success) {
+                  this.isChange = false
+                  this.closeModal.nativeElement.click()
+                }
               }
               this.isLoading = false
             }, error => {
@@ -113,21 +123,22 @@ export class ItemCarComponent implements OnInit {
         this.isLoading = false
       }
     }
-      close(){
-        this.resCar = Object.assign({}, this.resCarTmp)
-        this.validateCar = new ValidationCarModel
 
-        this.isChange = false
-        // this.parentType.emit(null);
-     }
+  close(){
+    this.resCar = Object.assign({}, this.resCarTmp)
+    this.validateCar = new ValidationCarModel
+
+    this.isChange = false
+    // this.parentType.emit(null);
+  }
 
 
-     getDataDelete(){
-      this.parentDelete.emit(this.resCar);
-    }
-    getDataRestore(){
-      this.parentRestore.emit(this.resCar);
-    }
-    }
+  getDataDelete(){
+    this.parentDelete.emit(this.resCar);
+  }
+  getDataRestore(){
+    this.parentRestore.emit(this.resCar);
+  }
+}
 
 
