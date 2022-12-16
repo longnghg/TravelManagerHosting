@@ -41,4 +41,8 @@ export class StatisticService{
     return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Statistic/list-statistic-tourbooking-by-month?month="+month+"&year="+year);
   }
 
+  getStatisticTotalTourbookingByDate(fromDate, toDate)
+  {
+    return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Statistic/list-statistic-total-tourbooking-by-date?fromDate="+fromDate+"&toDate="+toDate);
+  }
 }

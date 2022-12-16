@@ -5,7 +5,7 @@ import { ConfigService } from "../../services_API/config.service";
 import { StatusNotification } from "../../enums/enum";
 import { AuthenticationModel } from "../../models/authentication.model";
 import { ResponseModel } from "../../models/responsiveModels/response.model";
-import { StatisticModel, ReportTourBookingModel } from "../../models/statistic.model";
+import { StatisticModel, ReportTourBookingModel, TotalTourBooking } from "../../models/statistic.model";
 import { NotificationService } from "../../services_API/notification.service";
 import { StatisticService } from "../../services_API/statistic.service";
 // core components
@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit {
   resWeeks: StatisticModel[]
   resWeek: StatisticModel = new StatisticModel
   response: ResponseModel
+  resTotalTourbooking: TotalTourBooking
   resReportTourBooking: ReportTourBookingModel[]
   reportDataBar = []
   reportLabelBar: string[] = []
@@ -229,6 +230,22 @@ export class DashboardComponent implements OnInit {
 
     })
 
+    this.statisticService.getStatisticTotalTourbookingByDate(new Date(this.resWeek.fromDate).getTime(), new Date(this.resWeek.toDate).getTime()).subscribe(res => {
+      this.response = res
+      if(this.response.notification.type == StatusNotification.Success)
+      {
+        this.resTotalTourbooking = this.response.content
+        console.log(this.resTotalTourbooking);
+
+      }
+      else{
+        this.notificationService.handleAlertObj(res.notification)
+      }
+
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
   }
 
   yearChange(){
@@ -421,7 +438,6 @@ export class DashboardComponent implements OnInit {
   //   //   data: config.data
   //   // });
   // }
-
 
   public updateOptions(labelBar, labelLine) {
    this.lineChartData =
