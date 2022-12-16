@@ -171,7 +171,7 @@ export class ItemPlaceComponent implements OnInit {
     }
     else{
       if (input.value) {
-        if (property.includes("Price")) {
+        if (property.includes("priceTicket")) {
           this.resPlace[property] = Number(input.value).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
         }
         else{

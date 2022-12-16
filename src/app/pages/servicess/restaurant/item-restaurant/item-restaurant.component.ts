@@ -120,7 +120,9 @@ export class ItemRestaurantComponent implements OnInit {
           this.isLoading = false
         })
       }
-
+      }
+      else{
+        this.isLoading = false
       }
     }
 
