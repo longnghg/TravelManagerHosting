@@ -48,12 +48,12 @@ export class ListTourBookingComponent implements OnInit {
         // { field: 'idTourBooking',headerName: "Mã", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'idTourBooking'},
         { field: 'pincode',headerName: "Pin code", style: "width: 11%;", searchable: true, searchType: 'text', searchObj: 'pincode'},
         { field: 'bookingNo',headerName: "booking No", style: "width: 13%;", searchable: true, searchType: 'text', searchObj: 'pincode'},
-        { field: 'phone',headerName: "Số điện thoại", style: "width: 9%;", searchable: true, searchType: 'text', searchObj: 'phone'},
+        { field: 'phone',headerName: "Số điện thoại", style: "width: 8%;", searchable: true, searchType: 'text', searchObj: 'phone'},
         { field: 'dateBooking',headerName: "Ngày đặt tour", style: "width: 16%;", filter: "dateTime" , searchable: true, searchType: 'dateTime', typeDate:"range", searchObj: 'dateBooking'},
         { field: 'paymentId',headerName: "Phương thức thanh toán", style: "width: 11%;", filter: "statusPayment",searchable: true, searchType: 'section', searchObj: 'payment' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listPayment()},
         { field: 'toPlace',headerName: "Tên thành phố/tỉnh", style: "width: 11%;"  , searchable: true, searchType: 'section', searchObj: 'toPlace', multiple: false, closeOnSelect: true, bindLabel: 'nameProvince', bindValue: "nameProvince", listSection: this.resProvince},
         { field: 'isCalled',headerName: "Gọi xác nhận", style: "width: 9%;", filter: "call",searchable: true, searchType: 'section', searchObj: 'isCalled' , multiple: false, closeOnSelect: true, bindLabel: 'name', bindValue: "id", listSection: this.configService.listCalled()},
-        { field: 'status',headerName: "Trạng thái", style: "width: 20%;", filter: "statusTourBooking",searchable: true, searchType: 'section', searchObj: 'status' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listStatusBooking()},
+        { field: 'status',headerName: "Trạng thái", style: "width: 15%;", filter: "statusTourBooking",searchable: true, searchType: 'section', searchObj: 'status' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listStatusBooking()},
       ];
     })
 
@@ -65,13 +65,9 @@ export class ListTourBookingComponent implements OnInit {
     if (e) {
       this.tourookingService.search(Object.assign({}, e)).subscribe(res => {
         this.response = res
-        console.log(res);
-
         if(this.response.notification.type == StatusNotification.Success)
         {
           this.resTourBooking = this.response.content
-          console.log(this.resTourBooking);
-
         }
         else{
           this.resTourBooking = []

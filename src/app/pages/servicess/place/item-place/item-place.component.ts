@@ -91,6 +91,7 @@ export class ItemPlaceComponent implements OnInit {
       {
         this.placeService.create(this.resPlace).subscribe(res =>{
           this.response = res
+          this.isLoading = false
           if (res.notification.type == StatusNotification.Validation) {
             this.validatePlace[res.notification.description] = res.notification.messenge
           }
@@ -103,7 +104,6 @@ export class ItemPlaceComponent implements OnInit {
               this.isChange = false
             }
           }
-          this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -113,6 +113,7 @@ export class ItemPlaceComponent implements OnInit {
       else{
         this.placeService.update(this.resPlace, this.resPlace.idPlace).subscribe(res =>{
           this.response = res
+          this.isLoading = false
           if (res.notification.type == StatusNotification.Validation) {
             this.validatePlace[res.notification.description] = res.notification.messenge
           }
@@ -121,10 +122,11 @@ export class ItemPlaceComponent implements OnInit {
             this.notificationService.handleAlertObj(res.notification)
             if (this.response.notification.type == StatusNotification.Success) {
               this.isChange = false
-              this.closeModal.nativeElement.click()
+              setTimeout(() => {
+                this.closeModal.nativeElement.click()
+              }, 100);
             }
           }
-          this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
