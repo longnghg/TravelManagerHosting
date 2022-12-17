@@ -55,7 +55,7 @@ export class ItemRoleComponent implements OnInit {
         this.roleService.create(this.resRole).subscribe(res =>{
           this.response = res
           if (res.notification.type == StatusNotification.Validation) {
-            this.validateRole[res.notification.description] == res.notification.messenge
+            this.validateRole[res.notification.description] = res.notification.messenge
           }
           else{
             this.notificationService.handleAlertObj(res.notification)
@@ -72,7 +72,7 @@ export class ItemRoleComponent implements OnInit {
         this.roleService.update(this.resRole, this.resRole.idRole).subscribe(res =>{
           this.response = res
           if (res.notification.type == StatusNotification.Validation) {
-            this.validateRole[res.notification.description] == res.notification.messenge
+            this.validateRole[res.notification.description] = res.notification.messenge
           }
           else{
             this.notificationService.handleAlertObj(res.notification)

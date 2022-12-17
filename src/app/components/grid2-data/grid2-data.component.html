@@ -137,7 +137,7 @@
       </tbody>
       <tbody *ngIf="rowData" [style]="gridConfig.style ? gridConfig.style :  'height: 330px;'">
         <tr *ngFor="let row of rowData; let i=index" >
-          <ng-container>
+          <ng-container >
             <td style="padding-left: 20px; width: 50px;">{{row.rowNum}}</td>
             <td  *ngFor="let column of columnDefs" [style]="column.style" scope="row" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
               <ng-container *ngIf="column.filter == 'status'; else elseStatus">
@@ -193,31 +193,27 @@
                           </p>
                         </ng-container>
                         <ng-template #elseStatusTourBooking>
-                          <ng-template #elseStatusTourBooking>
-                            <ng-container *ngIf="column.filter == 'statusCar'; else elseStatusCar">
-                             {{row[column.field] | formatStatusCar}}
+                         <ng-container *ngIf="column.filter == 'statusCar'; else elseStatusCar">
+                          {{row[column.field] | formatStatusCar}}
+                         </ng-container>
+                         <ng-template #elseStatusCar>
+                          <ng-container *ngIf="column.filter == 'statusPayment'; else elseStatusPayment">
+                            {{row[column.field] | formatStatusPayment}}
+                          </ng-container>
+                          <ng-template #elseStatusPayment>
+                            <ng-container *ngIf="column.filter == 'price'; else elsePrice">
+                              {{row[column.field] | formatPriceVi}}
                             </ng-container>
-                            <ng-template #elseStatusCar>
-                             <ng-container *ngIf="column.filter == 'statusPayment'; else elseStatusPayment">
-                               {{row[column.field] | formatStatusPayment}}
-                             </ng-container>
-                             <ng-template #elseStatusPayment>
-                               <ng-container *ngIf="column.filter == 'price'; else elsePrice">
-                                 {{row[column.field] | formatPriceVi}}
-                               </ng-container>
-                               <ng-template #elsePrice>
-                                 {{row[column.field]}}
-                               </ng-template>
-                             </ng-template>
+                            <ng-template #elsePrice>
+                              {{row[column.field]}}
                             </ng-template>
-                           </ng-template>
+                          </ng-template>
+                         </ng-template>
                         </ng-template>
                       </ng-template>
-
                     </ng-template>
                   </ng-template>
                 </ng-template>
-
               </ng-template>
             </td>
 
@@ -231,7 +227,7 @@
                     <a class="dropdown-item" href="javascript:void(0)" *ngIf="!gridConfig.disableDetail" [routerLink]="['',gridConfig.route, 'detail', row[gridConfig.alias]]">Chi tiết</a>
                   </ng-container>
                   <ng-template #elseApprove>
-                    <a class="dropdown-item" href="javascript:void(0)" *ngIf="!gridConfig.disableDetail"  [routerLink]="['',gridConfig.route, 'approve', row[gridConfig.alias]]">Chi tiết</a>
+                    <a class="dropdown-item" href="javascript:void(0)" *ngIf="!gridConfig.disableDetail" [routerLink]="['',gridConfig.route, 'approve', row[gridConfig.alias]]">Chi tiết</a>
                   </ng-template>
 
 

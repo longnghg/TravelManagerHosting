@@ -92,7 +92,7 @@ export class ItemPlaceComponent implements OnInit {
         this.placeService.create(this.resPlace).subscribe(res =>{
           this.response = res
           if (res.notification.type == StatusNotification.Validation) {
-            this.validatePlace[res.notification.description] == res.notification.messenge
+            this.validatePlace[res.notification.description] = res.notification.messenge
           }
           else{
             this.notificationService.handleAlertObj(res.notification)
@@ -114,7 +114,7 @@ export class ItemPlaceComponent implements OnInit {
         this.placeService.update(this.resPlace, this.resPlace.idPlace).subscribe(res =>{
           this.response = res
           if (res.notification.type == StatusNotification.Validation) {
-            this.validatePlace[res.notification.description] == res.notification.messenge
+            this.validatePlace[res.notification.description] = res.notification.messenge
           }
           else
           {

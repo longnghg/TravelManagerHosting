@@ -88,8 +88,11 @@ export class ItemRestaurantComponent implements OnInit {
       {
         this.restaurantService.create(this.resRestaurant).subscribe(res =>{
           this.response = res
+          console.log(res);
           if (res.notification.type == StatusNotification.Validation) {
-            this.validateRestaurant[res.notification.description] == res.notification.messenge
+            this.validateRestaurant[res.notification.description] = res.notification.messenge
+            console.log(this.validateRestaurant[res.notification.description]);
+
           }
           else{
             this.notificationService.handleAlertObj(res.notification)
@@ -111,7 +114,7 @@ export class ItemRestaurantComponent implements OnInit {
         this.restaurantService.update(this.resRestaurant, this.resRestaurant.idRestaurant).subscribe(res =>{
           this.response = res
           if (res.notification.type == StatusNotification.Validation) {
-            this.validateRestaurant[res.notification.description] == res.notification.messenge
+            this.validateRestaurant[res.notification.description] = res.notification.messenge
           }
           else
           {

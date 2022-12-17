@@ -78,7 +78,7 @@ export class ItemCarComponent implements OnInit {
             this.carService.create(this.resCar).subscribe(res =>{
               this.response = res
               if (res.notification.type == StatusNotification.Validation) {
-                this.validateCar[res.notification.description] == res.notification.messenge
+                this.validateCar[res.notification.description] = res.notification.messenge
               }
               else
               {
@@ -101,7 +101,7 @@ export class ItemCarComponent implements OnInit {
             this.carService.update(this.resCar, this.resCar.idCar).subscribe(res =>{
               this.response = res
               if (res.notification.type == StatusNotification.Validation) {
-                this.validateCar[res.notification.description] == res.notification.messenge
+                this.validateCar[res.notification.description] = res.notification.messenge
               }
               else
               {

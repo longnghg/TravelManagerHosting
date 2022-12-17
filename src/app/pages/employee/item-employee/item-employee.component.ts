@@ -191,7 +191,7 @@ export class ItemEmployeeComponent implements OnInit{
         this.employeeService.create(file).subscribe(res =>{
           this.response = res
           if (res.notification.type == StatusNotification.Validation) {
-            this.validateEmployee[res.notification.description] == res.notification.messenge
+            this.validateEmployee[res.notification.description] = res.notification.messenge
           }
           else{
             this.notificationService.handleAlertObj(res.notification)
@@ -214,7 +214,7 @@ export class ItemEmployeeComponent implements OnInit{
         this.employeeService.update(file, this.resEmployee.idEmployee).subscribe(res =>{
           this.response = res
           if (res.notification.type == StatusNotification.Validation) {
-            this.validateEmployee[res.notification.description] == res.notification.messenge
+            this.validateEmployee[res.notification.description] = res.notification.messenge
           }
           else{
             this.notificationService.handleAlertObj(res.notification)

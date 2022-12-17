@@ -94,8 +94,10 @@ export class ItemHotelComponent implements OnInit {
       {
         this.hotelService.create(this.resHotel).subscribe(res =>{
           this.response = res
+
+
           if (res.notification.type == StatusNotification.Validation) {
-            this.validateHotel[res.notification.description] == res.notification.messenge
+            this.validateHotel[res.notification.description] = res.notification.messenge
           }
           else{
             this.notificationService.handleAlertObj(res.notification)
@@ -117,7 +119,7 @@ export class ItemHotelComponent implements OnInit {
         this.hotelService.update(this.resHotel, this.resHotel.idHotel).subscribe(res =>{
           this.response = res
           if (res.notification.type == StatusNotification.Validation) {
-            this.validateHotel[res.notification.description] == res.notification.messenge
+            this.validateHotel[res.notification.description] = res.notification.messenge
           }
           else
           {
