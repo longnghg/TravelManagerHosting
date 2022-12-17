@@ -45,3 +45,8 @@ export class ValidationForgotPass {
   password: string = null
   confirmPassword: string = null
 }
+export class EmpStatisticModel{
+  totalBlock: string
+  totalOnline: string
+  total: string
+}

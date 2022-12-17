@@ -59,10 +59,10 @@ export class ListLogsComponent implements OnInit {
     }
 
     search(e, isNotShow?){
-      console.log(e);
 
       this.logsService.gets(Object.assign({}, e)).subscribe(res =>{
         this.response = res
+
         if(this.response.notification.type == StatusNotification.Success){
           this.resLog = this.response.content
 

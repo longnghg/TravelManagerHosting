@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { EmployeeService } from "../../../services_API/employee.service";
 import { NotificationService } from "../../../services_API/notification.service";
-import { EmployeeModel } from "../../../models/employee.model";
+import { EmployeeModel , EmpStatisticModel } from "../../../models/employee.model";
 import { RoleModel } from "../../../models/role.model";
 import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.component';
 import { ColDef2, GridConfig2} from '../../../components/grid2-data/grid2-data.component';
@@ -23,6 +23,7 @@ export class ListEmployeeComponent implements OnInit {
   @ViewChild('closeModalLoadRestore') closeModalLoadRestore: ElementRef;
   @ViewChild('closeModalLoadApprove') closeModalLoadApprove: ElementRef;
   isLoading: boolean
+  resStatisticEmp: EmpStatisticModel = new EmpStatisticModel
   auth: AuthenticationModel
   dataChild: EmployeeModel
   typeChild: string
@@ -63,6 +64,7 @@ export class ListEmployeeComponent implements OnInit {
          private notificationService: NotificationService) {}
 
   ngOnInit() {
+    this.initStatistic()
     this.roleService.views().then(response =>
       {
         this.resRole = response
@@ -87,7 +89,20 @@ export class ListEmployeeComponent implements OnInit {
       this.search(this.pagination, true)
     }
   }
+  initStatistic(){
+    this.employeeService.statisticEmp().subscribe (res => {
+      this.response = res
+      if(this.response.notification.type == StatusNotification.Success)
+      {
+        this.resStatisticEmp = this.response.content
+        console.log(this.resStatisticEmp);
 
+      }
+      else{
+        this.notificationService.handleAlertObj(res.notification)
+      }
+    })
+  }
   search(e?, isNotShow?){
     if (e) {
       this.employeeService.search(Object.assign({}, e)).subscribe(res => {

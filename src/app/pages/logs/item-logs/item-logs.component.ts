@@ -5,11 +5,14 @@ import { LogsService } from '../../../services_API/logs.service'
 import { LogsModel } from '../../../models/logs.model';
 import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.component';
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
-import { StatusNotification } from "../../../enums/enum";
+import { StatusNotification, ClassContent } from "../../../enums/enum";
 import { AuthenticationModel } from 'src/app/models/authentication.model';
 import { PaginationModel } from 'src/app/models/responsiveModels/pagination.model';
 import { TourModel } from '../../../models/tour.model';
-
+import { PlaceModel } from '../../../models/place.model';
+import { TourBookingModel } from '../../../models/tourBooking.model';
+import { HotelModel } from '../../../models/hotel.model';
+import { RestaurantModel } from '../../../models/restaurant.model';
 
 @Component({
   selector: 'app-item-logs',
@@ -18,7 +21,11 @@ import { TourModel } from '../../../models/tour.model';
 })
 export class ItemLogsComponent implements OnInit {
   @Input() resLog: LogsModel
-  @Input() resTour : TourModel
+   resTour : TourModel
+   resHotel : HotelModel
+   resRestaurant : RestaurantModel
+   resPlace : PlaceModel
+   resTourBooking : TourBookingModel
   @Input() type: string
   @Output() parentData = new EventEmitter<any>()
   @Output() parentType = new EventEmitter<any>()
@@ -38,6 +45,34 @@ export class ItemLogsComponent implements OnInit {
   }
 
   ngOnChanges(): void {
+
+    if (this.resLog) {
+      this.logsService.getDetail(this.resLog.id).subscribe(res =>{
+        this.response = res
+        if (this.resLog.classContent == ClassContent.tour) {
+          this.resTour = this.response.content
+        }
+        else if (this.resLog.classContent == ClassContent.tourBooking) {
+          this.resTourBooking = this.response.content
+          console.log(this.resTourBooking);
+
+        }
+        else if (this.resLog.classContent == ClassContent.hotel) {
+          this.resHotel = this.response.content
+        }
+        else if (this.resLog.classContent == ClassContent.place) {
+          this.resPlace = this.response.content
+        }
+        else {
+          this.resRestaurant = this.response.content
+        }
+       }, error => {
+         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+         this.notificationService.handleAlert(message, StatusNotification.Error)
+
+       })
+    }
+
     this.resLogTmp = Object.assign({}, this.resLog)
 
   }
@@ -46,27 +81,18 @@ export class ItemLogsComponent implements OnInit {
     this.resLog[property] = new Date(this.resLog[property+"Display"]).getTime()
 
   }
-  getDetail(){
+  // getDetail(){
+  //     this.resLog = Object.assign({}, this.resLogTmp)
+  //  this.logsService.getDetail(this.resLog.id).subscribe(res =>{
+  //     this.response = res
 
+  //    }, error => {
+  //      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+  //      this.notificationService.handleAlert(message, StatusNotification.Error)
 
+  //    })
 
-      this.resLog = Object.assign({}, this.resLogTmp)
-      this.logsService.getDetail(this.resLog.id).subscribe(res =>{
-      this.response = res
-
-
-    this.resTour= this.response.content;
-
-
-     //  this.notificationService.handleAlertObj(res.notification)
-
-     }, error => {
-       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-       this.notificationService.handleAlert(message, StatusNotification.Error)
-
-     })
-
-  }
+  // }
   inputChange(){
     if (JSON.stringify(this.resLog) != JSON.stringify(this.resLogTmp)) {
       this.isChange = true
@@ -132,7 +158,6 @@ export class ItemLogsComponent implements OnInit {
     close(){
       this.resLog = Object.assign({}, this.resLogTmp)
      // this.validateVoucher = new ValidationVoucherModel
-console.log(this.resLog);
 
 
       this.isChange = false

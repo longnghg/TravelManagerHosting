@@ -94,4 +94,9 @@ async viewsUpdate(fromDate, toDate, idSchedule)
 SendOTP(email: string){
   return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Employee/send-otp-emp?email="+email);
 }
+statisticEmp()
+{
+  return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/list-statistic-total-emp");
+
+}
 }

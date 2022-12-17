@@ -7,28 +7,13 @@
       <div class="container-fluid" >
         <form>
           <div class="pl-lg-4">
+
+
             <div class="row">
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <label class="form-control-label" for="input-name">mã</label>
-                  <input type="text" id="id" name="id" class="form-control " placeholder="Mã code sẽ tự tạo " readonly [(ngModel)]="resLog.id">
-                </div>
-              </div>
-              <div class="col-lg-6" >
-                <div class="form-group">
-                  <label class="form-control-label" for="input-name" >Môi trường</label>
-                  <input type="text" id="content" name="content" class="form-control " readonly [(ngModel)]="resLog.classContent">
-                </div>
-              </div>
 
-            </div>
-
-            <div class="row align-items-center">
-              <div class="col-12 text-right">
-                <button class="btn btn-success"   (click)="getDetail()">XEM </button>
-                <ng-container *ngIf="resTour">
+                <ng-container *ngIf="resLog.classContent == 'Tour'">
                   <form>
-                    <div class="pl-lg-4">
+
                       <div class="row">
                         <div class="col-lg-6">
                           <div class="form-group">
@@ -66,12 +51,187 @@
                         </div>
                       </div>
                       <hr>
-                    </div>
+
                   </form>
                 </ng-container>
-              </div>
+
+                <ng-container *ngIf="resLog.classContent == 'Hotel'">
+                  <form>
+
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-name">Mã khách sạn</label>
+                            <input type="text" id="id" name="id" class="form-control " placeholder="Mã code sẽ tự tạo " readonly [(ngModel)]="resHotel.idHotel">
+                          </div>
+                        </div>
+                        <div class="col-lg-6" >
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-name" >Tên khách sạn</label>
+                            <input type="text" id="content" name="content" class="form-control " readonly [(ngModel)]="resHotel.nameHotel">
+                          </div>
+                        </div>
+
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-name">người tạo</label>
+                            <input type="text" id="modifyBy" name="modifyBy" class="form-control " placeholder="Mã code sẽ tự tạo " readonly [(ngModel)]="resHotel.modifyBy">
+                          </div>
+                        </div>
+                        <div class="col-lg-3" >
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-name" >Thời gian</label>
+                            <input type="text" id="modifyDate" name="modifyDate" class="form-control " readonly [(ngModel)]="resHotel.modifyDate ">
+                          </div>
+                        </div>
+                        <div class="col-lg-3" >
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-name" >Loại Phê Duyệt</label>
+                            <input type="text" id="typeAction" name="typeAction" class="form-control " readonly [(ngModel)]="resHotel.typeAction">
+                          </div>
+                        </div>
+                      </div>
+
+
+                  </form>
+                </ng-container>
+
+                <ng-container *ngIf="resLog.classContent == 'Place'">
+                  <form>
+
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-name">Mã địa điểm</label>
+                            <input type="text" id="id" name="id" class="form-control " placeholder="Mã code sẽ tự tạo " readonly [(ngModel)]="resPlace.idPlace">
+                          </div>
+                        </div>
+                        <div class="col-lg-6" >
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-name" >Tên khách sạn</label>
+                            <input type="text" id="content" name="content" class="form-control " readonly [(ngModel)]="resPlace.namePlace">
+                          </div>
+                        </div>
+
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-name">người tạo</label>
+                            <input type="text" id="modifyBy" name="modifyBy" class="form-control " placeholder="Mã code sẽ tự tạo " readonly [(ngModel)]="resPlace.modifyBy">
+                          </div>
+                        </div>
+                        <div class="col-lg-3" >
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-name" >Thời gian</label>
+                            <input type="text" id="modifyDate" name="modifyDate" class="form-control " readonly [(ngModel)]="resPlace.modifyDate ">
+                          </div>
+                        </div>
+                        <div class="col-lg-3" >
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-name" >Loại Phê Duyệt</label>
+                            <input type="text" id="typeAction" name="typeAction" class="form-control " readonly [(ngModel)]="resPlace.typeAction">
+                          </div>
+                        </div>
+                      </div>
+
+
+                  </form>
+                </ng-container>
+
+                <ng-container *ngIf="resLog.classContent == 'TourBooking'">
+                  <form>
+
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-name">Mã Tour Booking</label>
+                            <input type="text" id="idTourBooking" name="idTourBooking" class="form-control " placeholder="Mã code sẽ tự tạo " readonly [(ngModel)]="resTourBooking.idTourBooking">
+                          </div>
+                        </div>
+                        <div class="col-lg-6" >
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-name" >Email người tạo</label>
+                            <input type="text" id="alias" name="alias" class="form-control " readonly [(ngModel)]="resTourBooking.email">
+                          </div>
+                        </div>
+
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-name">Tên khách hàng</label>
+                            <input type="text" id="name" name="name" class="form-control "  readonly [(ngModel)]="resTourBooking.nameCustomer ">
+                          </div>
+                        </div>
+                        <div class="col-lg-3" >
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-name" >Số điện thoại</label>
+                            <input type="text" id="phone" name="phone" class="form-control " readonly [(ngModel)]="resTourBooking.phone ">
+                          </div>
+                        </div>
+                        <div class="col-lg-3" >
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-name" >Giá</label>
+                            <input type="text" id="tourName" name="tourName" class="form-control " readonly [(ngModel)]="resTourBooking.totalPrice">
+                          </div>
+                        </div>
+                      </div>
+
+
+                  </form>
+                </ng-container>
+
+                <ng-container *ngIf="resLog.classContent == 'Restaurant'">
+                  <form>
+
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-name">Mã nhà hàng</label>
+                            <input type="text" id="id" name="id" class="form-control " placeholder="Mã code sẽ tự tạo " readonly [(ngModel)]="resRestaurant.idRestaurant">
+                          </div>
+                        </div>
+                        <div class="col-lg-6" >
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-name" >Tên nhà hàng</label>
+                            <input type="text" id="content" name="content" class="form-control " readonly [(ngModel)]="resRestaurant.nameRestaurant">
+                          </div>
+                        </div>
+
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-name">người tạo</label>
+                            <input type="text" id="modifyBy" name="modifyBy" class="form-control " placeholder="Mã code sẽ tự tạo " readonly [(ngModel)]="resRestaurant.modifyBy">
+                          </div>
+                        </div>
+                        <div class="col-lg-3" >
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-name" >Thời gian</label>
+                            <input type="text" id="modifyDate" name="modifyDate" class="form-control " readonly [(ngModel)]="resRestaurant.modifyDate ">
+                          </div>
+                        </div>
+                        <div class="col-lg-3" >
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-name" >Loại Phê Duyệt</label>
+                            <input type="text" id="typeAction" name="typeAction" class="form-control " readonly [(ngModel)]="resRestaurant.typeAction">
+                          </div>
+                        </div>
+                      </div>
+
+
+                  </form>
+                </ng-container>
             </div>
-            <hr>
+
           </div>
         </form>
       </div>
