@@ -31,7 +31,7 @@ import { ViewTourScheduleComponent } from '../../pages/tour/view-tour-schedule/v
 
 import { ItemTourComponent } from 'src/app/pages/tour/item-tour/item-tour.component';
 import { ListVoucherComponent } from 'src/app/pages/voucher/list-voucher/list-voucher.component';
-
+import { ListCarInfoComponent } from 'src/app/pages/car-infor/list-car-info/list-car-info.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -58,4 +58,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'list-car',     component: ListCarComponent},
     { path: 'list-voucher',     component: ListVoucherComponent},
     { path: 'view-tour-schedule',     component: ViewTourScheduleComponent},
+    { path: 'list-car-infor',     component: ListCarInfoComponent},
 ];

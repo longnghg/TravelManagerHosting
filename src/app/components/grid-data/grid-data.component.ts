@@ -14,6 +14,7 @@ export class GridDataComponent implements OnInit {
   @Output() gdDelete = new EventEmitter<any>()
   @Output() gdApprove = new EventEmitter<any>()
   @Output() gdRestore = new EventEmitter<any>()
+  @Output() gdSchedule = new EventEmitter<any>()
   @Output() gdChild = new EventEmitter<any>()
   @Output() gdType = new EventEmitter<any>()
   rowDataRestore: any
@@ -208,6 +209,10 @@ export class GridDataComponent implements OnInit {
     this.gdApprove.emit(data);
   }
 
+  getDataSchedule(data: any){
+    this.gdSchedule.emit(data);
+  }
+
   getDataRestore(data: any){
     this.gdRestore.emit(data);
   }
@@ -245,6 +250,7 @@ export class GridConfig{
   idModal?: string
 
   disableApprove?: boolean
+  disableSchedule?: boolean
   disableCreate?: boolean
   disableDetail?: boolean
   disableDelete?: boolean

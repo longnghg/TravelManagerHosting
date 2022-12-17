@@ -235,6 +235,7 @@
 
                   <ng-container *ngIf="!gridConfig.isRestore; else elseRestoreOrDelete">
                     <a class="dropdown-item" href="javascript:void(0)" *ngIf="!gridConfig.disableDelete"  data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModalDelete" (click)="getDataDelete(row)">Xóa</a>
+                    <a class="dropdown-item" href="javascript:void(0)" *ngIf="!gridConfig.disableSchedule" (click)="getDataSchedule(row)">Xem lịch trình</a>
                     <a class="dropdown-item" href="javascript:void(0)" *ngIf="!gridConfig.disableApprove"  data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModalApprove" (click)="getDataApprove(row)">Hủy yêu cầu</a>
                   </ng-container>
                   <ng-template #elseRestoreOrDelete>

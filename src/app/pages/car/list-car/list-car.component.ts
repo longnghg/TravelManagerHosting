@@ -17,6 +17,10 @@ import { PaginationModel } from 'src/app/models/responsiveModels/pagination.mode
 export class ListCarComponent implements OnInit {
   @ViewChild('closeModalDeleteLoad') closeModalDeleteLoad: ElementRef;
   @ViewChild('closeModalRestoreLoad') closeModalRestoreLoad: ElementRef;
+
+  @ViewChild('fade') fade: ElementRef
+  @ViewChild('card') card: ElementRef
+
   isLoading: boolean
   resCar: CarModel[]
   resCarTmp: CarModel[]
@@ -44,7 +48,7 @@ export class ListCarComponent implements OnInit {
       { field: 'liscensePlate', headerName: "Biển số xe", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'liscensePlate'},
       { field: 'amountSeat',headerName: "Số lượng chỗ ngồi", style: "width: 10%;", searchable: true, searchType: 'number', searchObj: 'amountSeat'},
       { field: 'phone',headerName: "Số điện thoại", style: "width: 20%;", searchable: true, searchType: 'number', searchObj: 'phone'},
-      { field: 'status',headerName: "Trạng thái", style: "width: 20%;", filter:"statusCar", searchable: true, searchType: 'section', searchObj: 'status', multiple: true, closeOnSelect: false, bindLabel: "name", bindValue: "id", listSection: this.configService.listStatusCar()},
+      { field: 'status',headerName: "Trạng thái", style: "width: 20%;", filter:"statusCar", searchable: true, searchType: 'section', searchObj: 'status', multiple: true, closeOnSelect: false, bindLabel: "liscensePlate", bindValue: "id", listSection: this.configService.listStatusCar()},
     ];
 
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
@@ -84,6 +88,7 @@ export class ListCarComponent implements OnInit {
         if(this.response.notification.type == StatusNotification.Success)
         {
           this.resCar = this.response.content
+
         }
         else{
 
@@ -110,6 +115,15 @@ export class ListCarComponent implements OnInit {
   }
   getData(data: any){
     this.data = data
+  }
+
+  openInfo(data: any){
+    this.data = data
+    console.log(this.data);
+
+    document.getElementById("fade").style.display = "block"
+    document.getElementById("card").style.display = "block"
+    document.getElementById("card").setAttribute("class","card_open card-cus")
   }
 
   delete(){

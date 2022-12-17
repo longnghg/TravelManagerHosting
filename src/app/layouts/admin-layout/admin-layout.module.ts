@@ -66,6 +66,9 @@ import { PipesModule } from "../../pipes/pipes.module";
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { ItemBannerComponent } from '../../pages/banner/item-banner/item-banner.component';
+import { ItemCarInforComponent } from '../../pages/car-infor/item-car-infor/item-car-infor.component';
+import { ListCarInfoComponent } from '../../pages/car-infor/list-car-info/list-car-info.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -118,7 +121,9 @@ import { ItemBannerComponent } from '../../pages/banner/item-banner/item-banner.
     ItemTourScheduleComponent,
     ItemVoucherComponent,
     ListVoucherComponent,
-    ItemBannerComponent
+    ItemBannerComponent,
+    ItemCarInforComponent,
+    ListCarInfoComponent
   ],
   providers: [NavbarComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

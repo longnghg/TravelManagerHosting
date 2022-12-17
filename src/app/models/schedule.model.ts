@@ -1,6 +1,7 @@
 import { CarModel } from "../models/car.model";
 import { TourModel } from "../models/tour.model";
 import { PromotionModel } from "../models/promotion.model";
+import { EmployeeModel } from "../models/employee.model";
 export class ScheduleModel{
   idSchedule: string = ""
   departureDate: number = 0
@@ -16,6 +17,7 @@ export class ScheduleModel{
   endTimePromotion: number = 0
   endTimePromotionDisplay: string = ""
   car: CarModel
+  employee: EmployeeModel
   tour: TourModel
   departurePlace: string = null
   status: number = 0
