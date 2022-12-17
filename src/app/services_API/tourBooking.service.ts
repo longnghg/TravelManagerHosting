@@ -12,28 +12,28 @@ export class TourookingService{
 
   gets()
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/list-tourbooking");
+    return this.http.get<ResponseModel>( this.configService.apiTourBookingUrl + "/api/TourBooking/list-tourbooking");
   }
   create(data: any)
   {
-    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/create-tourBooking", data);
+    return this.http.post<ResponseModel>( this.configService.apiTourBookingUrl + "/api/TourBooking/create-tourBooking", data);
   }
 
   statisticTourBooking()
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/statistic-tourbooking");
+    return this.http.get<ResponseModel>( this.configService.apiTourBookingUrl + "/api/TourBooking/statistic-tourbooking");
 
   }
 
   checkCalled(idTourBooking: string){
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/check-called?idTourBooking="+idTourBooking);
+    return this.http.get<ResponseModel>( this.configService.apiTourBookingUrl + "/api/TourBooking/check-called?idTourBooking="+idTourBooking);
   }
 
   search(data){
-    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/search-TourBooking", data);
+    return this.http.post<ResponseModel>( this.configService.apiTourBookingUrl + "/api/TourBooking/search-TourBooking", data);
   }
 
   updateStatus(idTourBooking: string, status: number){
-    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/adm-update-tourBooking-status?idTourBooking="+idTourBooking+"&status="+status, {});
+    return this.http.put<ResponseModel>( this.configService.apiTourBookingUrl + "/api/TourBooking/adm-update-tourBooking-status?idTourBooking="+idTourBooking+"&status="+status, {});
   }
 }
