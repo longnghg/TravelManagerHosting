@@ -190,24 +190,19 @@ export class ItemEmployeeComponent implements OnInit{
       {
         this.employeeService.create(file).subscribe(res =>{
           this.response = res
-          if (res.notification.type == "Validation") {
-            if (res.notification.description == "Phone") {
-              this.validateEmployee.phone = res.notification.messenge
-            }
-            else{
-              this.validateEmployee.email = res.notification.messenge
-            }
+          if (res.notification.type == StatusNotification.Validation) {
+            this.validateEmployee[res.notification.description] = res.notification.messenge
           }
           else{
             this.notificationService.handleAlertObj(res.notification)
             if (res.notification.type == StatusNotification.Success) {
               this.close()
               this.isChange = false
+              this.router.navigate(['','list-employee']);
             }
           }
           this.isLoading = false
 
-          this.router.navigate(['','list-employee']);
 
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -218,24 +213,18 @@ export class ItemEmployeeComponent implements OnInit{
       else{
         this.employeeService.update(file, this.resEmployee.idEmployee).subscribe(res =>{
           this.response = res
-          if (res.notification.type == "Validation") {
-            if (res.notification.description == "Phone") {
-              this.validateEmployee.phone == res.notification.messenge
-            }
-            else{
-              this.validateEmployee.email == res.notification.messenge
-            }
+          if (res.notification.type == StatusNotification.Validation) {
+            this.validateEmployee[res.notification.description] = res.notification.messenge
           }
           else{
             this.notificationService.handleAlertObj(res.notification)
             if (res.notification.type == StatusNotification.Success) {
               this.close()
+              this.router.navigate(['','list-employee']);
             }
           }
           this.isChange = true
           this.isLoading = false
-
-          this.router.navigate(['','list-employee']);
 
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");

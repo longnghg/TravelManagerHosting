@@ -35,6 +35,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/list-restaurant', title: 'Nhà hàng',  icon:'fa-solid fa-utensils text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager, RoleTitle.ServiceManager]  },
     { path: '/list-place', title: 'Điểm tham quan',  icon:'ni ni-pin-3 text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager, RoleTitle.ServiceManager]  },
     { path: '/list-voucher', title: 'Voucher',  icon:'ni ni-tag text-purple', class: '', roles: [RoleTitle.Admin]  },
+    { path: '/list-logs', title: 'Logs',  icon:'fa-solid fa-landmark', class: '', roles: [RoleTitle.Admin]  },
 
     // { path: '/chat', title: 'Hỗ trợ',  icon:'ni fa-solid fa-headset', class: '', roles: [RoleTitle.Supporter]  },
 

@@ -13,3 +13,8 @@ export class CustomerModel{
   googleToken: string
   isBlock: boolean
 }
+export class CustomerStatisticModel{
+  totalBlock: string
+  totalBlack: string
+  total: string
+}

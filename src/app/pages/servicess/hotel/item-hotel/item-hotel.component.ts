@@ -94,13 +94,19 @@ export class ItemHotelComponent implements OnInit {
       {
         this.hotelService.create(this.resHotel).subscribe(res =>{
           this.response = res
-          this.notificationService.handleAlertObj(res.notification)
-          if(this.response.notification.type == StatusNotification.Success)
-          {
-            this.resHotel = Object.assign({}, new HotelModel)
-            this.resHotelTmp = Object.assign({}, new HotelModel)
-            this.validateHotel = new ValidationHotelModel
-            this.isChange = false
+
+
+          if (res.notification.type == StatusNotification.Validation) {
+            this.validateHotel[res.notification.description] = res.notification.messenge
+          }
+          else{
+            this.notificationService.handleAlertObj(res.notification)
+            if (this.response.notification.type == StatusNotification.Success) {
+              this.resHotel = Object.assign({}, new HotelModel)
+              this.resHotelTmp = Object.assign({}, new HotelModel)
+              this.validateHotel = new ValidationHotelModel
+              this.isChange = false
+            }
           }
           this.isLoading = false
         }, error => {
@@ -112,12 +118,16 @@ export class ItemHotelComponent implements OnInit {
       else{
         this.hotelService.update(this.resHotel, this.resHotel.idHotel).subscribe(res =>{
           this.response = res
-          this.notificationService.handleAlertObj(res.notification)
-
-          if(this.response.notification.type == StatusNotification.Success)
+          if (res.notification.type == StatusNotification.Validation) {
+            this.validateHotel[res.notification.description] = res.notification.messenge
+          }
+          else
           {
-            this.isChange = false
-            this.closeModal.nativeElement.click()
+            this.notificationService.handleAlertObj(res.notification)
+            if (this.response.notification.type == StatusNotification.Success) {
+              this.isChange = false
+              this.closeModal.nativeElement.click()
+            }
           }
           this.isLoading = false
         }, error => {

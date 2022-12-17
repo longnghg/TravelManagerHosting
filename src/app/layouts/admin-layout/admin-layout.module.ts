@@ -68,6 +68,9 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { ItemBannerComponent } from '../../pages/banner/item-banner/item-banner.component';
 import { ItemCarInforComponent } from '../../pages/car-infor/item-car-infor/item-car-infor.component';
 import { ListCarInfoComponent } from '../../pages/car-infor/list-car-info/list-car-info.component';
+import { ListLogsComponent } from '../../pages/logs/list-logs/list-logs.component';
+import { ItemLogsComponent } from '../../pages/logs/item-logs/item-logs.component';
+
 
 @NgModule({
   imports: [
@@ -123,7 +126,9 @@ import { ListCarInfoComponent } from '../../pages/car-infor/list-car-info/list-c
     ListVoucherComponent,
     ItemBannerComponent,
     ItemCarInforComponent,
-    ListCarInfoComponent
+    ListCarInfoComponent,
+    ListLogsComponent,
+    ItemLogsComponent,
   ],
   providers: [NavbarComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

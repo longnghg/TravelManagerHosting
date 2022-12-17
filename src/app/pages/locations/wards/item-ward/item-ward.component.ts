@@ -89,6 +89,9 @@ export class ItemWardComponent implements OnInit {
 
       }
     }
+    else{
+      this.isLoading = false
+    }
 
   }
 

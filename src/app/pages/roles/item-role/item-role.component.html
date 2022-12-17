@@ -20,7 +20,9 @@
           <div class="row">
             <div class="col-lg-12">
               <div class="form-group">
-                <label class="form-control-label" for="input-username">Mô tả</label>
+                <label class="form-control-label" for="input-username">Mô tả
+                  <span [class]="auth.roleId != -1 || resRole.isDelete || isLoading  ?'d-none':'text-red'">{{this.validateRole.description ? this.validateRole.description : ''}}</span>
+                </label>
                 <input type="text" id="description" name="description" (input)="inputChange()" class="form-control " placeholder="Nhập mô tả" [(ngModel)]="resRole.description" [readonly]="auth.roleId != -1 || resRole.isDelete || isLoading ">
               </div>
             </div>

@@ -18,7 +18,7 @@
                 <input type="text" id="nameBanner" name="nameBanner" [(ngModel)]="resBanner.nameBanner" class="form-control form-control-alternative" placeholder="Nhập số tên banner" [readonly]="type == 'detail'  || isLoading" >
               </div>
             </div>
-            <div class="row" *ngIf="type=='create'">
+            <div class="row" *ngIf="type=='create' && img.length < 6">
               <div class="form-group">
                 <input #bannerImg id="files" type="file" multiple class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeImg($event)">
                 <button for="files"  class="icon-btn add-btn" (click)="btnBannerImg()" style="position: relative;top: 30%;" [disabled]="isLoading" *ngIf="type == 'create' ">
@@ -38,7 +38,7 @@
                     <img [src]="item" alt="Random first slide" style="width: 43rem;
                     border-radius: 2rem; height: 30rem;" />
                   </div>
-                  <div class="carousel-caption" *ngIf="type=='create' && isLoading" style="margin-bottom: 23rem;
+                  <div class="carousel-caption" *ngIf="type=='create' && !isLoading" style="margin-bottom: 23rem;
                   margin-left: 31rem;">
                     <button class="btn btn-danger" (click)="btnDeleteImg(i, item)">Xóa</button>
                   </div>

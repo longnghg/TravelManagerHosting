@@ -15,6 +15,7 @@ export class GridDataComponent implements OnInit {
   @Output() gdApprove = new EventEmitter<any>()
   @Output() gdRestore = new EventEmitter<any>()
   @Output() gdSchedule = new EventEmitter<any>()
+  @Output() gdLog = new EventEmitter<any>()
   @Output() gdChild = new EventEmitter<any>()
   @Output() gdType = new EventEmitter<any>()
   rowDataRestore: any
@@ -213,6 +214,10 @@ export class GridDataComponent implements OnInit {
     this.gdSchedule.emit(data);
   }
 
+ getDataLog(data: any){
+    this.gdLog.emit(data);
+  }
+
   getDataRestore(data: any){
     this.gdRestore.emit(data);
   }
@@ -247,6 +252,7 @@ export class GridConfig{
   idModalRestore?: string
   idModalDelete?: string
   idModalApprove?: string
+  idModalLog?: string
   idModal?: string
 
   disableApprove?: boolean
@@ -256,6 +262,7 @@ export class GridConfig{
   disableDelete?: boolean
   disableRestore?: boolean
   disableRadioBox?: boolean
+  disableLog?: boolean
   radioBoxName?: string
   style?: string
   isRestore?: boolean

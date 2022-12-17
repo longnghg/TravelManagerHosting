@@ -9,4 +9,5 @@ export class RoleModel {
 export class ValidationRoleModel {
   total: number = 0
   nameRole: string = ""
+  description: string = ""
 }

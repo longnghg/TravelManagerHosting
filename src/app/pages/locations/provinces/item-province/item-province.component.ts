@@ -88,6 +88,9 @@ export class ItemProvinceComponent implements OnInit {
       }
 
     }
+    else{
+      this.isLoading = false
+    }
 
   }
 

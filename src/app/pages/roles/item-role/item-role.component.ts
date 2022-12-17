@@ -54,8 +54,13 @@ export class ItemRoleComponent implements OnInit {
       if(this.type == "create"){
         this.roleService.create(this.resRole).subscribe(res =>{
           this.response = res
-          this.notificationService.handleAlertObj(res.notification)
-          this.close()
+          if (res.notification.type == StatusNotification.Validation) {
+            this.validateRole[res.notification.description] = res.notification.messenge
+          }
+          else{
+            this.notificationService.handleAlertObj(res.notification)
+            this.close()
+          }
           this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -66,8 +71,13 @@ export class ItemRoleComponent implements OnInit {
       else{
         this.roleService.update(this.resRole, this.resRole.idRole).subscribe(res =>{
           this.response = res
-          this.notificationService.handleAlertObj(res.notification)
-          this.isChange = false
+          if (res.notification.type == StatusNotification.Validation) {
+            this.validateRole[res.notification.description] = res.notification.messenge
+          }
+          else{
+            this.notificationService.handleAlertObj(res.notification)
+            this.isChange = false
+          }
           this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");

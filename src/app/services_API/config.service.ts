@@ -204,10 +204,23 @@ export class ConfigService{
   listStatus(){
     var listStatus = [
       {id: false, name: "Chưa kích hoạt"},
+
       {id: true, name: "Đã kích hoạt"}
     ]
 
     return listStatus
+  }
+  listClassContent()
+  {
+  var listClassContent = [
+    {id: "Tour", name: "Tour"},
+    {id: "TourBooking", name: "TourBooking"},
+    {id:  "Hotel", name: "Hotel"},
+    {id: "Place", name: "Place"},
+    {id: "Restaurant", name: "Restaurant"}
+  ]
+    return listClassContent
+
   }
   validateChangePass(data: any, model: any){
     model.total = 0
