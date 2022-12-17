@@ -15,6 +15,7 @@ import { StatusNotification } from "../../../../enums/enum";
 })
 export class ItemDistrictComponent implements OnInit {
   isLoading: boolean
+  @ViewChild('closeModal') closeModal: ElementRef
   @Input() resDistrict: LocationModel
   @Input() type: string
   @Output() parentDel = new EventEmitter<any>()
@@ -62,7 +63,6 @@ export class ItemDistrictComponent implements OnInit {
           this.notificationService.handleAlertObj(res.notification)
           this.close()
           this.isLoading = false
-
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -72,16 +72,19 @@ export class ItemDistrictComponent implements OnInit {
       else{
         this.districtService.update(this.resDistrict, this.resDistrict.idDistrict).subscribe(res =>{
           this.response = res
+          this.isLoading = false
           this.notificationService.handleAlertObj(res.notification)
           if(this.response.notification.type == StatusNotification.Success)
           {
             this.resDistrictTmp = Object.assign({}, this.resDistrict)
+            this.isChange = false
+            setTimeout(() => {
+              this.closeModal.nativeElement.click()
+            }, 100);
           }
           else{
             this.resDistrict = Object.assign({},this.resDistrictTmp)
           }
-          this.isChange = false
-          this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Success)

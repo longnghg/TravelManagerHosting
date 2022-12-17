@@ -13,6 +13,7 @@ import { StatusNotification } from "../../../../enums/enum";
 })
 export class ItemProvinceComponent implements OnInit {
   isLoading: boolean
+  @ViewChild('closeModal') closeModal: ElementRef
   @Input() resProvince: LocationModel
   @Input() type: string
   @Output() parentDel = new EventEmitter<any>()
@@ -69,16 +70,18 @@ export class ItemProvinceComponent implements OnInit {
         this.provinceService.update(this.resProvince, this.resProvince.idProvince).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
+          this.isLoading = false
           if(this.response.notification.type == StatusNotification.Success)
           {
             this.resProvinceTmp = Object.assign({}, this.resProvince)
+            this.isChange = false
+            setTimeout(() => {
+              this.closeModal.nativeElement.click()
+            }, 100);
           }
           else{
             this.resProvince = Object.assign({},this.resProvinceTmp)
           }
-
-          this.isChange = false
-          this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)

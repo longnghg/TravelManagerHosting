@@ -1,4 +1,4 @@
-import { Component, OnInit, Input,Output,EventEmitter  } from '@angular/core';
+import { Component, OnInit, Input,Output,EventEmitter, ViewChild, ElementRef  } from '@angular/core';
 import { PromotionModel, ValidationPromotionModel } from "src/app/models/promotion.model";
 import { PromotionService } from "../../../services_API/promotion.service";
 import { NotificationService } from "../../../services_API/notification.service";
@@ -14,7 +14,7 @@ import { AuthenticationModel } from 'src/app/models/authentication.model';
   styleUrls: ['./item-promotion.component.scss']
 })
 export class ItemPromotionComponent implements OnInit {
-
+  @ViewChild('closeModal') closeModal: ElementRef
   @Input() resPromotion: PromotionModel
   @Input() type: string
   @Output() parentData = new EventEmitter<any>()
@@ -25,7 +25,7 @@ export class ItemPromotionComponent implements OnInit {
   isChange: boolean = false
   resPromotionTmp: PromotionModel
   formData: any
-
+  isLoading: boolean
   constructor(private promotionService: PromotionService,
     private configService: ConfigService,
     private notificationService: NotificationService) { }
@@ -74,14 +74,13 @@ export class ItemPromotionComponent implements OnInit {
 
     if (this.validatePromotion.total == 0) {
       this.resPromotion.IdUserModify = this.auth.id
-      console.log( this.resPromotion.IdUserModify);
-
       if(this.type == "create")
       {
         this.promotionService.create(this.resPromotion).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-	    if(this.response.notification.type == StatusNotification.Success)
+          this.isLoading = false
+	      if(this.response.notification.type == StatusNotification.Success)
         {
 		      this.resPromotion = Object.assign({}, new PromotionModel)
           this.resPromotionTmp = Object.assign({}, new PromotionModel)
@@ -99,10 +98,13 @@ export class ItemPromotionComponent implements OnInit {
           this.promotionService.update(this.resPromotion, this.resPromotion.idPromotion).subscribe(res =>{
             this.response = res
             this.notificationService.handleAlertObj(res.notification)
-
+            this.isLoading = false
             if(this.response.notification.type == StatusNotification.Success)
             {
               this.isChange = false
+              setTimeout(() => {
+                this.closeModal.nativeElement.click()
+              }, 100);
             }
           }, error => {
             var message = this.configService.error(error.status, error.error != null?error.error.text:"");

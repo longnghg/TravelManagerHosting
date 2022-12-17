@@ -94,8 +94,7 @@ export class ItemHotelComponent implements OnInit {
       {
         this.hotelService.create(this.resHotel).subscribe(res =>{
           this.response = res
-
-
+          this.isLoading = false
           if (res.notification.type == StatusNotification.Validation) {
             this.validateHotel[res.notification.description] = res.notification.messenge
           }
@@ -108,7 +107,6 @@ export class ItemHotelComponent implements OnInit {
               this.isChange = false
             }
           }
-          this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -118,6 +116,7 @@ export class ItemHotelComponent implements OnInit {
       else{
         this.hotelService.update(this.resHotel, this.resHotel.idHotel).subscribe(res =>{
           this.response = res
+          this.isLoading = false
           if (res.notification.type == StatusNotification.Validation) {
             this.validateHotel[res.notification.description] = res.notification.messenge
           }
@@ -126,10 +125,11 @@ export class ItemHotelComponent implements OnInit {
             this.notificationService.handleAlertObj(res.notification)
             if (this.response.notification.type == StatusNotification.Success) {
               this.isChange = false
-              this.closeModal.nativeElement.click()
+              setTimeout(() => {
+                this.closeModal.nativeElement.click()
+              }, 100);
             }
           }
-          this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)

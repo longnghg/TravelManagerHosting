@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { NotificationService } from "../../../services_API/notification.service";
 import { ConfigService } from "../../../services_API/config.service";
 import { RoleService } from "../../../services_API/role.service";
@@ -12,6 +12,7 @@ import { StatusNotification } from "../../../enums/enum";
   styleUrls: ['./item-role.component.scss']
 })
 export class ItemRoleComponent implements OnInit {
+  @ViewChild('closeModal') closeModal: ElementRef
   isLoading: boolean
   response: ResponseModel
   auth: AuthenticationModel
@@ -54,6 +55,7 @@ export class ItemRoleComponent implements OnInit {
       if(this.type == "create"){
         this.roleService.create(this.resRole).subscribe(res =>{
           this.response = res
+          this.isLoading = false
           if (res.notification.type == StatusNotification.Validation) {
             this.validateRole[res.notification.description] = res.notification.messenge
           }
@@ -61,7 +63,6 @@ export class ItemRoleComponent implements OnInit {
             this.notificationService.handleAlertObj(res.notification)
             this.close()
           }
-          this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -71,14 +72,17 @@ export class ItemRoleComponent implements OnInit {
       else{
         this.roleService.update(this.resRole, this.resRole.idRole).subscribe(res =>{
           this.response = res
+          this.isLoading = false
           if (res.notification.type == StatusNotification.Validation) {
             this.validateRole[res.notification.description] = res.notification.messenge
           }
           else{
             this.notificationService.handleAlertObj(res.notification)
             this.isChange = false
+            setTimeout(() => {
+              this.closeModal.nativeElement.click()
+            }, 100);
           }
-          this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)

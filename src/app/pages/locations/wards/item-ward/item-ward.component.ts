@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef} from '@angular/core';
 import { NotificationService } from "../../../../services_API/notification.service";
 import { WardService } from "../../../../services_API/ward.service";
 import { DistrictService } from "../../../../services_API/district.service";
@@ -13,6 +13,7 @@ import { StatusNotification } from "../../../../enums/enum";
 
 })
 export class ItemWardComponent implements OnInit {
+  @ViewChild('closeModal') closeModal: ElementRef
   isLoading: boolean
   @Input() resWard: LocationModel
   @Input() type: string
@@ -72,15 +73,18 @@ export class ItemWardComponent implements OnInit {
         this.wardService.update(this.resWard, this.resWard.idWard).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
+          this.isLoading = false
           if(this.response.notification.type == StatusNotification.Success)
           {
             this.resWardTmp = Object.assign({}, this.resWard)
+            this.isChange = false
+            setTimeout(() => {
+              this.closeModal.nativeElement.click()
+            }, 100);
           }
           else{
             this.resWard = Object.assign({},this.resWardTmp)
           }
-          this.isChange = false
-          this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
