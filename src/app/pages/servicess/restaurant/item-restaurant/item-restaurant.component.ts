@@ -81,60 +81,63 @@ export class ItemRestaurantComponent implements OnInit {
 
   save(){
     this.validateRestaurant = new ValidationRestaurantModel
+
     this.validateRestaurant =  this.configService.validateRestaurant(this.resRestaurant, this.validateRestaurant)
-    if (this.validateRestaurant.total == 0) {
-      this.resRestaurant.IdUserModify = this.auth.id
-      if(this.type == "create")
-      {
-        this.restaurantService.create(this.resRestaurant).subscribe(res =>{
-          this.response = res
-          this.isLoading = false
-          if (res.notification.type == StatusNotification.Validation) {
-            this.validateRestaurant[res.notification.description] = res.notification.messenge
-          }
-          else{
-            this.notificationService.handleAlertObj(res.notification)
-            if (this.response.notification.type == StatusNotification.Success) {
-              this.resRestaurant = Object.assign({}, new RestaurantModel)
-              this.resRestaurantTmp = Object.assign({}, new RestaurantModel)
-              this.validateRestaurant = new ValidationRestaurantModel
-              this.isChange = false
+     console.log(this.validateRestaurant.total);
+      if (this.validateRestaurant.total == 0) {
+
+        this.resRestaurant.IdUserModify = this.auth.id
+        if(this.type == "create")
+        {
+          this.restaurantService.create(this.resRestaurant).subscribe(res =>{
+            this.response = res
+            this.isLoading = false
+            if (res.notification.type == StatusNotification.Validation) {
+              this.validateRestaurant[res.notification.description] = res.notification.messenge
             }
-          }
-        }, error => {
-          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, StatusNotification.Error)
-          this.isLoading = false
-        })
+            else{
+              this.notificationService.handleAlertObj(res.notification)
+              if (this.response.notification.type == StatusNotification.Success) {
+                this.resRestaurant = Object.assign({}, new RestaurantModel)
+                this.resRestaurantTmp = Object.assign({}, new RestaurantModel)
+                this.validateRestaurant = new ValidationRestaurantModel
+                this.isChange = false
+              }
+            }
+          }, error => {
+            var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+            this.notificationService.handleAlert(message, StatusNotification.Error)
+            this.isLoading = false
+          })
+        }
+        else{
+          this.restaurantService.update(this.resRestaurant, this.resRestaurant.idRestaurant).subscribe(res =>{
+            this.response = res
+            this.isLoading = false
+            if (res.notification.type == StatusNotification.Validation) {
+              this.validateRestaurant[res.notification.description] = res.notification.messenge
+            }
+            else
+            {
+              this.notificationService.handleAlertObj(res.notification)
+              if (this.response.notification.type == StatusNotification.Success) {
+                this.isChange = false
+                setTimeout(() => {
+                  this.closeModal.nativeElement.click()
+                }, 100);
+              }
+            }
+          }, error => {
+            var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+            this.notificationService.handleAlert(message, StatusNotification.Error)
+            this.isLoading = false
+          })
+        }
       }
       else{
-        this.restaurantService.update(this.resRestaurant, this.resRestaurant.idRestaurant).subscribe(res =>{
-          this.response = res
-          this.isLoading = false
-          if (res.notification.type == StatusNotification.Validation) {
-            this.validateRestaurant[res.notification.description] = res.notification.messenge
-          }
-          else
-          {
-            this.notificationService.handleAlertObj(res.notification)
-            if (this.response.notification.type == StatusNotification.Success) {
-              this.isChange = false
-              setTimeout(() => {
-                this.closeModal.nativeElement.click()
-              }, 100);
-            }
-          }
-        }, error => {
-          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, StatusNotification.Error)
-          this.isLoading = false
-        })
+        this.isLoading = false
       }
-    }
-    else{
-      this.isLoading = false
-    }
-    }
+}
 
     close(){
       this.resRestaurant = Object.assign({}, this.resRestaurantTmp)
@@ -177,7 +180,7 @@ export class ItemRestaurantComponent implements OnInit {
       }
       else{
         if (input.value) {
-          if (property.includes("Price")) {
+          if (property.includes("comboPrice")) {
             this.resRestaurant[property] = Number(input.value).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
           }
           else{

@@ -1,100 +1,101 @@
-
 <div class="modal-header">
   <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin chi tiết</h1>
-  <button type="button" #closeModalLoad class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()" [disabled]="isLoading"></button>
+  <button type="button" #closeModalLoad class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"
+    [disabled]="isLoading"></button>
 </div>
 <div class="modal-body">
   <ng-container *ngIf="resPlace">
-    <div class="container-fluid" >
+    <div class="container-fluid">
       <form>
         <div class="pl-lg-4">
           <div class="row">
             <div class="col-6">
               <div class="form-group">
                 <label class="form-control-label" for="name">Tên điểm tham quan
-                  <span [class]="type != 'create' ?'d-none':'text-red'">* {{this.validatePlace.name ? this.validatePlace.name : ''}}</span>
+                  <span [class]="type != 'create' ?'d-none':'text-red'">* {{this.validatePlace.name ?
+                    this.validatePlace.name : ''}}</span>
                 </label>
-                <input type="text" id="name" name="name" (input)="inputChange()" class="form-control " placeholder="Nhập tên điểm tham quan" [(ngModel)]="resPlace.name" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete || isLoading">
+                <input type="text" id="name" name="name" (input)="inputChange()" class="form-control "
+                  placeholder="Nhập tên điểm tham quan" [(ngModel)]="resPlace.name"
+                  [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete || isLoading">
               </div>
             </div>
             <div class="col-lg-6">
               <div class="form-group">
                 <label class="form-control-label" for="phone">Số điện thoại
-                  <span [class]="type != 'create' ?'d-none':'text-danger'">* {{this.validatePlace.phone ? this.validatePlace.phone : ''}}</span>
+                  <span [class]="type != 'create' ?'d-none':'text-danger'">* {{this.validatePlace.phone ?
+                    this.validatePlace.phone : ''}}</span>
                 </label>
-                <input type="text" id="phone" name="phone" (input)="formatInput($any($event).target, 'phone'); inputChange()" class="form-control " placeholder="Nhập số điện thoại" [(ngModel)]="resPlace.phone" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete || isLoading">
+                <input type="text" id="phone" name="phone"
+                  (input)="formatInput($any($event).target, 'phone'); inputChange()" class="form-control "
+                  placeholder="Nhập số điện thoại" [(ngModel)]="resPlace.phone"
+                  [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete || isLoading">
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-md-4">
               <label class="form-control-label" for="input-address">Tỉnh/Thành phố
-                <span [class]="type != 'detail' && type != 'create' || resPlace.isDelete || isLoading ?'d-none':'text-danger'">* {{validatePlace.provinceId ? validatePlace.provinceId : ''}}</span>
+                <span
+                  [class]="type != 'detail' && type != 'create' || resPlace.isDelete || isLoading ?'d-none':'text-danger'">*
+                  {{validatePlace.provinceId ? validatePlace.provinceId : ''}}</span>
               </label>
-              <ng-select [items]="resProvince"
-              bindLabel="nameProvince"
-              bindValue="idProvince"
-              [(ngModel)]="resPlace.provinceId"
-              placeholder="Chọn thành phố/tỉnh..."
-              name="idProvince"
-              id="idProvince"
-              [clearable]="false"
-              [searchable]="false"
-              (change)="inputChange(); locationChange('province', 'District')"
-              [disabled]="isLoading">
-            </ng-select>
-              </div>
+              <ng-select [items]="resProvince" bindLabel="nameProvince" bindValue="idProvince"
+                [(ngModel)]="resPlace.provinceId" placeholder="Chọn thành phố/tỉnh..." name="idProvince" id="idProvince"
+                [clearable]="false" [searchable]="false"
+                (change)="inputChange(); locationChange('province', 'District')" [disabled]="isLoading"
+                [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resRestaurant.isDelete || isLoading">
+              </ng-select>
+            </div>
 
             <div class="col-md-4">
               <label class="form-control-label" for="input-address">Quận/Huyện
-                <span [class]="type != 'detail' && type != 'create' || resPlace.isDelete || isLoading ?'d-none':'text-danger'">* {{validatePlace.districtId ? validatePlace.districtId : ''}}</span>
+                <span
+                  [class]="type != 'detail' && type != 'create' || resPlace.isDelete || isLoading ?'d-none':'text-danger'">*
+                  {{validatePlace.districtId ? validatePlace.districtId : ''}}</span>
               </label>
-              <ng-select [items]="resDistrictTmp?resDistrictTmp:resDistrict"
-              bindLabel="nameDistrict"
-              bindValue="idDistrict"
-              [(ngModel)]="resPlace.districtId"
-              placeholder="Chọn thành quận/huyện..."
-              name="idDistrict"
-              id="idDistrict"
-              [clearable]="false"
-              [searchable]="false"
-              (change)="inputChange(); locationChange('district', 'Ward')"
-              [disabled]="isLoading">
-            </ng-select>
-          </div>
+              <ng-select [items]="resDistrictTmp?resDistrictTmp:resDistrict" bindLabel="nameDistrict"
+                bindValue="idDistrict" [(ngModel)]="resPlace.districtId" placeholder="Chọn thành quận/huyện..."
+                name="idDistrict" id="idDistrict" [clearable]="false" [searchable]="false"
+                (change)="inputChange(); locationChange('district', 'Ward')" [disabled]="isLoading"
+                [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resRestaurant.isDelete || isLoading">
+              </ng-select>
+            </div>
 
 
             <div class="col-md-4">
               <label class="form-control-label" for="input-address">Phường/Xã
-                <span [class]="type != 'detail' && type != 'create' || resPlace.isDelete || isLoading ?'d-none':'text-danger'">* {{validatePlace.wardId ? validatePlace.wardId : ''}}</span>
+                <span
+                  [class]="type != 'detail' && type != 'create' || resPlace.isDelete || isLoading ?'d-none':'text-danger'">*
+                  {{validatePlace.wardId ? validatePlace.wardId : ''}}</span>
               </label>
-              <ng-select [items]="resWardTmp?resWardTmp:resWard"
-              bindLabel="nameWard"
-              bindValue="idWard"
-              [(ngModel)]="resPlace.wardId"
-              placeholder="Chọn thành quận/huyện..."
-              name="idWard"
-              id="idWard"
-              [clearable]="false"
-              [searchable]="false"
-              (change)="inputChange()"
-              [disabled]="isLoading">
-            </ng-select>
-          </div>
+              <ng-select [items]="resWardTmp?resWardTmp:resWard" bindLabel="nameWard" bindValue="idWard"
+                [(ngModel)]="resPlace.wardId" placeholder="Chọn thành quận/huyện..." name="idWard" id="idWard"
+                [clearable]="false" [searchable]="false" (change)="inputChange()" [disabled]="isLoading"
+                [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resRestaurant.isDelete || isLoading">
+              </ng-select>
+            </div>
           </div>
           <div class="row">
             <div class="col-lg-6">
               <label class="form-control-label mt-3" for="input-address">Địa chỉ chi tiết
-                <span [class]="type != 'create'?'d-none':'text-danger'">* {{this.validatePlace.address ? this.validatePlace.address : ''}}</span>
+                <span [class]="type != 'create'?'d-none':'text-danger'">* {{this.validatePlace.address ?
+                  this.validatePlace.address : ''}}</span>
               </label>
-              <input type="text" id="address" name="address" (input)="inputChange()" class="form-control " placeholder="Nhập địa chỉ" [(ngModel)]="resPlace.address" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete || isLoading">
+              <input type="text" id="address" name="address" (input)="inputChange()" class="form-control "
+                placeholder="Nhập địa chỉ" [(ngModel)]="resPlace.address"
+                [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete || isLoading">
             </div>
 
             <div class="col-lg-6">
               <label class="form-control-label mt-3" for="input-address">Giá vé
-                <span [class]="type != 'create'?'d-none':'text-danger'">* {{this.validatePlace.priceTicket ? this.validatePlace.priceTicket : ''}}</span>
+                <span [class]="type != 'create'?'d-none':'text-danger'">* {{this.validatePlace.priceTicket ?
+                  this.validatePlace.priceTicket : ''}}</span>
               </label>
-              <input type="text" id="priceTicket" name="priceTicket" (input)="formatInput($any($event).target, 'priceTicket');inputChange()" class="form-control " placeholder="Nhập giá vé" [(ngModel)]="resPlace.priceTicket" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete || isLoading">
+              <input type="text" id="priceTicket" name="priceTicket"
+                (input)="formatInput($any($event).target, 'priceTicket');inputChange()" class="form-control "
+                placeholder="Nhập giá vé" [(ngModel)]="resPlace.priceTicket"
+                [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete || isLoading">
             </div>
           </div>
           <fieldset class="mt-4" *ngIf="type == 'approve' || type == 'refuse' || type == 'cancelRequire'">
@@ -102,15 +103,18 @@
             <div class="row" style="margin-top: -20px;">
               <div class="col-4">
                 <label class="form-control-label" for="input-address">Mã số</label>
-                <input type="text" id="idUserModify" name="idUserModify" class="form-control " placeholder="Mã người yêu cầu" [(ngModel)]="resPlace.idUserModify" readonly>
+                <input type="text" id="idUserModify" name="idUserModify" class="form-control "
+                  placeholder="Mã người yêu cầu" [(ngModel)]="resPlace.idUserModify" readonly>
               </div>
               <div class="col-6">
                 <label class="form-control-label" for="input-address">Tên</label>
-                <input type="text" id="modifyBy" name="modifyBy" class="form-control " placeholder="Tên người yêu cầu" [(ngModel)]="resPlace.modifyBy" readonly>
+                <input type="text" id="modifyBy" name="modifyBy" class="form-control " placeholder="Tên người yêu cầu"
+                  [(ngModel)]="resPlace.modifyBy" readonly>
               </div>
               <div class="col-2">
                 <label class="form-control-label" for="input-address">Ngày yêu cầu</label>
-                <input type="date" id="modifyDate" name="modifyDate" class="form-control " placeholder="Ngày yêu cầu" [(ngModel)]="resPlace.modifyDateDisplay" readonly>
+                <input type="date" id="modifyDate" name="modifyDate" class="form-control " placeholder="Ngày yêu cầu"
+                  [(ngModel)]="resPlace.modifyDateDisplay" readonly>
               </div>
             </div>
           </fieldset>
@@ -123,31 +127,38 @@
     <ng-container *ngIf="type != 'approve' && type != 'refuse' && type != 'cancelRequire'; else elseApprove">
       <div class="row align-items-center">
         <div class="col-12 text-right">
-          <button  *ngIf="type == 'detail' && !resPlace.isDelete" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deletePlaceModal" (click)="getParentData('detail')" [disabled]="isLoading">Xóa</button>
-          <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="backup()" [disabled]="isLoading">Khôi phục</button>
-          <button *ngIf="isChange" class="btn btn-sm btn-success"  (click)="isLoading=true;save()" [disabled]="isLoading">{{isLoading?'Đang xử lý...':type == 'detail' ? "Lưu":"Thêm"}}</button>
-          <button *ngIf="resPlace.isDelete" (click)="getParentData('detail')" data-bs-toggle="modal" data-bs-target="#restorePlaceModal" class="btn btn-sm btn-warning" [disabled]="isLoading">Khôi phục điểm tham quan</button>
+          <button *ngIf="type == 'detail' && !resPlace.isDelete" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+            data-bs-target="#deletePlaceModal" (click)="getParentData('detail')" [disabled]="isLoading">Xóa</button>
+          <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="backup()"
+            [disabled]="isLoading">Khôi phục</button>
+          <button *ngIf="isChange" class="btn btn-sm btn-success" (click)="isLoading=true;save()"
+            [disabled]="isLoading">{{isLoading?'Đang xử lý...':type == 'detail' ? "Lưu":"Thêm"}}</button>
+          <button *ngIf="resPlace.isDelete" (click)="getParentData('detail')" data-bs-toggle="modal"
+            data-bs-target="#restorePlaceModal" class="btn btn-sm btn-warning" [disabled]="isLoading">Khôi phục điểm
+            tham quan</button>
         </div>
       </div>
     </ng-container>
     <ng-template #elseApprove>
       <div class="row mt-2" style="border-top: 1.5px solid; padding-top: 20px;">
         <div [class]="auth.roleId == -1 && auth.id == resPlace.idUserModify ? 'col-4' : 'col-6'"
-        [style]="auth.roleId == -1 && auth.id == resPlace.idUserModify ? 'text-align: end' : 'padding-left: 8%; text-align: center'"
-        *ngIf="auth.roleId == -1">
-          <button class="btn btn-success"  data-bs-toggle="modal" data-bs-target="#approvePlaceModal" (click)="getParentData('approve')" [disabled]="isLoading">Phê duyệt</button>
+          [style]="auth.roleId == -1 && auth.id == resPlace.idUserModify ? 'text-align: end' : 'padding-left: 8%; text-align: center'"
+          *ngIf="auth.roleId == -1">
+          <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#approvePlaceModal"
+            (click)="getParentData('approve')" [disabled]="isLoading">Phê duyệt</button>
         </div>
         <div [class]="auth.roleId == -1 && auth.id == resPlace.idUserModify ? 'col-4' : 'col-6'"
-         style="text-align: center" *ngIf="auth.roleId == -1">
-          <button class="btn btn-warning"  data-bs-toggle="modal" data-bs-target="#approvePlaceModal" (click)="getParentData('refuse')" [disabled]="isLoading">Từ chối phê duyệt</button>
+          style="text-align: center" *ngIf="auth.roleId == -1">
+          <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#approvePlaceModal"
+            (click)="getParentData('refuse')" [disabled]="isLoading">Từ chối phê duyệt</button>
         </div>
         <div [class]="auth.roleId != -1 && auth.id == resPlace.idUserModify ? 'col' : 'col-4'"
-        [style]="auth.roleId != -1 && auth.id == resPlace.idUserModify ? 'padding-right: 4.9%; text-align: end' : ''"
-        *ngIf="auth.id == resPlace.idUserModify">
-          <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#approvePlaceModal" (click)="getParentData('cancelRequire')" [disabled]="isLoading">Hủy yêu cầu phê duyệt</button>
+          [style]="auth.roleId != -1 && auth.id == resPlace.idUserModify ? 'padding-right: 4.9%; text-align: end' : ''"
+          *ngIf="auth.id == resPlace.idUserModify">
+          <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#approvePlaceModal"
+            (click)="getParentData('cancelRequire')" [disabled]="isLoading">Hủy yêu cầu phê duyệt</button>
         </div>
       </div>
     </ng-template>
   </ng-container>
 </div>
-
