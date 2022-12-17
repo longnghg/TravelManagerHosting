@@ -5,6 +5,8 @@ import { BannerService } from "../../services_API/banner.service";
 import { NotificationService } from "../../services_API/notification.service";
 import { ConfigService } from "../../services_API/config.service";
 import { StatusNotification } from "../../enums/enum";
+import { ColDef, GridConfig} from '../../components/grid-data/grid-data.component';
+import { PaginationModel } from 'src/app/models/responsiveModels/pagination.model';
 @Component({
   selector: 'app-banner',
   templateUrl: './banner.component.html',
@@ -15,6 +17,7 @@ export class BannerComponent implements OnInit {
     private configService: ConfigService) { }
   @ViewChild('filesImg') filesImg: ElementRef;
   files: any
+  @ViewChild('closeModalDeleteLoad') closeModalDeleteLoad: ElementRef;
   nameBanner: string
   resListBanner: BannerModel[]
   resBanner: BannerModel
@@ -27,67 +30,85 @@ export class BannerComponent implements OnInit {
   fileNotify: string
   validateBanner: ValidationBannerModel = new ValidationBannerModel
   isLoading: boolean
+  pagination = new PaginationModel
+  dataChild: BannerModel
+  typeChild: string
+  data: any
+  public columnDefs: ColDef[]
+    public gridConfig: GridConfig = {
+      idModalRestore: "restoreCarModal",
+      idModalDelete: "deleteCarModal",
+      idModal: "gridCar",
+      disableRadioBox: true,
+      disableApprove: true
+    }
   ngOnInit(): void {
+    this.columnDefs= [
+      { field: 'nameBanner', headerName: "Tên banner", style: "width: 45%;", searchable: true, searchType: 'text', searchObj: 'nameBanner'},
+      { field: 'total', headerName: "Tổng hình", style: "width: 45%;"},
+       ];
 
-
-    this._bannerService.gets().subscribe(res => {
-      console.log(res);
-
-      this.response = res
-      if (this.response.notification.type == StatusNotification.Success) {
-        this.resListBanner = this.response.content
-      }
-      else {
-        this.notificationService.handleAlertObj(res.notification)
-      }
-    }, error => {
-      var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
-      this.notificationService.handleAlert(message, StatusNotification.Error)
-    })
-
-  }
-  changeImg(e) {
-    if (e.target.files[0].type == "image/jpg" || e.target.files[0].type == "image/jpeg" || e.target.files[0].type == "image/png") {
-      this.files = e
-    }
-    else {
-      this.notificationService.handleAlert("Không đúng định dạng hình ảnh !", StatusNotification.Error)
-    }
+    this.gridConfig.pageSize = this.pagination.pageSize
+    this.init(this.pagination, true)
   }
 
-  save() {
-    this.validateBanner = new ValidationBannerModel
-    var files = this.files.path[0].files
-    var file = new FormData();
-      for (let index = 0; index < files.length; index++) {
-        file.append('files', files[index]);
-      }
-      this._bannerService.UploadBanner(file, this.nameBanner).subscribe(res => {
+  init(e?, isNotShow?){
+    if (e) {
+      this._bannerService.search(Object.assign({}, e)).subscribe(res => {
+
         this.response = res
-        this.notificationService.handleAlertObj(res.notification)
         if (this.response.notification.type == StatusNotification.Success) {
-              this.files = null
-              this.filesImg.nativeElement.value = null
-              this.nameBanner = null
+          this.resListBanner = this.response.content
         }
-        this.isLoading = false
+        else {
+
+          if (!isNotShow) {
+            this.notificationService.handleAlertObj(res.notification)
+          }
+        }
+        this.gridConfig.totalResult = this.response.totalResult
       }, error => {
         var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
         this.notificationService.handleAlert(message, StatusNotification.Error)
-        this.isLoading = false
       })
+    }
+  }
+
+
+
+
+
+childData(e){
+  this.dataChild = Object.assign({}, e)
 }
 
-getData(idBanner: string){
-  this.idbanner = idBanner
+childType(e){
+  this.typeChild = e
 }
-delete (){
-  this._bannerService.delete(this.idbanner).subscribe(res => {
-    this.response = res
+getData(data: any){
+  this.data = data
+}
 
-  }, error => {
-    var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
-    this.notificationService.handleAlert(message, StatusNotification.Error)
-  })
+// getData(idBanner: string){
+//   this.idbanner = idBanner
+// }
+delete(){
+  console.log(this.data);
+  if (this.data) {
+
+    this._bannerService.delete(this.data.idBanner).subscribe(res => {
+      this.response = res
+      this.notificationService.handleAlertObj(res.notification)
+      this.isLoading = false
+      setTimeout(() => {
+       this.closeModalDeleteLoad.nativeElement.click()
+      }, 100);
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+      this.isLoading = false
+    })
+  }
+
 }
 }

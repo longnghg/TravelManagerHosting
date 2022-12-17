@@ -27,18 +27,74 @@
             </div>
           </div>
           <div class="row">
+            <div class="col-md-4">
+              <label class="form-control-label" for="input-address">Tỉnh/Thành phố
+                <span [class]="type != 'detail' && type != 'create' || resPlace.isDelete || isLoading ?'d-none':'text-danger'">* {{validatePlace.provinceId ? validatePlace.provinceId : ''}}</span>
+              </label>
+              <ng-select [items]="resProvince"
+              bindLabel="nameProvince"
+              bindValue="idProvince"
+              [(ngModel)]="resPlace.provinceId"
+              placeholder="Chọn thành phố/tỉnh..."
+              name="idProvince"
+              id="idProvince"
+              [clearable]="false"
+              [searchable]="false"
+              (change)="inputChange(); locationChange('province', 'District')"
+              [disabled]="isLoading">
+            </ng-select>
+              </div>
+
+            <div class="col-md-4">
+              <label class="form-control-label" for="input-address">Quận/Huyện
+                <span [class]="type != 'detail' && type != 'create' || resPlace.isDelete || isLoading ?'d-none':'text-danger'">* {{validatePlace.districtId ? validatePlace.districtId : ''}}</span>
+              </label>
+              <ng-select [items]="resDistrictTmp?resDistrictTmp:resDistrict"
+              bindLabel="nameDistrict"
+              bindValue="idDistrict"
+              [(ngModel)]="resPlace.districtId"
+              placeholder="Chọn thành quận/huyện..."
+              name="idDistrict"
+              id="idDistrict"
+              [clearable]="false"
+              [searchable]="false"
+              (change)="inputChange(); locationChange('district', 'Ward')"
+              [disabled]="isLoading">
+            </ng-select>
+          </div>
+
+
+            <div class="col-md-4">
+              <label class="form-control-label" for="input-address">Phường/Xã
+                <span [class]="type != 'detail' && type != 'create' || resPlace.isDelete || isLoading ?'d-none':'text-danger'">* {{validatePlace.wardId ? validatePlace.wardId : ''}}</span>
+              </label>
+              <ng-select [items]="resWardTmp?resWardTmp:resWard"
+              bindLabel="nameWard"
+              bindValue="idWard"
+              [(ngModel)]="resPlace.wardId"
+              placeholder="Chọn thành quận/huyện..."
+              name="idWard"
+              id="idWard"
+              [clearable]="false"
+              [searchable]="false"
+              (change)="inputChange()"
+              [disabled]="isLoading">
+            </ng-select>
+          </div>
+          </div>
+          <div class="row">
             <div class="col-lg-6">
-              <label class="form-control-label" for="input-address">Địa chỉ
+              <label class="form-control-label mt-3" for="input-address">Địa chỉ chi tiết
                 <span [class]="type != 'create'?'d-none':'text-danger'">* {{this.validatePlace.address ? this.validatePlace.address : ''}}</span>
               </label>
               <input type="text" id="address" name="address" (input)="inputChange()" class="form-control " placeholder="Nhập địa chỉ" [(ngModel)]="resPlace.address" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete || isLoading">
             </div>
 
             <div class="col-lg-6">
-              <label class="form-control-label" for="input-address">Giá vé
+              <label class="form-control-label mt-3" for="input-address">Giá vé
                 <span [class]="type != 'create'?'d-none':'text-danger'">* {{this.validatePlace.priceTicket ? this.validatePlace.priceTicket : ''}}</span>
               </label>
-              <input type="text" id="priceTicket" name="priceTicket" (input)="formatInput($any($event).target, 'priceTicket');inputChange() " class="form-control " placeholder="Nhập giá" [(ngModel)]="resPlace.priceTicket" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete || isLoading">
+              <input type="text" id="priceTicket" name="priceTicket" (input)="formatInput($any($event).target, 'priceTicket');inputChange()" class="form-control " placeholder="Nhập giá vé" [(ngModel)]="resPlace.priceTicket" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete || isLoading">
             </div>
           </div>
           <fieldset class="mt-4" *ngIf="type == 'approve' || type == 'refuse' || type == 'cancelRequire'">

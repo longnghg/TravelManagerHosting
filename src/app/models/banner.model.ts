@@ -8,6 +8,6 @@ export class BannerModel{
 }
 
 export class ValidationBannerModel {
-  nameBanner: string
+  nameBanner: string = null
   total: number = 0
 }

@@ -199,11 +199,16 @@
                           {{row[column.field] | formatStatusCar}}
                          </ng-container>
                          <ng-template #elseStatusCar>
-                          <ng-container *ngIf="column.filter == 'price'; else elsePrice">
-                            {{row[column.field] | formatPriceVi}}
+                          <ng-container *ngIf="column.filter == 'statusPayment'; else elseStatusPayment">
+                            {{row[column.field] | formatStatusPayment}}
                           </ng-container>
-                          <ng-template #elsePrice>
-                            {{row[column.field]}}
+                          <ng-template #elseStatusPayment>
+                            <ng-container *ngIf="column.filter == 'price'; else elsePrice">
+                              {{row[column.field] | formatPriceVi}}
+                            </ng-container>
+                            <ng-template #elsePrice>
+                              {{row[column.field]}}
+                            </ng-template>
                           </ng-template>
                          </ng-template>
                         </ng-template>
@@ -215,7 +220,7 @@
             </td>
 
             <td>
-              <div *ngIf="!gridConfig.disableDetail || !gridConfig.disableDelete || !gridConfig.disableRestore || !gridConfig.disableRestore" ngbDropdown [placement]="i >= rowData.length-2 && rowData.length > 2? 'top-right':'bottom-right'">
+              <div *ngIf="!gridConfig.disableDetail || !gridConfig.disableDelete || !gridConfig.disableRestore || !gridConfig.disableRestore || !gridConfig.disableLog" ngbDropdown [placement]="i >= rowData.length-2 && rowData.length > 2? 'top-right':'bottom-right'">
                 <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
                   <i class="fas fa-ellipsis-v" style="color: #4d4aef!important;"></i>
                 </a>
@@ -231,9 +236,11 @@
                   <ng-container *ngIf="!gridConfig.isRestore; else elseRestoreOrDelete">
                     <a class="dropdown-item" href="javascript:void(0)" *ngIf="!gridConfig.disableDelete"  data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModalDelete" (click)="getDataDelete(row)">Xóa</a>
                     <a class="dropdown-item" href="javascript:void(0)" *ngIf="!gridConfig.disableApprove"  data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModalApprove" (click)="getDataApprove(row)">Hủy yêu cầu</a>
+                    <!-- <a class="dropdown-item" href="javascript:void(0)" *ngIf="!gridConfig.disableLog"  data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModalLog" (click)="getDataLog(row)">Xem Logs</a> -->
                   </ng-container>
                   <ng-template #elseRestoreOrDelete>
                     <a class="dropdown-item" href="javascript:void(0)"  *ngIf="!gridConfig.disableRestore"  data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModalRestore" (click)="getDataRestore(row)">Khôi phục</a>
+                    <!-- <a class="dropdown-item" href="javascript:void(0)" *ngIf="!gridConfig.disableLog"  data-bs-toggle="modal" [attr.data-bs-target]="'#'+gridConfig.idModalLog" (click)="getDataLog(row)">Xem Logs</a> -->
                   </ng-template>
 
                 </div>

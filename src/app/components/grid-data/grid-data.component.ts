@@ -14,6 +14,7 @@ export class GridDataComponent implements OnInit {
   @Output() gdDelete = new EventEmitter<any>()
   @Output() gdApprove = new EventEmitter<any>()
   @Output() gdRestore = new EventEmitter<any>()
+  @Output() gdLog = new EventEmitter<any>()
   @Output() gdChild = new EventEmitter<any>()
   @Output() gdType = new EventEmitter<any>()
   rowDataRestore: any
@@ -136,26 +137,27 @@ export class GridDataComponent implements OnInit {
   selectSection(name){
     var kw = ""
      var i = 0
-     if (this.keyword[name+'Tmp']) {
-       if (this.keyword[name+'Tmp'].length > 0) {
-         this.keyword[name+'Tmp'].forEach(item => {
-
-           if ( i < this.keyword[name+'Tmp'].length-1) {
-             kw += item + ","
-           }
-           else{
-             kw += item
-           }
-           i++
-         });
-       }
-       else{
-         kw = this.keyword[name+'Tmp']
-       }
-     }
-     else{
-       kw = this.keyword[name+'Tmp']
-     }
+      if (this.keyword[name+'Tmp']) {
+        if (typeof this.keyword[name+'Tmp'] == 'object') {
+          if (this.keyword[name+'Tmp'].length > 0) {
+            this.keyword[name+'Tmp'].forEach(item => {
+              if ( i < this.keyword[name+'Tmp'].length-1) {
+                kw += item + ","
+              }
+              else{
+                kw += item
+              }
+              i++
+            });
+          }
+          else{
+            kw = this.keyword[name+'Tmp']
+          }
+        }
+        else{
+          kw = this.keyword[name+'Tmp']
+        }
+      }
      this.keyword[name] = kw
 
 
@@ -192,7 +194,7 @@ export class GridDataComponent implements OnInit {
   setCache(){
     this.rowData = null
     this.keyword.pageSize = this.gridConfig.pageSize
-    this.keyword.pageIndex = 1
+    this.keyword.pageIndex = this.pageIndex
     this.keyword.isDelete = this.gridConfig.isRestore
     setTimeout(() => {
       this.gdSearch.emit(this.keyword);
@@ -205,6 +207,10 @@ export class GridDataComponent implements OnInit {
 
   getDataApprove(data: any){
     this.gdApprove.emit(data);
+  }
+
+  getDataLog(data: any){
+    this.gdLog.emit(data);
   }
 
   getDataRestore(data: any){
@@ -241,6 +247,7 @@ export class GridConfig{
   idModalRestore?: string
   idModalDelete?: string
   idModalApprove?: string
+  idModalLog?: string
   idModal?: string
 
   disableApprove?: boolean
@@ -249,6 +256,7 @@ export class GridConfig{
   disableDelete?: boolean
   disableRestore?: boolean
   disableRadioBox?: boolean
+  disableLog?: boolean
   radioBoxName?: string
   style?: string
   isRestore?: boolean
@@ -257,6 +265,6 @@ export class GridConfig{
   totalResult? : number
 }
 
-export declare type GridFilter = 'star' | 'number' | 'date' | 'dateTime' | 'status' | 'text' | 'call' | 'price' | 'statusTourBooking' | 'statusCar' ;
+export declare type GridFilter = 'star' | 'number' | 'date' | 'dateTime' | 'status' | 'text' | 'call' | 'price' | 'statusTourBooking' | 'statusCar' | 'statusPayment' ;
 export declare type GridSearchType = 'section' | 'number' | 'date' | 'dateTime' | 'text' | 'email' | 'price' ;
 export declare type  GridTypeDate = 'single' | 'range' ;

@@ -13,6 +13,9 @@ export class RestaurantModel{
   modifyDateDisplay: string
   approve: number
   approveName: string
+  provinceId: string
+  districtId: string
+  wardId: string
 }
 
 export class ValidationRestaurantModel{
@@ -21,4 +24,7 @@ export class ValidationRestaurantModel{
   phone: string= null
   address: string= null
   comboPrice: number
+  provinceId: string
+  districtId: string
+  wardId: string
 }

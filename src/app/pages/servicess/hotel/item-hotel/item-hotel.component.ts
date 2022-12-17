@@ -1,11 +1,18 @@
 import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
 import { HotelModel ,ValidationHotelModel} from 'src/app/models/hotel.model';
-import { HotelService } from "src/app/services_API/hotel.service"
 import { NotificationService } from "../../../../services_API/notification.service";
+import { HotelService } from "src/app/services_API/hotel.service"
 import { ConfigService } from "../../../../services_API/config.service";
 import { ResponseModel } from "../../../../models/responsiveModels/response.model";
 import { AuthenticationModel } from 'src/app/models/authentication.model';
 import { StatusNotification } from "../../../../enums/enum";
+import { LocationModel} from 'src/app/models/location.model';
+import { ProvinceService } from "../../../../services_API/province.service";
+import { DistrictService } from "../../../../services_API/district.service";
+import { WardService } from "../../../../services_API/ward.service";
+import { LogLevel } from '@microsoft/signalr';
+
+
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
 @Component({
@@ -27,11 +34,26 @@ export class ItemHotelComponent implements OnInit {
   resHotelTmp: HotelModel
   listStar: any
   formData: any
-  constructor(private hotelService: HotelService, private configService: ConfigService, private notificationService: NotificationService) { }
+  resProvince: LocationModel
+  resDistrict: LocationModel
+  resWard : LocationModel
+  resProvinceTmp: LocationModel
+  resDistrictTmp: LocationModel
+  resWardTmp : LocationModel
+  constructor(private hotelService: HotelService,
+     private provinceService: ProvinceService,
+     private districtService: DistrictService,
+     private wardService: WardService,
+     private configService: ConfigService,
+     private notificationService: NotificationService
+     ) { }
 
   ngOnInit(): void {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
     this.listStar = this.configService.list5Star()
+    this.provinceService.views().then(response => this.resProvince = response)
+    this.districtService.views().then(response => this.resDistrict = response)
+    this.wardService.views().then(response => this.resWard = response)
   }
 
   ngOnChanges(): void {
@@ -67,25 +89,22 @@ export class ItemHotelComponent implements OnInit {
     this.validateHotel = new ValidationHotelModel
     this.validateHotel =  this.configService.validateHotel(this.resHotel, this.validateHotel)
     if (this.validateHotel.total == 0) {
-      //var file = new FormData();
-      //file.append('data', JSON.stringify(this.resHotel))
-
-      //if (this.formData) {
-        //file.append('file', this.formData.path[0].files[0])
-      //}
-
       this.resHotel.IdUserModify = this.auth.id
       if(this.type == "create")
       {
         this.hotelService.create(this.resHotel).subscribe(res =>{
           this.response = res
-          this.notificationService.handleAlertObj(res.notification)
-          if(this.response.notification.type == StatusNotification.Success)
-          {
-            this.resHotel = Object.assign({}, new HotelModel)
-            this.resHotelTmp = Object.assign({}, new HotelModel)
-            this.validateHotel = new ValidationHotelModel
-            this.isChange = false
+          if (res.notification.type == StatusNotification.Validation) {
+            this.validateHotel[res.notification.description] == res.notification.messenge
+          }
+          else{
+            this.notificationService.handleAlertObj(res.notification)
+            if (this.response.notification.type == StatusNotification.Success) {
+              this.resHotel = Object.assign({}, new HotelModel)
+              this.resHotelTmp = Object.assign({}, new HotelModel)
+              this.validateHotel = new ValidationHotelModel
+              this.isChange = false
+            }
           }
           this.isLoading = false
         }, error => {
@@ -97,12 +116,16 @@ export class ItemHotelComponent implements OnInit {
       else{
         this.hotelService.update(this.resHotel, this.resHotel.idHotel).subscribe(res =>{
           this.response = res
-          this.notificationService.handleAlertObj(res.notification)
-
-          if(this.response.notification.type == StatusNotification.Success)
+          if (res.notification.type == StatusNotification.Validation) {
+            this.validateHotel[res.notification.description] == res.notification.messenge
+          }
+          else
           {
-            this.isChange = false
-            this.closeModal.nativeElement.click()
+            this.notificationService.handleAlertObj(res.notification)
+            if (this.response.notification.type == StatusNotification.Success) {
+              this.isChange = false
+              this.closeModal.nativeElement.click()
+            }
           }
           this.isLoading = false
         }, error => {
@@ -128,6 +151,28 @@ export class ItemHotelComponent implements OnInit {
   getParentData(type?: string){
     this.parentType.emit(type);
     this.parentData.emit(this.resHotel);
+  }
+
+  locationChange(property: string, location?: string){
+    var list = []
+
+    if (property == 'province') {
+        this.resHotel.districtId = null
+        this.resHotel.wardId = null
+        this.resDistrictTmp = null
+        this.resWardTmp = null
+    }
+    else{
+      this.resHotel.wardId = null
+      this.resWardTmp = null
+    }
+
+    this["res"+location].forEach(item => {
+      if (item[property+'Id'] == this.resHotel[property+'Id']) {
+        list.push(item)
+      }
+    })
+    this["res"+location+"Tmp"] = list
   }
 
   formatInput(input: HTMLInputElement, property: string) {

@@ -19,7 +19,6 @@ import { ListCustomerComponent } from 'src/app/pages/customer/list-customer/list
 
 import { ListTourComponent } from 'src/app/pages/tour/list-tour/list-tour.component';
 
-import { ListTourBookingComponent } from 'src/app/pages/tourBookings/list-tour-booking/list-tour-booking.component';
 
 import { ListHotelComponent } from 'src/app/pages/servicess/hotel/list-hotel/list-hotel.component';
 import { ListPlaceComponent } from '../../pages/servicess/place/list-place/list-place.component';
@@ -51,7 +50,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'list-customer',  component: ListCustomerComponent },
     { path: 'list-tour',  component: ListTourComponent },
     { path: 'item-tour/:id1/:id2',  component: ItemTourComponent },
-    { path: 'list-tourBooking',  component: ListTourBookingComponent},
+
     { path: 'list-hotel',     component: ListHotelComponent},
     { path: 'list-promotion',  component: ListPromotionComponent},
     { path: 'list-restaurant',     component: ListRestaurantComponent},

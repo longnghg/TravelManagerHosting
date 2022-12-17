@@ -24,3 +24,10 @@ export class ReportTourBookingModel{
   totalRevenue: number
   totalCost: number
 }
+
+export class TotalTourBooking{
+  total: number
+  totalPaid: number
+  totalFinished: number
+  totalCancel: number
+}

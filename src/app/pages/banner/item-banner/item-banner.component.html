@@ -1,0 +1,80 @@
+<div class="modal-content">
+    <div class="modal-header">
+
+      <h5 class="modal-title">Thông tin Banner</h5>
+      <button #closeModal type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body" *ngIf="resBanner">
+
+      <fieldset>
+        <legend>Banner</legend>
+        <div class="row">
+          <div class="col-4">
+            <div class="row">
+              <div class="form-group">
+                <label class="form-control-label" for="input-tourName">Tên Banner
+                  <span [class]="type != 'detail'&& type != 'create' ?'d-none':'text-danger' ">* {{validateBanner.nameBanner ? validateBanner.nameBanner : ''}}</span>
+                </label>
+                <input type="text" id="nameBanner" name="nameBanner" [(ngModel)]="resBanner.nameBanner" class="form-control form-control-alternative" placeholder="Nhập số tên banner" [readonly]="type == 'detail'  || isLoading" >
+              </div>
+            </div>
+            <div class="row" *ngIf="type=='create' && img.length < 6">
+              <div class="form-group">
+                <input #bannerImg id="files" type="file" multiple class="d-none" accept="image/*,.jpg, .png, .jpeg" (change)="changeImg($event)">
+                <button for="files"  class="icon-btn add-btn" (click)="btnBannerImg()" style="position: relative;top: 30%;" [disabled]="isLoading" *ngIf="type == 'create' ">
+                  <div class="add-icon"></div>
+                 <div class="btn-txt">Thêm hình</div>
+                 </button>
+              </div>
+            </div>
+
+
+          </div>
+          <div class="col-8">
+            <ng-container *ngIf="img.length > 0; else elseTemplate">
+              <ngb-carousel *ngIf="img" >
+                <ng-template ngbSlide *ngFor="let item of img; let i=index" >
+                    <div class="picsum-img-wrapper">
+                    <img [src]="item" alt="Random first slide" style="width: 43rem;
+                    border-radius: 2rem; height: 30rem;" />
+                  </div>
+                  <div class="carousel-caption" *ngIf="type=='create' && !isLoading" style="margin-bottom: 23rem;
+                  margin-left: 31rem;">
+                    <button class="btn btn-danger" (click)="btnDeleteImg(i, item)">Xóa</button>
+                  </div>
+
+                  <!-- <div class="picsum-img-wrapper">
+                    <img [src]="img" alt="Random first slide" style="width: 43rem;
+                    border-radius: 2rem;" />
+                  </div>
+                  <div class="carousel-caption">
+                    <h3>First slide label</h3>
+                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                  </div> -->
+                </ng-template>
+
+              </ngb-carousel>
+            </ng-container>
+            <ng-template #elseTemplate>
+              <img [src]="imgCreate" alt="Random first slide" style="width: 43rem;
+                    border-radius: 2rem; height: 30rem;" />
+            </ng-template>
+
+
+          </div>
+        </div>
+
+
+        <!-- <img style="width: 100% ;height: 380px; border-radius: 20px;" [src]="img"> -->
+
+      </fieldset>
+    </div>
+    <div class="modal-footer">
+      <button  *ngIf="type == 'detail'" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCarModal" (click)="getDataDelete()" [disabled]="isLoading">Xóa</button>
+      <button class="btn btn-info" (click)="isLoading=true; save()" [disabled]="isLoading" *ngIf="type=='create'">
+        <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        {{isLoading?'Đang xử lý...':'Thêm'}}
+      </button>
+
+    </div>
+  </div>

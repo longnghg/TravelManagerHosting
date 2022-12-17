@@ -34,7 +34,8 @@ export class ListCustomerComponent implements OnInit {
       disableCreate: true,
       disableDelete: true,
       disableRestore: true,
-      disableRadioBox: true
+      disableRadioBox: false,
+      radioBoxName: "Ds bị block",
     }
     ngOnInit(): void {
 

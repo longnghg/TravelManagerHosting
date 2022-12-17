@@ -7,6 +7,11 @@ import { ConfigService } from "../../../../services_API/config.service";
 import { ResponseModel } from "../../../../models/responsiveModels/response.model";
 import { StatusNotification } from "../../../../enums/enum";
 import { AuthenticationModel } from 'src/app/models/authentication.model';
+import { LocationModel} from 'src/app/models/location.model';
+import { ProvinceService } from "../../../../services_API/province.service";
+import { DistrictService } from "../../../../services_API/district.service";
+import { WardService } from "../../../../services_API/ward.service";
+
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
 @Component({
@@ -27,12 +32,24 @@ export class ItemRestaurantComponent implements OnInit {
   isChange: boolean = false
   resRestaurantTmp: RestaurantModel
   formData: any
+  resProvince: LocationModel
+  resDistrict: LocationModel
+  resWard : LocationModel
+  resProvinceTmp: LocationModel
+  resDistrictTmp: LocationModel
+  resWardTmp : LocationModel
   constructor(private restaurantService: RestaurantService,
     private configService: ConfigService,
+    private provinceService: ProvinceService,
+    private districtService: DistrictService,
+    private wardService: WardService,
     private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
+    this.provinceService.views().then(response => this.resProvince = response)
+    this.districtService.views().then(response => this.resDistrict = response)
+    this.wardService.views().then(response => this.resWard = response)
   }
 
   ngOnChanges(): void {
@@ -66,19 +83,22 @@ export class ItemRestaurantComponent implements OnInit {
     this.validateRestaurant = new ValidationRestaurantModel
     this.validateRestaurant =  this.configService.validateRestaurant(this.resRestaurant, this.validateRestaurant)
     if (this.validateRestaurant.total == 0) {
-
       this.resRestaurant.IdUserModify = this.auth.id
       if(this.type == "create")
       {
-          this.restaurantService.create(this.resRestaurant).subscribe(res =>{
+        this.restaurantService.create(this.resRestaurant).subscribe(res =>{
           this.response = res
-          this.notificationService.handleAlertObj(res.notification)
-          if(this.response.notification.type == StatusNotification.Success)
-          {
-            this.resRestaurant = Object.assign({}, new RestaurantModel)
-            this.resRestaurantTmp = Object.assign({}, new RestaurantModel)
-            this.validateRestaurant = new ValidationRestaurantModel
-            this.isChange = false
+          if (res.notification.type == StatusNotification.Validation) {
+            this.validateRestaurant[res.notification.description] == res.notification.messenge
+          }
+          else{
+            this.notificationService.handleAlertObj(res.notification)
+            if (this.response.notification.type == StatusNotification.Success) {
+              this.resRestaurant = Object.assign({}, new RestaurantModel)
+              this.resRestaurantTmp = Object.assign({}, new RestaurantModel)
+              this.validateRestaurant = new ValidationRestaurantModel
+              this.isChange = false
+            }
           }
           this.isLoading = false
         }, error => {
@@ -90,11 +110,16 @@ export class ItemRestaurantComponent implements OnInit {
       else{
         this.restaurantService.update(this.resRestaurant, this.resRestaurant.idRestaurant).subscribe(res =>{
           this.response = res
-          this.notificationService.handleAlertObj(res.notification)
-          if(this.response.notification.type == StatusNotification.Success)
+          if (res.notification.type == StatusNotification.Validation) {
+            this.validateRestaurant[res.notification.description] == res.notification.messenge
+          }
+          else
           {
-		        this.isChange = false
-            this.closeModal.nativeElement.click()
+            this.notificationService.handleAlertObj(res.notification)
+            if (this.response.notification.type == StatusNotification.Success) {
+              this.isChange = false
+              this.closeModal.nativeElement.click()
+            }
           }
           this.isLoading = false
         }, error => {
@@ -103,8 +128,10 @@ export class ItemRestaurantComponent implements OnInit {
           this.isLoading = false
         })
       }
-
-      }
+    }
+    else{
+      this.isLoading = false
+    }
     }
 
     close(){
@@ -117,6 +144,28 @@ export class ItemRestaurantComponent implements OnInit {
     getParentData(type?: string){
       this.parentType.emit(type);
       this.parentData.emit(this.resRestaurant);
+    }
+
+    locationChange(property: string, location?: string){
+      var list = []
+
+      if (property == 'province') {
+          this.resRestaurant.districtId = null
+          this.resRestaurant.wardId = null
+          this.resDistrictTmp = null
+          this.resWardTmp = null
+      }
+      else{
+        this.resRestaurant.wardId = null
+        this.resWardTmp = null
+      }
+
+      this["res"+location].forEach(item => {
+        if (item[property+'Id'] == this.resRestaurant[property+'Id']) {
+          list.push(item)
+        }
+      })
+      this["res"+location+"Tmp"] = list
     }
 
     formatInput(input: HTMLInputElement, property: string) {

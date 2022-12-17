@@ -2,11 +2,13 @@ import { Component, OnInit,ViewChild, ElementRef  } from '@angular/core';
 import { TourBookingModel, TourBookingStatisticModel } from 'src/app/models/tourBooking.model';
 import { TourookingService } from "../../../services_API/tourBooking.service";
 import { NotificationService } from "../../../services_API/notification.service";
+import { ProvinceService } from "../../../services_API/province.service";
 import { ConfigService } from "../../../services_API/config.service";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { StatusNotification } from "../../../enums/enum";
 import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.component';
 import { PaginationModel } from "../../../models/responsiveModels/pagination.model";
+import { LocationModel } from "../../../models/location.model";
 @Component({
   selector: 'app-list-tour-booking',
   templateUrl: './list-tour-booking.component.html',
@@ -25,7 +27,9 @@ export class ListTourBookingComponent implements OnInit {
   typeChild: string
   data: TourBookingModel
   pagination = new PaginationModel
-  constructor(private tourookingService: TourookingService, private notificationService: NotificationService,
+  resProvince: LocationModel
+  constructor(private provinceService: ProvinceService,
+    private tourookingService: TourookingService, private notificationService: NotificationService,
     private configService: ConfigService) { }
     public columnDefs: ColDef[]
     public gridConfig: GridConfig = {
@@ -38,15 +42,21 @@ export class ListTourBookingComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.columnDefs= [
-      // { field: 'idTourBooking',headerName: "Mã", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'idTourBooking'},
-      { field: 'pincode',headerName: "Pin code", style: "width: 13%;", searchable: true, searchType: 'text', searchObj: 'pincode'},
-      { field: 'bookingNo',headerName: "booking No", style: "width: 14%;", searchable: true, searchType: 'text', searchObj: 'pincode'},
-      { field: 'phone',headerName: "Số điện thoại", style: "width: 10%;", searchable: true, searchType: 'text', searchObj: 'phone'},
-      { field: 'dateBooking',headerName: "Ngày đặt tour", style: "width: 18.5%;", filter: "dateTime" , searchable: true, searchType: 'dateTime', typeDate:"range", searchObj: 'dateBooking'},
-      { field: 'isCalled',headerName: "Gọi xác nhận", style: "width: 11.5%;", filter: "call",searchable: true, searchType: 'section', searchObj: 'isCalled' , multiple: false, closeOnSelect: true, bindLabel: 'name', bindValue: "id", listSection: this.configService.listCalled()},
-      { field: 'status',headerName: "Trạng thái", style: "width: 23%;", filter: "statusTourBooking",searchable: true, searchType: 'section', searchObj: 'status' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listStatusBooking()},
-    ];
+    this.provinceService.views().then(response => {
+      this.resProvince = response
+      this.columnDefs= [
+        // { field: 'idTourBooking',headerName: "Mã", style: "width: 15%;", searchable: true, searchType: 'text', searchObj: 'idTourBooking'},
+        { field: 'pincode',headerName: "Pin code", style: "width: 11%;", searchable: true, searchType: 'text', searchObj: 'pincode'},
+        { field: 'bookingNo',headerName: "booking No", style: "width: 13%;", searchable: true, searchType: 'text', searchObj: 'pincode'},
+        { field: 'phone',headerName: "Số điện thoại", style: "width: 9%;", searchable: true, searchType: 'text', searchObj: 'phone'},
+        { field: 'dateBooking',headerName: "Ngày đặt tour", style: "width: 16%;", filter: "dateTime" , searchable: true, searchType: 'dateTime', typeDate:"range", searchObj: 'dateBooking'},
+        { field: 'paymentId',headerName: "Phương thức thanh toán", style: "width: 11%;", filter: "statusPayment",searchable: true, searchType: 'section', searchObj: 'payment' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listPayment()},
+        { field: 'toPlace',headerName: "Tên thành phố/tỉnh", style: "width: 11%;"  , searchable: true, searchType: 'section', searchObj: 'toPlace', multiple: false, closeOnSelect: true, bindLabel: 'nameProvince', bindValue: "nameProvince", listSection: this.resProvince},
+        { field: 'isCalled',headerName: "Gọi xác nhận", style: "width: 9%;", filter: "call",searchable: true, searchType: 'section', searchObj: 'isCalled' , multiple: false, closeOnSelect: true, bindLabel: 'name', bindValue: "id", listSection: this.configService.listCalled()},
+        { field: 'status',headerName: "Trạng thái", style: "width: 20%;", filter: "statusTourBooking",searchable: true, searchType: 'section', searchObj: 'status' , multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id", listSection: this.configService.listStatusBooking()},
+      ];
+    })
+
     this.initStatistic()
     this.gridConfig.pageSize = this.pagination.pageSize
     this.search(this.pagination, true)
@@ -55,9 +65,13 @@ export class ListTourBookingComponent implements OnInit {
     if (e) {
       this.tourookingService.search(Object.assign({}, e)).subscribe(res => {
         this.response = res
+        console.log(res);
+
         if(this.response.notification.type == StatusNotification.Success)
         {
           this.resTourBooking = this.response.content
+          console.log(this.resTourBooking);
+
         }
         else{
           this.resTourBooking = []

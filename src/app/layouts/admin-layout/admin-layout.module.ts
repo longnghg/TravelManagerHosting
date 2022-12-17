@@ -57,10 +57,6 @@ import { NgSelectModule }           from '@ng-select/ng-select';
 import { NgOptionHighlightModule }  from '@ng-select/ng-option-highlight';
 
 
-import { ListTourBookingComponent } from '../../pages/tourBookings/list-tour-booking/list-tour-booking.component';
-import { ItemTourBookingComponent } from '../../pages/tourBookings/item-tour-booking/item-tour-booking.component';
-
-
 import { ViewTourScheduleComponent } from '../../pages/tour/view-tour-schedule/view-tour-schedule.component';
 import { ItemTourScheduleComponent } from '../../pages/tour/item-tour-schedule/item-tour-schedule.component';
 
@@ -69,7 +65,7 @@ import { PipesModule } from "../../pipes/pipes.module";
 
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
-
+import { ItemBannerComponent } from '../../pages/banner/item-banner/item-banner.component';
 import { ListLogsComponent } from '../../pages/logs/list-logs/list-logs.component';
 import { ItemLogsComponent } from '../../pages/logs/item-logs/item-logs.component';
 @NgModule({
@@ -88,13 +84,11 @@ import { ItemLogsComponent } from '../../pages/logs/item-logs/item-logs.componen
     CKEditorModule
   ],
   declarations: [
-
     DashboardComponent,
     UserProfileComponent,
     TablesComponent,
     IconsComponent,
     BannerComponent,
-    ItemTourBookingComponent,
     ListLocationComponent,
     ItemLocationComponent,
 
@@ -109,7 +103,7 @@ import { ItemLogsComponent } from '../../pages/logs/item-logs/item-logs.componen
     ItemDistrictComponent,
     ItemWardComponent,
     ListWardComponent,
-    ListTourBookingComponent,
+
     ListHotelComponent,
     ItemHotelComponent,
     ListPromotionComponent,
@@ -128,6 +122,7 @@ import { ItemLogsComponent } from '../../pages/logs/item-logs/item-logs.componen
     ListVoucherComponent,
     ListLogsComponent,
     ItemLogsComponent,
+    ItemBannerComponent
   ],
   providers: [NavbarComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
