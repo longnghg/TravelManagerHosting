@@ -1,0 +1,82 @@
+<div class="modal-header">
+    <h1 class="modal-title fs-5" id="gridDataLael">Thông tin chi tiết</h1>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
+  </div>
+  <div class="modal-body">
+    <ng-container *ngIf="resLog">
+      <div class="container-fluid" >
+        <form>
+          <div class="pl-lg-4">
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-name">mã</label>
+                  <input type="text" id="id" name="id" class="form-control " placeholder="Mã code sẽ tự tạo " readonly [(ngModel)]="resLog.id">
+                </div>
+              </div>
+              <div class="col-lg-6" >
+                <div class="form-group">
+                  <label class="form-control-label" for="input-name" >Môi trường</label>
+                  <input type="text" id="content" name="content" class="form-control " readonly [(ngModel)]="resLog.classContent">
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row align-items-center">
+              <div class="col-12 text-right">
+                <button class="btn btn-success"   (click)="getDetail()">XEM </button>
+                <ng-container *ngIf="resTour">
+                  <form>
+                    <div class="pl-lg-4">
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-name">Mã Tour</label>
+                            <input type="text" id="id" name="id" class="form-control " placeholder="Mã code sẽ tự tạo " readonly [(ngModel)]="resTour.idTour">
+                          </div>
+                        </div>
+                        <div class="col-lg-6" >
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-name" >Tên tour</label>
+                            <input type="text" id="content" name="content" class="form-control " readonly [(ngModel)]="resTour.nameTour">
+                          </div>
+                        </div>
+
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-name">người tạo</label>
+                            <input type="text" id="modifyBy" name="modifyBy" class="form-control " placeholder="Mã code sẽ tự tạo " readonly [(ngModel)]="resTour.modifyBy">
+                          </div>
+                        </div>
+                        <div class="col-lg-3" >
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-name" >Thời gian</label>
+                            <input type="text" id="modifyDate" name="modifyDate" class="form-control " readonly [(ngModel)]="resTour.modifyDate ">
+                          </div>
+                        </div>
+                        <div class="col-lg-3" >
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-name" >Loại Phê Duyệt</label>
+                            <input type="text" id="typeAction" name="typeAction" class="form-control " readonly [(ngModel)]="resTour.typeAction">
+                          </div>
+                        </div>
+                      </div>
+                      <hr>
+                    </div>
+                  </form>
+                </ng-container>
+              </div>
+            </div>
+            <hr>
+          </div>
+        </form>
+      </div>
+
+
+
+    </ng-container>
+  </div>

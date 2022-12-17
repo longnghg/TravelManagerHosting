@@ -27,4 +27,9 @@ export class CustomerService{
   {
     return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/customer/block-customer?idCustomer="+idCustomer+"&isBlock="+isBlock,{});
   }
+  statisticCus()
+  {
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Statistic/list-statistic-total-cus");
+
+  }
 }

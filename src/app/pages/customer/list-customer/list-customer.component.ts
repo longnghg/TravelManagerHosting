@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NotificationService } from "../../../services_API/notification.service";
 import { ConfigService } from "../../../services_API/config.service";
 import { CustomerService } from 'src/app/services_API/customer.service';
-import { CustomerModel } from 'src/app/models/customer.model';
+import { CustomerModel ,CustomerStatisticModel} from 'src/app/models/customer.model';
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.component';
 import { StatusNotification } from "../../../enums/enum";
@@ -15,10 +15,12 @@ import { PaginationModel } from 'src/app/models/responsiveModels/pagination.mode
 export class ListCustomerComponent implements OnInit {
   @ViewChild('closeModalBlockLoad') closeModalBlockLoad: ElementRef;
   resCustomer: CustomerModel[]
+  resStatisticCus: CustomerStatisticModel = new CustomerStatisticModel
   response: ResponseModel
   dataChild: CustomerModel
   data: CustomerModel
   typeChild: string
+  resStatistic:string
   pagination = new PaginationModel
   isLoading: boolean
   constructor(private customerService: CustomerService, private notificationService: NotificationService,
@@ -49,6 +51,7 @@ export class ListCustomerComponent implements OnInit {
 
       this.gridConfig.pageSize = this.pagination.pageSize
       this.search(this.pagination, true)
+      this.initStatistic()
     }
 
     init(){
@@ -65,12 +68,26 @@ export class ListCustomerComponent implements OnInit {
         this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
+    initStatistic(){
+      this.customerService.statisticCus().subscribe (res => {
+        this.response = res
+        if(this.response.notification.type == StatusNotification.Success)
+        {
+          this.resStatisticCus = this.response.content
+
+
+        }
+        else{
+          this.notificationService.handleAlertObj(res.notification)
+        }
+      })
+    }
 
     search(e, isNotShow?){
       if (e) {
         this.customerService.search(Object.assign({}, e)).subscribe(res => {
           this.response = res
-          console.log(res);
+
 
           if(this.response.notification.type == StatusNotification.Success)
           {
