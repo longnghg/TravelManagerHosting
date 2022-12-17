@@ -32,7 +32,7 @@ import { ViewTourScheduleComponent } from '../../pages/tour/view-tour-schedule/v
 import { ItemTourComponent } from 'src/app/pages/tour/item-tour/item-tour.component';
 import { ListVoucherComponent } from 'src/app/pages/voucher/list-voucher/list-voucher.component';
 
-
+import {  ListLogsComponent} from 'src/app/pages/logs/list-logs/list-logs.component';
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
@@ -58,4 +58,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'list-car',     component: ListCarComponent},
     { path: 'list-voucher',     component: ListVoucherComponent},
     { path: 'view-tour-schedule',     component: ViewTourScheduleComponent},
+    { path: 'list-logs',     component: ListLogsComponent},
+
 ];

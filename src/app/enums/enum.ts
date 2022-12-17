@@ -46,7 +46,13 @@ export enum TypeAction{
   update = "Chỉnh sửa",
   restore = "Khôi phục"
 }
-
+export enum ClassContent{
+  tour = "Tour",
+  tourBooking = "TourBooking",
+  hotel = "Hotel",
+  place  ="Place",
+  restaurant ="Restaurant"
+}
 export enum StatusBooking
 {
     "Đã huỷ và đang chờ hoàn tiền" = -2, // Pending warning
