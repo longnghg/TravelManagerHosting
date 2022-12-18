@@ -102,6 +102,7 @@ export class ItemTourComponent implements OnInit {
       if(this.response.notification.type == StatusNotification.Success)
       {
         this.resTour = this.response.content
+        sessionStorage.setItem("toPlace", this.resTour.toPlace)
         if(this.resTour){
           if (this.resTour.thumbnail) {
             this.img = this.resTour.thumbnail

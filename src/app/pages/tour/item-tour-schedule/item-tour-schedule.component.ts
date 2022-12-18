@@ -29,6 +29,7 @@ import { ProvinceService } from 'src/app/services_API/province.service';
 
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditorComponent } from '@ckeditor/ckeditor5-angular';
+import { TourModel } from 'src/app/models/tour.model';
 
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
@@ -83,7 +84,6 @@ export class ItemTourScheduleComponent implements OnInit {
   isChangeTimeline: boolean = false
   isChangeTimelineList: boolean = false
   isFirst: boolean = true
-
   pageCount: number
   pageSize: number = 7
   index: number = 0
@@ -122,8 +122,6 @@ export class ItemTourScheduleComponent implements OnInit {
     else {
       if (this.resSchedule) {
         this.resSchedule.isUpdate = true
-        console.log(this.resSchedule);
-
         this.resSchedule.departureDateDisplay = this.configService.formatFromUnixTimestampToFullDateTime(this.resSchedule.departureDate)
         this.resSchedule.returnDateDisplay = this.configService.formatFromUnixTimestampToFullDateTime(this.resSchedule.returnDate)
         this.resSchedule.beginDateDisplay = this.configService.formatFromUnixTimestampToFullDateTime(this.resSchedule.beginDate)
@@ -190,17 +188,17 @@ export class ItemTourScheduleComponent implements OnInit {
     if (this.resSchedule) {
       // this.resSchedule.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.modifyDate)
         console.log(this.resSchedule);
-      this.hotelService.hotelByProvince(this.resSchedule.tour.toPlace).then(response => {
-        this.resHotel = response
-      })
-      this.placeService.placeByProvince(this.resSchedule.tour.toPlace).then(response => {
-        this.resPlace = response
-      })
+        var toPlace = sessionStorage.getItem("toPlace")
+        this.hotelService.hotelByProvince(toPlace).then(response => {
+          this.resHotel = response
+        })
+        this.placeService.placeByProvince(toPlace).then(response => {
+          this.resPlace = response
+        })
 
-      this.restaurantService.restaurantByProvince(this.resSchedule.tour.toPlace).then(response => {
-        this.resRestaurant = response
-      })
-
+        this.restaurantService.restaurantByProvince(toPlace).then(response => {
+          this.resRestaurant = response
+        })
       // if (this.type != "create") {
       //   this.carService.viewsUpdate(this.resSchedule.departureDate, this.resSchedule.returnDate, this.resSchedule.idSchedule).then(response => {
       //     this.resCar = response
@@ -459,6 +457,7 @@ export class ItemTourScheduleComponent implements OnInit {
         this.response = res
         this.isLoading = false
         if (this.response.notification.type == StatusNotification.Success) {
+          this.close()
           setTimeout(() => {
             this.closeModal.nativeElement.click()
           }, 100);
@@ -478,6 +477,7 @@ export class ItemTourScheduleComponent implements OnInit {
         this.isLoading = false
 
         if (this.response.notification.type == StatusNotification.Success) {
+
           setTimeout(() => {
             this.closeModal.nativeElement.click()
           }, 100);
