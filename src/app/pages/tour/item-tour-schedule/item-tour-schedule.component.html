@@ -50,10 +50,13 @@
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-6">
+                    <div class="col-6" >
                       <div class="form-group">
                         <label class="form-control-label" for="employeeId">Hướng dẫn viên
                           <span [class]="type != 'create' &&  resSchedule.isDelete || isLoading ?'d-none':'text-red'">* {{this.validateScheduleModel.employeeId ? this.validateScheduleModel.employeeId : ''}}</span>
+                          <a *ngIf="resSchedule.employeeId" class="info-icon-cus" (click)="openInfo('employee')" placement="top" ngbTooltip="Lịch trình của hướng dẫn viên">
+                            <i class="fa-solid fa-circle-info"></i>
+                          </a>
                         </label>
                         <ng-select [items]="resEmployee"
                                     bindLabel="nameEmployee"
@@ -71,7 +74,7 @@
                       <div class="form-group">
                         <label class="form-control-label" for="carId">Xe
                           <span [class]="type != 'create' &&  resSchedule.isDelete || isLoading ?'d-none':'text-red'">* {{this.validateScheduleModel.carId ? this.validateScheduleModel.carId : ''}}</span>
-                          <a *ngIf="resSchedule.carId" class="info-icon-cus" (click)="openInfo()" placement="top" ngbTooltip="Lịch trình của xe">
+                          <a *ngIf="resSchedule.carId" class="info-icon-cus" (click)="openInfo('car')" placement="top" ngbTooltip="Lịch trình của xe">
                             <i class="fa-solid fa-circle-info"></i>
                           </a>
                         </label>
@@ -587,34 +590,68 @@
     <div class="table-responsive">
       <!-- Projects table -->
       <table class="table align-items-center table-flush">
-        <thead class="thead-light">
-          <tr>
-            <th scope="col" style="width: 6%;"></th>
-            <th scope="col" style="width: 35%;">Tên tour</th>
-            <th scope="col" style="width: 15%;">Xe</th>
-            <th scope="col">Ngày khởi hành</th>
-            <th scope="col">Ngày về</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let schedule of scheduleOfCar">
-            <td style="width: 6%;">
-              {{schedule.rowNum}}
-            </td>
-            <td style="width: 35%; text-align: unset;">
-              {{schedule.tour.nameTour}}
-            </td>
-            <td style="width: 15%;">
-              {{schedule.car.liscensePlate}}
-            </td>
-            <td>
-              {{schedule.departureDate | formatFromUnixTimestampToFullDateTimeView}}
-            </td>
-            <td>
-              {{schedule.returnDate | formatFromUnixTimestampToFullDateTimeView}}
-            </td>
-          </tr>
-        </tbody>
+        <ng-container *ngIf="!isOpenInfoCar; else elseTemplate">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col" style="width: 6%;"></th>
+              <th scope="col" style="width: 35%;">Tên tour</th>
+              <th scope="col" style="width: 15%;">Xe</th>
+              <th scope="col">Ngày khởi hành</th>
+              <th scope="col">Ngày về</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let schedule of scheduleOfCar">
+              <td style="width: 6%;">
+                {{schedule.rowNum}}
+              </td>
+              <td style="width: 35%; text-align: unset;">
+                {{schedule.tour.nameTour}}
+              </td>
+              <td style="width: 15%;">
+                {{schedule.car.liscensePlate}}
+              </td>
+              <td>
+                {{schedule.departureDate | formatFromUnixTimestampToFullDateTimeView}}
+              </td>
+              <td>
+                {{schedule.returnDate | formatFromUnixTimestampToFullDateTimeView}}
+              </td>
+            </tr>
+          </tbody>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <thead class="thead-light">
+            <tr>
+              <th scope="col" style="width: 6%;"></th>
+              <th scope="col" style="width: 35%;">Tên tour</th>
+              <th scope="col" style="width: 15%;">Hướng dẫn viên</th>
+              <th scope="col">Ngày khởi hành</th>
+              <th scope="col">Ngày về</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let schedule of scheduleOfEmployee">
+              <td style="width: 6%;">
+                {{schedule.rowNum}}
+              </td>
+              <td style="width: 35%; text-align: unset;">
+                {{schedule.tour.nameTour}}
+              </td>
+              <td style="width: 15%;">
+                {{schedule.employee.nameEmployee}}
+              </td>
+              <td>
+                {{schedule.departureDate | formatFromUnixTimestampToFullDateTimeView}}
+              </td>
+              <td>
+                {{schedule.returnDate | formatFromUnixTimestampToFullDateTimeView}}
+              </td>
+            </tr>
+          </tbody>
+        </ng-template>
+
+
         <nav aria-label="Page navigation example" style="width: 100%; margin-left: 0;" class="row">
           <ul class="pagination justify-content-end" style="border-top: 1px solid; border-radius: unset;">
             <li class="page-item">
@@ -657,3 +694,4 @@
     </div>
   </div>
 </div>
+

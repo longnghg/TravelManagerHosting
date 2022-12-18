@@ -54,6 +54,7 @@ export class ItemTourComponent implements OnInit {
   ngOnInit(): void {
     this.resAuth = JSON.parse(localStorage.getItem("currentUser"))
     this.listStar = this.configService.list10Star()
+
     this.provinceService.views().then(res => {
       this.resProvince = res
     })
