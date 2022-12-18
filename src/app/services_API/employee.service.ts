@@ -99,4 +99,9 @@ statisticEmp()
   return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/list-statistic-total-emp");
 
 }
+
+scheduleOfEmployee(idEmployee: any, pageIndex: number, pageSize: number)
+{
+  return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/list-schedule-of-employee?idEmployee="+idEmployee+"&pageIndex="+pageIndex+"&pageSize="+pageSize);
+}
 }

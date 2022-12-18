@@ -78,7 +78,7 @@ export class ConfigService{
 
   list10Star(){
     var listStar = []
-    for (let index = 0; index <= 10; index++) {
+    for (let index = 1; index <= 10; index++) {
       var name = index.toString()
       if (index < 10) {
         name = "0"+name

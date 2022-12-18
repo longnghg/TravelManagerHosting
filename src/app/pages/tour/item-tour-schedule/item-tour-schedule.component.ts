@@ -62,6 +62,7 @@ export class ItemTourScheduleComponent implements OnInit {
   resTimelinelistDelete: TimeLineModel[] = []
   resCar: CarModel[]
   scheduleOfCar: ScheduleModel[]
+  scheduleOfEmployee: ScheduleModel[]
   resEmployee: EmployeeModel[]
   resPromotion: PromotionModel[]
   resHotel: HotelModel[]
@@ -91,7 +92,7 @@ export class ItemTourScheduleComponent implements OnInit {
   end: number = 0
   btnPrev: boolean = false
   btnNext: boolean = true
-
+  isOpenInfoCar: boolean = false
   public Editor = ClassicEditor;
   config = {
     placeholder: 'Nhập thông tin timeline',toolbar: ['heading', 'bold', 'italic', '|', 'undo', 'redo', '|', 'numberedList', 'bulletedList'],
@@ -200,25 +201,25 @@ export class ItemTourScheduleComponent implements OnInit {
         this.resRestaurant = response
       })
 
-      if (this.type != "create") {
-        this.carService.viewsUpdate(this.resSchedule.departureDate, this.resSchedule.returnDate, this.resSchedule.idSchedule).then(response => {
-          this.resCar = response
-        })
+      // if (this.type != "create") {
+      //   this.carService.viewsUpdate(this.resSchedule.departureDate, this.resSchedule.returnDate, this.resSchedule.idSchedule).then(response => {
+      //     this.resCar = response
+      //   })
 
-        this.employeeService.viewsUpdate(this.resSchedule.departureDate, this.resSchedule.returnDate, this.resSchedule.idSchedule).then(response => {
-          this.resEmployee = response
-        })
-      } else {
-        this.carService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
+      //   this.employeeService.viewsUpdate(this.resSchedule.departureDate, this.resSchedule.returnDate, this.resSchedule.idSchedule).then(response => {
+      //     this.resEmployee = response
+      //   })
+      // } else {
+      //   this.carService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
 
-          this.resCar = response
+      //     this.resCar = response
 
-        })
+      //   })
 
-        this.employeeService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
-          this.resEmployee = response
-        })
-      }
+      //   this.employeeService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
+      //     this.resEmployee = response
+      //   })
+      // }
     }
 
     // this.employeeService.views2().then(response => {
@@ -262,6 +263,7 @@ export class ItemTourScheduleComponent implements OnInit {
   }
 
   dateChange(property) {
+
     this.resSchedule[property] = new Date(this.resSchedule[property+'Display']).getTime()
     if (this.resSchedule.departureDate != this.resScheduleTmp.departureDate || this.resSchedule.returnDate != this.resScheduleTmp.returnDate) {
       this.resSchedule.isUpdateDR = true
@@ -271,6 +273,7 @@ export class ItemTourScheduleComponent implements OnInit {
     if (this.resSchedule.beginDate != this.resScheduleTmp.beginDate || this.resSchedule.endDate != this.resScheduleTmp.endDate) {
       this.resSchedule.isUpdate = false
     }
+
 
     if (property == "departureDate" || property == "returnDate"){
       // if (this.type != "create") {
@@ -292,10 +295,18 @@ export class ItemTourScheduleComponent implements OnInit {
       // }
       this.carService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
         this.resCar = response
+        if(!this.resCar){
+          this.resSchedule.carId = null
+          this.notificationService.handleAlert("Ngày bạn chọn hiện tại không có xe !", StatusNotification.Warning)
+        }
       })
 
       this.employeeService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
         this.resEmployee = response
+        if(!this.resEmployee){
+          this.resSchedule.employeeId = null
+          this.notificationService.handleAlert("Ngày bạn chọn hiện tại không có hướng dẫn viên !", StatusNotification.Warning)
+        }
       })
     }
 
@@ -592,7 +603,6 @@ export class ItemTourScheduleComponent implements OnInit {
     this.isChangeTimelineList = false
     this.resTimelinelistDelete = []
     this.isFirst = true
-    this.editorComponent.editorInstance.setData("")
     this.active = 1
     // if (this.type == "detail") {
     //   this.validateScheduleModel.isUpdate = true
@@ -677,12 +687,32 @@ export class ItemTourScheduleComponent implements OnInit {
       this.notificationService.handleAlert(message, StatusNotification.Error)
     })
   }
-  openInfo(){
-    this.initScheduleOfCar()
+  initScheduleOfEmployee(){
+    this.employeeService.scheduleOfEmployee(this.resSchedule.employeeId, this.pageIndex, this.pageSize).subscribe(res => {
+      this.response = res
+      this.scheduleOfEmployee = this.response.content
+      this.calStartEndEmployee()
+      this.calTotalResult(this.response.totalResult)
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
+  }
+  openInfo(name: string){
+    if(name == 'car'){
+      this.isOpenInfoCar = false
+      this.initScheduleOfCar()
+    }
+    else{
+      this.isOpenInfoCar = true
+      this.initScheduleOfEmployee()
+    }
+
     this.fade.nativeElement.style.display = "block"
     this.card.nativeElement.style.display = "block"
     this.card.nativeElement.setAttribute("class","card_open card-cus")
   }
+
 
   closeInfo(){
     this.fade.nativeElement.removeAttribute("style")
@@ -696,6 +726,15 @@ export class ItemTourScheduleComponent implements OnInit {
     this.end = this.start + this.pageSize - 1
     for (let index = 0; index < this.scheduleOfCar.length; index++) {
       this.scheduleOfCar[index].rowNum = this.start + index
+    }
+
+  }
+
+  calStartEndEmployee(){
+    this.start = ((this.pageIndex - 1) * this.pageSize) + 1
+    this.end = this.start + this.pageSize - 1
+    for (let index = 0; index < this.scheduleOfEmployee.length; index++) {
+      this.scheduleOfEmployee[index].rowNum = this.start + index
     }
 
   }
