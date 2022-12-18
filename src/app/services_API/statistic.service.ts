@@ -28,21 +28,21 @@ export class StatisticService{
 
   getStatisticTourbookingFromDateToDate(fromDate, toDate)
   {
-    return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Statistic/list-statistic-tourbooking-by-date?fromDate="+fromDate+"&toDate="+toDate);
+    return this.http.get<ResponseModel>(this.configService.apiTourBookingUrl + "/api/Statistic/list-statistic-tourbooking-by-date?fromDate="+fromDate+"&toDate="+toDate);
   }
 
   getStatisticTourbookingByYear(year)
   {
-    return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Statistic/list-statistic-tourbooking-by-year?year="+year);
+    return this.http.get<ResponseModel>(this.configService.apiTourBookingUrl + "/api/Statistic/list-statistic-tourbooking-by-year?year="+year);
   }
 
   getStatisticTourbookingByMonth(month, year)
   {
-    return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Statistic/list-statistic-tourbooking-by-month?month="+month+"&year="+year);
+    return this.http.get<ResponseModel>(this.configService.apiTourBookingUrl + "/api/Statistic/list-statistic-tourbooking-by-month?month="+month+"&year="+year);
   }
 
   getStatisticTotalTourbookingByDate(fromDate, toDate)
   {
-    return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Statistic/list-statistic-total-tourbooking-by-date?fromDate="+fromDate+"&toDate="+toDate);
+    return this.http.get<ResponseModel>(this.configService.apiTourBookingUrl + "/api/Statistic/list-statistic-total-tourbooking-by-date?fromDate="+fromDate+"&toDate="+toDate);
   }
 }
