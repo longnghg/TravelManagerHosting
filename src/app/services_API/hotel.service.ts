@@ -29,6 +29,20 @@ async views()
 
 }
 
+async hotelByProvince(toPlace: string)
+{
+  var value = <any>await new Promise<any>(resolve => {
+    this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/list-hotel-by-province?toPlace="+toPlace).subscribe(res => {
+      this.response = res
+      this.resHotel =  this.response.content
+      resolve(this.resHotel);
+  }, error => {
+    var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+    this.notificationService.handleAlert(message, "Error")
+  })})
+  return value
+}
+
 gets(isDelete)
 {
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/list-hotel?isDelete="+isDelete);
@@ -74,4 +88,5 @@ search(data){
 searchWaiting(data){
   return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Service/search-hotel-waiting", data);
 }
+
 }

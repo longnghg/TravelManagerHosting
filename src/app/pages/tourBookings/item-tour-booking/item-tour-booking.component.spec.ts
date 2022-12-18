@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ItemTourBookingComponent } from './item-tour-booking.component';
 
-describe('ItemTourBookingComponent', () => {
+describe('ItemPlaceComponent', () => {
   let component: ItemTourBookingComponent;
   let fixture: ComponentFixture<ItemTourBookingComponent>;
 
@@ -11,9 +11,7 @@ describe('ItemTourBookingComponent', () => {
       declarations: [ ItemTourBookingComponent ]
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(ItemTourBookingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

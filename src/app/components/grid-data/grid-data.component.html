@@ -20,7 +20,7 @@
                       {{item[column.bindLabel]}} -
                       <i class="fa-solid fa-star text-yellow" *ngFor='let star of item[column.bindValue] | forNumber'></i>
                       <i class="fa-solid fa-star" *ngFor='let star of column.listSection.length-1 - item[column.bindValue] | forNumber'></i>
-
+                      <input type="text">
                     </ng-template>
                   </ng-container>
                 </ng-select>

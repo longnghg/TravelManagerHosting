@@ -65,6 +65,8 @@ export class ListTourBookingComponent implements OnInit {
     if (e) {
       this.tourookingService.search(Object.assign({}, e)).subscribe(res => {
         this.response = res
+        console.log(res);
+
         if(this.response.notification.type == StatusNotification.Success)
         {
           this.resTourBooking = this.response.content

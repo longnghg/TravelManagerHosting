@@ -188,6 +188,17 @@ export class ItemTourScheduleComponent implements OnInit {
   init(e?) {
     if (this.resSchedule) {
       // this.resSchedule.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.modifyDate)
+        console.log(this.resSchedule);
+      this.hotelService.hotelByProvince(this.resSchedule.tour.toPlace).then(response => {
+        this.resHotel = response
+      })
+      this.placeService.placeByProvince(this.resSchedule.tour.toPlace).then(response => {
+        this.resPlace = response
+      })
+
+      this.restaurantService.restaurantByProvince(this.resSchedule.tour.toPlace).then(response => {
+        this.resRestaurant = response
+      })
 
       if (this.type != "create") {
         this.carService.viewsUpdate(this.resSchedule.departureDate, this.resSchedule.returnDate, this.resSchedule.idSchedule).then(response => {

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TourBookingLayoutComponent } from './tourBooking-layout.component';
+import { TourBookingLayoutComponent } from './tour-booking-layout.component';
 
 describe('TourBookingLayoutComponent', () => {
   let component: TourBookingLayoutComponent;

@@ -163,14 +163,14 @@
                      <p class="col-7" style="color: #2d4271;">{{resTourBooking.lastDate | formatFromUnixTimestampToFullDateView}}</p>
                   </div>
                   <div class="row" *ngIf="!isExpires && resTourBooking.status != 3 && resTourBooking.status != 5">
-                    <label class="form-label col-4" style="font-weight: 600;padding-top: 8px;">Tình trạng</label>
+                    <label class="form-label col-4" style="font-weight: 600;padding-top: 8px;">Tình trạng{{resTourBooking.status}}</label>
                     <div class="col-8">
                       <ng-select
                         [items]="listStatusBooking"
-                        [(ngModel)]="resTourBooking.status"
                         [clearable]="false"
-                        name="tourbooking"
-                        id="tourbooking"
+                        [(ngModel)]="resTourBooking.status"
+                        name="tourbookingg"
+                        id="tourbookingg"
                         bindLabel="name"
                         bindValue="id"
                         [searchable]="false"
@@ -179,7 +179,6 @@
                       </ng-select>
                     </div>
                   </div>
-
                   <div class="row mt-3" *ngIf="isChange && resTourBooking.status != 3 && resTourBooking.status != 5">
                     <!-- <button class="btn btn-info mb-3" (click)="getParentData('detail')">
                       Khôi phục

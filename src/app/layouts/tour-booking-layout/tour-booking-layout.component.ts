@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-tourBooking-layout',
-  templateUrl: './tourBooking-layout.component.html',
-  styleUrls: ['./tourBooking-layout.component.scss']
+  templateUrl: './tour-booking-layout.component.html',
+  styleUrls: ['./tour-booking-layout.component.scss']
 })
 export class TourBookingLayoutComponent implements OnInit {
 

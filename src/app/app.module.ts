@@ -20,12 +20,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 import { SupportLayoutComponent } from './layouts/support-layout/support-layout.component';
-import { TourBookingLayoutComponent } from './layouts/tourBooking-layout/TourBooking-layout.component';
+import { TourBookingLayoutComponent } from "./layouts/tour-booking-layout/tour-booking-layout.component";
 
 @NgModule({
   imports: [
     BrowserAnimationsModule,
-    FormsModule,
+    // FormsModule,
     HttpClientModule,
     ComponentsModule,
     NgbModule,

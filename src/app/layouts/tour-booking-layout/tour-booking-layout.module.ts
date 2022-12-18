@@ -1,9 +1,10 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { TourBookingLayoutRoutes } from './tourBooking-layout-layout.routing';
-
+import { FormsModule  } from '@angular/forms';
+import { TourBookingLayoutRoutes } from './tour-booking-layout.routing';
+import { NgSelectModule }           from '@ng-select/ng-select';
+import { NgOptionHighlightModule }  from '@ng-select/ng-option-highlight';
 import { PipesModule } from "../../pipes/pipes.module";
 
 import { NavbarComponent } from '../../components/navbar/navbar.component';
@@ -17,7 +18,9 @@ import { ComponentsModule } from '../../components/components.module'
     RouterModule.forChild(TourBookingLayoutRoutes),
     FormsModule,
     PipesModule,
-    ComponentsModule
+    ComponentsModule,
+    NgOptionHighlightModule,
+    NgSelectModule
   ],
   declarations: [
     ItemTourBookingComponent,
