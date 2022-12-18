@@ -32,12 +32,12 @@ export class ItemRestaurantComponent implements OnInit {
   isChange: boolean = false
   resRestaurantTmp: RestaurantModel
   formData: any
-  resProvince: LocationModel
-  resDistrict: LocationModel
-  resWard : LocationModel
-  resProvinceTmp: LocationModel
-  resDistrictTmp: LocationModel
-  resWardTmp : LocationModel
+  resProvince: LocationModel[]
+  resDistrict: LocationModel[]
+  resWard : LocationModel[]
+  resProvinceTmp: LocationModel[]
+  resDistrictTmp: LocationModel[]
+  resWardTmp : LocationModel[]
   constructor(private restaurantService: RestaurantService,
     private configService: ConfigService,
     private provinceService: ProvinceService,
@@ -60,6 +60,21 @@ export class ItemRestaurantComponent implements OnInit {
       this.resRestaurant.comboPrice = Number(this.resRestaurant.comboPrice).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
       this.resRestaurant.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resRestaurant.modifyDate)
 
+      var listDistrict = []
+      var listWard = []
+      this.resDistrict.forEach(district => {
+        if (district.provinceId == this.resRestaurant.provinceId) {
+          listDistrict.push(district)
+        }
+      })
+      this.resDistrictTmp = listDistrict
+
+      this.resWard.forEach(ward => {
+        if (ward.districtId == this.resRestaurant.districtId) {
+          listWard.push(ward)
+        }
+      })
+      this.resWardTmp = listWard
     }
     this.resRestaurantTmp = Object.assign({}, this.resRestaurant)
   }

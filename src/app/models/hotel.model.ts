@@ -16,9 +16,9 @@ export class HotelModel{
   modifyDateDisplay: string
   approve: number
   approveName: string
-  provinceId: string
-  districtId: string
-  wardId: string
+  provinceId: string = null
+  districtId: string = null
+  wardId: string = null
 }
 
 export class ValidationHotelModel{

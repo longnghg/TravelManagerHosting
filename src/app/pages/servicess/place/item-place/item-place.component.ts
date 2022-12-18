@@ -32,12 +32,12 @@ export class ItemPlaceComponent implements OnInit {
   response: ResponseModel
   isChange: boolean = false
   resPlaceTmp: PlaceModel
-  resProvince: LocationModel
-  resDistrict: LocationModel
-  resWard : LocationModel
-  resProvinceTmp: LocationModel
-  resDistrictTmp: LocationModel
-  resWardTmp : LocationModel
+  resProvince: LocationModel[]
+  resDistrict: LocationModel[]
+  resWard : LocationModel[]
+  resProvinceTmp: LocationModel[]
+  resDistrictTmp: LocationModel[]
+  resWardTmp : LocationModel[]
   formData: any
   constructor(private placeService: PlaceService,
     private configService: ConfigService,
@@ -49,6 +49,9 @@ export class ItemPlaceComponent implements OnInit {
 
   ngOnInit(): void {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
+    this.provinceService.views().then(response => this.resProvince = response)
+    this.districtService.views().then(response => this.resDistrict = response)
+    this.wardService.views().then(response => this.resWard = response)
   }
 
   ngOnChanges(): void {
@@ -58,9 +61,22 @@ export class ItemPlaceComponent implements OnInit {
     if (this.resPlace) {
       this.resPlace.priceTicket = Number(this.resPlace.priceTicket).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
       this.resPlace.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resPlace.modifyDate)
-      this.provinceService.views().then(response => this.resProvince = response)
-      this.districtService.views().then(response => this.resDistrict = response)
-      this.wardService.views().then(response => this.resWard = response)
+
+      var listDistrict = []
+      var listWard = []
+      this.resDistrict.forEach(district => {
+        if (district.provinceId == this.resPlace.provinceId) {
+          listDistrict.push(district)
+        }
+      })
+      this.resDistrictTmp = listDistrict
+
+      this.resWard.forEach(ward => {
+        if (ward.districtId == this.resPlace.districtId) {
+          listWard.push(ward)
+        }
+      })
+      this.resWardTmp = listWard
     }
 
     this.resPlaceTmp = Object.assign({}, this.resPlace)
@@ -157,7 +173,7 @@ export class ItemPlaceComponent implements OnInit {
     var list = []
 
     if (property == 'province') {
-        this.resDistrict.districtId = null
+        this.resPlace.districtId = null
         this.resPlace.wardId = null
         this.resDistrictTmp = null
         this.resWardTmp = null

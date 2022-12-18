@@ -34,12 +34,12 @@ export class ItemHotelComponent implements OnInit {
   resHotelTmp: HotelModel
   listStar: any
   formData: any
-  resProvince: LocationModel
-  resDistrict: LocationModel
-  resWard : LocationModel
-  resProvinceTmp: LocationModel
-  resDistrictTmp: LocationModel
-  resWardTmp : LocationModel
+  resProvince: LocationModel[]
+  resDistrict: LocationModel[]
+  resWard : LocationModel[]
+  resProvinceTmp: LocationModel[]
+  resDistrictTmp: LocationModel[] = null
+  resWardTmp : LocationModel[] = null
   constructor(private hotelService: HotelService,
      private provinceService: ProvinceService,
      private districtService: DistrictService,
@@ -65,6 +65,23 @@ export class ItemHotelComponent implements OnInit {
       this.resHotel.doubleRoomPrice = Number(this.resHotel.doubleRoomPrice).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
       this.resHotel.singleRoomPrice = Number(this.resHotel.singleRoomPrice).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
       this.resHotel.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resHotel.modifyDate)
+
+      var listDistrict = []
+      var listWard = []
+      this.resDistrict.forEach(district => {
+        if (district.provinceId == this.resHotel.provinceId) {
+          listDistrict.push(district)
+        }
+      })
+      this.resDistrictTmp = listDistrict
+
+      this.resWard.forEach(ward => {
+        if (ward.districtId == this.resHotel.districtId) {
+          listWard.push(ward)
+        }
+      })
+      this.resWardTmp = listWard
+
     }
     this.resHotelTmp = Object.assign({}, this.resHotel)
   }
