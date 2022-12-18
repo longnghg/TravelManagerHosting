@@ -121,10 +121,10 @@
                   {{validateHotel.provinceId ? validateHotel.provinceId : ''}}</span>
               </label>
               <ng-select [items]="resProvince" bindLabel="nameProvince" bindValue="idProvince"
-                [(ngModel)]="resHotel.provinceId" placeholder="Chọn thành phố/tỉnh..." name="idProvince" id="idProvince"
-                [clearable]="false" [searchable]="false"
+                [(ngModel)]="resHotel.provinceId" placeholder="Chọn thành phố/tỉnh..." name="idProvince"
+                id="idProvince" [clearable]="false" [searchable]="false"
                 (change)="inputChange(); locationChange('province', 'District')" [disabled]="isLoading"
-                [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resRestaurant.isDelete || isLoading">
+                [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resHotel.isDelete || isLoading">
               </ng-select>
             </div>
 
@@ -138,7 +138,7 @@
                 bindValue="idDistrict" [(ngModel)]="resHotel.districtId" placeholder="Chọn thành quận/huyện..."
                 name="idDistrict" id="idDistrict" [clearable]="false" [searchable]="false"
                 (change)="inputChange(); locationChange('district', 'Ward')" [disabled]="isLoading"
-                [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resRestaurant.isDelete || isLoading">
+                [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resHotel.isDelete || isLoading">
               </ng-select>
             </div>
 
@@ -152,7 +152,7 @@
               <ng-select [items]="resWardTmp?resWardTmp:resWard" bindLabel="nameWard" bindValue="idWard"
                 [(ngModel)]="resHotel.wardId" placeholder="Chọn thành quận/huyện..." name="idWard" id="idWard"
                 [clearable]="false" [searchable]="false" (change)="inputChange()" [disabled]="isLoading"
-                [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resRestaurant.isDelete || isLoading">
+                [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resHotel.isDelete || isLoading">
               </ng-select>
             </div>
           </div>
