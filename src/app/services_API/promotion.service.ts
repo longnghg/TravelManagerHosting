@@ -16,10 +16,10 @@ export class PromotionService{
     private notificationService: NotificationService){ }
   response: ResponseModel
   resPromotion: PromotionModel[]
-  async views()
+  async views(fromDate: any, toDate: any)
   {
     var value = <any>await new Promise<any>(resolve => {
-      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/promotion/list-promotion?isDelete="+false+"&pageIndex="+1+"&pageSize="+10).subscribe(res => {
+      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Promotion/select-box-promotion?fromDate="+fromDate+"&toDate="+toDate).subscribe(res => {
         this.response = res
         if(this.response.notification.type == StatusNotification.Success)
         {
@@ -86,4 +86,5 @@ export class PromotionService{
   search(data){
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Promotion/search-promotion", data);
   }
+
 }

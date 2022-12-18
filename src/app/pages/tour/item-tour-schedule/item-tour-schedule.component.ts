@@ -118,6 +118,12 @@ export class ItemTourScheduleComponent implements OnInit {
       this.resCostTourTmp = Object.assign({}, this.resCostTour)
       this.resTimelinelistTmp = Object.assign({}, this.resTimelinelist)
       this.isFirst = false
+
+      this.promotionService.views(0,0).then(response => {
+        this.resPromotion = response
+        console.log(this.resPromotion);
+
+      })
     }
     else {
       if (this.resSchedule) {
@@ -131,6 +137,21 @@ export class ItemTourScheduleComponent implements OnInit {
         this.resSchedule.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.modifyDate)
         this.resScheduleTmp = Object.assign({}, this.resSchedule)
 
+        this.promotionService.gets(false).subscribe(response => {
+          this.response = response
+          this.resPromotion  = this.response.content
+        })
+
+
+        this.carService.gets(false).subscribe(response => {
+          this.response = response
+         this.resCar = this.response.content
+        })
+
+        this.employeeService.gets(false).subscribe(response => {
+          this.response = response
+          this.resEmployee = this.response.content
+        })
 
         this.costtourService.getCostbyidSchedule(this.resSchedule.idSchedule).subscribe(res => {
           this.response = res
@@ -228,9 +249,7 @@ export class ItemTourScheduleComponent implements OnInit {
     //   this.resCar = response
     // })
 
-    this.promotionService.views().then(response => {
-      this.resPromotion = response
-    })
+
     this.provinceService.views().then(response => {
       this.resProvince = response
     })
@@ -272,6 +291,13 @@ export class ItemTourScheduleComponent implements OnInit {
       this.resSchedule.isUpdate = false
     }
 
+    if(property == "beginDate" || property == "endDate"){
+      this.promotionService.views(this.resSchedule.beginDate, this.resSchedule.endDate).then(response => {
+        this.resPromotion = response
+        console.log(this.resPromotion);
+
+      })
+    }
 
     if (property == "departureDate" || property == "returnDate"){
       // if (this.type != "create") {

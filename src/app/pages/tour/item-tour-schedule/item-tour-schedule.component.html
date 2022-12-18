@@ -159,11 +159,11 @@
                       <div class="form-group">
                         <label class="form-control-label" for="input-promotionId">Khuyến mãi</label>
                         <ng-select
-                        bindLabel="value"
+                        bindLabel="promotions.value"
                         bindValue="idPromotion"
                         [(ngModel)]="resSchedule.promotionId"
                         [disabled]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete || isLoading"
-                        placeholder="Chọn khuyến mãi..."
+                        placeholder="{{resSchedule.promotions.value}}"
                         name="promotionId"
                         id="promotionId"
                         [clearable]="false"
