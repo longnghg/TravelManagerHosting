@@ -39,7 +39,7 @@ export class TourBookingModel{
   deposit: number = 0
 
   remainPrice: number = 0
-  totalPrice: number = 0
+  totalPrice: string
 
   modifyBy: string = ""
   modifyDate: number = 0

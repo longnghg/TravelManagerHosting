@@ -11,7 +11,7 @@
 
             <div class="row">
 
-                <ng-container *ngIf="resLog.classContent == 'Tour'">
+                <ng-container *ngIf="resLog.classContent == 'Tour' && resTour">
                   <form>
 
                       <div class="row">
@@ -40,7 +40,7 @@
                         <div class="col-lg-3" >
                           <div class="form-group">
                             <label class="form-control-label" for="input-name" >Thời gian</label>
-                            <input type="text" id="modifyDate" name="modifyDate" class="form-control " readonly [(ngModel)]="resTour.modifyDate ">
+                            <input type="text" id="modifyDateDisplay" name="modifyDateDisplay" class="form-control " readonly [(ngModel)]="resTour.modifyDateDisplay ">
                           </div>
                         </div>
                         <div class="col-lg-3" >
@@ -55,7 +55,7 @@
                   </form>
                 </ng-container>
 
-                <ng-container *ngIf="resLog.classContent == 'Hotel'">
+                <ng-container *ngIf="resLog.classContent == 'Hotel' && resHotel">
                   <form>
 
                       <div class="row">
@@ -84,7 +84,7 @@
                         <div class="col-lg-3" >
                           <div class="form-group">
                             <label class="form-control-label" for="input-name" >Thời gian</label>
-                            <input type="text" id="modifyDate" name="modifyDate" class="form-control " readonly [(ngModel)]="resHotel.modifyDate ">
+                            <input type="text" id="modifyDateDisplay" name="modifyDateDisplay" class="form-control " readonly [(ngModel)]="resHotel.modifyDateDisplay ">
                           </div>
                         </div>
                         <div class="col-lg-3" >
@@ -99,7 +99,7 @@
                   </form>
                 </ng-container>
 
-                <ng-container *ngIf="resLog.classContent == 'Place'">
+                <ng-container *ngIf="resLog.classContent == 'Place' && resPlace">
                   <form>
 
                       <div class="row">
@@ -128,7 +128,7 @@
                         <div class="col-lg-3" >
                           <div class="form-group">
                             <label class="form-control-label" for="input-name" >Thời gian</label>
-                            <input type="text" id="modifyDate" name="modifyDate" class="form-control " readonly [(ngModel)]="resPlace.modifyDate ">
+                            <input type="text" id="modifyDateDisplay" name="modifyDateDisplay" class="form-control " readonly [(ngModel)]="resPlace.modifyDateDisplay ">
                           </div>
                         </div>
                         <div class="col-lg-3" >
@@ -143,7 +143,7 @@
                   </form>
                 </ng-container>
 
-                <ng-container *ngIf="resLog.classContent == 'TourBooking'">
+                <ng-container *ngIf="resLog.classContent == 'TourBooking'&& resTourBooking">
                   <form>
 
                       <div class="row">
@@ -187,7 +187,7 @@
                   </form>
                 </ng-container>
 
-                <ng-container *ngIf="resLog.classContent == 'Restaurant'">
+                <ng-container *ngIf="resLog.classContent == 'Restaurant' && resRestaurant">
                   <form>
 
                       <div class="row">
@@ -216,7 +216,7 @@
                         <div class="col-lg-3" >
                           <div class="form-group">
                             <label class="form-control-label" for="input-name" >Thời gian</label>
-                            <input type="text" id="modifyDate" name="modifyDate" class="form-control " readonly [(ngModel)]="resRestaurant.modifyDate ">
+                            <input type="text" id="modifyDateDisplay" name="modifyDateDisplay" class="form-control " readonly [(ngModel)]="resRestaurant.modifyDateDisplay ">
                           </div>
                         </div>
                         <div class="col-lg-3" >

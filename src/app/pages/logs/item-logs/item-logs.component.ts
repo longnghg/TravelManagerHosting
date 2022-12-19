@@ -51,26 +51,31 @@ export class ItemLogsComponent implements OnInit {
         this.response = res
         if (this.resLog.classContent == ClassContent.tour) {
           this.resTour = this.response.content
+          this.resTour.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDateView(this.resTour.modifyDate)
         }
         else if (this.resLog.classContent == ClassContent.tourBooking) {
           this.resTourBooking = this.response.content
-          console.log(this.resTourBooking);
-
+          this.resTourBooking.totalPrice = Number(this.resTourBooking.totalPrice).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
         }
         else if (this.resLog.classContent == ClassContent.hotel) {
           this.resHotel = this.response.content
+          this.resHotel.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDateView(this.resHotel.modifyDate)
         }
         else if (this.resLog.classContent == ClassContent.place) {
           this.resPlace = this.response.content
+          this.resPlace.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDateView(this.resPlace.modifyDate)
         }
         else {
           this.resRestaurant = this.response.content
+          this.resRestaurant.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDateView(this.resRestaurant.modifyDate)
         }
        }, error => {
          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
          this.notificationService.handleAlert(message, StatusNotification.Error)
 
        })
+
+
     }
 
     this.resLogTmp = Object.assign({}, this.resLog)

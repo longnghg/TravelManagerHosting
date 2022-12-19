@@ -39,7 +39,7 @@ restore(idVoucher: any)
 }
 
 search(data){
-  return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Car/search-car", data);
+  return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Voucher/search-voucher", data);
 }
 
 getsCarByDate(fromDate: any, toDate: any, idTour: any)

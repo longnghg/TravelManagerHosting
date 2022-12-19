@@ -7,7 +7,7 @@ import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.compo
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { StatusNotification } from "../../../enums/enum";
 import { AuthenticationModel } from 'src/app/models/authentication.model';
-
+import { PaginationModel } from 'src/app/models/responsiveModels/pagination.model';
 
 @Component({
   selector: 'app-list-voucher',
@@ -23,6 +23,7 @@ export class ListVoucherComponent implements OnInit {
   isDelete: boolean = false
   auth: AuthenticationModel
   data: any
+  pagination = new PaginationModel
   constructor(private voucherService: VoucherService, private notificationService: NotificationService,
     private configService: ConfigService) { }
 
@@ -32,31 +33,36 @@ export class ListVoucherComponent implements OnInit {
       idModalDelete: "deleteVoucherModalLabel",
       idModal: "gridCar",
       radioBoxName: "Kho lưu trữ",
-      disableApprove: true
+      disableApprove: true,
+      disableRestore: true,
+      disableRadioBox: true
     }
       ngOnInit(): void {
+        this.columnDefs= [
+          { field: 'code', headerName: "Mã Code", style: "width: 30%;", searchable: true, searchType: 'text', searchObj: 'code'},
+          { field: 'value',headerName: "Giá trị", style: "width: 20%;", searchable: true, searchType: 'number', searchObj: 'endDvalueate', },
+          { field: 'startDate',headerName: "Từ ngày", style: "width: 20%;", searchable: true, searchType: 'date', searchObj: 'startDate',filter: 'date'},
+          { field: 'endDate',headerName: "Đến ngày", style: "width: 20%;", searchable: true, searchType: 'date', searchObj: 'endDate', filter: 'date'},
+           ];
+
         this.auth = JSON.parse(localStorage.getItem("currentUser"))
-        this.init()
+        this.gridConfig.pageSize = this.pagination.pageSize
+        this.init(this.pagination, true)
       }
 
-      init(){
-        this.voucherService.gets().subscribe(res =>{
+      init(e?, isNotShow?){
+        this.voucherService.search(Object.assign({}, e)).subscribe(res =>{
           this.response = res
           if(this.response.notification.type == StatusNotification.Success){
             this.resVoucher = this.response.content
-            console.log(this.resVoucher);
-
           }
           else{
-            this.resVoucher = null
+            this.resVoucher = []
+            if (!isNotShow) {
             this.notificationService.handleAlertObj(res.notification)
+           }
           }
-          this.columnDefs= [
-            { field: 'code', headerName: "Mã Code", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'code'},
-            { field: 'value',headerName: "Giá trị", style: "width: 20%;", searchable: true, searchType: 'number', searchObj: 'endDvalueate', },
-            { field: 'startDate',headerName: "Từ ngày", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'startDate',filter: 'date'},
-            { field: 'endDate',headerName: "Đến ngày", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'endDate', filter: 'date'},
-             ];
+          this.gridConfig.totalResult = this.response.totalResult
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)

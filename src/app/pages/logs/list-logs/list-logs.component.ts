@@ -49,7 +49,7 @@ export class ListLogsComponent implements OnInit {
       this.columnDefs= [
         { field: 'emailCreator', headerName: "Tên người tạo", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'emailCreator'},
         { field: 'type', headerName: "Loại ", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'type'},
-        { field: 'createDate', headerName: "Ngày tạo ", style: "width: 20%;", searchable: true, searchType: 'date', searchObj: 'createDate'},
+        { field: 'creationDate', headerName: "Ngày tạo ", style: "width: 20%;", searchable: true, searchType: 'date', searchObj: 'creationDate', filter: 'date'},
         { field: 'classContent',headerName: "Lớp nội dung", style: "width: 20%;",searchable: true, searchType: 'section', searchObj: 'classContent', multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id" , listSection: this.configService.listClassContent()},
          ];
 
@@ -65,6 +65,7 @@ export class ListLogsComponent implements OnInit {
 
         if(this.response.notification.type == StatusNotification.Success){
           this.resLog = this.response.content
+          console.log(this.resLog);
 
 
         }
