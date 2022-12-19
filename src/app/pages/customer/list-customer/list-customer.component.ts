@@ -130,9 +130,13 @@ export class ListCustomerComponent implements OnInit {
          this.response = res
          this.notificationService.handleAlertObj(res.notification)
          this.isLoading = false
-         setTimeout(() => {
-          this.closeModalBlockLoad.nativeElement.click()
-         }, 100);
+         if (this.response.notification.type == StatusNotification.Success) {
+          this.configService.callBlockSignalR(this.data.idCustomer)
+          setTimeout(() => {
+            this.closeModalBlockLoad.nativeElement.click()
+           }, 100);
+         }
+
        }, error => {
          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
          this.notificationService.handleAlert(message, StatusNotification.Error)

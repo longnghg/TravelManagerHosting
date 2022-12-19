@@ -186,6 +186,7 @@ export class ListEmployeeComponent implements OnInit {
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
           this.isLoading = false
+          this.configService.callBlockSignalR(this.data.idEmployee)
           setTimeout(() => {
             this.closeModalLoadDelete.nativeElement.click()
            }, 100);

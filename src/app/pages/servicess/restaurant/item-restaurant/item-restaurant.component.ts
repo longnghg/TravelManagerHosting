@@ -98,7 +98,6 @@ export class ItemRestaurantComponent implements OnInit {
     this.validateRestaurant = new ValidationRestaurantModel
 
     this.validateRestaurant =  this.configService.validateRestaurant(this.resRestaurant, this.validateRestaurant)
-     console.log(this.validateRestaurant.total);
       if (this.validateRestaurant.total == 0) {
 
         this.resRestaurant.IdUserModify = this.auth.id

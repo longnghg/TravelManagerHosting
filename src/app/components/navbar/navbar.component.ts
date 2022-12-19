@@ -44,6 +44,10 @@ export class NavbarComponent implements OnInit {
       this.hubConnectionBuilder.on('Notification', (result: any) => {
         this.initNotification()
       })
+
+      this.hubConnectionBuilder.on('BlockUser', (result: any) => {
+        this.logOut()
+      })
     }
   }
 

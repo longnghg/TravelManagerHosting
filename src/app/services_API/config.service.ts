@@ -35,6 +35,10 @@ export class ConfigService{
     this.hubConnectionBuilder.invoke('SendNotyf',roleId)
   }
 
+  callBlockSignalR(id:string): void{
+    this.hubConnectionBuilder.invoke('Block',id)
+  }
+
   error(status: any, message: any){
     console.log('Status:  '  + status);
     console.log('Message: '  + message);

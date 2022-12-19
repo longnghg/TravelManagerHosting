@@ -219,6 +219,9 @@ export class ItemEmployeeComponent implements OnInit{
           else{
             this.notificationService.handleAlertObj(res.notification)
             if (res.notification.type == StatusNotification.Success) {
+              if (this.resEmployee.isActive != this.resEmployeeTmp.isActive) {
+                this.configService.callBlockSignalR(this.resEmployee.idEmployee)
+              }
               this.close()
               this.router.navigate(['','list-employee']);
             }
@@ -275,6 +278,7 @@ export class ItemEmployeeComponent implements OnInit{
           this.notificationService.handleAlertObj(res.notification)
           this.isLoading = false
           if (res.notification.type == StatusNotification.Success) {
+            this.configService.callBlockSignalR(this.resEmployee.idEmployee)
             setTimeout(() => {
               this.closeModalLoadDelete.nativeElement.click()
               this.router.navigate(['','list-employee']);
