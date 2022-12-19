@@ -100,8 +100,8 @@ width: fit-content;">
 	<ng-container ngbNavItem>
 		<a ngbNavLink class="titleBN" style="font-size: 25px;">Thông tin chi tiết</a>
     <ng-template ngbNavContent>
-      <nav ngbNav #nav="ngbNav" class="nav-pills" style="margin-top: 7rem; margin-left: 11rem; position: absolute; z-index: 1;">
-        <ng-container ngbNavItem>
+      <nav ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-pills" style="margin-top: 7rem; margin-left: 11rem; position: absolute; z-index: 1;">
+        <ng-container [ngbNavItem]="1">
           <a ngbNavLink class="titleBN" style="font-size: 17px;" >Thông tin</a>
           <ng-template ngbNavContent>
             <div class="containerBN" *ngIf="resTour" style="margin-top: -10%; margin-bottom: 10%;">
@@ -238,7 +238,7 @@ width: fit-content;">
             </div>
           </ng-template>
         </ng-container>
-        <ng-container ngbNavItem>
+        <ng-container [ngbNavItem]="2">
           <a ngbNavLink class="titleBN" style="font-size: 17px;">Hình ảnh chi tiết</a>
           <ng-template ngbNavContent>
             <div class="containerBN" *ngIf="resTour" style="margin-top: -10%; margin-bottom: 10%;">

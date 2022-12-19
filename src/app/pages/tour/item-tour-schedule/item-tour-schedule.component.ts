@@ -113,7 +113,8 @@ export class ItemTourScheduleComponent implements OnInit {
       this.resCostTour = new CostTourModel()
       this.resTimeline = new TimeLineModel()
       this.resTimelinelist = []
-
+      this.resCar = []
+      this.resEmployee = []
       this.resScheduleTmp = Object.assign({}, this.resSchedule)
       this.resCostTourTmp = Object.assign({}, this.resCostTour)
       this.resTimelinelistTmp = Object.assign({}, this.resTimelinelist)
@@ -121,8 +122,6 @@ export class ItemTourScheduleComponent implements OnInit {
 
       this.promotionService.views(0,0).then(response => {
         this.resPromotion = response
-        console.log(this.resPromotion);
-
       })
     }
     else {
@@ -137,20 +136,20 @@ export class ItemTourScheduleComponent implements OnInit {
         this.resSchedule.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resSchedule.modifyDate)
         this.resScheduleTmp = Object.assign({}, this.resSchedule)
 
-        this.promotionService.gets(false).subscribe(response => {
-          this.response = response
-          this.resPromotion  = this.response.content
+        this.promotionService.views(this.resSchedule.beginDate, this.resSchedule.endDate).then(response => {
+          this.resPromotion = response
+          console.log(this.resPromotion);
+
         })
 
-
-        this.carService.gets(false).subscribe(response => {
-          this.response = response
-         this.resCar = this.response.content
+        this.carService.viewsUpdate(this.resSchedule.departureDate, this.resSchedule.returnDate, this.resSchedule.idSchedule).then(response => {
+          this.resCar = response
+          console.log(this.resCar);
         })
 
-        this.employeeService.gets(false).subscribe(response => {
-          this.response = response
-          this.resEmployee = this.response.content
+        this.employeeService.viewsUpdate(this.resSchedule.departureDate, this.resSchedule.returnDate,  this.resSchedule.idSchedule).then(response => {
+          this.resEmployee = response
+          console.log(this.resEmployee);
         })
 
         this.costtourService.getCostbyidSchedule(this.resSchedule.idSchedule).subscribe(res => {
@@ -294,8 +293,6 @@ export class ItemTourScheduleComponent implements OnInit {
     if(property == "beginDate" || property == "endDate"){
       this.promotionService.views(this.resSchedule.beginDate, this.resSchedule.endDate).then(response => {
         this.resPromotion = response
-        console.log(this.resPromotion);
-
       })
     }
 

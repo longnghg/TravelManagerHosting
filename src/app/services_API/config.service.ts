@@ -385,14 +385,29 @@ export class ConfigService{
 
    }
 
+   transform(val: any) {
+    let transformedVal;
+    if (val === undefined || val === null) {
+      transformedVal = ""
+    } else {
+      transformedVal = val.toString().replace(/,/g, "");
+    }
+    return transformedVal;
+  }
+
    validateCostTour(data: any, model: any){
     model.total = 0
     var min = 0
+
+
     if (data.breakfast == null || data.breakfast == "") {
       model.breakfast = "[Chi phí ăn]  không để trống !"
       model.total += 1
     }else if (data.breakfast <= 0) {
       model.breakfast = "[Chi phí ăn] không nhỏ hơn 0!"
+      model.total += 1
+    }else if( this.transform(data.breakfast) >  500000){
+      model.breakfast = "[Chi phí ăn] không lớn hơn 500.000đ!"
       model.total += 1
     }
 
@@ -401,6 +416,9 @@ export class ConfigService{
      model.total += 1
     }else if (data.water <= 0) {
       model.water = "[Chi phí nước] không nhỏ hơn 0!"
+      model.total += 1
+    }else if(this.transform(data.water) > 150000){
+      model.water = "[Chi phí nước] không lớn hơn 150.000đ!"
       model.total += 1
     }
 
@@ -411,6 +429,10 @@ export class ConfigService{
        model.feeGas = "[Chi phí xăng] không nhỏ hơn 0!"
        model.total += 1
      }
+     else if (this.transform(data.feeGas) > 50000) {
+      model.feeGas = "[Chi phí xăng] không lớn hơn 50.000đ!"
+      model.total += 1
+    }
 
      if(data.distance == null || data.distance == ""){
       model.distance = ("[Khoảng cách] không để trống !")
@@ -418,7 +440,10 @@ export class ConfigService{
      }else if (data.distance <= 0) {
        model.distance = "[Khoảng cách] không nhỏ hơn 0!"
        model.total += 1
-     }
+     }else if (data.distance > 2000) {
+      model.distance = "[Khoảng cách] không lớn hơn 2000km!"
+      model.total += 1
+    }
 
      if(data.sellCost == null || data.sellCost == ""){
       model.sellCost = ("[Chi phí bán tour] không để trống !")
@@ -427,6 +452,10 @@ export class ConfigService{
        model.sellCost = "[Chi phí bán tour] không nhỏ hơn 0!"
        model.total += 1
      }
+     else if (this.transform(data.sellCost) > 1000000) {
+      model.sellCost = "[Chi phí bán tour] không lớn hơn 1.000.000đ!"
+      model.total += 1
+    }
 
      if(data.depreciation == null || data.depreciation == ""){
       model.depreciation = ("[Khấu hao] không để trống !")
@@ -434,15 +463,18 @@ export class ConfigService{
      }else if (data.depreciation <= 0) {
        model.depreciation = "[Khấu hao] không nhỏ hơn 0!"
        model.total += 1
-     }
+     }else if (this.transform(data.depreciation) > 1000000) {
+      model.depreciation = "[Khấu hao] lớn hơn 1.000.000đ!"
+      model.total += 1
+    }
 
-    //  if(data.otherPrice == null || data.otherPrice == ""){
-    //   model.otherPrice = ("[Chi phí khác] không để trống !")
-    //   model.total += 1
-    //  }else if (data.otherPrice <= 0) {
-    //    model.otherPrice = "[Chi phí khác] không nhỏ hơn 0!"
-    //    model.total += 1
-    //  }
+     if(data.otherPrice == null || data.otherPrice == ""){
+      model.otherPrice = ("[Chi phí khác] không để trống !")
+      model.total += 1
+     }else if(this.transform(data.otherPrice) > 2000000){
+      model.otherPrice = ("[Chi phí khác] kkhông lớn hơn 2.000.000đ")
+      model.total += 1
+     }
 
      if(data.tolls == null || data.tolls == ""){
       model.tolls = ("[Chi phí cầu đường] không để trống !")
@@ -450,7 +482,10 @@ export class ConfigService{
      }else if (data.tolls <= 0) {
        model.tolls = "[Chi phí cầu đường] không nhỏ hơn 0!"
        model.total += 1
-     }
+     }else if (this.transform(data.tolls) > 500000) {
+      model.tolls = "[Chi phí cầu đường] không lớn hơn 500.000!"
+      model.total += 1
+    }
 
 
 
@@ -461,6 +496,10 @@ export class ConfigService{
        model.insuranceFee = "[Chi phí bảo hiểm] không nhỏ hơn 0!"
        model.total += 1
      }
+     else if (this.transform(data.insuranceFee) > 500000) {
+      model.insuranceFee = "[Chi phí bảo hiểm] không lớn hơn 500.000!"
+      model.total += 1
+    }
 
     if (data.isHoliday == null) {
       model.isHoliday = ("[Ngày lễ] chưa chọn!")
@@ -600,6 +639,9 @@ export class ConfigService{
      }else if (data.minCapacity <= 0) {
       model.minCapacity = "[Số người tối thiểu] không nhỏ hơn 0!"
       model.total += 1
+    }else if (data.minCapacity >  100) {
+      model.minCapacity = "[Số người tối thiểu] không quá 50!"
+      model.total += 1
     }
 
     if(data.maxCapacity == null || data.maxCapacity == ""){
@@ -610,6 +652,9 @@ export class ConfigService{
       model.total += 1
     }else if (data.maxCapacity <= 0) {
       model.maxCapacity = "[Số người tối đa] không nhỏ hơn 0!"
+      model.total += 1
+    }else if (data.maxCapacity > 100) {
+      model.maxCapacity = "[Số người tối đa] không quá 100!"
       model.total += 1
     }
 

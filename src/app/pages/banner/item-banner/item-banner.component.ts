@@ -243,7 +243,7 @@ save() {
   this.validateBanner = new ValidationBannerModel
   this.validateBanner =  this.configService.validateBanner(this.resBanner, this.validateBanner)
   if (this.validateBanner.total == 0) {
-    if(this.img.length >= 4 && this.img.length <= 6){
+    if(this.img.length == 6){
       var files = new FormData();
       if (this.formDatas) {
 
@@ -267,7 +267,7 @@ save() {
     }
     else{
       this.isLoading = false
-      this.notificationService.handleAlert("Bạn phải thêm ít nhất 4 banner hoặc nhiều nhất 6 banner !", StatusNotification.Warning)
+      this.notificationService.handleAlert("Bạn phải thêm 6 banner !", StatusNotification.Warning)
     }
 
   }

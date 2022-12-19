@@ -299,7 +299,7 @@
                     </div>
                     <div class="col-3">
                       <label class="form-control-label" for="input-toPlace">Chi phí khác (₫)
-                        <!-- <span [class]="type != 'create' &&  resSchedule.isDelete || isLoading ?'d-none':'text-red'">* {{this.validateCostTourModel.otherPrice ? this.validateCostTourModel.otherPrice : ''}}</span> -->
+                        <span [class]="type != 'create' &&  resSchedule.isDelete || isLoading ?'d-none':'text-red'">* {{this.validateCostTourModel.otherPrice ? this.validateCostTourModel.otherPrice : ''}}</span>
                       </label>
                       <input type="text" id="otherPrice" name="otherPrice" (input)="formatInput($any($event).target, 'otherPrice');inputChange()" class="form-control " placeholder="Nhập chi phí khác " [(ngModel)]="resCostTour.otherPrice" [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resSchedule.isDelete || isLoading" >
                     </div>
@@ -410,6 +410,23 @@
           <li [ngbNavItem]="3" *ngIf="resTimeline || resTimelinelist">
             <a ngbNavLink style="font-size: 25px;">Timeline</a>
             <ng-template ngbNavContent>
+              <fieldset style="border: 1px solid #ced4da; border-radius: 0.375rem; margin-top: 10px;" *ngIf="type == 'create' || type == 'detail'">
+                <legend>Thời gian khởi hành & trở về</legend>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-departureDate">Ngày khởi hành</label>
+                      <input   (change)="dateChange('departureDate')" [(ngModel)]="resSchedule.departureDateDisplay" class="form-control datepicker" placeholder="Ngày khởi hành" name="departureDate" id="departureDate" type="datetime-local" readonly />
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-returnDate">Ngày trở về</label>
+                      <input   (change)="dateChange('returnDate')" [(ngModel)]="resSchedule.returnDateDisplay" class="form-control datepicker" placeholder="Ngày trở về" name="returnDate" id="returnDate" type="datetime-local" readonly />
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
               <fieldset style="border: 1px solid #ced4da; border-radius: 0.375rem; margin-top: 10px;" *ngIf="type == 'create' || type == 'detail'"><legend>TimeLine</legend>
                 <div class="row">
                   <div class="row-12">

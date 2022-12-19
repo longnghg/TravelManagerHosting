@@ -447,6 +447,7 @@ export class ItemTourComponent implements OnInit {
       else{
         this.notificationService.handleAlert("Hình ảnh chi tiết tour phải thêm 4 ảnh!", StatusNotification.Warning)
         this.isLoading = false
+        this.active = 2
       }
 
     }
@@ -454,6 +455,7 @@ export class ItemTourComponent implements OnInit {
       if (this.validateTourModel.thumbnail) {
         this.notificationService.handleAlert(this.validateTourModel.thumbnail, StatusNotification.Warning)
       }
+      this.active = 1
       this.isLoading = false
     }
   }
