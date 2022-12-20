@@ -55,4 +55,13 @@ search(data, idTour: any){
 searchWaiting(data, idTour: any){
   return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Schedule/search-schedule-waiting?idTour="+idTour, data);
 }
+
+getsListInfoOfSchedule(idCar: string, pageIndex: number, pageSize: number) {
+  return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Car/list-schedule-of-car?idCar="+idCar+"&pageIndex="+pageIndex+"&pageSize="+pageSize);
+}
+
+getsFullCar(isdelete: any)
+{
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/list-car?isDelete="+isdelete);
+}
 }

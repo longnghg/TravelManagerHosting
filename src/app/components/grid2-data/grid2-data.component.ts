@@ -11,6 +11,7 @@ export class Grid2DataComponent implements OnInit {
   @Input() gridConfig: GridConfig2
   @Output() gdSearch = new EventEmitter<any>()
   @Output() gdChecked = new EventEmitter<any>()
+  @Output() gdSchedule = new EventEmitter<any>()
   @Output() gdDelete = new EventEmitter<any>()
   @Output() gdLog = new EventEmitter<any>()
   @Output() gdApprove = new EventEmitter<any>()
@@ -206,6 +207,10 @@ export class Grid2DataComponent implements OnInit {
 
   getDataRestore(data: any){
     this.gdRestore.emit(data);
+  }
+
+  getDataSchedule(data: any){
+    this.gdSchedule.emit(data);
   }
 
   getDataLog(data: any){

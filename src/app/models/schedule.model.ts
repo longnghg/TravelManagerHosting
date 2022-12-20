@@ -77,3 +77,15 @@ export class ValidateScheduleModel{
   vat: string = null
   profit: number = null
 }
+
+
+export class InfoScheduleModel{
+  departureDate: Number
+  departureDateDisplay: string = ""
+  returnDate: Number
+  returnDateDisplay: string = ""
+  departurePlace: string
+  liscensePlate: string = ""
+  nameEmployee: string
+  nameTour: string
+}

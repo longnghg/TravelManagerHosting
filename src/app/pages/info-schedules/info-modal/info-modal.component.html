@@ -1,0 +1,18 @@
+<div #fade id="fade" class="fade_cus"></div>
+<div #card id="card" class="card-cus">
+  <div class="tools">
+    <div class="circle">
+      <span class="red box"></span>
+    </div>
+    <div class="circle">
+      <span class="yellow box"></span>
+    </div>
+    <div class="circle">
+      <span class="green box"></span>
+    </div>
+    <button type="button" style="margin-left: 93%;" class="btn-close" (click)="closeInfo()"></button>
+  </div>
+  <div class="card__content">
+    <app-grid-data [rowData]="resInfoSchedule" [columnDefs]="columnDefs" [gridConfig]="gridConfig" (gdSearch)="initInfo($event)"></app-grid-data>
+  </div>
+</div>

@@ -37,6 +37,7 @@ import { MenuRightClickComponent } from './menu-right-click/menu-right-click.com
     GridDataComponent,
     Grid2DataComponent,
     MenuRightClickComponent
-  ]
+  ],
+  providers: []
 })
 export class ComponentsModule { }

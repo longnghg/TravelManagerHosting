@@ -47,7 +47,7 @@ import { TourBookingLayoutComponent } from "./layouts/tour-booking-layout/tour-b
     AdminLayoutComponent,
     AuthLayoutComponent,
     SupportLayoutComponent,
-    TourBookingLayoutComponent
+    TourBookingLayoutComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

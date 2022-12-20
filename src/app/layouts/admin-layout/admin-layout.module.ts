@@ -70,7 +70,8 @@ import { ItemCarInforComponent } from '../../pages/car-infor/item-car-infor/item
 import { ListCarInfoComponent } from '../../pages/car-infor/list-car-info/list-car-info.component';
 import { ListLogsComponent } from '../../pages/logs/list-logs/list-logs.component';
 import { ItemLogsComponent } from '../../pages/logs/item-logs/item-logs.component';
-
+import { InfoModalComponent } from '../../pages/info-schedules/info-modal/info-modal.component';
+import { InfoPageComponent } from '../../pages/info-schedules/info-page/info-page.component';
 
 @NgModule({
   imports: [
@@ -129,6 +130,9 @@ import { ItemLogsComponent } from '../../pages/logs/item-logs/item-logs.componen
     ListCarInfoComponent,
     ListLogsComponent,
     ItemLogsComponent,
+
+    InfoModalComponent,
+    InfoPageComponent
   ],
   providers: [NavbarComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

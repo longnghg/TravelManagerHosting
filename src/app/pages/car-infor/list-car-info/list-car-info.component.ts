@@ -33,24 +33,21 @@ export class ListCarInfoComponent implements OnInit {
     public columnDefs: ColDef[]
     public gridConfig: GridConfig = {
     idModal: "gridCarInfor",
-    radioBoxName: "Kho lưu trữ",
-    disableApprove: true
+    // radioBoxName: "Ds xe rảnh",
+    disableApprove: true,
+    disableCreate: true,
+    disableDelete: true,
+    disableDetail: true,
+    disableLog: true,
+    disableRestore: true,
+    disableSchedule: true,
+    disableRadioBox: true,
   }
   ngOnInit(): void {
     this.init()
-    this.columnDefs= [
-      { field: 'liscensePlate',headerName: "Biển số xe", style: 'width: 20%', searchable: true, searchType: 'section', multiple: false, closeOnSelect: true, searchObj: 'idCar', bindLabel: "liscensePlate", bindValue: "idCar"},
-      { field: 'nameTour', headerName: "Tên tour", style: "width: 20%;", searchable: true, searchType: "text", typeDate: "range"},
-      { field: 'departureDate', headerName: "Ngày đi", style: "width: 20%;", filter:"dateTime", searchable: true, typeDate: "range"},
-      { field: 'returnDate',headerName: "Ngày về", style: "width: 20%;", filter:"dateTime", searchable: true, typeDate: "range"},
-      { field: 'nameEmployee',headerName: "Tên hướng dẫn viên", style: "width: 20%;", searchable: true, searchType: 'text'},
-    ];
-
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
     this.gridConfig.pageSize = this.pagination.pageSize
-    //this.gridConfigWaiting.pageSize = this.pagination.pageSize
-   // this.init(this.isDelete)
-  //  this.search(this.pagination, true)
+    this.search(this.pagination, true)
   }
 
   init(){
@@ -73,42 +70,56 @@ export class ListCarInfoComponent implements OnInit {
   }
 
   search(e?, isNotShow?){
-    if (e) {
-      this.carService.getsListScheduleOfCar(Object.assign({}, e).idCar).subscribe(res => {
-        this.response = res
-        if(this.response.notification.type == StatusNotification.Success)
-        {
+    if (!e.isDelete) {
+      this.columnDefs= [
+        { field: 'liscensePlate',headerName: "Biển số xe", style: 'width: 15%', searchable: true, searchType: 'section', multiple: false, closeOnSelect: true, searchObj: 'idCar', bindLabel: "liscensePlate", bindValue: "idCar"},
+        { field: 'nameEmployee',headerName: "Tên hướng dẫn viên", style: "width: 15%;", searchable: true, searchType: 'text'},
+        { field: 'nameTour', headerName: "Tên tour", style: "width: 20%;", searchable: true, searchType: "text", typeDate: "range"},
+        { field: 'departureDate', headerName: "Ngày đi", style: "width: 20%;", filter:"dateTime", searchType: "dateTime", searchable: true, typeDate: "range"},
+        { field: 'returnDate',headerName: "Ngày về", style: "width: 20%;", filter:"dateTime", searchType: "dateTime", searchable: true, typeDate: "range"},
+      ];
 
-            var carInfo = new CarInforModel
-            var list = []
-            this.resSchedule = this.response.content
-            console.log(this.resSchedule);
-
-            this.resSchedule.forEach(schedule => {
-              carInfo.liscensePlate = schedule.car.liscensePlate
-              carInfo.nameEmployee = schedule.employee.nameEmployee
-              carInfo.nameTour = schedule.tour.nameTour
-              carInfo.departureDate = schedule.departureDate
-              carInfo.returnDate = schedule.returnDate
-              list.push(carInfo)
-            });
-            this.resCarHaveSchedule = list
-          console.log(this.resCarHaveSchedule);
-        }
-        else{
-
-          this.resCarHaveSchedule = []
-          if (!isNotShow) {
-            this.notificationService.handleAlertObj(res.notification)
+      if (e.idCar) {
+        this.carService.getsListScheduleOfCar(Object.assign({}, e).idCar).subscribe(res => {
+          this.response = res
+          if(this.response.notification.type == StatusNotification.Success)
+          {
+              var carInfo = new CarInforModel
+              var list = []
+              this.resSchedule = this.response.content
+              this.resSchedule.forEach(schedule => {
+                carInfo.liscensePlate = schedule.car.liscensePlate
+                carInfo.nameEmployee = schedule.employee.nameEmployee
+                carInfo.nameTour = schedule.tour.nameTour
+                carInfo.departureDate = schedule.departureDate
+                carInfo.returnDate = schedule.returnDate
+                list.push(carInfo)
+              });
+              this.resCarHaveSchedule = list
           }
-          //this.resCar = Object.assign([], this.resCarTmp)
-        }
-        this.gridConfig.totalResult = this.response.totalResult
-      }, error => {
-        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, StatusNotification.Error)
-      })
+          else{
+
+            this.resCarHaveSchedule = []
+            if (!isNotShow) {
+              this.notificationService.handleAlertObj(res.notification)
+            }
+          }
+          this.gridConfig.totalResult = this.response.totalResult
+        }, error => {
+          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+          this.notificationService.handleAlert(message, StatusNotification.Error)
+        })
+      }
     }
+    // else{
+    //   this.columnDefs= [
+    //     { field: 'liscensePlate',headerName: "Biển số xe", style: 'width: 15%', searchable: false, searchType: 'section', multiple: false, closeOnSelect: true, searchObj: 'idCar', bindLabel: "liscensePlate", bindValue: "idCar"},
+    //     { field: 'nameEmployee',headerName: "Tên hướng dẫn viên", style: "width: 15%;", searchable: false, searchType: 'text'},
+    //     { field: 'nameTour', headerName: "Tên tour", style: "width: 20%;", searchable: false, searchType: "text", typeDate: "range"},
+    //     { field: 'departureDate', headerName: "Ngày đi", style: "width: 20%;", filter:"dateTime", searchType: "dateTime", searchable: true, typeDate: "range"},
+    //     { field: 'returnDate',headerName: "Ngày về", style: "width: 20%;", filter:"dateTime", searchType: "dateTime", searchable: true, typeDate: "range"},
+    //   ];
+    // }
   }
 
   childData(e){

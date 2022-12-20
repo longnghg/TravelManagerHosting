@@ -17,8 +17,6 @@ export class CarInforService {
   resCar: CarModel[]
 
   getsListScheduleOfCar(idCar: string) {
-    console.log(this.configService.apiUrl + "/api/Car/list-schedule-of-car?idCar="+idCar+"&pageIndex=1&pageSize=5");
-
     return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Car/list-schedule-of-car?idCar="+idCar+"&pageIndex=1&pageSize=5");
   }
 

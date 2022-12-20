@@ -119,8 +119,6 @@ export class ListCarComponent implements OnInit {
 
   openInfo(data: any){
     this.data = data
-    console.log(this.data);
-
     document.getElementById("fade").style.display = "block"
     document.getElementById("card").style.display = "block"
     document.getElementById("card").setAttribute("class","card_open card-cus")
