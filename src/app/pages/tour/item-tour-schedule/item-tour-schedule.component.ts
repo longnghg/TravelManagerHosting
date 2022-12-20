@@ -126,6 +126,8 @@ export class ItemTourScheduleComponent implements OnInit {
     }
     else {
       if (this.resSchedule) {
+        console.log(this.resSchedule.isdelete);
+
         this.resSchedule.isUpdate = true
         this.resSchedule.departureDateDisplay = this.configService.formatFromUnixTimestampToFullDateTime(this.resSchedule.departureDate)
         this.resSchedule.returnDateDisplay = this.configService.formatFromUnixTimestampToFullDateTime(this.resSchedule.returnDate)

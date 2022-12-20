@@ -42,7 +42,7 @@ export class ScheduleModel{
   finalHoliday: number = 0
   vat: number = 10
   description: string = ""
-  isDelete: boolean
+  isdelete: boolean
   idUserModify:string = ""
   modifyBy: string = ""
   typeAction: string = ""
