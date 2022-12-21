@@ -66,7 +66,7 @@
       <div class="row align-items-center">
         <div class="col-12 text-right">
           <button  *ngIf="type == 'detail' && !resPromotion.isDelete" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deletePromotionModal" (click)="getParentData('detail')">Xóa</button>
-          <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-info" (click)="backup()">Khôi phục</button>
+          <button *ngIf="isChange" class="btn btn-sm btn-info" (click)="backup()">Khôi phục</button>
           <button *ngIf="isChange && type == 'detail'" class="btn btn-sm btn-success"  (click)="save()">Lưu</button>
           <button *ngIf="isChange && type == 'create'" class="btn btn-sm btn-success"  (click)="save()">Thêm</button>
           <button *ngIf="resPromotion.isDelete" (click)="getParentData('detail')" data-bs-toggle="modal" data-bs-target="#restorePromotionModal" class="btn btn-sm btn-warning">Khôi phục điểm tham quan</button>

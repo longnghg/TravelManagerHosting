@@ -77,7 +77,10 @@ export class ItemPlaceComponent implements OnInit {
         }
       })
       this.resWardTmp = listWard
+
     }
+    console.log(this.resPlace);
+    console.log(this.resWardTmp);
 
     this.resPlaceTmp = Object.assign({}, this.resPlace)
   }
@@ -130,6 +133,7 @@ export class ItemPlaceComponent implements OnInit {
         this.placeService.update(this.resPlace, this.resPlace.idPlace).subscribe(res =>{
           this.response = res
           this.isLoading = false
+
           if (res.notification.type == StatusNotification.Validation) {
             this.validatePlace[res.notification.description] = res.notification.messenge
           }

@@ -38,7 +38,6 @@ export class ItemPromotionComponent implements OnInit {
   ngOnChanges(): void {
     if(this.type == 'create'){
       this.resPromotion = new PromotionModel()
-      this.resPromotionTmp = Object.assign({}, this.resPromotion)
     }
     else{
       if(this.resPromotion){
@@ -47,6 +46,7 @@ export class ItemPromotionComponent implements OnInit {
         this.resPromotion.modifyDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resPromotion.modifyDate)
       }
     }
+    this.resPromotionTmp = Object.assign({}, this.resPromotion)
   }
 
   dateChange() {

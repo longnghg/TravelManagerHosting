@@ -55,7 +55,7 @@
                   [class]="type != 'detail' && type != 'create' || resRestaurant.isDelete || isLoading ?'d-none':'text-danger'">*
                   {{validateRestaurant.districtId ? validateRestaurant.districtId : ''}}</span>
               </label>
-              <ng-select [items]="resDistrictTmp?resDistrictTmp:resDistrict" bindLabel="nameDistrict"
+              <ng-select [items]="resDistrictTmp" bindLabel="nameDistrict"
                 bindValue="idDistrict" [(ngModel)]="resRestaurant.districtId" placeholder="Chọn thành quận/huyện..."
                 name="idDistrict" id="idDistrict" [clearable]="false" [searchable]="false"
                 (change)="inputChange(); locationChange('district', 'Ward')" [disabled]="isLoading"
@@ -70,7 +70,7 @@
                   [class]="type != 'detail' && type != 'create' || resRestaurant.isDelete || isLoading ?'d-none':'text-danger'">*
                   {{validateRestaurant.wardId ? validateRestaurant.wardId : ''}}</span>
               </label>
-              <ng-select [items]="resWardTmp?resWardTmp:resWard" bindLabel="nameWard" bindValue="idWard"
+              <ng-select [items]="resWardTmp" bindLabel="nameWard" bindValue="idWard"
                 [(ngModel)]="resRestaurant.wardId" placeholder="Chọn thành quận/huyện..." name="idWard" id="idWard"
                 [clearable]="false" [searchable]="false" (change)="inputChange()" [disabled]="isLoading"
                 [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resRestaurant.isDelete || isLoading">

@@ -1,6 +1,6 @@
 <div class="modal-header">
   <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin chi tiết</h1>
-  <button type="button" #closeModalLoad class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"
+  <button type="button" #closeModal class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"
     [disabled]="isLoading"></button>
 </div>
 <div class="modal-body">
@@ -54,7 +54,7 @@
                   [class]="type != 'detail' && type != 'create' || resPlace.isDelete || isLoading ?'d-none':'text-danger'">*
                   {{validatePlace.districtId ? validatePlace.districtId : ''}}</span>
               </label>
-              <ng-select [items]="resDistrictTmp?resDistrictTmp:resDistrict" bindLabel="nameDistrict"
+              <ng-select [items]="resDistrictTmp" bindLabel="nameDistrict"
                 bindValue="idDistrict" [(ngModel)]="resPlace.districtId" placeholder="Chọn thành quận/huyện..."
                 name="idDistrict" id="idDistrict" [clearable]="false" [searchable]="false"
                 (change)="inputChange(); locationChange('district', 'Ward')" [disabled]="isLoading"
@@ -69,7 +69,7 @@
                   [class]="type != 'detail' && type != 'create' || resPlace.isDelete || isLoading ?'d-none':'text-danger'">*
                   {{validatePlace.wardId ? validatePlace.wardId : ''}}</span>
               </label>
-              <ng-select [items]="resWardTmp?resWardTmp:resWard" bindLabel="nameWard" bindValue="idWard"
+              <ng-select [items]="resWardTmp" bindLabel="nameWard" bindValue="idWard"
                 [(ngModel)]="resPlace.wardId" placeholder="Chọn thành quận/huyện..." name="idWard" id="idWard"
                 [clearable]="false" [searchable]="false" (change)="inputChange()" [disabled]="isLoading"
                 [readonly]="type == 'refuse' || type == 'cancelRequire' || type == 'approve' || resPlace.isDelete || isLoading">
