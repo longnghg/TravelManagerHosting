@@ -199,13 +199,19 @@ export class ItemTourComponent implements OnInit {
   changeImg(e: any){
     this.formData = e
     if (e.target.files[0].type == "image/jpg" || e.target.files[0].type == "image/jpeg" || e.target.files[0].type == "image/png") {
-      if (e.target.files && e.target.files[0]){
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.onload = e => this.img = reader.result;
-        reader.readAsDataURL(file)
+      console.log(e.target.files[0].size);
+      if(e.target.files[0].size <= 2097152 ){
+        if (e.target.files && e.target.files[0]){
+          const file = e.target.files[0];
+          const reader = new FileReader();
+          reader.onload = e => this.img = reader.result;
+          reader.readAsDataURL(file)
 
-        this.resTour.thumbnail = this.img
+          this.resTour.thumbnail = this.img
+        }
+      }
+      else{
+        this.notificationService.handleAlert("Đã xóa [" + e.target.files[0].name + "] hình ảnh quá lớn !", StatusNotification.Error)
       }
     }
     else{
@@ -222,94 +228,106 @@ export class ItemTourComponent implements OnInit {
       var files =  Object.assign([], e.target.files)
       var filesTmp = Object.assign([],  e.target.files);
       var check = 0
+      var checkLength = 0
       var dt = new DataTransfer();
       files.forEach(file => {
         if (file.type == "image/jpg" || file.type == "image/jpeg" || file.type == "image/png") {
-          if (this.imgDetail) {
-            this.imgDetail = Object.assign([], this.imgDetailRoot)
-          }
-          else{
-            this.imgDetail = []
-          }
 
-          if (this.type == "create") {
-            if (this.formDatas) {
-              this.resImage=[]
-              dt = new DataTransfer();
-              var image = new ImageModel
-              filesTmp = Object.assign([], this.formDatasTmp)
-              filesTmp.forEach(_fileTmp => {
-                image.nameImage = _fileTmp.name
-                this.resImage.push(Object.assign({}, image))
-                dt.items.add(_fileTmp);
-              });
+          if(file.size <=  2097152){
+            if (this.imgDetail) {
+              this.imgDetail = Object.assign([], this.imgDetailRoot)
+            }
+            else{
+              this.imgDetail = []
+            }
 
-              if (filesTmp.length < 4) {
+            if (this.type == "create") {
+              if (this.formDatas) {
+                this.resImage=[]
+                dt = new DataTransfer();
+                var image = new ImageModel
+                filesTmp = Object.assign([], this.formDatasTmp)
+                filesTmp.forEach(_fileTmp => {
+                  image.nameImage = _fileTmp.name
+                  this.resImage.push(Object.assign({}, image))
+                  dt.items.add(_fileTmp);
+                });
+
+                if (filesTmp.length < 4) {
+                  image.nameImage = file.name
+                  this.resImage.push(Object.assign({}, image))
+                  dt.items.add(file);
+                }
+                this.formDatas.target.files = dt.files
+                this.formDatasTmp = dt.files
+              }
+              else{
+                var image = new ImageModel
                 image.nameImage = file.name
                 this.resImage.push(Object.assign({}, image))
+                dt.items.add(file);
+                this.formDatas = e
+                this.formDatasTmp = dt.files
+              }
+
+            }else{
+             if (this.formDatas) {
+              filesTmp = Object.assign([], this.formDatasTmp)
+              this.resImage = Object.assign([], this.resImageTmp)
+              dt = new DataTransfer();
+              filesTmp.forEach(_fileTmp => {
+                  dt.items.add(_fileTmp);
+              });
+              console.log(this.resImage);
+
+              if (this.resImage.length < 4) {
+                 var image = new ImageModel
+                image.nameImage = file.name
+                this.resImage.push(Object.assign({}, image))
+                this.resImageTmp.push(Object.assign({}, image))
                 dt.items.add(file);
               }
               this.formDatas.target.files = dt.files
               this.formDatasTmp = dt.files
-            }
-            else{
+             }
+             else{
               var image = new ImageModel
-              image.nameImage = file.name
-              this.resImage.push(Object.assign({}, image))
-              dt.items.add(file);
-              this.formDatas = e
-              this.formDatasTmp = dt.files
-            }
-
-          }else{
-           if (this.formDatas) {
-            filesTmp = Object.assign([], this.formDatasTmp)
-            this.resImage = Object.assign([], this.resImageTmp)
-            dt = new DataTransfer();
-            filesTmp.forEach(_fileTmp => {
-                dt.items.add(_fileTmp);
-            });
-            console.log(this.resImage);
-
-            if (this.resImage.length < 4) {
-               var image = new ImageModel
               image.nameImage = file.name
               this.resImage.push(Object.assign({}, image))
               this.resImageTmp.push(Object.assign({}, image))
               dt.items.add(file);
+              this.formDatas = e
+              this.formDatasTmp = dt.files
+             }
             }
-            this.formDatas.target.files = dt.files
-            this.formDatasTmp = dt.files
-           }
-           else{
-            var image = new ImageModel
-            image.nameImage = file.name
-            this.resImage.push(Object.assign({}, image))
-            this.resImageTmp.push(Object.assign({}, image))
-            dt.items.add(file);
-            this.formDatas = e
-            this.formDatasTmp = dt.files
-           }
+
+            const reader = new FileReader();
+            reader.onload = e =>{
+              var length = this.imgDetail.length
+              if (length < 4) {
+                this.imgDetail.push(reader.result)
+                this.imgDetailRoot.push(reader.result)
+              }
+            };
+            reader.readAsDataURL(file)
+          }
+          else{
+            checkLength++
           }
 
-          const reader = new FileReader();
-          reader.onload = e =>{
-            var length = this.imgDetail.length
-            if (length < 4) {
-              this.imgDetail.push(reader.result)
-              this.imgDetailRoot.push(reader.result)
-            }
-          };
-          reader.readAsDataURL(file)
         }
         else{
           filesTmp.splice(filesTmp.indexOf(file), 1)
+
           check++
         }
       });
 
       if (check > 0) {
         this.notificationService.handleAlert("Đã xóa [" + check + "] file không đúng định dạng hình ảnh !", StatusNotification.Error)
+      }
+      if (checkLength > 0) {
+        this.notificationService.handleAlert("Đã xóa [" + checkLength + "] hình ảnh quá lớn !", StatusNotification.Error)
       }
       setTimeout(() => {
         if (this.imgDetail.length < 4) {
