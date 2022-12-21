@@ -255,6 +255,7 @@ export class GridConfig{
   idModalLog?: string
   idModal?: string
 
+  disablePagination?: boolean
   disableApprove?: boolean
   disableSchedule?: boolean
   disableCreate?: boolean

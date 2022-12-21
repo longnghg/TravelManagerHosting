@@ -162,6 +162,7 @@ export class ListPlaceComponent implements OnInit {
          this.isLoading = false
          setTimeout(() => {
           this.closeModalLoadDelete.nativeElement.click()
+          this.closeModalLoadApprove.nativeElement.click()
          }, 100);
        }, error => {
          var message = this.configService.error(error.status, error.error != null?error.error.text:"");

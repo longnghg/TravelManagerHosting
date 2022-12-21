@@ -252,6 +252,7 @@ export class GridConfig2{
   route?: string
   alias?: string
 
+  disablePagination?: boolean
   disableApprove?: boolean
   disableCreate?: boolean
   disableDetail?: boolean

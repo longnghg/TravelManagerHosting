@@ -64,4 +64,5 @@ getsFullCar(isdelete: any)
 {
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/list-car?isDelete="+isdelete);
 }
+
 }

@@ -83,7 +83,7 @@
   <div class="modal-dialog  modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="approveScheduleModalLabel">Xác nhận</h1>
+        <h1 class="modal-title fs-5" id="approveScheduleModalLabel">Xác nhận {{typeChild}}</h1>
         <button type="button" #closeModalLoadApprove class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
       </div>
       <div class="modal-body" *ngIf="data">
@@ -98,8 +98,6 @@
             Bạn có chắc muốn hủy yêu cầu phê duyệt [<span class="text-red">{{data.idSchedule}}</span>] !
           </ng-template>
         </ng-template>
-
-
       </div>
       <div class="modal-footer">
         <ng-container *ngIf="typeChild == 'approve'; else elseApprove">

@@ -2,22 +2,22 @@
 <div class="container-fluid">
   <div class="row mt-3" style="width: 20rem;">
     <div class="col-4" style="padding-top: 8px;">Từ ngày </div>
-    <input  class="col-8 form-control custom-pages-input" style="height: 30px;" name="dp" onkeydown="return false"   placeholder="DD/MM/YYYY"  type="datetime-local"/>
+    <input  class="col-8 form-control custom-pages-input" style="height: 30px;" name="dp" onkeydown="return false" [(ngModel)]="from" (change)="initCar()" placeholder="DD/MM/YYYY"  type="datetime-local"/>
    </div>
   <div class="row" style="width: 20rem;">
      <div class="col-4" style="padding-top: 8px;">Đến ngày </div>
-     <input  class="col-8 form-control custom-pages-input" style="height: 30px;"  name="dp" onkeydown="return false"   placeholder="DD/MM/YYYY"  type="datetime-local"/>
+     <input  class="col-8 form-control custom-pages-input" style="height: 30px;"  name="dp" onkeydown="return false" [(ngModel)]="to" (change)="initCar()" placeholder="DD/MM/YYYY"  type="datetime-local"/>
   </div>
   <div class="row mt-3">
     <div class="col-6">
       <div class="card shadow border-0">
-        <app-grid-data [rowData]="" [columnDefs]="columnDefs1" [gridConfig]="gridConfig1"></app-grid-data>
+        <app-grid-data [rowData]="resInfo.listCarFree" [columnDefs]="columnDefs1" [gridConfig]="gridConfig"></app-grid-data>
       </div>
     </div>
 
     <div class="col-6">
       <div class="card shadow border-0">
-        <app-grid-data [rowData]="" [columnDefs]="columnDefs2" [gridConfig]="gridConfig2"></app-grid-data>
+        <app-grid-data [rowData]="resInfo.listEmployeeFree" [columnDefs]="columnDefs2" [gridConfig]="gridConfig"></app-grid-data>
       </div>
     </div>
   </div>

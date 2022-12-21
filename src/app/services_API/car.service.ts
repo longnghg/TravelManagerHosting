@@ -96,4 +96,9 @@ scheduleOfCard(idCar: any, pageIndex: number, pageSize: number)
 {
   return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/list-schedule-of-car?idCar="+idCar+"&pageIndex="+pageIndex+"&pageSize="+pageSize);
 }
+
+getsInfoFree(from: number, to: number)
+{
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/list-car-and-tour-guide-free?from="+from+"&to="+to);
+}
 }

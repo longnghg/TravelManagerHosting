@@ -132,7 +132,6 @@ export class ViewTourScheduleComponent implements OnInit {
       var idTour = this.activatedRoute.snapshot.paramMap.get('id2')
       this.scheduleService.search(Object.assign({}, e,),idTour).subscribe(res => {
         this.response = res
-        console.warn(res);
         if(this.response.notification.type == StatusNotification.Success)
         {
           this.resSchedule = this.response.content
@@ -194,6 +193,7 @@ export class ViewTourScheduleComponent implements OnInit {
        this.isLoading = false
        setTimeout(() => {
         this.closeModalLoadDelete.nativeElement.click()
+        this.closeModalLoadApprove.nativeElement.click()
        }, 100);
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -202,6 +202,7 @@ export class ViewTourScheduleComponent implements OnInit {
      })
     }
    }
+
 
    restore(){
     if (this.data) {

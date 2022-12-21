@@ -1,6 +1,6 @@
 <div class="table-responsive" style="overflow-x: hidden;">
   <table class="table align-items-center table-flush" >
-    <thead id="thead" class="thead-light" *ngIf="columnDefs">
+    <thead id="thead" class="thead-light" style="z-index: 0" *ngIf="columnDefs">
       <tr>
         <th scope="col" style="width: 50px;"></th>
         <th scope="col" *ngFor="let column of columnDefs" [style]="column.style">{{column.headerName}}
@@ -253,7 +253,7 @@
       </tbody>
     </table>
   </div>
-  <nav aria-label="Page navigation example" class="row">
+  <nav aria-label="Page navigation example" class="row" *ngIf="!gridConfig.disablePagination">
     <div class="col-6">
       <ul class="pagination justify-content-start" style="margin-left: 20px;">
       <li class="page-item" style="margin-right: 10px; margin-top: 10px;"><h5>Xem</h5></li>
