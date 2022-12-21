@@ -395,7 +395,7 @@ export class ConfigService{
     return transformedVal;
   }
 
-   validateCostTour(data: any, model: any){
+  validateCostTour(data: any, model: any){
     model.total = 0
     var min = 0
 
@@ -406,8 +406,8 @@ export class ConfigService{
     }else if (data.breakfast <= 0) {
       model.breakfast = "[Chi phí ăn] không nhỏ hơn 0!"
       model.total += 1
-    }else if( this.transform(data.breakfast) >  500000){
-      model.breakfast = "[Chi phí ăn] không lớn hơn 500.000đ!"
+    }else if( this.transform(data.breakfast) >  1000000){
+      model.breakfast = "[Chi phí ăn] không lớn hơn 1.000.000đ!"
       model.total += 1
     }
 
@@ -429,8 +429,8 @@ export class ConfigService{
        model.feeGas = "[Chi phí xăng] không nhỏ hơn 0!"
        model.total += 1
      }
-     else if (this.transform(data.feeGas) > 50000) {
-      model.feeGas = "[Chi phí xăng] không lớn hơn 50.000đ!"
+     else if (this.transform(data.feeGas) > 100000) {
+      model.feeGas = "[Chi phí xăng] không lớn hơn 100.000đ!"
       model.total += 1
     }
 
@@ -452,8 +452,8 @@ export class ConfigService{
        model.sellCost = "[Chi phí bán tour] không nhỏ hơn 0!"
        model.total += 1
      }
-     else if (this.transform(data.sellCost) > 1000000) {
-      model.sellCost = "[Chi phí bán tour] không lớn hơn 1.000.000đ!"
+     else if (this.transform(data.sellCost) > 10000000) {
+      model.sellCost = "[Chi phí bán tour] không lớn hơn 10.000.000đ!"
       model.total += 1
     }
 
