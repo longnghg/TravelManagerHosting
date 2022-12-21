@@ -167,8 +167,6 @@ export class NavbarComponent implements OnInit {
   }
 
   changeZIndex(){
-    console.log(1);
-
     document.getElementById("thead").style.zIndex = "0"
   }
 }

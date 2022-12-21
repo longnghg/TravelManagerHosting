@@ -48,7 +48,7 @@ export class ListCarComponent implements OnInit {
       { field: 'liscensePlate', headerName: "Biển số xe", style: "width: 20%;", searchable: true, searchType: 'text', searchObj: 'liscensePlate'},
       { field: 'amountSeat',headerName: "Số lượng chỗ ngồi", style: "width: 10%;", searchable: true, searchType: 'number', searchObj: 'amountSeat'},
       { field: 'phone',headerName: "Số điện thoại", style: "width: 20%;", searchable: true, searchType: 'number', searchObj: 'phone'},
-      { field: 'status',headerName: "Trạng thái", style: "width: 20%;", filter:"statusCar", searchable: true, searchType: 'section', searchObj: 'status', multiple: true, closeOnSelect: false, bindLabel: "liscensePlate", bindValue: "id", listSection: this.configService.listStatusCar()},
+      { field: 'status',headerName: "Trạng thái", style: "width: 20%;", filter:"statusCar", searchable: true, searchType: 'section', searchObj: 'status', multiple: true, closeOnSelect: false, bindLabel: "name", bindValue: "id", listSection: this.configService.listStatusCar()},
     ];
 
     this.auth = JSON.parse(localStorage.getItem("currentUser"))

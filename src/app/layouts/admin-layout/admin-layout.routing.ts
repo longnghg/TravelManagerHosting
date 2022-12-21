@@ -32,7 +32,8 @@ import { ViewTourScheduleComponent } from '../../pages/tour/view-tour-schedule/v
 import { ItemTourComponent } from 'src/app/pages/tour/item-tour/item-tour.component';
 import { ListVoucherComponent } from 'src/app/pages/voucher/list-voucher/list-voucher.component';
 import { ListCarInfoComponent } from 'src/app/pages/car-infor/list-car-info/list-car-info.component';
-import {  ListLogsComponent} from 'src/app/pages/logs/list-logs/list-logs.component';
+import { ListLogsComponent } from 'src/app/pages/logs/list-logs/list-logs.component';
+import { InfoPageComponent } from 'src/app/pages/info-schedules/info-page/info-page.component';
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
@@ -59,6 +60,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'list-voucher',     component: ListVoucherComponent},
     { path: 'view-tour-schedule',     component: ViewTourScheduleComponent},
     { path: 'list-car-infor',     component: ListCarInfoComponent},
+    { path: 'list-info',     component: InfoPageComponent},
     { path: 'list-logs',     component: ListLogsComponent},
 
 ];

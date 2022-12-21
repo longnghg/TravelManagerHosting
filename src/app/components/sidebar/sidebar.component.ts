@@ -23,8 +23,8 @@ export const ROUTES: RouteInfo[] = [
     { path: '/list-customer', title: 'Khách hàng',  icon:'ni ni-single-02 text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager, RoleTitle.TourBookingManager]  },
     { path: '/list-promotion', title: 'Mã khuyến mãi',  icon:'ni ni-tag text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager]  },
     { path: '/list-car', title: 'Phương tiện',  icon:'ni ni-bus-front-12 text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager]  },
-    { path: '/list-car-infor', title: 'Lịch trình phương tiện',  icon:'ni ni-single-02 text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager, RoleTitle.TourBookingManager]  },
-
+    { path: '/list-info', title: 'Lịch trình phương tiện',  icon:'ni ni-single-02 text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager, RoleTitle.TourManager]  },
+    { path: '/list-car-infor', title: 'Lịch trình phương tiện',  icon:'ni ni-single-02 text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager, RoleTitle.TourManager]  },
     { path: '/list-tour', title: 'Tour',  icon:'ni ni-world-2 text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager, RoleTitle.TourManager]  },
     { path: '/item-tour/:id1/:id2', title: '',  icon:'', class: 'd-none', roles: [RoleTitle.Admin, RoleTitle.LocalManager, RoleTitle.TourManager]  },
     // { path: '/list-schedule', title: 'Schedule',  icon:'ni ni-calendar-grid-58 text-purple', class: '', roles: [RoleTitle.Admin, RoleTitle.LocalManager, RoleTitle.TourManager]  },
@@ -37,7 +37,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/list-voucher', title: 'Voucher',  icon:'ni ni-tag text-purple', class: '', roles: [RoleTitle.Admin]  },
     { path: '/list-logs', title: 'Logs',  icon:'fa-solid fa-landmark', class: '', roles: [RoleTitle.Admin]  },
 
-    { path: '/chat', title: 'Hỗ trợ',  icon:'ni fa-solid fa-headset', class: '', roles: [RoleTitle.Supporter]  },
+    // { path: '/chat', title: 'Hỗ trợ',  icon:'ni fa-solid fa-headset', class: '', roles: [RoleTitle.Supporter]  },
 
 
   ]
