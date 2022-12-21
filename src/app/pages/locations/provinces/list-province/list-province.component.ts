@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef} from '@angular/core';
 import { NotificationService } from "../../../../services_API/notification.service";
 import { ConfigService } from "../../../../services_API/config.service";
 import { ProvinceService } from '../../../../services_API/province.service';
@@ -7,7 +7,6 @@ import { DistrictService } from '../../../../services_API/district.service';
 import { LocationModel } from "../../../../models/location.model";
 import { ResponseModel } from "../../../../models/responsiveModels/response.model";
 import { ColDef, GridConfig} from '../../../../components/grid-data/grid-data.component';
-import { HubConnection } from '@microsoft/signalr';
 import { StatusNotification } from "../../../../enums/enum";
 import { PaginationModel } from "../../../../models/responsiveModels/pagination.model";
 @Component({
@@ -17,12 +16,15 @@ import { PaginationModel } from "../../../../models/responsiveModels/pagination.
 
 })
 export class ListProvinceComponent implements OnInit {
-  @Output() parentLocationDel = new EventEmitter<any>()
+  @ViewChild('closeModalLoadDeleteProvince') closeModalLoadDeleteProvince: ElementRef;
+
+  isLoading: boolean
   @Input() resDistrict: LocationModel[]
   dataChild: LocationModel
   typeChild: string
   resProvince: LocationModel[]
   pagination = new PaginationModel
+  data: LocationModel
   response: ResponseModel
   public columnDefs: ColDef[]
   public gridConfig: GridConfig = {
@@ -32,7 +34,6 @@ export class ListProvinceComponent implements OnInit {
     disableApprove: true,
   }
 
-  private hubConnectionBuilder!: HubConnection;
   constructor( private provinceService: ProvinceService, private districtService: DistrictService, private notificationService: NotificationService,
     private configService: ConfigService){}
 
@@ -45,11 +46,6 @@ export class ListProvinceComponent implements OnInit {
 
     this.gridConfig.pageSize = this.pagination.pageSize
     this.search(this.pagination, true)
-    this.hubConnectionBuilder = this.configService.signalR()
-    this.hubConnectionBuilder.start();
-    this.hubConnectionBuilder.on('Init', (result: any) => {
-      this.search(this.pagination, true)
-    })
   }
 
 
@@ -94,6 +90,8 @@ export class ListProvinceComponent implements OnInit {
     if (e) {
       this.provinceService.search(Object.assign({}, e)).subscribe(res => {
         this.response = res
+        console.warn(res);
+
         if(this.response.notification.type == StatusNotification.Success)
         {
           this.resProvince = this.response.content
@@ -143,7 +141,22 @@ export class ListProvinceComponent implements OnInit {
   }
 
   parentDelete(e){
-    this.parentLocationDel.emit(e);
+    this.data = e
   }
 
+  deleteProvince(){
+    this.provinceService.delete(this.data.idProvince).subscribe(res =>{
+      this.response = res
+      this.notificationService.handleAlertObj(res.notification)
+      this.isLoading = false
+      this.ngOnInit()
+      setTimeout(() => {
+        this.closeModalLoadDeleteProvince.nativeElement.click()
+       }, 100);
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+      this.isLoading = false
+    })
+   }
 }

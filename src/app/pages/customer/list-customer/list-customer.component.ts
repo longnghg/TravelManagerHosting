@@ -132,6 +132,21 @@ export class ListCustomerComponent implements OnInit {
          this.isLoading = false
          if (this.response.notification.type == StatusNotification.Success) {
           this.configService.callBlockSignalR(this.data.idCustomer)
+
+          this.gridConfig.pageIndex = 1
+
+          if (this.data.isBlock) {
+            var data = {
+              isDelete: true,
+              pageIndex: this.gridConfig.pageIndex,
+              pageSize: this.gridConfig.pageSize
+            }
+            this.search(data)
+          }
+          else{
+            this.ngOnInit()
+          }
+
           setTimeout(() => {
             this.closeModalBlockLoad.nativeElement.click()
            }, 100);

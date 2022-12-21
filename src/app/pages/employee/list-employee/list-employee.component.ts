@@ -187,6 +187,9 @@ export class ListEmployeeComponent implements OnInit {
           this.notificationService.handleAlertObj(res.notification)
           this.isLoading = false
           this.configService.callBlockSignalR(this.data.idEmployee)
+
+          this.gridConfig.pageIndex = 1
+          this.ngOnInit()
           setTimeout(() => {
             this.closeModalLoadDelete.nativeElement.click()
            }, 100);
@@ -209,6 +212,15 @@ export class ListEmployeeComponent implements OnInit {
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
         this.isLoading = false
+
+        this.gridConfig.pageIndex = 1
+        var data = {
+          isDelete: true,
+          pageIndex: this.gridConfig.pageIndex,
+          pageSize: this.gridConfig.pageSize
+        }
+        this.search(data)
+
         setTimeout(() => {
           this.closeModalLoadRestore.nativeElement.click()
          }, 100);

@@ -225,6 +225,20 @@ export class ListTourComponent implements OnInit {
          this.response = res
          this.notificationService.handleAlertObj(res.notification)
          this.isLoading = false
+
+         this.gridConfig2.pageIndex = 1
+         var data = {
+           isDelete: this.gridConfig2.isRestore,
+           pageIndex: this.gridConfig2.pageIndex,
+           pageSize: this.gridConfig2.pageSize
+         }
+         this.search(data)
+         this.gridConfigApprove.pageIndex = 1
+         var dataWaiting = {
+           pageIndex: this.gridConfigApprove.pageIndex,
+           pageSize: this.gridConfigApprove.pageSize
+         }
+         this.initWaiting(dataWaiting)
          setTimeout(() => {
           this.closeModalLoadDelete.nativeElement.click()
           this.closeModalLoadApprove.nativeElement.click()
@@ -243,6 +257,21 @@ export class ListTourComponent implements OnInit {
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
           this.isLoading = false
+
+          this.gridConfig2.pageIndex = 1
+          var data = {
+            isDelete: true,
+            pageIndex: this.gridConfig2.pageIndex,
+            pageSize: this.gridConfig2.pageSize
+          }
+          this.search(data)
+          this.gridConfigApprove.pageIndex = 1
+          var dataWaiting = {
+            pageIndex: this.gridConfigApprove.pageIndex,
+            pageSize: this.gridConfigApprove.pageSize
+          }
+          this.initWaiting(dataWaiting)
+
           setTimeout(() => {
             this.closeModalLoadRestore.nativeElement.click()
            }, 100);

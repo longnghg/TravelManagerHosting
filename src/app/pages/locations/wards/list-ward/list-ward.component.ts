@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef} from '@angular/core';
 import { NotificationService } from "../../../../services_API/notification.service";
 import { ConfigService } from "../../../../services_API/config.service";
 import { DistrictService } from '../../../../services_API/district.service';
@@ -15,7 +15,9 @@ import { PaginationModel } from "../../../../models/responsiveModels/pagination.
   styleUrls: ['./list-ward.component.scss']
 })
 export class ListWardComponent implements OnInit {
-  @Output() parentLocationDel = new EventEmitter<any>()
+  @ViewChild('closeModalLoadDeleteWard') closeModalLoadDeleteWard: ElementRef;
+  isLoading: boolean
+  data: LocationModel
   @Input() resDistrict: LocationModel[]
   dataChild: LocationModel
   typeChild: string
@@ -116,6 +118,24 @@ export class ListWardComponent implements OnInit {
   }
 
   parentDelete(e){
-    this.parentLocationDel.emit(e);
+    this.data = e
   }
+
+  deleteWard(){
+    if (this.data) {
+     this.wardService.delete(this.data.idWard).subscribe(res =>{
+       this.response = res
+       this.notificationService.handleAlertObj(res.notification)
+       this.isLoading = false
+       this.ngOnInit()
+       setTimeout(() => {
+        this.closeModalLoadDeleteWard.nativeElement.click()
+       }, 100);
+     }, error => {
+       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+       this.notificationService.handleAlert(message, StatusNotification.Error)
+       this.isLoading = false
+     })
+    }
+   }
 }

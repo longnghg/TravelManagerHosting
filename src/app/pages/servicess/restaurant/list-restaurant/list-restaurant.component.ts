@@ -191,6 +191,20 @@ export class ListRestaurantComponent implements OnInit {
          this.response = res
          this.notificationService.handleAlertObj(res.notification)
          this.isLoading = false
+         this.gridConfig.pageIndex = 1
+         var data = {
+           isDelete: this.gridConfig.isRestore,
+           pageIndex: this.gridConfig.pageIndex,
+           pageSize: this.gridConfig.pageSize
+         }
+         this.search(data)
+         this.gridConfigWaiting.pageIndex = 1
+         var dataWaiting = {
+           pageIndex: this.gridConfigWaiting.pageIndex,
+           pageSize: this.gridConfigWaiting.pageSize
+         }
+         this.initWaiting(dataWaiting)
+
          setTimeout(() => {
           this.closeModalLoadDelete.nativeElement.click()
           this.closeModalLoadApprove.nativeElement.click()
@@ -209,6 +223,19 @@ export class ListRestaurantComponent implements OnInit {
          this.response = res
          this.notificationService.handleAlertObj(res.notification)
          this.isLoading = false
+         this.gridConfig.pageIndex = 1
+         var data = {
+           isDelete: true,
+           pageIndex: this.gridConfig.pageIndex,
+           pageSize: this.gridConfig.pageSize
+         }
+         this.search(data)
+         this.gridConfigWaiting.pageIndex = 1
+         var dataWaiting = {
+           pageIndex: this.gridConfigWaiting.pageIndex,
+           pageSize: this.gridConfigWaiting.pageSize
+         }
+         this.initWaiting(dataWaiting)
          setTimeout(() => {
           this.closeModalLoadRestore.nativeElement.click()
          }, 100);
@@ -226,6 +253,19 @@ export class ListRestaurantComponent implements OnInit {
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
         this.isLoading = false
+        this.gridConfig.pageIndex = 1
+        var data = {
+          isDelete: this.gridConfig.isRestore,
+          pageIndex: this.gridConfig.pageIndex,
+          pageSize: this.gridConfig.pageSize
+        }
+        this.search(data, true)
+        this.gridConfigWaiting.pageIndex = 1
+        var dataWaiting = {
+          pageIndex: this.gridConfigWaiting.pageIndex,
+          pageSize: this.gridConfigWaiting.pageSize
+        }
+        this.initWaiting(dataWaiting)
         setTimeout(() => {
           this.closeModalLoadApprove.nativeElement.click()
          }, 100);
@@ -243,9 +283,24 @@ export class ListRestaurantComponent implements OnInit {
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
         this.isLoading = false
+
+        this.gridConfig.pageIndex = 1
+        var data = {
+          isDelete: this.gridConfig.isRestore,
+          pageIndex: this.gridConfig.pageIndex,
+          pageSize: this.gridConfig.pageSize
+        }
+        this.search(data)
+        this.gridConfigWaiting.pageIndex = 1
+        var dataWaiting = {
+          pageIndex: this.gridConfigWaiting.pageIndex,
+          pageSize: this.gridConfigWaiting.pageSize
+        }
+        this.initWaiting(dataWaiting)
+
         setTimeout(() => {
           this.closeModalLoadApprove.nativeElement.click()
-         }, 100);
+        }, 100);
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, StatusNotification.Error)

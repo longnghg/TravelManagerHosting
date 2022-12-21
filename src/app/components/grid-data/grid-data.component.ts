@@ -33,6 +33,11 @@ export class GridDataComponent implements OnInit {
   ngOnInit(): void {
   }
   ngOnChanges(): void {
+    console.log(this.rowData);
+
+    if (this.gridConfig.pageIndex) {
+      this.pageIndex = this.gridConfig.pageIndex
+    }
     this.calTotalResult()
     this.calStartEnd()
   }
@@ -269,6 +274,7 @@ export class GridConfig{
   isRestore?: boolean
 
   pageSize?: number
+  pageIndex?: number
   totalResult? : number
 }
 

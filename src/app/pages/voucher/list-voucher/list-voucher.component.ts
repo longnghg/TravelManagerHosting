@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NotificationService } from "../../../services_API/notification.service";
 import { ConfigService } from "../../../services_API/config.service";
 import { VoucherService } from '../../../services_API/voucher.service'
@@ -15,12 +15,14 @@ import { PaginationModel } from 'src/app/models/responsiveModels/pagination.mode
   styleUrls: ['./list-voucher.component.scss']
 })
 export class ListVoucherComponent implements OnInit {
+  @ViewChild('closeModalLoadDelete') closeModalLoadDelete: ElementRef;
   resVoucher: VoucherModel[]
   resVoucherTmp: VoucherModel[]
   response: ResponseModel
   dataChild: VoucherModel
   typeChild: string
   isDelete: boolean = false
+  isLoading: boolean
   auth: AuthenticationModel
   data: any
   pagination = new PaginationModel
@@ -29,13 +31,12 @@ export class ListVoucherComponent implements OnInit {
 
     public columnDefs: ColDef[]
     public gridConfig: GridConfig = {
-      idModalRestore: "restoreVoucherModalLabel",
       idModalDelete: "deleteVoucherModalLabel",
-      idModal: "gridCar",
-      radioBoxName: "Kho lưu trữ",
+      idModal: "gridVoucher",
       disableApprove: true,
       disableRestore: true,
-      disableRadioBox: true
+      disableRadioBox: true,
+      disableSchedule: true
     }
       ngOnInit(): void {
         this.columnDefs= [
@@ -43,14 +44,14 @@ export class ListVoucherComponent implements OnInit {
           { field: 'value',headerName: "Giá trị", style: "width: 20%;", searchable: true, searchType: 'number', searchObj: 'endDvalueate', },
           { field: 'startDate',headerName: "Từ ngày", style: "width: 20%;", searchable: true, searchType: 'date', searchObj: 'startDate',filter: 'date'},
           { field: 'endDate',headerName: "Đến ngày", style: "width: 20%;", searchable: true, searchType: 'date', searchObj: 'endDate', filter: 'date'},
-           ];
+        ];
 
         this.auth = JSON.parse(localStorage.getItem("currentUser"))
         this.gridConfig.pageSize = this.pagination.pageSize
-        this.init(this.pagination, true)
+        this.search(this.pagination, true)
       }
 
-      init(e?, isNotShow?){
+      search(e?, isNotShow?){
         this.voucherService.search(Object.assign({}, e)).subscribe(res =>{
           this.response = res
           if(this.response.notification.type == StatusNotification.Success){
@@ -81,13 +82,30 @@ export class ListVoucherComponent implements OnInit {
 
       delete(){
         if (this.data) {
-
           this.voucherService.delete(this.data.idVoucher).subscribe(res =>{
            this.response = res
            this.notificationService.handleAlertObj(res.notification)
+           this.isLoading = false
+
+           if (this.response.notification.type == StatusNotification.Success) {
+            this.gridConfig.pageIndex = 1
+            var data = {
+              isDelete: this.gridConfig.isRestore,
+              pageIndex: this.gridConfig.pageIndex,
+              pageSize: this.gridConfig.pageSize
+            }
+            this.search(data)
+            this.gridConfig.pageIndex  = 1
+            this.ngOnInit()
+
+            setTimeout(() => {
+              this.closeModalLoadDelete.nativeElement.click()
+             }, 100);
+           }
          }, error => {
            var message = this.configService.error(error.status, error.error != null?error.error.text:"");
            this.notificationService.handleAlert(message, StatusNotification.Error)
+           this.isLoading = false
          })
         }
       }

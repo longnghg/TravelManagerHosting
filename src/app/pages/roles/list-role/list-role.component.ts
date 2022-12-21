@@ -60,6 +60,8 @@ export class ListRoleComponent implements OnInit {
   }
 
   search(e, isNotShow?){
+    console.log(e);
+
     if (e) {
       this.roleService.search(Object.assign({}, e)).subscribe(res => {
         this.response = res
@@ -126,6 +128,9 @@ export class ListRoleComponent implements OnInit {
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
        this.isLoading = false
+       this.gridConfig.pageIndex = 1
+       this.ngOnInit()
+
        setTimeout(() => {
         this.closeModalLoadDelete.nativeElement.click()
        }, 100);
@@ -143,6 +148,13 @@ export class ListRoleComponent implements OnInit {
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
         this.isLoading = false
+        this.gridConfig.pageIndex = 1
+        var data = {
+          isDelete: true,
+          pageIndex: this.gridConfig.pageIndex,
+          pageSize: this.gridConfig.pageSize
+        }
+        this.search(data)
         setTimeout(() => {
           this.closeModalLoadRestore.nativeElement.click()
          }, 100);

@@ -98,7 +98,7 @@
   <div class="row">
     <div class="col">
       <div class="card shadow border-0">
-        <app-list-province [resDistrict]="resDistrict" (parentLocationDel)="getDataDelete($event)"></app-list-province>
+        <app-list-province></app-list-province>
       </div>
     </div>
   </div>
@@ -109,7 +109,7 @@
   <div class="row">
     <div class="col">
       <div class="card shadow border-0">
-        <app-list-district [resProvince]="resProvince" [resWard]="resWard" (parentLocationDel)="getDataDelete($event)"></app-list-district>
+        <app-list-district></app-list-district>
       </div>
     </div>
   </div>
@@ -120,112 +120,9 @@
   <div class="row">
     <div class="col">
       <div class="card shadow border-0">
-        <app-list-ward [resDistrict]="resDistrict"  (parentLocationDel)="getDataDelete($event)"></app-list-ward>
+        <app-list-ward></app-list-ward>
       </div>
     </div>
   </div>
 </div>
-
-
-<div class="modal fade" id="deleteProvinceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteProvinceModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="deleteProvinceModalLabel">Xác nhận</h1>
-        <button type="button" #closeModalLoadDeleteProvince class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
-      </div>
-      <div class="modal-body" *ngIf="dataDelete">
-        Bạn có chắc muốn xóa [<span class="text-red">{{dataDelete.nameProvince}}</span>] !
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" (click)="isLoading=true;deleteProvince()" [disabled]="isLoading">
-          <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-          {{isLoading?'Đang xử lý...':'Xóa'}}
-        </button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="isLoading">Không</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="deleteDistrictModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteDistrictModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="deleteDistrictModalLabel">Xác nhận</h1>
-        <button type="button" #closeModalLoadDeleteDistrict class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
-      </div>
-      <div class="modal-body" *ngIf="dataDelete">
-        Bạn có chắc muốn xóa [<span class="text-red">{{dataDelete.nameDistrict}}</span>] !
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" (click)="isLoading=true;deleteDistrict()" [disabled]="isLoading">
-          <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-          {{isLoading?'Đang xử lý...':'Xóa'}}
-        </button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="isLoading">Không</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="deleteWardModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteWardModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="deleteWardModalLabel">Xác nhận</h1>
-        <button type="button" #closeModalLoadDeleteWard class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
-      </div>
-      <div class="modal-body" *ngIf="dataDelete">
-        Bạn có chắc muốn xóa [<span class="text-red">{{dataDelete.nameWard}}</span>] !
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" (click)="isLoading=true;deleteWard()" [disabled]="isLoading">
-          <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-          {{isLoading?'Đang xử lý...':'Xóa'}}
-        </button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="isLoading">Không</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- <div class="modal fade" id="gridData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="gridDataLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin chi tiết</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <ng-container *ngIf="expression; then thenTemplate; else elseTemplate">
-          <app-item-province></app-item-province>
-        </ng-container>
-        <ng-template #thenTemplate>
-          <app-item-district></app-item-district>
-        </ng-template>
-        <ng-template #elseTemplate>
-          <app-item-ward></app-item-ward>
-        </ng-template>
-
-      </div>
-    </div>
-  </div>
-</div> -->
-
-
-<!-- Thêm - Sửa -->
-<!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Thông tin</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-         <app-item-province [resParent]="child" [type]="type"></app-item-province>
-      </div>
-    </div>
-  </div>
-</div> -->
 

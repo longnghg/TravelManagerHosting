@@ -11,6 +11,7 @@ import { LocationModel} from 'src/app/models/location.model';
 import { ProvinceService } from "../../../../services_API/province.service";
 import { DistrictService } from "../../../../services_API/district.service";
 import { WardService } from "../../../../services_API/ward.service";
+import { ListRestaurantComponent } from "../list-restaurant/list-restaurant.component";
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
@@ -43,7 +44,8 @@ export class ItemRestaurantComponent implements OnInit {
     private provinceService: ProvinceService,
     private districtService: DistrictService,
     private wardService: WardService,
-    private notificationService: NotificationService) { }
+    private notificationService: NotificationService,
+    private listRestaurantComponent: ListRestaurantComponent) { }
 
   ngOnInit(): void {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
@@ -112,6 +114,7 @@ export class ItemRestaurantComponent implements OnInit {
             else{
               this.notificationService.handleAlertObj(res.notification)
               if (this.response.notification.type == StatusNotification.Success) {
+                this.listRestaurantComponent.ngOnInit()
                 this.resRestaurant = Object.assign({}, new RestaurantModel)
                 this.resRestaurantTmp = Object.assign({}, new RestaurantModel)
                 this.validateRestaurant = new ValidationRestaurantModel
@@ -135,6 +138,7 @@ export class ItemRestaurantComponent implements OnInit {
             {
               this.notificationService.handleAlertObj(res.notification)
               if (this.response.notification.type == StatusNotification.Success) {
+                this.listRestaurantComponent.ngOnInit()
                 this.isChange = false
                 setTimeout(() => {
                   this.closeModal.nativeElement.click()

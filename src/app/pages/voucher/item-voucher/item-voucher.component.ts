@@ -1,4 +1,4 @@
-import { Component, OnInit, Input,Output,EventEmitter  } from '@angular/core';
+import { Component, OnInit, Input,Output,EventEmitter, ViewChild, ElementRef  } from '@angular/core';
 import { ValidationVoucherModel, VoucherModel,  } from "src/app/models/voucher.model";
 import { VoucherService } from "../../../services_API/voucher.service";
 import { NotificationService } from "../../../services_API/notification.service";
@@ -7,14 +7,14 @@ import { ConfigService } from "../../../services_API/config.service";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { StatusNotification } from "../../../enums/enum";
 import { AuthenticationModel } from 'src/app/models/authentication.model';
-
+import { ListVoucherComponent } from "../list-voucher/list-voucher.component";
 @Component({
   selector: 'app-item-voucher',
   templateUrl: './item-voucher.component.html',
   styleUrls: ['./item-voucher.component.scss']
 })
 export class ItemVoucherComponent implements OnInit {
-
+  @ViewChild('closeModal') closeModal: ElementRef;
   @Input() resVoucher: VoucherModel
   @Input() type: string
   @Output() parentData = new EventEmitter<any>()
@@ -25,10 +25,12 @@ export class ItemVoucherComponent implements OnInit {
   isChange: boolean = false
   resVoucherTmp: VoucherModel
   formData: any
+  isLoading: boolean
 
   constructor(private voucherService: VoucherService,
     private configService: ConfigService,
-    private notificationService: NotificationService) { }
+    private notificationService: NotificationService,
+    private listVoucherComponent: ListVoucherComponent) { }
 
   ngOnInit(): void {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
@@ -45,7 +47,7 @@ export class ItemVoucherComponent implements OnInit {
         this.resVoucher.endDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resVoucher.endDate)
         this.resVoucher.startDateDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resVoucher.startDate)
       }
-      }
+    }
   }
 
   dateChange(property: string) {
@@ -66,30 +68,30 @@ export class ItemVoucherComponent implements OnInit {
     this.isChange = false
     this.notificationService.handleAlert("Khôi phục dữ liệu ban đầu thành công !", StatusNotification.Info)
   }
+
   save(){
     this.validateVoucher = new ValidationVoucherModel
     this.validateVoucher =  this.configService.validateVoucher(this.resVoucher, this.validateVoucher)
-    console.log(this.validateVoucher);
-
     if (this.validateVoucher.total == 0) {
       this.resVoucher.IdUserModify = this.auth.id
       if(this.type == "create")
       {
-        console.log(this.resVoucher);
-
         this.voucherService.create(this.resVoucher).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-	      if(this.response.notification.type == StatusNotification.Success)
-        {
-		      this.resVoucher = Object.assign({}, new VoucherModel)
-          this.resVoucherTmp = Object.assign({}, new VoucherModel)
-          this.validateVoucher = new ValidationVoucherModel
-          this.isChange = false
-        }
+          if(this.response.notification.type == StatusNotification.Success)
+          {
+            this.resVoucher = Object.assign({}, new VoucherModel)
+            this.resVoucherTmp = Object.assign({}, new VoucherModel)
+            this.validateVoucher = new ValidationVoucherModel
+            this.isChange = false
+            this.listVoucherComponent.ngOnInit()
+          }
+          this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"aa");
           this.notificationService.handleAlert(message, StatusNotification.Error)
+          this.isLoading = false
 
         })
       }
@@ -102,11 +104,17 @@ export class ItemVoucherComponent implements OnInit {
             if(this.response.notification.type == StatusNotification.Success)
             {
               this.isChange = false
+              this.listVoucherComponent.ngOnInit()
+              setTimeout(() => {
+                this.closeModal.nativeElement.click()
+              }, 100);
             }
+
+            this.isLoading = false
           }, error => {
             var message = this.configService.error(error.status, error.error != null?error.error.text:"");
             this.notificationService.handleAlert(message, StatusNotification.Error)
-
+            this.isLoading = false
           })
        }
 

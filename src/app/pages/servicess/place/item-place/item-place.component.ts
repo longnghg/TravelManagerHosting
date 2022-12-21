@@ -11,7 +11,7 @@ import { LocationModel} from 'src/app/models/location.model';
 import { ProvinceService } from "../../../../services_API/province.service";
 import { DistrictService } from "../../../../services_API/district.service";
 import { WardService } from "../../../../services_API/ward.service";
-
+import { ListPlaceComponent } from "../list-place/list-place.component";
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
@@ -44,7 +44,8 @@ export class ItemPlaceComponent implements OnInit {
     private notificationService: NotificationService,
     private provinceService: ProvinceService,
     private districtService: DistrictService,
-    private wardService: WardService,) { }
+    private wardService: WardService,
+    private listPlaceComponent: ListPlaceComponent) { }
 
 
   ngOnInit(): void {
@@ -79,8 +80,6 @@ export class ItemPlaceComponent implements OnInit {
       this.resWardTmp = listWard
 
     }
-    console.log(this.resPlace);
-    console.log(this.resWardTmp);
 
     this.resPlaceTmp = Object.assign({}, this.resPlace)
   }
@@ -117,6 +116,7 @@ export class ItemPlaceComponent implements OnInit {
           else{
             this.notificationService.handleAlertObj(res.notification)
             if (this.response.notification.type == StatusNotification.Success) {
+              this.listPlaceComponent.ngOnInit()
               this.resPlace = Object.assign({}, new PlaceModel)
               this.resPlaceTmp = Object.assign({}, new PlaceModel)
               this.validatePlace = new ValidationPlaceModel
@@ -141,6 +141,7 @@ export class ItemPlaceComponent implements OnInit {
           {
             this.notificationService.handleAlertObj(res.notification)
             if (this.response.notification.type == StatusNotification.Success) {
+              this.listPlaceComponent.ngOnInit()
               this.isChange = false
               setTimeout(() => {
                 this.closeModal.nativeElement.click()

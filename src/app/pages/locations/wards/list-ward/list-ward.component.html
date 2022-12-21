@@ -8,3 +8,25 @@
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" id="deleteWardModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteWardModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="deleteWardModalLabel">Xác nhận</h1>
+        <button type="button" #closeModalLoadDeleteWard class="btn-close" data-bs-dismiss="modal" aria-label="Close" [disabled]="isLoading"></button>
+      </div>
+      <div class="modal-body" *ngIf="data">
+        Bạn có chắc muốn xóa [<span class="text-red">{{data.nameWard}}</span>] !
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="isLoading=true;deleteWard()" [disabled]="isLoading">
+          <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          {{isLoading?'Đang xử lý...':'Xóa'}}
+        </button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="isLoading">Không</button>
+      </div>
+    </div>
+  </div>
+</div>

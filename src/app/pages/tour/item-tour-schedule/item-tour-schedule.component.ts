@@ -30,7 +30,7 @@ import { ProvinceService } from 'src/app/services_API/province.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditorComponent } from '@ckeditor/ckeditor5-angular';
 import { TourModel } from 'src/app/models/tour.model';
-
+import { ViewTourScheduleComponent } from "../view-tour-schedule/view-tour-schedule.component";
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
@@ -101,7 +101,7 @@ export class ItemTourScheduleComponent implements OnInit {
   constructor(private scheduleService: ScheduleService, private configService: ConfigService, private notificationService: NotificationService,
     private employeeService: EmployeeService, private carService: CarService, private promotionService: PromotionService, private activatedRoute: ActivatedRoute,
     private costtourService: CostTourService, private hotelService: HotelService, private placeService: PlaceService, private restaurantService: RestaurantService,
-    private timelineService: TimelineService, private provinceService: ProvinceService) { }
+    private timelineService: TimelineService, private provinceService: ProvinceService, private viewTourScheduleComponent: ViewTourScheduleComponent) { }
 
   ngOnInit(): void {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
@@ -482,6 +482,7 @@ export class ItemTourScheduleComponent implements OnInit {
         this.response = res
         this.isLoading = false
         if (this.response.notification.type == StatusNotification.Success) {
+          this.viewTourScheduleComponent.ngOnInit()
           this.close()
           setTimeout(() => {
             this.closeModal.nativeElement.click()
@@ -502,7 +503,7 @@ export class ItemTourScheduleComponent implements OnInit {
         this.isLoading = false
 
         if (this.response.notification.type == StatusNotification.Success) {
-
+          this.viewTourScheduleComponent.ngOnInit()
           setTimeout(() => {
             this.closeModal.nativeElement.click()
           }, 100);

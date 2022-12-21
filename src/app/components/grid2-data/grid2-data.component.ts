@@ -33,6 +33,9 @@ export class Grid2DataComponent implements OnInit {
   ngOnInit(): void {
   }
   ngOnChanges(): void {
+    if (this.gridConfig.pageIndex) {
+      this.pageIndex = this.gridConfig.pageIndex
+    }
     this.calTotalResult()
     this.calStartEnd()
   }
@@ -265,6 +268,7 @@ export class GridConfig2{
   isRestore?: boolean
 
   pageSize?: number
+  pageIndex?: number
   totalResult? : number
 }
 

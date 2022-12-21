@@ -129,7 +129,7 @@
 
       </div>
       <div class="modal-footer" *ngIf="data">
-        <button type="button" class="btn btn-danger" (click)="isLoading=true; block()" >
+        <button type="button" class="btn btn-danger" (click)="isLoading=true; block()" [disabled]="isLoading">
           <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
           {{isLoading?'Đang xử lý...':!data.isBlock?'Khóa':'Mở khóa'}}
         </button>

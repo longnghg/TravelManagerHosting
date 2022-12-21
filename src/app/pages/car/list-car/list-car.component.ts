@@ -130,6 +130,9 @@ export class ListCarComponent implements OnInit {
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
        this.isLoading = false
+
+       this.gridConfig.pageIndex = 1
+       this.ngOnInit()
        setTimeout(() => {
         this.closeModalDeleteLoad.nativeElement.click()
        }, 100);
@@ -147,6 +150,13 @@ export class ListCarComponent implements OnInit {
        this.response = res
        this.notificationService.handleAlertObj(res.notification)
        this.isLoading = false
+       this.gridConfig.pageIndex = 1
+       var data = {
+        isDelete: true,
+        pageIndex: this.gridConfig.pageIndex,
+        pageSize: this.gridConfig.pageSize
+       }
+      this.search(data)
        setTimeout(() => {
         this.closeModalRestoreLoad.nativeElement.click()
        }, 100);

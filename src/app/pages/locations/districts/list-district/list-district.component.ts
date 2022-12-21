@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild,  ElementRef} from '@angular/core';
 import { NotificationService } from "../../../../services_API/notification.service";
 import { ConfigService } from "../../../../services_API/config.service";
 import { DistrictService } from '../../../../services_API/district.service';
@@ -7,24 +7,26 @@ import { WardService } from '../../../../services_API/ward.service';
 import { LocationModel } from "../../../../models/location.model";
 import { ResponseModel } from "../../../../models/responsiveModels/response.model";
 import { ColDef, GridConfig} from '../../../../components/grid-data/grid-data.component';
-import { HubConnection } from '@microsoft/signalr';
 import { StatusNotification } from "../../../../enums/enum";
 import { PaginationModel } from "../../../../models/responsiveModels/pagination.model";
+
 @Component({
   selector: 'app-list-district',
   templateUrl: './list-district.component.html',
   styleUrls: ['./list-district.component.scss']
 })
 export class ListDistrictComponent implements OnInit {
-  @Output() parentLocationDel = new EventEmitter<any>()
+  @ViewChild('closeModalLoadDeleteDistrict') closeModalLoadDeleteDistrict: ElementRef;
+
+  isLoading: boolean
   @Input() resProvince: LocationModel[]
   @Input() resWard: LocationModel[]
   dataChild: LocationModel
   typeChild: string
   resDistrict: LocationModel[]
+  data: LocationModel
   response: ResponseModel
   pagination = new PaginationModel
-  private hubConnectionBuilder: HubConnection
   public columnDefs: ColDef[]
   public gridConfig: GridConfig = {
     idModalDelete: "deleteDistrictModal",
@@ -47,12 +49,6 @@ export class ListDistrictComponent implements OnInit {
 
     this.gridConfig.pageSize = this.pagination.pageSize
     this.search(this.pagination, true)
-    this.hubConnectionBuilder = this.configService.signalR()
-    this.hubConnectionBuilder.start();
-    this.hubConnectionBuilder.on('Init', (result: any) => {
-      this.search(this.pagination, true)
-    })
-
   }
 
   init(){
@@ -139,7 +135,25 @@ export class ListDistrictComponent implements OnInit {
   }
 
   parentDelete(e){
-    this.parentLocationDel.emit(e);
+    this.data = e
   }
+
+  deleteDistrict(){
+    if (this.data) {
+     this.districtService.delete(this.data.idDistrict).subscribe(res =>{
+       this.response = res
+       this.notificationService.handleAlertObj(res.notification)
+       this.isLoading = false
+       this.ngOnInit()
+       setTimeout(() => {
+        this.closeModalLoadDeleteDistrict.nativeElement.click()
+       }, 100);
+     }, error => {
+       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+       this.notificationService.handleAlert(message, StatusNotification.Error)
+       this.isLoading = false
+     })
+    }
+   }
 
 }

@@ -11,7 +11,7 @@ import { ProvinceService } from "../../../../services_API/province.service";
 import { DistrictService } from "../../../../services_API/district.service";
 import { WardService } from "../../../../services_API/ward.service";
 import { LogLevel } from '@microsoft/signalr';
-
+import { ListHotelComponent } from "../list-hotel/list-hotel.component";
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
@@ -45,7 +45,8 @@ export class ItemHotelComponent implements OnInit {
      private districtService: DistrictService,
      private wardService: WardService,
      private configService: ConfigService,
-     private notificationService: NotificationService
+     private notificationService: NotificationService,
+     private listHotelComponent: ListHotelComponent
      ) { }
 
   ngOnInit(): void {
@@ -118,6 +119,7 @@ export class ItemHotelComponent implements OnInit {
           else{
             this.notificationService.handleAlertObj(res.notification)
             if (this.response.notification.type == StatusNotification.Success) {
+              this.listHotelComponent.ngOnInit()
               this.resHotel = Object.assign({}, new HotelModel)
               this.resHotelTmp = Object.assign({}, new HotelModel)
               this.validateHotel = new ValidationHotelModel
@@ -141,6 +143,7 @@ export class ItemHotelComponent implements OnInit {
           {
             this.notificationService.handleAlertObj(res.notification)
             if (this.response.notification.type == StatusNotification.Success) {
+              this.listHotelComponent.ngOnInit()
               this.isChange = false
               setTimeout(() => {
                 this.closeModal.nativeElement.click()

@@ -160,6 +160,8 @@ export class ListPromotionComponent implements OnInit {
     if (this.data) {
       this.promotionService.delete(this.data.idPromotion, this.auth.id).subscribe(res =>{
        this.response = res
+       this.gridConfig.pageIndex = 1
+       this.ngOnInit()
        this.notificationService.handleAlertObj(res.notification)
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -172,6 +174,15 @@ export class ListPromotionComponent implements OnInit {
     if (this.data) {
       this.promotionService.restore(this.data.idPromotion, this.auth.id).subscribe(res =>{
        this.response = res
+
+       this.gridConfig.pageIndex = 1
+        var data = {
+          isDelete: true,
+          pageIndex: this.gridConfig.pageIndex,
+          pageSize: this.gridConfig.pageSize
+        }
+        this.search(data)
+
        this.notificationService.handleAlertObj(res.notification)
      }, error => {
        var message = this.configService.error(error.status, error.error != null?error.error.text:"");

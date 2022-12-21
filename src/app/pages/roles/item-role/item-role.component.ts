@@ -6,6 +6,7 @@ import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { RoleModel, ValidationRoleModel } from 'src/app/models/role.model';
 import { AuthenticationModel } from 'src/app/models/authentication.model';
 import { StatusNotification } from "../../../enums/enum";
+import { ListRoleComponent } from "../list-role/list-role.component";
 @Component({
   selector: 'app-item-role',
   templateUrl: './item-role.component.html',
@@ -24,7 +25,7 @@ export class ItemRoleComponent implements OnInit {
   resRoleTmp: RoleModel
   isChange: boolean = false
 
-  constructor(private roleService: RoleService, private notificationService: NotificationService,
+  constructor(private listRoleComponent: ListRoleComponent, private roleService: RoleService, private notificationService: NotificationService,
     private configService: ConfigService) { }
 
   ngOnInit(): void {
@@ -60,6 +61,7 @@ export class ItemRoleComponent implements OnInit {
             this.validateRole[res.notification.description] = res.notification.messenge
           }
           else{
+            this.listRoleComponent.ngOnInit()
             this.notificationService.handleAlertObj(res.notification)
             this.close()
           }
@@ -77,6 +79,7 @@ export class ItemRoleComponent implements OnInit {
             this.validateRole[res.notification.description] = res.notification.messenge
           }
           else{
+            this.listRoleComponent.ngOnInit()
             this.notificationService.handleAlertObj(res.notification)
             this.isChange = false
             setTimeout(() => {

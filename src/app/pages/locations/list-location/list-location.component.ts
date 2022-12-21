@@ -9,88 +9,14 @@ import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.component';
 
 import { StatusNotification } from "../../../enums/enum";
-
 @Component({
   selector: 'app-list-location',
   templateUrl: './list-location.component.html',
   styleUrls: ['./list-location.component.scss'],
 })
 export class ListLocationComponent implements OnInit {
-  @ViewChild('closeModalLoadDeleteProvince') closeModalLoadDeleteProvince: ElementRef;
-  @ViewChild('closeModalLoadDeleteDisctrict') closeModalLoadDeleteDisctrict: ElementRef;
-  @ViewChild('closeModalLoadDeleteWard') closeModalLoadDeleteWard: ElementRef;
-  isLoading: boolean
-  dataChild: LocationModel
-  typeChild: string
-  resProvince: LocationModel[]
-  resDistrict: LocationModel[]
-  resWard: LocationModel[]
-  dataDelete: LocationModel
-  response: ResponseModel
-  child: LocationModel
-  type: string
-  public columnDefsProvince: ColDef[]
-  public columnDefsDistrict: ColDef[]
-  public columnDefsWard: ColDef[]
-  public gridConfig: GridConfig
-
   constructor(private wardService: WardService, private districtService: DistrictService, private provinceService: ProvinceService, private notificationService: NotificationService,
      private configService: ConfigService){}
   ngOnInit(): void {
   }
-
-  getDataDelete(data: any){
-    this.dataDelete = data
-  }
-
-  deleteProvince(){
-   if (this.dataDelete) {
-    this.provinceService.delete(this.dataDelete.idProvince).subscribe(res =>{
-      this.response = res
-      this.notificationService.handleAlertObj(res.notification)
-      this.isLoading = false
-      setTimeout(() => {
-        this.closeModalLoadDeleteProvince.nativeElement.click()
-       }, 100);
-    }, error => {
-      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, StatusNotification.Error)
-      this.isLoading = false
-    })
-   }
-  }
-
-  deleteDistrict(){
-    if (this.dataDelete) {
-     this.districtService.delete(this.dataDelete.idDistrict).subscribe(res =>{
-       this.response = res
-       this.notificationService.handleAlertObj(res.notification)
-       this.isLoading = false
-       setTimeout(() => {
-        this.closeModalLoadDeleteDisctrict.nativeElement.click()
-       }, 100);
-     }, error => {
-       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-       this.notificationService.handleAlert(message, StatusNotification.Error)
-       this.isLoading = false
-     })
-    }
-   }
-
-   deleteWard(){
-    if (this.dataDelete) {
-     this.wardService.delete(this.dataDelete.idWard).subscribe(res =>{
-       this.response = res
-       this.notificationService.handleAlertObj(res.notification)
-       this.isLoading = false
-       setTimeout(() => {
-        this.closeModalLoadDeleteWard.nativeElement.click()
-       }, 100);
-     }, error => {
-       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-       this.notificationService.handleAlert(message, StatusNotification.Error)
-       this.isLoading = false
-     })
-    }
-   }
 }

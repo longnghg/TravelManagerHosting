@@ -7,7 +7,7 @@ import { ConfigService } from "../../../services_API/config.service";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { StatusNotification } from "../../../enums/enum";
 import { AuthenticationModel } from 'src/app/models/authentication.model';
-
+import { ListPromotionComponent } from "../list-promotion/list-promotion.component";
 @Component({
   selector: 'app-item-promotion',
   templateUrl: './item-promotion.component.html',
@@ -28,6 +28,7 @@ export class ItemPromotionComponent implements OnInit {
   isLoading: boolean
   constructor(private promotionService: PromotionService,
     private configService: ConfigService,
+    private listPromotionComponent: ListPromotionComponent,
     private notificationService: NotificationService) { }
 
   ngOnInit(): void {
@@ -68,6 +69,7 @@ export class ItemPromotionComponent implements OnInit {
     this.isChange = false
     this.notificationService.handleAlert("Khôi phục dữ liệu ban đầu thành công !", StatusNotification.Info)
   }
+
   save(){
     this.validatePromotion = new ValidationPromotionModel
     this.validatePromotion =  this.configService.validatePromotion(this.resPromotion, this.validatePromotion)
@@ -82,6 +84,7 @@ export class ItemPromotionComponent implements OnInit {
           this.isLoading = false
 	      if(this.response.notification.type == StatusNotification.Success)
         {
+          this.listPromotionComponent.ngOnInit()
 		      this.resPromotion = Object.assign({}, new PromotionModel)
           this.resPromotionTmp = Object.assign({}, new PromotionModel)
           this.validatePromotion = new ValidationPromotionModel
@@ -101,6 +104,7 @@ export class ItemPromotionComponent implements OnInit {
             this.isLoading = false
             if(this.response.notification.type == StatusNotification.Success)
             {
+              this.listPromotionComponent.ngOnInit()
               this.isChange = false
               setTimeout(() => {
                 this.closeModal.nativeElement.click()
