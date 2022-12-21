@@ -122,11 +122,12 @@ export class ItemTourScheduleComponent implements OnInit {
 
       this.promotionService.views(0,0).then(response => {
         this.resPromotion = response
+        console.log(this.resPromotion);
+
       })
     }
     else {
       if (this.resSchedule) {
-        console.log(this.resSchedule.isdelete);
 
         this.resSchedule.isUpdate = true
         this.resSchedule.departureDateDisplay = this.configService.formatFromUnixTimestampToFullDateTime(this.resSchedule.departureDate)
@@ -140,24 +141,21 @@ export class ItemTourScheduleComponent implements OnInit {
 
         this.promotionService.views(this.resSchedule.beginDate, this.resSchedule.endDate).then(response => {
           this.resPromotion = response
-          console.log(this.resPromotion);
-
         })
 
         this.carService.viewsUpdate(this.resSchedule.departureDate, this.resSchedule.returnDate, this.resSchedule.idSchedule).then(response => {
           this.resCar = response
-          console.log(this.resCar);
         })
 
         this.employeeService.viewsUpdate(this.resSchedule.departureDate, this.resSchedule.returnDate,  this.resSchedule.idSchedule).then(response => {
           this.resEmployee = response
-          console.log(this.resEmployee);
         })
 
         this.costtourService.getCostbyidSchedule(this.resSchedule.idSchedule).subscribe(res => {
           this.response = res
           this.resCostTour = this.response.content
           if (this.resCostTour) {
+
             this.resCostTour.breakfast = Number(this.resCostTour.breakfast).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
             this.resCostTour.water = Number(this.resCostTour.water).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
             this.resCostTour.feeGas = Number(this.resCostTour.feeGas).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
@@ -213,6 +211,7 @@ export class ItemTourScheduleComponent implements OnInit {
         var toPlace = sessionStorage.getItem("toPlace")
         this.hotelService.hotelByProvince(toPlace).then(response => {
           this.resHotel = response
+
         })
         this.placeService.placeByProvince(toPlace).then(response => {
           this.resPlace = response
@@ -282,6 +281,9 @@ export class ItemTourScheduleComponent implements OnInit {
 
   dateChange(property) {
 
+    console.log(this.resSchedule.beginDate);
+    console.log( this.resSchedule.endDate);
+
     this.resSchedule[property] = new Date(this.resSchedule[property+'Display']).getTime()
     if (this.resSchedule.departureDate != this.resScheduleTmp.departureDate || this.resSchedule.returnDate != this.resScheduleTmp.returnDate) {
       this.resSchedule.isUpdateDR = true
@@ -292,11 +294,21 @@ export class ItemTourScheduleComponent implements OnInit {
       this.resSchedule.isUpdate = false
     }
 
-    if(property == "beginDate" || property == "endDate"){
-      this.promotionService.views(this.resSchedule.beginDate, this.resSchedule.endDate).then(response => {
-        this.resPromotion = response
-      })
+    if(this.resSchedule.beginDate != null && this.resSchedule.endDate != null){
+      if(!isNaN(this.resSchedule.beginDate) && !isNaN(this.resSchedule.endDate)){
+        if(property == "beginDate" || property == "endDate"){
+          this.promotionService.views(this.resSchedule.beginDate, this.resSchedule.endDate).then(response => {
+            this.resPromotion = response
+          })
+        }
+      }
+
     }
+
+    if(this.resSchedule.beginDate == 0 && this.resSchedule.endDate == 0){
+      this.resPromotion = null
+    }
+
 
     if (property == "departureDate" || property == "returnDate"){
       // if (this.type != "create") {

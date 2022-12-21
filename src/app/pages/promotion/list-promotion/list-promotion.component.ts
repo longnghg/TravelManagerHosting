@@ -158,13 +158,20 @@ export class ListPromotionComponent implements OnInit {
   }
   delete(){
     if (this.data) {
-      this.promotionService.delete(this.data.idPromotion, this.auth.id).subscribe(res =>{
-       this.response = res
-       this.notificationService.handleAlertObj(res.notification)
-     }, error => {
-       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-       this.notificationService.handleAlert(message, StatusNotification.Error)
-     })
+
+      if(this.data.idPromotion > 1){
+        this.promotionService.delete(this.data.idPromotion, this.auth.id).subscribe(res =>{
+          this.response = res
+          this.notificationService.handleAlertObj(res.notification)
+        }, error => {
+          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+          this.notificationService.handleAlert(message, StatusNotification.Error)
+        })
+      }
+      else{
+        this.notificationService.handleAlert("Không thể xóa !", StatusNotification.Warning)
+      }
+
     }
   }
 
