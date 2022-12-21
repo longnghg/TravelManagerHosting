@@ -395,7 +395,7 @@ export class ConfigService{
     return transformedVal;
   }
 
-   validateCostTour(data: any, model: any){
+  validateCostTour(data: any, model: any){
     model.total = 0
     var min = 0
 
@@ -406,8 +406,8 @@ export class ConfigService{
     }else if (data.breakfast <= 0) {
       model.breakfast = "[Chi phí ăn] không nhỏ hơn 0!"
       model.total += 1
-    }else if( this.transform(data.breakfast) >  500000){
-      model.breakfast = "[Chi phí ăn] không lớn hơn 500.000đ!"
+    }else if( this.transform(data.breakfast) >  1000000){
+      model.breakfast = "[Chi phí ăn] không lớn hơn 1.000.000đ!"
       model.total += 1
     }
 
@@ -429,8 +429,8 @@ export class ConfigService{
        model.feeGas = "[Chi phí xăng] không nhỏ hơn 0!"
        model.total += 1
      }
-     else if (this.transform(data.feeGas) > 50000) {
-      model.feeGas = "[Chi phí xăng] không lớn hơn 50.000đ!"
+     else if (this.transform(data.feeGas) > 100000) {
+      model.feeGas = "[Chi phí xăng] không lớn hơn 100.000đ!"
       model.total += 1
     }
 
@@ -452,8 +452,8 @@ export class ConfigService{
        model.sellCost = "[Chi phí bán tour] không nhỏ hơn 0!"
        model.total += 1
      }
-     else if (this.transform(data.sellCost) > 1000000) {
-      model.sellCost = "[Chi phí bán tour] không lớn hơn 1.000.000đ!"
+     else if (this.transform(data.sellCost) > 10000000) {
+      model.sellCost = "[Chi phí bán tour] không lớn hơn 10.000.000đ!"
       model.total += 1
     }
 
@@ -828,36 +828,35 @@ export class ConfigService{
   }
   validatePromotion(data: any, model: any){
     model.total = 0
-    if (data.value == null || data.value == "") {
-      model.value = "[Mã giảm giá] không để trống !"
-      model.total += 1
-    }else if (data.value.length > 30) {
-      model.value = "[Mã giảm giá] quá dài !"
-      model.total += 1
-    }else if (data.value.length < 3) {
-      model.value = "[Mã giảm giá] quá ngắn !"
+    if(data.value == null)
+    {
+      model.value = "[Mã giảm giá] không được để trống !"
       model.total += 1
     }
-
-    if (data.fromDate == null || data.fromDate == "") {
-      model.fromDate = "[Ngày giảm giá] không để trống !"
-      model.total += 1
-    }else if(data.fromDate < Date.now ){
-      model.fromDate = "[Ngày giảm giá] không hợp lệ !"
-      model.total += 1
-    }else if(data.fromDate > data.toDate){
-      model.toDate = "[Ngày giảm giá] không trước ngày kết thúc !"
+    else if (data.value <0 || data.value >50) {
+      model.value = "[Mã giảm giá] lớn hơn 0 và nhỏ hơn 50 !"
       model.total += 1
     }
-
-    if (data.toDate == null || data.toDate == "") {
-      model.toDate = "[Ngày kết thúc giảm giá] không để trống !"
+    if(data.fromDate == 0 || data.fromDate == ""){
+      model.fromDate = ("[Ngày bắt đầu] không bỏ trống !")
       model.total += 1
-    }else if(data.toDate < data.fromDate ){
-      model.toDate = "[Ngày kết thúc giảm giá] không trước ngày giảm giá !"
+     }else if(data.fromDate < Date.now()){
+      model.fromDate = ("[Ngày bắt đầu] không trước ngày hiện tại !")
       model.total += 1
-    }
-
+     }else if(data.fromDate >= data.toDate){
+      model.fromDate = ("[Ngày bắt đầu ]không sau ngày kết thúc !")
+      model.total += 1
+     }
+     if(data.toDate == 0 || data.toDate == ""){
+      model.toDate = ("[Ngày kết thúc] không bỏ trống !")
+      model.total += 1
+     }else if(data.toDate <= data.fromDate){
+      model.toDate = ("[Ngày kết thúc] không trước ngày bắt đầu!")
+      model.total += 1
+     }else if(data.toDate < data.fromDate){
+      model.toDate = ("[Ngày kết thúc] không trước ngày hiện tại!")
+      model.total += 1
+     }
     return model
   }
 

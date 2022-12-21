@@ -126,7 +126,6 @@ export class ItemTourScheduleComponent implements OnInit {
     }
     else {
       if (this.resSchedule) {
-        console.log(this.resSchedule.isdelete);
 
         this.resSchedule.isUpdate = true
         this.resSchedule.departureDateDisplay = this.configService.formatFromUnixTimestampToFullDateTime(this.resSchedule.departureDate)
@@ -140,24 +139,34 @@ export class ItemTourScheduleComponent implements OnInit {
 
         this.promotionService.views(this.resSchedule.beginDate, this.resSchedule.endDate).then(response => {
           this.resPromotion = response
-          console.log(this.resPromotion);
-
         })
 
         this.carService.viewsUpdate(this.resSchedule.departureDate, this.resSchedule.returnDate, this.resSchedule.idSchedule).then(response => {
           this.resCar = response
-          console.log(this.resCar);
         })
 
         this.employeeService.viewsUpdate(this.resSchedule.departureDate, this.resSchedule.returnDate,  this.resSchedule.idSchedule).then(response => {
           this.resEmployee = response
-          console.log(this.resEmployee);
+        })
+
+        var toPlace = sessionStorage.getItem("toPlace")
+        this.hotelService.hotelByProvince(toPlace).then(response => {
+          this.resHotel = response
+
+        })
+        this.placeService.placeByProvince(toPlace).then(response => {
+          this.resPlace = response
+        })
+
+        this.restaurantService.restaurantByProvince(toPlace).then(response => {
+          this.resRestaurant = response
         })
 
         this.costtourService.getCostbyidSchedule(this.resSchedule.idSchedule).subscribe(res => {
           this.response = res
           this.resCostTour = this.response.content
           if (this.resCostTour) {
+
             this.resCostTour.breakfast = Number(this.resCostTour.breakfast).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
             this.resCostTour.water = Number(this.resCostTour.water).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
             this.resCostTour.feeGas = Number(this.resCostTour.feeGas).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
@@ -198,11 +207,12 @@ export class ItemTourScheduleComponent implements OnInit {
           var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
           this.notificationService.handleAlert(message, StatusNotification.Error)
         })
+
       }
     }
 
     this.init()
-    this.initCost()
+    //this.initCost()
   }
 
 
@@ -213,6 +223,7 @@ export class ItemTourScheduleComponent implements OnInit {
         var toPlace = sessionStorage.getItem("toPlace")
         this.hotelService.hotelByProvince(toPlace).then(response => {
           this.resHotel = response
+
         })
         this.placeService.placeByProvince(toPlace).then(response => {
           this.resPlace = response
@@ -292,46 +303,55 @@ export class ItemTourScheduleComponent implements OnInit {
       this.resSchedule.isUpdate = false
     }
 
-    if(property == "beginDate" || property == "endDate"){
-      this.promotionService.views(this.resSchedule.beginDate, this.resSchedule.endDate).then(response => {
+    if(this.resSchedule.beginDate != null && this.resSchedule.endDate != null){
+      if(!isNaN(this.resSchedule.beginDate) && !isNaN(this.resSchedule.endDate)){
+        if(property == "beginDate" || property == "endDate"){
+          this.promotionService.views(this.resSchedule.beginDate, this.resSchedule.endDate).then(response => {
+            this.resPromotion = response
+          })
+        }
+      }
+
+    }
+
+    if(this.resSchedule.beginDateDisplay == "" || this.resSchedule.endDateDisplay == ""){
+      this.promotionService.views(0,0).then(response => {
         this.resPromotion = response
       })
+      this.resSchedule.promotionId = 1
     }
 
-    if (property == "departureDate" || property == "returnDate"){
-      // if (this.type != "create") {
-      //   this.carService.viewsUpdate(this.resSchedule.departureDate, this.resSchedule.returnDate, this.resSchedule.idSchedule).then(response => {
-      //     this.resCar = response
-      //   })
+    // if(this.resSchedule.departureDateDisplay == "" || this.resSchedule.returnDateDisplay == ""){
+    //   this.resSchedule.employeeId = null
+    //   this.resSchedule.carId = null
+    //   this.resCar = []
+    //   this.resEmployee = []
+    // }
 
-      //   this.employeeService.viewsUpdate(this.resSchedule.departureDate, this.resSchedule.returnDate, this.resSchedule.idSchedule).then(response => {
-      //     this.resEmployee = response
-      //   })
-      // } else {
-      //   this.carService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
-      //     this.resCar = response
-      //   })
 
-      //   this.employeeService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
-      //     this.resEmployee = response
-      //   })
-      // }
-      this.carService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
-        this.resCar = response
-        if(!this.resCar){
-          this.resSchedule.carId = null
-          this.notificationService.handleAlert("Ngày bạn chọn hiện tại không có xe !", StatusNotification.Warning)
-        }
-      })
+    if(!isNaN(this.resSchedule.departureDate) && !isNaN(this.resSchedule.returnDate)){
+      if (property == "departureDate" || property == "returnDate"){
+        this.resSchedule.employeeId = null
+        this.resSchedule.carId = null
+        this.resCar = []
+         this.resEmployee = []
+          this.carService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
+            this.resCar = response
+            if(!this.resCar){
+              this.resSchedule.carId = null
+              this.notificationService.handleAlert("Ngày bạn chọn hiện tại không có xe !", StatusNotification.Warning)
+            }
+          })
 
-      this.employeeService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
-        this.resEmployee = response
-        if(!this.resEmployee){
-          this.resSchedule.employeeId = null
-          this.notificationService.handleAlert("Ngày bạn chọn hiện tại không có hướng dẫn viên !", StatusNotification.Warning)
-        }
-      })
+          this.employeeService.views(this.resSchedule.departureDate, this.resSchedule.returnDate).then(response => {
+            this.resEmployee = response
+            if(!this.resEmployee){
+              this.resSchedule.employeeId = null
+              this.notificationService.handleAlert("Ngày bạn chọn hiện tại không có hướng dẫn viên !", StatusNotification.Warning)
+            }
+          })
     }
+  }
 
   }
 
