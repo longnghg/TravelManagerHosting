@@ -409,6 +409,9 @@ export class ConfigService{
     }else if( this.transform(data.breakfast) >  1000000){
       model.breakfast = "[Chi phí ăn] không lớn hơn 1.000.000đ!"
       model.total += 1
+    }else if( this.transform(data.breakfast) <  1000){
+      model.breakfast = "[Chi phí ăn] không nhỏ hơn 1.000!"
+      model.total += 1
     }
 
     if(data.water == null || data.water == ""){
@@ -419,6 +422,9 @@ export class ConfigService{
       model.total += 1
     }else if(this.transform(data.water) > 150000){
       model.water = "[Chi phí nước] không lớn hơn 150.000đ!"
+      model.total += 1
+    }else if(this.transform(data.water) < 1000){
+      model.water = "[Chi phí nước] không nhỏ hơn 1.000đ!"
       model.total += 1
     }
 
@@ -431,6 +437,9 @@ export class ConfigService{
      }
      else if (this.transform(data.feeGas) > 100000) {
       model.feeGas = "[Chi phí xăng] không lớn hơn 100.000đ!"
+      model.total += 1
+    }else if (this.transform(data.feeGas) < 1000) {
+      model.feeGas = "[Chi phí xăng] không nhỏ hơn 1.000đ!"
       model.total += 1
     }
 
@@ -455,6 +464,9 @@ export class ConfigService{
      else if (this.transform(data.sellCost) > 10000000) {
       model.sellCost = "[Chi phí bán tour] không lớn hơn 10.000.000đ!"
       model.total += 1
+    }else if (this.transform(data.sellCost) < 1000) {
+      model.sellCost = "[Chi phí bán tour] không nhỏ hơn 1.000đ!"
+      model.total += 1
     }
 
      if(data.depreciation == null || data.depreciation == ""){
@@ -466,13 +478,19 @@ export class ConfigService{
      }else if (this.transform(data.depreciation) > 1000000) {
       model.depreciation = "[Khấu hao] lớn hơn 1.000.000đ!"
       model.total += 1
+    }else if (this.transform(data.depreciation) < 1000) {
+      model.depreciation = "[Khấu hao] nhỏ hơn 1.000đ!"
+      model.total += 1
     }
 
      if(data.otherPrice == null || data.otherPrice == ""){
       model.otherPrice = ("[Chi phí khác] không để trống !")
       model.total += 1
      }else if(this.transform(data.otherPrice) > 2000000){
-      model.otherPrice = ("[Chi phí khác] kkhông lớn hơn 2.000.000đ")
+      model.otherPrice = ("[Chi phí khác] không lớn hơn 2.000.000đ")
+      model.total += 1
+     }else if(this.transform(data.otherPrice) < 1000){
+      model.otherPrice = ("[Chi phí khác] không nhỏ hơn 1.000đ")
       model.total += 1
      }
 
@@ -485,19 +503,26 @@ export class ConfigService{
      }else if (this.transform(data.tolls) > 500000) {
       model.tolls = "[Chi phí cầu đường] không lớn hơn 500.000!"
       model.total += 1
+    }else if (this.transform(data.tolls) < 1000) {
+      model.tolls = "[Chi phí cầu đường] không nhỏ hơn 1.000!"
+      model.total += 1
     }
 
 
 
-     if(data.insuranceFee == null || data.insuranceFee == ""){
-      model.insuranceFee = ("[Chi phí bảo hiểm] không để trống !")
-      model.total += 1
-     }else if (data.insuranceFee <= 0) {
+    //  if(data.insuranceFee == null || data.insuranceFee == ""){
+    //   model.insuranceFee = ("[Chi phí bảo hiểm] không để trống !")
+    //   model.total += 1
+    //  }else 
+      if (data.insuranceFee <= 0) {
        model.insuranceFee = "[Chi phí bảo hiểm] không nhỏ hơn 0!"
        model.total += 1
      }
      else if (this.transform(data.insuranceFee) > 500000) {
       model.insuranceFee = "[Chi phí bảo hiểm] không lớn hơn 500.000!"
+      model.total += 1
+    }else if (this.transform(data.insuranceFee) < 1000) {
+      model.insuranceFee = "[Chi phí bảo hiểm] không nhỏ hơn 1.000!"
       model.total += 1
     }
 

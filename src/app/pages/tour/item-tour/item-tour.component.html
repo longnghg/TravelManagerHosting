@@ -113,7 +113,7 @@ width: fit-content;">
                        <h2>{{resTour.nameTour}}</h2>
                        <div class="desBN">
                         <i class="fa-solid fa-star text-yellow" *ngFor='let star of resTour.rating | forNumber'></i>
-                        <i class="fa-solid fa-star" *ngFor='let star of listStar.length - resTour.rating | forNumber'></i>
+                        <i class="fa-solid fa-star" *ngFor='let star of (listStar.length - 1) - resTour.rating | forNumber'></i>
                        </div>
                      </div>
                      <div class="col-5">
