@@ -5,6 +5,7 @@ import { ConfigService } from "../../../../services_API/config.service";
 import { LocationModel, ValidateLocationModel } from 'src/app/models/location.model';
 import { ResponseModel } from "../../../../models/responsiveModels/response.model";
 import { StatusNotification } from "../../../../enums/enum";
+import { ListProvinceComponent } from "../list-province/list-province.component";
 @Component({
   selector: 'app-item-province',
   templateUrl: './item-province.component.html',
@@ -21,7 +22,7 @@ export class ItemProvinceComponent implements OnInit {
   response: ResponseModel
   isChange: boolean = false
   resProvinceTmp: LocationModel
-  constructor(private provinceService: ProvinceService, private notificationService: NotificationService,
+  constructor(private listProvinceComponent: ListProvinceComponent, private provinceService: ProvinceService, private notificationService: NotificationService,
     private configService: ConfigService) { }
 
   ngOnInit(): void {
@@ -58,7 +59,10 @@ export class ItemProvinceComponent implements OnInit {
         this.provinceService.create(this.resProvince).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-          this.close()
+          if (this.response.notification.type == StatusNotification.Success) {
+            this.listProvinceComponent.ngOnInit()
+            this.close()
+          }
           this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -73,6 +77,7 @@ export class ItemProvinceComponent implements OnInit {
           this.isLoading = false
           if(this.response.notification.type == StatusNotification.Success)
           {
+            this.listProvinceComponent.ngOnInit()
             this.resProvinceTmp = Object.assign({}, this.resProvince)
             this.isChange = false
             setTimeout(() => {

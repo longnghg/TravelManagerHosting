@@ -6,6 +6,7 @@ import { ConfigService } from "../../../../services_API/config.service";
 import { LocationModel, ValidateLocationModel } from 'src/app/models/location.model';
 import { ResponseModel } from "../../../../models/responsiveModels/response.model";
 import { StatusNotification } from "../../../../enums/enum";
+import { ListWardComponent } from "../list-ward/list-ward.component";
 @Component({
   selector: 'app-item-ward',
   templateUrl: './item-ward.component.html',
@@ -23,7 +24,7 @@ export class ItemWardComponent implements OnInit {
   resWardTmp: LocationModel
   resDistrict: LocationModel
   validateLocation: ValidateLocationModel = new ValidateLocationModel
-  constructor(private districtService: DistrictService, private wardService: WardService, private notificationService: NotificationService,
+  constructor(private listWardComponent: ListWardComponent, private districtService: DistrictService, private wardService: WardService, private notificationService: NotificationService,
     private configService: ConfigService) { }
 
   ngOnInit(): void {
@@ -61,7 +62,10 @@ export class ItemWardComponent implements OnInit {
         this.wardService.create(this.resWard).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-          this.close()
+          if (this.response.notification.type == StatusNotification.Success) {
+            this.listWardComponent.ngOnInit()
+            this.close()
+          }
           this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -76,6 +80,7 @@ export class ItemWardComponent implements OnInit {
           this.isLoading = false
           if(this.response.notification.type == StatusNotification.Success)
           {
+            this.listWardComponent.ngOnInit()
             this.resWardTmp = Object.assign({}, this.resWard)
             this.isChange = false
             setTimeout(() => {

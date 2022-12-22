@@ -138,6 +138,7 @@ export class ListTourBookingComponent implements OnInit {
       if(this.response.notification.type == StatusNotification.Success)
       {
         this.data.isCalled = true
+        this.ngOnInit()
         this.closeCalled.nativeElement.click()
       }
       this.notificationService.handleAlertObj(res.notification)
@@ -150,6 +151,7 @@ export class ListTourBookingComponent implements OnInit {
       this.response = res
       if(this.response.notification.type == StatusNotification.Success)
       {
+        this.ngOnInit()
         this.closeStatus.nativeElement.click()
       }
       this.notificationService.handleAlertObj(res.notification)

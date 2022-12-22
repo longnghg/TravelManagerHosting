@@ -6,7 +6,7 @@ import { ConfigService } from "../../../../services_API/config.service";
 import { LocationModel, ValidateLocationModel } from 'src/app/models/location.model';
 import { ResponseModel } from "../../../../models/responsiveModels/response.model";
 import { StatusNotification } from "../../../../enums/enum";
-
+import { ListDistrictComponent } from "../list-district/list-district.component";
 @Component({
   selector: 'app-item-district',
   templateUrl: './item-district.component.html',
@@ -24,7 +24,7 @@ export class ItemDistrictComponent implements OnInit {
   resDistrictTmp: LocationModel
   validateLocation: ValidateLocationModel = new ValidateLocationModel
   resProvince: LocationModel
-  constructor(private districtService: DistrictService, private provinceService: ProvinceService, private notificationService: NotificationService,
+  constructor(private listDistrictComponent: ListDistrictComponent,private districtService: DistrictService, private provinceService: ProvinceService, private notificationService: NotificationService,
     private configService: ConfigService) { }
 
   ngOnInit(): void {
@@ -61,7 +61,10 @@ export class ItemDistrictComponent implements OnInit {
         this.districtService.create(this.resDistrict).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-          this.close()
+          if (this.response.notification.type == StatusNotification.Success) {
+            this.listDistrictComponent.ngOnInit()
+            this.close()
+          }
           this.isLoading = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -76,6 +79,7 @@ export class ItemDistrictComponent implements OnInit {
           this.notificationService.handleAlertObj(res.notification)
           if(this.response.notification.type == StatusNotification.Success)
           {
+            this.listDistrictComponent.ngOnInit()
             this.resDistrictTmp = Object.assign({}, this.resDistrict)
             this.isChange = false
             setTimeout(() => {

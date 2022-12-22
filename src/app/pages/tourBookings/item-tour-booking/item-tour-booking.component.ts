@@ -6,6 +6,7 @@ import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { AuthenticationModel } from 'src/app/models/authentication.model';
 import { TourBookingModel } from 'src/app/models/tourBooking.model';
 import { StatusNotification } from "../../../enums/enum";
+import { ListTourBookingComponent } from "../list-tour-booking/list-tour-booking.component";
 @Component({
   selector: 'app-item-tour-booking',
   templateUrl: './item-tour-booking.component.html',
@@ -22,7 +23,7 @@ export class ItemTourBookingComponent implements OnInit {
   isChange: boolean = false
   resTourBookingTmp: TourBookingModel
   isExpires: boolean = false
-  constructor(private tourookingService: TourookingService, private configService: ConfigService, private notificationService: NotificationService) { }
+  constructor(private listTourBookingComponent: ListTourBookingComponent, private configService: ConfigService, private notificationService: NotificationService) { }
   url = this.configService.apiUrl
   ngOnInit(): void {
     this.listStatusBooking = this.configService.listStatusBooking()
@@ -31,8 +32,6 @@ export class ItemTourBookingComponent implements OnInit {
 
   ngOnChanges(): void {
     this.resTourBookingTmp = Object.assign({}, this.resTourBooking)
-    console.log(this.resTourBooking);
-
     if (this.resTourBooking) {
 
       // if (this.resTourBooking.status == 1 || this.resTourBooking.status == 2) {
