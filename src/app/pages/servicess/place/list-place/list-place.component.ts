@@ -43,7 +43,9 @@ export class ListPlaceComponent implements OnInit {
       idModalDelete: "deletePlaceModal",
       idModal: "gridPlace",
       radioBoxName: "Kho lưu trữ",
-      disableApprove: true
+      disableApprove: true,
+      disableLog: true,
+      disableSchedule: true
     }
     public gridConfigWaiting: GridConfig = {
       idModal: "gridPlace",
@@ -51,7 +53,9 @@ export class ListPlaceComponent implements OnInit {
       disableDelete: true,
       disableRadioBox: true,
       disableCreate: true,
-      disableRestore: true
+      disableRestore: true,
+      disableLog: true,
+      disableSchedule: true
     }
     ngOnInit(): void {
       this.columnDefs= [

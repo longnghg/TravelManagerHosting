@@ -45,7 +45,9 @@ export class ListEmployeeComponent implements OnInit {
     idModal: "gridEmployee",
     disableRadioBox: false,
     radioBoxName: "Kho lưu trữ",
-    style: "height: 330px;"
+    style: "height: 330px;",
+    disableLog: true,
+    disableSchedule: true
   }
 
   public gridConfig2: GridConfig2 = {
@@ -55,7 +57,9 @@ export class ListEmployeeComponent implements OnInit {
     alias: "idEmployee",
     style: "height: 330px;",
     radioBoxName: "Kho lưu trữ",
-    disableApprove: true
+    disableApprove: true,
+    disableLog: true,
+    disableSchedule: true
   }
 
     constructor(private roleService: RoleService,
@@ -95,8 +99,6 @@ export class ListEmployeeComponent implements OnInit {
       if(this.response.notification.type == StatusNotification.Success)
       {
         this.resStatisticEmp = this.response.content
-        console.log(this.resStatisticEmp);
-
       }
       else{
         this.notificationService.handleAlertObj(res.notification)

@@ -36,6 +36,7 @@ export class ListVoucherComponent implements OnInit {
       disableApprove: true,
       disableRestore: true,
       disableRadioBox: true,
+      disableLog: true,
       disableSchedule: true
     }
       ngOnInit(): void {

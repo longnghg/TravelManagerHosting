@@ -34,6 +34,8 @@ export class ListRoleComponent implements OnInit {
     idModal: "gridRole",
     radioBoxName: "Kho lưu trữ",
     disableApprove: true,
+    disableLog: true,
+    disableSchedule: true
   }
 
   constructor(private roleService: RoleService, private notificationService: NotificationService,

@@ -38,7 +38,9 @@ export class ListTourBookingComponent implements OnInit {
       disableCreate: true,
       disableDelete: true,
       disableRadioBox: true,
-      disableRestore: true
+      disableRestore: true,
+      disableLog: true,
+      disableSchedule: true
     }
 
   ngOnInit(): void {

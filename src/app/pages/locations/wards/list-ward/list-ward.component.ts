@@ -30,6 +30,8 @@ export class ListWardComponent implements OnInit {
     idModal: "gridWard",
     disableRadioBox: true,
     disableApprove: true,
+    disableLog: true,
+    disableSchedule: true
   }
 
   private hubConnectionBuilder: HubConnection

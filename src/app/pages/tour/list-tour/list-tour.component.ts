@@ -46,7 +46,9 @@ export class ListTourComponent implements OnInit {
     alias: "idTour",
     disableRadioBox: false,
     radioBoxName: "Kho lưu trữ",
-    disableApprove: true
+    disableApprove: true,
+    disableLog: true,
+    disableSchedule: true
 
   }
   public gridConfigApprove: GridConfig2 = {
@@ -56,7 +58,9 @@ export class ListTourComponent implements OnInit {
     disableRadioBox: true,
     disableCreate: true,
     disableDelete: true,
-    disableRestore: true
+    disableRestore: true,
+    disableLog: true,
+    disableSchedule: true
   }
   constructor(
     private configService: ConfigService,

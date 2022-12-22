@@ -32,6 +32,8 @@ export class ListProvinceComponent implements OnInit {
     idModal: "gridProvince",
     disableRadioBox: true,
     disableApprove: true,
+    disableLog: true,
+    disableSchedule: true
   }
 
   constructor( private provinceService: ProvinceService, private districtService: DistrictService, private notificationService: NotificationService,

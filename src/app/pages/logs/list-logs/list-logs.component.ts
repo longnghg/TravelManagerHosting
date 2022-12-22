@@ -43,7 +43,9 @@ export class ListLogsComponent implements OnInit {
       disableCreate: true,
       disableDelete: true,
       disableRestore: true,
-      disableRadioBox: true
+      disableRadioBox: true,
+      disableLog: true,
+      disableSchedule: true
     }
     ngOnInit(): void {
       this.columnDefs= [

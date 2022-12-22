@@ -40,7 +40,9 @@ export class ListHotelComponent implements OnInit {
     idModalDelete: "deleteHotelModal",
     idModal: "gridHotel",
     radioBoxName: "Kho lưu trữ",
-    disableApprove: true
+    disableApprove: true,
+    disableLog: true,
+    disableSchedule: true
   }
   public gridConfigWaiting: GridConfig = {
     idModal: "gridHotel",
@@ -48,7 +50,9 @@ export class ListHotelComponent implements OnInit {
     disableDelete: true,
     disableRadioBox: true,
     disableCreate: true,
-    disableRestore: true
+    disableRestore: true,
+    disableLog: true,
+    disableSchedule: true
   }
   ngOnInit(): void {
     this.columnDefs= [

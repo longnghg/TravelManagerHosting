@@ -40,7 +40,8 @@ export class ListCarComponent implements OnInit {
       idModalDelete: "deleteCarModal",
       idModal: "gridCar",
       radioBoxName: "Kho lưu trữ",
-      disableApprove: true
+      disableApprove: true,
+      disableLog: true
     }
   ngOnInit(): void {
     this.columnDefs= [

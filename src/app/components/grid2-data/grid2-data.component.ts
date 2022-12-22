@@ -262,6 +262,7 @@ export class GridConfig2{
   disableDelete?: boolean
   disableRestore?: boolean
   disableRadioBox?: boolean
+  disableSchedule?: boolean
   disableLog?: boolean
   radioBoxName?: string
   style?: string

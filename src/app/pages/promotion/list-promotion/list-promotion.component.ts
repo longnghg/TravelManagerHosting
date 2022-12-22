@@ -38,7 +38,9 @@ export class ListPromotionComponent implements OnInit {
       idModalDelete: "deletePromotionModal",
       idModal: "gridPromotion",
       radioBoxName: "Kho lưu trữ",
-      disableApprove: true
+      disableApprove: true,
+      disableLog: true,
+      disableSchedule: true
     }
     public gridConfigWaiting: GridConfig = {
       idModal: "gridPromotion",
@@ -46,7 +48,9 @@ export class ListPromotionComponent implements OnInit {
       disableDelete: true,
       disableRadioBox: true,
       disableCreate: true,
-      disableRestore: true
+      disableRestore: true,
+      disableLog: true,
+      disableSchedule: true
     }
   ngOnInit(): void {
     this.columnDefs= [

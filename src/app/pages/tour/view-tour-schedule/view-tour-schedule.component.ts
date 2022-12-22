@@ -43,7 +43,9 @@ export class ViewTourScheduleComponent implements OnInit {
     idModal: "gridSchedule1",
     disableRadioBox: false,
     radioBoxName: "Kho lưu trữ",
-    disableApprove: true
+    disableApprove: true,
+    disableLog: true,
+    disableSchedule: true
   }
 
   public gridConfigWaiting: GridConfig = {
@@ -52,7 +54,9 @@ export class ViewTourScheduleComponent implements OnInit {
     disableDelete: true,
     disableRadioBox: true,
     disableCreate: true,
-    disableRestore: true
+    disableRestore: true,
+    disableLog: true,
+    disableSchedule: true
   }
   ngOnInit(): void {
     this.columnDefs= [
