@@ -1347,6 +1347,9 @@ validateHotel(data : any,model: any)
       });
     }
     if (check == 0) {
+      console.log("rurl");
+      console.log(this.clientUrl);
+      
       location.assign(this.clientUrl + "/login")
     }
    }
