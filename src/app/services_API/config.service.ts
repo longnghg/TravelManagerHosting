@@ -16,10 +16,12 @@ export class ConfigService{
   private hubConnectionBuilder: HubConnection
   public apiUrl = "https://rovermanagerservice.azurewebsites.net";
   public apiTourBookingUrl = "https://roverbookingservice.azurewebsites.net";
+  public apiUrlSignal = "https://rovermanagerservice.azurewebsites.net";
+
   public clientUrl = this.document.location.origin
   signalR(){
      return this.hubConnectionBuilder = new HubConnectionBuilder()
-    .configureLogging(LogLevel.Information).withUrl(`${this.apiUrl}/travelhub`,
+    .configureLogging(LogLevel.Information).withUrl(`${this.apiUrlSignal}/travelhub`,
     {
         accessTokenFactory: () => localStorage.getItem("token")
     })

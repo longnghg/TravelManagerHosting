@@ -35,6 +35,8 @@ export class NavbarComponent implements OnInit {
   constructor(private notificationService: NotificationService, private authenticationService: AuthenticationService, location: Location,  private element: ElementRef, private router: Router, public configService:ConfigService) {
     this.location = location;
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
+    console.log(this.auth);
+
     if(this.auth){
       this.hubConnectionBuilder = this.configService.signalR()
       this.hubConnectionBuilder.start().then(function(){

@@ -13,5 +13,5 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TRAVELROVERMANAGER_4DF0A }}'
-          projectId: travelrovermanager-4df0a
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ERP_TRAVELROVER }}'
+          projectId: erp-travelrover
