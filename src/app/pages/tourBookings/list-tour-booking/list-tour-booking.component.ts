@@ -28,6 +28,7 @@ export class ListTourBookingComponent implements OnInit {
   data: TourBookingModel
   pagination = new PaginationModel
   resProvince: LocationModel
+  isloading: boolean = false
   constructor(private provinceService: ProvinceService,
     private tourookingService: TourookingService, private notificationService: NotificationService,
     private configService: ConfigService) { }
@@ -67,11 +68,11 @@ export class ListTourBookingComponent implements OnInit {
     if (e) {
       this.tourookingService.search(Object.assign({}, e)).subscribe(res => {
         this.response = res
-        console.log(res);
 
         if(this.response.notification.type == StatusNotification.Success)
         {
           this.resTourBooking = this.response.content
+
         }
         else{
           this.resTourBooking = []
@@ -131,6 +132,8 @@ export class ListTourBookingComponent implements OnInit {
   }
   getData(data: any){
     this.data = data
+    console.log(this.data);
+
   }
 
 
@@ -156,6 +159,21 @@ export class ListTourBookingComponent implements OnInit {
         this.ngOnInit()
         this.closeStatus.nativeElement.click()
       }
+      this.notificationService.handleAlertObj(res.notification)
+    })
+  }
+
+  doPayment(){
+    this.isloading = true
+    this.tourookingService.doPayment(this.data.idTourBooking, this.data.customerId, this.data.phone).subscribe (res => {
+      this.response = res
+      if(this.response.notification.type == StatusNotification.Success)
+      {
+        this.ngOnInit()
+        this.closeStatus.nativeElement.click()
+        this.data.status = 3
+      }
+      this.isloading = false
       this.notificationService.handleAlertObj(res.notification)
     })
   }

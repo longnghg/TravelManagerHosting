@@ -187,6 +187,11 @@
                       Cập nhật
                     </button>
                   </div>
+                  <div class="row mt-3" *ngIf="resTourBooking.status == 1">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#payment" (click)="getParentData('detail')" >
+                      Thanh toán
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
