@@ -14,7 +14,7 @@ export class ConfigService{
     this.location = location;
   }
   private hubConnectionBuilder: HubConnection
-  public apiUrl = "https://travelapiweb.azurewebsites.net";
+  public apiUrl = "https://rovermanagerservice.azurewebsites.net";
   public apiTourBookingUrl = "https://roverbookingservice.azurewebsites.net";
   public clientUrl = this.document.location.origin
   signalR(){
@@ -513,7 +513,7 @@ export class ConfigService{
     //  if(data.insuranceFee == null || data.insuranceFee == ""){
     //   model.insuranceFee = ("[Chi phí bảo hiểm] không để trống !")
     //   model.total += 1
-    //  }else 
+    //  }else
       if (data.insuranceFee <= 0) {
        model.insuranceFee = "[Chi phí bảo hiểm] không nhỏ hơn 0!"
        model.total += 1
@@ -1349,7 +1349,7 @@ validateHotel(data : any,model: any)
     if (check == 0) {
       console.log("rurl");
       console.log(this.clientUrl);
-      
+
       location.assign(this.clientUrl + "/login")
     }
    }
