@@ -65,4 +65,7 @@ getsFullCar(isdelete: any)
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Car/list-car?isDelete="+isdelete);
 }
 
+deleteInstantlySchedule(idSchedule: any, idUser: any) {
+  return this.http.delete<ResponseModel>(this.configService.apiUrl + "/api/schedule/immediately-schedule?idSchedule=" + idSchedule + "&idUser=" + idUser);
+}
 }

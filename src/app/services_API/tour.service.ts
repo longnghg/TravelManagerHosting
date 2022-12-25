@@ -8,78 +8,74 @@ import { NotificationService } from "../services_API/notification.service";
   providedIn: 'root'
 })
 
-export class TourService{
-  constructor(private http:HttpClient, private configService:ConfigService, private notificationService: NotificationService){ }
+export class TourService {
+  constructor(private http: HttpClient, private configService: ConfigService, private notificationService: NotificationService) { }
   response: ResponseModel
   resTour: TourModel[]
-  async views()
-  {
+  async views() {
     var value = <any>await new Promise<any>(resolve => {
-      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/gets-tour").subscribe(res => {
+      this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Tour/gets-tour").subscribe(res => {
         this.response = res
-        if(!this.response.notification.type)
-        {
-          this.resTour =  this.response.content
+        if (!this.response.notification.type) {
+          this.resTour = this.response.content
           resolve(this.resTour);
         }
-        else{
+        else {
           this.notificationService.handleAlertObj(res.notification)
         }
-    }, error => {
-      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
-    })})
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+        this.notificationService.handleAlert(message, "Error")
+      })
+    })
     return value
   }
 
-  gets(isDelete)
-  {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/list-tour?isDelete="+isDelete);
+  gets(isDelete) {
+    return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Tour/list-tour?isDelete=" + isDelete);
   }
-  getwaiting(idUser: any, pageIndex: number, pageSize: number){
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/list-tour-waiting?idUser="+idUser+"&pageIndex="+pageIndex+"&pageSize="+pageSize);
+  getwaiting(idUser: any, pageIndex: number, pageSize: number) {
+    return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Tour/list-tour-waiting?idUser=" + idUser + "&pageIndex=" + pageIndex + "&pageSize=" + pageSize);
   }
-  getTour(idTour: string)
-  {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/detail-tour?idTour="+idTour);
+  getTour(idTour: string) {
+    return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Tour/detail-tour?idTour=" + idTour);
   }
-  create(data: any)
-  {
-    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Tour/create-tour", data);
+  create(data: any) {
+    return this.http.post<ResponseModel>(this.configService.apiUrl + "/api/Tour/create-tour", data);
   }
-  update(data: any, idTour: any)
-  {
-    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Tour/update-tour?idTour="+idTour, data);
+  update(data: any, idTour: any) {
+    return this.http.put<ResponseModel>(this.configService.apiUrl + "/api/Tour/update-tour?idTour=" + idTour, data);
   }
 
-  delete(idTour: any, idUser: any)
-  {
-    return this.http.delete<ResponseModel>( this.configService.apiUrl + "/api/Tour/delete-tour?idTour="+idTour+"&idUser="+idUser);
+  delete(idTour: any, idUser: any) {
+    return this.http.delete<ResponseModel>(this.configService.apiUrl + "/api/Tour/delete-tour?idTour=" + idTour + "&idUser=" + idUser);
   }
-  restore(idTour: any, idUser: any)
-  {
-    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Tour/restore-tour?idTour="+idTour+"&idUser="+idUser, {});
+  restore(idTour: any, idUser: any) {
+    return this.http.put<ResponseModel>(this.configService.apiUrl + "/api/Tour/restore-tour?idTour=" + idTour + "&idUser=" + idUser, {});
   }
 
-  approve(idTour: any){
-    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Tour/approve-tour?idTour="+idTour, {});
+  approve(idTour: any) {
+    return this.http.put<ResponseModel>(this.configService.apiUrl + "/api/Tour/approve-tour?idTour=" + idTour, {});
   }
 
-  refused(idTour: any){
-    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Tour/refused-tour?idTour="+idTour, {});
+  refused(idTour: any) {
+    return this.http.put<ResponseModel>(this.configService.apiUrl + "/api/Tour/refused-tour?idTour=" + idTour, {});
   }
 
-  ratingTour(rating: any, idTour: any)
-  {
-    return this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Tour/update-rating-tour?rating="+rating+"&idTour="+idTour, {});
+  ratingTour(rating: any, idTour: any) {
+    return this.http.put<ResponseModel>(this.configService.apiUrl + "/api/Tour/update-rating-tour?rating=" + rating + "&idTour=" + idTour, {});
   }
 
-  search(data){
-    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Tour/search-tour", data);
+  search(data) {
+    return this.http.post<ResponseModel>(this.configService.apiUrl + "/api/Tour/search-tour", data);
   }
 
-  searchWaiting(data){
-    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Tour/search-tour-waiting", data);
+  searchWaiting(data) {
+    return this.http.post<ResponseModel>(this.configService.apiUrl + "/api/Tour/search-tour-waiting", data);
   }
+  deleteInstantly(idTour: any, idUser: any) {
+    return this.http.delete<ResponseModel>(this.configService.apiUrl + "/api/Tour/immediately-tour?idTour=" + idTour + "&idUser=" + idUser);
+  }
+
+
 }
-

@@ -501,6 +501,28 @@ export class ItemTourComponent implements OnInit {
     }
    }
 
+
+  deleteInstantly(){
+    if (this.resTour) {
+     this.tourService.deleteInstantly(this.resTour.idTour, this.resAuth.id).subscribe(res =>{
+       this.response = res
+       this.notificationService.handleAlertObj(res.notification)
+       this.isLoading = false
+       if (res.notification.type == StatusNotification.Success) {
+        this.configService.callNotyfSignalR(this.configService.listRole())
+        setTimeout(() => {
+          this.closeModalLoadDelete.nativeElement.click()
+          this.router.navigate(['','list-tour']);
+         }, 100);
+       }
+     }, error => {
+       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+       this.notificationService.handleAlert(message, StatusNotification.Error)
+       this.isLoading = false
+     })
+    }
+   }
+
    restoreTour(){
     if (this.resTour) {
       this.tourService.restore(this.resTour.idTour, this.resAuth.id).subscribe(res =>{

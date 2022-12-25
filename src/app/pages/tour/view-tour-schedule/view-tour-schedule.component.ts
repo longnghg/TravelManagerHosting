@@ -16,6 +16,8 @@ import { PaginationModel } from "../../../models/responsiveModels/pagination.mod
 })
 export class ViewTourScheduleComponent implements OnInit {
   @ViewChild('closeModalLoadDelete') closeModalLoadDelete: ElementRef;
+  @ViewChild('closeModalLoadDeleteInstantly') closeModalLoadDeleteInstantly: ElementRef;
+
   @ViewChild('closeModalLoadRestore') closeModalLoadRestore: ElementRef;
   @ViewChild('closeModalLoadApprove') closeModalLoadApprove: ElementRef;
 
@@ -222,7 +224,38 @@ export class ViewTourScheduleComponent implements OnInit {
     }
    }
 
+   deleteinstantly(){
+    if (this.data) {
+     this.scheduleService.deleteInstantlySchedule(this.data.idSchedule, this.auth.id).subscribe(res =>{
+       this.response = res
+       this.notificationService.handleAlertObj(res.notification)
+       this.isLoading = false
 
+       this.gridConfig.pageIndex = 1
+       var data = {
+         isDelete: this.gridConfig.isRestore,
+         pageIndex: this.gridConfig.pageIndex,
+         pageSize: this.gridConfig.pageSize
+       }
+       this.search(data)
+       this.gridConfigWaiting.pageIndex = 1
+       var dataWaiting = {
+         pageIndex: this.gridConfigWaiting.pageIndex,
+         pageSize: this.gridConfigWaiting.pageSize
+       }
+       this.initWaiting(dataWaiting)
+
+       setTimeout(() => {
+        this.closeModalLoadDeleteInstantly.nativeElement.click()
+        this.closeModalLoadDeleteInstantly.nativeElement.click()
+       }, 100);
+     }, error => {
+       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+       this.notificationService.handleAlert(message, StatusNotification.Error)
+       this.isLoading = false
+     })
+    }
+   }
    restore(){
     if (this.data) {
       this.scheduleService.restore(this.data.idSchedule, this.auth.id).subscribe(res =>{
