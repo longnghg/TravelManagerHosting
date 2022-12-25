@@ -9,6 +9,7 @@ import { StatusNotification } from "../../../enums/enum";
 import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.component';
 import { PaginationModel } from "../../../models/responsiveModels/pagination.model";
 import { LocationModel } from "../../../models/location.model";
+import { NavbarComponent } from "../../../components/navbar/navbar.component";
 @Component({
   selector: 'app-list-tour-booking',
   templateUrl: './list-tour-booking.component.html',
@@ -30,7 +31,7 @@ export class ListTourBookingComponent implements OnInit {
   resProvince: LocationModel
   constructor(private provinceService: ProvinceService,
     private tourookingService: TourookingService, private notificationService: NotificationService,
-    private configService: ConfigService) { }
+    private configService: ConfigService, private navbarComponent: NavbarComponent) { }
     public columnDefs: ColDef[]
     public gridConfig: GridConfig = {
       idModal: "gridTourBooking",
@@ -62,12 +63,21 @@ export class ListTourBookingComponent implements OnInit {
     this.initStatistic()
     this.gridConfig.pageSize = this.pagination.pageSize
     this.search(this.pagination, true)
+    this.loadMessageSignalR()
   }
+
+  loadMessageSignalR(){
+    this.navbarComponent.hubConnectionBuilder.on('Message', (result: any) => {
+      this.search(this.pagination, true)
+    })
+}
+
+
   search(e, isNotShow?){
     if (e) {
+      this.pagination.pageSize = e.pageSize
       this.tourookingService.search(Object.assign({}, e)).subscribe(res => {
         this.response = res
-        console.log(res);
 
         if(this.response.notification.type == StatusNotification.Success)
         {
