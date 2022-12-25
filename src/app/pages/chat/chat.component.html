@@ -24,7 +24,7 @@
                     <div [id]="group.idCustomer" class="card-sidebar" (click)="getData(group)">
                       <ng-container *ngIf="group.isSeen; else elseIsSeen">
                         <!-- <div class="card_load"></div> -->
-                        <div class="card_load_extreme_title">{{group.nameCustomer}}1</div>
+                        <div class="card_load_extreme_title">{{group.nameCustomer}}</div>
                         <div class="card_load_extreme_descripion">{{group.messengers[group.messengers.length-1].content}}</div>
                         <span class="position-absolute" style="color: silver; top: 2.5rem; right: 1rem;">
                             {{group.date | dateAgo}}

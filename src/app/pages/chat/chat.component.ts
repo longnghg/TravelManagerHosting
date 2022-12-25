@@ -38,17 +38,19 @@ export class ChatComponent implements OnInit {
     this.dataSend.receiverId = this.resMess.idCustomer
     this.dataSend.senderId = this.auth.id
     this.dataSend.senderName = this.auth.name
-    this.notificationService.reply(this.dataSend).then(res => {
-      this.response = res
-      if (this.response.notification.type == StatusNotification.Success) {
-        this.configService.callChatSignalR(this.dataSend.receiverId)
-        this.dataSend = new Message
-        this.initChat()
-      }
-    }, error => {
-      var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
-      this.notificationService.handleAlert(message, StatusNotification.Error)
-    })
+    if (this.dataSend.content) {
+      this.notificationService.reply(this.dataSend).then(res => {
+        this.response = res
+        if (this.response.notification.type == StatusNotification.Success) {
+          this.configService.callChatSignalR(this.dataSend.receiverId)
+          this.dataSend = new Message
+          this.initChat()
+        }
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+        this.notificationService.handleAlert(message, StatusNotification.Error)
+      })
+    }
   }
 
   initChat(){
