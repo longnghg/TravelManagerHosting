@@ -14,8 +14,8 @@ export class ConfigService{
     this.location = location;
   }
   private hubConnectionBuilder: HubConnection
-  public apiUrl = "https://rovermanagerservice.azurewebsites.net";
-  public apiTourBookingUrl = "https://roverbookingservice.azurewebsites.net";
+  public apiUrl = "https://gatewayapitravelrover.azurewebsites.net";
+  public apiTourBookingUrl = "https://gatewayapitravelrover.azurewebsites.net";
   public apiUrlSignal = "https://rovermanagerservice.azurewebsites.net";
 
   public clientUrl = this.document.location.origin
