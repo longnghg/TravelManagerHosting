@@ -88,7 +88,7 @@
                     <div class="searchbar-center">
                         <div class="searchbar-input-spacer"></div>
 
-                        <input type="text" [(ngModel)]="dataSend.content" class="searchbar-input" maxlength="2048" name="q" autocapitalize="off" autocomplete="off" title="Search" role="combobox" placeholder="Nhập tin nhắn tới @{{resMess.nameCustomer}}">
+                        <input type="text" [(ngModel)]="dataSend.content" (keyup.enter)="reply()" class="searchbar-input" maxlength="2048" name="q" autocapitalize="off" autocomplete="off" title="Search" role="combobox" placeholder="Nhập tin nhắn tới @{{resMess.nameCustomer}}">
                     </div>
                 </div>
 
