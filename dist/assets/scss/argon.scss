@@ -1,0 +1,140 @@
+/*!
+
+=========================================================
+* Argon Dashboard Angular - v1.4.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/argon-dashboard-angular
+* Copyright 2019 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-angular/blob/master/LICENSE.md)
+
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+*/
+
+// Core
+
+@import "custom/functions";
+@import "custom/variables";
+@import "custom/mixins";
+
+// Bootstrap (4.3.0) components
+
+// @import "~bootstrap/scss/bootstrap";
+@import "~bootstrap/scss/root";
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/type";
+@import "~bootstrap/scss/images";
+@import "~bootstrap/scss/code";
+@import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/tables";
+@import "~bootstrap/scss/forms";
+@import "~bootstrap/scss/buttons";
+@import "~bootstrap/scss/transitions";
+@import "~bootstrap/scss/dropdown";
+@import "~bootstrap/scss/button-group";
+@import "~bootstrap/scss/input-group";
+@import "~bootstrap/scss/custom-forms";
+@import "~bootstrap/scss/nav";
+@import "~bootstrap/scss/navbar";
+@import "~bootstrap/scss/card";
+@import "~bootstrap/scss/breadcrumb";
+@import "~bootstrap/scss/pagination";
+@import "~bootstrap/scss/badge";
+@import "~bootstrap/scss/jumbotron";
+@import "~bootstrap/scss/alert";
+@import "~bootstrap/scss/progress";
+@import "~bootstrap/scss/media";
+@import "~bootstrap/scss/list-group";
+@import "~bootstrap/scss/close";
+@import "~bootstrap/scss/modal";
+@import "~bootstrap/scss/tooltip";
+@import "~bootstrap/scss/popover";
+@import "~bootstrap/scss/carousel";
+@import "~bootstrap/scss/utilities";
+@import "~bootstrap/scss/print";
+
+// Argon utilities and components
+
+@import "custom/reboot";
+@import "custom/utilities";
+@import "custom/components";
+
+// Vendor (Plugins)
+
+@import "custom/vendors";
+
+// Angular Differences
+@import "angular-differences/angular-differences";
+
+
+@import "~ngx-toastr/toastr";
+
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+legend{
+  width: unset;
+  float: unset;
+  font-size: 20px;
+}
+
+fieldset{
+  border: 1px solid;
+  padding: 20px;
+  border-radius: 0.375rem;
+  // border: 1px solid #cad1d7 !important;
+}
+
+.form-control{
+  color: black !important;
+}
+
+.ng-select.ng-select-single .ng-select-container {
+  height: 43px !important;
+  border-radius: 0.375rem !important;
+  border: 1px solid #cad1d7 !important;
+  color: black !important;
+}
+
+.ng-select.ng-select-disabled>.ng-select-container {
+  background-color: #e9ecef !important;
+}
+
+.modal{
+  overflow: unset !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+ }
+
+//  209077
+//  1ae28a
+ .bg-gradient-cus{
+  background: linear-gradient(-45deg, #209077, #1ae28a 100%) !important;
+ }
+
+ .bg-gradient-logo{
+  background: linear-gradient(-45deg, #1ae28a, #209077 100%) !important;
+ }
+
+
+ .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: cadetblue;
+}
+
+.nav-pills .nav-link {
+  color: #525f7f;
+}
+
+.nav-pills .nav-link:hover {
+  color: cadetblue;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link:hover {
+  color: #fff;
+  background-color: cadetblue;
+}
