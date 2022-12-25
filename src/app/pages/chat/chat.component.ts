@@ -70,7 +70,7 @@ export class ChatComponent implements OnInit {
                   }
                 }
                 document.getElementById("mess").scrollTop = document.getElementById("mess").scrollHeight
-              }, 200);
+              }, 0.1);
             }
           });
 
@@ -99,7 +99,7 @@ export class ChatComponent implements OnInit {
       }
     }
     document.getElementById("mess").scrollTop = document.getElementById("mess").scrollHeight
-   }, 200);
+   }, 0.1);
 
     if (!this.idTmp) {
       document.getElementById(data.idCustomer).setAttribute("class","card-sidebar card-active")
