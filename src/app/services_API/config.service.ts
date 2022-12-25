@@ -14,8 +14,8 @@ export class ConfigService{
     this.location = location;
   }
   private hubConnectionBuilder: HubConnection
-  public apiUrl = "https://gatewayapitravelrover.azurewebsites.net";
-  public apiTourBookingUrl = "https://gatewayapitravelrover.azurewebsites.net";
+  public apiUrl = "http://gatewayapitravelrover.azurewebsites.net";
+  public apiTourBookingUrl = "http://gatewayapitravelrover.azurewebsites.net";
   public apiUrlSignal = "https://rovermanagerservice.azurewebsites.net";
 
   public clientUrl = this.document.location.origin
@@ -1349,9 +1349,6 @@ validateHotel(data : any,model: any)
       });
     }
     if (check == 0) {
-      console.log("rurl");
-      console.log(this.clientUrl);
-
       location.assign(this.clientUrl + "/login")
     }
    }

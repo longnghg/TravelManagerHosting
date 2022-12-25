@@ -59,9 +59,8 @@ export class LoginComponent implements OnInit {
           var path = this.configService.getPath(this.resAthentication.roleId)
           localStorage.setItem("token", this.resAthentication.token)
           localStorage.setItem("currentUser", JSON.stringify(this.resAthentication))
-          console.log("hello");
-          console.log(document.location.assign(this.configService.clientUrl + path))
-          // document.location.assign(this.configService.clientUrl + path)
+
+          document.location.assign(this.configService.clientUrl + path)
         }
         else if(this.response.notification.type == StatusNotification.Block){
           this.timeBlock = this.response.content
