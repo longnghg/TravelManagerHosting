@@ -38,17 +38,19 @@ export class ChatComponent implements OnInit {
     this.dataSend.receiverId = this.resMess.idCustomer
     this.dataSend.senderId = this.auth.id
     this.dataSend.senderName = this.auth.name
-    this.notificationService.reply(this.dataSend).then(res => {
-      this.response = res
-      if (this.response.notification.type == StatusNotification.Success) {
-        this.configService.callChatSignalR(this.dataSend.receiverId)
-        this.dataSend = new Message
-        this.initChat()
-      }
-    }, error => {
-      var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
-      this.notificationService.handleAlert(message, StatusNotification.Error)
-    })
+    if (this.dataSend.content) {
+      this.notificationService.reply(this.dataSend).then(res => {
+        this.response = res
+        if (this.response.notification.type == StatusNotification.Success) {
+          this.configService.callChatSignalR(this.dataSend.receiverId)
+          this.dataSend = new Message
+          this.initChat()
+        }
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+        this.notificationService.handleAlert(message, StatusNotification.Error)
+      })
+    }
   }
 
   initChat(){
@@ -62,8 +64,13 @@ export class ChatComponent implements OnInit {
               this.resMess = group
               this.updateIsSeen(this.resMess)
               setTimeout(() => {
+                for (let index = 0; index <  this.resMess.messengers.length; index++) {
+                  if (index < this.resMess.messengers.length-1) {
+                    document.getElementsByClassName("chat-container")[index].setAttribute("style", "height: " + (document.getElementsByClassName("chat-content")[index].clientHeight+10) + "px")
+                  }
+                }
                 document.getElementById("mess").scrollTop = document.getElementById("mess").scrollHeight
-              }, 200);
+              }, 0.1);
             }
           });
 
@@ -84,9 +91,15 @@ export class ChatComponent implements OnInit {
 
   getData(data: GroupMessage){
     this.resMess = data
+
    setTimeout(() => {
+    for (let index = 0; index <  this.resMess.messengers.length; index++) {
+      if (index < this.resMess.messengers.length-1) {
+        document.getElementsByClassName("chat-container")[index].setAttribute("style", "height: " + (document.getElementsByClassName("chat-content")[index].clientHeight+10) + "px")
+      }
+    }
     document.getElementById("mess").scrollTop = document.getElementById("mess").scrollHeight
-   }, 200);
+   }, 0.1);
 
     if (!this.idTmp) {
       document.getElementById(data.idCustomer).setAttribute("class","card-sidebar card-active")

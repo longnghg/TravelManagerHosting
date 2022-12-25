@@ -99,26 +99,22 @@
     color: white;
     max-width: 40rem;
     word-wrap: break-word;
-    height: 50px;
     background: rgb(73, 146, 241);
     border-radius: 40px;
     position: absolute;
     right: 0;
-    padding: 1rem;
-    padding-bottom: 2.5rem;
+    padding: 1rem 1rem;
 }
 
 .card-receive {
-    color: white;
-    padding: 1rem;
-    padding-bottom: 2.5rem;
-    max-width: 40rem;
-    word-wrap: break-word;
-    height: 50px;
-    background: cadetblue;
-    border-radius: 40px;
-    position: absolute;
-    left: 0;
+  color: #fff;
+  padding: 1rem 1rem;
+  max-width: 40rem;
+  word-wrap: break-word;
+  background: cadetblue;
+  border-radius: 40px;
+  position: absolute;
+  left: 0;
 }
 
 
@@ -208,7 +204,7 @@
     transform: rotate(44deg);
     font-size: 30px;
     margin-top: 0.4rem;
-    margin-left: 3rem;
+    margin-left: 4.5rem;
     cursor: pointer;
     transition: 0.5s;
 }
@@ -273,8 +269,8 @@
   }
 
   .card_load_extreme_descripion {
-    width: 7.7rem;
-    max-width: 7.7rem;
+    width: 8rem;
+    max-width: 8rem;
     height: 47px;
     position: relative;
     float: right;
@@ -293,19 +289,21 @@
 
 
   .card_load_extreme_descripion_isSeen {
-    width: 14.7rem;
-    max-width: 14.7rem;
+    width: 8rem;
+    max-width: 8rem;
     height: 47px;
     position: relative;
-    float: right;
+    float: left;
     border-radius: 5px;
-    margin-top: -0.8rem;
+    margin-top: -0.9rem;
     background-size: 200% 100%;
     background-position: 100% 0;
     padding-top: 0.7rem;
-    padding-left: 1rem;
+    padding-left: 0.5rem;
     color: black;
-    overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
 

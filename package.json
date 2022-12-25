@@ -34,6 +34,7 @@
     "@ngx-loading-bar/http-client": "^6.0.2",
     "@ngx-loading-bar/router": "^6.0.2",
     "@popperjs/core": "^2.11.4",
+    "@types/chart.js": "^2.9.37",
     "bootstrap": "4.6.1",
     "clipboard": "2.0.10",
     "core-js": "3.21.1",

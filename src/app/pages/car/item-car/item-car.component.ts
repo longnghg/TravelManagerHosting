@@ -3,7 +3,7 @@ import { NotificationService } from "../../../services_API/notification.service"
 import { ConfigService } from "../../../services_API/config.service";
 import { ColDef, GridConfig} from '../../../components/grid-data/grid-data.component';
 import { CarService } from 'src/app/services_API/car.service';
-import { CarModel, ValidationCarModel } from 'src/app/models/Car.model';
+import { CarModel, ValidationCarModel } from 'src/app/models/car.model';
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { StatusNotification } from "../../../enums/enum";
 import { AuthenticationModel } from 'src/app/models/authentication.model';

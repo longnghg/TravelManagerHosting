@@ -519,6 +519,7 @@
             <ng-container *ngIf="type != 'approve' && type != 'refuse' && type != 'cancelRequire'; else elseApprove">
               <div class="mt-3 row align-items-center">
                 <div class="col-12 text-right">
+                  <button  *ngIf="type == 'detail' && !resSchedule.isdelete" class="btn btn-lg btn-warning" data-bs-toggle="modal" data-bs-target="#deleteScheduleModalInstantly" (click)="getParentData('detail')" [disabled]="isLoading">Xóa lập tức</button>
                   <button  *ngIf="type == 'detail' && !resSchedule.isdelete" class="btn btn-lg btn-danger" data-bs-toggle="modal" data-bs-target="#deleteScheduleModal" (click)="getParentData('detail')" [disabled]="isLoading">Xóa</button>
                   <button *ngIf="isChange || isChangeTimelineList && type == 'detail'" class="btn btn-lg btn-info" (click)="backup()" [disabled]="isLoading">Khôi phục</button>
                   <button *ngIf="isChange || isChangeTimelineList" class="btn btn-lg btn-success"  (click)="isLoading=true;save()" [disabled]="isLoading">{{isLoading?'Đang xử lý...':active == 3 ? type == 'create' ? 'Thêm' : 'Lưu' : 'Kế tiếp'}}</button>

@@ -36,4 +36,8 @@ export class TourookingService{
   updateStatus(idTourBooking: string, status: number){
     return this.http.put<ResponseModel>( this.configService.apiTourBookingUrl + "/api/TourBooking/adm-update-tourBooking-status?idTourBooking="+idTourBooking+"&status="+status, {});
   }
+
+  doPayment(idTourBooking: string, customerId: string, phoneCus: string){
+    return this.http.get<ResponseModel>( this.configService.apiTourBookingUrl + "/api/TourBooking/do-payment?idTourBooking="+idTourBooking+"&customerId="+customerId+"&phoneCus="+phoneCus);
+  }
 }
