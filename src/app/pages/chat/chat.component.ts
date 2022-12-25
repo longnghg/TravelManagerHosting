@@ -27,7 +27,17 @@ export class ChatComponent implements OnInit {
     this.initChat();
     this.loadMessageSignalR()
   }
-
+  ngDoCheck(): void {
+    if (this.resMess) {
+      setTimeout(() => {
+        for (let index = 0; index <  this.resMess.messengers.length; index++) {
+          if (index < this.resMess.messengers.length-1) {
+            document.getElementsByClassName("chat-container")[index].setAttribute("style", "height: " + (document.getElementsByClassName("chat-content")[index].clientHeight+10) + "px")
+          }
+        }
+      }, 1);
+    }
+  }
   loadMessageSignalR(){
     this.navbarComponent.hubConnectionBuilder.on('Message', (result: any) => {
       this.initChat();
@@ -63,19 +73,14 @@ export class ChatComponent implements OnInit {
             if (this.resMess.idCustomer == group.idCustomer) {
               this.resMess = group
               this.updateIsSeen(this.resMess)
+
               setTimeout(() => {
-                for (let index = 0; index <  this.resMess.messengers.length; index++) {
-                  if (index < this.resMess.messengers.length-1) {
-                    document.getElementsByClassName("chat-container")[index].setAttribute("style", "height: " + (document.getElementsByClassName("chat-content")[index].clientHeight+10) + "px")
-                  }
-                }
-                document.getElementById("mess").scrollTop = document.getElementById("mess").scrollHeight
-              }, 0.1);
+                  document.getElementById("mess").scrollTop = document.getElementById("mess").scrollHeight
+              }, 1);
             }
           });
-
-
         }
+
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
@@ -99,7 +104,7 @@ export class ChatComponent implements OnInit {
       }
     }
     document.getElementById("mess").scrollTop = document.getElementById("mess").scrollHeight
-   }, 0.1);
+   }, 1);
 
     if (!this.idTmp) {
       document.getElementById(data.idCustomer).setAttribute("class","card-sidebar card-active")
