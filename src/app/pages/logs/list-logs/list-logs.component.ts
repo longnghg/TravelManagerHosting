@@ -49,7 +49,7 @@ export class ListLogsComponent implements OnInit {
     }
     ngOnInit(): void {
       this.columnDefs= [
-        { field: 'classContent',headerName: "Lớp nội dung", style: "width: 20%;",searchable: true, searchType: 'section', searchObj: 'classContent', multiple: true, closeOnSelect: false, bindLabel: 'name', bindValue: "id" , listSection: this.configService.listClassContent()},
+        { field: 'classContent',headerName: "Lớp nội dung", style: "width: 20%;",searchable: true, searchType: 'section', searchObj: 'classContent', multiple: false, closeOnSelect: false, bindLabel: 'name', bindValue: "id" , listSection: this.configService.listClassContent()},
         { field: 'emailCreator', headerName: "Tên người tạo", style: "width: 20%;", searchable: false, searchType: 'text', searchObj: 'emailCreator'},
         { field: 'type', headerName: "Loại ", style: "width: 20%;", searchable: false, searchType: 'text', searchObj: 'type'},
         { field: 'creationDate', headerName: "Ngày tạo ", style: "width: 20%;", searchable: false, searchType: 'date', searchObj: 'creationDate', filter: 'date'},
