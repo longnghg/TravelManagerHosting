@@ -19,7 +19,7 @@
                 </div>
                 </form>
             <ul class="navbar-nav" style="margin-top: -0.5rem">
-                <div style="overflow-x: hidden; overflow-y: auto; max-height: 30.4rem;">
+                <div style="overflow-x: hidden; overflow-y: auto; max-height: 45rem;">
                   <ng-container  *ngFor="let group of resGroup; let i=index">
                     <div [id]="group.idCustomer" class="card-sidebar" (click)="getData(group)">
                       <ng-container *ngIf="group.isSeen; else elseIsSeen">
@@ -62,22 +62,22 @@
     <div id="mess" class="card__body">
         <ng-container *ngFor="let item of resMess.messengers; let i=index">
             <ng-container *ngIf="item.senderId == auth.id; else elseSend">
-                <div class="row mr-2">
+                <div class="row mr-2 chat-container">
                     <div class="col">
-                        <div class="card-send">{{item.content}}</div>
+                        <div class="card-send chat-content">{{item.content}}</div>
                     </div>
                 </div>
             </ng-container>
             <ng-template #elseSend>
-                <div class="row ml-2">
-                    <div class="col">
-                        <div class="card-receive">{{item.content}}</div>
+                <div class="row ml-2 chat-container">
+                    <div class="col-12">
+                        <div class="card-receive chat-content">{{item.content}}</div>
                     </div>
                 </div>
             </ng-template>
 
 
-            <div *ngIf="i < resMess.messengers.length-1" class="row" style="margin: 2rem;"> <div class="col"></div></div>
+            <!-- <div *ngIf="i < resMess.messengers.length-1" class="row" style="margin: 2rem"> <div class="col"></div></div> -->
         </ng-container>
     </div>
 

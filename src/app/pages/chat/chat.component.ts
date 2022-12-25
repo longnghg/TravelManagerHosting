@@ -64,6 +64,11 @@ export class ChatComponent implements OnInit {
               this.resMess = group
               this.updateIsSeen(this.resMess)
               setTimeout(() => {
+                for (let index = 0; index <  this.resMess.messengers.length; index++) {
+                  if (index < this.resMess.messengers.length-1) {
+                    document.getElementsByClassName("chat-container")[index].setAttribute("style", "height: " + (document.getElementsByClassName("chat-content")[index].clientHeight+10) + "px")
+                  }
+                }
                 document.getElementById("mess").scrollTop = document.getElementById("mess").scrollHeight
               }, 200);
             }
@@ -86,7 +91,13 @@ export class ChatComponent implements OnInit {
 
   getData(data: GroupMessage){
     this.resMess = data
+
    setTimeout(() => {
+    for (let index = 0; index <  this.resMess.messengers.length; index++) {
+      if (index < this.resMess.messengers.length-1) {
+        document.getElementsByClassName("chat-container")[index].setAttribute("style", "height: " + (document.getElementsByClassName("chat-content")[index].clientHeight+10) + "px")
+      }
+    }
     document.getElementById("mess").scrollTop = document.getElementById("mess").scrollHeight
    }, 200);
 
