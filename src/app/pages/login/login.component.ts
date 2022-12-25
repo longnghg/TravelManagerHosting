@@ -29,8 +29,7 @@ export class LoginComponent implements OnInit {
   timeBlock: any
   constructor(private router: Router, private configService:ConfigService, private notificationService:NotificationService, private authenticationService:AuthenticationService) { }
   ngOnInit() {
-    this.resEmployee.email = "test1@gmail.com"
-    this.resEmployee.password = "123"
+
   }
 
   login(){

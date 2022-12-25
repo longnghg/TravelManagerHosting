@@ -2,7 +2,7 @@
   <nav class="navbar navbar-top navbar-horizontal navbar-expand-md navbar-dark">
     <div class="container px-4">
       <a  routerLinkActive="active" [routerLink]="['/login']">
-        <img style="width: 40%;" src="../../../assets//img//brand//lgoRover.png" />
+        <img style="width: 20%;" src="https://res.cloudinary.com/ddv2idi9d/image/upload/v1671287460/Uploads/Logoaiu_xkmijd.png" />
       </a>
       <button class="navbar-toggler" type="button" (click)="isCollapsed=!isCollapsed"
          aria-controls="sidenav-collapse-main">
@@ -10,21 +10,6 @@
       </button>
       <div class="collapse navbar-collapse"  [ngbCollapse]="isCollapsed" id="sidenav-collapse-main">
         <!-- Collapse header -->
-        <div class="navbar-collapse-header d-md-none">
-          <div class="row">
-            <div class="col-6 collapse-brand">
-              <a routerLinkActive="active" [routerLink]="['/login']">
-                <img src="assets/img/brand/blue.png">
-              </a>
-            </div>
-            <div class="col-6 collapse-close">
-              <button type="button" class="navbar-toggler" (click)="isCollapsed=!isCollapsed" >
-                <span></span>
-                <span></span>
-              </button>
-            </div>
-          </div>
-        </div>
         <!-- Navbar items -->
         <!-- <ul class="navbar-nav ml-auto">
           <li class="nav-item">
