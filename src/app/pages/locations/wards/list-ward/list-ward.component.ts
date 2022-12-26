@@ -31,7 +31,8 @@ export class ListWardComponent implements OnInit {
     disableRadioBox: true,
     disableApprove: true,
     disableLog: true,
-    disableSchedule: true
+    disableSchedule: true,
+    disableDelete: true
   }
 
   private hubConnectionBuilder: HubConnection

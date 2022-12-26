@@ -34,7 +34,8 @@ export class ListDistrictComponent implements OnInit {
     disableRadioBox: true,
     disableApprove: true,
     disableLog: true,
-    disableSchedule: true
+    disableSchedule: true,
+    disableDelete: true
   }
   constructor(private provinceService: ProvinceService, private wardService: WardService, private districtService: DistrictService, private notificationService: NotificationService,
     private configService: ConfigService){}

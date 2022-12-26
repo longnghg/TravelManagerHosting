@@ -33,7 +33,8 @@ export class ListProvinceComponent implements OnInit {
     disableRadioBox: true,
     disableApprove: true,
     disableLog: true,
-    disableSchedule: true
+    disableSchedule: true,
+    disableDelete: true
   }
 
   constructor( private provinceService: ProvinceService, private districtService: DistrictService, private notificationService: NotificationService,
